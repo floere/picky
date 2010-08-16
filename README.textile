@@ -1,0 +1,7 @@
+Note: In development. Expect release version in September 2010.
+
+h1. Picky
+
+h2. The combinatorial small-text search engine.
+
+The search enine is split into a server and a client which is to be used in e.g. Rails.

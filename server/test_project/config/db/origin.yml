@@ -1,0 +1,6 @@
+adapter: sqlite3
+host: localhost
+username: root
+password:
+database: data/test.db
+encoding: utf8

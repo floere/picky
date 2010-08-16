@@ -1,0 +1,3 @@
+h1. Search engine client.
+
+# TODO Usage etc.

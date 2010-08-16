@@ -1,0 +1,50 @@
+require 'rake'
+require 'rake/gempackagetask'
+
+task :default => :spec
+
+# Gem.
+#
+desc "Create the picky search engine client"
+spec = Gem::Specification.new do |s|
+  s.name = 'picky'
+  s.version = '0.0.0'
+  s.author = 'Florian Hanke'
+  s.email = 'florian.hanke+picky@gmail.com'
+  s.homepage = 'http://floere.github.com/picky'
+  s.description = 'Fast Combinatorial Ruby Search Engine'
+  s.platform = Gem::Platform::RUBY
+  s.summary = 'Picky the Search Engine'
+  s.files = [] # Dir["lib/**/*.rb"]
+  s.test_files = [] # Dir["spec/**/*_spec.rb"]
+  s.has_rdoc = false
+  s.extra_rdoc_files = ['README.textile']
+  
+  s.add_dependency 'bundler',          '>=0.9.26'
+  s.add_dependency 'activesupport',    '2.3.8'
+  s.add_dependency 'activerecord',     '2.3.8'
+  s.add_dependency 'rack',             '1.2.1'
+  s.add_dependency 'rack-mount',       '0.6.9'
+  s.add_dependency 'rsolr'             '0.12.1'
+  s.add_dependency 'sunspot',          '1.1.0'
+  s.add_dependency 'text',             '0.2.0'
+  s.add_dependency 'rack_fast_escape', '2009.06.24'
+  
+  s.add_development_dependency 'rspec'
+end
+Rake::GemPackageTask.new(spec) do |pkg|
+  pkg.need_tar = true
+end
+
+# Specs.
+#
+require 'spec'
+require 'spec/rake/spectask'
+
+spec_root = File.join(File.dirname(__FILE__), 'spec')
+
+desc "Run all specs in spec directory (excluding plugin specs)"
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_opts = ['--options', "\"#{File.join(spec_root, 'spec.opts')}\""]
+  t.spec_files = FileList[File.join(spec_root, '**', '*_spec.rb')]
+end

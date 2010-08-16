@@ -1,0 +1,16 @@
+source :gemcutter
+
+# Gems required by Rainbows.
+#
+gem 'bundler',       '>=0.9.26'
+gem 'activesupport', '2.3.8'
+gem 'activerecord',  '2.3.8'
+
+gem 'rack_fast_escape'
+gem 'rack',          '1.1.0'
+gem 'text'
+gem 'rsolr'
+
+gem 'sqlite3'
+
+gem 'rspec'

@@ -1,0 +1,8 @@
+.DS_Store
+pkg/
+server/lib/picky/ext/ruby19/Makefile
+server/lib/picky/ext/ruby19/mkmf.log
+server/lib/picky/ext/ruby19/performant.bundle
+
+server/.yardoc
+server/doc
