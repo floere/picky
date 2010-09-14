@@ -51,7 +51,8 @@ class BookSearch < Application
   
   # Part 3: Indexing parameters.
   #
-  # Where you define how Picky indexes your data (per default).
+  # Where you define how Picky processes your data
+  # while indexing (per default).
   # For specific indexes, see TODO.
   # 
   indexing do
@@ -138,7 +139,7 @@ class BookSearch < Application
     similar_title = field :title,  :similarity => few_similarities,
                                    :qualifiers => [:t, :title, :titre]
     author        = field :author, :qualifiers => [:a, :author, :auteur]
-    year          = field :year,   :partial => Partial::None.new,
+    year          = field :year,   :partial    => Partial::None.new,
                                    :qualifiers => [:y, :year, :annee]
                                    
     index :main,
