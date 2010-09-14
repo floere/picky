@@ -118,7 +118,7 @@ class BookSearch < Application
     #
     #
     normalizing_word_patterns([
-      [/^Deoxyribonucleic Acid/i, 'DNA']
+      [/Deoxyribonucleic Acid/i, 'DNA']
     ])
     
     #
@@ -136,20 +136,31 @@ class BookSearch < Application
   indexes do
     few_similarities = Similarity::DoubleLevenshtone.new(3)
     
+    # We define a few fields that are used in the indexes.
+    #
+    # Note: They could also be defined right with the index
+    #       definition below. It's just Ruby.
+    #       
+    #
     similar_title = field :title,  :similarity => few_similarities,
                                    :qualifiers => [:t, :title, :titre]
     author        = field :author, :qualifiers => [:a, :author, :auteur]
     year          = field :year,   :partial    => Partial::None.new,
                                    :qualifiers => [:y, :year, :annee]
-                                   
+    
+    #
+    #
+    
+    # 
+    #
     index :main,
           "SELECT title, author, year FROM books",
-          title_with_similarity,
+          similar_title,
           author,
           year,
           :heuristics => Query::Heuristics.new([:title,  :author] => 5,
                                                [:author, :year]   => 2)
-                                               
+    
     index :isbn,
           "SELECT isbn FROM books",
           field(:isbn, :qualifiers => [:i, :isbn])
