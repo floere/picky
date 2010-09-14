@@ -6,6 +6,17 @@ class BookSearch < Application
   #
   # Sets defaults in the options object.
   #
+  # Methods:
+  #  * partial:
+  #    * Cacher::Partial::None.new     # Doesn't generate a partial index.
+  #    * Cacher::Partial::Subtoken.new # Default. Generates a partial index.
+  #      * Options:
+  #        * down_to:     At which character it should stop. 1 to n.
+  #        * starting_at: Which character it should start at. -1 to -n.
+  #  * similarity:
+  #    * Cacher::Similarity::None.new                 # Default. Doesn't generate a similarity index.
+  #    * Cacher::Similarity::DoubleLevenshtone.new(n) # Generates a similarity index with n similar tokens per token.
+  #
   defaults do
     partial    Cacher::Partial::Subtoken.new
     similarity Cacher::Similarity::None.new
