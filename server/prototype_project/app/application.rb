@@ -18,10 +18,21 @@ class BookSearch < Application
   #    * Cacher::Similarity::DoubleLevenshtone.new(n) # Generates a similarity index with n similar tokens per token.
   #
   defaults do
-    partial    Cacher::Partial::Subtoken.new
+    partial Cacher::Partial::Subtoken.new
+    # or
+    # partial Cacher::Partial::Subtoken.new
+    # or
+    # partial Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => -1
+    
     similarity Cacher::Similarity::None.new
+    # or
+    # similarity Cacher::Similarity::DoubleLevenshtone.new
+    # or
+    # similarity Cacher::Similarity::DoubleLevenshtone.new(2)
   end
   
+  # This example
+  #
   routing do
     route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn])
     route '^/books/live', Query::Live.new(Indexes[:main], Indexes[:isbn])
@@ -52,38 +63,28 @@ class BookSearch < Application
   end
   
   indexes do
-    # Heuristics.
-    #
     heuristics = Query::Heuristics.new [:title, :author] => 5,
                                        [:author, :year]  => 2
-    
-    # Convenience variables for the index definitions.
+                                       
+    # TODO Rename to Similarity::DoubleLevenshtone
     #
-    double_levenshtone_with_few_similarities = Cacher::Similarity::DoubleLevenshtone.new 3
-
-    title_with_similarity      = field :title,
-                                       :similarity => double_levenshtone_with_few_similarities,
-                                       :qualifiers => [:t, :title, :titre]
-    author_with_similarity     = field :author,
-                                       :similarity => double_levenshtone_with_few_similarities,
-                                       :qualifiers => [:a, :author, :auteur]
-    blurb                      = field :blurb,
-                                       :qualifiers => [:b, :blurb, :rabat]
-    year                       = field :year,
-                                       :partial => Cacher::Partial::None.new,
-                                       :qualifiers => [:y, :year, :annee]
+    few_similarities = Cacher::Similarity::DoubleLevenshtone.new 3
     
-    type :main,
-         "SELECT title, author, blurb, year FROM books",
-         title_with_similarity,
-         author_with_similarity,
-         blurb,
-         year,
-         :result_type => 'm',
-         :heuristics => heuristics
-         
-    type :isbn,
-         "SELECT isbn FROM books",
-         field(:isbn, :qualifiers => [:i, :isbn])
+    index :main,
+          "SELECT title, author, year FROM books",
+          title_with_similarity,
+          author,
+          year,
+          :heuristics => heuristics
+          
+    index :isbn,
+          "SELECT isbn FROM books",
+          field(:isbn, :qualifiers => [:i, :isbn])
+          
+    similar_title = field :title,  :similarity => few_similarities,
+                                   :qualifiers => [:t, :title, :titre]
+    author        = field :author, :qualifiers => [:a, :author, :auteur]
+    year          = field :year,   :partial => Cacher::Partial::None.new,
+                                   :qualifiers => [:y, :year, :annee]
   end
 end
