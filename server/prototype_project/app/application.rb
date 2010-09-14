@@ -94,8 +94,7 @@ class BookSearch < Application
   #       or the same definitions as in the indexing step.
   #
   querying do
-    # The maximum amount of tokens that are
-    # passed to a query.
+    # The maximum amount of tokens that are passed to a query.
     #
     maximum_tokens 5
     
@@ -128,31 +127,30 @@ class BookSearch < Application
   
   # Part 5: Indexes.
   #
-  # 
+  # Where you define where your data comes from and into which indexes
+  # it is put.
+  #
+  # Also...
   #
   indexes do
-    heuristics = Query::Heuristics.new [:title, :author] => 5,
-                                       [:author, :year]  => 2
-                                       
-    # TODO Rename to Similarity::DoubleLevenshtone
-    #
-    few_similarities = Cacher::Similarity::DoubleLevenshtone.new 3
+    few_similarities = Similarity::DoubleLevenshtone.new(3)
     
+    similar_title = field :title,  :similarity => few_similarities,
+                                   :qualifiers => [:t, :title, :titre]
+    author        = field :author, :qualifiers => [:a, :author, :auteur]
+    year          = field :year,   :partial => Partial::None.new,
+                                   :qualifiers => [:y, :year, :annee]
+                                   
     index :main,
           "SELECT title, author, year FROM books",
           title_with_similarity,
           author,
           year,
-          :heuristics => heuristics
-          
+          :heuristics => Query::Heuristics.new([:title,  :author] => 5,
+                                               [:author, :year]   => 2)
+                                               
     index :isbn,
           "SELECT isbn FROM books",
           field(:isbn, :qualifiers => [:i, :isbn])
-          
-    similar_title = field :title,  :similarity => few_similarities,
-                                   :qualifiers => [:t, :title, :titre]
-    author        = field :author, :qualifiers => [:a, :author, :auteur]
-    year          = field :year,   :partial => Cacher::Partial::None.new,
-                                   :qualifiers => [:y, :year, :annee]
   end
 end
