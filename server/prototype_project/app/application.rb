@@ -4,7 +4,7 @@ class BookSearch < Application
   
   # Part 1: Defaults.
   #
-  # Sets defaults in the options object.
+  # Where you define defaults for the rest of the application.
   #
   # Methods:
   #  * partial:
@@ -31,7 +31,14 @@ class BookSearch < Application
     # similarity Cacher::Similarity::DoubleLevenshtone.new(2)
   end
   
-  # This example
+  # Part 2: Routing.
+  #
+  # Where you define how Picky maps URLs to queries.
+  #
+  # Methods:
+  #  # TODO Why a string?
+  #  * route <path regexp>, <query>
+  #  * root <html status code>
   #
   routing do
     route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn])
@@ -42,26 +49,87 @@ class BookSearch < Application
     root 200 # Heartbeat check by web front server.
   end
   
+  # Part 3: Indexing parameters.
+  #
+  # Where you define how Picky indexes your data (per default).
+  # For specific indexes, see TODO.
+  # 
   indexing do
+    # Denote illegal characters with a regexp.
+    # These are removed first.
+    #
+    # Default: Nothing is illegal.
+    #
     illegal(/[',\(\)#:!@]/)
-    illegal_after_normalizing(/[\.]/)
+    
+    # Define contractions.
+    #
+    # Default: No contractions.
+    #
+    contract(/mr\.\s*|mister\s*/i, 'mr')
+    
+    # Stopwords are removed from the search text.
+    #
+    # Default: No stopwords.
+    #
     stopwords(/\b(and|the|or|on)\b/)
+    
+    # Split the search text into tokens based on the given delimiters.
+    #
+    # Default: Split on \s.
+    #
     split_on(/[\s\/\-\"\&\.]/)
+    
+    # 
+    #
+    illegal_after_normalizing(/[\.]/)
   end
   
+  # Part 4: Query parameters.
+  #
+  # Where you define what Picky does with your search text
+  # before searching.
+  #
+  # Note: Usually it is a good idea to use similar
+  #       or the same definitions as in the indexing step.
+  #
   querying do
+    # The maximum amount of tokens that are
+    # passed to a query.
+    #
     maximum_tokens 5
     
+    #
+    #
     illegal(/[()']/)
-    stopwords(/\b(and|the|or|on)/i)
+    
+    #
+    #
     contract(/mr\.\s*|mister\s*/i, 'mr')
+    
+    #
+    #
+    stopwords(/\b(and|the|or|on)/i)
+    
+    #
+    #
     split_on(/[\s\/\-\,\&]+/)
+    
+    #
+    #
     normalizing_word_patterns([
       [/^Deoxyribonucleic Acid/i, 'DNA']
     ])
+    
+    #
+    #
     illegal_after_normalizing(/[\.]/)
   end
   
+  # Part 5: Indexes.
+  #
+  # 
+  #
   indexes do
     heuristics = Query::Heuristics.new [:title, :author] => 5,
                                        [:author, :year]  => 2
