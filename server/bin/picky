@@ -11,4 +11,4 @@ rescue LoadError => e
 end
 
 generator = Picky::Generator.new
-generator.run ARGV
+generator.generate ARGV
