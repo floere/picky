@@ -254,6 +254,10 @@ module Loader
     #
     load_relative 'solr/schema_generator'
     load_relative 'cores'
+    
+    # Load generation.
+    #
+    load_relative 'generator'
   end
 
   def self.exclaim text
