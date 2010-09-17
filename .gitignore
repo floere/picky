@@ -3,6 +3,7 @@ pkg/
 server/lib/picky/ext/ruby19/Makefile
 server/lib/picky/ext/ruby19/mkmf.log
 server/lib/picky/ext/ruby19/performant.bundle
+server/lib/picky/ext/ruby19/performant.o
 
 server/.yardoc
 server/doc
