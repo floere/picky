@@ -47,9 +47,19 @@ module Picky
       #
       #
       def generate
-        target = File.expand_path File.join(Dir.pwd, name)
-        puts "Creating #{target} and setting up Picky project."
+        target = target_directory
+        exclaim "Creating #{target} and setting up Picky project."
         FileUtils.cp_r prototype_project_basedir, target
+      end
+      
+      #
+      #
+      def target_directory
+        File.expand_path File.join(Dir.pwd, name)
+      end
+      
+      def exclaim something
+        puts something
       end
       
     end
