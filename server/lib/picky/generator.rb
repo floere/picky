@@ -48,7 +48,8 @@ module Picky
       #
       def generate
         target = File.expand_path File.join(Dir.pwd, name)
-        FileUtils.cp_r prototype_project_basedir, target, :verbose => true
+        puts "Creating #{target} and setting up Picky project."
+        FileUtils.cp_r prototype_project_basedir, target
       end
       
     end
