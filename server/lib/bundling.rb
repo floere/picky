@@ -4,7 +4,7 @@ begin
   require 'bundler'
 rescue LoadError => e
   require 'rubygems'
-  retry
+  require 'bundler'
 end
 Bundler.setup SEARCH_ENVIRONMENT
 Bundler.require

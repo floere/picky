@@ -7,13 +7,21 @@ describe Picky::Generator do
     before(:each) do
       @generator = Picky::Generator.new
     end
-
-    describe "generate" do
-      it "should exist" do
-        lambda { @generator.generate(['project', 'some_project']) }.should_not raise_error
+    
+    describe "generator_for_class" do
+      it "should return me a generator for the given class" do
+        @generator.generator_for_class(Picky::Generator::Project, :some_args).should be_kind_of(Picky::Generator::Project)
       end
-      it "should " do
-
+    end
+    
+    describe "generate" do
+      it "should raise a NoGeneratorException if called with the wrong params" do
+        lambda { @generator.generate(['blarf', 'gnorf']) }.should raise_error(Picky::NoGeneratorException)
+      end
+      it "should not raise on the right params" do
+        @generator.stub! :generator_for_class => stub(:generator, :generate => nil)
+        
+        lambda { @generator.generate(['project', 'some_project']) }.should_not raise_error
       end
     end
   end

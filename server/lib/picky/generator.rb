@@ -32,7 +32,13 @@ module Picky
     def generator_for identifier, *args
       generator_class = types[identifier.to_sym]
       raise NoGeneratorException unless generator_class
-      generator_class.new *args
+      generator_for_class generator_class, *args
+    end
+    
+    #
+    #
+    def generator_for_class klass, *args
+      klass.new *args
     end
     
     class Project
