@@ -65,6 +65,7 @@ module Picky
           exists target_directory
         else
           FileUtils.mkdir target_directory
+          created target_directory
         end
       end
       
