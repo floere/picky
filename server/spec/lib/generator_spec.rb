@@ -44,11 +44,20 @@ describe Picky::Generator do
       end
     end
     
+    describe "target_filename_for" do
+      it "should return the right filename" do
+        @generator.stub! :target_directory => 'some_target_directory'
+        
+        test_filename = File.expand_path File.join(@generator.prototype_project_basedir, '/some/file/name')
+        
+        @generator.target_filename_for(test_filename).should == 'some_target_directory/some/file/name'
+      end
+    end
+    
     describe "generate" do
       it "should copy recursively" do
-        @generator.stub! :target_directory => 'target_directory'
-        
-        FileUtils.should_receive(:cp_r).once.with @generator.prototype_project_basedir, 'target_directory'
+        @generator.should_receive(:create_target_directory).once.with
+        @generator.should_receive(:copy_all_files).once.with
         
         @generator.generate
       end
