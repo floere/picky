@@ -10,8 +10,6 @@ require 'constants'
 
 # Library bundling.
 #
-# TODO Ok?
-#
 require 'bundling'
 
 # Loader which handles framework and app loading.
