@@ -33,6 +33,17 @@ describe Picky::Generator do
       @generator.stub! :exclaim
     end
     
+    context "after initialize" do
+      it "should have a prototype project basedir" do
+        lambda {
+          @generator.prototype_project_basedir
+        }.should_not raise_error
+      end
+      it "should have a name" do
+        @generator.name.should == 'some_name'
+      end
+    end
+    
     describe "generate" do
       it "should copy recursively" do
         @generator.stub! :target_directory => 'target_directory'
