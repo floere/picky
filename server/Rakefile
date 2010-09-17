@@ -15,6 +15,8 @@ spec = Gem::Specification.new do |s|
   s.description = 'Fast Combinatorial Ruby Search Engine'
   s.platform = Gem::Platform::RUBY
   s.summary = 'Picky the Search Engine'
+  s.executables = ['picky']
+  s.default_executable = "picky"
   s.files = [] # Dir["lib/**/*.rb"]
   s.test_files = [] # Dir["spec/**/*_spec.rb"]
   s.has_rdoc = false
@@ -25,7 +27,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency 'activerecord',     '2.3.8'
   s.add_dependency 'rack',             '1.2.1'
   s.add_dependency 'rack-mount',       '0.6.9'
-  s.add_dependency 'rsolr'             '0.12.1'
+  s.add_dependency 'rsolr',            '>=0.12.1'
   s.add_dependency 'sunspot',          '1.1.0'
   s.add_dependency 'text',             '0.2.0'
   s.add_dependency 'rack_fast_escape', '2009.06.24'
