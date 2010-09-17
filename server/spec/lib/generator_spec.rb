@@ -43,6 +43,12 @@ describe Picky::Generator do
       end
     end
     
+    describe "target_directory" do
+      it "should return the right dir name" do
+        @generator.target_directory.should == File.expand_path(File.join(__FILE__, '..', '..', '..', 'some_name'))
+      end
+    end
+    
   end
   
 end
