@@ -53,7 +53,7 @@ module Picky
       #
       #
       def generate
-        exclaim "Creating #{target_directory} and setting up Picky project."
+        exclaim "Setting up Picky project \"#{name}\"."
         create_target_directory
         copy_all_files
       end
