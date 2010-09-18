@@ -56,6 +56,7 @@ module Picky
         exclaim "Setting up Picky project \"#{name}\"."
         create_target_directory
         copy_all_files
+        exclaim "\"#{name}\" is a great project name! Have fun :)"
       end
       
       #
