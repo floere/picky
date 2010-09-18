@@ -56,6 +56,55 @@ describe Picky::Generator do
       end
     end
     
+    describe "generate" do
+      it "should do things in order" do
+        @generator.should_receive(:create_target_directory).once.ordered
+        @generator.should_receive(:copy_all_files).once.ordered
+        
+        @generator.generate
+      end
+    end
+    
+    describe "create_target_directory" do
+      context "file exists" do
+        before(:each) do
+          File.stub! :exists? => true
+        end
+        it "should just tell the user that" do
+          @generator.stub! :target_directory => :some_target_directory
+          
+          @generator.should_receive(:exists).once.with :some_target_directory
+          
+          @generator.create_target_directory
+        end
+        it "should not make the directory" do
+          FileUtils.should_receive(:mkdir).never
+          
+          @generator.create_target_directory
+        end
+      end
+      context "file does not exist" do
+        before(:each) do
+          File.stub! :exists? => false
+          FileUtils.stub! :mkdir
+        end
+        it "should make the directory" do
+          @generator.stub! :target_directory => :some_target_directory
+          
+          FileUtils.should_receive(:mkdir).once.with :some_target_directory
+          
+          @generator.create_target_directory
+        end
+        it "should tell the user" do
+          @generator.stub! :target_directory => :some_target_directory
+          
+          @generator.should_receive(:created).once.with :some_target_directory
+          
+          @generator.create_target_directory
+        end
+      end
+    end
+    
     describe "target_filename_for" do
       it "should return the right filename" do
         @generator.stub! :target_directory => 'some_target_directory'
