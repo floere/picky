@@ -129,7 +129,7 @@ class Routing
       
       results = query.search_with_text *extracted(params)
       
-      SearchLog.log results.to_log(params[query_key]) # TODO Save the original query in the results object.
+      PickyLog.log results.to_log(params[query_key]) # TODO Save the original query in the results object.
       
       respond_with results.to_response, content_type
     end

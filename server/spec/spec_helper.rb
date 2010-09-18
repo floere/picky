@@ -11,5 +11,5 @@ Object.send :remove_const, :SEARCH_ROOT
 SEARCH_ROOT = 'some/search/root'
 puts "Redefined SEARCH_ROOT to '#{SEARCH_ROOT}' for the tests."
 
-SearchLog = Loggers::Search.new ::Logger.new(STDOUT)
+PickyLog = Loggers::Search.new ::Logger.new(STDOUT)
 puts "Using STDOUT as test log."
