@@ -2,6 +2,8 @@ h1. Picky Generation
 
 h2. Explanation
 
+Generation uses a prototype project in prototype_project.
+
 This is the project which is used for project generation.
 
 Files are simply copied into the target directory.
