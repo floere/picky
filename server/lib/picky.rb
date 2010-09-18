@@ -1,20 +1,16 @@
-# Add dirname to load path. TODO Necessary?
-#
-$:.unshift File.dirname(__FILE__)
-
 # Require the constants.
 #
 # TODO Move to app?
 #
-require 'constants'
+require File.expand_path(File.join(File.dirname(__FILE__), 'constants'))
 
 # Library bundling.
 #
-require 'bundling'
+require File.expand_path(File.join(File.dirname(__FILE__), 'bundling'))
 
 # Loader which handles framework and app loading.
 #
-require 'picky/loader'
+require File.expand_path(File.join(File.dirname(__FILE__), 'picky', 'loader'))
 
 # Load the framework
 #
