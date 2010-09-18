@@ -94,6 +94,8 @@ module Picky
         end
       end
       
+      # Well, "smart" ;)
+      #
       def smart_copy filename, target
         # p "Trying to copy #{filename} -> #{target}"
         FileUtils.copy_file filename, target
