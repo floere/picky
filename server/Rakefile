@@ -19,6 +19,9 @@ spec = Gem::Specification.new do |s|
   s.default_executable = "picky"
   s.files = Dir["lib/**/*.rb", "prototype_project/**/*"]
   s.test_files = Dir["spec/**/*_spec.rb"]
+  
+  s.extensions << 'ext/ruby19/extconf.rb'
+  
   s.has_rdoc = false
   s.extra_rdoc_files = ['README.textile']
   
