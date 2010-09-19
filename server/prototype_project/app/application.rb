@@ -11,15 +11,11 @@ class PickySearch < Application
   #   root 200
   # end
   # indexes do
-  #   title   = field :title,  :similarity => Similarity::DoubleLevenshtone.new(3)
-  #   author  = field :author
-  #   year    = field :year,   :partial => Partial::None.new
-  #   
   #   index :main,
   #         "SELECT title, author, year FROM books",
-  #         title,
-  #         author,
-  #         year
+  #         field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
+  #         field(:author),
+  #         field(:year, :partial => Partial::None.new)
   # end
   
   # 1. Querying.
