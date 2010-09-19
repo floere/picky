@@ -1,4 +1,4 @@
-require 'picky-tasks'
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'picky-tasks'))
 
 require 'spec'
 require 'spec/rake/spectask'
