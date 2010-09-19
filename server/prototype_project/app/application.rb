@@ -1,8 +1,28 @@
 # coding: utf-8
 #
-class BookSearch < Application
+class PickySearch < Application
   
-  # 2. Querying.
+  # A simple example.
+  #
+  # queries do
+  #   route '^/books/full', Query::Full.new(Indexes[:main])
+  #   route '^/books/live', Query::Live.new(Indexes[:main])
+  #   
+  #   root 200
+  # end
+  # indexes do
+  #   title   = field :title,  :similarity => Similarity::DoubleLevenshtone.new(3)
+  #   author  = field :author
+  #   year    = field :year,   :partial => Partial::None.new
+  #   
+  #   index :main,
+  #         "SELECT title, author, year FROM books",
+  #         title,
+  #         author,
+  #         year
+  # end
+  
+  # 1. Querying.
   #
   # a) Where you define what Picky does with your search text
   #    before searching.
@@ -67,7 +87,7 @@ class BookSearch < Application
     queries.root 200 # Heartbeat check by web front server.
   end
   
-  # Part 3: Indexing parameters.
+  # Part 2: Indexing parameters.
   #
   # Where you define how Picky processes your data
   # while indexing (per default).
@@ -84,7 +104,7 @@ class BookSearch < Application
   #    * Cacher::Similarity::None.new                 # Default. Doesn't generate a similarity index.
   #    * Cacher::Similarity::DoubleLevenshtone.new(n) # Generates a similarity index with n similar tokens per token.
   # 
-  indexes :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new do ||
+  indexes :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new do
     # Denote illegal characters with a regexp.
     # These are removed first.
     #
