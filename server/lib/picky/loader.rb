@@ -72,6 +72,8 @@ module Loader
       retry
     end
     
+    # TODO Rethink this.
+    #
     load_user 'app/logging'
     load_user 'app/config'
     Configuration.apply
