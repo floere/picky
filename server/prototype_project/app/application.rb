@@ -2,11 +2,78 @@
 #
 class BookSearch < Application
   
-  # Part 1: Defaults.
+  # 2. Querying.
   #
-  # Where you define defaults for the rest of the application.
+  # a) Where you define what Picky does with your search text
+  #    before searching.
+  # b) Where you define how Picky maps URLs to queries.
   #
-  # Methods:
+  # Options:
+  # * tokenizer:    # default: Tokenizers::Query.new
+  # * query_key:    # default: 'query'
+  # * offset_key:   # default: 'offset'
+  # * content_type: # default: 'application/octet-stream'
+  #
+  # Methods inside:
+  #  # TODO Why a string?
+  #  * route <path regexp>, <query>
+  #  * root <html status code>
+  #
+  queries do |queries|
+    
+    # Where you define what Picky does with your search text
+    # before searching.
+    #
+    # Note: Usually it is a good idea to use similar
+    #       or the same definitions as in the indexing step.
+    
+    # The maximum amount of tokens that are passed to a query.
+    #
+    queries.maximum_tokens 5
+    
+    #
+    #
+    queries.illegal_characters(/[()']/)
+    
+    #
+    #
+    queries.contract_expressions(/mr\.\s*|mister\s*/i, 'mr')
+    
+    #
+    #
+    queries.stopwords(/\b(and|the|or|on)/i)
+    
+    #
+    #
+    queries.split_text_on(/[\s\/\-\,\&]+/)
+    
+    #
+    #
+    queries.normalize_words([
+      [/Deoxyribonucleic Acid/i, 'DNA']
+    ])
+    
+    #
+    #
+    queries.illegal_characters_after(/[\.]/)
+    
+    # Routing.
+    #
+    queries.route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn])
+    queries.route '^/books/live', Query::Live.new(Indexes[:main], Indexes[:isbn])
+    
+    queries.route '^/isbn/full',  Query::Full.new(Indexes[:isbn])
+    
+    queries.root 200 # Heartbeat check by web front server.
+  end
+  
+  # Part 3: Indexing parameters.
+  #
+  # Where you define how Picky processes your data
+  # while indexing (per default).
+  # For specific indexes, see TODO.
+  #
+  # Options:
   #  * partial:
   #    * Cacher::Partial::None.new     # Doesn't generate a partial index.
   #    * Cacher::Partial::Subtoken.new # Default. Generates a partial index.
@@ -16,52 +83,14 @@ class BookSearch < Application
   #  * similarity:
   #    * Cacher::Similarity::None.new                 # Default. Doesn't generate a similarity index.
   #    * Cacher::Similarity::DoubleLevenshtone.new(n) # Generates a similarity index with n similar tokens per token.
-  #
-  defaults do
-    partial Cacher::Partial::Subtoken.new
-    # or
-    # partial Cacher::Partial::Subtoken.new
-    # or
-    # partial Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => -1
-    
-    similarity Cacher::Similarity::None.new
-    # or
-    # similarity Cacher::Similarity::DoubleLevenshtone.new
-    # or
-    # similarity Cacher::Similarity::DoubleLevenshtone.new(2)
-  end
-  
-  # Part 2: Routing.
-  #
-  # Where you define how Picky maps URLs to queries.
-  #
-  # Methods:
-  #  # TODO Why a string?
-  #  * route <path regexp>, <query>
-  #  * root <html status code>
-  #
-  routing do
-    route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn])
-    route '^/books/live', Query::Live.new(Indexes[:main], Indexes[:isbn])
-    
-    route '^/isbn/full',  Query::Full.new(Indexes[:isbn])
-    
-    root 200 # Heartbeat check by web front server.
-  end
-  
-  # Part 3: Indexing parameters.
-  #
-  # Where you define how Picky processes your data
-  # while indexing (per default).
-  # For specific indexes, see TODO.
   # 
-  indexing do
+  indexes :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new do ||
     # Denote illegal characters with a regexp.
     # These are removed first.
     #
     # Default: Nothing is illegal.
     #
-    illegal(/[',\(\)#:!@]/)
+    illegal_characters(/[',\(\)#:!@]/)
     
     # Define contractions.
     #
@@ -84,56 +113,10 @@ class BookSearch < Application
     # 
     #
     illegal_after_normalizing(/[\.]/)
-  end
-  
-  # Part 4: Query parameters.
-  #
-  # Where you define what Picky does with your search text
-  # before searching.
-  #
-  # Note: Usually it is a good idea to use similar
-  #       or the same definitions as in the indexing step.
-  #
-  querying do
-    # The maximum amount of tokens that are passed to a query.
-    #
-    maximum_tokens 5
     
     #
     #
-    illegal(/[()']/)
     
-    #
-    #
-    contract(/mr\.\s*|mister\s*/i, 'mr')
-    
-    #
-    #
-    stopwords(/\b(and|the|or|on)/i)
-    
-    #
-    #
-    split_on(/[\s\/\-\,\&]+/)
-    
-    #
-    #
-    normalizing_word_patterns([
-      [/Deoxyribonucleic Acid/i, 'DNA']
-    ])
-    
-    #
-    #
-    illegal_after_normalizing(/[\.]/)
-  end
-  
-  # Part 5: Indexes.
-  #
-  # Where you define where your data comes from and into which indexes
-  # it is put.
-  #
-  # Also...
-  #
-  indexes do
     few_similarities = Similarity::DoubleLevenshtone.new(3)
     
     # We define a few fields that are used in the indexes.
