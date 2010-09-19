@@ -10,11 +10,11 @@ class PickySearch < Application
   #    before searching.
   # b) Where you define how Picky maps URLs to queries.
   #
-  # queries do
-  #   route '^/books/full', Query::Full.new(Indexes[:main])
-  #   route '^/books/live', Query::Live.new(Indexes[:main])
+  # queries do |query|
+  #   query.route '^/books/full', Query::Full.new(Indexes[:main])
+  #   query.route '^/books/live', Query::Live.new(Indexes[:main])
   #   
-  #   root 200
+  #   query.root :status => 200
   # end
   #
   #
@@ -22,12 +22,12 @@ class PickySearch < Application
   #
   # Where you define how Picky indexes your data.
   #
-  # indexes do |indexes|
-  #   indexes.add_index :main,
-  #                     Source::DB.new('db.yml', 'SELECT title, author, year FROM books'),
-  #                     field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
-  #                     field(:author),
-  #                     field(:year, :partial => Partial::None.new)
+  # indexes do |index|
+  #   index.add :main,
+  #             Source::DB.new('SELECT title, author, year FROM books', options_from_yml('app/database.yml')),
+  #             field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
+  #             field(:author),
+  #             field(:year, :partial => Partial::None.new)
   # end
   
   # A more complex example.
