@@ -26,11 +26,4 @@ namespace :index do
     Indexes.generate_cache_only type.to_sym, field.to_sym
   end
   
-  desc "TODO: Try how a given word would be indexed. Field name is optional."
-  task :try, [:text, :field] => :application do |_, options|
-    text, field = options.text, options.field
-    # TODO Without given field: Basic Indexer.
-    # TODO With given field: Specific Indexer.
-  end
-  
 end
