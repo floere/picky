@@ -22,12 +22,12 @@ class PickySearch < Application
   #
   # Where you define how Picky indexes your data.
   #
-  # indexes do
-  #   index :main,
-  #         "SELECT title, author, year FROM books",
-  #         field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
-  #         field(:author),
-  #         field(:year, :partial => Partial::None.new)
+  # indexes do |indexes|
+  #   indexes.add_index :main,
+  #                     Source::DB.new('db.yml', 'SELECT title, author, year FROM books'),
+  #                     field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
+  #                     field(:author),
+  #                     field(:year, :partial => Partial::None.new)
   # end
   
   # A more complex example.
