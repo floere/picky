@@ -4,7 +4,7 @@ class BookSearch < Application
   
   queries do
     maximum_tokens 5
-    illegal(/[()']/)
+    illegal(/[\(\)\']/)
     contract(/mr\.\s*|mister\s*/i, 'mr')
     stopwords(/\b(and|the|or|on)/i)
     split_on(/[\s\/\-\,\&]+/)
@@ -23,7 +23,7 @@ class BookSearch < Application
   
   indexes :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new do
     
-    illegal(/[',\(\)
+    illegal(/[',\(\)#:!@]/)
     contract(/mr\.\s*|mister\s*/i, 'mr')
     stopwords(/\b(and|the|or|on)\b/)
     split_on(/[\s\/\-\"\&\.]/)
