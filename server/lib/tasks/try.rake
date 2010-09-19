@@ -3,7 +3,7 @@
 namespace :try do
   
   desc "Try how a given word would be tokenized when indexing (field name optional)."
-  task :index, [:text, :field] => :framework do |_, options|
+  task :index, [:text, :field] => :application do |_, options|
     text, field = options.text, options.field
     
     if field
@@ -14,7 +14,7 @@ namespace :try do
   end
   
   desc "Try how a given word would be tokenized when querying."
-  task :query, [:text] => :framework do |_, options|
+  task :query, [:text] => :application do |_, options|
     text = options.text
     
     puts "\"#{text}\" is query tokenized as #{Tokenizers::Query.new.tokenize(text).to_a}"
