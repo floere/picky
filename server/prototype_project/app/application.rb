@@ -4,12 +4,24 @@ class PickySearch < Application
   
   # A simple example.
   #
+  # 1. Querying.
+  #
+  # a) Where you define what Picky does with your search text
+  #    before searching.
+  # b) Where you define how Picky maps URLs to queries.
+  #
   # queries do
   #   route '^/books/full', Query::Full.new(Indexes[:main])
   #   route '^/books/live', Query::Live.new(Indexes[:main])
   #   
   #   root 200
   # end
+  #
+  #
+  # 2. Indexing.
+  #
+  # Where you define how Picky indexes your data.
+  #
   # indexes do
   #   index :main,
   #         "SELECT title, author, year FROM books",
@@ -18,6 +30,8 @@ class PickySearch < Application
   #         field(:year, :partial => Partial::None.new)
   # end
   
+  # A more complex example.
+  #
   # 1. Querying.
   #
   # a) Where you define what Picky does with your search text
