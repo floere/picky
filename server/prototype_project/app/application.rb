@@ -1,4 +1,6 @@
-# coding: utf-8
+# This is your application.
+#
+# Have fun with Picky!
 #
 class PickySearch < Application
   
