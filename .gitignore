@@ -1,9 +1,13 @@
 .DS_Store
 pkg/
-server/lib/picky/ext/ruby19/Makefile
-server/lib/picky/ext/ruby19/mkmf.log
-server/lib/picky/ext/ruby19/performant.bundle
-server/lib/picky/ext/ruby19/performant.o
+
+Makefile
+mkmf.log
+performant.bundle
+performant.o
 
 server/.yardoc
 server/doc
+
+config
+Gemfile.lock
