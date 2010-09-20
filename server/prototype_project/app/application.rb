@@ -12,11 +12,11 @@ class PickySearch < Application
   #    before searching.
   # b) Where you define how Picky maps URLs to queries.
   #
-  # queries do |query|
-  #   query.route '^/books/full', Query::Full.new(Indexes[:main])
-  #   query.route '^/books/live', Query::Live.new(Indexes[:main])
+  # queries do |configure|
+  #   configure.route '^/books/full', Query::Full.new(Indexes[:main])
+  #   configure.route '^/books/live', Query::Live.new(Indexes[:main])
   #   
-  #   query.root :status => 200
+  #   configure.root :status => 200
   # end
   #
   #
