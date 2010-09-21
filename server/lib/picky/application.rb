@@ -28,6 +28,7 @@ class Application
   #
   def self.queries &block
     queries_configuration.instance_eval &block
+    routing.freeze
   end
   def self.queries_configuration
     @queries || reset_queries

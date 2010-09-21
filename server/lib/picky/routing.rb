@@ -14,13 +14,13 @@ class Routing
     @defaults = @@defaults.dup
   end
   
-  #
-  #
-  def define_using &block
-    reset_routes
-    instance_eval &block
-    routes.freeze
-  end
+  # #
+  # #
+  # def define_using &block
+  #   reset_routes
+  #   instance_eval &block
+  #   routes.freeze
+  # end
   
   # 
   #
@@ -29,6 +29,9 @@ class Routing
   end
   def routes
     @routes || reset_routes
+  end
+  def freeze
+    routes.freeze
   end
   
   # Routing simply delegates to the route set to handle a request.
