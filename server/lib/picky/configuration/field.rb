@@ -1,7 +1,7 @@
 module Configuration
 
   class Field
-    attr_reader :name, :indexed_field, :virtual
+    attr_reader :name, :indexed_name, :virtual
     attr_accessor :type # convenience
     def initialize name, options = {}
       @name            = name
@@ -11,8 +11,8 @@ module Configuration
       @indexer_class   = options.delete(:indexer)   || Indexers::Default
       @tokenizer_class = options.delete(:tokenizer) || Tokenizers::Index # Default
       
-      @indexed_field   = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
-      @virtual         = options.delete(:virtual)       || false
+      @indexed_name   = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
+      @virtual        = options.delete(:virtual)       || false
       
       # Note: Moved to Bundle.
       #
@@ -55,7 +55,7 @@ module Configuration
       generate.generate_caches
     end
     def indexer
-      @indexer || @indexer = @indexer_class.new(indexed_field, type, self)
+      @indexer || @indexer = @indexer_class.new(type, self)
     end
     def tokenizer
       @tokenizer || @tokenizer = @tokenizer_class.new # TODO Make instances.

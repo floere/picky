@@ -1,26 +1,33 @@
 class Application
   
-  # Sets the defaults and delegates routing to
-  # the routes.
-  #
-  def self.routing default_options = nil, &block
-    routes.defaults default_options if default_options
-    routes.define_using &block
-  end
-  
-  # An application simply delegates to the route set to handle a request.
+  # An application simply delegates to the queries configuration to handle a request.
   #
   def self.call env
-    routes.call env
+    queries_configuration.call env
   end
   
   #
   #
-  def self.routes
-    @routes || reset_routes
+  def self.queries
+    yield queries_configuration
   end
-  def self.reset_routes
-    @routes = Routing.new
+  def self.queries_configuration
+    @queries || reset_queries
   end
+  def self.reset_queries
+    @queries = Configuration::Queries.new # Is instance a problem?
+  end
+  
+  # #
+  # #
+  # def self.indexes
+  #   yield indexes_configuration
+  # end
+  # def self.indexes_configuration
+  #   @indexes || reset_indexes
+  # end
+  # def self.reset_indexes
+  #   @indexes = Configuration::Indexes.new # Is instance a problem?
+  # end
   
 end

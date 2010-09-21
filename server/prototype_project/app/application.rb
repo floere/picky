@@ -6,7 +6,20 @@ class PickySearch < Application
   
   # A simple example.
   #
-  # 1. Querying.
+  # 1. Indexing.
+  #
+  # Where you define how Picky indexes your data.
+  #
+  # indexes do |index|
+  #   index.add :main,
+  #             Sources::DB.new('SELECT title, author, year FROM books', DB::Source), # TODO Rewrite.
+  #             field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
+  #             field(:author),
+  #             field(:year, :partial => Partial::None.new)
+  # end
+  #
+  #
+  # 2. Querying.
   #
   # a) Where you define what Picky does with your search text
   #    before searching.
@@ -18,88 +31,11 @@ class PickySearch < Application
   #   
   #   configure.root :status => 200
   # end
-  #
-  #
-  # 2. Indexing.
-  #
-  # Where you define how Picky indexes your data.
-  #
-  # indexes do |index|
-  #   index.add :main,
-  #             Source::DB.new('SELECT title, author, year FROM books', options_from_yml('app/database.yml')),
-  #             field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)),
-  #             field(:author),
-  #             field(:year, :partial => Partial::None.new)
-  # end
+  
   
   # A more complex example.
   #
-  # 1. Querying.
-  #
-  # a) Where you define what Picky does with your search text
-  #    before searching.
-  # b) Where you define how Picky maps URLs to queries.
-  #
-  # Options:
-  # * tokenizer:    # default: Tokenizers::Query.new
-  # * query_key:    # default: 'query'
-  # * offset_key:   # default: 'offset'
-  # * content_type: # default: 'application/octet-stream'
-  #
-  # Methods inside:
-  #  # TODO Why a string?
-  #  * route <path regexp>, <query>
-  #  * root <html status code>
-  #
-  queries do |queries|
-    
-    # Where you define what Picky does with your search text
-    # before searching.
-    #
-    # Note: Usually it is a good idea to use similar
-    #       or the same definitions as in the indexing step.
-    
-    # The maximum amount of tokens that are passed to a query.
-    #
-    queries.maximum_tokens 5
-    
-    #
-    #
-    queries.illegal_characters(/[()']/)
-    
-    #
-    #
-    queries.contract_expressions(/mr\.\s*|mister\s*/i, 'mr')
-    
-    #
-    #
-    queries.stopwords(/\b(and|the|or|on)/i)
-    
-    #
-    #
-    queries.split_text_on(/[\s\/\-\,\&]+/)
-    
-    #
-    #
-    queries.normalize_words([
-      [/Deoxyribonucleic Acid/i, 'DNA']
-    ])
-    
-    #
-    #
-    queries.illegal_characters_after(/[\.]/)
-    
-    # Routing.
-    #
-    queries.route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn])
-    queries.route '^/books/live', Query::Live.new(Indexes[:main], Indexes[:isbn])
-    
-    queries.route '^/isbn/full',  Query::Full.new(Indexes[:isbn])
-    
-    queries.root 200 # Heartbeat check by web front server.
-  end
-  
-  # Part 2: Indexing parameters.
+  # Part 1: Indexing parameters.
   #
   # Where you define how Picky processes your data
   # while indexing (per default).
@@ -180,4 +116,70 @@ class PickySearch < Application
           "SELECT isbn FROM books",
           field(:isbn, :qualifiers => [:i, :isbn])
   end
+  
+  # 2. Querying.
+  #
+  # a) Where you define what Picky does with your search text
+  #    before searching.
+  # b) Where you define how Picky maps URLs to queries.
+  #
+  # Options:
+  # * tokenizer:    # default: Tokenizers::Query.new
+  # * query_key:    # default: 'query'
+  # * offset_key:   # default: 'offset'
+  # * content_type: # default: 'application/octet-stream'
+  #
+  # Methods inside:
+  #  # TODO Why a string?
+  #  * route <path regexp>, <query>
+  #  * root <html status code>
+  #
+  queries do |queries|
+    
+    # Where you define what Picky does with your search text
+    # before searching.
+    #
+    # Note: Usually it is a good idea to use similar
+    #       or the same definitions as in the indexing step.
+    
+    # The maximum amount of tokens that are passed to a query.
+    #
+    queries.maximum_tokens 5
+    
+    #
+    #
+    queries.illegal_characters(/[()']/)
+    
+    #
+    #
+    queries.contract_expressions(/mr\.\s*|mister\s*/i, 'mr')
+    
+    #
+    #
+    queries.stopwords(/\b(and|the|or|on)/i)
+    
+    #
+    #
+    queries.split_text_on(/[\s\/\-\,\&]+/)
+    
+    #
+    #
+    queries.normalize_words([
+      [/Deoxyribonucleic Acid/i, 'DNA']
+    ])
+    
+    #
+    #
+    queries.illegal_characters_after(/[\.]/)
+    
+    # Routing.
+    #
+    queries.route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn])
+    queries.route '^/books/live', Query::Live.new(Indexes[:main], Indexes[:isbn])
+    
+    queries.route '^/isbn/full',  Query::Full.new(Indexes[:isbn])
+    
+    queries.root 200 # Heartbeat check by web front server.
+  end
+  
 end

@@ -9,12 +9,12 @@ module Tokenizers
     
     # Default handling definitions. Override in config.
     #
-    illegal(//)
-    illegal_after_normalizing(//)
+    illegal_characters(//)
     stopwords(//)
-    contract(//, '')
-    split_on(/\s/)
-    normalizing_word_patterns([])
+    contract_expressions(//, '')
+    split_text_on(/\s/)
+    normalize_words([])
+    illegal_characters_after(//)
     
     # Default indexing preprocessing hook.
     #

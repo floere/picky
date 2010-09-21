@@ -1,28 +1,28 @@
 module Configuration
   class Type
     attr_reader :name,
-                :indexed_table_selection,
+                :source,
                 :fields,
                 :after_indexing,
                 :result_type,
                 :heuristics,
                 :ignore_unassigned_tokens,
                 :solr
-    def initialize name, indexed_table_selection, *fields, options
+    def initialize name, source, *fields, options
       if Configuration::Field === options
         fields << options
         options = {}
       end
 
       @name                     = name
-      @indexed_table_selection  = indexed_table_selection
+      @source                   = source
                                   # dup, if field is reused. TODO Rewrite.
       @fields                   = fields.map { |field| field = field.dup; field.type = self; field }
 
       @after_indexing           = options[:after_indexing]
       @result_type              = options[:result_type] || name
-      @heuristics               = options[:heuristics] || Query::Heuristics.new({})
-      @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false # TODO Move to query?
+      @heuristics               = options[:heuristics] || Query::Heuristics.new({}) # TODO Move to query?
+      @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false       # TODO Move to query?
       @solr                     = options[:solr] || nil
     end
     def generate
@@ -30,22 +30,10 @@ module Configuration
       Index::Type.new name, result_type, heuristics, ignore_unassigned_tokens, *categories
     end
     def table_name
-      self # FIXME UGH
-    end
-    def snapshot_table_name
-      "#{name}_type_index"
+      self # FIXME UGH, Remove anyway
     end
     def take_snapshot
-      DB::Source.connect
-      
-      DB::Source.connection.execute "DROP TABLE IF EXISTS #{snapshot_table_name}"
-      DB::Source.connection.execute "CREATE TABLE #{snapshot_table_name} AS #{indexed_table_selection}"
-      DB::Source.connection.execute "ALTER TABLE #{snapshot_table_name} CHANGE COLUMN id indexed_id INTEGER"
-      DB::Source.connection.execute "ALTER TABLE #{snapshot_table_name} ADD COLUMN id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
-      
-      # Execute any special queries this type needs executed.
-      #
-      DB::Source.connection.execute after_indexing if after_indexing
+      source.take_snapshot self
     end
     def index
       fields.each do |field|

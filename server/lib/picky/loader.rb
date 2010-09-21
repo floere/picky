@@ -75,8 +75,12 @@ module Loader
     # TODO Rethink this.
     #
     load_user 'app/logging'
-    load_user 'app/config'
-    Configuration.apply
+    # load_user 'app/config'
+    # Configuration.apply
+    
+    # Require the user's application.
+    #
+    load_user 'app/application'
     
     # Setup Indexes from user definition
     #
@@ -86,10 +90,6 @@ module Loader
     #
     Indexes.setup # TODO Think about setup/reload.
     Query::Qualifiers.instance.prepare # TODO Rewrite
-    
-    # Require the user's application.
-    #
-    load_user 'app/application'
     
     exclaim "Application loaded."
   end
@@ -246,6 +246,10 @@ module Loader
     load_relative 'configuration/type'
     load_relative 'configuration/indexes'
     load_relative 'configuration/configuration'
+    
+    # ... in Application.
+    #
+    load_relative 'configuration/queries'
     
     # Application and routing.
     #

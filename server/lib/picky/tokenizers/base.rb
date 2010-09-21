@@ -22,7 +22,7 @@ module Tokenizers
 
     # Contraction.
     #
-    def self.contract what, to_what
+    def self.contract_expressions what, to_what
       define_method :contract do |text|
         text.gsub! what, to_what
       end
@@ -33,7 +33,7 @@ module Tokenizers
     #
     # TODO Should there be a legal?
     #
-    def self.illegal regexp
+    def self.illegal_characters regexp
       define_method :remove_illegals do |text|
         text.gsub! regexp, ''
       end
@@ -42,7 +42,7 @@ module Tokenizers
 
     # Splitting.
     #
-    def self.split_on regexp
+    def self.split_text_on regexp
       define_method :split do |text|
         text.split regexp
       end
@@ -51,7 +51,7 @@ module Tokenizers
 
     # Normalizing.
     #
-    def self.normalizing_word_patterns regexp_replaces
+    def self.normalize_words regexp_replaces
       define_method :normalize_with_patterns do |text|
         regexp_replaces.each do |regex, replace|
           # This should be sufficient
@@ -68,7 +68,7 @@ module Tokenizers
     #
     # TODO Rename illegal_after_tokenizing?
     #
-    def self.illegal_after_normalizing regexp
+    def self.illegal_characters_after regexp
       define_method :remove_after_normalizing_illegals do |text|
         text.gsub! regexp, ''
       end

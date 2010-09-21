@@ -8,8 +8,9 @@ describe Indexers::Base do
                   :snapshot_table_name => :some_prepared_table_name
     @field = stub :field,
                   :name => :some_field_name,
-                  :search_index_file_name => :some_search_index_name
-    @strategy = Indexers::Base.new :example_field, @type, @field
+                  :search_index_file_name => :some_search_index_name,
+                  :indexed_name => :some_indexed_field_name
+    @strategy = Indexers::Base.new @type, @field
     @strategy.stub! :indexing_message
   end
 

@@ -7,10 +7,7 @@ module Indexers
   #
   class Base
     
-    attr_reader :field_name
-    
-    def initialize field_name, type, field
-      @field_name = field_name # TODO Move to field
+    def initialize type, field
       @type       = type
       @field      = field
     end
@@ -37,37 +34,45 @@ module Indexers
       process
     end
     
-    # Harvests the data to index, chunked.
+    # Get the source where the data is taken from.
     #
-    # Subclasses should override harvest_statement to define how their data is found.
-    # Example:
-    #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
+    # If the field has a source, use that, if not, use the type's.
     #
-    def harvest offset
-      DB::Source.connect
-      
-      DB::Source.connection.execute harvest_statement_with_offset(offset)
+    def source
+      @field.source || @type.source
     end
     
-    # Builds a harvest statement for getting data to index.
-    #
-    def harvest_statement_with_offset offset
-      statement = harvest_statement
-      
-      if statement.include? 'WHERE'
-        statement += ' AND'
-      else
-        statement += ' WHERE'
-      end
-      
-      "#{statement} st.id > #{offset} LIMIT #{chunksize}"
-    end
-    
-    # Counts all the entries that are used for the index.
-    #
-    def count
-      DB::Source.connection.select_value("SELECT COUNT(id) FROM #{snapshot_table}").to_i
-    end
+    # # Harvests the data to index, chunked.
+    # #
+    # # Subclasses should override harvest_statement to define how their data is found.
+    # # Example:
+    # #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
+    # #
+    # def harvest offset
+    #   DB::Source.connect
+    #   
+    #   DB::Source.connection.execute harvest_statement_with_offset(offset)
+    # end
+    # 
+    # # Builds a harvest statement for getting data to index.
+    # #
+    # def harvest_statement_with_offset offset
+    #   statement = harvest_statement
+    #   
+    #   if statement.include? 'WHERE'
+    #     statement += ' AND'
+    #   else
+    #     statement += ' WHERE'
+    #   end
+    #   
+    #   "#{statement} st.id > #{offset} LIMIT #{chunksize}"
+    # end
+    # 
+    # # Counts all the entries that are used for the index.
+    # #
+    # def count
+    #   DB::Source.connection.select_value("SELECT COUNT(id) FROM #{snapshot_table}").to_i
+    # end
     
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
     #
@@ -89,9 +94,9 @@ module Indexers
     # Split original data into chunks.
     #
     def chunked
-      (0..count).step(chunksize) do |offset|
+      (0..source.count).step(chunksize) do |offset|
         indexing_message offset
-        data = harvest offset
+        data = source.harvest offset
         data.each do |indexed_id, text|
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed?
@@ -101,7 +106,7 @@ module Indexers
     end
     
     def indexing_message offset
-      puts "#{Time.now}: Indexing #{@type.name}:#{@field.name}:#{@field_name} beginning at #{offset}."
+      puts "#{Time.now}: Indexing #{@type.name}:#{@field.name}:#{@field.indexed_name} beginning at #{offset}."
     end
     
   end
