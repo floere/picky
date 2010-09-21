@@ -2,16 +2,18 @@ module Configuration
   
   class Queries
     
+    attr_reader :routing
+    
     #
     #
-    def routing
-      @routing ||= Routing.new
+    def initialize routing
+      @routing = routing
     end
     
-    # A queries simply delegates to the route set to handle a request.
     #
-    def self.call env
-      routing.call env
+    #
+    def default_index
+      Tokenizers::Query
     end
     
     # Routes.
@@ -24,12 +26,6 @@ module Configuration
       Query::Tokens.maximum = amount
     end
     delegate :illegal_characters, :contract_expressions, :stopwords, :split_text_on, :normalize_words, :illegal_characters_after, :to => :default_index
-    
-    
-    
-    def default_index
-      Tokenizers::Index
-    end
     
   end
   

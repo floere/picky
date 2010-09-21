@@ -84,11 +84,8 @@ module Loader
     
     # Setup Indexes from user definition
     #
-    # TODO Reload not possible like this! Or is it?
-    #
     # TODO Make special task that reloads the indexes!
     #
-    Indexes.setup # TODO Think about setup/reload.
     Query::Qualifiers.instance.prepare # TODO Rewrite
     
     exclaim "Application loaded."
@@ -178,6 +175,12 @@ module Loader
     load_relative 'cacher/similarity/double_levenshtone'
     load_relative 'cacher/similarity/default'
     
+    # Convenience accessors for generators.
+    #
+    # TODO Just remove from under Cacher?
+    #
+    load_relative 'cacher/convenience'
+    
     # Index generators.
     #
     load_relative 'cacher/generator'
@@ -231,6 +234,11 @@ module Loader
     load_relative 'results/base'
     load_relative 'results/full'
     load_relative 'results/live'
+    
+    # Sources.
+    #
+    load_relative 'sources/base'
+    load_relative 'sources/db'
     
     # DB
     #

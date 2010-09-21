@@ -1,1 +1,0 @@
-# No logging is done.

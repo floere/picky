@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="search-engine" version="1.0">
+  <types>
+    <fieldType name="integer" class="solr.IntField" omitNorms="false"/>
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="false"/>
+    <fieldType name="similar" class="solr.StrField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+      </analyzer>
+    </fieldType>
+  </types>
+  <fields>
+    <field name="id" type="integer" stored="true" multiValued="false" indexed="true"/>
+    
+    <field name="type" type="string"  stored="false" multiValued="false" indexed="true"/>
+    
+    <field name="text" type="similar" stored="false" multiValued="true"  indexed="true"/>
+    
+    <%= field_names.map do |name| %Q{<field name="#{name}" type="similar" stored="true" multiValued="true" indexed="true"/>} end.join("\n    ") %>
+    
+  </fields>
+  <%= field_names.map do |name| %Q{<copyField source="#{name}" dest="text"/>} end.join("\n  ") %>
+   
+  <uniqueKey>id</uniqueKey>
+  <defaultSearchField>text</defaultSearchField>
+  <solrQueryParser defaultOperator="AND"/>
+</schema>

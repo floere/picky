@@ -7,11 +7,28 @@ module Configuration
     def initialize *types
       @types = types
     end
-      
-    def save
-      ::Indexes.configuration = self
+    
+    #
+    #
+    def default_index
+      Tokenizers::Query
     end
     
+    # Delegates
+    #
+    delegate :illegal_characters, :contract_expressions, :stopwords, :split_text_on, :normalize_words, :illegal_characters_after, :to => :default_index
+    
+    #
+    #
+    def type name, *fields
+      types << Type.new(name, *fields)
+    end
+    def field name, options = {}
+      Field.new name, options
+    end
+    
+    #
+    #
     def take_snapshot *type_names
       only_if_included_in type_names do |type|
         type.take_snapshot
@@ -28,6 +45,8 @@ module Configuration
       end
     end
     
+    #
+    #
     def only_if_included_in type_names = []
       type_names = types.map(&:name) if type_names.empty?
       types.each do |type|
