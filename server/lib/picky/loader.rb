@@ -52,7 +52,7 @@ module Loader
     # DB::Source.connect # FIXME only needed when indexing.
     # Load the user's application.
     #
-    exclaim 'Loading app configuration.'
+    exclaim 'Loading Application.'
     
     load_all_user_in 'app/initializers'
     
