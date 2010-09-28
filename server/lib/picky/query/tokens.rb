@@ -93,9 +93,9 @@ module Query
       originals.join ' '
     end
     
-    def to_a
-      @tokens
-    end
+    # def to_a
+    #   @tokens
+    # end
 
   end
 
