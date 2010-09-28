@@ -43,6 +43,8 @@ describe "BookSearch" do
   
   it_should_route '/isbn/full?query=', 200
   
+  it_should_route '/isbn/ful?query=blarf', 404
+  
   it_should_route '/', 200
   
 end
