@@ -10,56 +10,77 @@ describe Indexers::Base do
                   :name => :some_field_name,
                   :search_index_file_name => :some_search_index_name,
                   :indexed_name => :some_indexed_field_name
-    @strategy = Indexers::Base.new @type, @field
-    @strategy.stub! :indexing_message
+    @indexer = Indexers::Base.new @type, @field
+    @indexer.stub! :indexing_message
   end
-
-  describe 'search_index_file_name' do
-    it 'should return a specific name' do
-      @strategy.search_index_file_name.should == :some_search_index_name
-    end
-  end
-
-  describe 'snapshot_table' do
-    it 'should return a specific name' do
-      @strategy.snapshot_table.should == :some_prepared_table_name
-    end
-  end
-
-  describe "index" do
-    it "should execute! the indexer" do
-      @strategy.should_receive(:process).once
+  
+  describe "tokenizer" do
+    it "should delegate to field" do
+      @field.should_receive(:tokenizer).once.with
       
-      @strategy.index
+      @indexer.tokenizer
     end
   end
   
-  # FIXME!
-  #
-  # describe "process" do
-  #   it "should call insert count / chunksize + 1 times" do
-  #     amount = 112 / 10
-  #     @strategy.should_receive(:count).and_return 112
-  #     @strategy.should_receive(:chunksize).and_return 10
-  #     @strategy.should_receive(:harvest).any_number_of_times
-  # 
-  #     @strategy.should_receive(:insert!).exactly(amount + 1).times
-  # 
-  #     @strategy.process
-  #   end
-  #   it "should harvest the right ids" do
-  #     amount = 112 / 10
-  #     @strategy.should_receive(:count).and_return 112
-  #     @strategy.should_receive(:chunksize).and_return 10
-  #     @strategy.should_receive(:insert!).any_number_of_times
-  # 
-  #     0.step(110, 10) do |n|
-  #       @strategy.should_receive(:harvest).once.with n
-  #     end
-  #     @strategy.should_receive(:harvest).never.with(120)
-  # 
-  #     @strategy.process
-  #   end
-  # end
-
+  describe 'search_index_file_name' do
+    it 'should return a specific name' do
+      @indexer.search_index_file_name.should == :some_search_index_name
+    end
+  end
+  
+  describe "index" do
+    it "should execute! the indexer" do
+      @indexer.should_receive(:process).once.with
+      
+      @indexer.index
+    end
+  end
+  
+  describe "source" do
+    before(:each) do
+      @source = stub :source
+    end
+    context "field has one" do
+      before(:each) do
+        @field.stub! :source => @source
+      end
+      it "should return that one" do
+        @indexer.source.should == @source
+      end
+    end
+    context "field doesn't have one" do
+      before(:each) do
+        @field.stub! :source => nil
+      end
+      context "type has one" do
+        before(:each) do
+          @type.stub! :source => @source
+        end
+        it "should return that one" do
+          @indexer.source.should == @source
+        end
+      end
+      context "type doesn't have one" do
+        before(:each) do
+          @type.stub! :source => nil
+        end
+        it "should call raise_no_source" do
+          @indexer.should_receive(:raise_no_source).once.with
+          
+          @indexer.source
+        end
+      end
+    end
+  end
+  
+  describe "raise_no_source" do
+    it "should raise" do
+      lambda { @indexer.raise_no_source }.should raise_error(Indexers::NoSourceSpecifiedException)
+    end
+  end
+  
+  describe "chunked" do
+    
+  end
+  
 end

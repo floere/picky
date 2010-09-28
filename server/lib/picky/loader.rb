@@ -149,6 +149,7 @@ module Loader
 
     # Index generation strategies.
     #
+    load_relative 'indexers/no_source_specified_error'
     load_relative 'indexers/base'
     load_relative 'indexers/field'
     load_relative 'indexers/default'

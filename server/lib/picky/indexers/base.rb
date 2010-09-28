@@ -17,11 +17,6 @@ module Indexers
     def tokenizer
       @field.tokenizer
     end
-    # Convenience method for user subclasses.
-    #
-    def snapshot_table
-      @type.snapshot_table_name
-    end
     # Convenience methods for user subclasses.
     #
     def search_index_file_name
@@ -40,40 +35,8 @@ module Indexers
       @field.source || @type.source || raise_no_source
     end
     def raise_no_source
-      raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}"
+      raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}."
     end
-    
-    # # Harvests the data to index, chunked.
-    # #
-    # # Subclasses should override harvest_statement to define how their data is found.
-    # # Example:
-    # #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
-    # #
-    # def harvest offset
-    #   DB::Source.connect
-    #   
-    #   DB::Source.connection.execute harvest_statement_with_offset(offset)
-    # end
-    # 
-    # # Builds a harvest statement for getting data to index.
-    # #
-    # def harvest_statement_with_offset offset
-    #   statement = harvest_statement
-    #   
-    #   if statement.include? 'WHERE'
-    #     statement += ' AND'
-    #   else
-    #     statement += ' WHERE'
-    #   end
-    #   
-    #   "#{statement} st.id > #{offset} LIMIT #{chunksize}"
-    # end
-    # 
-    # # Counts all the entries that are used for the index.
-    # #
-    # def count
-    #   DB::Source.connection.select_value("SELECT COUNT(id) FROM #{snapshot_table}").to_i
-    # end
     
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
     #
@@ -97,7 +60,7 @@ module Indexers
     def chunked
       (0..source.count).step(chunksize) do |offset|
         indexing_message offset
-        data = source.harvest offset
+        data = source.harvest offset, chunksize
         data.each do |indexed_id, text|
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed?
