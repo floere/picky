@@ -5,15 +5,13 @@ namespace :try do
   desc "try Tasks let you try out your indexing and querying specifications."
   task
   
-  desc "Try how a given word would be tokenized when indexing (field name optional)."
-  task :index, [:text, :field] => :application do |_, options|
-    text, field = options.text, options.field
+  desc "Try how a given word would be tokenized when indexing (type:field optional)."
+  task :index, [:text, :type_and_field] => :application do |_, options|
+    text, type_and_field = options.text, options.type_and_field
     
-    if field
-      # TODO
-    else
-      puts "\"#{text}\" is index tokenized as #{Tokenizers::Index.new.tokenize(text).to_a}"
-    end
+    tokenizer = type_and_field ? Indexes.find(*type_and_field.split(':')).tokenizer : Tokenizers::Index.new
+    
+    puts "\"#{text}\" is index tokenized as #{tokenizer.tokenize(text).to_a}"
   end
   
   desc "Try how a given word would be tokenized when querying."
@@ -23,11 +21,11 @@ namespace :try do
     puts "\"#{text}\" is query tokenized as #{Tokenizers::Query.new.tokenize(text).to_a}"
   end
   
-  desc "Try the given text with both the index and the query (field name optional)."
-  task :both, [:text, :field] => :application do |_, options|
-    text, field = options.text, options.field
+  desc "Try the given text with both the index and the query (type:field optional)."
+  task :both, [:text, :type_and_field] => :application do |_, options|
+    text, type_and_field = options.text, options.type_and_field
     
-    Rake::Task[:"try:index"].invoke text, field
+    Rake::Task[:"try:index"].invoke text, type_and_field
     Rake::Task[:"try:query"].invoke text
   end
   

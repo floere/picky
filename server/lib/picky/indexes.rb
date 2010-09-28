@@ -40,6 +40,22 @@ module Indexes
     result
   end
   
+  #
+  #
+  # TODO Rewrite.
+  #
+  def self.find type_name, field_name
+    type_name  = type_name.to_sym
+    field_name = field_name.to_sym
+    configuration.types.each do |type|
+      next unless type.name == type_name
+      type.fields.each do |field|
+        next unless field.name == field_name
+        return field
+      end
+    end
+  end
+  
   # Backup / Restore.
   #
   def self.backup_caches
