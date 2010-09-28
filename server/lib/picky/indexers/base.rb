@@ -36,10 +36,11 @@ module Indexers
     
     # Get the source where the data is taken from.
     #
-    # If the field has a source, use that, if not, use the type's.
-    #
     def source
-      @field.source || @type.source
+      @field.source || @type.source || raise_no_source
+    end
+    def raise_no_source
+      raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}"
     end
     
     # # Harvests the data to index, chunked.

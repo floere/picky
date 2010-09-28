@@ -2,7 +2,7 @@ module Sources
   
   class DB < Base
     
-    attr_reader :database
+    attr_reader :select_statement, :database
     
     def initialize select_statement, database_adapter
       @select_statement = select_statement
@@ -44,17 +44,19 @@ module Sources
     # Example:
     #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
     #
-    def harvest offset
+    def harvest offset, chunksize
       database.connect
       
-      database.connection.execute harvest_statement_with_offset(offset)
+      database.connection.execute harvest_statement_with_offset(offset, chunksize)
     end
     
     
     # Builds a harvest statement for getting data to index.
     #
-    def harvest_statement_with_offset offset
-      statement = harvest_statement
+    # TODO Use the adapter for this.
+    #
+    def harvest_statement_with_offset offset, chunksize
+      statement = select_statement
       
       if statement.include? 'WHERE'
         statement += ' AND'
