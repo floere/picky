@@ -7,6 +7,7 @@ module Configuration
       @name            = name
       
       # TODO Dup the options?
+      # TODO add source as option
       
       @indexer_class   = options.delete(:indexer)   || Indexers::Default
       @tokenizer_class = options.delete(:tokenizer) || Tokenizers::Index # Default
@@ -14,21 +15,15 @@ module Configuration
       @indexed_name   = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
       @virtual        = options.delete(:virtual)       || false
       
-      # Note: Moved to Bundle.
-      #
-      # @weights         = options[:weights]       || Cacher::Weights::Default
-      # @partial         = options[:partial]       || Cacher::Partial::Default
-      # @similarity      = options[:similarity]    || Cacher::Similarity::Default
-      
-      # TODO Replace by add.
-      #
-      # Query::Qualifiers.instance << Query::Qualifier.new(name, options.delete(:qualifiers)) if options[:qualifiers]
       Query::Qualifiers.add(name, options[:qualifiers]) if options[:qualifiers]
       
       # @remove          = options[:remove]        || false
       # @filter          = options[:filter]        || true
       
       @options = options
+    end
+    def source
+      @source || type.source
     end
     def generate
       Index::Category.new self.name, type, @options

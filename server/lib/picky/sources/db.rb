@@ -44,19 +44,24 @@ module Sources
     # Example:
     #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
     #
-    def harvest offset, chunksize
+    def harvest type, field, offset, chunksize
       database.connect
       
-      database.connection.execute harvest_statement_with_offset(offset, chunksize)
+      database.connection.execute harvest_statement_with_offset(type, field, offset, chunksize)
     end
     
+    # Base harvest statement for dbs.
+    #
+    def harvest_statement type, field
+      "SELECT indexed_id, #{field.name} FROM #{snapshot_table_name(type)} st"
+    end
     
     # Builds a harvest statement for getting data to index.
     #
     # TODO Use the adapter for this.
     #
-    def harvest_statement_with_offset offset, chunksize
-      statement = select_statement
+    def harvest_statement_with_offset type, field, offset, chunksize
+      statement = harvest_statement type, field
       
       if statement.include? 'WHERE'
         statement += ' AND'

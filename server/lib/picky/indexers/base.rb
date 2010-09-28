@@ -32,7 +32,7 @@ module Indexers
     # Get the source where the data is taken from.
     #
     def source
-      @field.source || @type.source || raise_no_source
+      @field.source || raise_no_source
     end
     def raise_no_source
       raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}."
@@ -58,9 +58,9 @@ module Indexers
     # Split original data into chunks.
     #
     def chunked
-      (0..source.count).step(chunksize) do |offset|
+      (0..source.count(@type)).step(chunksize) do |offset|
         indexing_message offset
-        data = source.harvest offset, chunksize
+        data = source.harvest @type, @field, offset, chunksize
         data.each do |indexed_id, text|
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed?

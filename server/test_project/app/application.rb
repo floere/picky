@@ -6,7 +6,7 @@ class BookSearch < Application
     # defaults :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new
     
     illegal_characters(/[',\(\)#:!@]/)
-    contract_expressions(/mr\.\s*|mister\s*/i, 'mr')
+    contract_expressions(/mr\.\s*|mister\s*/i, 'mr ')
     stopwords(/\b(and|the|or|on)\b/)
     split_text_on(/[\s\/\-\"\&\.]/)
     illegal_characters_after(/[\.]/)
@@ -18,7 +18,7 @@ class BookSearch < Application
     year          = field :year,   :partial    => Partial::None.new,
                                    :qualifiers => [:y, :year, :annee]
     type :main,
-          Sources::DB.new('SELECT title, author, year FROM books', DB::Source),
+          Sources::DB.new('SELECT id, title, author, year FROM books', DB::Source),
           similar_title,
           author,
           year,
@@ -26,7 +26,7 @@ class BookSearch < Application
                                                [:author, :year]   => 2)
     
     type :isbn,
-          "SELECT isbn FROM books",
+          Sources::DB.new("SELECT id, isbn FROM books", DB::Source),
           field(:isbn, :qualifiers => [:i, :isbn])
   end
   
