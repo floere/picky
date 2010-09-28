@@ -32,20 +32,24 @@ class BookSearch < Application
   end
   
   queries do
+    # TODO Should these be definable per Query?
+    #      And serve only as defaults if the query cannot find them?
+    #
     maximum_tokens 5
     illegal_characters(/[\(\)\']/)
     contract_expressions(/mr\.\s*|mister\s*/i, 'mr')
     stopwords(/\b(and|the|or|on)/i)
-    split_text_on(/[\s\/\-\,\&]+/)
+    split_text_on(/[\s\/\-\,\&]+/) #
     normalize_words([
-      [/Deoxyribonucleic Acid/i, 'DNA']
+      [/Deoxyribonucleic Acid/i, 'DNA'] # normalize_tokens
     ])
-    illegal_characters_after(/[\.]/)
+    illegal_characters_after(/[\.]/) # illegal_after
     
-    route '^/books/full', Query::Full.new(Indexes[:main], Indexes[:isbn]) # full_query_with(:main, :isbn)
-    route '^/books/live', Query::Live.new(Indexes[:main], Indexes[:isbn]) # live_query_with(:main, :isbn)
+    # TODO Make regexps. Or allow also Strings?
+    route %r{^/books/full}, Query::Full.new(Indexes[:main], Indexes[:isbn]) # full_query_with(:main, :isbn)
+    route %r{^/books/live}, Query::Live.new(Indexes[:main], Indexes[:isbn]) # live_query_with(:main, :isbn)
     
-    route '^/isbn/full',  Query::Full.new(Indexes[:isbn])                 # full_query_with(:isbn)
+    route %r{^/isbn/full},  Query::Full.new(Indexes[:isbn])                 # full_query_with(:isbn)
     
     root 200
   end

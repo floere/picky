@@ -13,7 +13,7 @@ module Query
     # Run a query on the given text, with the offset and these indexes.
     #
     def initialize *index_types
-      options = Hash === index_types.last ? index_types.pop : {}
+      options      = Hash === index_types.last ? index_types.pop : {}
       @index_types = index_types
       @weigher     = Weigher.new index_types
       @tokenizer   = (options[:tokenizer] || Tokenizers::Query.new)
@@ -81,7 +81,7 @@ module Query
 
       # Score the allocations.
       #
-      allocations.calculate_score
+      allocations.calculate_score # TODO Move heuristics here!
 
       # Sort the allocations.
       # (allocations are sorted according to score, highest to lowest)

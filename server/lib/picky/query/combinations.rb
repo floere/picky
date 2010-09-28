@@ -25,7 +25,7 @@ module Query
     #
     def calculate_score
       @score  = @combinations.sum &:weight
-      @score += @type.score @combinations
+      @score += @type.score @combinations # Move this to the query?
       @score
     end
 

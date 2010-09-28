@@ -131,7 +131,7 @@ module Query
         #               by the number of combinations.
         #
         single_mult /= combinations_size unless combinations_size.zero?
-
+        
         # Expand each combination by the single mult:
         # [a,b,c]
         # [a,a,a,  b,b,b,  c,c,c]
@@ -141,19 +141,19 @@ module Query
         combinations = combinations.inject([]) do |total, combination|
           total + [combination]*single_mult
         end * group_mult
-
+        
         # Multiply the group mult by the combinations size,
         # since the next combinations' single mult is smaller
         # and we need to adjust for that.
         #
         group_mult = group_mult * combinations_size
-
+        
         # Return the combinations.
         #
         combinations
       end
     end
-
-  end # class Weigher
-
+    
+  end
+  
 end

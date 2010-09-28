@@ -26,7 +26,7 @@ module Index
       @combinator.possible_combinations_for token
     end
     
-    #
+    # TODO Move this to the query?
     #
     def score combinations
       @heuristics.score combinations

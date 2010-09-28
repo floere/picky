@@ -79,7 +79,7 @@ class Routing
   #
   #
   def root status
-    answer '^/$', STATUSES[status]
+    answer %r{^/$}, STATUSES[status]
   end
   #
   #
@@ -103,7 +103,7 @@ class Routing
   def default_options url, route_options = {}
     options = { :request_method => 'GET' }.merge route_options
     
-    options[:path_info] = %r{#{url}} if url
+    options[:path_info] = url if url
     
     options.delete :content_type # TODO
     
@@ -153,7 +153,11 @@ class Routing
   # Setup a route that answers using the given app.
   #
   def answer url = nil, app = nil
-    routes.add_route (app || STATUSES[200]), default_options(url)
+    routes.add_route (app || STATUSES[200]), default_options(normalized(url))
+  end
+  
+  def normalized url
+    String === url ? %r{url} : url
   end
   
 end
