@@ -11,7 +11,7 @@ module Configuration
     #
     #
     def default_index
-      Tokenizers::Query
+      Tokenizers::Index
     end
     
     # Delegates

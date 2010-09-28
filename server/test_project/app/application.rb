@@ -22,7 +22,8 @@ class BookSearch < Application
           similar_title,
           author,
           year,
-          :heuristics => Query::Heuristics.new([:title,  :author] => 5,
+          :heuristics => Query::Heuristics.new([:author] => 6,
+                                               [:title,  :author] => 5,
                                                [:author, :year]   => 2)
     
     type :isbn,
