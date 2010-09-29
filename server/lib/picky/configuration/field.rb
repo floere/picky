@@ -44,9 +44,14 @@ module Configuration
       File.join cache_directory, "#{type.name}_#{name}_index.txt"
     end
     def index
+      prepare_cache_directory
       indexer.index
     end
+    def prepare_cache_directory
+      FileUtils.mkdir_p cache_directory
+    end
     def cache
+      prepare_cache_directory
       generate.generate_caches
     end
     def indexer
