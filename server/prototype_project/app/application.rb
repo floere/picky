@@ -26,10 +26,8 @@ class PickySearch < Application # The App Constant needs to be identical in appl
          field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)),
          field(:author, :qualifiers => [:s, :author, :auteur]),
          field(:isbn,   :qualifiers => [:i, :isbn]),
-         :heuristics => [
-           [:title] => 6, # includes [:title, :title, ...]
-           [:author, :title] => 3
-         ]
+         :heuristics => Query::Heuristics.new([:title] => 6, # includes [:title, :title, ...]
+                                              [:author, :title] => 3)
   end
   
   queries do
