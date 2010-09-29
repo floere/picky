@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Search::Serializer do
+describe Picky::Serializer do
 
   describe "serialize-deserialize" do
     it "should serialize and deserialize certain values" do
       results = stub :results
       results.stub! :serialize => {}
 
-      deserialized = Search::Serializer.deserialize Search::Serializer.serialize(results)
+      deserialized = Picky::Serializer.deserialize Picky::Serializer.serialize(results)
 
       deserialized.should == {}
     end
@@ -24,13 +24,13 @@ describe Search::Serializer do
         :duration => 0.12345
       }
 
-      Search::Serializer.serialize(results).should == "\x04\b{\t:\x10allocations[\b[\t000[\ri\x06i\ai\bi\ti\ni\vi\fi\r[\t000[\ri\x0Ei\x0Fi\x10i\x11i\x12i\x13i\x14i\x15[\t000[\fi\x16i\x17i\x18i\x19i\x1Ai\ei\x1C:\voffseti\x01{:\ntotali\x0290:\rdurationf\x0F0.12345\x00\xF2|"
+      Picky::Serializer.serialize(results).should == "\x04\b{\t:\x10allocations[\b[\t000[\ri\x06i\ai\bi\ti\ni\vi\fi\r[\t000[\ri\x0Ei\x0Fi\x10i\x11i\x12i\x13i\x14i\x15[\t000[\fi\x16i\x17i\x18i\x19i\x1Ai\ei\x1C:\voffseti\x01{:\ntotali\x0290:\rdurationf\x0F0.12345\x00\xF2|"
     end
   end
 
   describe "deserialize" do
     it "should deserialize" do
-      results = Search::Serializer.deserialize "\x04\b{\t:\x10allocations[\b[\t000[\ri\x06i\ai\bi\ti\ni\vi\fi\r[\t000[\ri\x0Ei\x0Fi\x10i\x11i\x12i\x13i\x14i\x15[\t000[\fi\x16i\x17i\x18i\x19i\x1Ai\ei\x1C:\voffseti\x01{:\ntotali\x0290:\rdurationf\x0F0.12345\x00\xF2|"
+      results = Picky::Serializer.deserialize "\x04\b{\t:\x10allocations[\b[\t000[\ri\x06i\ai\bi\ti\ni\vi\fi\r[\t000[\ri\x0Ei\x0Fi\x10i\x11i\x12i\x13i\x14i\x15[\t000[\fi\x16i\x17i\x18i\x19i\x1Ai\ei\x1C:\voffseti\x01{:\ntotali\x0290:\rdurationf\x0F0.12345\x00\xF2|"
 
       results.should be_kind_of(Hash)
     end

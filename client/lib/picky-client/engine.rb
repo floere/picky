@@ -11,7 +11,7 @@ module Picky
   # TODO Rewrite such that instead of an http request we connect through tcp.
   # Or use EventMachine.
   #
-  module Engine
+  module Client
 
     class Base
 
@@ -41,23 +41,23 @@ module Picky
           options
         end
       end
-
+      
       # Merges the given params, overriding the defaults.
       #
       def defaultize params = {}
         default_params.merge params
       end
-
+      
       # Searches the index. Use this method.
       #
       # Returns a hash. Extend with Convenience.
       #
       def search params = {}
-        return {} if params[:query].empty?
-
+        return {} unless params[:query] && !params[:query].empty?
+        
         send_search params
       end
-
+      
       # Sends a search to the configured address.
       #
       def send_search params = {}

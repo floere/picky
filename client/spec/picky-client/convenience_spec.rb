@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Search::Convenience do
+describe Picky::Convenience do
 
   before(:each) do
     @convenience = {
@@ -10,7 +10,7 @@ describe Search::Convenience do
       :offset => 123,
       :total => 12345,
       :duration => 0.12345
-    }.extend Search::Convenience
+    }.extend Picky::Convenience
   end
 
   # describe 'replace_ids_with' do

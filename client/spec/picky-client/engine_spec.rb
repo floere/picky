@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Search::Engine do
+describe Picky::Client do
   
   describe 'defaultize' do
     context 'no default params' do
       before(:each) do
-        @base = Search::Engine::Base.new
+        @base = Picky::Client::Base.new
       end
       it 'should return unchanged' do
         @base.defaultize( :a => :b ).should == { :a => :b }
@@ -13,11 +13,11 @@ describe Search::Engine do
     end
     context 'default params' do
       before(:each) do
-        Search::Engine::Base.default_params 'c' => 'd'
-        @base = Search::Engine::Base.new
+        Picky::Client::Base.default_params 'c' => 'd'
+        @base = Picky::Client::Base.new
       end
       after(:each) do
-        Search::Engine::Base.default_params
+        Picky::Client::Base.default_params
       end
       it 'should return changed' do
         @base.defaultize( 'a' => 'b' ).should == { 'a' => 'b', 'c' => 'd' }
@@ -30,7 +30,7 @@ describe Search::Engine do
   
   describe 'Base' do
     before(:each) do
-      @base = Search::Engine::Base.new
+      @base = Picky::Client::Base.new
     end
     it 'should have a default_configuration method' do
       lambda { @base.default_configuration }.should_not raise_error
@@ -48,7 +48,7 @@ describe Search::Engine do
 
   describe "Full" do
     before(:each) do
-      @full = Search::Engine::Full.new
+      @full = Picky::Client::Full.new
     end
     describe "defaults" do
       it "should set host to 'localhost'" do
@@ -64,7 +64,7 @@ describe Search::Engine do
 
     describe "cattr_accessors" do
       before(:each) do
-        @full = Search::Engine::Full.new :host => :some_host, :port => :some_port, :path => :some_path
+        @full = Picky::Client::Full.new :host => :some_host, :port => :some_port, :path => :some_path
       end
       it "should have a writer for the host" do
         @full.host = :some_host
@@ -117,7 +117,7 @@ describe Search::Engine do
 
   describe "Live" do
     before(:each) do
-      @live = Search::Engine::Live.new
+      @live = Picky::Client::Live.new
     end
     describe "defaults" do
       it "should set host to 'localhost'" do
