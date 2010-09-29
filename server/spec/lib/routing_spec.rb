@@ -38,6 +38,7 @@ describe Routing do
   context 'real routes' do
     before(:each) do
       @routing.reset_routes
+      PickyLog.stub! :log
     end
     it 'should route correctly' do
       env = {}
@@ -64,6 +65,14 @@ describe Routing do
     it 'should route correctly' do
       env = rack_defaults_for '/gurk'
       
+      @routing.answer %r{/gurk}, lambda { |env| [333, {}, ['this is gurk']] }
+      
+      @routing.routes.freeze
+      @routing.call(env).should == [333, {}, ['this is gurk']]
+    end
+    it 'should route correctly' do
+      env = rack_defaults_for '/gurk'
+      
       @routing.answer '/gurk', lambda { |env| [333, {}, ['this is gurk']] }
       
       @routing.routes.freeze
@@ -76,10 +85,34 @@ describe Routing do
       live.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Live.new)
       Query::Live.stub! :new => live
       
+      @routing.live %r{/searches/live}, :some_index
+      
+      @routing.routes.freeze
+      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
+    end
+    it 'should route correctly' do
+      env = rack_defaults_for '/searches/live.json?query=some_query'
+      
+      live = stub :live
+      live.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Live.new)
+      Query::Live.stub! :new => live
+      
       @routing.live '/searches/live', :some_index
       
       @routing.routes.freeze
       @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
+    end
+    it 'should route correctly' do
+      env = rack_defaults_for '/searches/full?query=some_query'
+      
+      full = stub :full
+      full.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Full.new)
+      Query::Full.stub! :new => full
+      
+      @routing.full %r{/searches/full}, :some_index
+      
+      @routing.routes.freeze
+      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
     end
     it 'should route correctly' do
       env = rack_defaults_for '/searches/full?query=some_query'
@@ -169,7 +202,7 @@ describe Routing do
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :path_info => /some_url/ }
         
-        @routing.route 'some_url', :some_query, {}
+        @routing.route %r{some_url}, :some_query, {}
       end
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :path_info => /some_url/ }
@@ -193,7 +226,7 @@ describe Routing do
     
     describe 'root' do
       it 'should call answer' do
-        @routing.should_receive(:answer).once.with '^/$', Routing::STATUSES[200]
+        @routing.should_receive(:answer).once.with %r{^/$}, Routing::STATUSES[200]
         
         @routing.root 200
       end

@@ -221,7 +221,7 @@ module Loader
     load_relative 'query/weigher'
     load_relative 'query/combinator'
 
-    load_relative 'query/heuristics'
+    load_relative 'query/weights'
 
     # Query.
     #

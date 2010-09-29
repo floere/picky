@@ -1,32 +1,32 @@
 require 'spec_helper'
 
-describe Query::Heuristics do
+describe Query::Weights do
 
   before(:each) do
-    @heuristics = Query::Heuristics.new [:test1, :test2]         => 6,
-                                        [:test1]                 => 5,
-                                        [:test3]                 => 3,
-                                        [:test3, :test2]         => 4,
-                                        [:test1, :test4]         => 5,
-                                        [:test4, :test1]         => 5,
-                                        [:test4, :test1, :test2] => 4,
-                                        [:test1, :test4, :test2] => 4,
-                                        [:test4, :test5]         => 3,
-                                        [:test5, :test1]         => 2,
-                                        [:test1, :test5]         => 2,
-                                        [:test3, :test1]         => 2,
-                                        [:test1, :test3]         => 2
+    @weights = Query::Weights.new [:test1, :test2]         => 6,
+                                     [:test1]                 => 5,
+                                     [:test3]                 => 3,
+                                     [:test3, :test2]         => 4,
+                                     [:test1, :test4]         => 5,
+                                     [:test4, :test1]         => 5,
+                                     [:test4, :test1, :test2] => 4,
+                                     [:test1, :test4, :test2] => 4,
+                                     [:test4, :test5]         => 3,
+                                     [:test5, :test1]         => 2,
+                                     [:test1, :test5]         => 2,
+                                     [:test3, :test1]         => 2,
+                                     [:test1, :test3]         => 2
   end
 
   describe "weight_for" do
     it "should return zero if there is no specific weight" do
-      @heuristics.weight_for([:not_a_specific_allocation]).should be_zero
+      @weights.weight_for([:not_a_specific_allocation]).should be_zero
     end
   end
   
   def self.it_should_return_a_specific_weight_for(allocation, weight)
     it "should return weight #{weight} for #{allocation.inspect}" do
-      @heuristics.weight_for(allocation).should == weight
+      @weights.weight_for(allocation).should == weight
     end
   end
   

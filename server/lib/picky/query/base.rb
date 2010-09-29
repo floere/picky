@@ -8,7 +8,7 @@ module Query
     include Helpers::Measuring
     
     attr_writer   :tokenizer
-    attr_accessor :reduce_to_amount, :heuristics
+    attr_accessor :reduce_to_amount, :weights
     
     # Run a query on the given text, with the offset and these indexes.
     #
@@ -17,7 +17,7 @@ module Query
       @index_types = index_types
       @weigher     = Weigher.new index_types
       @tokenizer   = (options[:tokenizer]  || Tokenizers::Query.new)
-      @heuristics  = (options[:heuristics] || Heuristics.new)
+      @weights     = (options[:weights] || Weights.new)
     end
     
     # Convenience method.
@@ -82,7 +82,7 @@ module Query
 
       # Score the allocations.
       #
-      allocations.calculate_score heuristics
+      allocations.calculate_score weights
 
       # Sort the allocations.
       # (allocations are sorted according to score, highest to lowest)

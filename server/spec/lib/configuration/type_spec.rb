@@ -15,7 +15,7 @@ describe Configuration::Type do
                                     @virtual_field,
                                     :after_indexing => "some after indexing",
                                     :result_type => :some_result_type,
-                                    :heuristics => :some_heuristics,
+                                    :weights => :some_weights,
                                     :ignore_unassigned_tokens => :some_ignore_unassigned_tokens_option,
                                     :solr => :some_solr_option
   end

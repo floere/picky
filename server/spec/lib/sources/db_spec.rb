@@ -37,7 +37,7 @@ describe Sources::DB do
         @connection.stub! :execute
       end
       after(:each) do
-        @source.harvest :some_offset, :some_chunksize
+        @source.harvest :some_type, :some_field, :some_offset, :some_chunksize
       end
       context "with WHERE" do
         before(:each) do
@@ -47,7 +47,7 @@ describe Sources::DB do
           @adapter.should_receive(:connect).once.with
         end
         it "should call the harvest statement with an offset" do
-          @source.should_receive(:harvest_statement_with_offset).once.with :some_offset, :some_chunksize
+          @source.should_receive(:harvest_statement_with_offset).once.with :some_type, :some_field, :some_offset, :some_chunksize
         end
       end
       context "without WHERE" do
@@ -55,7 +55,7 @@ describe Sources::DB do
           @adapter.should_receive(:connect).once.with
         end
         it "should call the harvest statement with an offset" do
-          @source.should_receive(:harvest_statement_with_offset).once.with :some_offset, :some_chunksize
+          @source.should_receive(:harvest_statement_with_offset).once.with :some_type, :some_field, :some_offset, :some_chunksize
         end
       end
     end
@@ -63,7 +63,7 @@ describe Sources::DB do
       it "should return whatever the execute statement returns" do
         @connection.stub! :execute => :some_result
         
-        @source.harvest(:some_offset, :some_chunksize).should == :some_result
+        @source.harvest(:some_type, :some_field, :some_offset, :some_chunksize).should == :some_result
       end
     end
   end
@@ -71,18 +71,20 @@ describe Sources::DB do
   describe "harvest_statement_with_offset" do
     before(:each) do
       @source.should_receive(:type_name).any_number_of_times.and_return :books
+      @field = stub :field, :name => :some_field
+      @type  = stub :type,  :name => :some_type
     end
     it "should get a harvest statement and the chunksize to put the statement together" do
-      @source.should_receive(:select_statement).once.and_return 'some_example_statement'
-      @source.harvest_statement_with_offset(:some_offset, :some_chunksize)
+      @source.should_receive(:harvest_statement).once.and_return 'some_example_statement'
+      @source.harvest_statement_with_offset(@type, @field, :some_offset, :some_chunksize)
     end
     it "should add an AND if it already contains a WHERE statement" do
-      @source.should_receive(:select_statement).and_return 'WHERE'
-      @source.harvest_statement_with_offset(:some_offset, :some_chunksize).should == "WHERE AND st.id > some_offset LIMIT some_chunksize"
+      @source.should_receive(:harvest_statement).and_return 'WHERE'
+      @source.harvest_statement_with_offset(@type, @field, :some_offset, :some_chunksize).should == "WHERE AND st.id > some_offset LIMIT some_chunksize"
     end
     it "should add a WHERE if it doesn't already contain one" do
-      @source.should_receive(:select_statement).and_return 'some_statement'
-      @source.harvest_statement_with_offset(:some_offset, :some_chunksize).should == "some_statement WHERE st.id > some_offset LIMIT some_chunksize"
+      @source.should_receive(:harvest_statement).and_return 'some_statement'
+      @source.harvest_statement_with_offset(@type, @field, :some_offset, :some_chunksize).should == "some_statement WHERE st.id > some_offset LIMIT some_chunksize"
     end
   end
   

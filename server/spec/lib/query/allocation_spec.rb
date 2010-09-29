@@ -1,28 +1,28 @@
 require 'spec_helper'
 
 describe Query::Allocation do
-
+  
   before(:each) do
     @combinations = stub :combinations
     @allocation = Query::Allocation.new @combinations
   end
-
+  
   describe 'remove' do
     it 'should delegate to the combinations' do
       @combinations.should_receive(:remove).once.with [:some_identifiers]
-
+      
       @allocation.remove [:some_identifiers]
     end
   end
-
+  
   describe 'keep' do
     it 'should delegate to the combinations' do
       @combinations.should_receive(:keep).once.with [:some_identifiers]
-
+      
       @allocation.keep [:some_identifiers]
     end
   end
-
+  
   describe 'process!' do
     context 'no ids' do
       before(:each) do
@@ -127,9 +127,9 @@ describe Query::Allocation do
 
   describe "calculate_score" do
     it 'should delegate to the combinations' do
-      @combinations.should_receive(:calculate_score).once.with
+      @combinations.should_receive(:calculate_score).once.with :some_weights
 
-      @allocation.calculate_score
+      @allocation.calculate_score :some_weights
     end
   end
 

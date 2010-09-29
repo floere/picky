@@ -14,7 +14,7 @@ class PickySearch < Application # The App Constant needs to be identical in appl
   #
   
   indexes do
-    illegal_characters(/[^a-zA-Z0-9\s\/\-\"\&\.äöü]/)
+    illegal_characters(/[^äöüa-zA-Z0-9\s\/\-\"\&\.]/)
     stopwords(/\b(und|der|die|das|mit|im|ein|des|dem|the|of)\b/)
     split_text_on(/[\s\/\-\"\&\.]/)
       
@@ -30,13 +30,16 @@ class PickySearch < Application # The App Constant needs to be identical in appl
   
   queries do
     maximum_tokens 5
-    illegal_characters(/[^a-zA-Z0-9\s\/\-\"\,\&äöü\~\*\:]/)
+    # Note that Picky needs the following characters to
+    # pass through, as they are control characters: *"~:
+    #
+    illegal_characters(/[^a-zA-Z0-9\s\/\-\,\&äöü\"\~\*\:]/)
     stopwords(/\b(und|der|die|das|mit|ein|des|dem|the|of)\b/)
     split_text_on(/[\s\/\-\,\&]+/)
     
-    # Set some weights according to the position.
+    # Set some weights according to the position. Note that the order is important.
     #
-    options = { :heuristics => Query::Heuristics.new([:title] => 6, [:author, :title] => 3) }
+    options = { :weights => Query::Weights.new([:title] => 6, [:author, :title] => 3) }
     
     route %r{^/books/full}, Query::Full.new(Indexes[:books], options)
     route %r{^/books/live}, Query::Live.new(Indexes[:books], options)

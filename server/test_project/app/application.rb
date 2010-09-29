@@ -46,7 +46,7 @@ class BookSearch < Application
     ])
     illegal_characters_after(/[\.]/) # illegal_after
     
-    options = { :heuristics => Query::Heuristics.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
+    options = { :weights => Query::Weights.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
     
     route %r{^/books/full}, Query::Full.new(Indexes[:main], Indexes[:isbn], options)
     route %r{^/books/live}, Query::Live.new(Indexes[:main], Indexes[:isbn], options)

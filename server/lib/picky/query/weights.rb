@@ -1,8 +1,8 @@
 module Query
 
-  # Calculates bonuses and maluses for certain combinations.
+  # Calculates weights for certain combinations.
   #
-  class Heuristics
+  class Weights
     
     #
     #
@@ -35,7 +35,7 @@ module Query
     #
     # ...
     #
-    # Just kidding. It's far more complicated than that ;)
+    # Just kidding. It's far more complicated than that. Ha ha ha ha ;)
     #
     include Helpers::Cache
     def score combinations
@@ -46,7 +46,7 @@ module Query
       # TODO Caching even necessary?
       #
       cached @weights_cache, categories do
-        categories.map!(&:name)
+        categories.map! &:name
         weight_for categories
       end
     end
