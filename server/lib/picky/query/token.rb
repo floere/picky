@@ -75,7 +75,7 @@ module Query
       self.partial = true if @text =~ @@partial
     end
 
-    # If the text ends with ~ partialize it. If with ", don't.
+    # If the text ends with ~ similarize it. If with ", don't.
     #
     @@no_similar = /\"$/
     @@similar    = /[~]$/

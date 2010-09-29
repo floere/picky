@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+# Like... totally stolen from rails.
+#
+# TODO Move to gem.
+#
+irb = 'irb'
+
+require 'optparse'
+options = { :sandbox => false, :irb => irb }
+OptionParser.new do |opt|
+  opt.banner = "Usage: console [environment] [options]"
+  opt.on("--irb=[#{irb}]", 'Invoke a different irb.') { |v| options[:irb] = v }
+  opt.parse!(ARGV)
+end
+
+libs =  " -r irb/completion"
+# TODO Load gem.
+#
+libs << %( -r "#{File.expand_path(File.join(File.dirname(__FILE__), '/../../lib/picky.rb'))}" )
+
+ENV['SEARCH_ENV'] = case ARGV.first
+  when "p"; "production"
+  when "d"; "development"
+  when "t"; "test"
+  else
+    ARGV.first || ENV['SEARCH_ENV'] || 'development'
+end
+
+puts "Use \x1b[1;30mLoader.load_application\x1b[m to load app."
+puts "Use \x1b[1;30mIndexes.load_from_cache\x1b[m after that to load indexes."
+puts "Copy the following line to do just that:"
+puts "\x1b[1;30mLoader.load_application; Indexes.load_from_cache; p\x1b[m"
+exec "#{options[:irb]} #{libs} --simple-prompt"
