@@ -2,6 +2,7 @@ source :gemcutter
 
 # Gems required by Picky.
 #
+gem 'picky'
 gem 'bundler',          '>=0.9.26'
 gem 'rack',             '1.2.1'
 gem 'rack-mount',       '0.6.9'
@@ -18,3 +19,5 @@ gem 'rspec'
 
 # Required by your project.
 #
+gem 'unicorn'
+gem 'mysql'

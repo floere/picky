@@ -127,7 +127,7 @@ module Picky
               run "ln -sf #{shared_path}/config/base.yml #{current_path}/config/db/base.yml"
               run "ln -sf #{shared_path}/config/source.yml #{current_path}/config/db/source.yml"
               # link unicorn.ru
-              run "ln -sf #{shared_path}/config/unicorn.ru #{current_path}/config/unicorn.ru"
+              run "ln -sf #{shared_path}/config/unicorn.ru #{current_path}/config/unicorn.ru" # TODO change path
             end
             
             namespace :rollback do

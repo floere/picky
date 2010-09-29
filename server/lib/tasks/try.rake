@@ -2,9 +2,6 @@
 #
 namespace :try do
   
-  desc "try Tasks let you try out your indexing and querying specifications."
-  task
-  
   desc "Try how a given word would be tokenized when indexing (type:field optional)."
   task :index, [:text, :type_and_field] => :application do |_, options|
     text, type_and_field = options.text, options.type_and_field
