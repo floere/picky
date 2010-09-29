@@ -23,9 +23,9 @@ class PickySearch < Application # The App Constant needs to be identical in appl
            'SELECT id, title, author, isbn13 as isbn FROM books',
            DB.configure(:file => 'app/db.yml')
          ),
-         field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)),
+         field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
          field(:author, :qualifiers => [:s, :author, :auteur]),
-         field(:isbn,   :qualifiers => [:i, :isbn])
+         field(:isbn,   :qualifiers => [:i, :isbn], :partial => Partial::None.new) # It makes no sense searching partially on ISBNs.
   end
   
   queries do
