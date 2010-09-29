@@ -14,8 +14,10 @@ module Query
 
     # Score each allocation.
     #
-    def calculate_score
-      @allocations.each &:calculate_score
+    def calculate_score heuristics
+      @allocations.each do |allocation|
+        allocation.calculate_score heuristics
+      end
     end
     # Sort the allocations.
     #

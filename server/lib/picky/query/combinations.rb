@@ -23,9 +23,9 @@ module Query
     #
     # TODO Rewrite.
     #
-    def calculate_score
+    def calculate_score heuristics
       @score  = @combinations.sum &:weight
-      @score += @type.score @combinations # Move this to the query?
+      @score += heuristics.score @combinations
       @score
     end
 

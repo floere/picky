@@ -6,16 +6,15 @@ module Query
     
     #
     #
-    def initialize bonuses, maluses = {}
+    def initialize weights = {}
       @weights_cache = {}
-      @bonuses = prepare bonuses
-      @maluses = prepare maluses
+      @weights = prepare weights
     end
     
     # Get the category indexes for the given bonuses.
     #
-    def prepare bonuses
-      bonuses
+    def prepare weights
+      weights
     end
     
     # Get the weight of an allocation.
@@ -23,7 +22,7 @@ module Query
     # TODO Add a block to evaluate?
     #
     def weight_for clustered
-      @bonuses[clustered] || 0
+      @weights[clustered] || 0
     end
     
     # Returns an energy term E for allocation. this turns into a probability

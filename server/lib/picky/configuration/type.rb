@@ -5,7 +5,6 @@ module Configuration
                 :fields,
                 :after_indexing,
                 :result_type,
-                :heuristics,
                 :ignore_unassigned_tokens,
                 :solr
     def initialize name, source, *fields, options
@@ -21,13 +20,12 @@ module Configuration
 
       @after_indexing           = options[:after_indexing]
       @result_type              = options[:result_type] || name
-      @heuristics               = options[:heuristics] || Query::Heuristics.new({}) # TODO Move to query?
       @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false       # TODO Move to query?
       @solr                     = options[:solr] || nil
     end
     def generate
       categories = fields.map { |field| field.generate }
-      Index::Type.new name, result_type, heuristics, ignore_unassigned_tokens, *categories
+      Index::Type.new name, result_type, ignore_unassigned_tokens, *categories
     end
     def table_name
       self # FIXME UGH, Remove anyway

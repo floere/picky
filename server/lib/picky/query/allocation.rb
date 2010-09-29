@@ -23,8 +23,8 @@ module Query
 
     # Scores its combinations and caches the result.
     #
-    def calculate_score
-      @score || @score = @combinations.calculate_score
+    def calculate_score heuristics
+      @score || @score = @combinations.calculate_score(heuristics)
     end
 
     # Asks the combinations for the (intersected) ids.

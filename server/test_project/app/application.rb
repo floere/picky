@@ -25,10 +25,7 @@ class BookSearch < Application
           Sources::DB.new('SELECT id, title, author, year FROM books', adapter),
           similar_title,
           author,
-          year,
-          :heuristics => Query::Heuristics.new([:author] => 6,
-                                               [:title,  :author] => 5,
-                                               [:author, :year]   => 2)
+          year
     
     type :isbn,
           Sources::DB.new("SELECT id, isbn FROM books", adapter),
@@ -49,11 +46,12 @@ class BookSearch < Application
     ])
     illegal_characters_after(/[\.]/) # illegal_after
     
-    # TODO Make regexps. Or allow also Strings?
-    route %r{^/books/full}, Query::Full.new(Indexes[:main], Indexes[:isbn]) # full_query_with(:main, :isbn)
-    route %r{^/books/live}, Query::Live.new(Indexes[:main], Indexes[:isbn]) # live_query_with(:main, :isbn)
+    options = { :heuristics => Query::Heuristics.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
     
-    route %r{^/isbn/full},  Query::Full.new(Indexes[:isbn])                 # full_query_with(:isbn)
+    route %r{^/books/full}, Query::Full.new(Indexes[:main], Indexes[:isbn], options)
+    route %r{^/books/live}, Query::Live.new(Indexes[:main], Indexes[:isbn], options)
+    
+    route %r{^/isbn/full},  Query::Full.new(Indexes[:isbn], options)
     
     root 200
   end
