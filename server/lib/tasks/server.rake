@@ -1,3 +1,5 @@
+# TODO This file needs some love.
+#
 namespace :server do
   def chdir_to_root
     Dir.chdir SEARCH_ROOT
@@ -9,7 +11,7 @@ namespace :server do
   desc "Start the unicorns. Weheee!"
   task :start => :application do
     chdir_to_root
-    Rake::Task[:"solr:start"].invoke # TODO Move to better place.
+    # Rake::Task[:"solr:start"].invoke # TODO Move to better place.
     config = {}
     config['production'] = {
       :port      => 6000,
@@ -33,7 +35,7 @@ namespace :server do
   task :stop => :application do
     chdir_to_root
     `kill -QUIT #{current_pid}` if current_pid
-    Rake::Task[:"solr:stop"].invoke # TODO Move to better place.
+    # Rake::Task[:"solr:stop"].invoke # TODO Move to better place.
   end
 
   # TODO
