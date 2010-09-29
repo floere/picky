@@ -15,8 +15,6 @@ Gem::Specification.new do |s|
   
   s.extensions << 'lib/picky/ext/ruby19/extconf.rb'
   
-  s.has_rdoc = false
-  
   s.add_dependency 'bundler',          '>=0.9.26'
   s.add_dependency 'activesupport',    '2.3.8'
   s.add_dependency 'activerecord',     '2.3.8'
