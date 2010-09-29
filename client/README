@@ -2,7 +2,10 @@
 
 == Usage
 
-1. FullSearch = Picky::Client::Full.new :host => 'some_host', :port => 1234, :path => '/path/to/search'
+1. Define a client instance:
+   
+   FullSearch = Picky::Client::Full.new :host => 'some_host', :port => 1234, :path => '/path/to/search'
+   
 2. In your controllers: result = FullSearch.search :query => 'some query', :offset => 123 # This gets you a hash
 3. Then, to make access easier (if needed): result.extend Picky::Convenience
 4. This gets you the following methods: empty? ids(limit=20) clear_ids allocations allocations_size total
