@@ -49,7 +49,7 @@ module Loader
   # Load the user's application.
   #
   def self.load_application
-    # DB::Source.connect # FIXME only needed when indexing.
+    # DB.connect # FIXME only needed when indexing.
     # Load the user's application.
     #
     exclaim 'Loading Application.'
@@ -243,7 +243,7 @@ module Loader
     
     # DB
     #
-    load_relative 'database/source'
+    load_relative 'db/configuration'
     
     # Indexes.
     #

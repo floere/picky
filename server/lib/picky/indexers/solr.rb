@@ -24,9 +24,10 @@ module Indexers
       puts "#{Time.now}: Indexing solr for #{type.name}:#{fields.join(', ')}"
       statement = "SELECT indexed_id, #{fields.join(',')} FROM #{type.snapshot_table_name}"
       
-      DB::Source.connect
-      
-      results   = DB::Source.connection.execute statement
+      # TODO Rewrite.
+      #
+      DB.connect
+      results   = DB.connection.execute statement
 
       return unless results # TODO check
 

@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 # This is your application.
 #
 # Have fun with Picky!
@@ -16,12 +18,10 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     stopwords(/\b(und|der|die|das|mit|im|ein|des|dem|the|of)\b/)
     split_text_on(/[\s\/\-\"\&\.]/)
     
-    adapter = DB::Configuration.new(:file => 'app/db.yml')
-    
     type :books,
          Sources::DB.new(
            'SELECT id, title, author, isbn13 as isbn FROM books',
-           adapter
+           DB.configure(:file => 'app/db.yml')
          ),
          field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)),
          field(:author, :qualifiers => [:s, :author, :auteur]),

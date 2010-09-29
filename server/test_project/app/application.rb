@@ -17,8 +17,12 @@ class BookSearch < Application
     author        = field :author, :qualifiers => [:a, :author, :auteur]
     year          = field :year,   :partial    => Partial::None.new,
                                    :qualifiers => [:y, :year, :annee]
+    
+    
+    adapter = DB.configure :file => 'config/db/source.yml'
+    
     type :main,
-          Sources::DB.new('SELECT id, title, author, year FROM books', DB::Source.configured(:file => 'config/db/source.yml')),
+          Sources::DB.new('SELECT id, title, author, year FROM books', adapter),
           similar_title,
           author,
           year,
@@ -27,7 +31,7 @@ class BookSearch < Application
                                                [:author, :year]   => 2)
     
     type :isbn,
-          Sources::DB.new("SELECT id, isbn FROM books", DB::Source),
+          Sources::DB.new("SELECT id, isbn FROM books", adapter),
           field(:isbn, :qualifiers => [:i, :isbn])
   end
   

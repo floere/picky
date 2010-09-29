@@ -17,7 +17,7 @@ module Indexes
     puts "Indexing using #{Cores.max_processors} processors."
     Cores.forked self.fields, :randomly => true do |field|
       # Reestablish DB connection.
-      DB::Source.connect
+      DB.connect # TODO Rewrite!
       field.index
       field.cache
     end
