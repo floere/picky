@@ -30,6 +30,20 @@ describe Cacher::Partial::Subtoken do
     end
   end
   context 'down_to set' do
+    context "large down_to" do
+      before(:each) do
+        @cacher = Cacher::Partial::Subtoken.new :down_to => 10
+      end
+      describe 'generate_from' do
+        it 'should generate the right index' do
+          @cacher.generate_from( :florian => [1], :'01234567890' => [2] ).should == {
+            :florian => [1],
+            :'01234567890' => [2],
+            :'0123456789' => [2]
+          }
+        end
+      end
+    end
     context 'default starting_at' do
       before(:each) do
         @cacher = Cacher::Partial::Subtoken.new :down_to => 4
