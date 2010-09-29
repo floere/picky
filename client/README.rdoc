@@ -4,7 +4,7 @@
 
 1. Define a client instance, and save it (as an example) in a constant:
    
-   FullSearch = Picky::Client::Full.new :host => 'some_host', :port => 1234, :path => '/path/to/search'
+   +FullSearch = Picky::Client::Full.new :host => 'some_host', :port => 1234, :path => '/path/to/search'+
    
 2. Use it in your controllers to search:
    
