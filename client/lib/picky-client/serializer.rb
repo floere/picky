@@ -1,4 +1,4 @@
-module Search
+module Picky
 
   # This class handles serialization and deserialization.
   #

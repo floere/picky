@@ -1,6 +1,6 @@
 require 'net/http'
 
-module Search
+module Picky
   # Frontend for the search client.
   #
   # Configure a search by passing the options in the initializer:
@@ -53,7 +53,7 @@ module Search
       # Returns a hash. Extend with Convenience.
       #
       def search params = {}
-        return {} if params[:query].blank?
+        return {} if params[:query].empty?
 
         send_search params
       end
@@ -87,6 +87,7 @@ end
 
 # Extend hash with to_query method.
 #
+require 'active_support/core_ext/object/to_query'
 class Hash
   def to_query namespace = nil
     collect do |key, value|

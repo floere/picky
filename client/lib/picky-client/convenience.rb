@@ -1,4 +1,4 @@
-module Search
+module Picky
   # Use this class to extend the hash the serializer returns.
   #
   module Convenience
