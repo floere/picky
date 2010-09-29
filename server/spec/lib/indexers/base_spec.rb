@@ -52,23 +52,10 @@ describe Indexers::Base do
       before(:each) do
         @field.stub! :source => nil
       end
-      context "type has one" do
-        before(:each) do
-          @type.stub! :source => @source
-        end
-        it "should return that one" do
-          @indexer.source.should == @source
-        end
-      end
-      context "type doesn't have one" do
-        before(:each) do
-          @type.stub! :source => nil
-        end
-        it "should call raise_no_source" do
-          @indexer.should_receive(:raise_no_source).once.with
-          
-          @indexer.source
-        end
+      it "should call raise_no_source" do
+        @indexer.should_receive(:raise_no_source).once.with
+        
+        @indexer.source
       end
     end
   end
