@@ -1,5 +1,7 @@
 h1. Picky
 
+Note: Currently at version 0.0.1, so don't get your hopes up ;)
+
 h2. The combinatorial small-text search engine.
 
 Picky is split into a server (picky) and a client (picky-client) which is to be used in e.g. Rails.
