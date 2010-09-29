@@ -1,10 +1,10 @@
-# TODO Should actually be set in the master?
+# TODO Cleanup and move to prototype_project.
 #
-Signal.trap 'USR1' do
-  Loader.reload
-end
-# Signal.trap 'USR2' do
+# Signal.trap 'USR1' do
 #   Indexes.reload
+# end
+# Signal.trap 'USR2' do
+#   Loader.reload
 # end
 # Signal.trap 'INT' do
 #   exit!
