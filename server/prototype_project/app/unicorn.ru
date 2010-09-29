@@ -1,4 +1,4 @@
-worker_processes 1
+worker_processes 2
 listen           '/tmp/unicorn.sock', :backlog => 1
 listen           9292, :tcp_nopush => true
 timeout          10

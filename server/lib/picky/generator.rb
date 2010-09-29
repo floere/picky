@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Picky
   
   class NoGeneratorException < Exception; end
