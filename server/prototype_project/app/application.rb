@@ -36,8 +36,10 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     stopwords(/\b(und|der|die|das|mit|ein|des|dem|the|of)\b/)
     split_text_on(/[\s\/\-\,\&]+/)
     
-    route %r{^/books/full}, Query::Full.new(Indexes[:books])
-    route %r{^/books/live}, Query::Live.new(Indexes[:books])
+    options = { :heuristics => Query::Heuristics.new([:title] => 6, [:author, :title] => 3) }
+    
+    route %r{^/books/full}, Query::Full.new(Indexes[:books], options)
+    route %r{^/books/live}, Query::Live.new(Indexes[:books], options)
     
     root 200
   end
