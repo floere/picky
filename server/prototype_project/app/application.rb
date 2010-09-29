@@ -25,7 +25,7 @@ class PickySearch < Application # The App Constant needs to be identical in appl
          ),
          field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
          field(:author, :qualifiers => [:s, :author, :auteur]),
-         field(:isbn,   :qualifiers => [:i, :isbn], :partial => Partial::None.new) # It makes no sense searching partially on ISBNs.
+         field(:isbn,   :qualifiers => [:i, :isbn])
   end
   
   queries do
