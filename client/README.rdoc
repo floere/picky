@@ -14,7 +14,7 @@
    
    result.extend Picky::Convenience
    
-4. This gets you the following methods:
+4. This gets you the following methods on result:
    
    * empty?
    * ids(limit=20)
