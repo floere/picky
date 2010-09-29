@@ -16,9 +16,9 @@
    
 4. This gets you the following methods on result:
    
-   * typewriter:empty?
-   * typewriter:ids(limit=20)
-   * typewriter:clear_ids
-   * typewriter:allocations
-   * typewriter:allocations_size
-   * typewriter:total
+   * <tt>empty?</tt>
+   * <tt>ids(limit=20)</tt>
+   * <tt>clear_ids</tt>
+   * <tt>allocations</tt>
+   * <tt>allocations_size</tt>
+   * <tt>total</tt>
