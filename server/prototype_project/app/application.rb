@@ -15,7 +15,6 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     illegal_characters(/[^a-zA-Z0-9\s\/\-\"\&\.äöü]/)
     stopwords(/\b(und|der|die|das|mit|im|ein|des|dem|the|of)\b/)
     split_text_on(/[\s\/\-\"\&\.]/)
-    illegal_characters_after(/[\.]/)
     
     adapter = DB::Configuration.new(:file => 'app/db.yml')
     
