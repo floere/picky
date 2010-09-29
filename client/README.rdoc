@@ -8,17 +8,17 @@
    
 2. Use it in your controllers to search:
    
-   result = FullSearch.search :query => 'some query', :offset => 123 # This gets you a hash
+   <tt>result = FullSearch.search :query => 'some query', :offset => 123 # This gets you a hash</tt>
    
 3. Then, to make access easier (if needed):
    
-   result.extend Picky::Convenience
+   <tt>result.extend Picky::Convenience</tt>
    
 4. This gets you the following methods on result:
    
-   * empty?
-   * ids(limit=20)
-   * clear_ids
-   * allocations
-   * allocations_size
-   * total
+   * typewriter:empty?
+   * typewriter:ids(limit=20)
+   * typewriter:clear_ids
+   * typewriter:allocations
+   * typewriter:allocations_size
+   * typewriter:total
