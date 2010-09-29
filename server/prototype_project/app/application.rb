@@ -25,9 +25,7 @@ class PickySearch < Application # The App Constant needs to be identical in appl
          ),
          field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)),
          field(:author, :qualifiers => [:s, :author, :auteur]),
-         field(:isbn,   :qualifiers => [:i, :isbn]),
-         :heuristics => Query::Heuristics.new([:title] => 6, # includes [:title, :title, ...]
-                                              [:author, :title] => 3)
+         field(:isbn,   :qualifiers => [:i, :isbn])
   end
   
   queries do
@@ -36,6 +34,8 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     stopwords(/\b(und|der|die|das|mit|ein|des|dem|the|of)\b/)
     split_text_on(/[\s\/\-\,\&]+/)
     
+    # Set some weights according to the position.
+    #
     options = { :heuristics => Query::Heuristics.new([:title] => 6, [:author, :title] => 3) }
     
     route %r{^/books/full}, Query::Full.new(Indexes[:books], options)
