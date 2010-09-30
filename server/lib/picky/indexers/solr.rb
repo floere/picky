@@ -28,16 +28,16 @@ module Indexers
       #
       DB.connect
       results   = DB.connection.execute statement
-
+      
       return unless results # TODO check
-
+      
       type_name = @type.name.to_s
-
+      
       solr.delete_by_query "type:#{type_name}"
       solr.commit
-
+      
       documents = []
-
+      
       results.each do |indexed_id, *values|
         values.each &:downcase!
         documents << hashed(values).merge(:id => indexed_id, :type => type_name)

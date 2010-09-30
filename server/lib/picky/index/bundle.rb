@@ -162,7 +162,7 @@ module Index
     def weights_cache_path
       cache_path "#{category.name}_weights"
     end
-
+    
     # Loads all indexes into this category.
     #
     def load
@@ -185,29 +185,10 @@ module Index
       puts "#{Time.now}: Loading the weights for #{identifier} from the cache."
       load_the :weights, weights_cache_path
     end
-
-    # TODO Decide on the fate of this.
-    #
-    # # Generates similar index entries. If you search for bla, you will also find the blarf and vice versa.
-    # #
-    # # Examples:
-    # #   title.generate_similar_from { :bla => :blarf }
-    # #
-    # # Note: Be careful with this, as it uses up a lot of memory.
-    # #
-    # def generate_similar_from mapping
-    #   mapping.each_pair do |one, other|
-    #     one_ids   = self.index[one]
-    #     other_ids = self.index[other]
-    #
-    #     self.index[one]   += other_ids || [] if one_ids
-    #     self.index[other] += one_ids || [] if other_ids
-    #   end
-    # end
-
+    
     # Generation
     #
-
+    
     # This method
     # * loads the base index from the db
     # * generates derived indexes
@@ -232,17 +213,17 @@ module Index
     def cache_from_memory_generation_message
       puts "#{Time.now}: Generating derived caches from memory for #{identifier}."
     end
-
+    
     # Generates the weights and similarity from the main index.
     #
     def generate_derived
       generate_weights
       generate_similarity
     end
-
+    
     # Load the data from the db.
     #
-    def load_from_index_file # TODO Load from index_file.
+    def load_from_index_file
       clear
       retrieve
     end
