@@ -1,6 +1,6 @@
 h1. Picky
 
-Note: Currently at version 0.0.1, so don't get your hopes up ;)
+Note: Currently in the 0.0.x version range, so don't get your hopes up ;)
 
 h2. The combinatorial small-text search engine.
 
