@@ -1,8 +1,7 @@
 module Tokenizers
-  # The Tokenizers
-  #
-  class Base # TODO Rename Strategy.
-
+  
+  class Base
+    
     # Stopwords.
     #
     def self.stopwords regexp
@@ -19,7 +18,7 @@ module Tokenizers
       end
     end
     def remove_stopwords text; end
-
+    
     # Contraction.
     #
     def self.contract_expressions what, to_what
@@ -28,7 +27,7 @@ module Tokenizers
       end
     end
     def contract text; end
-
+    
     # Illegals.
     #
     # TODO Should there be a legal?
@@ -39,7 +38,7 @@ module Tokenizers
       end
     end
     def remove_illegals text; end
-
+    
     # Splitting.
     #
     def self.split_text_on regexp
@@ -48,7 +47,7 @@ module Tokenizers
       end
     end
     def split text; end
-
+    
     # Normalizing.
     #
     def self.normalize_words regexp_replaces
@@ -63,18 +62,16 @@ module Tokenizers
       end
     end
     def normalize_with_patterns text; end
-
+    
     # Illegal after normalizing.
     #
-    # TODO Rename illegal_after_tokenizing?
-    #
-    def self.illegal_characters_after regexp
+    def self.illegal_characters_after_splitting regexp
       define_method :remove_after_normalizing_illegals do |text|
         text.gsub! regexp, ''
       end
     end
     def remove_after_normalizing_illegals text; end
-
+    
     # Returns a number of tokens, generated from the given text.
     #
     # Note:
@@ -88,10 +85,10 @@ module Tokenizers
       tokens = tokens_for words # creating tokens / strings
                process tokens   # processing tokens / strings
     end
-
+    
     # Hooks.
     #
-
+    
     # Preprocessing.
     #
     def preprocess text; end
@@ -104,7 +101,7 @@ module Tokenizers
       reject tokens    # Reject any tokens that don't meet criteria
       tokens
     end
-
+    
     # Rejects blank tokens.
     #
     def reject tokens
@@ -125,6 +122,6 @@ module Tokenizers
     def empty_tokens
       ::Query::Tokens.new
     end
-
+    
   end
 end

@@ -9,7 +9,7 @@ class BookSearch < Application
     contract_expressions(/mr\.\s*|mister\s*/i, 'mr ')
     stopwords(/\b(and|the|or|on)\b/)
     split_text_on(/[\s\/\-\"\&\.]/)
-    illegal_characters_after(/[\.]/)
+    illegal_characters_after_splitting(/[\.]/)
     
     few_similarities = Similarity::DoubleLevenshtone.new(3)
     similar_title = field :title,  :similarity => few_similarities,
@@ -42,9 +42,9 @@ class BookSearch < Application
     stopwords(/\b(and|the|or|on)/i)
     split_text_on(/[\s\/\-\,\&]+/) #
     normalize_words([
-      [/Deoxyribonucleic Acid/i, 'DNA'] # normalize_tokens
+      [/Deoxyribonucleic Acid/i, 'DNA']
     ])
-    illegal_characters_after(/[\.]/) # illegal_after
+    illegal_characters_after_splitting(/[\.]/)
     
     options = { :weights => Query::Weights.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
     

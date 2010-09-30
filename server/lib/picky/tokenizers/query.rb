@@ -22,7 +22,7 @@ module Tokenizers
     contract_expressions(//, '')
     split_text_on(/\s/)
     normalize_words([])
-    illegal_characters_after(//)
+    illegal_characters_after_splitting(//)
     
     def preprocess text
       remove_illegals text             # Remove illegal characters

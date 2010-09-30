@@ -25,7 +25,7 @@ module Configuration
     def maximum_tokens amount
       Query::Tokens.maximum = amount
     end
-    delegate :illegal_characters, :contract_expressions, :stopwords, :split_text_on, :normalize_words, :illegal_characters_after, :to => :default_index
+    delegate :illegal_characters, :contract_expressions, :stopwords, :split_text_on, :normalize_words, :illegal_characters_after_splitting, :to => :default_index
     
   end
   
