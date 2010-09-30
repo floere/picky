@@ -220,7 +220,6 @@ module Loader
     load_relative 'configuration/field'
     load_relative 'configuration/type'
     load_relative 'configuration/indexes'
-    load_relative 'configuration/configuration'
     
     # ... in Application.
     #
