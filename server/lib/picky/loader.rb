@@ -41,15 +41,9 @@ module Loader
     end
   end
   
-  # def self.add_lib_dir
-  #   lib_dir = File.join(SEARCH_ROOT, 'lib')
-  #   $:.unshift lib_dir unless $:.include?(lib_dir)
-  # end
-  
   # Load the user's application.
   #
   def self.load_application
-    # DB.connect # FIXME only needed when indexing.
     # Load the user's application.
     #
     exclaim 'Loading Application.'
@@ -72,14 +66,9 @@ module Loader
       retry
     end
     
-    # TODO Rethink this.
+    # Load the user's config.
     #
     load_user 'app/logging'
-    # load_user 'app/config'
-    # Configuration.apply
-    
-    # Require the user's application.
-    #
     load_user 'app/application'
     
     # Setup Indexes from user definition
@@ -94,19 +83,9 @@ module Loader
   # Loads the framework.
   #
   def self.load_framework
-    # exclaim 'Loading the application.'
-    
-    # exclaim 'Compiling C code.'
-    require_relative 'initializers/ext'
-    
-    require 'rack_fast_escape'
-    # exclaim 'Loaded rack_fast_escape.'
-    require 'text'
-    # exclaim 'Loaded text.'
-    
-    # Extend path with lib
+    # Compile C-Code. TODO Remove as soon as stable.
     #
-    extend_load_path 'lib'
+    require_relative 'initializers/ext'
     
     # Load extensions.
     #
@@ -114,7 +93,6 @@ module Loader
     load_relative 'extensions/symbol'
     load_relative 'extensions/module'
     load_relative 'extensions/hash'
-    # exclaim "Loaded extensions."
     
     # Load harakiri.
     #
@@ -126,23 +104,12 @@ module Loader
     load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
     load_relative 'helpers/search'
-    # exclaim "Loaded helpers."
     
     # Signal handling
     #
     load_relative 'signals'
-    # exclaim "Loaded signals handling."
 
-    # Load and require the plugins.
-    #
-    Dir['plugins/*'].each do |directory|
-      extend_load_path directory
-      extend_load_path directory, 'lib'
-      load "#{directory.gsub!(/plugins\//, '')}.rb"
-    end
-    # exclaim "Loaded plugins."
-
-    # Require the necessary libs. Referenced modules first.
+    # Various.
     #
     load_relative 'loggers/search'
     load_relative 'umlaut_substituter'
@@ -178,8 +145,6 @@ module Loader
     
     # Convenience accessors for generators.
     #
-    # TODO Just remove from under Cacher?
-    #
     load_relative 'cacher/convenience'
     
     # Index generators.
@@ -213,23 +178,24 @@ module Loader
     #
     load_relative 'query/combination'
     load_relative 'query/combinations'
-
+    
     load_relative 'query/allocation'
     load_relative 'query/allocations'
-
+    
     load_relative 'query/qualifiers'
     load_relative 'query/weigher'
     load_relative 'query/combinator'
-
+    
     load_relative 'query/weights'
-
+    
     # Query.
     #
     load_relative 'query/base'
     load_relative 'query/live'
     load_relative 'query/full'
-    load_relative 'query/solr' # TODO ?
-
+    #
+    load_relative 'query/solr' # TODO
+    
     # Results.
     #
     load_relative 'results/base'
@@ -274,14 +240,11 @@ module Loader
     #
     load_relative 'generator'
   end
-
+  
+  # Silenceable puts.
+  #
   def self.exclaim text
     puts text
-  end
-
-  def self.extend_load_path *dirs
-    dir = File.join(SEARCH_ROOT, *dirs)
-    $:.unshift dir unless $:.include? dir
   end
 
 end
