@@ -145,7 +145,7 @@ module Indexes
   # 
   #
   def self.clear
-    self.types = []
+    self.types = [] # TODO self.types = Types.new
   end
   
   
