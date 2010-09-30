@@ -12,12 +12,12 @@ module Configuration
         fields << options
         options = {}
       end
-
+      
       @name                     = name
       @source                   = source
                                   # dup, if field is reused. TODO Rewrite.
       @fields                   = fields.map { |field| field = field.dup; field.type = self; field }
-
+      
       @after_indexing           = options[:after_indexing]
       @result_type              = options[:result_type] || name
       @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false       # TODO Move to query?
@@ -26,9 +26,6 @@ module Configuration
     def generate
       categories = fields.map { |field| field.generate }
       Index::Type.new name, result_type, ignore_unassigned_tokens, *categories
-    end
-    def table_name
-      self # FIXME UGH, Remove anyway
     end
     def take_snapshot
       source.take_snapshot self

@@ -1,5 +1,3 @@
-# TODO Remove?
-#
 begin
   require 'bundler'
 rescue LoadError => e

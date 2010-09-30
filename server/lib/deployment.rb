@@ -124,10 +124,9 @@ module Picky
               run "rm -rf #{current_path}/log;   ln -sf #{shared_path}/log   #{current_path}/log"
               run "rm -rf #{current_path}/index; ln -sf #{shared_path}/index #{current_path}/index"
               # link database-config files
-              run "ln -sf #{shared_path}/config/base.yml #{current_path}/config/db/base.yml"
-              run "ln -sf #{shared_path}/config/source.yml #{current_path}/config/db/source.yml"
+              run "ln -sf #{shared_path}/app/db.yml #{current_path}/app/db.yml"
               # link unicorn.ru
-              run "ln -sf #{shared_path}/config/unicorn.ru #{current_path}/config/unicorn.ru" # TODO change path
+              run "ln -sf #{shared_path}/app/unicorn.ru #{current_path}/app/unicorn.ru"
             end
             
             namespace :rollback do
