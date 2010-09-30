@@ -21,7 +21,7 @@ namespace :server do
       :port      => 4000,
       :daemonize => false
     }
-    # TODO Move port!
+    # TODO Move port configuration!
     port = SEARCH_ENVIRONMENT == 'production' ? 6000 : 4000
     `export SEARCH_ENV=#{SEARCH_ENVIRONMENT}; unicorn -p #{config[SEARCH_ENVIRONMENT][:port]} -c #{File.join(SEARCH_ROOT, 'app/unicorn.ru')} #{config[SEARCH_ENVIRONMENT][:daemonize] ? '-D' : ''} #{File.join(SEARCH_ROOT, 'app/application.ru')}`
   end
