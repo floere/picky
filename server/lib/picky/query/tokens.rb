@@ -67,9 +67,9 @@ module Query
       @tokens.reject! &:blank?
     end
 
-    # Switches the tokens
+    # Switches the tokens.
     #
-    # TODO
+    # TODO Is this called?
     #
     def next_similar
       @tokens.first.next_similar unless empty?
