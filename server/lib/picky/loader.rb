@@ -70,11 +70,9 @@ module Loader
     load_user 'app/logging'
     load_user 'app/application'
     
-    # Setup Indexes from user definition
+    # TODO Rewrite
     #
-    # TODO Make special task that reloads the indexes!
-    #
-    Query::Qualifiers.instance.prepare # TODO Rewrite
+    Query::Qualifiers.instance.prepare
     
     exclaim "Application loaded."
   end
