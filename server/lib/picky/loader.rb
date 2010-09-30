@@ -48,8 +48,6 @@ module Loader
     #
     exclaim 'Loading Application.'
     
-    load_all_user_in 'app/initializers'
-    
     # Add lib dir to load path.
     #
     # add_lib_dir
@@ -57,6 +55,7 @@ module Loader
     # Picky autoloading.
     #
     begin
+      load_all_user_in 'lib/initializers'
       load_all_user_in 'lib/tokenizers'
       load_all_user_in 'lib/indexers'
       load_all_user_in 'lib/query'

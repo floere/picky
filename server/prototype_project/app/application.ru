@@ -5,7 +5,17 @@
 #
 require 'picky'
 
-# Load your application. This requires the files in lib TODO
+# Load your application. This requires the following files in
+# 
+#  * /lib/initializers/*.rb
+#  * /lib/tokenizers/*.rb
+#  * /lib/indexers/*.rb
+#  * /lib/query/*.rb
+#
+#  * /app/logging.rb
+#  * /app/application.rb
+#
+# to be required (in that order).
 #
 Loader.load_application
 
