@@ -55,7 +55,7 @@ describe Index::Bundle do
     end
   end
   
-  # FIXME
+  # TODO
   #
   # describe 'retrieve' do
   #   it 'should call the other methods correctly' do

@@ -74,9 +74,9 @@ describe Results do
         @allocations = stub :allocations
         @results.stub! :allocations => @allocations
       end
-      it 'should first offset (TODO), then truncate' do
+      it 'should process' do
         @allocations.should_receive(:process!).once.with(20, 0).ordered
-
+        
         @results.prepare!
       end
     end
