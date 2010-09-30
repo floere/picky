@@ -19,8 +19,6 @@ module Query
     
     # Get the weight of an allocation.
     #
-    # TODO Add a block to evaluate?
-    #
     def weight_for clustered
       @weights[clustered] || 0
     end
@@ -43,7 +41,8 @@ module Query
       #
       categories = combinations.map { |combination| combination.bundle.category }.clustered_uniq
       
-      # TODO Caching even necessary?
+      # Note: Caching will not be necessary anymore if the
+      #       mapping is not necessary anymore.
       #
       cached @weights_cache, categories do
         categories.map! &:name
