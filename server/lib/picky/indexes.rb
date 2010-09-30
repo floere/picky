@@ -1,3 +1,5 @@
+# TODO I should really do a Types collector class which does all this!
+#
 module Indexes
 
   mattr_accessor :configuration, :types, :type_mapping
