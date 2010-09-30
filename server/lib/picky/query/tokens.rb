@@ -1,32 +1,32 @@
 # encoding: utf-8
 #
 module Query
-
+  
   # This class primarily handles switching through similar token constellations.
   #
   class Tokens
-
+    
     #
     #
     cattr_accessor :maximum
     self.maximum = 5
-
+    
     # Basically delegates to its internal tokens array.
     #
     self.delegate *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, { :to => :@tokens }].flatten
-
+    
     #
     #
     def initialize tokens = []
       @tokens = tokens
     end
-
+    
     #
     #
     def tokenize_with tokenizer
       @tokens.each { |token| token.tokenize_with(tokenizer) }
     end
-
+    
     # Generates an array in the form of
     # [
     #  [combination],                           # of token 1
@@ -60,43 +60,31 @@ module Query
     def cap?
       @tokens.size > @@maximum
     end
-
+    
     # Rejects blank tokens.
     #
     def reject
       @tokens.reject! &:blank?
     end
-
-    # Switches the tokens.
-    #
-    # TODO Is this called?
-    #
-    def next_similar
-      @tokens.first.next_similar unless empty?
-    end
-
+    
     # Returns a solr query.
     #
     def to_solr_query
       @tokens.map(&:to_solr).join ' '
     end
-
+    
     #
     #
     def originals
       @tokens.map(&:original)
     end
-
+    
     # Just join the token original texts.
     #
     def to_s
       originals.join ' '
     end
     
-    # def to_a
-    #   @tokens
-    # end
-
   end
-
+  
 end
