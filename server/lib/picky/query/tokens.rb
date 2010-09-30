@@ -52,7 +52,7 @@ module Query
 
     # Caps the tokens to the maximum.
     #
-    # TODO parametrize?
+    # Note: We could parametrize this if necessary.
     #
     def cap
       @tokens.slice!(@@maximum..-1) if cap?

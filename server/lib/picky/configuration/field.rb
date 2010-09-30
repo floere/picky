@@ -58,7 +58,7 @@ module Configuration
       @indexer || @indexer = @indexer_class.new(type, self)
     end
     def tokenizer
-      @tokenizer || @tokenizer = @tokenizer_class.new # TODO Make instances.
+      @tokenizer || @tokenizer = @tokenizer_class.new
     end
     def virtual?
       !!virtual

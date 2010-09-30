@@ -94,10 +94,7 @@ module Query
     def remove_illegals
       @text.gsub! @@illegals, '' unless @text.blank?
     end
-
-    # TODO Think about these, remove illegals and normalize...
-    #
-
+    
     # Visitor for tokenizer.
     #
     # TODO Rewrite!!!

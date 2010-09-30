@@ -67,28 +67,25 @@ module Query
       # Get the allocations.
       #
       allocations = @weigher.allocations_for tokens
-
+      
       # Callbacks.
       #
       reduce allocations
       remove_from allocations
-
-      # TODO allocations#calculate # or better name
-      #
-
+      
       # Remove double allocations.
       #
       allocations.uniq
-
-      # Score the allocations.
+      
+      # Score the allocations using weights as bias.
       #
       allocations.calculate_score weights
-
+      
       # Sort the allocations.
       # (allocations are sorted according to score, highest to lowest)
       #
       allocations.sort
-
+      
       # Return the allocations.
       #
       allocations
