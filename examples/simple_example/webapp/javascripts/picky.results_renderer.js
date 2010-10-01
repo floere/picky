@@ -16,7 +16,7 @@ var PickyResultsRenderer = function(controller, data) {
   };
 
   this.renderHeader = function(allocation) {
-    var type = allocation.isType("c") ? t('suggestions.results.info.type.company') : t('suggestions.results.info.type.person');
+    var type = allocation.type; // Make definable.
     var explanation = '<div class="explanation">' + type + ' ' + this.explain(allocation.combination).replace(/([\wÄäÖöÜüéèà\/]+):([\wÄäÖöÜüéèà]+)/g, "<strong>$1</strong> <a href=\"javascript:searchEngine.highlight('$2')\">$2</a>") + '</div>';
     var rangeStart = this.data.offset + 1;
     var rangeEnd = this.data.offset + allocation.entries.length;
@@ -60,7 +60,7 @@ var PickyResultsRenderer = function(controller, data) {
   this.explain = function(combination) {
     var explanations = Localization.explanations(PickyI18n.locale);
     var explanation_delimiter = Localization.explanation_delimiters(PickyI18n.locale);
-    var no_ellipses           = ['street_number', 'zipcode'];
+    var no_ellipses           = ['street_number', 'zipcode']; // TODO Change!
     var parts = [];
     var combo;
     for (var i = 0, l = combination.length; i < l; i++) {
@@ -92,8 +92,8 @@ var PickyResultsRenderer = function(controller, data) {
 
   this.calculateAddinationData = function(correction) {
     var correction = correction || 0;
-    var results = 20;
-    var offset  = data.offset + results + correction; //$('#picky_results div.entry').size(); // data.offset + results
+    var results = 20; // Make parametrizable.
+    var offset  = data.offset + results + correction;
     var end     = offset + results;
     var total   = data.total;
     if (total < end) { end = total; }

@@ -110,15 +110,6 @@ var PickyController = function(searchEngine) {
     }
   };
   
-  this.allocationsCloudClickEventHandler = function(event) {
-    // TODO Callback?
-    
-    self.view.searchField.val(event.data.query);
-    self.view.hideAllocationCloud();
-    
-    self.fullSearch(event.data.query);
-  };
-  
   this.addinationClickEventHandler = function(event) {
     self.fullSearch(self.view.searchField.val(), event.data.offset);
   };

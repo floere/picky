@@ -1,8 +1,9 @@
 // Add PickyResults?
 var PickyView = function(controller) {
-
+  
+  var self = this;
   var controller = controller;
-  var config = controller.config;
+  // var config = controller.config;
 
   this.searchField   = $('#picky input.query');
   this.clearButton   = $('#picky div.reset');
@@ -10,9 +11,13 @@ var PickyView = function(controller) {
   this.resultCounter = $('#picky div.status');
   this.dashboard     = $('#picky .dashboard');
   
-  this.results       = $('#picky .results');
-  this.noResults     = $('#picky .no_results');
-  this.allocations   = $('#picky .allocations');
+  this.results   = $('#picky .results');
+  this.noResults = $('#picky .no_results');
+  
+  this.allocations         = $('#picky .allocations');
+  this.shownAllocations    = this.allocations.find('.shown')
+  this.showMoreAllocations = this.allocations.find('.more')
+  this.hiddenAllocations   = this.allocations.find('.hidden')
   
   this.init = function() {
     this.bindEventHandlers();
@@ -20,7 +25,6 @@ var PickyView = function(controller) {
   };
   
   this.bindEventHandlers = function() {
-    
     this.searchField.keyup(function(event) {
       controller.keyUpEventHandler(event);
     });
@@ -33,9 +37,19 @@ var PickyView = function(controller) {
       controller.clearButtonClickEventHandler(event);
     });
     
-    // $('#picky .allocations .' + v + ' .more li').click(function() {
-    //   $(this).parent().hide().next().show();}
-    // );
+    this.showMoreAllocations.click(function() {
+      self.showMoreAllocations.hide();
+      self.hiddenAllocations.show();
+    });
+  };
+  
+  this.allocationsCloudClickEventHandler = function(event) {
+    // TODO Callback?
+    
+    this.searchField.val(event.data.query);
+    this.hideAllocationCloud();
+    
+    controller.fullSearch(event.data.query);
   };
   
   this.focus = function() {
@@ -80,26 +94,29 @@ var PickyView = function(controller) {
   
   this.showAllocationCloud = function(data) {
     this.reset(false);
-    var renderer = new PickyAllocationsCloudRenderer(controller, data);
+    var renderer = new PickyAllocationsCloudRenderer(this, data);
     renderer.render();
     this.allocations.show();
     this.showClearButton();
   };
-  
   this.hideAllocationCloud = function() {
     this.allocations.hide();
   };
-  
   this.clearAllocationCloud = function() {
-    $('#search .allocations .shown').empty();
-    $('#search .allocations .more').hide();
-    $('#search .allocations .hidden').empty();
+    this.shownAllocations.empty();
+    this.showMoreAllocations.hide();
+    this.hiddenAllocations.empty().hide();
+  };
+  this.appendShownAllocation = function(item) {
+    this.shownAllocations.append(item);
+  };
+  this.appendHiddenAllocation = function(item) {
+    this.hiddenAllocations.append(item);
   };
   
   this.showClearButton = function() {
     this.clearButton.fadeTo(166, 1.0);
   };
-
   this.hideClearButton = function() {
     this.clearButton.fadeTo(166, 0.0);
   };

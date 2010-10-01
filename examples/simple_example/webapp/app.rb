@@ -36,7 +36,9 @@ get '/search/full' do
   {
     :allocations => [
       ["book",25.22,2,[["title","Old","old"],["title","Man","man"]],[],['Content Result a1','Content Result a2']],
-      ["book",22.16,1,[["author","Old","old"],["title","Man","man"]],[],['Content Result b1']]
+      ["book",22.16,1,[["author","Old","old"],["title","Man","man"]],[],['Content Result b1']],
+      ["book",13.11,1,[["author","Old","old"],["author","Man","man"]],[],['Content Result c1']],
+      ["book",5.23,1,[["author","Man","man"],["author","Old","old"]],[],['Content Result d1']],
     ],
     :offset => 0,
     :total => rand(20),

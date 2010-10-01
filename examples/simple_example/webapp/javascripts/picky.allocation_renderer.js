@@ -11,64 +11,24 @@ var Localization = function() {
   //
   var all_qualifiers = {
     de:{
-      first_name:    'vorname',
-      name:          'name',
-      maiden_name:   'maedchen',
-      street:        'strasse',
-      street_number: 'nummer',
-      zipcode:       'plz',
-      city:          'ort',
-      category:      'rubrik',
-      occupation:    'beruf',
-      phone_number:  'tel'
+      title:    'Titel',
+      author:   'Autor'
     },
     fr:{
       first_name:    'prenom',
-      name:          'nom',
-      maiden_name:   'fille',
-      street:        'rue',
-      street_number: 'numero',
-      zipcode:       'postal',
-      city:          'lieu',
-      category:      'rubrique',
-      occupation:    'occupation',
-      phone_number:  'tel'
+      name:          'nom'
     },
     it:{
       first_name:    'cognome',
-      name:          'nome',
-      maiden_name:   'ragazza',
-      street:        'strada',
-      street_number: 'numero',
-      zipcode:       'cap',
-      city:          'luogo',
-      category:      'rubrica',
-      occupation:    'occupazione',
-      phone_number:  'tel'
+      name:          'nome'
     },
     en:{
-      first_name:    'first',
-      name:          'name',
-      maiden_name:   'maiden',
-      street:        'street',
-      street_number: 'number',
-      zipcode:       'zip',
-      city:          'city',
-      category:      'category',
-      occupation:    'occupation',
-      phone_number:  'phone:'
+      title:    'title',
+      author:   'author'
     },
     ch:{
       first_name:    'vornamä',
-      name:          'namä',
-      maiden_name:   'meitli',
-      street:        'schtrass',
-      street_number: 'nummerä',
-      zipcode:       'plz',
-      city:          'ort',
-      category:      'rubriik',
-      occupation:    'bruef',
-      phone_number:  'tel'
+      name:          'namä'
     }
   };
 
@@ -80,63 +40,23 @@ var Localization = function() {
   var all_explanations = {
     de:{
       first_name:    'Vorname',
-      name:          'Name',
-      maiden_name:   'Mädchenname',
-      street:        'Strasse',
-      street_number: 'Hausnummer',
-      zipcode:       'Postleitzahl',
-      city:          'Ort',
-      category:      'Rubrik',
-      occupation:    'Beruf',
-      phone_number:  'Telefon/Fax/Mobil'
+      name:          'Name'
     },
     fr:{
       first_name:    'prénom',
-      name:          'nom',
-      maiden_name:   'nom de fille',
-      street:        'rue',
-      street_number: 'numero',
-      zipcode:       'code postal',
-      city:          'lieu',
-      category:      'rubrique',
-      occupation:    'occupation',
-      phone_number:  'téléphone/fax/mobile'
+      name:          'nom'
     },
     it:{
       first_name:    'prenome',
-      name:          'nome',
-      maiden_name:   'cognome da ragazza',
-      street:        'strada',
-      street_number: 'numero',
-      zipcode:       'CAP',
-      city:          'luogo',
-      category:      'rubrica',
-      occupation:    'occupazione',
-      phone_number:  'telefono/fax/cellulare'
+      name:          'nome'
     },
     en:{
-      first_name:    'first name',
-      name:          'name',
-      maiden_name:   'maiden name',
-      street:        'street',
-      street_number: 'number',
-      zipcode:       'zipcode',
-      city:          'place',
-      category:      'category',
-      occupation:    'profession',
-      phone_number:  'phone/fax/mobile'
+      title:    'title',
+      author:   'author'
     },
     ch:{
       first_name:    'Vornamä',
-      name:          'Namä',
-      maiden_name:   'Mäitlinamä',
-      street:        'Schtrass',
-      street_number: 'Huusnummerä',
-      zipcode:       'Poschtleitzahl',
-      city:          'Ort',
-      category:      'Rubriik',
-      occupation:    'Bruef',
-      phone_number:  'Telefon/Fax/Handy'
+      name:          'Namä'
     }
   };
 
@@ -416,8 +336,14 @@ function AllocationRenderer(allocation) {
   this.generate = function() {
     this.query       = querify(combination);
     this.text        = suggestify(combination);
-
+    
     return self;
   };
+  
+  //
+  //
+  this.listItem = function() {
+    return $('<li><div class="text">' + this.text + '</div><div class="count">' + this.count + '</div></li>');
+  }
 
 };
