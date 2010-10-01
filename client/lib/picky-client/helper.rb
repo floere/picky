@@ -4,20 +4,24 @@ module Picky
   #
   class Helper
     
+    # TODO I18n stuff!
+    #
     @@interface_html = <<-HTML
-<div class="picky_dashboard empty">
-  <div class="picky_feedback">
-    <div title="# results" class="picky_status"></div>
-    <input type="text" class="picky_query" autocorrect="off">
-    <div title="clear" class="picky_reset"></div>
+<div id="picky">
+  <div class="dashboard empty">
+    <div class="feedback">
+      <div title="# results" class="status"></div>
+      <input type="text" class="query" autocorrect="off">
+      <div title="clear" class="reset"></div>
+    </div>
+    <input type="button" value="search" class="search_button">
   </div>
-  <input type="button" value="search" class="picky_search_button" style="margin-top: 3px;">
 </div>
     HTML
     @@interface_html.gsub!(/[\n]/, '').squeeze!(' ')
     @@interface_html.freeze
     #
-    # 
+    # Returns
     #
     def self.interface
       @@interface_html

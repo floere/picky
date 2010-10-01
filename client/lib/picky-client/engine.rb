@@ -87,7 +87,11 @@ end
 
 # Extend hash with to_query method.
 #
-require 'active_support/core_ext/object/to_query'
+begin
+  require 'active_support/core_ext/object/to_query'
+rescue LoadError
+  
+end
 class Hash
   def to_query namespace = nil
     collect do |key, value|

@@ -4,7 +4,7 @@ describe Picky::Helper do
   
   describe "interface" do
     it "should return good html" do
-      Picky::Helper.interface.should == '<div class="picky_dashboard empty"> <div class="picky_feedback"> <div title="# results" class="picky_status"></div> <input type="text" class="picky_query" autocorrect="off"> <div title="clear" class="picky_reset"></div> </div> <input type="button" value="search" class="picky_search_button" style="margin-top: 3px;"></div>'
+      Picky::Helper.interface.should == "<div id=\"picky\"> <div class=\"dashboard empty\"> <div class=\"feedback\"> <div title=\"# results\" class=\"status\"></div> <input type=\"text\" class=\"query\" autocorrect=\"off\"> <div title=\"clear\" class=\"reset\"></div> </div> <input type=\"button\" value=\"search\" class=\"search_button\"> </div></div>"
     end
   end
   
