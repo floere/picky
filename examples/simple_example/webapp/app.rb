@@ -88,16 +88,10 @@ def wrap_in_html interface
           No results, sorry!
         </div>
       </div>
-      <div style="display: block;" class="allocations">
-        <div class="shown">
-          Shown
-        </div>
-        <div class="more">
-          More
-        </div>
-        <div class="hidden">
-          Hidden
-        </div>
+      <div style="display: none;" class="allocations">
+        <div class="shown"></div>
+        <div class="more">More</div>
+        <div class="hidden"></div>
       </div>
     </div>
     <script type='text/javascript'>

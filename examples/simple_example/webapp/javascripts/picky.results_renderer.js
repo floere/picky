@@ -17,7 +17,7 @@ var PickyResultsRenderer = function(controller, data) {
 
   this.renderHeader = function(allocation) {
     var type = allocation.type; // Make definable.
-    var explanation = '<div class="explanation">' + type + ' ' + this.explain(allocation.combination).replace(/([\wÄäÖöÜüéèà\/]+):([\wÄäÖöÜüéèà]+)/g, "<strong>$1</strong> <a href=\"javascript:searchEngine.highlight('$2')\">$2</a>") + '</div>';
+    var explanation = '<div class="explanation">' + type + ' ' + this.explain(allocation.combination).replace(/([\wÄäÖöÜüéèà\/]+):([\wÄäÖöÜüéèà]+)/g, "<strong>$1</strong> $2") + '</div>';
     var rangeStart = this.data.offset + 1;
     var rangeEnd = this.data.offset + allocation.entries.length;
     var rangeText = (rangeStart == rangeEnd) ? rangeStart : rangeStart + '-' + rangeEnd;

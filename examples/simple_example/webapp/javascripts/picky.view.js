@@ -46,8 +46,8 @@ var PickyView = function(controller) {
   this.allocationsCloudClickEventHandler = function(event) {
     // TODO Callback?
     
-    this.searchField.val(event.data.query);
-    this.hideAllocationCloud();
+    self.searchField.val(event.data.query);
+    self.hideAllocationCloud();
     
     controller.fullSearch(event.data.query);
   };
