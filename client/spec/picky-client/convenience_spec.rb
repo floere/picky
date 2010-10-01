@@ -12,21 +12,60 @@ describe Picky::Convenience do
       :duration => 0.12345
     }.extend Picky::Convenience
   end
-
-  # describe 'replace_ids_with' do
-  #   before(:each) do
-  #     @results = Search::Results.new [
-  #         [nil, nil, nil, [1,2,3,4,5,6,7,8]],
-  #         [nil, nil, nil, [9,10,11,12,13,14,15,16]],
-  #         [nil, nil, nil, [17,18,19,20,21,22,23]]
-  #       ], [], nil, 123, true, true, 0.123, 1234
-  #   end
-  #   it 'should replace the ids' do
-  #     new_ids = (11..31).to_a # +10
-  #     @results.replace_ids_with new_ids
-  #     @results.ids.should == (11..31).to_a
-  #   end
-  # end
+  
+  describe "populate_with" do
+    before(:each) do
+      @results = {
+          :allocations => [[nil, nil, nil, nil, [1,2,3,4,5,6,7,8]],
+                           [nil, nil, nil, nil, [9,10,11,12,13,14,15,16]],
+                           [nil, nil, nil, nil, [17,18,19,20,21,22,23]]
+                          ],
+           :offset => 123,
+           :duration => 0.123,
+           :count => 1234
+         }.extend Picky::Convenience
+      
+      class ARClass
+        attr_reader :id
+        def initialize id
+          @id = id
+        end
+        def self.find ids, options = {}
+          ids.map { |id| new(id) }
+        end
+        def == other
+          self.id == other.id
+        end
+      end
+    end
+    it "should populate correctly even without a block" do
+      @results.populate_with ARClass
+      @results.entries.should == (1..21).map { |id| ARClass.new(id) }
+    end
+    it "should populate correctly with a render block" do
+      @results.populate_with(ARClass) { |ar_instance| ar_instance.id.to_s }
+      @results.entries.should == (1..21).map { |id| id.to_s } # "rendering" using to_s
+    end
+  end
+  
+  describe 'replace_ids_with' do
+    before(:each) do
+      @results = {
+          :allocations => [[nil, nil, nil, nil, [1,2,3,4,5,6,7,8]],
+                           [nil, nil, nil, nil, [9,10,11,12,13,14,15,16]],
+                           [nil, nil, nil, nil, [17,18,19,20,21,22,23]]
+                          ],
+           :offset => 123,
+           :duration => 0.123,
+           :count => 1234
+         }.extend Picky::Convenience
+    end
+    it 'should populate with the entries' do
+      new_ids = (11..31).to_a # +10
+      @results.replace_ids_with new_ids
+      @results.entries.should == (11..31).to_a
+    end
+  end
 
   describe 'clear_ids' do
     it 'should clear all ids' do
