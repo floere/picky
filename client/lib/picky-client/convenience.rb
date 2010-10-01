@@ -44,7 +44,9 @@ module Picky
     # Populating the results.
     #
     # Give it an AR class and options for the find and it
-    # will yield each found result for you to render. 
+    # will yield each found result for you to render.
+    #
+    # If you don't pass it a block, it will just use the AR results.
     #
     def populate_with klass, amount = 20, options = {}, &block
       the_ids = ids amount
