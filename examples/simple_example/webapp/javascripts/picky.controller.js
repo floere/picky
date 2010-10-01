@@ -24,15 +24,11 @@ var PickyController = function(searchEngine) {
   this.focus = function() {
     self.view.focus();
   };
-
-  this.currentSearchTerms = function() {
-    return self.view.currentSearchTerms();
-  };
-
+  
   this.select = function() {
     self.view.select();
   };
-
+  
   this.insert = function(query, full) {
     self.view.searchField.val(query);
     self.select();
@@ -51,7 +47,7 @@ var PickyController = function(searchEngine) {
   };
   
   this.fullSearchCallback = function(data, query) {
-    data = this.successCallback(data) || data;
+    data = self.successCallback(data) || data;
     
     if (data.total == 0) {
       self.showNoResults(data);
@@ -69,7 +65,7 @@ var PickyController = function(searchEngine) {
     
     self.focus();
     
-    this.afterCallback(data, 'full');
+    self.afterCallback(data, query, 'full');
   };
 
   this.liveSearch = function(query, params) {
@@ -80,13 +76,13 @@ var PickyController = function(searchEngine) {
     this.searchEngine.search('live', query, this.liveSearchCallback, 0);
   };
 
-  this.liveSearchCallback = function(data) {
-    data = this.successCallback(data) || data;
+  this.liveSearchCallback = function(data, query) {
+    data = self.successCallback(data) || data;
     
     self.view.updateResultCounter(data.total);
     self.view.setSearchStatus(self.searchStatus(data));
     
-    this.afterCallback(data, 'full');
+    self.afterCallback(data, query, 'live');
   };
   
   this.keyUpEventHandler = function(event) {
@@ -118,7 +114,6 @@ var PickyController = function(searchEngine) {
     // TODO Callback?
     
     self.view.searchField.val(event.data.query);
-    self.view.hideSimilar();
     self.view.hideAllocationCloud();
     
     self.fullSearch(event.data.query);
@@ -166,7 +161,7 @@ var PickyController = function(searchEngine) {
   this.searchStatus = function(data) {
     if (data.total == 0) { return 'none'; };
     if (this.mustShowAllocationCloud(data)) { return 'support'; }
-    return 'results';
+    return 'ok';
   };
   
   this.highlight = function(text, klass) {

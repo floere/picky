@@ -7,6 +7,8 @@ var Localization = function() {
   //
   // This needs to correspond to the parsing in the search engine.
   //
+  // TODO Change.
+  //
   var all_qualifiers = {
     de:{
       first_name:    'vorname',
@@ -158,7 +160,7 @@ var Localization = function() {
 function AllocationRenderer(allocation) {
   var self = this;
 
-  var locale = I18n.locale;
+  var locale = PickyI18n.locale;
   var qualifiers            = Localization.qualifiers(locale);
   var explanations          = Localization.explanations(locale);
   var location_delimiter    = Localization.location_delimiters(locale);

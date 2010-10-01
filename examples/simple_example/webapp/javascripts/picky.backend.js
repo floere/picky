@@ -1,16 +1,17 @@
 // Core search backend.
 //
 var PickyBackend = function(url) {
+  
   return {
     url: url || '/search',
-    wrap: function(data) {
-      return new Data(data);
-    },
     get: function(timestamp, query, engineCallback, offset, specificParams) {
       var params = specificParams || {};
       params = $.extend({ query: query, offset: offset }, specificParams);
       // wrap the data before returning it
-      var wrappedCallback = function(data, query) { return engineCallback(SearchBackend.wrap(data), query); };
+      //
+      var wrappedCallback = function(data, query) {
+        return engineCallback(new Data(data), query);
+      };
       $.ajax({ type: 'GET', url: this.url, data: params, success: this.callback(query, wrappedCallback, timestamp), dataType: 'json'});
     },
     // Override search in subclasses.

@@ -3,27 +3,20 @@ var PickyAllocationsCloudRenderer = function(controller, data) {
 
   this.controller  = controller;
   this.allocations = data.allocations;
-  this.companies   = [];
-  this.people      = [];
+  this.shown       = [];
 
   this.render = function() {
-    this.createAllocationLists();
-    this.renderLists();
+    this.createAllocationList();
+    this.renderList(this.shown);
   };
 
-  this.createAllocationLists = function() {
+  this.createAllocationList = function() {
     this.allocations.each(function(i, allocation) {
       var allocationRenderer = new AllocationRenderer(allocation);
-
       allocationRenderer.generate();
+      
       var listItem = self.renderListItem(allocationRenderer);
-
-      if (allocation.isType('c')) {
-        self.companies.push(listItem);
-      }
-      else {
-        self.people.push(listItem);
-      }
+      self.shown.push(listItem);
     });
   };
 
@@ -34,21 +27,16 @@ var PickyAllocationsCloudRenderer = function(controller, data) {
      item.bind('click', { query: allocationRenderer.query, type: allocationRenderer.type }, this.controller.allocationsCloudClickEventHandler);
      return item;
   };
-
-  this.renderLists = function() {
-    this.renderList('company', this.companies);
-    this.renderList('person', this.people);
-  };
-
-  this.renderList = function(type, list) {
+  
+  this.renderList = function(list) {
     if (list.length == 0) {
-      $('#search .allocations .' + type).hide();
+      $('#search .allocations').hide();
       return;
     }
     var maxSuggestions = 3;
-    var shown = $('#search .allocations .' + type + ' .shown').empty();
-    var more  = $('#search .allocations .' + type + ' .more').hide();
-    var hidden = $('#search .allocations .' + type + ' .hidden').empty().hide();
+    var shown = $('#search .allocations .shown').empty();
+    var more  = $('#search .allocations .more').hide();
+    var hidden = $('#search .allocations .hidden').empty().hide();
 
     if (list.length > maxSuggestions) {
       $.each(list.slice(0,maxSuggestions-1), function(i, item) {
@@ -64,7 +52,7 @@ var PickyAllocationsCloudRenderer = function(controller, data) {
         shown.append(item);
       });
     }
-    $('#search .allocations .' + type).show();
+    $('#search .allocations').show();
   };
 
 };

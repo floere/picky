@@ -11,7 +11,7 @@ var PickyResultsRenderer = function(controller, data) {
       var header = self.renderHeader(allocation);
       var entries = self.renderEntries(allocation);
       var addination = self.renderAddination(self.data);
-      $('#search_results').append(header).append(entries).append(addination);
+      $('#picky .results').append(header).append(entries).append(addination);
     });
   };
 
@@ -58,8 +58,8 @@ var PickyResultsRenderer = function(controller, data) {
   };
 
   this.explain = function(combination) {
-    var explanations = Localization.explanations(I18n.locale);
-    var explanation_delimiter = Localization.explanation_delimiters(I18n.locale);
+    var explanations = Localization.explanations(PickyI18n.locale);
+    var explanation_delimiter = Localization.explanation_delimiters(PickyI18n.locale);
     var no_ellipses           = ['street_number', 'zipcode'];
     var parts = [];
     var combo;
@@ -93,7 +93,7 @@ var PickyResultsRenderer = function(controller, data) {
   this.calculateAddinationData = function(correction) {
     var correction = correction || 0;
     var results = 20;
-    var offset  = data.offset + results + correction; //$('#search_results div.entry').size(); // data.offset + results
+    var offset  = data.offset + results + correction; //$('#picky_results div.entry').size(); // data.offset + results
     var end     = offset + results;
     var total   = data.total;
     if (total < end) { end = total; }

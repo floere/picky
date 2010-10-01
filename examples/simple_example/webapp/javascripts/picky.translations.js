@@ -1,11 +1,11 @@
 // Translations
 //
-var PickyI18n = { locale:'en' };
+var PickyI18n = { };
 
 // Set the correct locale for all js code.
 //
 $(function() {
-  PickyI18n.locale = $('html').attr('lang');
+  PickyI18n.locale = $('html').attr('lang') || 'en';
 });
 
 var dictionary = {

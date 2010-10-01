@@ -6,10 +6,10 @@
 function Allocation(type, weight, count, combination, ids, rendered) {
   var self = this;
 
-  this.type        = type;        // 'c'
+  this.type        = type;        // 'books'
   this.weight      = weight;      // 5.14
   this.count       = count;       // 14
-  this.combination = combination; // [['street', 'Meierstrasse'], ['name', 'Peter']]
+  this.combination = combination; // [['title', 'Old', 'old'], ['title', 'Man', 'man']]
   this.ids         = ids || [];
   this.rendered    = rendered || [];
   this.entries     = this.rendered;
