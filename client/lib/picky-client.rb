@@ -4,7 +4,8 @@ require 'rubygems'
 
 require 'active_support'
 
-this = File.dirname __FILE__
-require File.join(this, '/picky-client/engine')
-require File.join(this, '/picky-client/serializer')
-require File.join(this, '/picky-client/convenience')
+dir = File.dirname __FILE__
+require File.expand_path('picky-client/engine', dir)
+require File.expand_path('picky-client/serializer', dir)
+require File.expand_path('picky-client/convenience', dir)
+require File.expand_path('picky-client/helper', dir)
