@@ -19,7 +19,7 @@ class BookSearch < Application
                                    :qualifiers => [:y, :year, :annee]
     
     
-    adapter = DB.configure :file => 'config/db/source.yml'
+    adapter = DB.configure :file => 'app/db.yml'
     
     type :main,
           Sources::DB.new('SELECT id, title, author, year FROM books', adapter),

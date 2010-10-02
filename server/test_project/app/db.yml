@@ -1,0 +1,6 @@
+adapter: mysql
+host: localhost
+username: root
+password:
+database: picky_test_project
+encoding: utf8
