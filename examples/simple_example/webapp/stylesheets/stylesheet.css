@@ -9,7 +9,7 @@ body {
     position: relative;
     overflow: hidden;
     background-color: lightGrey;
-    padding: 5px 5px 6px 5px;
+    padding: 5px 5px 7px 5px;
     height: 26px;
     margin-bottom: 3px; }
   #picky .status {
@@ -60,7 +60,7 @@ body {
   #picky .feedback {
     width: 460px;
     float: left;
-    border: 1px solid #eecc00;
+    border: 1px solid #cccccc;
     padding: 0;
     margin: 0; }
     #picky .feedback .reset {
