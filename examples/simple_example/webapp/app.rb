@@ -5,6 +5,9 @@ require 'picky-client'
 
 PickyBackend = Picky::Client::Full.new :host => 'localhost', :port => 4000, :path => '/books/full'
 
+set :static, true
+set :public, '.'
+
 get '/javascripts/:file_name' do
   f = File.open("javascripts/#{params[:file_name]}")
   result = f.read
@@ -74,22 +77,19 @@ def wrap_in_html interface
     #{javascripts}
   </head>
   <body>
+    <img src="images/picky.png"/>
     <div id="picky">
       <div class="dashboard empty">
         <div class="feedback">
-          <div class="status" title="# results" style="opacity: 1;"></div>
-          <input type="text" autocorrect="off" class="query">
-          <div class="reset" title="clear" style="opacity: 1;"></div>
+          <div class="status" title="# results"></div>
+          <input type="text" autocorrect="off" class="query"/>
+          <div class="reset" title="clear"></div>
         </div>
         <input type="button" class="search_button" value="search">
       </div>
-      <ol style="display: none;" class="results">
-        
-      </ol>
-      <div style="display: none;" class="no_results">
-        Sorry!
-      </div>
-      <div style="display: none;" class="allocations">
+      <ol class="results"></ol>
+      <div class="no_results">Sorry!</div>
+      <div class="allocations">
         <ol class="shown"></ol>
         <ol class="more">More</ol>
         <ol class="hidden"></ol>
@@ -112,6 +112,7 @@ def wrap_in_html interface
             after: function(data) {  },
             keyUp: function(event) {  }
           });
+          pickyClient.insert('enter something here :)', false);
         });
       //]]>
     </script>

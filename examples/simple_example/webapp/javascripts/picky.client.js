@@ -11,8 +11,8 @@ var PickyClient = function(config) {
     this.controller.focus();
   };
   
-  this.insert = function(query, people, companies, full, withoutHistory) {
-    this.controller.insert(query, people, companies, full, withoutHistory);
+  this.insert = function(query, full) {
+    this.controller.insert(query, full);
   };
   
   // If the given backend cannot be found, ignore the search request.

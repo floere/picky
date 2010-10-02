@@ -1,8 +1,13 @@
 body {
+  text-align: center;
   font-family: Lucida Grande; }
 
+img {
+  margin: 10px; }
+
 #picky {
-  margin: 50px auto;
+  text-align: left;
+  margin: 0px auto;
   width: 560px;
   overflow: hidden; }
   #picky .dashboard {
