@@ -86,6 +86,8 @@ body {
     background-color: #09be01; }
   #picky .ok .feedback {
     background-color: #bcf0b3; }
+  #picky input.search_button {
+    margin: 5px 15px; }
   #picky input.query {
     float: left;
     width: 380px;
