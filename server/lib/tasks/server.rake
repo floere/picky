@@ -14,16 +14,12 @@ namespace :server do
     # Rake::Task[:"solr:start"].invoke # TODO Move to better place.
     config = {}
     config['production'] = {
-      :port      => 6000,
       :daemonize => true
     }
     config['development'] = {
-      :port      => 4000,
       :daemonize => false
     }
-    # TODO Move port configuration!
-    port = SEARCH_ENVIRONMENT == 'production' ? 6000 : 4000
-    `export SEARCH_ENV=#{SEARCH_ENVIRONMENT}; unicorn -p #{config[SEARCH_ENVIRONMENT][:port]} -c #{File.join(SEARCH_ROOT, 'unicorn.ru')} #{config[SEARCH_ENVIRONMENT][:daemonize] ? '-D' : ''} #{File.join(SEARCH_ROOT, 'config.ru')}`
+    puts `export SEARCH_ENV=#{SEARCH_ENVIRONMENT}; unicorn -c #{File.join(SEARCH_ROOT, 'unicorn.ru')} #{config[SEARCH_ENVIRONMENT][:daemonize] ? '-D' : ''}`
   end
   desc "Restart the unicorns!"
   task :restart do
@@ -36,13 +32,5 @@ namespace :server do
     chdir_to_root
     `kill -QUIT #{current_pid}` if current_pid
     # Rake::Task[:"solr:stop"].invoke # TODO Move to better place.
-  end
-
-  # TODO
-  #
-  desc 'send the USR1 signal to the thin server'
-  task :usr1 => :ruby_version do
-    puts "Sending USR1 signal to the thin server."
-    `pidof thin#{RUBY_VERSION_APPENDIX}`.split.each { |pid| Process.kill('USR1', pid.to_i) }
   end
 end
