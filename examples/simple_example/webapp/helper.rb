@@ -25,18 +25,17 @@ def wrap_in_html interface
     <script type='text/javascript'>
       //<![CDATA[
         pickyClient = new PickyClient({
+          locale: PickyI18n.locale,
           controller: PickyController,
           backends: {
             live: new LiveBackend('/search/live'),
             full: new FullBackend('/search/full')
           },
-          locale: PickyI18n.locale,
           showResultsThreshold: 10,
           showFeedback: true,
-          before: function(params, query, offset) {  }, // mess with the params before sending. params['hello'] = 'blaaah'; return params
-          success: function(data, query) {  },
-          after: function(data, query) {  },
-          keyUp: function(event) {  }
+          before: function(params, query, offset) {  }, // Before Picky sends any data.
+          success: function(data, query) {  }, // Just after Picky receives data. (Get a PickyData object)
+          after: function(data, query) {  } // After Picky has handled the data and updated the view.
         });
         pickyClient.insert('enter something here :)');
       //]]>

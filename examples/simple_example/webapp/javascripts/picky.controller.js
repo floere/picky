@@ -7,7 +7,6 @@ var PickyController = function(searchEngine) {
   this.beforeCallback  = this.config.before; // || ...
   this.successCallback = this.config.success; // || ...
   this.afterCallback   = this.config.after; // || ...
-  this.keyUpCallback   = this.config.keyUp; // || ...
   
   this.init = function() {
     this.view = new PickyView(this);
@@ -86,8 +85,6 @@ var PickyController = function(searchEngine) {
   };
   
   this.keyUpEventHandler = function(event) {
-    this.keyUpCallback(event);
-    
     if (this.view.searchField.val() == '') {
       this.reset();
     } else {
