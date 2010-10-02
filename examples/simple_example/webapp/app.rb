@@ -1,11 +1,12 @@
 require 'rubygems'
-require 'sinatra'
-require "sinatra/reloader" if development?
-require 'picky-client'
+require 'bundler'
+Bundler.require
 
-require 'helper'
+require File.expand_path 'helper', File.dirname(__FILE__)
 
-PickyBackend = Picky::Client::Full.new :host => 'localhost', :port => 4000, :path => '/books/full'
+# What you would do in an app.
+#
+# PickyBackend = Picky::Client::Full.new :host => 'localhost', :port => 4000, :path => '/books/full'
 
 set :static, true
 set :public, File.dirname(__FILE__)
@@ -20,7 +21,7 @@ end
 #
 get '/search/live' do
   # Return a fake result
-  {
+  results = {
     :allocations => [
       ["book",25.22,203,[["title","Old","old"],["title","Man","man"]],[]],
       ["book",22.16,56,[["author","Old","old"],["title","Man","man"]],[]]
@@ -28,7 +29,8 @@ get '/search/live' do
     :offset => 0,
     :total => rand(2000),
     :duration => rand(1)
-  }.to_json
+  }
+  ActiveSupport::JSON.encode results
 end
 
 # For full results, you get the ids from the picky server
@@ -44,7 +46,7 @@ get '/search/full' do
   #
   
   # Return a fake result
-  {
+  results = {
     :allocations => [
       ["book",25.22,2,[["title","Old","old"],["title","Man","man"]],[],['<div class="item">Content Result a1</div>','<div class="item">Content Result a2</div>']],
       ["book",22.16,1,[["author","Old","old"],["title","Man","man"]],[],['<div class="item">Content Result b1</div>']],
@@ -54,5 +56,6 @@ get '/search/full' do
     :offset => 0,
     :total => rand(20),
     :duration => rand(1)
-  }.to_json
+  }
+  ActiveSupport::JSON.encode results
 end

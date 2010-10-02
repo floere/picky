@@ -51,7 +51,7 @@ function Allocations(allocations) {
 //   allocations:
 //     Allocation[] of [weight, count, combination, Entry[] of [id, content]]
 //
-function Data(data) {
+function PickyData(data) {
   var self = this;
 
   // Attributes.

@@ -1,0 +1,177 @@
+1984; George Orwell
+20,000 Leagues Under the Sea; Jules Verne
+A Connecticut Yankee in King Arthur's Court; Mark Twain
+A Death in the Family; James Agee
+Adventures of Huckleberry Finn; Mark Twain
+Adventures of Tom Sawyer; Mark Twain
+A Farewell to Arms; Ernest Hemmingway
+Age of Reason; Jean Paul Sartre
+Alice's Adventures in Wonderland; Lewis Carroll
+All Quiet on the Western Front; Erich Maria Remarque
+Andersonville; MacKinlay Kantor
+Animal Farm; George Orwell
+Anna Karenina; Leo Tolstoy
+Arrowsmith; Sinclair Lewis
+A Tree Grows in Brooklyn; Betty Smith
+Babbit; Sinclair Lewis
+Bell Jar; Sylivia Plath
+Beowulf; UNKNOWN, ancient German
+Holy Bible; VARIOUS
+Big Sky; Alfred Bertram Guthrie
+Billy Budd; Herman Meville
+Brave New World; Aldous Huxley
+Brothers Karamozov; Fyodor Dostoyevski
+Farenheit 451; Ray Bradbury
+Farewell to Manzanar; Jeanne Wakatsuki Houston
+Fathers and Sons; Ivan Turgenve
+Flowers for Algernon; Daniel Keyes
+For Whom the Bell Tolls; Ernest Hemingway
+Frankenstein; Mary Shelly
+French Lieutenant's Woman; John Fowles
+Daisy Miller; Henry James
+Darkness at Noon; Arthur Koestler
+David Copperfield; Charles Dickens
+Death Comes for the Archbishop; Willa Cather
+Death of Ivan Ilych; Leo Tolstoy
+Dombey and Son; Charles Dickens
+Don Quiote de la Mancha; Miguel de Cervantes
+Dracula; Bram Stoker
+Dune; Frank Herbert
+Emma; Jane Austen
+Ethan Frome; Edith Wharton
+Heart is a Lonely Hunter; Carson McCullers
+Hiroshima; John Hersey
+House of Seven Gables; Nathaniel Hawthorne
+Hunchback of Notre Dame; Victor Hugo
+Germinal; Emile Zola
+Giant; Edna Ferber
+Giants in the Earth; Ole Edvart Rolvaag
+Go Tell it on the Mountain; James Baldwin
+Gone with the Wind; Margaret Mitchell
+Good Earth; Pearl Sydenstricker Buck
+Grapes of Wrath; John Steinbeck
+Great Expectations; Charles Dickens
+Great Gatsby; Francis Scott Fitzgerald
+Great Short Works of Joseph Conrad; Joseph Conrad
+Green Mansions; William Henry Hudson
+Grendel; John Gardiner
+Gulliver's Travels; Johnathan Swift
+Caine Mutiny; Herman Wouk
+Call of the Wild; Jack London
+Candide; Voltaire
+Canterbury Tales; Geoffrey Chaucer
+Catch-22; Joseph Heller
+Catcher in the Rye; Jerome David Salinger
+Color Purple; Alice Walker
+Count of Monte Cristo; Alexandre Dumas
+Crime and Punishment; Fyodor Dostoyevski
+Cry, the Beloved Country; Alan Paton
+I Heard the Owl Call My Name; Margaret Craven
+I Never Promised You a Rose Garden; Hannah Green
+In This Sign; Joanne Greenberg
+Invisible Man; Ralph Ellison
+Ivanhoe; Sir Walter Scott
+Jane Eyre; Charlotte Bronte
+Jungle Books; Rudyard Kipling
+Kidnapped Robert; Lewis Stevenson
+Kristen Lavransdatter; Sigrid Undset
+Last of the Mohicans; James Fenimore Cooper
+Les Miserables; Victor Hugo
+Le Morte D'Arthur; Thomas Malory
+Le Pere Goriot Honore De; Balzac
+Little Women; Louisa May Alcott
+Look Homeward Angel; Thomas Wolfe
+Lord Jim; Joseph Conrad
+Lord of the Flies; William Golding
+Lord of the Rings; John Ronald Reuel Tolkien
+Madame Bovary; Gustav Flaubert
+Magic Mountain; Thomas Mann
+Main Street; Sinclair Lewis
+Mayor of Casterbridge; Thomas Hardy
+Metamorphis; Franz Kafka
+Mill on the Floss; George Eliot
+Moby Dick; Herman Melville
+Moll Flanders; Daniel Defoe
+Mutiny on the Bounty; Charles Nordhoff
+My Antonia; Willa Cather
+Native Son; Richard Wright
+Nausea; Jean Paul Sartre
+Nectar in a Sieve; Kamala Markandaya
+Northwest Passage; Kenneth Roberts
+Of Human Bondage; William Somerset Maugham
+Of Mice and Men; John Steinbeck
+Old Man and the Sea; Ernest Hemingway
+Oliver Twist; Charles Dickens
+On the Beach; Nevil Shute
+One Day in the Life of Ivan Denisovich; Alexander Solzhenitzyn
+One Hundred Years of Solitude; Gabriel Garcia Marquez
+Painted Bird; Jerzy Kosinski
+Pearl; John Steinbeck
+Pilgim's Progress; John Bunyon
+Portrait of a Lady; Henry James
+Portrait of the Artist as a Young Man; James Joyce
+Power and the Glory; Graham Greene
+Pride and Prejudice; Jane Austin
+Quo Vadis; Henryk Sienkiewicz
+Rabbit Run; John Updike
+Rebecca; Daphne Dumaurier
+Red Badge of Courage; Stephen Crane
+Red Pony; John Steinbeck
+Return of the Native; Thomas Hardy
+Robinson Crusoe; Daniel Defoe
+Roll of Thunder, Hear My Cry; Mildred Taylor
+Scarlet Letter; Nathaniel Hawthorn
+Separate Peace; John Knowles
+Shane; Jack Schaefer
+Sherlock Holmes, the Complete Stories; Arthur Conan Doyle
+Siddhartha; Herman Hesse
+Silas Marner; George Eliot
+Sister Carrie; Theodore Dreiser
+Slaughterhouse-five; Kurt Vonnegut
+Song of Roland; UNKNOWN, ancient French
+Sons and Lovers; David Henry Lawrence
+Sound and the Fury; William Faulkner
+Stranger; Albert Camus
+Sun Also Rises; Ernest Hemingway
+Tale of Two Cities; Charles Dickens
+Tess of the D'Urbervilles; Thomas Hardy
+The Aeneid; Virgil
+The American; Henry James
+The Castle; Franz Kafka
+The Chosen; Chaim Potok
+The Dollmaker; Harriet Arnow
+The Fixer; Bernard Malamud
+The Hobbit; John Ronald Reuel Tolkien
+The Iliad; Homer
+The Jungle; Upton Sinclair
+The King Must Die; Mary Renault
+The Odyssey; Homer
+The Once and Future King; Terence Hanbury White
+The Oxbow Incident; Walter van Tilburg Clark
+The Natural; Bernard Malamud
+The Picture of Dorian Gray; Oscar Wilde
+The Plague; Albert Camus
+The Red and the Black; Henri Stendhal
+The Stranger; Albert Camus
+The Tin Drum; Gunter Grass
+The Yearling; Marjorie Kinnan Rawlings
+Three Musketeers; Alexander Dumas
+Through the Looking Glass; Lewis Carroll
+Time Machine; Herbert George Wells
+To Kill a Mockingbird; Harper Lee
+To The Lighthouse; Virginia Woolf
+Tom Jones; Henry Fielding
+Treasure Island; Robert Lewis Stevenson
+Turn of the Screw; Henry James
+U.S.A.; John Dos Passos
+Ugly American; William Julius Lederer/Eugene Burdick
+Uncle Tom's Cabin Harriet; Beecher Stowe
+Vanity Fair; William Thackeray
+Walkabout; James Marshall
+War and Peace; Leo Tolstoy
+Wind, Sand and Stars; Antoine de Saint-Exupery
+Winesburg, Ohio; Sherwood Anderson
+Women in Love; David Herbert Lawrence
+Wuthering Heights; Emily Bronte
+You Can't Go Home Again; Thomas Wolfe
+Zorba the Greek; Nikos Kazantzakis

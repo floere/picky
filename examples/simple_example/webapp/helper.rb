@@ -21,6 +21,9 @@ def wrap_in_html interface
   </head>
   <body>
     <img src="images/picky.png"/>
+    <p>
+      <a href="http://floere.github.com/picky">Back to the Picky documentation.</a>
+    </p>
     #{Picky::Helper.cached_interface}
     <script type='text/javascript'>
       //<![CDATA[

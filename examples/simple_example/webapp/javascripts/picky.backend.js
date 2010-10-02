@@ -10,7 +10,7 @@ var PickyBackend = function(url) {
       // wrap the data before returning it
       //
       var wrappedCallback = function(data, query) {
-        var data = new Data(data);
+        var data = new PickyData(data);
         if (clientCallback) { data = clientCallback(data, query); }
         return data;
       };
