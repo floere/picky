@@ -33,9 +33,9 @@ def wrap_in_html interface
           locale: PickyI18n.locale,
           showResultsThreshold: 10,
           showFeedback: true,
-          before: function(params) {  }, // mess with the params before sending. params['hello'] = 'blaaah'; return params
-          success: function(data) {  },
-          after: function(data) {  },
+          before: function(params, query, offset) {  }, // mess with the params before sending. params['hello'] = 'blaaah'; return params
+          success: function(data, query) {  },
+          after: function(data, query) {  },
           keyUp: function(event) {  }
         });
         pickyClient.insert('enter something here :)');

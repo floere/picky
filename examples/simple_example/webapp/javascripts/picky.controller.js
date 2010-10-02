@@ -41,13 +41,13 @@ var PickyController = function(searchEngine) {
     var offset = offset || 0;
     this.liveSearchTimer.stop();
     
-    params = this.beforeCallback(params) || params;
+    params = this.beforeCallback(params, query, offset) || params;
     
     this.searchEngine.search('full', query, this.fullSearchCallback, offset, params);
   };
   
   this.fullSearchCallback = function(data, query) {
-    data = self.successCallback(data) || data;
+    data = self.successCallback(data, query) || data;
     
     if (data.total == 0) {
       self.showNoResults(data);
@@ -65,7 +65,7 @@ var PickyController = function(searchEngine) {
     
     self.focus();
     
-    self.afterCallback(data, query, 'full');
+    self.afterCallback(data, query);
   };
 
   this.liveSearch = function(query, params) {
@@ -77,12 +77,12 @@ var PickyController = function(searchEngine) {
   };
 
   this.liveSearchCallback = function(data, query) {
-    data = self.successCallback(data) || data;
+    data = self.successCallback(data, query) || data;
     
     self.view.updateResultCounter(data.total);
     self.view.setSearchStatus(self.searchStatus(data));
     
-    self.afterCallback(data, query, 'live');
+    self.afterCallback(data, query);
   };
   
   this.keyUpEventHandler = function(event) {
