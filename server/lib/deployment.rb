@@ -126,7 +126,7 @@ module Picky
               # link database-config files
               run "ln -sf #{shared_path}/app/db.yml #{current_path}/app/db.yml"
               # link unicorn.ru
-              run "ln -sf #{shared_path}/app/unicorn.ru #{current_path}/app/unicorn.ru"
+              run "ln -sf #{shared_path}/unicorn.ru #{current_path}/unicorn.ru"
             end
             
             namespace :rollback do
