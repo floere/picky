@@ -11,6 +11,12 @@ get '/javascripts/:file_name' do
   f.close
   result
 end
+get '/stylesheets/:file_name' do
+  f = File.open("stylesheets/#{params[:file_name]}")
+  result = f.read
+  f.close
+  result
+end
 
 get '/' do
   PickyBackend.search :query => params[:query]
@@ -35,11 +41,11 @@ get '/search/full' do
   # Return a fake result
   {
     :allocations => [
-      ["book",25.22,2,[["title","Old","old"],["title","Man","man"]],[],['Content Result a1','Content Result a2']],
-      ["book",22.16,1,[["author","Old","old"],["title","Man","man"]],[],['Content Result b1']],
-      ["book",13.11,1,[["author","Old","old"],["author","Man","man"]],[],['Content Result c1']],
-      ["book",5.23,1,[["author","Man","man"],["author","Old","old"]],[],['Content Result d1']],
-    ],
+      ["book",25.22,2,[["title","Old","old"],["title","Man","man"]],[],['<div class="item">Content Result a1</div>','<div class="item">Content Result a2</div>']],
+      ["book",22.16,1,[["author","Old","old"],["title","Man","man"]],[],['<div class="item">Content Result b1</div>']],
+      ["book",13.11,1,[["author","Old","old"],["author","Man","man"]],[],['<div class="item">Content Result c1</div>']],
+      ["book",5.23,1,[["author","Man","man"],["author","Old","old"]],[],['<div class="item">Content Result d1</div>']],
+    ].sort_by { rand },
     :offset => 0,
     :total => rand(20),
     :duration => rand(1)
@@ -64,6 +70,7 @@ def wrap_in_html interface
   <<-HTML
 <html>
   <head>
+    <link type="text/css" rel="stylesheet" media="screen" href="stylesheets/stylesheet.css">
     #{javascripts}
   </head>
   <body>
@@ -76,22 +83,16 @@ def wrap_in_html interface
         </div>
         <input type="button" class="search_button" value="search">
       </div>
-      <div style="display: none;" class="results">
-        <div class="speech_triangle pointing_up"></div>
-        <div class="speech_bubble">
-          Results!
-        </div>
-      </div>
+      <ol style="display: none;" class="results">
+        
+      </ol>
       <div style="display: none;" class="no_results">
-        <div class="speech_triangle pointing_up"></div>
-        <div class="speech_bubble">
-          No results, sorry!
-        </div>
+        Sorry!
       </div>
       <div style="display: none;" class="allocations">
-        <div class="shown"></div>
-        <div class="more">More</div>
-        <div class="hidden"></div>
+        <ol class="shown"></ol>
+        <ol class="more">More</ol>
+        <ol class="hidden"></ol>
       </div>
     </div>
     <script type='text/javascript'>
