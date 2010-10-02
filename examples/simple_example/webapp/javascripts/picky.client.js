@@ -12,6 +12,7 @@ var PickyClient = function(config) {
   };
   
   this.insert = function(query, full) {
+    var full = full || true;
     this.controller.insert(query, full);
   };
   

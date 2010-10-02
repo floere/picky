@@ -24,23 +24,21 @@ def wrap_in_html interface
     #{Picky::Helper.cached_interface}
     <script type='text/javascript'>
       //<![CDATA[
-        $(function() {
-          pickyClient = new PickyClient({
-            controller: PickyController,
-            backends: {
-              live: new LiveBackend('/search/live'),
-              full: new FullBackend('/search/full')
-            },
-            locale: PickyI18n.locale,
-            showResultsThreshold: 10,
-            showFeedback: true,
-            before: function(params) {  }, // mess with the params before sending. params['hello'] = 'blaaah'; return params
-            success: function(data) {  },
-            after: function(data) {  },
-            keyUp: function(event) {  }
-          });
-          pickyClient.insert('enter something here :)', false);
+        pickyClient = new PickyClient({
+          controller: PickyController,
+          backends: {
+            live: new LiveBackend('/search/live'),
+            full: new FullBackend('/search/full')
+          },
+          locale: PickyI18n.locale,
+          showResultsThreshold: 10,
+          showFeedback: true,
+          before: function(params) {  }, // mess with the params before sending. params['hello'] = 'blaaah'; return params
+          success: function(data) {  },
+          after: function(data) {  },
+          keyUp: function(event) {  }
         });
+        pickyClient.insert('enter something here :)');
       //]]>
     </script>
   </body>

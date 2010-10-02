@@ -4,27 +4,29 @@ var PickyBackend = function(url) {
   
   return {
     url: url || '/search',
-    get: function(timestamp, query, engineCallback, offset, specificParams) {
+    get: function(timestamp, query, clientCallback, offset, specificParams) {
       var params = specificParams || {};
       params = $.extend({ query: query, offset: offset }, specificParams);
       // wrap the data before returning it
       //
       var wrappedCallback = function(data, query) {
-        return engineCallback(new Data(data), query);
+        var data = new Data(data);
+        if (clientCallback) { data = clientCallback(data, query); }
+        return data;
       };
       $.ajax({ type: 'GET', url: this.url, data: params, success: this.callback(query, wrappedCallback, timestamp), dataType: 'json'});
     },
     // Override search in subclasses.
     //
-    search: function(query, engineCallback, offset, specificParams) {
-      get(query, engineCallback, offset, specificParams);
+    search: function(query, clientCallback, offset, specificParams) {
+      get(query, clientCallback, offset, specificParams);
     },
     extend: function(properties) {
       return $.extend({}, this, properties);
     },
-    callback: function(query, engineCallback, date) {
+    callback: function(query, clientCallback, date) {
       return function(data) {
-        engineCallback(data);
+        clientCallback(data);
       };
     }
   };
