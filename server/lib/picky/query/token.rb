@@ -178,13 +178,13 @@ module Query
     def to_solr
       blank? ? '' : (to_s + @@solr_fuzzy_mapping[@text.size].to_s)
     end
-
+    
     #
     #
     def to_result
       [@original, @text]
     end
-
+    
     # Displays the qualifier text and the text, joined.
     #
     # e.g. name:meier
@@ -192,9 +192,9 @@ module Query
     def to_s
       [@qualifier, @text].compact.join ':'
     end
-
+    
     private
-
+      
       # Splits text into a qualifier and text.
       #
       # Returns [qualifier, text].

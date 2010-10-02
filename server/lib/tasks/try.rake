@@ -15,7 +15,9 @@ namespace :try do
   task :query, [:text] => :application do |_, options|
     text = options.text
     
-    puts "\"#{text}\" is query tokenized as #{Tokenizers::Query.new.tokenize(text).to_a}"
+    # TODO tokenize destroys the original text...
+    #
+    puts "\"#{text}\" is query tokenized as #{Tokenizers::Query.new.tokenize(text.dup).to_a.map(&:to_s)}"
   end
   
   desc "Try the given text with both the index and the query (type:field optional)."
