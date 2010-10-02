@@ -4,7 +4,6 @@ var PickyResultsRenderer = function(controller, data) {
   this.controller = controller;
   this.data = data;
   this.allocations = data.allocations;
-  // this.allocation = null; // TODO Remove.
 
   this.render = function() {
     this.allocations.each(function(i, allocation) {
@@ -49,14 +48,14 @@ var PickyResultsRenderer = function(controller, data) {
       header_html += range;
     }
     header_html += '<div class="clear"></div></div>';
-
+    
     return header_html;
   };
-
+  
   this.renderEntries = function(allocation) {
     return allocation.entries.join('');
   };
-
+  
   this.explain = function(combination) {
     var explanations = Localization.explanations(PickyI18n.locale);
     var explanation_delimiter = Localization.explanation_delimiters(PickyI18n.locale);
@@ -76,7 +75,7 @@ var PickyResultsRenderer = function(controller, data) {
     parts.push(last_part);
     return parts.join(' ' + explanation_delimiter + ' ');
   };
-
+  
   this.renderAddination = function(data) {
     var total = data.total;
     var range = this.calculateAddinationData();
@@ -84,12 +83,11 @@ var PickyResultsRenderer = function(controller, data) {
       var addination = $("<div class='addination current'>" + t('suggestions.results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});return false;'>&uarr;</a></div></div>");
       addination.bind('click', { offset: range.offset}, this.controller.addinationClickEventHandler);
       return addination;
-    }
-    else {
+    } else {
       return '';
     }
   };
-
+  
   this.calculateAddinationData = function(correction) {
     var correction = correction || 0;
     var results = 20; // Make parametrizable.

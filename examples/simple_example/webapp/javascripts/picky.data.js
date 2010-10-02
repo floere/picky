@@ -36,21 +36,10 @@ function Allocations(allocations) {
     this.allocations.push(new_allocation);
   }
   this.length = this.allocations.length;
-
+  
   this.each = function(callback) {
     return $.each(this.allocations, callback);
   };
-
-  // // Sort sorts the allocations according to their weight.
-  // // The byWeight function is the sorting function.
-  // //
-  // var byWeight = function(a1, a2) {
-  //   return a2.weight - a1.weight;
-  // };
-  // this.sort = function() {
-  //   self.allocations = self.allocations.sort(byWeight);
-  // };
-  // this.sort();
 };
 
 // Container for the types.
@@ -58,16 +47,9 @@ function Allocations(allocations) {
 // data:
 //   offset: X
 //   duration: X
-//   company: true|false
-//   person: true|false
 //   total: X
 //   allocations:
 //     Allocation[] of [weight, count, combination, Entry[] of [id, content]]
-//   top: rendered [x,y,z]
-//   ad:  rendered w
-//
-//
-// TODO Expose method.
 //
 function Data(data) {
   var self = this;
@@ -82,13 +64,7 @@ function Data(data) {
   // Expose some attributes.
   //
   this.total       = total;
+  this.duration    = duration;
   this.offset      = offset;
   this.allocations = allocations;
-
-  this.company  = data.company; // TODO Remove.
-  this.person   = data.person;  // TODO Remove.
-  this.top      = data.top;
-  this.ad       = data.ad;
-  this.detailed = data.detailed;
-  this.similar  = data.similar;
 };
