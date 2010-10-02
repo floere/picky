@@ -21,23 +21,7 @@ def wrap_in_html interface
   </head>
   <body>
     <img src="images/picky.png"/>
-    <div id="picky">
-      <div class="dashboard empty">
-        <div class="feedback">
-          <div class="status" title="# results"></div>
-          <input type="text" autocorrect="off" class="query"/>
-          <div class="reset" title="clear"></div>
-        </div>
-        <input type="button" class="search_button" value="search">
-      </div>
-      <ol class="results"></ol>
-      <div class="no_results">Sorry!</div>
-      <div class="allocations">
-        <ol class="shown"></ol>
-        <ol class="more">More</ol>
-        <ol class="hidden"></ol>
-      </div>
-    </div>
+    #{Picky::Helper.cached_interface}
     <script type='text/javascript'>
       //<![CDATA[
         $(function() {

@@ -50,7 +50,7 @@ HTML
     # Returns a cached version if you always use a single language.
     #
     def self.cached_interface options = {}
-      @interface ||= interface.freeze
+      @interface ||= interface(options).freeze
     end
     
   end

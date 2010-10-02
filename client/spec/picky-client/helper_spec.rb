@@ -6,6 +6,9 @@ describe Picky::Helper do
     it "should return good html" do
       Picky::Helper.cached_interface.should == Picky::Helper.interface
     end
+    it "should respect the options" do
+      Picky::Helper.cached_interface(:more => 'bla').should_not == Picky::Helper.interface(:more => 'blu')
+    end
     it "should return the cached interface" do
       Picky::Helper.cached_interface.object_id.should == Picky::Helper.cached_interface.object_id
     end
