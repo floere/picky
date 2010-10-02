@@ -3,30 +3,21 @@ require 'sinatra'
 require "sinatra/reloader" if development?
 require 'picky-client'
 
+require 'helper'
+
 PickyBackend = Picky::Client::Full.new :host => 'localhost', :port => 4000, :path => '/books/full'
 
 set :static, true
-set :public, '.'
+set :public, File.dirname(__FILE__)
 
-get '/javascripts/:file_name' do
-  f = File.open("javascripts/#{params[:file_name]}")
-  result = f.read
-  f.close
-  result
-end
-get '/stylesheets/:file_name' do
-  f = File.open("stylesheets/#{params[:file_name]}")
-  result = f.read
-  f.close
-  result
-end
-
+# Search Interface.
+#
 get '/' do
-  PickyBackend.search :query => params[:query]
-  
   wrap_in_html Picky::Helper.interface
 end
 
+# Normally, you'd access the picky server directly for the live data.
+#
 get '/search/live' do
   # Return a fake result
   {
@@ -40,7 +31,18 @@ get '/search/live' do
   }.to_json
 end
 
+# For full results, you get the ids from the picky server
+# and then populate the result with models (rendered, even).
+#
 get '/search/full' do
+  # What you would do:
+  #
+  # result = PickyBackend.search :query => params[:query], :offset => params[:offset]
+  # result.extend Picky::Convenience
+  # result.populate_with(SomeModelClass) { |model| render model }
+  # result.to_json
+  #
+  
   # Return a fake result
   {
     :allocations => [
@@ -53,70 +55,4 @@ get '/search/full' do
     :total => rand(20),
     :duration => rand(1)
   }.to_json
-end
-
-def wrap_in_html interface
-  javascripts = []
-  javascripts << 'jquery-1.3.2.js'
-  javascripts << 'jquery.timer.js'
-  javascripts << 'picky.extensions.js'
-  javascripts << 'picky.translations.js'
-  javascripts << 'picky.data.js'
-  javascripts << 'picky.view.js'
-  javascripts << 'picky.backend.js'
-  javascripts << 'picky.controller.js'
-  javascripts << 'picky.client.js'
-  javascripts << 'picky.results_renderer.js'
-  javascripts << 'picky.allocation_renderer.js'
-  javascripts << 'picky.allocations_cloud_renderer.js'
-  javascripts = javascripts.map { |js_file| "<script src='javascripts/#{js_file}' type='text/javascript'></script>" }.join
-  <<-HTML
-<html>
-  <head>
-    <link type="text/css" rel="stylesheet" media="screen" href="stylesheets/stylesheet.css">
-    #{javascripts}
-  </head>
-  <body>
-    <img src="images/picky.png"/>
-    <div id="picky">
-      <div class="dashboard empty">
-        <div class="feedback">
-          <div class="status" title="# results"></div>
-          <input type="text" autocorrect="off" class="query"/>
-          <div class="reset" title="clear"></div>
-        </div>
-        <input type="button" class="search_button" value="search">
-      </div>
-      <ol class="results"></ol>
-      <div class="no_results">Sorry!</div>
-      <div class="allocations">
-        <ol class="shown"></ol>
-        <ol class="more">More</ol>
-        <ol class="hidden"></ol>
-      </div>
-    </div>
-    <script type='text/javascript'>
-      //<![CDATA[
-        $(function() {
-          pickyClient = new PickyClient({
-            controller: PickyController,
-            backends: {
-              live: new LiveBackend('/search/live'),
-              full: new FullBackend('/search/full')
-            },
-            locale: PickyI18n.locale,
-            showResultsThreshold: 10,
-            showFeedback: true,
-            before: function(params) {  }, // mess with the params before sending. params['hello'] = 'blaaah'; return params
-            success: function(data) {  },
-            after: function(data) {  },
-            keyUp: function(event) {  }
-          });
-          pickyClient.insert('enter something here :)', false);
-        });
-      //]]>
-    </script>
-  </body>
-</html>
-HTML
 end
