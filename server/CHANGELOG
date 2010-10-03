@@ -1,0 +1,7 @@
+0.0.5 - hanke: config.ru, unicorn.ru now top level in newly created project.
+        hanke: Port now defined in unicorn.ru.
+        hanke: Enriched callbacks in the JS interface definition.
+0.0.4 - hanke: Interface now created using Picky::Helper.interface or .cached_interface
+0.0.3 - hanke: C-Code cleaned up.
+0.0.2 - hanke: Newly created application better documented.
+0.0.1 - hanke: Initial project. Server and basic frontend client available. 
