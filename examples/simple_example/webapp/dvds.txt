@@ -1,0 +1,315 @@
+Title;Year;Country;Length;Code;Remarks
+
+13th Knight, The;1999;USA;100;2;
+24 - Season One;2002;USA;1080;2;
+24 - Season Two;2002;USA;1080;2;
+About a Boy;2002;UK, USA, FR;97;2;
+About Schmidt;2002;USA;120;2;
+Aladdin;1992;USA;87;2;2-Disc Special Edition
+Along Came Polly;2004;USA;85;2;
+Amélie de Montmartre;2001;FR, DE;117;2;
+American Beauty;1999;USA;117;2;
+American History X;1998;USA;114;2;
+American Pie;1999;USA;92;2;Platinum Edition
+Amores Perros;2000;MEX;148;1;
+Anger Management;2003;USA;101;2;
+Apocalypse Now - Redux;1979;USA;195;2;
+As Good as It Gets - Besser geht's nicht;1997;USA;133;2;
+Asterix & Obelix: Mission Kleopatra;2002;FR, DE;107;2;
+Austin Powers: Gold Member;2002;UK;91;2;
+Austin Powers: International Man of Mystery;1999;UK;91;2;
+Austin Powers: The Spy who Shagged me;1999;UK;91;2;
+Babe;1995;AUS, USA;92;2;
+Bad Boys 2;2003;USA;141;2;Extended Version
+Batman Begins;2005;USA;141;2;
+Beautiful Mind, A;2001;USA;130;2;
+Beauty and The Beast;1991;USA;87;2;
+Before Sunrise;1995;USA, AUT, CH;97;2;
+Before Sunset;2004;USA;77;2;
+Big Lebowski, The;1997;USA;112;2;
+Billy Elliot;2000;UK, FR;106;2;
+Black Dahlia, The;2006;DE, USA;116;2;
+Blue in the Face;1995;USA;83;2;Boxed: Smoke & Blue in the face
+Blue Planet;2001;USA;41;2;
+Bollywood Hollywood;2002;CAN;105;2;
+Bourne Identity, The;2002;USA, DE;113;2;Special Edition
+Bourne Identity, The;2002;USA, DE;114;2;Die Ultimative Bourne Collection
+Bourne Supremacy, The;2004;USA, DE;103;2;Die Ultimative Bourne Collection
+Bourne Ultimatum, The;2007;USA, DE;110;2;Die Ultimative Bourne Collection
+Bowling for Columbine;2002;USA;118;2;
+Breakfast at Tiffanys;1961;USA;110;2;
+Breaking the Waves;1996;DK, SWE, FR;150;2;
+Bridget Jones's Diary;2001;UK, FR;93;2;Widescreen Edition
+Bruce Almighty;2002;USA;101;2;
+Casablanca;1943;USA;98;2;
+Cast Away;2000;USA;138;2;
+Catch Me If You Can;2002;USA;135;2;
+Cell, The;2000;USA;105;2;
+Charlie and the Chocolate Factory;2005;USA;115;2;
+Charlie's Angels;2000;USA;94;2;
+Charlie's Angels: Full Throttle;2003;USA;103;2;
+Chasing Amy;1996;USA;104;2;
+Chat Noir, Chat Blanc;1998;FR, DE, YU;124;2;
+Chicken Run;2000;UK;81;2;
+Chinese Ghost Story, A;1987;HK;92;2;
+Chocolat;2000;UK, USA;121;2;
+Choristes, Les - Die Kinder des Monsieur Mathieu;2004;FR, CH, DE;136;2;
+Chronicles of Narnia, The;2005;USA;143;2;
+Cinema Paradiso;1988;It, Fr;119;2;
+City of God;2002;BRA, FR, USA;128;2;
+Cold Mountain;2003;USA;148;2;
+Color Purple, The;1985;USA;148;2;
+Coyote Ugly;2000;USA;96;2;
+Crash;2004;USA, De;107;2;
+Crouching Tiger, Hidden Dragon;2000;HK, China, USA;115;2;
+Curse of the Jade Scorpion, The;2001;USA;97;2;
+Dances with Wolves;1990;USA;240;2;Director's Cut
+Dangerous Liaisons;1988;USA, UK;1988;2;
+Das Boot;1981;DE;208;2;Director's Cut
+Dave;1993;USA;105;2;
+Day After Tomorrow, The;2004;USA;119;2;
+Dead Man;1995;USA, DE, JP;116;2;
+Dead Poet's Society;1989;USA;123;2;Special Booklet
+Deep Blue;2003;UK, De;91;2;
+Desperado;1995;USA;106;2;MexiCollection
+Die another day;2002;USA;127;2;Special Edition
+Dirty Dancing;1987;USA;96;2;
+Don Juan De Marco;1995;USA;93;2;
+Dracula (Bram Stoker's);1992;USA;123;2;
+Driving Miss Daisy;1989;USA;95;2;Special Edition
+Dschungelbuch, Das;1967;USA;75;2;
+East is East;1999;UK;92;2;
+Eat Drink Man Woman;1994;Taiwan, USA;123;2;Ang Lee Box (mit The Wedding Banket)
+Elizabeth;1998;UK;119;2;
+Emma;1996;UK/USA;120;2;
+Enemy of the State, The;1998;USA;127;2;
+English Patient, The;1997;USA;154;2;
+Ernstfall in Havanna;2002;CH;82;2;
+Everyone Says I Love You;1996;USA;97;2;nur Deutsch
+Experiment, Das;2001;DE;114;2;
+Fargo;1996;USA;98;2;
+Fawlty Towers;1975;UK;373;1;The Complete Collection, nur Englisch
+Fear And Loathing In Las Vegas;1998;USA;111;2;
+Fetten Jahre sind vorbei, Die;2004;De, AUT;126;2;
+Fierce Creatures;1997;UK, USA;89;2;
+Fifth Element, The;1997;FR, USA;126;1;
+Fifth Element, The;1997;FR, USA;126;2;Deluxe Widescreen Edition
+Fight Club;1999;USA;135;2;
+Final Destination;2000;USA;94;2;
+Final Destination 2;2003;USA;97;2;
+Finding Nemo;2003;USA;96;2;Special Edition
+Finding Neverland;2004;UK, USA;97;2;
+Fish Called Wanda, A;1988;USA, UK;103;2;Gold Edition
+Forrest Gump;1994;USA;136;2;
+Four Weddings and a Funeral;1994;UK;113;2;
+Fried Green Tomatoes;1991;UK, USA;125;2;
+From Dusk Till Dawn;1996;USA;104;2;The Tarantino Collection
+Full Monty, The;1997;UK;88;2;
+Futurama - Season 1;1999;USA;286;2;
+Futurama - Season 2;2000;USA;437;2;
+Futurama - Season 3;2001;USA;494;2;
+Gandhi;1982;UK. IND;183;2;Collector's Edition
+Gangs Of New York;2002;USA, DE, IT, UK;160;2;
+Geschichte vom weinenden Kamel, Die;2004;De, Mong;87;2;
+Ghost Dog;1999;FR, DE, USA;111;2;
+Gilmore Girls, Season 1;2000;USA;60;2;
+Gladiator;2000;USA;155;1;
+Gladiator;2000;USA;149;2;
+Godfather I, The - Der Pate I;1972;USA;175;2;Der Pate: DVD Collection
+Godfather II, The - Der Pate II;1974;USA;200;2;Der Pate: DVD Collection
+Godfather III, The - Der Pate III;1990;USA;162;2;Der Pate: DVD Collection
+Gods Must Be Crazy I, The;1980;Botswana;104;2;
+Gods Must Be Crazy II, The;1988;Botswana, SA, USA;94;2;
+Good Bye Lenin!;2003;DE;117;2;
+Good Morning Vietnam;1987;USA;116;2;Special Edition
+GoodFellas;1990;USA;139;2;
+Gosford Park;2001;UK, USA, DE, IT;132;2;
+Graduate, The;1967;USA;105;2;
+Green Mile, The;1999;USA;181;2;
+Groundhog Day - Und täglich grüsst das Murmeltier;1993;USA;97;2;Special Edition
+Hable con Ella;2002;ESP;109;2;
+Hana-Bi;1997;JP;99;2;
+Harry Potter and the Chamber of Secrets;2002;USA;154;2;
+Harry Potter and the Philosopher's Stone;2001;USA;147;2;
+Harry Potter: The Prisoner of Askaban;2004;USA/UK;136;2;
+Herbert Grönemeyer - Mensch Live;2002;-;110;2;
+Hero;2002;HK, China;99;2;
+Himmel über Berlin, Der;1987;De, Fr;127;2;
+Hours, The;2002;USA;110;2;Exclusive Edition
+House of Flying Daggers;2004;China, HK;115;2;
+Howls moving Castle (Hauru no ugoku shiro);2004;Jp;119;2;
+Huit Femmes;2002;FR;106;2;
+Ice Age;2002;USA;78;2;
+In The Mood For Love;2000;HK, FR;97;2;
+Incredibles, The;2004;USA;115;2;
+Insider, The;1999;USA;158;1;
+Interpreter, The;2004;UK, USA, Fr;124;2;
+Interview with a Vampire;1994;USA;118;2;
+It's a Wonderful Life;1946;USA;125;2;
+Italian Job, The;2003;USA, FR, UK;106;2;
+Italienisch für Anfänger;2000;Dk, Swe;108;2;
+Jackie Brown;1997;USA;146;2;The Tarantino Collection
+Jane Austen Book Club, The;2007;USA;101;2;
+Jerry Maguire;1996;USA;133;2;Special Edition
+JFK;1991;USA, FR;181;2;
+Kabhi Khushi Kabhie Gham;2001;India, UK;210;2;
+Keinohrhasen;2007;DE;111;2;
+Kill Bill: Volume 1;2003;USA;106;2;
+Kill Bill: Volume 2;2004;USA;131;2;
+Knockin' on Heaven's Door;1996;DE;86;2;
+Komiker;2000;CH;90;2;
+Kramer vs Kramer;1979;USA;100;2;
+Kundun;1997;USA;133;2;
+L.A. Confidential;1997;USA;132;2;Special Edition
+La Vita è Bella;1997;IT;121;2;Deluxe Widescreen Edition
+Lagaan (Es war einmal in Indien);2001;Indien;214;2;
+Last Emperor, The;1987;FR, IT, UK;157;2;Nur Deutsch
+Last Samurai, The;2003;USA, NZL, JP;148;2;
+Léon - Der Profi;1994;FR, USA;128;2;Director's Cut
+Leben ist eine Baustelle, Das;1997;De;111;2;
+Lethal Weapon 1;1987;USA;105;2;
+Lethal Weapon 2;1989;USA;108;2;
+Lethal Weapon 3;1992;USA;113;2;
+Lethal Weapon 4;1998;USA;122;2;
+Level 42, Live at Rockpalast;1983;UK;188;2;
+Life Aquatic with Steve Zissou, The;2004;USA;114;2;
+Lock, Stock and Two Smoking Barrels;1998;UK;107;2;
+Lola Rennt;1998;DE;77;2;Special Edition
+Lord of the Rings, The: The Fellowship of the Ring;2001;NZL, USA;171;2;
+Lord of the Rings, The: The Return of the King;2003;NZL, USA;240;2;Special Extended Edition (4 DVDs)
+Lord of the Rings, The: The Two Towers;2002;NZL, USA;172;2;
+Lord of the Rings, The: The Two Towers;2002;NZL, USA;225;2;Special Extended Edition (4 DVDs)
+Lost in Translation;2003;USA, JP;97;2;
+Lost in Translation;2003;USA, Jp;102;2;
+Love Actually;2003;UK, USA;130;2;
+Lustige Welt der Tiere, Die - Animals Are Beautiful People;1974;SA;88;2;
+Madagascar;2005;USA;82;2;
+Mar Adentro;2004;ESP/FR/IT;125;2;
+Mariachi, El;1993;MEX, USA;81;2;MexiCollection
+Mark King in Concert;1999;-;60;2;
+Master and Commander;2003;USA;138;2;
+Matrix Reloaded;2003;USA;133;2;
+Matrix Revolutions;2003;USA;129;2;
+Matrix, The;1999;USA;131;2;
+Maverick;1994;USA;121;2;
+Memento;2000;USA;109;2;
+Men in Black;1997;USA;94;2;
+Mission: Impossible;1996;USA;105;2;
+Mission: Impossible 2;2000;USA;118;2;
+Mona Lisa Smile;2003;USA;120;2;
+Monsoon Wedding;2001;IND, USA, FR, IT, DE;109;2;
+Monster;2003;USA, DE;105;2;
+Monster's Ball;2001;USA, CAN;108;2;
+Monster's Inc. - Die Monster AG;2001;USA;92;2;
+Monty Python and the Holy Grail;1975;UK;91;2;Boxed: Montys Enzyklopythonia
+Monty Python's Life of Brian;1979;UK;94;2;Boxed: Montys Enzyklopythonia
+Monty Python's The Meaning of Life;1983;UK;107;1;Boxed: Montys Enzyklopythonia
+Moulin Rouge;2001;AUS, USA;123;2;
+Much Ado about Nothing;1993;UK, USA;106;2;nur Deutsch
+Mummy Returns, The;2001;USA;129;2;
+Mystic River;2003;USA;132;2;2 Disc Edition
+Name der Rose, Der;1986;FR, IT, DE;126;2;
+Ninth Gate, The;1999;ESP, FR, USA;128;2;
+Nirgendwo in Afrika;2001;DE;136;2;Special Edition
+Nomaden der Lüfte;2001;FR, IT, DE;94;2;
+Notting Hill;1999;UK;119;2;
+O Brother, Where Art Thou?;2000;UK, FR, USA;103;2;
+Ocean's Eleven;2001;USA;116;2;
+October Sky;1999;USA;103;2;
+Once upon a Time in America;1984;USA;221;2;Special Edition
+Once Upon a Time in Mexico;2003;MEX, USA;101;2;MexiCollection
+Once upon a Time in the West - Spiel mir das Lied vom Tod;1968;IT, USA;159;2;Special Collector's Edition
+One Flew over the Cuckoo's Nest;1975;USA;128;2;Special Edition
+Others, The;2001;ESP, USA, FR;100;2;
+Out of Africa;1985;USA;154;2;
+Out of Rosenheim;1987;DE, USA;104;2;
+Out of Sight;1998;USA;118;2;
+Pakt der Wölfe;2001;FR;137;2;Director's Cut
+Pane e Tulipani;2000;IT, CH;113;2;
+Pane e Tulipani;2000;It, CH;118;2;
+Passion of the Christ, The;2004;USA;121;2;
+Pearl Harbor;2001;USA;176;2;
+Perfect World;1993;USA;133;2;
+Phantom of the Opera, The;2004;USA, UK;143;2;
+Pianist, The;2002;FR, DE, POL;143;2;
+Piano, The;1993;AUS, NZ, FR;121;2;Lmitierte Sonderedition
+Pirates of the Caribbean;2003;USA;137;2;Special Edition
+Pirates of the Caribbean;2003;USA;143;2;
+Postino, Il;1994;IT;104;2;
+Pride and Prejudice;2005;Fr, UK;127;2;
+Princess Mononoke Hime;1997;JP;133;2;
+Priscilla, Queen of the Desert;1994;AUS;99;2;
+Pulp Fiction;1994;USA;148;2;The Tarantino Collection
+Purpurnen Flüsse, Die;2001;FR;105;2;
+Reservoir Dogs;1992;USA;95;2;
+Road to Perdition;2002;USA;112;1;
+Road Trip;2000;USA;94;2;ungekürzte Version
+Robin Hood;1973;USA;80;2;
+Rock, The;1996;USA;131;2;Special Edition
+Roger & Me;1989;USA;87;2;
+Romeo and Juliet;1996;USA;115;2;
+Romeo Must Die;2000;USA;111;2;
+Saving Private Ryan;1998;USA;163;2;
+Schindler's List;1993;USA;187;2;
+Schtonk!;1992;DE;110;2;
+Schuh des Manitu, Der;2001;DE;82;2;Deluxe Widescreen Edition
+Schweizermacher, Die;1978;CH;104;2;
+Seabiscuit;2003;USA;134;2;
+Sen to Chihiro no Kamikakushi - Spirited Away;2001;JP;124;2;
+Seven;1995;USA;127;2;
+Shaft;2000;DE, USA;97;2;
+Shakespeare in Love;1998;USA, UK;119;2;
+Shawshank Redemption, The;1994;USA;137;2;
+Shine;1995;AUS;101;2;keine deutschen Untertitel
+Shipping News, The;2001;USA, CAN;106;2;
+Shrek;2001;USA;87;2;
+Shrek 2;2004;USA;89;2;
+Simple Plan, A;1998;USA;117;2;
+Simpsons, The - Season 1;1989;USA;390;2;
+Simpsons, The - Season 2;1990;USA;490;2;
+Simpsons, The - Season 3;1992;USA;552;2;
+Sixth Sense, The;1999;USA;103;2;
+Smoke;1995;DE, USA;112;2;Boxed: Smoke & Blue in the Face
+Snatch;2000;UK, USA;99;2;
+Sonnenallee;1999;DE;85;2;
+South Park: The Movie;1999;USA;78;2;
+Space Balls;1987;USA;92;2;
+Spring, Summer, Fall, Winter... and Spring;2003;Kor;98;2;
+Star Wars: Episode I - The Phantom Menace;1999;USA;133;2;
+Star Wars: Episode II - Attack of the Clones;2002;USA;137;2;Special Edition
+Star Wars: Episode IV: A New Hope;1977;USA;120;2;Star Wars Trilogie
+Star Wars: Episode V - The Empire Strikes Back;1980;USA;124;2;Star Wars Trilogie
+Star Wars: Episode VI - Return of the Jedi;1983;USA;131;2;Star Wars Trilogie
+Station Agent, The;2003;USA;90;2;
+Sting, The - Der Clou;1973;USA;124;2;
+Sting: Inside the Songs of Sacred Love;2003;-;77;2;
+Syriana;2005;USA;122;2;
+Tampopo;1985;JP;110;2;
+Terminator 2;1991;USA;147;2;Ultimate Edition (Silberbox)
+The Departed;2006;USA/HK;145;1;
+There's Something about Mary;1998;USA;114;2;
+Thomas Crown Affair, The;1999;USA;108;2;
+Three Kings;1999;USA;111;2;
+To Live;1994;China, HK;133;2;
+Todo Sobre Mi Madre - Alles über meine Mutter;1999;ESP, FR;1999;2;
+Toy Story 2;1999;USA;89;2;
+Traffic;2000;USA;141;2;
+Trainspotting;1996;UK;88;2;
+Triplettes de Belleville, Les (Das grosse Rennen von Belleville);2002;FR, BEL, CAN, UK;78;2;
+Twelve Monkeys;1995;USA;125;2;Remastered
+U2 - Elevation Tour 2001 - Live from Boston;2001;-;107;2;
+U2: Vertigo 2005, Live from Chicago;2005;USA;139;2;
+Under the Tuscan Sun;2003;USA, It;108;2;
+Untergang, Der;2004;De, It, AUT;150;2;
+Waking Ned;1998;IRL, UK, FR;87;2;
+Waking Ned Devine;1999;IRL, UK, FR;87;2;
+Wallace and Gromit;1994;UK;82;2;"A Grand Day Out", "The Wrong Trousers", "A Close Shave".
+Wedding Banket, The;1993;Taiwan, USA;106;2;Ang Lee Box (mit Eat Drink Man Woman)
+Whale Rider;2002;NZ, DE;97;2;
+When Harry Met Sally;1989;USA;92;2;
+Wild Things;1998;USA;108;2;
+Windtalkers;2002;USA;128;2;
+Wunder von Bern, Das;2003;DE;113;2;
+X-Men;2000;USA;100;2;
+X-Men 2;2003;USA;128;2;
+X-Men 3;2006;USA, UK;104;2;
