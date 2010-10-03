@@ -28,14 +28,14 @@ def wrap_in_html interface
     <script type='text/javascript'>
       //<![CDATA[
         pickyClient = new PickyClient({
-          locale: PickyI18n.locale,
-          controller: PickyController,
-          backends: {
+          locale: PickyI18n.locale, // TODO Remove?
+          controller: PickyController, // TODO Remove?
+          backends: { // TODO Hide implementation, but still allow this here.
             live: new LiveBackend('/search/live'),
             full: new FullBackend('/search/full')
           },
-          showResultsThreshold: 10,
-          showFeedback: true,
+          showResultsThreshold: 10, // TODO Rename to showResultsIfLess ?
+          showFeedback: true, // TODO What is this?
           before: function(params, query, offset) {  }, // Before Picky sends any data.
           success: function(data, query) {  }, // Just after Picky receives data. (Get a PickyData object)
           after: function(data, query) {  } // After Picky has handled the data and updated the view.
