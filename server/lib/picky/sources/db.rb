@@ -69,6 +69,8 @@ module Sources
     # Counts all the entries that are used for the index.
     #
     def count type
+      connect_backend
+      
       database.connection.select_value("SELECT COUNT(id) FROM #{snapshot_table_name(type)}").to_i
     end
     

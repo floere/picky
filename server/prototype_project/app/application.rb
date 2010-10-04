@@ -11,7 +11,7 @@ class PickySearch < Application # The App Constant needs to be identical in appl
   # Note: Much more is possible, but let's start out easy.
   #
   # Ask me if you have questions!
-  #  
+  #
   
   indexes do
     illegal_characters(/[^äöüa-zA-Z0-9\s\/\-\"\&\.]/)

@@ -10,7 +10,7 @@ module Sources
     
     def initialize *field_names, options
       @field_names = field_names
-      @file_name   = options[:file] || raise_no_file_given(field_names)
+      @file_name   = Hash === options && options[:file] || raise_no_file_given(field_names)
     end
     
     #
@@ -23,14 +23,13 @@ module Sources
     #
     def harvest _, field
       index = field_names.index field.name
-      process_data = lambda do |ary|
+      get_data do |ary|
         indexed_id = ary.shift.to_i
         text       = ary[index]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
         yield indexed_id, text
       end
-      get_data &process_data
     end
     
     #
