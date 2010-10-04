@@ -33,12 +33,12 @@ module Configuration
     # TODO Move to type, and use in bundle from there.
     #
     def search_index_root
-      File.join SEARCH_ROOT, 'index'
+      File.join PICKY_ROOT, 'index'
     end
     # TODO Move to config. Duplicate Code in field.rb.
     #
     def cache_directory
-      File.join search_index_root, SEARCH_ENVIRONMENT, type.name.to_s
+      File.join search_index_root, PICKY_ENVIRONMENT, type.name.to_s
     end
     def search_index_file_name
       File.join cache_directory, "#{type.name}_#{name}_index.txt"

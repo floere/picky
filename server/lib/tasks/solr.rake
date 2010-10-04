@@ -18,7 +18,7 @@ namespace :solr do
   
   
   def action name
-    `sunspot-solr #{name} --solr-home=solr --data-directory=index/#{SEARCH_ENVIRONMENT}/solr --pid-dir=solr/pids --log-file=log/solr.log`
+    `sunspot-solr #{name} --solr-home=solr --data-directory=index/#{PICKY_ENVIRONMENT}/solr --pid-dir=solr/pids --log-file=log/solr.log`
   end
   task :start => :application do
     Rake::Task['solr:schema:generate'].invoke

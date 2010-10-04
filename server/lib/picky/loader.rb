@@ -6,7 +6,7 @@ module Loader
   # First itself, then the app.
   #
   def self.reload
-    Dir.chdir(SEARCH_ROOT)
+    Dir.chdir(PICKY_ROOT)
     exclaim 'Reloading loader.'
     load_self
     exclaim 'Reloading framework.'
@@ -30,13 +30,13 @@ module Loader
   end
   
   def self.load_user filename
-    load File.join(SEARCH_ROOT, "#{filename}.rb")
+    load File.join(PICKY_ROOT, "#{filename}.rb")
   end
   def self.load_user_lib filename
     load_user File.join('lib', filename)
   end
   def self.load_all_user_in dirname
-    Dir[File.join(SEARCH_ROOT, dirname, '**', '*.rb')].each do |filename|
+    Dir[File.join(PICKY_ROOT, dirname, '**', '*.rb')].each do |filename|
       load filename
     end
   end

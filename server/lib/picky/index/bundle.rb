@@ -56,7 +56,7 @@ module Index
     # Point to category.
     #
     def search_index_root
-      File.join SEARCH_ROOT, 'index'
+      File.join PICKY_ROOT, 'index'
       # category.search_index_root
     end
     
@@ -145,7 +145,7 @@ module Index
     # TODO Move to config. Duplicate Code in field.rb.
     #
     def cache_directory
-      File.join search_index_root, SEARCH_ENVIRONMENT, type.name.to_s
+      File.join search_index_root, PICKY_ENVIRONMENT, type.name.to_s
     end
 
     # Generates a cache path.

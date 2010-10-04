@@ -3,7 +3,7 @@
 
 # Use rack's environment for the search engine.
 #
-ENV['SEARCH_ENV'] ||= ENV['RACK_ENV']
+ENV['PICKY_ENV'] ||= ENV['RACK_ENV']
 
-SEARCH_ENVIRONMENT = ENV['SEARCH_ENV'] || 'development' unless defined? SEARCH_ENVIRONMENT
-SEARCH_ROOT        = Dir.pwd unless defined? SEARCH_ROOT
+PICKY_ENVIRONMENT = ENV['PICKY_ENV'] || 'development' unless defined? PICKY_ENVIRONMENT
+PICKY_ROOT        = Dir.pwd unless defined? PICKY_ROOT

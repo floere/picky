@@ -3,11 +3,11 @@
 namespace :server do
   
   def chdir_to_root
-    Dir.chdir SEARCH_ROOT
+    Dir.chdir PICKY_ROOT
   end
   
   def current_pid
-    pid = `cat #{File.join(SEARCH_ROOT, 'tmp/pids/unicorn.pid')}`
+    pid = `cat #{File.join(PICKY_ROOT, 'tmp/pids/unicorn.pid')}`
     pid.blank? ? nil : pid.chomp
   end
   
@@ -15,8 +15,8 @@ namespace :server do
   task :start => :framework do
     chdir_to_root
     # Rake::Task[:"solr:start"].invoke # TODO Move to better place.
-    daemonize = SEARCH_ENVIRONMENT == 'production' ? '-D' : ''
-    command = "export SEARCH_ENV=#{SEARCH_ENVIRONMENT}; unicorn -c unicorn.ru #{daemonize}".strip
+    daemonize = PICKY_ENVIRONMENT == 'production' ? '-D' : ''
+    command = "export PICKY_ENV=#{PICKY_ENVIRONMENT}; unicorn -c unicorn.ru #{daemonize}".strip
     puts "Running \`#{command}\`."
     exec command
   end

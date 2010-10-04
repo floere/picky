@@ -58,6 +58,8 @@ class BookSearch < Application
     route %r{^/books/full}, Query::Full.new(Indexes[:main], Indexes[:isbn], options)
     route %r{^/books/live}, Query::Live.new(Indexes[:main], Indexes[:isbn], options)
     
+    route %r{^/csv/live}, Query::Live.new(Indexes[:csv_test], options)
+    
     route %r{^/isbn/full},  Query::Full.new(Indexes[:isbn], options)
     
     root 200

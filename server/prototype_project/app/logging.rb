@@ -1,7 +1,7 @@
 # Standard logging.
 #
 require 'logger'
-PickyLog = Loggers::Search.new ::Logger.new(File.expand_path(File.join(SEARCH_ROOT, 'log/search.log')))
+PickyLog = Loggers::Search.new ::Logger.new(File.expand_path(File.join(PICKY_ROOT, 'log/search.log')))
 
 # Example with using the syslog logger.
 # Falling back to the standard log if it isn't available.
@@ -16,5 +16,5 @@ PickyLog = Loggers::Search.new ::Logger.new(File.expand_path(File.join(SEARCH_RO
 # rescue StandardError
 #   puts "Could not connect to the syslog, using the normal log."
 #   require 'logger'
-#   PickyLog        = Loggers::Search.new ::Logger.new(File.join(SEARCH_ROOT, 'log/search.log'))
+#   PickyLog        = Loggers::Search.new ::Logger.new(File.join(PICKY_ROOT, 'log/search.log'))
 # end

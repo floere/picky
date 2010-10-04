@@ -34,7 +34,7 @@ module Sources
     #
     def configure options
       @connection_options = if filename = options[:file]
-        File.open(File.join(SEARCH_ROOT, filename)) { |f| YAML::load(f) }
+        File.open(File.join(PICKY_ROOT, filename)) { |f| YAML::load(f) }
       else
         options
       end
@@ -44,7 +44,7 @@ module Sources
     # Connect the backend.
     #
     def connect_backend
-      return if SEARCH_ENVIRONMENT.to_s == 'test' # TODO Unclean.
+      return if PICKY_ENVIRONMENT.to_s == 'test' # TODO Unclean.
       raise "Database backend not configured" unless connection_options
       database.establish_connection connection_options
     end

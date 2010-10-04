@@ -13,12 +13,12 @@ module Picky
           # Executes a rake task on the server.
           #
           # Options:
-          #  * env: The SEARCH_ENV. Will not set if set explicitly to false. Default: production.
+          #  * env: The PICKY_ENV. Will not set if set explicitly to false. Default: production.
           #  * All other options get passed on to the Capistrano run task.
           #
           def execute_rake_task name, options = {}, &block
             env = options.delete :env
-            env = env == false ? '' : "SEARCH_ENV=#{env || 'production'}"
+            env = env == false ? '' : "PICKY_ENV=#{env || 'production'}"
             run "cd #{current_path}; rake #{name} #{env}", options, &block
           end
           

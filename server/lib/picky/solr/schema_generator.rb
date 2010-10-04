@@ -52,7 +52,7 @@ module Solr
     #
     #
     def read_template
-      template_path = File.join SEARCH_ROOT, 'solr', 'conf', 'schema.xml.erb'
+      template_path = File.join PICKY_ROOT, 'solr', 'conf', 'schema.xml.erb'
       schema = ''
       File.open(template_path, 'r') do |f|
         schema = f.read
@@ -63,7 +63,7 @@ module Solr
     #
     #
     def write result
-      schema_path = File.join SEARCH_ROOT, 'solr', 'conf', 'schema.xml'
+      schema_path = File.join PICKY_ROOT, 'solr', 'conf', 'schema.xml'
       File.open(schema_path, 'w') do |f|
         f << result
       end

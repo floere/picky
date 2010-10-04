@@ -19,12 +19,12 @@ libs =  " -r irb/completion"
 #
 libs << %( -r "#{File.expand_path(File.join(File.dirname(__FILE__), '/../../lib/picky.rb'))}" )
 
-ENV['SEARCH_ENV'] = case ARGV.first
+ENV['PICKY_ENV'] = case ARGV.first
   when "p"; "production"
   when "d"; "development"
   when "t"; "test"
   else
-    ARGV.first || ENV['SEARCH_ENV'] || 'development'
+    ARGV.first || ENV['PICKY_ENV'] || 'development'
 end
 
 puts "Use \x1b[1;30mLoader.load_application\x1b[m to load app."

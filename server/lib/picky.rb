@@ -15,4 +15,4 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'picky', 'loader'))
 # Load the framework
 #
 Loader.load_framework
-puts "Loaded picky with environment '#{SEARCH_ENVIRONMENT}' in #{SEARCH_ROOT} on Ruby #{RUBY_VERSION}."
+puts "Loaded picky with environment '#{PICKY_ENVIRONMENT}' in #{PICKY_ROOT} on Ruby #{RUBY_VERSION}."

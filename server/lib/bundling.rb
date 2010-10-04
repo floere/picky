@@ -4,5 +4,5 @@ rescue LoadError => e
   require 'rubygems'
   require 'bundler'
 end
-Bundler.setup SEARCH_ENVIRONMENT
+Bundler.setup PICKY_ENVIRONMENT
 Bundler.require
