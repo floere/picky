@@ -25,7 +25,7 @@ def wrap_in_html interface
     <p><a href="http://floere.github.com/picky">Back to the Picky documentation.</a></p>
     <p>
       Try a few examples
-      <span class="explanation">(on a simple book database with 540 examples)</span>:
+      <span class="explanation">(on a simple database with 540 books)</span>:
     </p>
     <p>
       A simple word, <a href="#" onclick="pickyClient.insert('alan');">alan</a>.
