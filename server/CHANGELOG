@@ -3,8 +3,7 @@
         hanke: Renamed all instances of SEARCH_* constants to PICKY_*. (Uses RACK_ENV)
 0.0.5 - hanke: config.ru, unicorn.ru now top level in newly created project (more standard).
         hanke: Port now defined in unicorn.ru (use listen 'host:port').
-        hanke: Enriched callbacks in the JS interface definition (before, success, after).
-0.0.4 - hanke: Interface now created using Picky::Helper.interface or .cached_interface (if you only have a single language in your app).
+0.0.4 - 
 0.0.3 - hanke: C-Code cleaned up, removed warnings.
 0.0.2 - hanke: Newly created application better documented.
 0.0.1 - hanke: Initial project. Server (picky) and basic frontend client (picky-client) available. 
