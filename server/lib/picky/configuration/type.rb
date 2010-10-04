@@ -45,5 +45,10 @@ module Configuration
       @indexer = Indexers::Solr.new self
       @indexer.index
     end
+    # TODO Spec!
+    #
+    def connect_backend
+      @source.connect_backend
+    end
   end
 end

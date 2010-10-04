@@ -20,13 +20,21 @@ module Indexes
     Cores.forked self.fields, :randomly => true do |field|
       # Reestablish DB connection.
       #
-      DB.connect # TODO Rewrite!
+      connect_backends
       field.index
       field.cache
     end
   end
   def self.index_solr
     configuration.index_solr
+  end
+  
+  # TODO Push into configuration.
+  #
+  def self.connect_backends
+    configuration.types.each do |type|
+      type.connect_backend
+    end
   end
   
   # Returns an array of fields.

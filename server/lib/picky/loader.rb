@@ -206,7 +206,7 @@ module Loader
     
     # DB
     #
-    load_relative 'db/configuration'
+    load_relative 'backends/db'
     
     # Indexes.
     #

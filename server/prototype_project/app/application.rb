@@ -21,7 +21,7 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     type :books,
          Sources::DB.new(
            'SELECT id, title, author, isbn13 as isbn FROM books',
-           DB.configure(:file => 'app/db.yml')
+           DB.configured(:file => 'app/db.yml')
          ),
          field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
          field(:author, :qualifiers => [:s, :author, :auteur]),

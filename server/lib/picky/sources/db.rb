@@ -9,6 +9,12 @@ module Sources
       @database         = database_adapter
     end
     
+    # COnnect to the backend, if needed.
+    #
+    def connect_backend
+      @database.connect
+    end
+    
     # Take the snapshot.
     #
     def take_snapshot type
