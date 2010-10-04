@@ -18,11 +18,10 @@ module Configuration
     #
     delegate :illegal_characters, :contract_expressions, :stopwords, :split_text_on, :normalize_words, :illegal_characters_after_splitting, :to => :default_index
     
-    #
-    #
     def type name, *fields
       types << Type.new(name, *fields)
     end
+    alias add_index type
     def field name, options = {}
       Field.new name, options
     end
