@@ -1,5 +1,4 @@
-var Localization = function() {
-
+var Localization = {
   // This is used to generate the correct query strings, localized.
   //
   // e.g with locale it:
@@ -7,84 +6,33 @@ var Localization = function() {
   //
   // This needs to correspond to the parsing in the search engine.
   //
-  // TODO Change.
-  //
-  var all_qualifiers = {
-    de:{
-      title:    'Titel',
-      author:   'Autor'
-    },
-    fr:{
-      first_name:    'prenom',
-      name:          'nom'
-    },
-    it:{
-      first_name:    'cognome',
-      name:          'nome'
-    },
-    en:{
-      title:    'title',
-      author:   'author'
-    },
-    ch:{
-      first_name:    'vornamä',
-      name:          'namä'
-    }
-  };
-
+  qualifiers: {},
   // This is used to explain the preceding word in the suggestion text.
   //
   // e.g. with locale it:
   // ['name'], ['hanke'] => 'name (cognome)'
   //
-  var all_explanations = {
-    de:{
-      first_name:    'Vorname',
-      name:          'Name'
-    },
-    fr:{
-      first_name:    'prénom',
-      name:          'nom'
-    },
-    it:{
-      first_name:    'prenome',
-      name:          'nome'
-    },
-    en:{
-      title:    'title',
-      author:   'author'
-    },
-    ch:{
-      first_name:    'Vornamä',
-      name:          'Namä'
-    }
-  };
-
+  explanations: {},
   // Located in the suggestion text between what and where.
   //
   // e.g. french:
   // ['name', 'city'], ['Hanke', 'Zürich'] => 'Hanke (nom) à Zürich'
   //
-  var all_location_delimiters = { de:'in', fr:'à', it:'a', en:'in', ch:'in' };
-  var all_explanation_delimiters = { de:'und', fr:'et', it:'e', en:'and', ch:'und' };
-
-  return {
-    qualifiers:             function(locale) { return all_qualifiers[locale]; },
-    explanations:           function(locale) { return all_explanations[locale]; },
-    location_delimiters:    function(locale) { return all_location_delimiters[locale]; },
-    explanation_delimiters: function(locale) { return all_explanation_delimiters[locale]; }
-  };
-
-}();
+  // TODO Remove.
+  //
+  location_delimiters: { de:'in', fr:'à', it:'a', en:'in', ch:'in' },
+  explanation_delimiters: { de:'und', fr:'et', it:'e', en:'and', ch:'und' }
+};
 
 function AllocationRenderer(allocation) {
   var self = this;
 
-  var locale = PickyI18n.locale;
-  var qualifiers            = Localization.qualifiers(locale);
-  var explanations          = Localization.explanations(locale);
-  var location_delimiter    = Localization.location_delimiters(locale);
-  var explanation_delimiter = Localization.explanation_delimiters(locale);
+  var locale                = PickyI18n.locale;
+  
+  var qualifiers            = Localization.qualifiers && Localization.qualifiers[locale] || {};
+  var explanations          = Localization.explanations[locale];
+  var location_delimiter    = Localization.location_delimiters[locale];
+  var explanation_delimiter = Localization.explanation_delimiters[locale];
 
   var combination = allocation.combination;
 
@@ -96,14 +44,7 @@ function AllocationRenderer(allocation) {
   this.text = '';
   this.query = '';
   this.explanation = '';
-
-  //
-  //
-  // var allocation            = allocation;
-  // var qualifiers            = qualifiers;
-  // var explanations          = explanations;
-  // var location_delimiter    = location_delimiter;
-  // var explanation_delimiter = explanation_delimiter;
+  
   var no_ellipses           = ['street_number', 'zipcode'];
 
   // Contracts the originals of the zipped.
@@ -317,8 +258,11 @@ function AllocationRenderer(allocation) {
   //
   function querify(zipped) {
     var query_parts = [];
+    var qualifier;
     for (var i in zipped) {
-      query_parts[i] = qualifiers[zipped[i][0]] + ':' + zipped[i][1];
+      qualifier = zipped[i][0];
+      qualifier = qualifiers[qualifier] || qualifier; // Use the returned qualifier if none is given.
+      query_parts[i] = qualifier + ':' + zipped[i][1];
     };
     return query_parts.join(' ');
   };

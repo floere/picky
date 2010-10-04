@@ -5,6 +5,9 @@ body {
 img {
   margin: 10px; }
 
+p span.explanation {
+  color: #999999; }
+
 #picky {
   text-align: left;
   margin: 0px auto;
@@ -32,6 +35,10 @@ img {
   #picky .results {
     margin-top: 0px;
     padding: 0px; }
+    #picky .results div.book {
+      background-color: #ffeeee;
+      padding: 5px 25px;
+      margin: 3px 0px; }
     #picky .results em {
       font-style: normal;
       background-color: #fff196; }
@@ -42,7 +49,7 @@ img {
       position: relative;
       text-align: center;
       padding: 7px 5px 5px 5px;
-      background-color: #aaaaaa;
+      background-color: #eeeeee;
       color: #276abb;
       cursor: pointer; }
       #picky .results .addination .tothetop {
@@ -57,8 +64,6 @@ img {
       color: #555555;
       background-color: #eeeeee;
       padding: 6px 5px 5px 8px; }
-      #picky .results .info strong {
-        font-weight: normal; }
       #picky .results .info .tothetop {
         float: right;
         margin-top: -4px; }

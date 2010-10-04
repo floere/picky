@@ -3,7 +3,7 @@
 var PickyBackend = function(url) {
   
   return {
-    url: url || '/search',
+    url: url,
     get: function(timestamp, query, clientCallback, offset, specificParams) {
       var params = specificParams || {};
       params = $.extend({ query: query, offset: offset }, specificParams);

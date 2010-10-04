@@ -5,6 +5,8 @@ var PickyClient = function(config) {
   this.init = function() {
     this.controller     = new config.controller(this);
     this.searchBackends = config.backends;
+    Localization.qualifiers   = config.qualifiers;
+    Localization.explanations = config.explanations;
   };
   
   this.focus = function() {

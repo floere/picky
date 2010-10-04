@@ -7,13 +7,15 @@ var PickyResultsRenderer = function(controller, data) {
 
   this.render = function() {
     this.allocations.each(function(i, allocation) {
-      var header = self.renderHeader(allocation);
+      var header = self.renderHeader(allocation); // TODO Render header.
       var entries = self.renderEntries(allocation);
       var addination = self.renderAddination(self.data);
       $('#picky .results').append(header).append(entries).append(addination);
     });
   };
-
+  
+  // TODO Make customizable.
+  //
   this.renderHeader = function(allocation) {
     var type = allocation.type; // Make definable.
     var explanation = '<div class="explanation">' + type + ' ' + this.explain(allocation.combination).replace(/([\wÄäÖöÜüéèà\/]+):([\wÄäÖöÜüéèà]+)/g, "<strong>$1</strong> $2") + '</div>';
@@ -43,9 +45,9 @@ var PickyResultsRenderer = function(controller, data) {
       header_html += toTheTop;
     }
     if (data.total > 20) {
-      header_html += '<div class="clear"></div>';
-      header_html += names;
-      header_html += range;
+      // header_html += '<div class="clear"></div>'; // TODO
+      // header_html += names; // TODO
+      // header_html += range; // TODO
     }
     header_html += '<div class="clear"></div></div>';
     
@@ -57,8 +59,8 @@ var PickyResultsRenderer = function(controller, data) {
   };
   
   this.explain = function(combination) {
-    var explanations = Localization.explanations(PickyI18n.locale);
-    var explanation_delimiter = Localization.explanation_delimiters(PickyI18n.locale);
+    var explanations          = Localization.explanations[PickyI18n.locale];
+    var explanation_delimiter = Localization.explanation_delimiters[PickyI18n.locale];
     var no_ellipses           = ['street_number', 'zipcode']; // TODO Change!
     var parts = [];
     var combo;
@@ -80,7 +82,7 @@ var PickyResultsRenderer = function(controller, data) {
     var total = data.total;
     var range = this.calculateAddinationData();
     if (range.offset < total) {
-      var addination = $("<div class='addination current'>" + t('suggestions.results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});return false;'>&uarr;</a></div></div>");
+      var addination = $("<div class='addination current'>" + t('results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});'>&uarr;</a></div></div>");
       addination.bind('click', { offset: range.offset}, this.controller.addinationClickEventHandler);
       return addination;
     } else {
