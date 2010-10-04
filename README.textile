@@ -8,7 +8,7 @@ Picky is split into a server (picky) and a client (picky-client) which is to be 
 
 
 
-h1. Walkthrough (Draft)
+h1. Walkthrough (Draft, for friends & family)
 
 h2. The Search Server
 
@@ -105,6 +105,16 @@ end</code></pre>
 
 defines how query data (the search text you enter) is processed, and also how it is routed.
 
+There are pretty much the same options as in indexing, like @illegal_characters@, @stopwords@, @split_text_on@.
+
+But also
+
+<pre><code>maximum_tokens 5</code></pre>
+
+that defines how many tokens make it through.
+
+If you queried for "The red fox jumps over the nice dog", only the first 5 tokens would come through.
+
 <pre><code>queries do
   maximum_tokens 5
   # Note that Picky needs the following characters to
@@ -119,6 +129,18 @@ defines how query data (the search text you enter) is processed, and also how it
   
   root 200
 end</code></pre>
+
+Routing is quite easy. Use
+
+<pre><code>route(regexp_or_string, query)</code></pre>
+
+to define a route and a query that is called.
+
+There are two query types to be called, @Full@ or @Live@. The difference is that Full returns a marshalled result (for the picky-client) with ids, the live result is in json (for either the search engine directly or the picky-client), without ids.
+
+Indexes are identified by their index_identifier (see above). Multiple indexes can be used per query, no problem. Just pass them to a @Query@ like this:
+
+<pre><code>Query::Full.new(Indexes[:books], Indexes[:dvds], Indexes[:music]) # a comprehensive media search</code></pre>
 
 h2. The Frontend (Controller etc.)
 
@@ -183,12 +205,20 @@ The options are:
 :more       # Default: 'more'
 </pre></code>
 
+Generates a search interface structure (with results) with a div#picky around it all.
+
 h3. Javascript
+
+TODO Extract JS files, make them installable through @picky-client install javascripts@
+
+The simplest setup we can think of:
 
 <pre><code>new PickyClient({
   live: '/books/live',
   full: '/books/full'
 });</code></pre>
+
+But it can be customized quite a bit:
 
 <pre><code>pickyClient = new PickyClient({
   live: '/books/live',
