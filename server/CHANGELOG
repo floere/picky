@@ -1,5 +1,6 @@
 0.0.6 - hanke: Removed unnecessary gem dependencies (thanks to niko).
         hanke: Added CSV to the possible Sources. Sources::CSV.new(:title, :author, :isbn, :file => 'data/books.csv'),
+        hanke: Renamed all instances of SEARCH_* constants to PICKY_*. (Uses RACK_ENV)
 0.0.5 - hanke: config.ru, unicorn.ru now top level in newly created project (more standard).
         hanke: Port now defined in unicorn.ru (use listen 'host:port').
         hanke: Enriched callbacks in the JS interface definition (before, success, after).
