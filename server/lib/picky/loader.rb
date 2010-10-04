@@ -80,7 +80,7 @@ module Loader
   # Loads the framework.
   #
   def self.load_framework
-    # Compile C-Code. TODO Remove as soon as stable. Remove also mentioned file.
+    # Load compiled C code.
     #
     require_relative 'initializers/ext'
     
