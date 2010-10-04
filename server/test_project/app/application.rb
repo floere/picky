@@ -19,24 +19,24 @@ class BookSearch < Application
                                    :qualifiers => [:y, :year, :annee]
     isbn          = field :isbn,   :qualifiers => [:i, :isbn]
     
-    type :main,
-          Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml'),
-          similar_title,
-          author,
-          year
+    add_index :main,
+              Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml'),
+              similar_title,
+              author,
+              year
     
-    type :isbn,
-          Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml'),
-          field(:isbn, :qualifiers => [:i, :isbn])
+    add_index :isbn,
+              Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml'),
+              field(:isbn, :qualifiers => [:i, :isbn])
     
-    type :csv_test,
-          Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
-          similar_title,
-          author,
-          isbn,
-          year,
-          field(:publisher, :qualifiers => [:p, :publisher]),
-          field(:subjects, :qualifiers => [:s, :subject])
+    add_index :csv_test,
+              Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
+              similar_title,
+              author,
+              isbn,
+              year,
+              field(:publisher, :qualifiers => [:p, :publisher]),
+              field(:subjects, :qualifiers => [:s, :subject])
   end
   
   queries do
