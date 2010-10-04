@@ -28,6 +28,10 @@ def wrap_in_html interface
       <span class="explanation">(on a simple book database with 540 examples)</span>:
     </p>
     <p>
+      A simple word, <a href="#" onclick="pickyClient.insert('alan');">alan</a>.
+      <span class="explanation">(Finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.)<span>
+    </p>
+    <p>
       With qualifier, <a href="#" onclick="pickyClient.insert('title:women');">title:women</a>.
       <span class="explanation">(Finds "women*" in title)<span>
     </p>
