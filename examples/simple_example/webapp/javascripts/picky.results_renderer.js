@@ -18,13 +18,14 @@ var PickyResultsRenderer = function(controller, data) {
   //
   this.renderHeader = function(allocation) {
     var type = allocation.type; // Make definable.
-    var explanation = '<div class="explanation">' + type + ' ' + this.explain(allocation.combination).replace(/([\wÄäÖöÜüéèà\/]+):([\wÄäÖöÜüéèà]+)/g, "<strong>$1</strong> $2") + '</div>';
+    var explanation = '<div class="explanation">' + type + ' ' + this.explain(allocation.combination).replace(/([\s\wÄäÖöÜüéèà\/]+):([\wÄäÖöÜüéèà]+)/g, "<strong>$1</strong> $2") + '</div>';
     var rangeStart = this.data.offset + 1;
     var rangeEnd = this.data.offset + allocation.entries.length;
     var rangeText = (rangeStart == rangeEnd) ? rangeStart : rangeStart + '-' + rangeEnd;
     var range = '<div class="range">' + rangeText + ' ' + t('common.of') + ' ' + this.data.total + '</div>';
     var toTheTop = '<div class="tothetop"><a href="javascript:$.scrollTo(0,{ duration: 500 }); searchEngine.focus();">&uarr;</a></div>';
-
+    
+    // TODO Parametrize!
     var names = '';
     var firstEntryName = $(allocation.entries[0]).find('.name').html();
     var lastEntryName = $(allocation.entries[allocation.entries.length-1]).find('.name').html();
@@ -59,14 +60,16 @@ var PickyResultsRenderer = function(controller, data) {
   };
   
   this.explain = function(combination) {
-    var explanations          = Localization.explanations[PickyI18n.locale];
+    var explanations          = Localization.explanations && Localization.explanations[PickyI18n.locale] || {}; // TODO
     var explanation_delimiter = Localization.explanation_delimiters[PickyI18n.locale];
-    var no_ellipses           = ['street_number', 'zipcode']; // TODO Change!
+    var no_ellipses           = ['street_number', 'zipcode']; // TODO Parametrize!
     var parts = [];
     var combo;
     for (var i = 0, l = combination.length; i < l; i++) {
       combo = combination[i];
-      parts.push([explanations[combo[0]], combo[1]].join(':'));
+      var explanation = combo[0];
+      explanation = explanations[explanation] || explanation;
+      parts.push([explanation, combo[1]].join(':'));
     }
     var last_part = parts[parts.length-1];
     parts = parts.slice(0, parts.length-1).join(', ');

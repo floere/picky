@@ -4,6 +4,9 @@ var PickyController = function(searchEngine) {
   
   this.searchEngine    = searchEngine;
   this.config          = searchEngine.config;
+  
+  this.showResultsLimit = this.config.showResultsLimit || 10;
+  
   this.beforeCallback  = this.config.before; // || ...
   this.successCallback = this.config.success; // || ...
   this.afterCallback   = this.config.after; // || ...
@@ -143,7 +146,7 @@ var PickyController = function(searchEngine) {
   };
   
   this.mustShowAllocationCloud = function(data) {
-    return data.total > this.config.showResultsThreshold && data.allocations.length > 1;
+    return data.total > this.showResultsLimit && data.allocations.length > 1;
   };
   
   this.searchStatus = function(data) {

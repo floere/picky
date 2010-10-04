@@ -30,7 +30,7 @@ function AllocationRenderer(allocation) {
   var locale                = PickyI18n.locale;
   
   var qualifiers            = Localization.qualifiers && Localization.qualifiers[locale] || {};
-  var explanations          = Localization.explanations[locale];
+  var explanations          = Localization.explanations && Localization.explanations[locale] || {};
   var location_delimiter    = Localization.location_delimiters[locale];
   var explanation_delimiter = Localization.explanation_delimiters[locale];
 
@@ -75,7 +75,8 @@ function AllocationRenderer(allocation) {
     return zipped;
   };
   this.contract = contract;
-
+  
+  // TODO Parametrize!
   var specialWhoCases = {
     "maiden_name" : { format:"(-%1$s)", method:'capitalize', ignoreSingle:true },
     "name"        : { format:"<strong>%1$s</strong>", method:'toUpperCase', ignoreSingle:true },
@@ -91,7 +92,8 @@ function AllocationRenderer(allocation) {
       if (formatting.method) { word = word[formatting.method](); }
       if (formatting.format) { word = formatting.format.replace(/%1\$s/, word); }
     }
-    if (single && !(formatting && formatting.ignoreSingle)) { return word + '&nbsp;(' + explanations[allocation] + ')'; }
+    var explanation = explanations[allocation] || allocation;
+    if (single && !(formatting && formatting.ignoreSingle)) { return word + '&nbsp;(' + explanation + ')'; }
 
     return word;
   }
@@ -179,8 +181,10 @@ function AllocationRenderer(allocation) {
   function handleSingleWhat(both) {
     var allocation = both[0];
     var word       = both[1];
-
-    return word + '&nbsp;(' + explanations[allocation] + ')';
+    
+    var explanation = explanations[allocation] || allocation;
+    
+    return word + '&nbsp;(' + explanation + ')';
   }
   function what(zipped) {
     if (zipped.length == 0) { return ''; };

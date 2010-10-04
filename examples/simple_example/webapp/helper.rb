@@ -15,7 +15,7 @@ def wrap_in_html interface
   javascripts << 'picky.allocations_cloud_renderer'
   javascripts = javascripts.map { |js_file| "<script src='javascripts/#{js_file}.js' type='text/javascript'></script>" }.join
   <<-HTML
-<html>
+<html lang="en">
   <head>
     <link type="text/css" rel="stylesheet" media="screen" href="stylesheets/stylesheet.css">
     #{javascripts}
@@ -47,37 +47,32 @@ def wrap_in_html interface
     <script type='text/javascript'>
       //<![CDATA[
         pickyClient = new PickyClient({
-          locale: PickyI18n.locale, // TODO Remove?
-          controller: PickyController, // TODO Remove?
-          backends: { // TODO Hide implementation, but still allow this here.
-            live: new LiveBackend('/search/live'), // 
-            full: new FullBackend('/search/full')
-          },
-          showResultsThreshold: 10, // TODO Rename to showResultsIfLess ?
-          showFeedback: true, // TODO What is this?
-          before: function(params, query, offset) {  }, // Before Picky sends any data.
-          success: function(data, query) {  }, // Just after Picky receives data. (Get a PickyData object)
-          after: function(data, query) {  }, // After Picky has handled the data and updated the view.
+          live: '/search/live',
+          full: '/search/full',
+          showResultsLimit: 10, // Optional. Default is 10.
+          
+          before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
+          success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+          after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+          
           // This is used to generate the correct query strings, localized. E.g. "subject:war".
-          // If you don't give these, the field identifier given in the Picky server is used.
+          // Optional. If you don't give these, the field identifier given in the Picky server is used.
+          //
           qualifiers: {
             en:{
-              // title:     'title',
-              // author:    'author',
-              // isbn:      'isbn',
-              // year:      'year',
-              // publisher: 'publisher',
               subjects:  'subject'
             }
           },
-          // This is used to explain the preceding word in the suggestion text. E.g. "Peter (author)".
+          // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
+          // Optional. Default are the field identifiers from the Picky server.
+          //
           explanations: {
             en:{
-              title:     'title',
-              author:    'author',
+              title:     'titled',
+              author:    'written by',
               isbn:      'ISBN-13',
-              year:      'published',
-              publisher: 'publisher',
+              year:      'published in',
+              publisher: 'published by',
               subjects:  'topics'
             }
           }

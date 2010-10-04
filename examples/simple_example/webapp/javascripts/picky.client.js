@@ -3,8 +3,21 @@ var PickyClient = function(config) {
   this.config = config;
   
   this.init = function() {
-    this.controller     = new config.controller(this);
-    this.searchBackends = config.backends;
+    var controller      = config.controller;
+    this.controller     = controller && new controller(this) || new PickyController(this);
+    
+    var backends        = config.backends;
+    if (backends) {
+      backends.live || alert('Both a full and live backend must be provided.');
+      backends.full || alert("Both a full and live backend must be provided.");
+    } else {
+      backends = {
+        live: config.live && new LiveBackend(config.live) || alert("A live backend path must be provided."),
+        full: config.full && new FullBackend(config.full) || alert("A live backend path must be provided.")
+      };
+    }
+    this.searchBackends = backends;
+    
     Localization.qualifiers   = config.qualifiers;
     Localization.explanations = config.explanations;
   };
@@ -14,8 +27,7 @@ var PickyClient = function(config) {
   };
   
   this.insert = function(query, full) {
-    var full = full || true;
-    this.controller.insert(query, full);
+    this.controller.insert(query, full || true);
   };
   
   // If the given backend cannot be found, ignore the search request.
