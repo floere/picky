@@ -1,28 +1,42 @@
+require 'CSV'
+
 module Sources
+  
+  class NoCSVFileGiven < StandardError; end
   
   class CSV < Base
     
-    attr_reader :file_name
+    attr_reader :file_name, :field_names
     
-    def initialize file_name, *field_names
-      @file_name = file_name
-      @field_names
+    def initialize *field_names, options
+      @field_names = field_names
+      @file_name   = options[:file] || raise_no_file_given(field_names)
     end
     
-    # Counts all the entries that are used for the index.
     #
-    def count type
-      `wc -l #{file_name}`
+    #
+    def raise_no_file_given field_names
+      raise NoCSVFileGiven.new field_names.join(', ')
     end
     
-    # Harvests the data to index, chunked.
+    # Harvests the data to index.
     #
-    # Subclasses should override harvest_statement to define how their data is found.
-    # Example:
-    #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
+    def harvest _, field
+      index = field_names.index field.name
+      process_data = lambda do |ary|
+        indexed_id = ary.shift.to_i
+        text       = ary[index]
+        next unless text
+        text.force_encoding 'utf-8' # TODO Still needed?
+        yield indexed_id, text
+      end
+      get_data &process_data
+    end
+    
     #
-    def harvest offset
-      File.open file_name, 'r'
+    #
+    def get_data &block
+      ::CSV.foreach file_name, &block
     end
     
   end

@@ -10,11 +10,7 @@ module Sources
       
     end
     
-    def count type
-      
-    end
-    
-    def harvest offset
+    def harvest type, field
       
     end
     

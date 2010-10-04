@@ -5,9 +5,9 @@ class BookSearch < Application
   indexes do
     # defaults :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new
     
-    illegal_characters(/[',\(\)#:!@]/)
+    illegal_characters(/[',\(\)#:!@;\?]/)
     contract_expressions(/mr\.\s*|mister\s*/i, 'mr ')
-    stopwords(/\b(and|the|or|on)\b/)
+    stopwords(/\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/)
     split_text_on(/[\s\/\-\"\&\.]/)
     illegal_characters_after_splitting(/[\.]/)
     
@@ -17,19 +17,26 @@ class BookSearch < Application
     author        = field :author, :qualifiers => [:a, :author, :auteur]
     year          = field :year,   :partial    => Partial::None.new,
                                    :qualifiers => [:y, :year, :annee]
-    
-    
-    adapter = DB.configured :file => 'app/db.yml'
+    isbn          = field :isbn,   :qualifiers => [:i, :isbn]
     
     type :main,
-          Sources::DB.new('SELECT id, title, author, year FROM books', adapter),
+          Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml'),
           similar_title,
           author,
           year
     
     type :isbn,
-          Sources::DB.new("SELECT id, isbn FROM books", adapter),
+          Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml'),
           field(:isbn, :qualifiers => [:i, :isbn])
+    
+    type :csv_test,
+          Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
+          similar_title,
+          author,
+          isbn,
+          year,
+          field(:publisher, :qualifiers => [:p, :publisher]),
+          field(:subjects, :qualifiers => [:s, :subject])
   end
   
   queries do

@@ -19,10 +19,7 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     split_text_on(/[\s\/\-\"\&\.]/)
       
     type :books,
-         Sources::DB.new(
-           'SELECT id, title, author, isbn13 as isbn FROM books',
-           DB.configured(:file => 'app/db.yml')
-         ),
+         Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
          field(:title,  :qualifiers => [:t, :title, :titre], :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
          field(:author, :qualifiers => [:s, :author, :auteur]),
          field(:isbn,   :qualifiers => [:i, :isbn],          :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.
