@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'constants'))
+require File.expand_path '../constants', __FILE__
 
 module Picky
   module Capistrano

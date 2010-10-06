@@ -2,7 +2,7 @@
 # from the project root directory.
 #
 ENV['PICKY_ENV'] = 'test'
-require File.expand_path(File.dirname(__FILE__) + '/../lib/picky')
+require File.expand_path '../../lib/picky', __FILE__
 require 'spec'
 
 # Set some spec preconditions.

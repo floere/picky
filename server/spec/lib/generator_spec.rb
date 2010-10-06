@@ -109,7 +109,7 @@ describe Picky::Generator do
       it "should return the right filename" do
         @generator.stub! :target_directory => 'some_target_directory'
         
-        test_filename = File.expand_path File.join(@generator.prototype_project_basedir, '/some/file/name')
+        test_filename = File.expand_path 'some/file/name', @generator.prototype_project_basedir
         
         @generator.target_filename_for(test_filename).should == 'some_target_directory/some/file/name'
       end
@@ -126,7 +126,7 @@ describe Picky::Generator do
     
     describe "target_directory" do
       it "should return the right dir name" do
-        @generator.target_directory.should == File.expand_path(File.join(__FILE__, '..', '..', '..', 'some_name'))
+        @generator.target_directory.should == File.expand_path('../../../some_name', __FILE__)
       end
     end
     

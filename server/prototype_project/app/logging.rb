@@ -1,7 +1,7 @@
 # Standard logging.
 #
 require 'logger'
-PickyLog = Loggers::Search.new ::Logger.new(File.expand_path(File.join(PICKY_ROOT, 'log/search.log')))
+PickyLog = Loggers::Search.new ::Logger.new(File.expand_path('log/search.log', PICKY_ROOT))
 
 # Example with using the syslog logger.
 # Falling back to the standard log if it isn't available.

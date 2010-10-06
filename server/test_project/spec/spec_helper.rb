@@ -3,7 +3,7 @@
 #
 ENV['PICKY_ENV'] = 'test'
 require 'rubygems'
-require File.expand_path(File.dirname(__FILE__) + "/../../lib/picky")
+require File.expand_path '../../../lib/picky', __FILE__
 require 'spec'
 
 SearchLog = Loggers::Search.new ::Logger.new(STDOUT)

@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-# Like... totally stolen from rails.
-#
-# TODO Move to gem.
 #
 irb = 'irb'
 
@@ -15,7 +12,7 @@ OptionParser.new do |opt|
 end
 
 libs =  " -r irb/completion"
-libs << %( -r "#{File.expand_path(File.join(File.dirname(__FILE__), '/../../lib/picky.rb'))}" )
+libs << %( -r "#{File.expand_path('../../../lib/picky.rb', __FILE__)}" )
 
 mapping = {
   'p' => 'production',

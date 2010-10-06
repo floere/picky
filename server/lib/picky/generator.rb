@@ -49,7 +49,7 @@ module Picky
       
       def initialize name, *args
         @name = name
-        @prototype_project_basedir = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'prototype_project'))
+        @prototype_project_basedir = File.expand_path '../../prototype_project', __FILE__
       end
       
       #
@@ -134,7 +134,7 @@ module Picky
       #
       #
       def target_directory
-        File.expand_path File.join(Dir.pwd, name)
+        File.expand_path name, Dir.pwd
       end
       
       def created entry
