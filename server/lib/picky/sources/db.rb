@@ -123,11 +123,7 @@ module Sources
     def harvest_statement_with_offset type, field, offset
       statement = harvest_statement type, field
       
-      if statement.include? 'WHERE'
-        statement += ' AND'
-      else
-        statement += ' WHERE'
-      end
+      statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
       
       "#{statement} st.id > #{offset} LIMIT #{chunksize}"
     end

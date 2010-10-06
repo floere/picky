@@ -19,6 +19,7 @@ module Query
         # Expand the combinations.
         #
         possible_combinations = tokens.possible_combinations_in index
+        
         # Optimization for ignoring tokens that allocate to nothing and
         # can be ignored.
         # For example in a context search, where "florian" is not
@@ -26,39 +27,39 @@ module Query
         #
         possible_combinations.compact!
         expanded_combinations = expand_combinations_from possible_combinations
-
+        
         # TODO Rewrite.
         #
         # expanded_combinations.map! { |expanded_combination| Combinations.new(index, expanded_combination) }
-
-        if expanded_combinations.empty?
-          previous_allocations
-        else
-          # The recombination part, where
-          # [
-          #  [a,a,b,b,c,c]
-          #  [d,e,d,e,d,e]
-          # ]
-          # becomes
-          # [
-          #  [a,d],
-          #  [a,e],
-          #  [b,d],
-          #  [b,e],
-          #  [c,d],
-          #  [c,e]
-          # ]
-          #
-          expanded_combinations = expanded_combinations.shift.zip(*expanded_combinations)
-          
-          # Wrap into a real combination.
-          #
-          expanded_combinations.map! { |expanded_combination| Combinations.new(index, expanded_combination) }
-          
-          # Add the possible allocations to the ones we already have.
-          #
-          previous_allocations + expanded_combinations.map(&:pack_into_allocation)
-        end
+        
+        #
+        #
+        next previous_allocations if expanded_combinations.empty?
+        
+        # The recombination part, where
+        # [
+        #  [a,a,b,b,c,c]
+        #  [d,e,d,e,d,e]
+        # ]
+        # becomes
+        # [
+        #  [a,d],
+        #  [a,e],
+        #  [b,d],
+        #  [b,e],
+        #  [c,d],
+        #  [c,e]
+        # ]
+        #
+        expanded_combinations = expanded_combinations.shift.zip(*expanded_combinations)
+        
+        # Wrap into a real combination.
+        #
+        expanded_combinations.map! { |expanded_combination| Combinations.new(index, expanded_combination) }
+        
+        # Add the possible allocations to the ones we already have.
+        #
+        previous_allocations + expanded_combinations.map(&:pack_into_allocation)
       end)
     end
     
