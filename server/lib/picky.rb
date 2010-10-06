@@ -1,14 +1,14 @@
 # Require the constants.
 #
-require File.expand_path 'constants', File.dirname(__FILE__)
+require File.expand_path '../constants', __FILE__
 
 # Library bundling.
 #
-require File.expand_path 'bundling', File.dirname(__FILE__)
+require File.expand_path '../bundling', __FILE__
 
 # Loader which handles framework and app loading.
 #
-require File.expand_path 'picky/loader', File.dirname(__FILE__)
+require File.expand_path '../picky/loader', __FILE__
 
 # Load the framework
 #
