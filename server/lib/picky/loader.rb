@@ -100,7 +100,6 @@ module Loader
     load_relative 'helpers/gc'
     load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
-    load_relative 'helpers/search'
     
     # Signal handling
     #
