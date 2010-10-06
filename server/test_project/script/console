@@ -15,8 +15,6 @@ OptionParser.new do |opt|
 end
 
 libs =  " -r irb/completion"
-# TODO Load gem.
-#
 libs << %( -r "#{File.expand_path(File.join(File.dirname(__FILE__), '/../../lib/picky.rb'))}" )
 
 mapping = {
