@@ -16,7 +16,7 @@ require 'picky'
 #
 Loader.load_application
 
-# Load the data. This loads data from cache files e.g. "some_index/*_index.dump" into constant Indexes::SomeIndex.
+# Load the data. This loads data from cache files e.g. "some_index/*_index.dump" into Indexes[:some_index]
 #
 Indexes.load_from_cache
 
