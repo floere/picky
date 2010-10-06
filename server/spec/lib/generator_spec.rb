@@ -56,6 +56,12 @@ describe Picky::Generator do
       end
     end
     
+    describe "prototype_project_basedir" do
+      it "should be the right basedir" do
+        @generator.prototype_project_basedir.should == File.expand_path('../../../prototype_project', __FILE__)
+      end
+    end
+    
     describe "generate" do
       it "should do things in order" do
         @generator.should_receive(:create_target_directory).once.ordered

@@ -49,7 +49,7 @@ module Picky
       
       def initialize name, *args
         @name = name
-        @prototype_project_basedir = File.expand_path '../../prototype_project', __FILE__
+        @prototype_project_basedir = File.expand_path '../../../prototype_project', __FILE__
       end
       
       #
