@@ -1,16 +1,14 @@
 # Require the constants.
 #
-# TODO Move to app?
-#
-require File.expand_path(File.join(File.dirname(__FILE__), 'constants'))
+require File.expand_path 'constants', File.dirname(__FILE__)
 
 # Library bundling.
 #
-require File.expand_path(File.join(File.dirname(__FILE__), 'bundling'))
+require File.expand_path 'bundling', File.dirname(__FILE__)
 
 # Loader which handles framework and app loading.
 #
-require File.expand_path(File.join(File.dirname(__FILE__), 'picky', 'loader'))
+require File.expand_path 'picky/loader', File.dirname(__FILE__)
 
 # Load the framework
 #
