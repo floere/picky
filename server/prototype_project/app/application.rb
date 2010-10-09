@@ -34,10 +34,13 @@ class PickySearch < Application # The App Constant needs to be identical in appl
     stopwords(/\b(and|the|of|it|in|for)\b/)
     split_text_on(/[\s\/\-\,\&]+/)
     
+    # The example defines two queries that use the same index(es).
+    #
+    # A Full query returns ids, combinations, and counts.
+    # A Live query does return all that Full returns, without ids.
+    #
     route %r{^/books/full}, Query::Full.new(Indexes[:books])
     route %r{^/books/live}, Query::Live.new(Indexes[:books])
-    
-    root 200
   end
   
 end
