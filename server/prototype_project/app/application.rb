@@ -4,7 +4,7 @@
 #
 # Have fun with Picky!
 #
-class PickySearch < Application # The App Constant needs to be identical in application.ru.
+class PickySearch < Application # The App Constant needs to be identical in config.ru.
   
   # This is an example with books that you can adapt.
   #
