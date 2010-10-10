@@ -2,6 +2,27 @@ module Cacher
 
   module Partial
     
+    class SubtokenGenerator
+      
+      attr_reader :down_to, :starting_at
+      
+      def initialize down_to, starting_at
+        @down_to, @starting_at = down_to, starting_at
+        
+        if @starting_at.zero?
+          def each_subtoken token, &block
+            token.each_subtoken @down_to, &block
+          end
+        else
+          def each_subtoken token, &block
+            token[0..@starting_at].intern.each_subtoken @down_to, &block
+          end
+        end
+        
+      end
+      
+    end
+    
     # The subtoken partial strategy.
     #
     # If given
@@ -17,8 +38,6 @@ module Cacher
     #
     class Subtoken < Strategy
       
-      attr_reader :down_to, :starting_at
-      
       # Down to is how far it will go down in generating the subtokens.
       #
       # Examples:
@@ -31,9 +50,16 @@ module Cacher
       # * down to == 4: [:hell]
       #
       def initialize options = {}
-        @down_to     = options[:down_to] || 1
-        starting_at  = options[:starting_at] || 0
-        @starting_at = starting_at.zero? ? 0 : starting_at - 1
+        down_to     = options[:down_to] || 1
+        starting_at = options[:starting_at] || 0
+        starting_at = starting_at - 1 unless starting_at.zero?
+        @generator = SubtokenGenerator.new down_to, starting_at
+      end
+      def down_to
+        @generator.down_to
+      end
+      def starting_at
+        @generator.starting_at
       end
       
       # Generates a partial index from the given index.
@@ -74,8 +100,7 @@ module Cacher
         # TODO Could be improved by appending the aforegoing ids?
         #
         def generate_for token, index, result
-          clipped_token = starting_at.zero? ? token : token[0..starting_at].to_sym
-          clipped_token.subtokens(down_to).each do |subtoken|
+          @generator.each_subtoken(token) do |subtoken|
             if result[subtoken]
               result[subtoken] += index[token] # unique
             else
@@ -83,9 +108,9 @@ module Cacher
             end
           end
         end
-
+        
     end
-
+    
   end
-
+  
 end
