@@ -92,19 +92,19 @@ describe Cacher::Partial::Subtoken do
       describe "a horrible example" do
         before(:each) do
           @index = {
-            :desoxyribonukleinsaeure => [1],
-            :desoxyribonukleinsaeure => [2],
-            :desoxyribonukleinsaeure => [3],
-            :desoxyribonukleinsaeure => [4],
+            :desoxyribonukleinsaeura => [1],
+            :desoxyribonukleinsaeurb => [2],
+            :desoxyribonukleinsaeurc => [3],
+            :desoxyribonukleinsaeurd => [4],
             :desoxyribonukleinsaeure => [5],
-            :desoxyribonukleinsaeure => [6],
-            :desoxyribonukleinsaeure => [7],
-            :desoxyribonukleinsaeure => [8],
-            :desoxyribonukleinsaeure => [9]
+            :desoxyribonukleinsaeurf => [6],
+            :desoxyribonukleinsaeurg => [7],
+            :desoxyribonukleinsaeurh => [8],
+            :desoxyribonukleinsaeuri => [9]
           }
         end
         it "should be fast" do
-          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.0001
+          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.0004
         end
       end
     end
