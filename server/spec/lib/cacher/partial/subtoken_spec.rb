@@ -89,22 +89,18 @@ describe Cacher::Partial::Subtoken do
           }
         end
       end
-      describe "a horrible example" do
+      describe "a bigger example" do
         before(:each) do
-          @index = {
-            :desoxyribonukleinsaeura => [1],
-            :desoxyribonukleinsaeurb => [2],
-            :desoxyribonukleinsaeurc => [3],
-            :desoxyribonukleinsaeurd => [4],
-            :desoxyribonukleinsaeure => [5],
-            :desoxyribonukleinsaeurf => [6],
-            :desoxyribonukleinsaeurg => [7],
-            :desoxyribonukleinsaeurh => [8],
-            :desoxyribonukleinsaeuri => [9]
-          }
+          abc = ('A'..'z').to_a
+          @index = {}
+          52.times do |i|
+            character = abc.shift
+            abc << character
+            @index[abc.to_s.to_sym] = [i]
+          end
         end
         it "should be fast" do
-          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.0004
+          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.04
         end
       end
     end
