@@ -17,7 +17,7 @@ describe Symbol do
 
       timed do
         s.subtokens
-      end.should <= 0.003 # was 0.0019
+      end.should <= 0.001
     end
   end
 
@@ -63,22 +63,22 @@ describe Symbol do
           @sym.subtokens(@downto).should == [:reinke, :reink, :rein, :rei, :re, :r]
         end
       end
-      # context 'downto is 0' do
-      #   before(:each) do
-      #     @downto = 0
-      #   end
-      #   it "should return an array of pieces of the original token, each 1 smaller than the other" do
-      #     @sym.subtokens(@downto).should == [:reinke, :reink, :rein, :rei, :re, :r]
-      #   end
-      # end
-      # context 'downto is less than zero' do
-      #   before(:each) do
-      #     @downto = -2
-      #   end
-      #   it "should return an array of pieces of the original token, each 1 smaller than the other" do
-      #     @sym.subtokens(@downto).should == [:reinke, :reink, :rein, :rei, :re, :r]
-      #   end
-      # end
+      context 'downto is 0' do
+        before(:each) do
+          @downto = 0
+        end
+        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+          @sym.subtokens(@downto).should == [:reinke, :reink, :rein, :rei, :re, :r, :""]
+        end
+      end
+      context 'downto is less than zero' do
+        before(:each) do
+          @downto = -2
+        end
+        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+          @sym.subtokens(@downto).should == [:reinke, :reink, :rein]
+        end
+      end
     end
   end
 
