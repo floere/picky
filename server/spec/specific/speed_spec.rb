@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe "Speccing Ruby for speed" do
-  
   describe "various versions for allocation id concatenating" do
     before(:each) do
       @allocs = [:hello, :speed, :test]

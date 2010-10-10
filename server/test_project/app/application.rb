@@ -12,11 +12,10 @@ class BookSearch < Application
     illegal_characters_after_splitting(/[\.]/)
     
     few_similarities = Similarity::DoubleLevenshtone.new(3)
-    similar_title = field :title,  :similarity => few_similarities,
-                                   :qualifiers => [:t, :title, :titre]
+    similar_title = field :title,  :qualifiers => [:t, :title, :titre],
+                                   :similarity => few_similarities
     author        = field :author, :qualifiers => [:a, :author, :auteur]
-    year          = field :year,   :partial    => Partial::None.new,
-                                   :qualifiers => [:y, :year, :annee]
+    year          = field :year,   :qualifiers => [:y, :year, :annee]
     isbn          = field :isbn,   :qualifiers => [:i, :isbn]
     
     add_index :main,
