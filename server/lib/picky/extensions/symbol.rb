@@ -6,7 +6,7 @@ class Symbol
   # :keys.subtokens(2) # => [:key, :ke]
   #
   def subtokens down_to_length = 1
-    sub, result = self.to_s, [self]
+    sub, result = self.id2name, [self]
     
     size = sub.size
     down_to_length = size + down_to_length if down_to_length < 0
