@@ -43,12 +43,12 @@ module Cacher
         
         # Generate for each key token the subtokens.
         #
-        i = 5000
+        i = 0
         index.each_key do |token|
-          i -= 1
-          if i == 0
+          i += 1
+          if i == 5000
             puts "#{Time.now}: Generating partial tokens for token #{token}. This appears every 5000 tokens."
-            i = 5000
+            i = 0
           end
           generate_for token, index, result
         end
@@ -79,7 +79,7 @@ module Cacher
             if result[subtoken]
               result[subtoken] += index[token] # unique
             else
-              result[subtoken] = index[token].dup
+              result[subtoken] = index[token].dup # TODO Spec this dup
             end
           end
         end
