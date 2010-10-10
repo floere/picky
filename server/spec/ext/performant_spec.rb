@@ -47,7 +47,7 @@ describe Performant::Array do
       # brute force
       Benchmark.realtime do
         Performant::Array.memory_efficient_intersect(arys.sort_by(&:size))
-      end.should <= 0.001
+      end.should < 0.001
     end
     it "should be optimal for 2 small arrays of 50/10_000" do
       arys = [(1..50).to_a, (10_000..20_000).to_a << 7]
@@ -57,7 +57,7 @@ describe Performant::Array do
         arys.inject(arys.shift.dup) do |total, ary|
           total & arys
         end
-      end.should <= 0.0015
+      end.should < 0.0015
     end
   end
 

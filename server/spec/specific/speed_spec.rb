@@ -22,14 +22,14 @@ describe "Speccing Ruby for speed" do
           @allocs.inject([]) do |total, alloc|
             total + @ids[alloc]
           end
-        end.should <= 0.0025
+        end.should < 0.0025
       end
     end
     describe "map and flatten!(1)" do
       it "should be fast" do
         Benchmark.realtime do
           @allocs.map { |alloc| @ids[alloc] }.flatten!(1)
-        end.should <= 0.02
+        end.should < 0.02
       end
     end
     describe "<< and flatten!(1)" do
@@ -38,7 +38,7 @@ describe "Speccing Ruby for speed" do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
           end.flatten!(1)
-        end.should <= 0.02
+        end.should < 0.02
       end
     end
     describe "<< and flatten!" do
@@ -47,7 +47,7 @@ describe "Speccing Ruby for speed" do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
           end.flatten!
-        end.should <= 0.02
+        end.should < 0.02
       end
     end
   end

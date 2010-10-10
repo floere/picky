@@ -39,7 +39,7 @@ describe Index::Bundle do
       it 'should be fast' do
         Benchmark.realtime do
           @full.generate_partial
-        end.should <= 0.2
+        end.should < 0.2
       end
     end
   end

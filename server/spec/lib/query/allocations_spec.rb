@@ -328,7 +328,7 @@ describe Query::Allocations do
         @allocations.total.should == 110
       end
       it 'should be fast' do
-        Benchmark.realtime { @allocations.process!(20, 0) }.should <= 0.0001
+        Benchmark.realtime { @allocations.process!(20, 0) }.should < 0.0001
       end
     end
   end

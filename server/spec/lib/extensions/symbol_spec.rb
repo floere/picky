@@ -16,7 +16,7 @@ describe Symbol do
       
       timed do
         s.subtokens
-      end.should <= 0.001
+      end.should < 0.001
     end
   end
 
