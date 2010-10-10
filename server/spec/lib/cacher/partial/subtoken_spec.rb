@@ -97,18 +97,30 @@ describe Cacher::Partial::Subtoken do
           }
         end
       end
-      describe "a bigger example" do
+      describe "a bigger example with disjunct symbols" do
         before(:each) do
-          abc = ('A'..'z').to_a
+          abc = ('A'..'Z').to_a + ('a'..'z').to_a
           @index = {}
           52.times do |i|
+            @index[abc.join.to_sym] = [i]
             character = abc.shift
             abc << character
-            @index[abc.to_s.to_sym] = [i]
           end
         end
         it "should be fast" do
-          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.04
+          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.005
+        end
+      end
+      describe "a bigger example with almost identical symbols" do
+        before(:each) do
+          abc = ('A'..'Z').to_a + ('a'..'z').to_a
+          @index = {}
+          52.times do |i|
+            @index[(abc.join + abc[i].to_s).to_sym] = [i]
+          end
+        end
+        it "should be fast" do
+          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.003
         end
       end
     end
