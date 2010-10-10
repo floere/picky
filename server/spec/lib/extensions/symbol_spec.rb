@@ -1,20 +1,19 @@
 require 'spec_helper'
 
 describe Symbol do
-
-  before(:each) do
-    GC.disable
-  end
-  after(:each) do
-    GC.enable
-    GC.start
-  end
-
+  
   context 'performance' do
     include Helpers::Measuring
+    before(:each) do
+      GC.disable
+    end
+    after(:each) do
+      GC.enable
+      GC.start
+    end
     it 'should be fast' do
       s = (((0..9).to_a)*10).to_s.to_sym
-
+      
       timed do
         s.subtokens
       end.should <= 0.001
