@@ -58,7 +58,7 @@ module Cacher
         # TODO If it is unique for a subtoken, it is
         #      unique for all derived longer tokens.
         #
-        result.each_value &:uniq! # Removed because of the set combination operation below
+        result.each_value &:uniq!
         
         result
       end
