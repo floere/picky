@@ -30,6 +30,14 @@ describe Cacher::Partial::Subtoken do
       it "should be fast" do
         Benchmark.realtime { @cacher.generate_from( :florian => [1], :flavia => [2] ) }.should < 0.0001
       end
+      it "should handle duplicate ids" do
+        @cacher.generate_from( :flo => [1], :fla => [1] ).should == {
+          :flo => [1],
+          :fl => [1],
+          :f => [1],
+          :fla => [1]
+        }
+      end
     end
   end
   context 'down_to set' do
