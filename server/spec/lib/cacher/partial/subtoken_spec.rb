@@ -27,9 +27,27 @@ describe Cacher::Partial::Subtoken do
           :fla => [2]
         }
       end
+      it "should be fast" do
+        Benchmark.realtime { @cacher.generate_from( :florian => [1], :flavia => [2] ) }.should < 0.0001
+      end
     end
   end
   context 'down_to set' do
+    describe 'negative down_to' do
+      before(:each) do
+        @cacher = Cacher::Partial::Subtoken.new :down_to => -2
+      end
+      it 'should generate the right index' do
+        @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
+          :florian => [1],
+          :floria => [1],
+          :flori => [1],
+          :flavia => [2],
+          :flavi => [2],
+          :flav => [2]
+        }
+      end
+    end
     context "large down_to" do
       before(:each) do
         @cacher = Cacher::Partial::Subtoken.new :down_to => 10
@@ -69,6 +87,24 @@ describe Cacher::Partial::Subtoken do
             :flavi => [2],
             :flav => [2]
           }
+        end
+      end
+      describe "a horrible example" do
+        before(:each) do
+          @index = {
+            :desoxyribonukleinsaeure => [1],
+            :desoxyribonukleinsaeure => [2],
+            :desoxyribonukleinsaeure => [3],
+            :desoxyribonukleinsaeure => [4],
+            :desoxyribonukleinsaeure => [5],
+            :desoxyribonukleinsaeure => [6],
+            :desoxyribonukleinsaeure => [7],
+            :desoxyribonukleinsaeure => [8],
+            :desoxyribonukleinsaeure => [9]
+          }
+        end
+        it "should be fast" do
+          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.0001
         end
       end
     end
