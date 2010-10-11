@@ -33,4 +33,5 @@ use Rack::Harakiri
 #
 # Note: Needs to be the same constant name as in app/application.rb.
 #
+    PickySearch.finalize
 run PickySearch

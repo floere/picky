@@ -6,5 +6,5 @@ adapter: mysql
 host: localhost
 username: root
 password:
-database: table_with_search_data
+database: books_database # Needs to contain the DB source in app/application.rb.
 encoding: utf8
