@@ -1,3 +1,5 @@
+# The Picky application wherein the indexing and querying is defined.
+#
 class Application
   
   # An application simply delegates to the routing to handle a request.
