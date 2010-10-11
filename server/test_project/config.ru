@@ -20,6 +20,6 @@ Indexes.load_from_cache
     Rack::Harakiri.after = 100
 use Rack::Harakiri
 
-# Start the application and start accepting requests.
+# Finalize and start the application and start accepting requests.
 #
 run BookSearch
