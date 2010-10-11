@@ -79,61 +79,13 @@ describe Routing do
       @routing.call(env).should == [333, {}, ['this is gurk']]
     end
     it 'should route correctly' do
-      env = rack_defaults_for '/searches/live.json?query=some_query'
-      
-      live = stub :live
-      live.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Live.new)
-      Query::Live.stub! :new => live
-      
-      @routing.live %r{/searches/live}, :some_index
-      
-      @routing.routes.freeze
-      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
-    end
-    it 'should route correctly' do
-      env = rack_defaults_for '/searches/live.json?query=some_query'
-      
-      live = stub :live
-      live.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Live.new)
-      Query::Live.stub! :new => live
-      
-      @routing.live '/searches/live', :some_index
-      
-      @routing.routes.freeze
-      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
-    end
-    it 'should route correctly' do
-      env = rack_defaults_for '/searches/full?query=some_query'
-      
-      full = stub :full
-      full.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Full.new)
-      Query::Full.stub! :new => full
-      
-      @routing.full %r{/searches/full}, :some_index
-      
-      @routing.routes.freeze
-      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
-    end
-    it 'should route correctly' do
-      env = rack_defaults_for '/searches/full?query=some_query'
-      
-      full = stub :full
-      full.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Full.new)
-      Query::Full.stub! :new => full
-      
-      @routing.full '/searches/full', :some_index
-      
-      @routing.routes.freeze
-      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
-    end
-    it 'should route correctly' do
       env = rack_defaults_for '/searches/some_route?query=some_query'
       
       full = stub :full
       full.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Full.new)
       Query::Full.stub! :new => full
       
-      @routing.route '/searches/some_route', Query::Full.new(:some_index, :some_other_index)
+      @routing.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index)
       
       @routing.routes.freeze
       @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
@@ -145,7 +97,7 @@ describe Routing do
       full.should_receive(:search_with_text).once.with(anything, 0).and_return(Results::Full.new)
       Query::Full.stub! :new => full
       
-      @routing.route '/searches/some_route', Query::Full.new(:some_index, :some_other_index), :query => { :type => :some_type }
+      @routing.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index), :query => { :type => :some_type }
       
       @routing.routes.freeze
       @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
@@ -157,7 +109,7 @@ describe Routing do
       full.should_receive(:search_with_text).never
       Query::Full.stub! :new => full
       
-      @routing.route '/searches/some_route', Query::Full.new(:some_index, :some_other_index)
+      @routing.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index)
       
       @routing.routes.freeze
       @routing.call(env).should == [404, {"Content-Type"=>"text/html", "X-Cascade"=>"pass"}, ["Not Found"]]
@@ -194,7 +146,22 @@ describe Routing do
       end
     end
     
-    describe 'route' do
+    describe "route" do
+      it "should delegate correctly" do
+        @routing.should_receive(:route_one).once.with %r{regexp1}, :query1, {}
+        @routing.should_receive(:route_one).once.with %r{regexp2}, :query2, {}
+        
+        @routing.route %r{regexp1} => :query1, %r{regexp2} => :query2
+      end
+      it "should split options correctly" do
+        @routing.should_receive(:route_one).once.with %r{regexp1}, :query1, :some => :option
+        @routing.should_receive(:route_one).once.with %r{regexp2}, :query2, :some => :option
+        
+        @routing.route %r{regexp1} => :query1, %r{regexp2} => :query2, :some => :option
+      end
+    end
+    
+    describe 'route_one' do
       before(:each) do
         @some_query_app = stub :some_query_app
         @routing.stub! :generate_app => @some_query_app
@@ -202,17 +169,17 @@ describe Routing do
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :path_info => /some_url/ }
         
-        @routing.route %r{some_url}, :some_query, {}
+        @routing.route_one %r{some_url}, :some_query, {}
       end
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :path_info => /some_url/ }
         
-        @routing.route 'some_url', :some_query, {}
+        @routing.route_one 'some_url', :some_query, {}
       end
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :glarf => :blarf, :path_info => /some_url/ }
         
-        @routing.route 'some_url', :some_query, { :glarf => :blarf }
+        @routing.route_one 'some_url', :some_query, { :glarf => :blarf }
       end
     end
     
@@ -229,49 +196,6 @@ describe Routing do
         @routing.should_receive(:answer).once.with %r{^/$}, Routing::STATUSES[200]
         
         @routing.root 200
-      end
-    end
-    
-    # 
-    describe 'live' do
-      describe 'instance creation' do
-        before(:each) do
-          @routing.stub :route
-        end
-        context 'with options' do
-          it 'should call route correctly' do
-            Query::Live.should_receive(:new).once.with :some_index, :some_other_index
-            
-            @routing.live :url, :some_index, :some_other_index, { :query => { :param => :value } }
-          end
-        end
-        context 'without options' do
-          it 'should call route correctly' do
-            Query::Live.should_receive(:new).once.with :some_index, :some_other_index
-            
-            @routing.live :url, :some_index, :some_other_index
-          end
-        end
-      end
-      describe 'delegation' do
-        context 'with options' do
-          it 'should call route correctly' do
-            Query::Live.stub! :new => :live
-            
-            @routing.should_receive(:route).once.with :url, :live, { :query => { :param => :value } }
-            
-            @routing.live :url, :some_index, { :query => { :param => :value } }
-          end
-        end
-        context 'without options' do
-          it 'should call route correctly' do
-            Query::Live.stub! :new => :live
-            
-            @routing.should_receive(:route).once.with :url, :live, {}
-            
-            @routing.live :url, :some_index
-          end
-        end
       end
     end
     

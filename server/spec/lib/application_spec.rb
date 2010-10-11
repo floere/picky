@@ -37,6 +37,14 @@ describe Application do
     end
   end
   
+  describe 'delegation' do
+    it "should delegate route" do
+      Application.routing.should_receive(:route).once.with :path => :query
+      
+      Application.route :path => :query
+    end
+  end
+  
   describe 'routing' do
     it 'should be there' do
       lambda { Application.routing }.should_not raise_error

@@ -14,14 +14,6 @@ class Routing
     @defaults = @@defaults.dup
   end
   
-  # #
-  # #
-  # def define_using &block
-  #   reset_routes
-  #   instance_eval &block
-  #   routes.freeze
-  # end
-  
   # 
   #
   def reset_routes
@@ -60,21 +52,27 @@ class Routing
   
   #
   #
-  def route url, query, route_options = {}
+  def route options = {}
+    mappings, route_options = split options
+    mappings.each do |url, query|
+      route_one url, query, route_options
+    end
+  end
+  def split options
+    mappings      = {}
+    route_options = {}
+    options.each_pair do |key, value|
+      if Regexp === key or String === key
+        mappings[key] = value
+      else
+        route_options[key] = value
+      end
+    end
+    [mappings, route_options]
+  end
+  def route_one url, query, route_options = {}
     query.tokenizer = @defaults[:tokenizer] if @defaults[:tokenizer]
     routes.add_route generate_app(query, route_options), default_options(url, route_options)
-  end
-  #
-  #
-  def live url, *indexes_and_options
-    route_options = Hash === indexes_and_options.last ? indexes_and_options.pop : {}
-    route url, Query::Live.new(*indexes_and_options), route_options
-  end
-  #
-  #
-  def full url, *indexes_and_options
-    route_options = Hash === indexes_and_options.last ? indexes_and_options.pop : {}
-    route url, Query::Full.new(*indexes_and_options), route_options
   end
   #
   #

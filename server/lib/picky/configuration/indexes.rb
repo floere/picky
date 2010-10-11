@@ -23,7 +23,7 @@ module Configuration
     def type name, *fields
       types << Type.new(name, *fields)
     end
-    alias add_index type
+    alias index type
     def field name, options = {}
       Field.new name, options
     end
