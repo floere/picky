@@ -7,9 +7,9 @@ module Tokenizers
   # removes_characters regexp
   # illegal_after_normalizing regexp
   # stopwords regexp
-  # contract_expressions regexp, to_string
+  # contracts_expressions regexp, to_string
   # splits_text_on regexp
-  # normalize_words [[/regexp1/, 'replacement1'], [/regexp2/, 'replacement2']]
+  # normalizes_words [[/regexp1/, 'replacement1'], [/regexp2/, 'replacement2']]
   #
   class Query < Base
     
@@ -19,9 +19,9 @@ module Tokenizers
     #
     removes_characters(//)
     stopwords(//)
-    contract_expressions(//, '')
+    contracts_expressions(//, '')
     splits_text_on(/\s/)
-    normalize_words([])
+    normalizes_words([])
     removes_characters_after_splitting(//)
     
     def preprocess text

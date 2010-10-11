@@ -11,8 +11,10 @@ describe Application do
         #
         class TestApplication < Application
           indexing.removes_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
+          indexing.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
           indexing.stopwords(/\b(and|the|of|it|in|for)\b/)
           indexing.splits_text_on(/[\s\/\-\"\&\.]/)
+          indexing.removes_characters_after_splitting(/[\.]/)
           
           books_index = index Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
                               field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
@@ -25,6 +27,9 @@ describe Application do
           querying.removes_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
           querying.stopwords(/\b(and|the|of|it|in|for)\b/)
           querying.splits_text_on(/[\s\/\-\,\&]+/)
+          querying.normalizes_words([
+            [/Deoxyribonucleic Acid/i, 'DNA']
+          ])
           querying.maximum_tokens 5
           
           full = Query::Full.new books_index

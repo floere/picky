@@ -11,9 +11,9 @@ module Tokenizers
     #
     removes_characters(//)
     stopwords(//)
-    contract_expressions(//, '')
+    contracts_expressions(//, '')
     splits_text_on(/\s/)
-    normalize_words([])
+    normalizes_words([])
     removes_characters_after_splitting(//)
     
     # Default indexing preprocessing hook.

@@ -5,11 +5,22 @@ class Application
     
     # An application simply delegates to the routing to handle a request.
     #
+    def call env
+      finalized_routing.call env
+    end
+    
+    # Freezes the routes.
+    #
+    def finalize
+      routing.freeze
+    end
+    # Returns a finalized routing.
+    #
+    def finalized_routing
+      @finalized_routing ||= routing.freeze
+    end
     def routing
       @routing ||= Routing.new
-    end
-    def call env
-      routing.call env
     end
     # Routes.
     #
@@ -20,7 +31,10 @@ class Application
     def indexing
       @indexing ||= Configuration::Indexes.new
     end
-    delegate :index, :field, :to => :indexing
+    def index *args
+      self.type *args
+    end
+    delegate :type, :field, :to => :indexing
     
     #
     #

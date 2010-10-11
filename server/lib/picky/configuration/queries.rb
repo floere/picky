@@ -9,7 +9,7 @@ module Configuration
     def default_index
       Tokenizers::Query
     end
-    delegate :removes_characters, :contract_expressions, :stopwords, :splits_text_on, :normalize_words, :removes_characters_after_splitting, :to => :default_index
+    delegate :removes_characters, :contracts_expressions, :stopwords, :splits_text_on, :normalizes_words, :removes_characters_after_splitting, :to => :default_index
     
     # Delegates.
     #

@@ -1,15 +1,12 @@
 # encoding: utf-8
 #
 class BookSearch < Application
-  
-  indexes do
-    # defaults :partial => Cacher::Partial::Subtoken.new, :similarity => Cacher::Similarity::None.new
     
-    removes_characters(/[',\(\)#:!@;\?]/)
-    contract_expressions(/mr\.\s*|mister\s*/i, 'mr ')
-    stopwords(/\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/)
-    splits_text_on(/[\s\/\-\"\&\.]/)
-    removes_characters_after_splitting(/[\.]/)
+    indexing.removes_characters(/[',\(\)#:!@;\?]/)
+    indexing.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
+    indexing.stopwords(/\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/)
+    indexing.splits_text_on(/[\s\/\-\"\&\.]/)
+    indexing.removes_characters_after_splitting(/[\.]/)
     
     few_similarities = Similarity::DoubleLevenshtone.new(3)
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
@@ -18,50 +15,51 @@ class BookSearch < Application
     year          = field :year,   :qualifiers => [:y, :year, :annee]
     isbn          = field :isbn,   :qualifiers => [:i, :isbn]
     
-    add_index :main,
-              Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml'),
-              similar_title,
-              author,
-              year
+    main_index = index :main,
+                       Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml'),
+                       similar_title,
+                       author,
+                       year
     
-    add_index :isbn,
-              Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml'),
-              field(:isbn, :qualifiers => [:i, :isbn])
+    isbn_index = index :isbn,
+                       Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml'),
+                       field(:isbn, :qualifiers => [:i, :isbn])
     
-    add_index :csv_test,
-              Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
-              similar_title,
-              author,
-              isbn,
-              year,
-              field(:publisher, :qualifiers => [:p, :publisher]),
-              field(:subjects, :qualifiers => [:s, :subject])
-  end
-  
-  queries do
+    csv_test_index = index :csv_test,
+                           Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
+                           similar_title,
+                           author,
+                           isbn,
+                           year,
+                           field(:publisher, :qualifiers => [:p, :publisher]),
+                           field(:subjects, :qualifiers => [:s, :subject])
+                           
     # TODO Should these be definable per Query?
     #      And serve only as defaults if the query cannot find them?
     #
-    maximum_tokens 5
-    removes_characters(/[\(\)\']/)
-    contract_expressions(/mr\.\s*|mister\s*/i, 'mr')
-    stopwords(/\b(and|the|or|on)/i)
-    splits_text_on(/[\s\/\-\,\&]+/) #
-    normalize_words([
+    querying.maximum_tokens 5
+    querying.removes_characters(/[\(\)\']/)
+    querying.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr')
+    querying.stopwords(/\b(and|the|or|on)/i)
+    querying.splits_text_on(/[\s\/\-\,\&]+/) #
+    querying.normalizes_words([
       [/Deoxyribonucleic Acid/i, 'DNA']
     ])
-    removes_characters_after_splitting(/[\.]/)
+    querying.removes_characters_after_splitting(/[\.]/)
     
     options = { :weights => Query::Weights.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
     
-    route %r{^/books/full}, Query::Full.new(Indexes[:main], Indexes[:isbn], options)
-    route %r{^/books/live}, Query::Live.new(Indexes[:main], Indexes[:isbn], options)
+    full_main = Query::Full.new main_index, isbn_index, options
+    live_main = Query::Live.new main_index, isbn_index, options
     
-    route %r{^/csv/live}, Query::Live.new(Indexes[:csv_test], options)
+    live_csv  = Query::Live.new csv_test_index, options
+    full_isbn = Query::Full.new isbn_index, options
     
-    route %r{^/isbn/full},  Query::Full.new(Indexes[:isbn], options)
+    route %r{^/books/full} => full_main,
+          %r{^/books/live} => live_main,
+          %r{^/csv/live}   => live_csv,
+          %r{^/isbn/full}  => full_isbn
     
     root 200
-  end
   
 end

@@ -6,8 +6,8 @@ module Configuration
     
     attr_reader :types
     
-    def initialize *types
-      @types = types
+    def initialize
+      @types = []
     end
     
     #
@@ -18,16 +18,19 @@ module Configuration
     
     # Delegates
     #
-    delegate :removes_characters, :contract_expressions, :stopwords, :splits_text_on, :normalize_words, :removes_characters_after_splitting, :to => :default_index
+    delegate :removes_characters, :contracts_expressions, :stopwords, :splits_text_on, :normalizes_words, :removes_characters_after_splitting, :to => :default_index
     
     # TODO Rewrite all this configuration handling.
     #
-    def type name, *fields
-      type = Type.new(name, *fields)
-      types << type
-      ::Indexes.add type.generate
+    def type name, source, *fields
+      new_type = Type.new name, source, *fields
+      types << new_type
+      ::Indexes.configuration ||= self
+      
+      generated = new_type.generate
+      ::Indexes.add generated
+      generated
     end
-    alias index type
     def field name, options = {}
       Field.new name, options
     end

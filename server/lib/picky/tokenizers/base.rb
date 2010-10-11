@@ -23,7 +23,7 @@ module Tokenizers
     
     # Contraction.
     #
-    def self.contract_expressions what, to_what
+    def self.contracts_expressions what, to_what
       define_method :contract do |text|
         text.gsub! what, to_what
       end
@@ -52,7 +52,7 @@ module Tokenizers
     
     # Normalizing.
     #
-    def self.normalize_words regexp_replaces
+    def self.normalizes_words regexp_replaces
       define_method :normalize_with_patterns do |text|
         regexp_replaces.each do |regex, replace|
           # This should be sufficient
