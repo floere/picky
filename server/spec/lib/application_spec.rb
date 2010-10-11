@@ -4,6 +4,39 @@ require 'spec_helper'
 
 describe Application do
   
+  describe "integration" do
+    it "should run ok" do
+      lambda {
+        # TODO Add all possible cases.
+        #
+        class TestApplication < Application
+          indexing.removes_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
+          indexing.stopwords(/\b(and|the|of|it|in|for)\b/)
+          indexing.splits_text_on(/[\s\/\-\"\&\.]/)
+          
+          books_index = index Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
+                              field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
+                              field(:author),
+                              field(:isbn,  :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.
+                              
+          # Note that Picky needs the following characters to
+          # pass through, as they are control characters: *"~:
+          #
+          querying.removes_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
+          querying.stopwords(/\b(and|the|of|it|in|for)\b/)
+          querying.split_text_on(/[\s\/\-\,\&]+/)
+          querying.maximum_tokens 5
+          
+          full = Query::Full.new books_index
+          live = Query::Live.new books_index
+          
+          route %r{^/books/full} => full
+          route %r{^/books/live} => live
+        end
+      }.should_not raise_error
+    end
+  end
+  
   describe 'routing' do
     it 'should be there' do
       lambda { Application.routing }.should_not raise_error
