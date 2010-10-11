@@ -1,3 +1,9 @@
+0.1.0 - hanke: Application interface rewrite. See a freshly created
+               project (using picky project <name>).
+               Application#add_index.
+0.0.9 - hanke: Cleanup. Frontend example.
+0.0.8 - hanke: Application#add_index instead of Application#type.
+               Simplified scaffolding.
 0.0.7 - hanke: Gem compiles on install. Do not compile on run.
 0.0.6 - hanke: Removed unnecessary gem dependencies (thanks to niko).
         hanke: Added CSV to the possible Sources. Sources::CSV.new(:title, :author, :isbn, :file => 'data/books.csv'),
