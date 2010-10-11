@@ -22,4 +22,5 @@ use Rack::Harakiri
 
 # Finalize and start the application and start accepting requests.
 #
+    BookSearch.finalize
 run BookSearch
