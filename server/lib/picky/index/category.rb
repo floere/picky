@@ -22,8 +22,8 @@ module Index
       @full    = options[:full_bundle]    || Bundle.new(:full,    self, type, Cacher::Partial::None.new, weights, similarity)
       @partial = options[:partial_bundle] || Bundle.new(:partial, self, type, partial, weights, Cacher::Similarity::None.new)
       
-      @full    = options[:full_lambda].call(@full, @partial)    if options[:full_lambda]
-      @partial = options[:partial_lambda].call(@full, @partial) if options[:partial_lambda]
+      @full    = full_lambda.call(@full, @partial)    if full_lambda = options[:full_lambda]
+      @partial = partial_lambda.call(@full, @partial) if partial_lambda = options[:partial_lambda]
     end
     
     # Loads the index from cache.
