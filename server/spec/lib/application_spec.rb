@@ -24,7 +24,7 @@ describe Application do
           #
           querying.removes_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
           querying.stopwords(/\b(and|the|of|it|in|for)\b/)
-          querying.split_text_on(/[\s\/\-\,\&]+/)
+          querying.splits_text_on(/[\s\/\-\,\&]+/)
           querying.maximum_tokens 5
           
           full = Query::Full.new books_index
@@ -64,30 +64,30 @@ describe Application do
   describe "indexes" do
     
   end
-  describe "indexes_configuration" do
+  describe "indexing" do
     it 'should be there' do
-      lambda { Application.indexes_configuration }.should_not raise_error
+      lambda { Application.indexing }.should_not raise_error
     end
     it "should return a new Routing instance" do
-      Application.indexes_configuration.should be_kind_of(Configuration::Indexes)
+      Application.indexing.should be_kind_of(Configuration::Indexes)
     end
     it "should cache the instance" do
-      Application.indexes_configuration.should == Application.indexes_configuration
+      Application.indexing.should == Application.indexing
     end
   end
   
   describe "queries" do
     
   end
-  describe "queries_configuration" do
+  describe "querying" do
     it 'should be there' do
-      lambda { Application.queries_configuration }.should_not raise_error
+      lambda { Application.querying }.should_not raise_error
     end
     it "should return a new Routing instance" do
-      Application.queries_configuration.should be_kind_of(Configuration::Queries)
+      Application.querying.should be_kind_of(Configuration::Queries)
     end
     it "should cache the instance" do
-      Application.queries_configuration.should == Application.queries_configuration
+      Application.querying.should == Application.querying
     end
   end
   
