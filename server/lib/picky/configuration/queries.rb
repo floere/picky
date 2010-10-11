@@ -4,30 +4,18 @@ module Configuration
   #
   class Queries
     
-    attr_reader :routing
-    
-    #
-    #
-    def initialize routing
-      @routing = routing
-    end
-    
     #
     #
     def default_index
       Tokenizers::Query
     end
-    
-    # Routes.
-    #
-    delegate :defaults, :route, :live, :full, :root, :default, :to => :routing
+    delegate :removes_characters, :contract_expressions, :stopwords, :splits_text_on, :normalize_words, :removes_characters_after_splitting, :to => :default_index
     
     # Delegates.
     #
     def maximum_tokens amount
       Query::Tokens.maximum = amount
     end
-    delegate :illegal_characters, :contract_expressions, :stopwords, :split_text_on, :normalize_words, :illegal_characters_after_splitting, :to => :default_index
     
   end
   

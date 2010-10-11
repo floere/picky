@@ -4,11 +4,11 @@ module Tokenizers
   
   # There are a few class methods that you can use to configure how a query works.
   #
-  # illegal_characters regexp
+  # removes_characters regexp
   # illegal_after_normalizing regexp
   # stopwords regexp
   # contract_expressions regexp, to_string
-  # split_text_on regexp
+  # splits_text_on regexp
   # normalize_words [[/regexp1/, 'replacement1'], [/regexp2/, 'replacement2']]
   #
   class Query < Base
@@ -17,12 +17,12 @@ module Tokenizers
     
     # Default query tokenizer behaviour. Override in config.
     #
-    illegal_characters(//)
+    removes_characters(//)
     stopwords(//)
     contract_expressions(//, '')
-    split_text_on(/\s/)
+    splits_text_on(/\s/)
     normalize_words([])
-    illegal_characters_after_splitting(//)
+    removes_characters_after_splitting(//)
     
     def preprocess text
       remove_illegals text             # Remove illegal characters

@@ -34,7 +34,7 @@ module Tokenizers
     #
     # TODO Should there be a legal?
     #
-    def self.illegal_characters regexp
+    def self.removes_characters regexp
       define_method :remove_illegals do |text|
         text.gsub! regexp, ''
       end
@@ -43,7 +43,7 @@ module Tokenizers
     
     # Splitting.
     #
-    def self.split_text_on regexp
+    def self.splits_text_on regexp
       define_method :split do |text|
         text.split regexp
       end
@@ -67,7 +67,7 @@ module Tokenizers
     
     # Illegal after normalizing.
     #
-    def self.illegal_characters_after_splitting regexp
+    def self.removes_characters_after_splitting regexp
       define_method :remove_after_normalizing_illegals do |text|
         text.gsub! regexp, ''
       end

@@ -14,9 +14,9 @@ class PickySearch < Application # The App Constant needs to be identical in conf
   #
   
   indexes do
-    illegal_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
+    removes_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
     stopwords(/\b(and|the|of|it|in|for)\b/)
-    split_text_on(/[\s\/\-\"\&\.]/)
+    splits_text_on(/[\s\/\-\"\&\.]/)
       
     add_index :books,
               Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
@@ -30,9 +30,9 @@ class PickySearch < Application # The App Constant needs to be identical in conf
     # Note that Picky needs the following characters to
     # pass through, as they are control characters: *"~:
     #
-    illegal_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
+    removes_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
     stopwords(/\b(and|the|of|it|in|for)\b/)
-    split_text_on(/[\s\/\-\,\&]+/)
+    splits_text_on(/[\s\/\-\,\&]+/)
     
     # The example defines two queries that use the same index(es).
     #

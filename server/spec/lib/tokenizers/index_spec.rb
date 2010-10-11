@@ -8,7 +8,7 @@ describe Tokenizers::Index do
     @tokenizer = Tokenizers::Index.new
   end
   
-  describe "remove_illegal_characters" do
+  describe "remove_removes_characters" do
     it "should not remove ' from a query by default" do
       @tokenizer.remove_illegals("Lugi's").should == "Lugi's"
     end

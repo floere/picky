@@ -10,33 +10,20 @@ class Application
   def self.call env
     routing.call env
   end
+  # Routes.
+  #
+  delegate :defaults, :route, :live, :full, :root, :default, :to => :routing
   
   # 
   #
-  def self.indexes &block
-    indexes_configuration.instance_eval &block
-    # TODO Uglyyyyyy.
-    ::Indexes.configuration = indexes_configuration
-    ::Indexes.setup # TODO Think about setup/reload.
-  end
-  def self.indexes_configuration
-    @indexes || reset_indexes
-  end
-  def self.reset_indexes
-    @indexes = Configuration::Indexes.new # Is instance a problem?
+  def self.indexing
+    @indexing ||= Configuration::Indexes.new
   end
   
-  # 
   #
-  def self.queries &block
-    queries_configuration.instance_eval &block
-    routing.freeze
-  end
-  def self.queries_configuration
-    @queries || reset_queries
-  end
-  def self.reset_queries
-    @queries = Configuration::Queries.new routing # Is instance a problem?
+  #
+  def self.querying
+    @queries ||= Configuration::Queries.new
   end
   
 end
