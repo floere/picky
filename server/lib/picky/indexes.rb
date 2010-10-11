@@ -171,16 +171,10 @@ module Indexes
     end
   end
   
-  # Loads all index definitions.
-  #
-  def self.setup
-    self.types        ||= []
-    self.type_mapping ||= {}
-    configuration.types.each do |type|
-      add type.generate
-    end
-  end
   def self.add type
+    self.type_mapping ||= {}
+    self.types        ||= []
+    
     self.type_mapping[type.name] = type
     self.types << type
   end

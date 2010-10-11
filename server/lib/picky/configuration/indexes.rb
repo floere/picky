@@ -20,8 +20,12 @@ module Configuration
     #
     delegate :removes_characters, :contract_expressions, :stopwords, :splits_text_on, :normalize_words, :removes_characters_after_splitting, :to => :default_index
     
+    # TODO Rewrite all this configuration handling.
+    #
     def type name, *fields
-      types << Type.new(name, *fields)
+      type = Type.new(name, *fields)
+      types << type
+      ::Indexes.add type.generate
     end
     alias index type
     def field name, options = {}
