@@ -76,7 +76,7 @@ describe Cacher::Partial::Subtoken do
       end
       describe 'starting_at' do
         it 'should return the right value' do
-          @cacher.starting_at.should == 0
+          @cacher.starting_at.should == -1
         end
       end
       describe 'down_to' do
@@ -126,7 +126,7 @@ describe Cacher::Partial::Subtoken do
     end
     context 'starting_at -1' do
       before(:each) do
-        @cacher = Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => -1
+        @cacher = Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => -2
       end
       describe 'starting_at' do
         it 'should return the right value' do

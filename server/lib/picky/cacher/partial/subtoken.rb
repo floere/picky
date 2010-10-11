@@ -2,6 +2,8 @@ module Cacher
 
   module Partial
     
+    # Generates the right subtokens for use in the subtoken strategy.
+    #
     class SubtokenGenerator
       
       attr_reader :down_to, :starting_at
@@ -41,18 +43,17 @@ module Cacher
       # Down to is how far it will go down in generating the subtokens.
       #
       # Examples:
-      # With :hello, and starting_at 0
+      # With :hello, and starting_at -1
       # * down to == 1: [:hello, :hell, :hel, :he, :h]
       # * down to == 4: [:hello, :hell]
       #
-      # With :hello, and starting_at -1
+      # With :hello, and starting_at -2
       # * down to == 1: [:hell, :hel, :he, :h]
       # * down to == 4: [:hell]
       #
       def initialize options = {}
         down_to     = options[:down_to] || 1
-        starting_at = options[:starting_at] || 0
-        starting_at = starting_at - 1 unless starting_at.zero?
+        starting_at = options[:starting_at] || -1
         @generator = SubtokenGenerator.new down_to, starting_at
       end
       def down_to

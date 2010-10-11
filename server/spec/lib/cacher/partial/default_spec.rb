@@ -9,7 +9,7 @@ describe Cacher::Partial::Default do
     Cacher::Partial::Default.down_to.should == 1
   end
   it "should be a the right starting at" do
-    Cacher::Partial::Default.starting_at.should == 0
+    Cacher::Partial::Default.starting_at.should == -1
   end
   
 end
