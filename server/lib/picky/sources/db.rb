@@ -37,7 +37,7 @@ module Sources
     #
     def configure options
       @connection_options = if filename = options[:file]
-        File.open(File.join(PICKY_ROOT, filename)) { |f| YAML::load(f) }
+        File.open(File.join(PICKY_ROOT, filename)) { |file| YAML::load(file) }
       else
         options
       end

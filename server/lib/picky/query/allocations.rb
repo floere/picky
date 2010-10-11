@@ -66,8 +66,8 @@ module Query
       # TODO can there be no @allocations???
       return [] if @allocations.empty?
       ids = @allocations.first.ids
-      indexes = Array.new(ids.size) { |i| i }.sort_by { rand }
-      indexes.first(amount).map { |i| ids[i] }
+      indexes = Array.new(ids.size) { |id| id }.sort_by { rand }
+      indexes.first(amount).map { |id| ids[id] }
     end
 
     # This is the main method of this class that will replace ids and count.
