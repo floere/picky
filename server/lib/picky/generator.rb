@@ -43,6 +43,11 @@ module Picky
       klass.new *args
     end
     
+    # Generates a new Picky project.
+    #
+    # Example:
+    #   > picky project my_lovely_project
+    #
     class Project
       
       attr_reader :name, :prototype_project_basedir
