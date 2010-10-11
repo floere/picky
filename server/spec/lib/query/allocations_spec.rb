@@ -164,7 +164,7 @@ describe Query::Allocations do
     context 'enough ids' do
       before(:each) do
         @allocation1 = stub :allocation1, :ids => [1, 2, 3]
-        @allocation2 = stub :allocation1, :ids => [4, 5, 6, 7]
+        @allocation2 = stub :allocation2, :ids => [4, 5, 6, 7]
         @allocations = Query::Allocations.new [@allocation1, @allocation2]
       end
       it 'should return one random id from the first allocations by default' do
@@ -177,7 +177,7 @@ describe Query::Allocations do
         (1..7).to_a.should include(@allocations.random_ids.first)
       end
       it 'should not contain the same id twice' do
-        100.times do
+        20.times do
           @allocations.random_ids(2).uniq.size.should_not == 1
         end
       end
@@ -185,7 +185,7 @@ describe Query::Allocations do
     context 'just one id' do
       before(:each) do
         @allocation1 = stub :allocation1, :ids => [1]
-        @allocation2 = stub :allocation1, :ids => []
+        @allocation2 = stub :allocation2, :ids => []
         @allocations = Query::Allocations.new [@allocation1, @allocation2]
       end
       it 'should return one random id from its allocations by default' do
@@ -201,7 +201,7 @@ describe Query::Allocations do
     context 'no id' do
       before(:each) do
         @allocation1 = stub :allocation1, :ids => []
-        @allocation2 = stub :allocation1, :ids => []
+        @allocation2 = stub :allocation2, :ids => []
         @allocations = Query::Allocations.new [@allocation1, @allocation2]
       end
       it 'should return one random id from its allocations by default' do
