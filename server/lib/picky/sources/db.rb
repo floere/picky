@@ -7,10 +7,10 @@ module Sources
     
     attr_reader :select_statement, :database, :connection_options
     
-    def initialize select_statement, with_options = { :file => 'app/db.yml' }
+    def initialize select_statement, options = { :file => 'app/db.yml' }
       @select_statement = select_statement
       @database         = create_database_adapter
-      configure with_options
+      @options          = options
     end
     
     # Get a configured Database backend.
@@ -47,6 +47,7 @@ module Sources
     # Connect the backend.
     #
     def connect_backend
+      configure @options
       return if PICKY_ENVIRONMENT.to_s == 'test' # TODO Unclean.
       raise "Database backend not configured" unless connection_options
       database.establish_connection connection_options
