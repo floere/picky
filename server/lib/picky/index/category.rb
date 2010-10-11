@@ -40,13 +40,13 @@ module Index
     # Generates all caches for this category.
     #
     def generate_caches
-      exclaim "#{Time.now}: Loading data from db for #{identifier}."
+      timed_exclaim "Loading data from db for #{identifier}."
       generate_caches_from_db
-      exclaim "#{Time.now}: Generating partial for #{identifier}."
+      timed_exclaim "Generating partial for #{identifier}."
       generate_partial
-      exclaim "#{Time.now}: Generating caches from memory for #{identifier}."
+      timed_exclaim "Generating caches from memory for #{identifier}."
       generate_caches_from_memory
-      exclaim "#{Time.now}: Dumping all caches for #{identifier}."
+      timed_exclaim "Dumping all caches for #{identifier}."
       dump_caches
     end
     def generate_caches_from_db
@@ -62,10 +62,17 @@ module Index
       full.dump
       partial.dump
     end
+    # TODO move to Kernel?
+    #
+    def timed_exclaim text
+      exclaim "#{Time.now}: #{text}"
+    end
+    # TODO move to Kernel?
+    #
     def exclaim text
       puts text
     end
-
+    
     # Used for testing.
     #
     def generate_indexes_from_full_index

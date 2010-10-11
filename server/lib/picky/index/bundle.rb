@@ -103,10 +103,11 @@ module Index
     # Copies the indexes to the "backup" directory.
     #
     def backup
-      FileUtils.mkdir backup_path unless Dir.exists?(backup_path)
-      FileUtils.cp index_cache_path, backup_path, :verbose => true
-      FileUtils.cp similarity_cache_path, backup_path, :verbose => true
-      FileUtils.cp weights_cache_path, backup_path, :verbose => true
+      target = backup_path
+      FileUtils.mkdir target unless Dir.exists?(target)
+      FileUtils.cp index_cache_path,      target, :verbose => true
+      FileUtils.cp similarity_cache_path, target, :verbose => true
+      FileUtils.cp weights_cache_path,    target, :verbose => true
     end
     def backup_path
       File.join File.dirname(index_cache_path), 'backup'

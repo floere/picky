@@ -58,15 +58,17 @@ module Sources
       connect_backend
       
       origin = snapshot_table_name type
-
-      database.connection.execute "DROP TABLE IF EXISTS #{origin}"
-      database.connection.execute "CREATE TABLE #{origin} AS #{select_statement}"
-      database.connection.execute "ALTER TABLE #{origin} CHANGE COLUMN id indexed_id INTEGER"
-      database.connection.execute "ALTER TABLE #{origin} ADD COLUMN id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
-
+      
+      on_database = database.connection
+      
+      on_database.execute "DROP TABLE IF EXISTS #{origin}"
+      on_database.execute "CREATE TABLE #{origin} AS #{select_statement}"
+      on_database.execute "ALTER TABLE #{origin} CHANGE COLUMN id indexed_id INTEGER"
+      on_database.execute "ALTER TABLE #{origin} ADD COLUMN id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
+      
       # Execute any special queries this type needs executed.
       #
-      database.connection.execute type.after_indexing if type.after_indexing
+      on_database.execute type.after_indexing if type.after_indexing
     end
     
     # Counts all the entries that are used for the index.
@@ -89,6 +91,8 @@ module Sources
     # Example:
     #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
     #
+    # TODO Perhaps it should be just harvest field.
+    #
     def harvest type, field
       connect_backend
       
@@ -101,22 +105,10 @@ module Sources
       end
     end
     
-    # Override in subclasses.
-    #
-    def chunksize
-      25_000
-    end
-    
     # Gets database from the backend.
     #
     def get_data type, field, offset
       database.connection.execute harvest_statement_with_offset(type, field, offset)
-    end
-    
-    # Base harvest statement for dbs.
-    #
-    def harvest_statement type, field
-      "SELECT indexed_id, #{field.name} FROM #{snapshot_table_name(type)} st"
     end
     
     # Builds a harvest statement for getting data to index.
@@ -129,6 +121,18 @@ module Sources
       statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
       
       "#{statement} st.id > #{offset} LIMIT #{chunksize}"
+    end
+    
+    # Base harvest statement for dbs.
+    #
+    def harvest_statement type, field
+      "SELECT indexed_id, #{field.name} FROM #{snapshot_table_name(type)} st"
+    end
+    
+    # Override in subclasses.
+    #
+    def chunksize
+      25_000
     end
     
   end
