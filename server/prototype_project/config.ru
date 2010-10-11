@@ -29,8 +29,8 @@ Indexes.load_from_cache
     Rack::Harakiri.after = 50
 use Rack::Harakiri
 
-# Start the application and start accepting requests.
+# Finalize the application and start accepting requests.
 #
-# Note: Needs to be the same name as in app/application.rb.
+# Note: Needs to be the same constant name as in app/application.rb.
 #
 run PickySearch
