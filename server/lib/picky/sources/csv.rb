@@ -2,6 +2,9 @@ require 'csv'
 
 module Sources
   
+  # Describes a CSV source, a file with csv in it.
+  # Give it a sequence of field names and a file option with the filename.
+  #
   class NoCSVFileGiven < StandardError; end
   
   class CSV < Base

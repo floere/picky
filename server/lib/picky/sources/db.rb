@@ -1,5 +1,8 @@
 module Sources
   
+  # Describes a database source. Just give it a select statement
+  # (with id in it), and a file option or the options from an AR config file.
+  #
   class DB < Base
     
     attr_reader :select_statement, :database, :connection_options

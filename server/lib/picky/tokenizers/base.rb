@@ -1,5 +1,7 @@
 module Tokenizers
   
+  # Defines tokenizing processes used both in indexing and querying.
+  #
   class Base
     
     # Stopwords.

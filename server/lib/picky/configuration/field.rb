@@ -1,5 +1,7 @@
 module Configuration
-
+  
+  #
+  #
   class Field
     attr_reader :name, :indexed_name, :virtual
     attr_accessor :type # convenience
