@@ -11,12 +11,13 @@ module Rack
     # Set the amount of requests before the Unicorn commits Harakiri.
     #
     cattr_accessor :after
+    attr_reader :quit_after_requests
     
     def initialize app
       @app = app
       
       @requests            = 0
-      @quit_after_requests = @@after || 50
+      @quit_after_requests = self.class.after || 50
     end
     
     def call env
