@@ -1,11 +1,12 @@
-# Simple Rack Middleware to kill Unicorns after X requests.
-#
-# Use as follows in e.g. your rackup File:
-#
-# Rack::Harakiri.after = 50
-# use Rack::Harakiri
-#
 module Rack
+  
+  # Simple Rack Middleware to kill Unicorns after X requests.
+  #
+  # Use as follows in e.g. your rackup File:
+  #
+  # Rack::Harakiri.after = 50
+  # use Rack::Harakiri
+  #
   class Harakiri
     
     # Set the amount of requests before the Unicorn commits Harakiri.

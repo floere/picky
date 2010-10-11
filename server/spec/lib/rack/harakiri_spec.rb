@@ -18,6 +18,9 @@ describe Rack::Harakiri do
       Rack::Harakiri.after = 100
       @harakiri = Rack::Harakiri.new @app
     end
+    after(:each) do
+      Rack::Harakiri.after = nil
+    end
     it "should quit after an amount of requests" do
       @harakiri.quit_after_requests.should == 100
     end
