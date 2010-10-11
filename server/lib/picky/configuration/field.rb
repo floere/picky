@@ -18,7 +18,8 @@ module Configuration
       @indexed_name   = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
       @virtual        = options.delete(:virtual)       || false
       
-      Query::Qualifiers.add(name, options[:qualifiers]) if options[:qualifiers]
+      qualifiers = options[:qualifiers]
+      Query::Qualifiers.add(name, qualifiers) if qualifiers
       
       # @remove          = options[:remove]        || false
       # @filter          = options[:filter]        || true
