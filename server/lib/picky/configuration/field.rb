@@ -1,6 +1,7 @@
 module Configuration
   
-  #
+  # Describes the configuration of a "field", a category
+  # (title is a category of a books index, for example).
   #
   class Field
     attr_reader :name, :indexed_name, :virtual
