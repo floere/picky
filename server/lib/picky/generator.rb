@@ -2,6 +2,10 @@ require 'fileutils'
 
 module Picky
   
+  # Thrown when no generator for the command
+  #   picky <command> <options>
+  # is found.
+  #
   class NoGeneratorException < Exception; end
   
   # This is a very simple project generator.

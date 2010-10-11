@@ -1,5 +1,7 @@
 module Configuration
   
+  # 
+  #
   class Queries
     
     attr_reader :routing

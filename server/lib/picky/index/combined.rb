@@ -2,7 +2,12 @@
 #
 module Index
 
-  # 
+  # This index combines a full and partial index.
+  # It serves to order the results such that exact (full) hits are found first.
+  #
+  # TODO Rename full -> exact. exact/partial?
+  #
+  # TODO Need to use the right subtokens. Bake in?
   #
   class Combined < Bundle
     

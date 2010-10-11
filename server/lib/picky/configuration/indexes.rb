@@ -1,5 +1,7 @@
 module Configuration
-
+  
+  # Describes the container for all index configurations.
+  #
   class Indexes
     
     attr_reader :types
