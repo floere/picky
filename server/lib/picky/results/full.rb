@@ -9,11 +9,5 @@ module Results
       ?> + super
     end
     
-    # The default response style for full results is to_marshal.
-    #
-    def to_response
-      to_marshal
-    end
-    
   end
 end

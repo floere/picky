@@ -88,7 +88,7 @@ describe Routing do
       @routing.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index)
       
       @routing.routes.freeze
-      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
+      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
     end
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_route?query=some_query&type=some_type'
@@ -100,7 +100,7 @@ describe Routing do
       @routing.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index), :query => { :type => :some_type }
       
       @routing.routes.freeze
-      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"50"}, ["\x04\b{\t:\x10allocations[\x00:\voffseti\x00:\rdurationi\x00:\ntotali\x00"]]
+      @routing.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
     end
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_wrong_route?query=some_query'

@@ -30,17 +30,6 @@ describe Results do
       end
     end
   end
-  
-  describe 'to_marshal' do
-    before(:each) do
-      @results = Results::Base.new
-    end
-    it 'should do it correctly' do
-      @results.stub! :serialize => :serialized
-
-      @results.to_marshal.should == "\x04\b:\x0Fserialized"
-    end
-  end
 
   describe 'to_json' do
     before(:each) do

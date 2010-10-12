@@ -1,6 +1,7 @@
 module Results
 
-  # This is the internal results object. Usually, to_marshal, or to_json is called on it.
+  # This is the internal results object. Usually, to_marshal, or to_json
+  # is called on it to get a string for the answer.
   #
   class Base
 
@@ -32,10 +33,10 @@ module Results
                   :duration    => duration,
                   :total       => total)
     end
-    # Convert to marshal format.
+    # The default format is json.
     #
-    def to_marshal
-      Marshal.dump serialize
+    def to_response options = {}
+      to_json options
     end
     # Convert to json format.
     #
