@@ -17,7 +17,7 @@ Indexes.load_from_cache
 #
 # See http://vimeo.com/12614970 for more info.
 #
-    Rack::Harakiri.after = 100
+    Rack::Harakiri.after = 500
 use Rack::Harakiri
 
 # Finalize and start the application and start accepting requests.

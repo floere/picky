@@ -7,8 +7,9 @@ gem 'activesupport',    '2.3.8', :require => 'active_support'
 gem 'activerecord',     '2.3.8', :require => 'active_record'
 gem 'rack',             '1.2.1'
 gem 'rack-mount',       '0.6.9'
-gem 'rsolr',            '0.12.1'
-gem 'sunspot',          '1.1.0'
+gem 'yajl-ruby',                 :require => 'yajl'
 gem 'text',             '0.2.0'
 gem 'rack_fast_escape', '2009.06.24'
+gem 'rsolr',            '0.12.1' # TODO Try to remove
+gem 'sunspot',          '1.1.0'  # TODO Try to remove
 gem 'rspec'
