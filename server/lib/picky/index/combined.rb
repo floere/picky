@@ -9,6 +9,8 @@ module Index
   #
   # TODO Need to use the right subtokens. Bake in?
   #
+  # TODO One can use it as a wrapper, and it will extract the indexes itself. Rename: ExactFirst.
+  #
   class Combined < Bundle
     
     delegate :similar,
@@ -25,6 +27,8 @@ module Index
              :load,
              :to => :@partial
     
+    # TODO initialize type_or_category # => installs itself on all full and partial
+    #
     def initialize full, partial
       @full    = full
       @partial = partial
