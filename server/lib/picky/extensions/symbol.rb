@@ -23,8 +23,9 @@ class Symbol
     sub = self.id2name
     
     size = sub.size
-    down_to_length = size + down_to_length if down_to_length < 0
+    down_to_length = size + down_to_length + 1 if down_to_length < 0
     down_to_length = size if size < down_to_length
+    down_to_length = 1 if down_to_length < 1
     
     yield self
     size.downto(down_to_length + 1) { yield sub.chop!.intern }

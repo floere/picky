@@ -49,10 +49,8 @@ describe Cacher::Partial::Subtoken do
         @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
           :florian => [1],
           :floria => [1],
-          :flori => [1],
           :flavia => [2],
-          :flavi => [2],
-          :flav => [2]
+          :flavi => [2]
         }
       end
     end
