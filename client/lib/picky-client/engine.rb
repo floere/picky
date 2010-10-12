@@ -68,18 +68,16 @@ module Picky
     end
 
     class Full < Base
-      default_configuration :host => 'localhost', :port => 4000, :path => '/searches/full'
-
-      # Full needs to deserialize the results.
-      #
-      def send_search params = {}
-        Serializer.deserialize super(params)
+      default_configuration :host => 'localhost', :port => 8080, :path => '/searches/full'
+      
+      @@parser_options = { :symbolize_keys => true }
+      def send_search params = {}                                                                                                                                 
+        Yajl::Parser.parse super(params), @@parser_options
       end
-
     end
 
     class Live < Base
-      default_configuration :host => 'localhost', :port => 4000, :path => '/searches/live'
+      default_configuration :host => 'localhost', :port => 8080, :path => '/searches/live'
     end
 
   end

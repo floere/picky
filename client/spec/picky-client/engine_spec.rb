@@ -50,12 +50,26 @@ describe Picky::Client do
     before(:each) do
       @full = Picky::Client::Full.new
     end
+    describe "send_search" do
+      before(:each) do
+        Net::HTTP.stub! :get => "{\"allocations\":[[\"c\",17.53,275179,[[\"name\",\"s*\",\"s\"]],[]],[\"c\",15.01,164576,[[\"category\",\"s*\",\"s\"]],[]],[\"p\",12.94,415634,[[\"street\",\"s*\",\"s\"]],[]],[\"p\",12.89,398247,[[\"name\",\"s*\",\"s\"]],[]],[\"p\",12.67,318912,[[\"city\",\"s*\",\"s\"]],[]],[\"p\",12.37,235933,[[\"first_name\",\"s*\",\"s\"]],[]],[\"p\",11.76,128259,[[\"maiden_name\",\"s*\",\"s\"]],[]],[\"p\",11.73,124479,[[\"occupation\",\"s*\",\"s\"]],[]],[\"c\",11.35,84807,[[\"street\",\"s*\",\"s\"]],[]],[\"c\",11.15,69301,[[\"city\",\"s*\",\"s\"]],[]],[\"p\",4.34,77,[[\"street_number\",\"s*\",\"s\"]],[]],[\"c\",2.08,8,[[\"street_number\",\"s*\",\"s\"]],[]],[\"c\",1.61,5,[[\"adword\",\"s*\",\"s\"]],[]]],\"offset\":0,\"duration\":0.04,\"total\":2215417}"
+      end
+      it "should return a parsed hash" do
+        @full.send_search(:query => 'something').should == {:allocations=>[["c", 17.53, 275179, [["name", "s*", "s"]], []], ["c", 15.01, 164576, [["category", "s*", "s"]], []], ["p", 12.94, 415634, [["street", "s*", "s"]], []], ["p", 12.89, 398247, [["name", "s*", "s"]], []], ["p", 12.67, 318912, [["city", "s*", "s"]], []], ["p", 12.37, 235933, [["first_name", "s*", "s"]], []], ["p", 11.76, 128259, [["maiden_name", "s*", "s"]], []], ["p", 11.73, 124479, [["occupation", "s*", "s"]], []], ["c", 11.35, 84807, [["street", "s*", "s"]], []], ["c", 11.15, 69301, [["city", "s*", "s"]], []], ["p", 4.34, 77, [["street_number", "s*", "s"]], []], ["c", 2.08, 8, [["street_number", "s*", "s"]], []], ["c", 1.61, 5, [["adword", "s*", "s"]], []]], :offset=>0, :duration=>0.04, :total=>2215417}
+      end
+      it "should be fast" do
+        GC.disable
+        Benchmark.realtime { @full.send_search(:query => 'something') }.should < 0.00015
+        GC.enable
+      end
+    end
+    
     describe "defaults" do
       it "should set host to 'localhost'" do
         @full.host.should == 'localhost'
       end
-      it "should set port to 4000" do
-        @full.port.should == 4000
+      it "should set port to the right value" do
+        @full.port.should == 8080
       end
       it "should set path to '/searches/full'" do
         @full.path.should == '/searches/full'
@@ -123,8 +137,8 @@ describe Picky::Client do
       it "should set host to 'localhost'" do
         @live.host.should == 'localhost'
       end
-      it "should set port to 4000" do
-        @live.port.should == 4000
+      it "should set port to the right value" do
+        @live.port.should == 8080
       end
       it "should set path to '/searches/live'" do
         @live.path.should == '/searches/live'

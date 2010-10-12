@@ -3,6 +3,9 @@
 ENV['SEARCH_ENV'] = 'test'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/picky-client")
 require 'spec'
+require 'benchmark'
+
+require 'yajl'
 
 def in_the(object, &block)
   object.instance_eval &block

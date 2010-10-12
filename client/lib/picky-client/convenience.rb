@@ -8,14 +8,6 @@ module Picky
     def empty?
       allocations.empty?
     end
-    # The rendered results or AR instances if you
-    # have populated the results.
-    #
-    def entries limit = 20
-      entries = []
-      allocations.each { |allocation| allocation[5].each { |id| break if entries.size > limit; entries << id } }
-      entries
-    end
     # Returns the topmost limit results.
     #
     def ids limit = 20
@@ -70,6 +62,14 @@ module Picky
       clear_ids
       
       objects
+    end
+    # The rendered results or AR instances if you
+    # have populated the results.
+    #
+    def entries limit = 20
+      entries = []
+      allocations.each { |allocation| allocation[5].each { |id| break if entries.size > limit; entries << id } }
+      entries
     end
     
     # The ids need to come in the order which the ids were returned by the ids method.

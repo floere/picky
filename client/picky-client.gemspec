@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'picky-client'
-  s.version = '0.1.0'
+  s.version = '0.2.0'
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky-client@gmail.com'
   s.homepage = 'http://floere.github.com/picky'
@@ -10,4 +10,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.has_rdoc = false
   s.extra_rdoc_files = ['README.rdoc']
+  
+  s.add_dependency('yajl-ruby', '>= 0.7.8')
 end
