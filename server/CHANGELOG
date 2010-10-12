@@ -1,3 +1,5 @@
+0.2.1 - hanke: Fix for negative partial index values (:partial => Partial::Subtoken.new(:down_to => -3))
+0.2.0 - hanke: Server only uses JSON to encode results.
 0.1.0 - hanke: Application interface rewrite. See a freshly created
                project (using picky project <name>).
                Application#add_index.
