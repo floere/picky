@@ -9,15 +9,10 @@ describe "Speccing Ruby for speed" do
         :speed => (1..5_000).to_a,
         :test => (1..1_000).to_a
       }
-      GC.disable
-    end
-    after(:each) do
-      GC.enable
-      GC.start # start the GC to minimize the chance that it will run again during the speed spec
     end
     describe "+" do
       it "should be fast" do
-        Benchmark.realtime do
+        performance_of do
           @allocs.inject([]) do |total, alloc|
             total + @ids[alloc]
           end
@@ -26,14 +21,14 @@ describe "Speccing Ruby for speed" do
     end
     describe "map and flatten!(1)" do
       it "should be fast" do
-        Benchmark.realtime do
+        performance_of do
           @allocs.map { |alloc| @ids[alloc] }.flatten!(1)
         end.should < 0.02
       end
     end
     describe "<< and flatten!(1)" do
       it "should be fast" do
-        Benchmark.realtime do
+        performance_of do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
           end.flatten!(1)
@@ -42,7 +37,7 @@ describe "Speccing Ruby for speed" do
     end
     describe "<< and flatten!" do
       it "should be fast" do
-        Benchmark.realtime do
+        performance_of do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
           end.flatten!

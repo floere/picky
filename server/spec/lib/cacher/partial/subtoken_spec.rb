@@ -28,7 +28,7 @@ describe Cacher::Partial::Subtoken do
         }
       end
       it "should be fast" do
-        Benchmark.realtime { @cacher.generate_from( :florian => [1], :flavia => [2] ) }.should < 0.0001
+        performance_of { @cacher.generate_from( :florian => [1], :flavia => [2] ) }.should < 0.0001
       end
       it "should handle duplicate ids" do
         @cacher.generate_from( :flo => [1], :fla => [1] ).should == {
@@ -106,7 +106,7 @@ describe Cacher::Partial::Subtoken do
           end
         end
         it "should be fast" do
-          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.005
+          performance_of { @cacher.generate_from(@index) }.should < 0.005
         end
       end
       describe "a bigger example with almost identical symbols" do
@@ -118,7 +118,7 @@ describe Cacher::Partial::Subtoken do
           end
         end
         it "should be fast" do
-          Benchmark.realtime { @cacher.generate_from(@index) }.should < 0.003
+          performance_of { @cacher.generate_from(@index) }.should < 0.003
         end
       end
     end

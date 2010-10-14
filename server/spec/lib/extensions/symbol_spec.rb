@@ -6,11 +6,6 @@ describe Symbol do
     include Helpers::Measuring
     before(:each) do
       @token = (((0..9).to_a)*10).to_s.to_sym
-      GC.disable
-    end
-    after(:each) do
-      GC.enable
-      GC.start
     end
     # Note: They influence each other. each_subtoken is faster though.
     #

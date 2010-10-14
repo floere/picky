@@ -39,7 +39,7 @@ describe Hash do
       lambda { @obj.to_json(:some => :option) }.should_not raise_error
     end
     it "should be fast" do
-      Benchmark.realtime { @obj.to_json }.should < 0.00006
+      performance_of { @obj.to_json }.should < 0.00006
     end
   end
 

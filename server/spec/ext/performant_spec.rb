@@ -3,13 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Performant::Array do
 
   describe "memory_efficient_intersect" do
-    before(:each) do
-      GC.disable
-    end
-    after(:each) do
-      GC.enable
-      GC.start
-    end
     it "should intersect empty arrays correctly" do
       arys = [[3,4], [1,2,3], []]
 
@@ -45,15 +38,13 @@ describe Performant::Array do
       arys = [(1..50).to_a, (10_000..20_000).to_a << 7]
 
       # brute force
-      Benchmark.realtime do
-        Performant::Array.memory_efficient_intersect(arys.sort_by(&:size))
-      end.should < 0.001
+      performance_of { Performant::Array.memory_efficient_intersect(arys.sort_by(&:size)) }.should < 0.001
     end
     it "should be optimal for 2 small arrays of 50/10_000" do
       arys = [(1..50).to_a, (10_000..20_000).to_a << 7]
 
       # &
-      Benchmark.realtime do
+      performance_of do
         arys.inject(arys.shift.dup) do |total, ary|
           total & arys
         end

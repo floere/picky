@@ -62,21 +62,21 @@ describe 'Query::Combinations' do
       @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      Benchmark.realtime { @combinations.ids }.should < 0.004
+      performance_of { @combinations.ids }.should < 0.004
     end
     it "should be fast" do
       @combination1.should_receive(:ids).once.with.and_return (1..1000).to_a
       @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      Benchmark.realtime { @combinations.ids }.should < 0.00015
+      performance_of { @combinations.ids }.should < 0.00015
     end
     it "should be fast" do
       @combination1.should_receive(:ids).once.with.and_return (1..1000).to_a
       @combination2.should_receive(:ids).once.with.and_return (901..1000).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      Benchmark.realtime { @combinations.ids }.should < 0.0001
+      performance_of { @combinations.ids }.should < 0.0001
     end
   end
 

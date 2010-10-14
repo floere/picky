@@ -29,15 +29,9 @@ describe Index::Bundle do
         random_keys  = generate_random_keys 500
         random_ids   = generate_random_ids  500
         @full.index = Hash[random_keys.zip(random_ids)]
-
-        GC.disable
-      end
-      after(:each) do
-        GC.enable
-        GC.start
       end
       it 'should be fast' do
-        Benchmark.realtime do
+        performance_of do
           @full.generate_partial
         end.should < 0.2
       end
