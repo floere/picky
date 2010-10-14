@@ -5,8 +5,6 @@ module Tokenizers
   #
   class Index < Base
     
-    include UmlautSubstituter
-    
     # Default handling definitions. Override in config.
     #
     removes_characters(//)
@@ -26,7 +24,7 @@ module Tokenizers
     #   5. Remove non-single stopwords. (Stopwords that occur with other words)
     #
     def preprocess text
-      text = substitute_umlauts text
+      text = substituter.substitute text if substituter?
       text.downcase!
       remove_illegals text
       contract text

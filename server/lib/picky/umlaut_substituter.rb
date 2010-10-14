@@ -1,8 +1,20 @@
 # encoding: utf-8
 #
-module UmlautSubstituter
-  def substitute_umlauts text
-    trans = ActiveSupport::Multibyte.proxy_class.new(text).normalize(:kd)
+
+# Substitutes certain umlauts, like
+# ä, ö, ü => ae, oe, ue.
+# (and more, see specs)
+#
+class UmlautSubstituter
+  
+  attr_reader :chars
+  
+  def initialize
+    @chars = ActiveSupport::Multibyte.proxy_class
+  end
+  
+  def substitute text
+    trans = chars.new(text).normalize(:kd)
 
     # substitute special cases
     #
@@ -18,4 +30,5 @@ module UmlautSubstituter
       cp < 0x0300 || cp > 0x035F
     }.pack('U*')
   end
+  
 end

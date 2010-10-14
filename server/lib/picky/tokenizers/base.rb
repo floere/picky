@@ -88,6 +88,13 @@ module Tokenizers
                process tokens   # processing tokens / strings
     end
     
+    attr_accessor :substituter
+    alias substituter? substituter
+    
+    def initialize substituter = UmlautSubstituter.new
+      @substituter = substituter
+    end
+    
     # Hooks.
     #
     

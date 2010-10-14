@@ -2,18 +2,20 @@
 require 'spec_helper'
 
 describe UmlautSubstituter do
-  include UmlautSubstituter
+  before(:each) do
+    @substituter = UmlautSubstituter.new
+  end
 
   # A bit of metaprogramming to help with the myriads of its.
   #
   def self.it_should_substitute(special_character, normal_character)
     it "should substitute #{special_character} with #{normal_character}" do
-      substitute_umlauts(special_character).should == normal_character
+      @substituter.substitute(special_character).should == normal_character
     end
   end
   def self.it_should_not_substitute(special_character)
     it "should not substitute #{special_character}" do
-      substitute_umlauts(special_character).should == special_character
+      @substituter.substitute(special_character).should == special_character
     end
   end
 
