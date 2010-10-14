@@ -24,8 +24,6 @@ Indexes.load_from_cache
 #
 # See http://vimeo.com/12614970 for more info.
 #
-# Note: Comment this.
-#
     Rack::Harakiri.after = 50
 use Rack::Harakiri
 

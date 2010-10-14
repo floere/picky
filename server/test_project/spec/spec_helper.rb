@@ -10,3 +10,7 @@ SearchLog = Loggers::Search.new ::Logger.new(STDOUT)
 puts "Using STDOUT as test log."
 
 Loader.load_application
+
+# TODO Not ok.
+#
+BookSearch.finalize
