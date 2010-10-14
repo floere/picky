@@ -35,10 +35,12 @@ module Indexers
       @field.source || raise_no_source
     end
     def raise_no_source
-      raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}."
+      raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}." # TODO field.identifier
     end
     
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
+    #
+    # Note: Puts together the parts first in an array, then releasing the array from time to time by joining.
     #
     def process
       comma   = ?,
@@ -47,19 +49,19 @@ module Indexers
       indexing_message
       
       File.open(search_index_file_name, 'w:binary') do |file|
+        result = []
         source.harvest(@type, @field) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
-            file.write indexed_id
-            file.write comma
-            file.write token_text
-            file.write newline
+            result << indexed_id << comma << token_text << newline
           end
+          file.write(result.join) && result.clear if result.size > 100_000
         end
+        file.write result.join
       end
     end
     
     def indexing_message
-      puts "#{Time.now}: Indexing #{@type.name}:#{@field.name}:#{@field.indexed_name}."
+      puts "#{Time.now}: Indexing #{@type.name}:#{@field.name}:#{@field.indexed_name}." # TODO field.identifier
     end
     
   end
