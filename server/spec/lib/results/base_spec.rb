@@ -20,10 +20,9 @@ describe Results do
         @allocations = stub :allocations,
                             :process! => nil, :size => 12
 
-        @results = Results::Base.new @allocations
+        @results = Results::Base.new 1234, @allocations
         @results.stub! :duration => 0.1234567890,
-                       :total    => 12345678,
-                       :offset   => 1234
+                       :total    => 12345678
       end
       it 'should output a specific log' do
         @results.to_log('some_query').should == '|0-08-16 10:07:33|0.123457|some_query                                        |12345678|1234|12|'
@@ -46,11 +45,11 @@ describe Results do
     before(:each) do
       @allocations = stub :allocations, :process! => nil, :to_result => :allocations, :total => :some_total
 
-      @results = Results::Base.new @allocations
+      @results = Results::Base.new :some_offset, @allocations
       @results.duration = :some_duration
     end
     it 'should do it correctly' do
-      @results.prepare! :some_offset
+      @results.prepare!
 
       @results.serialize.should == { :allocations => :allocations, :offset => :some_offset, :duration => :some_duration, :total => :some_total }
     end
@@ -139,7 +138,7 @@ describe Results do
           }.should_not raise_error
         end
         it 'should set the allocations to an empty array' do
-          Results::Full.new(:some_allocations).instance_variable_get(:@allocations).should == :some_allocations
+          Results::Full.new(:unimportant, :some_allocations).instance_variable_get(:@allocations).should == :some_allocations
         end
       end
       describe 'Live' do
@@ -149,7 +148,7 @@ describe Results do
           }.should_not raise_error
         end
         it 'should set the allocations to an empty array' do
-          Results::Live.new(:some_allocations).instance_variable_get(:@allocations).should == :some_allocations
+          Results::Live.new(:unimportant, :some_allocations).instance_variable_get(:@allocations).should == :some_allocations
         end
       end
     end
@@ -188,7 +187,7 @@ describe Results do
     describe 'Full' do
       it 'should delegate to allocations.total' do
         allocations = stub :allocations
-        results = Results::Full.new allocations
+        results = Results::Full.new nil, allocations
 
         allocations.should_receive(:total).once
 
@@ -198,7 +197,7 @@ describe Results do
     describe 'Live' do
       it 'should delegate to allocations.total' do
         allocations = stub :allocations
-        results = Results::Live.new allocations
+        results = Results::Live.new nil, allocations
 
         allocations.should_receive(:total).once
 

@@ -5,16 +5,16 @@ module Results
   #
   class Base
 
-    # Duration is set by the query.
+    # Duration is set externally by the query.
     #
     attr_writer :duration
     attr_reader :allocations, :offset
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize allocations = nil
+    def initialize offset = 0, allocations = nil
+      @offset = offset
       @allocations = allocations || Query::Allocations.new
-      @offset = 0
     end
 
     def add more_results
@@ -49,9 +49,8 @@ module Results
     # Without this, the allocations are not processed,
     # and no ids are calculated.
     #
-    def prepare! offset = 0
-      @offset = offset
-      allocations.process! self.max_results, offset
+    def prepare!
+      allocations.process! self.max_results, self.offset
     end
 
     # Duration default is 0.

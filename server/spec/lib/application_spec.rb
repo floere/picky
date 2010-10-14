@@ -24,7 +24,7 @@ describe Application do
           # Note that Picky needs the following characters to
           # pass through, as they are control characters: *"~:
           #
-          querying.removes_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
+          querying.removes_characters(/[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/)
           querying.stopwords(/\b(and|the|of|it|in|for)\b/)
           querying.splits_text_on(/[\s\/\-\,\&]+/)
           querying.normalizes_words([

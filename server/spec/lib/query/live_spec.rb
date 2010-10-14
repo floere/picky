@@ -31,7 +31,7 @@ describe Query::Live do
       allocations = stub :allocations
       @query.should_receive(:sorted_allocations).and_return allocations
 
-      @query.should_receive(:results_from).once.with(allocations, 0).and_return stub(:results, :prepare! => true)
+      @query.should_receive(:results_from).once.with(0, allocations).and_return stub(:results, :prepare! => true)
 
       @query.execute 'some query', 0
     end
@@ -53,7 +53,7 @@ describe Query::Live do
         @query.results_from(@allocations).duration.should == 0
       end
       it "should generate a result with the allocations" do
-        @query.results_from(@allocations).allocations.should == @allocations
+        @query.results_from(0, @allocations).allocations.should == @allocations
       end
     end
   end

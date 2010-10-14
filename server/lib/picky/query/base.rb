@@ -32,7 +32,7 @@ module Query
       results = nil
       
       duration = timed do
-        results = execute(tokens, offset) || empty_results # TODO Does not work yet
+        results = execute(tokens, offset) || empty_results(offset) # TODO Does not work yet
       end
       results.duration = duration.round 6
       
@@ -42,21 +42,21 @@ module Query
     # Return nil if no results have been found.
     #
     def execute tokens, offset
-      results_from sorted_allocations(tokens), offset
+      results_from offset, sorted_allocations(tokens)
     end
-
+    
     # Returns an empty result with default values.
     #
-    def empty_results
-      result_type.new
+    def empty_results offset = 0
+      result_type.new offset
     end
-
+    
     # Delegates the tokenizing to the query tokenizer.
     #
     def tokenized text
       @tokenizer.tokenize text
     end
-
+    
     # Gets sorted allocations for the tokens.
     #
     # This generates the possible allocations, sorted.
@@ -111,9 +111,9 @@ module Query
     #
     # TODO Move to results. result_type.from allocations, offset
     #
-    def results_from allocations = nil, offset = 0
-      results = result_type.new allocations
-      results.prepare! offset
+    def results_from offset = 0, allocations = nil
+      results = result_type.new offset, allocations
+      results.prepare!
       results
     end
 
