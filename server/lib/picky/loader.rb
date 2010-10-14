@@ -70,6 +70,10 @@ module Loader
     load_user 'app/logging'
     load_user 'app/application'
     
+    # Finalize the applications.
+    #
+    Application.finalize_apps
+    
     # TODO Rewrite
     #
     Query::Qualifiers.instance.prepare

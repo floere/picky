@@ -3,6 +3,19 @@
 class Application
   class << self
     
+    # Finalize the subclass as soon as it
+    # has finished loading.
+    #
+    # Note: finalize finalizes the routes.
+    #
+    def inherited app
+      @apps ||= []
+      @apps << app
+    end
+    def finalize_apps
+      @apps.each &:finalize
+    end
+    
     # An application simply delegates to the routing to handle a request.
     #
     def call env
