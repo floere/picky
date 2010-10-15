@@ -68,7 +68,11 @@ function PickyData(data) {
   this.offset      = offset;
   this.allocations = allocations;
   
-  this.isEmpty = function() {
+  // Are there any results?
+  //
+  var isEmpty = function() {
     return total == 0;
-  }
+  };
+  this.isEmpty = isEmpty;
+  
 };

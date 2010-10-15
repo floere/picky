@@ -22,10 +22,6 @@ var PickyClient = function(config) {
     Localization.explanations = config.explanations;
   };
   
-  this.focus = function() {
-    this.controller.focus();
-  };
-  
   this.insert = function(query, full) {
     this.controller.insert(query, full || true);
   };

@@ -1,10 +1,11 @@
 // Add PickyResults?
-var PickyView = function(picky_controller) {
+var PickyView = function(picky_controller, config) {
   
-  var self = this;
-  var controller = picky_controller;
-  // var config = controller.config;
-
+  var controller       = picky_controller;
+  var allocationsCloud = new PickyAllocationsCloud(this);
+  
+  var showResultsLimit = config.showResultsLimit || 10;
+  
   var searchField   = $('#picky input.query');
   var clearButton   = $('#picky div.reset');
   var searchButton  = $('#picky input.search_button');
@@ -14,16 +15,6 @@ var PickyView = function(picky_controller) {
   var results       = $('#picky .results');
   var noResults     = $('#picky .no_results');
   
-  var allocations         = $('#picky .allocations');
-  var shownAllocations    = allocations.find('.shown');
-  var showMoreAllocations = allocations.find('.more');
-  var hiddenAllocations   = allocations.find('.hidden');
-  
-  var init = function() {
-    bindEventHandlers();
-    focus();
-  };
-  
   // Resets the whole view to the inital state.
   //
   var reset = function(to_text) {
@@ -31,7 +22,7 @@ var PickyView = function(picky_controller) {
     hideClearButton();
     setSearchStatus('empty');
     resultCounter.empty();
-    hideAllocationCloud();
+    allocationsCloud.hide();
     clearResults();
     hideEmptyResults();
   };
@@ -58,24 +49,15 @@ var PickyView = function(picky_controller) {
       controller.clearButtonClicked();
       focus();
     });
-    
-    showMoreAllocations.click(function() {
-      showMoreAllocations.hide();
-      hiddenAllocations.show();
-    });
   };
   
-  // TODO Move to Controller.
-  this.allocationsCloudClickEventHandler = function(event) {
-    // TODO Callback?
-    
+  this.allocationChosen = function(event) {
     var text = event.data.query;
     
     searchField.val(text);
-    hideAllocationCloud();
     
     controller.allocationChosen(text);
-  };
+  }
   
   var select = function() {
     searchField.select();
@@ -91,22 +73,25 @@ var PickyView = function(picky_controller) {
   var focus = function() {
     searchField.focus();
   };
-  this.focus = focus;
   
-  this.showEmptyResults = function() {
-    reset();
+  var showTooManyResults = function(data) {
+    clearResults();
+    showClearButton();
+    allocationsCloud.show(data);
+    updateResultCounter(data.total);
+  }
+  var showEmptyResults = function() {
+    clearResults();
     updateResultCounter(0);
     
     noResults.show();
     showClearButton();
   };
-
   var hideEmptyResults = function() {
     noResults.hide();
   };
-  
-  this.showResults = function(data) {
-    reset();
+  var showResults = function(data) {
+    clearResults();
     updateResultCounter(data.total);
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
@@ -114,7 +99,7 @@ var PickyView = function(picky_controller) {
     showClearButton();
   };
   
-  this.appendResults = function(data) {
+  var appendResults = function(data) {
     results.find('.addination').remove();
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
@@ -123,31 +108,6 @@ var PickyView = function(picky_controller) {
   
   var clearResults = function() {
     results.empty();
-  };
-  
-  this.showAllocationCloud = function(data) {
-    reset();
-    var renderer = new PickyAllocationsCloudRenderer(this, data);
-    renderer.render();
-    allocations.show();
-    showClearButton();
-  };
-  var hideAllocationCloud = function() {
-    allocations.hide();
-  };
-  this.clearAllocationCloud = function() {
-    shownAllocations.empty();
-    showMoreAllocations.hide();
-    hiddenAllocations.empty().hide();
-  };
-  this.appendShownAllocation = function(item) {
-    shownAllocations.append(item);
-  };
-  this.appendHiddenAllocation = function(item) {
-    hiddenAllocations.append(item);
-  };
-  this.showMoreAllocations = function() {
-    showMoreAllocations.show();
   };
   
   var showClearButton = function() {
@@ -161,7 +121,6 @@ var PickyView = function(picky_controller) {
     resultCounter.text(total); // ((total > 999) ? '999+' : total); // TODO Decide on this.
     flashResultCounter(total);
   };
-  this.updateResultCounter = updateResultCounter;
   
   var alertThreshold = 5;
   var flashResultCounter = function(total) {
@@ -169,11 +128,6 @@ var PickyView = function(picky_controller) {
       resultCounter.fadeTo('fast', 0.5).fadeTo('fast', 1);
     }
   };
-  
-  setSearchStatus = function(statusClass) {
-    dashboard.attr('class', 'dashboard ' + statusClass);
-  };
-  this.setSearchStatus = setSearchStatus;
   
   // TODO Fix or remove.
   //
@@ -191,5 +145,47 @@ var PickyView = function(picky_controller) {
     select();
   };
   
-  init();
+  
+  var tooManyResults = function(data) {
+    return data.total > showResultsLimit && data.allocations.length > 1;
+  };
+  var resultStatusFor = function(data) {
+    if (data.isEmpty()) { return 'none'; };
+    if (tooManyResults(data)) { return 'support'; }
+    return 'ok';
+  };
+  var setSearchStatus = function(statusClass) {
+    dashboard.attr('class', 'dashboard ' + statusClass);
+  };
+  var setSearchStatusFor = function(data) {
+    setSearchStatus(resultStatusFor(data));
+  }
+  
+  var fullResultsCallback = function(data) {
+    setSearchStatusFor(data);
+    
+    if (data.isEmpty()) {
+      showEmptyResults();
+    } else if (tooManyResults(data)) {
+      showTooManyResults(data);
+    } else {
+      if (data.offset == 0) {
+        showResults(data);
+      } else {
+        appendResults(data);
+      }
+    };
+    
+    focus();
+  };
+  this.fullResultsCallback = fullResultsCallback;
+  
+  var liveResultsCallback = function(data) {
+    setSearchStatusFor(data);
+    updateResultCounter(data.total);
+  };
+  this.liveResultsCallback = liveResultsCallback;
+  
+  bindEventHandlers();
+  focus();
 };

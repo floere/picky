@@ -1,46 +1,17 @@
 var PickyController = function(searchEngine) {
   
-  var self = this;
-  
-  var searchEngine     = searchEngine;
-  var view             = new PickyView(this);
-  
   var config           = searchEngine.config;
-  var showResultsLimit = config.showResultsLimit || 10;
-  var beforeCallback   = config.before; // || ...
-  var successCallback  = config.success; // || ...
-  var afterCallback    = config.after; // || ...
+  var beforeCallback   = config.before || function(params, query, offset) {  };
+  var successCallback  = config.success || function(data, query) {  };
+  var afterCallback    = config.after || function(data, query) {  };
   
-  // TODO Move to view model?
-  var mustShowAllocationCloud = function(data) {
-    return data.total > showResultsLimit && data.allocations.length > 1;
-  };
-  // TODO Move to view model?
-  var searchStatus = function(data) {
-    if (data.isEmpty()) { return 'none'; };
-    if (mustShowAllocationCloud(data)) { return 'support'; }
-    return 'ok';
-  };
+  var searchEngine      = searchEngine;
+  var view              = new PickyView(this, config);
   
   var fullSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
     
-    if (data.isEmpty()) {
-      view.setSearchStatus(searchStatus(data));
-      view.showEmptyResults();
-    } else if (mustShowAllocationCloud(data)) {
-      view.showAllocationCloud(data);
-      view.updateResultCounter(data.total);
-    } else {
-      if (data.offset == 0) {
-        view.showResults(data);
-      } else {
-        view.appendResults(data);
-      }
-    };
-    
-    view.setSearchStatus(searchStatus(data));
-    view.focus();
+    view.fullResultsCallback(data);
     
     afterCallback(data, query);
   };
@@ -53,12 +24,10 @@ var PickyController = function(searchEngine) {
     
     searchEngine.search('full', query, fullSearchCallback, offset, params);
   };
-  
   var liveSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
     
-    view.updateResultCounter(data.total);
-    view.setSearchStatus(searchStatus(data));
+    view.liveResultsCallback(data);
     
     afterCallback(data, query);
   };
