@@ -80,7 +80,7 @@ var PickyView = function(picky_controller) {
     searchField.select();
   };
   
-  this.showEmptyResults = function(person, company) {
+  this.showEmptyResults = function() {
     reset();
     updateResultCounter(0);
     
@@ -88,7 +88,7 @@ var PickyView = function(picky_controller) {
     showClearButton();
   };
 
-  var hideNoResults = function(person, company) {
+  var hideEmptyResults = function() {
     noResults.hide();
   };
   
@@ -177,7 +177,7 @@ var PickyView = function(picky_controller) {
     resultCounter.empty();
     hideAllocationCloud();
     clearResults();
-    hideNoResults();
+    hideEmptyResults();
   };
   this.reset = function() { reset(true); }; // External calls always reset also the text.
   

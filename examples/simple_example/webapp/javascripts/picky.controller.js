@@ -32,9 +32,7 @@ var PickyController = function(searchEngine) {
   this.highlight = function(text, klass) {
     this.view.highlight(text, klass);
   };
-  this.showAllocationCloud = function(data) {
-    this.view.showAllocationCloud(data);
-  };
+  
   this.showResults = function(data) {
     this.view.showResults(data);
   };
@@ -43,7 +41,7 @@ var PickyController = function(searchEngine) {
   };
   this.showEmptyResults = function(data) {
     this.view.setSearchStatus(this.searchStatus(data));
-    this.view.showEmptyResults(this.searchPeople, this.searchCompanies);
+    this.view.showEmptyResults();
   };
   
   this.insert = function(query, full) {
@@ -68,7 +66,7 @@ var PickyController = function(searchEngine) {
     
     if (data.total == 0) {
       self.showEmptyResults(data);
-    } else if (self.mustShowAllocationCloud(data)) {
+    } else if (mustShowAllocationCloud(data)) {
       self.view.showAllocationCloud(data);
       self.view.updateResultCounter(data.total);
     } else {
@@ -137,13 +135,13 @@ var PickyController = function(searchEngine) {
     return $.inArray(event.keyCode, validTriggerKeys) > -1;
   };
   
-  this.mustShowAllocationCloud = function(data) {
+  var mustShowAllocationCloud = function(data) {
     return data.total > this.showResultsLimit && data.allocations.length > 1;
   };
   
   this.searchStatus = function(data) {
-    if (data.total == 0) { return 'none'; };
-    if (this.mustShowAllocationCloud(data)) { return 'support'; }
+    if (data.isEmpty()) { return 'none'; };
+    if (mustShowAllocationCloud(data)) { return 'support'; }
     return 'ok';
   };
   

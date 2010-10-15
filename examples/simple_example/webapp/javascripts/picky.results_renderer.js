@@ -86,7 +86,7 @@ var PickyResultsRenderer = function(controller, data) {
     var range = this.calculateAddinationData();
     if (range.offset < total) {
       var addination = $("<div class='addination current'>" + t('results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});'>&uarr;</a></div></div>");
-      addination.bind('click', { offset: range.offset}, this.controller.addinationClickEventHandler);
+      addination.bind('click', { offset: range.offset }, this.controller.addinationClickEventHandler);
       return addination;
     } else {
       return '';

@@ -67,4 +67,8 @@ function PickyData(data) {
   this.duration    = duration;
   this.offset      = offset;
   this.allocations = allocations;
+  
+  this.isEmpty = function() {
+    return total == 0;
+  }
 };
