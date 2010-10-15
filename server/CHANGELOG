@@ -1,3 +1,5 @@
+0.2.3 - hanke: Indexer hits filesystem only seldomly.
+        hanke: Internal rename from full index to exact index (visible in index filenames).
 0.2.2 - hanke: Umlaut handling (i.e. character substitution) now pluggable.
         hanke: Apps finalization now handled through Ruby callback (thanks to severin).
 0.2.1 - hanke: Fix for negative partial index values (:partial => Partial::Subtoken.new(:down_to => -3))
