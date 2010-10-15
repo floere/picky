@@ -121,7 +121,7 @@ module Loader
     load_relative 'indexers/field'
     load_relative 'indexers/default'
     #
-    load_relative 'indexers/solr'
+    # load_relative 'indexers/solr'
 
     # Partial index generation strategies.
     #
@@ -194,7 +194,7 @@ module Loader
     load_relative 'query/live'
     load_relative 'query/full'
     #
-    load_relative 'query/solr' # TODO
+    # load_relative 'query/solr'
     
     # Results.
     #
@@ -229,7 +229,7 @@ module Loader
     
     # Load tools.
     #
-    load_relative 'solr/schema_generator'
+    # load_relative 'solr/schema_generator'
     load_relative 'cores'
     
     # Load generation.

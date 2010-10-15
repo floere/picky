@@ -16,7 +16,6 @@ gem 'activerecord',     '2.3.8', :require => 'active_record'
 gem 'rsolr',            '0.12.1'
 gem 'sunspot',          '1.1.0'
 gem 'rack_fast_escape', '2009.06.24'
-gem 'rspec'
 
 # Required by your project.
 #

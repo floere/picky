@@ -20,22 +20,22 @@ describe Configuration::Type do
                                     :solr => :some_solr_option
   end
   
-  describe 'solr_fields' do
-    it 'should return all non-virtual fields' do
-      @type.solr_fields.should == [@field]
-    end
-  end
+  # describe 'solr_fields' do
+  #   it 'should return all non-virtual fields' do
+  #     @type.solr_fields.should == [@field]
+  #   end
+  # end
   
-  describe 'index_solr' do
-    it 'should get a new solr indexer and start it' do
-      solr = mock :solr
-      Indexers::Solr.should_receive(:new).once.with(@type).and_return solr
-      
-      solr.should_receive(:index).once.with
-      
-      @type.index_solr
-    end
-  end
+  # describe 'index_solr' do
+  #   it 'should get a new solr indexer and start it' do
+  #     solr = mock :solr
+  #     Indexers::Solr.should_receive(:new).once.with(@type).and_return solr
+  #     
+  #     solr.should_receive(:index).once.with
+  #     
+  #     @type.index_solr
+  #   end
+  # end
   
   describe 'index' do
     it 'should index each of the fields' do

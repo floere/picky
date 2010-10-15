@@ -21,7 +21,7 @@ module Configuration
       @after_indexing           = options[:after_indexing]
       @result_type              = options[:result_type] || name
       @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false       # TODO Move to query?
-      @solr                     = options[:solr] || nil
+      # @solr                     = options[:solr] || nil
     end
     def generate
       categories = fields.map { |field| field.generate }
@@ -35,16 +35,16 @@ module Configuration
         field.index
       end
     end
-    def solr_fields
-      solr ? fields.select { |field| !field.virtual? } : []
-    end
-    # TODO Delegate to Solr handler.
-    #
-    def index_solr
-      return unless solr
-      @indexer = Indexers::Solr.new self
-      @indexer.index
-    end
+    # def solr_fields
+    #   solr ? fields.select { |field| !field.virtual? } : []
+    # end
+    # # TODO Delegate to Solr handler.
+    # #
+    # def index_solr
+    #   return unless solr
+    #   @indexer = Indexers::Solr.new self
+    #   @indexer.index
+    # end
     # TODO Spec!
     #
     def connect_backend
