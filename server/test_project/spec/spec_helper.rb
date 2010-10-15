@@ -4,7 +4,6 @@
 ENV['PICKY_ENV'] = 'test'
 require 'rubygems'
 require File.expand_path '../../../lib/picky', __FILE__
-require 'spec'
 
 SearchLog = Loggers::Search.new ::Logger.new(STDOUT)
 puts "Using STDOUT as test log."

@@ -3,7 +3,7 @@
 
 # Require the gem. This loads the search framework.
 #
-require ::File.join(::File.dirname(__FILE__), '/../lib/picky')
+require File.expand_path '/../lib/picky', __FILE__
 
 # Load your application. This requires the files in lib TODO
 #
