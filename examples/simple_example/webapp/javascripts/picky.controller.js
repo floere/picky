@@ -110,6 +110,8 @@ var PickyController = function(searchEngine) {
         if (event.keyCode == 13) { this.fullSearch(this.view.text()); } else { this.liveSearchTimer.reset(); }
       }
       
+      // TODO The view should know if there is Text and act accordingly.
+      // this.view.update() ?
       this.view.showClearButton();
     }
   };

@@ -14,10 +14,10 @@ var PickyView = function(picky_controller) {
   var results       = $('#picky .results');
   var noResults     = $('#picky .no_results');
   
-  this.allocations        = $('#picky .allocations');
-  var shownAllocations    = this.allocations.find('.shown');
-  var showMoreAllocations = this.allocations.find('.more');
-  var hiddenAllocations   = this.allocations.find('.hidden');
+  var allocations         = $('#picky .allocations');
+  var shownAllocations    = allocations.find('.shown');
+  var showMoreAllocations = allocations.find('.more');
+  var hiddenAllocations   = allocations.find('.hidden');
   
   var init = function() {
     bindEventHandlers();
@@ -41,11 +41,12 @@ var PickyView = function(picky_controller) {
     });
   };
   
+  // TODO Move to Controller.
   this.allocationsCloudClickEventHandler = function(event) {
     // TODO Callback?
     
     searchField.val(event.data.query);
-    self.hideAllocationCloud();
+    hideAllocationCloud();
     
     controller.fullSearch(event.data.query);
   };
@@ -70,7 +71,7 @@ var PickyView = function(picky_controller) {
   };
   
   this.showEmptyResults = function(person, company) {
-    this.reset(false);
+    reset();
     updateResultCounter(0);
     
     noResults.show();
@@ -82,7 +83,7 @@ var PickyView = function(picky_controller) {
   };
   
   this.showResults = function(data) {
-    this.reset(false);
+    reset();
     updateResultCounter(data.total);
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
@@ -102,14 +103,14 @@ var PickyView = function(picky_controller) {
   };
   
   this.showAllocationCloud = function(data) {
-    this.reset(false);
+    reset();
     var renderer = new PickyAllocationsCloudRenderer(this, data);
     renderer.render();
-    this.allocations.show();
+    allocations.show();
     this.showClearButton();
   };
-  this.hideAllocationCloud = function() {
-    this.allocations.hide();
+  var hideAllocationCloud = function() {
+    allocations.hide();
   };
   this.clearAllocationCloud = function() {
     shownAllocations.empty();
@@ -129,22 +130,8 @@ var PickyView = function(picky_controller) {
   this.showClearButton = function() {
     clearButton.fadeTo(166, 1.0);
   };
-  this.hideClearButton = function() {
+  var hideClearButton = function() {
     clearButton.fadeTo(166, 0.0);
-  };
-
-  this.selectAll = function() {
-    searchField.select();
-  };
-
-  this.reset = function(clearSearchField) {
-    if (clearSearchField) { searchField.val(''); }
-    this.hideClearButton();
-    this.setSearchStatus('empty');
-    resultCounter.empty();
-    this.hideAllocationCloud();
-    clearResults();
-    hideNoResults();
   };
   
   var updateResultCounter = function(total) {
@@ -160,15 +147,29 @@ var PickyView = function(picky_controller) {
     }
   };
   
-  this.setSearchStatus = function(statusClass) {
+  setSearchStatus = function(statusClass) {
     dashboard.attr('class', 'dashboard ' + statusClass);
   };
+  this.setSearchStatus = setSearchStatus;
   
   var highlight = function(text, klass) {
     var selector = 'span' + (klass ? '.' + klass : '');
     results.find(selector).highlight(text, { element:'em' });
   };
   this.highlight = highlight;
+  
+  // Resets the whole view to the inital state.
+  //
+  reset = function(clearSearchField) {
+    if (clearSearchField) { searchField.val(''); }
+    hideClearButton();
+    setSearchStatus('empty');
+    resultCounter.empty();
+    hideAllocationCloud();
+    clearResults();
+    hideNoResults();
+  };
+  this.reset = function() { reset(true); }; // External calls always reset also the text.
   
   init();
 };
