@@ -69,7 +69,7 @@ var PickyView = function(picky_controller) {
     searchField.select();
   };
   
-  this.showNoResults = function(person, company) {
+  this.showEmptyResults = function(person, company) {
     this.reset(false);
     updateResultCounter(0);
     

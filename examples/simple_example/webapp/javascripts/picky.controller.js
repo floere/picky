@@ -41,9 +41,9 @@ var PickyController = function(searchEngine) {
   this.appendResults = function(data) {
     this.view.appendResults(data);
   };
-  this.showNoResults = function(data) {
+  this.showEmptyResults = function(data) {
     this.view.setSearchStatus(this.searchStatus(data));
-    this.view.showNoResults(this.searchPeople, this.searchCompanies);
+    this.view.showEmptyResults(this.searchPeople, this.searchCompanies);
   };
   
   this.insert = function(query, full) {
@@ -67,7 +67,7 @@ var PickyController = function(searchEngine) {
     data = self.successCallback(data, query) || data;
     
     if (data.total == 0) {
-      self.showNoResults(data);
+      self.showEmptyResults(data);
     } else if (self.mustShowAllocationCloud(data)) {
       self.view.showAllocationCloud(data);
       self.view.updateResultCounter(data.total);
