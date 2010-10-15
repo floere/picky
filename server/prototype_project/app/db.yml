@@ -1,6 +1,6 @@
 # Just an example, see application.rb on how this file is used.
 #
-# Note: ActiveRecord is used.
+# Note: ActiveRecord is used. Sorry.
 #
 adapter: mysql
 host: localhost

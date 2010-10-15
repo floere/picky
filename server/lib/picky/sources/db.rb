@@ -21,6 +21,8 @@ module Sources
     #  Or
     #  * The configuration as a hash.
     #
+    # TODO Do not use ActiveRecord directly.
+    #
     def create_database_adapter
       adapter_class = Class.new ActiveRecord::Base
       adapter_class.abstract_class = true
