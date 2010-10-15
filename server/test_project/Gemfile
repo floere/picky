@@ -2,22 +2,26 @@ source :gemcutter
 
 # Gems required by Picky.
 #
-gem 'bundler',          '>=0.9.26'
-gem 'activesupport',    '2.3.8', :require => 'active_support'
-gem 'activerecord',     '2.3.8', :require => 'active_record'
-gem 'rack',             '1.2.1'
-gem 'rack-mount',       '0.6.9'
-gem 'yajl-ruby',                 :require => 'yajl'
-# gem 'rsolr',            '0.12.1'
-# gem 'sunspot',          '1.1.0'
-gem 'text',             '0.2.0'
-gem 'rack_fast_escape', '2009.06.24'
+gem 'picky',            '~> 0.2.0'
+gem 'bundler',          '>= 0.9.26'
+gem 'rack',             '~> 1.2.1'
+gem 'rack-mount',       '~> 0.6.9'
+gem 'text',             '~> 0.2.0'
+gem 'yajl-ruby',        '~> 0.7.8', :require => 'yajl'
 
-group :test do
-  gem 'rspec', '1.3.0'
-end
+# Should be optional, but isn't yet.
+#
+gem 'activerecord',     '~> 2.3.8', :require => 'active_record'
+
+# Optional.
+#
+gem 'rack_fast_escape', '2009.06.24'
 
 # Required by your project.
 #
 gem 'unicorn'
 gem 'mysql'
+
+group :test do
+  gem 'rspec', '1.3.0'
+end
