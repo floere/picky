@@ -1,95 +1,104 @@
 // Add PickyResults?
-var PickyView = function(controller) {
+var PickyView = function(picky_controller) {
   
   var self = this;
-  var controller = controller;
+  var controller = picky_controller;
   // var config = controller.config;
 
-  this.searchField   = $('#picky input.query');
-  this.clearButton   = $('#picky div.reset');
-  this.searchButton  = $('#picky input.search_button');
-  this.resultCounter = $('#picky div.status');
-  this.dashboard     = $('#picky .dashboard');
+  var searchField   = $('#picky input.query');
+  var clearButton   = $('#picky div.reset');
+  var searchButton  = $('#picky input.search_button');
+  var resultCounter = $('#picky div.status');
+  var dashboard     = $('#picky .dashboard');
   
-  this.results   = $('#picky .results');
-  this.noResults = $('#picky .no_results');
+  var results       = $('#picky .results');
+  var noResults     = $('#picky .no_results');
   
-  this.allocations         = $('#picky .allocations');
-  this.shownAllocations    = this.allocations.find('.shown')
-  this.showMoreAllocations = this.allocations.find('.more')
-  this.hiddenAllocations   = this.allocations.find('.hidden')
+  this.allocations        = $('#picky .allocations');
+  var shownAllocations    = this.allocations.find('.shown');
+  var showMoreAllocations = this.allocations.find('.more');
+  var hiddenAllocations   = this.allocations.find('.hidden');
   
-  this.init = function() {
-    this.bindEventHandlers();
-    this.focus();
+  var init = function() {
+    bindEventHandlers();
+    focus();
   };
   
-  this.bindEventHandlers = function() {
-    this.searchField.keyup(function(event) {
+  var bindEventHandlers = function() {
+    searchField.keyup(function(event) {
       controller.keyUpEventHandler(event);
     });
     
-    this.searchButton.click(function(event) {
-      controller.searchButtonClickEventHandler(event);
-    });
+    searchButton.click(controller.searchButtonClickEventHandler);
     
-    this.clearButton.click(function(event) {
+    clearButton.click(function(event) {
       controller.clearButtonClickEventHandler(event);
     });
     
-    this.showMoreAllocations.click(function() {
-      self.showMoreAllocations.hide();
-      self.hiddenAllocations.show();
+    showMoreAllocations.click(function() {
+      showMoreAllocations.hide();
+      hiddenAllocations.show();
     });
   };
   
   this.allocationsCloudClickEventHandler = function(event) {
     // TODO Callback?
     
-    self.searchField.val(event.data.query);
+    searchField.val(event.data.query);
     self.hideAllocationCloud();
     
     controller.fullSearch(event.data.query);
   };
   
-  this.focus = function() {
-    this.searchField.focus();
+  this.insert = function(text) {
+    searchField.val(text);
+  };
+  this.text = function() {
+    return searchField.val();
+  };
+  this.isTextEmpty = function() {
+    return this.text() == '';
   };
   
+  var focus = function() {
+    searchField.focus();
+  };
+  this.focus = focus;
+  
   this.select = function() {
-    this.searchField.select();
+    searchField.select();
   };
   
   this.showNoResults = function(person, company) {
     this.reset(false);
-    this.updateResultCounter(0);
+    updateResultCounter(0);
     
-    this.noResults.show();
+    noResults.show();
     this.showClearButton();
   };
 
-  this.hideNoResults = function(person, company) {
-    this.noResults.hide();
+  var hideNoResults = function(person, company) {
+    noResults.hide();
   };
   
   this.showResults = function(data) {
     this.reset(false);
-    this.updateResultCounter(data.total);
+    updateResultCounter(data.total);
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
-    this.results.show();
+    results.show();
     this.showClearButton();
   };
   
   this.appendResults = function(data) {
-    $('#picky .results .addination').remove();
+    results.find('.addination').remove();
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
     $.scrollTo('#picky .results div.info:last', { duration: 500, offset: -12 });
   };
   
-  this.clearResults = function() {
-    this.results.empty();
+  var clearResults = function() {
+    results.empty();
   };
   
   this.showAllocationCloud = function(data) {
@@ -103,60 +112,63 @@ var PickyView = function(controller) {
     this.allocations.hide();
   };
   this.clearAllocationCloud = function() {
-    this.shownAllocations.empty();
-    this.showMoreAllocations.hide();
-    this.hiddenAllocations.empty().hide();
+    shownAllocations.empty();
+    showMoreAllocations.hide();
+    hiddenAllocations.empty().hide();
   };
   this.appendShownAllocation = function(item) {
-    this.shownAllocations.append(item);
+    shownAllocations.append(item);
   };
   this.appendHiddenAllocation = function(item) {
-    this.hiddenAllocations.append(item);
+    hiddenAllocations.append(item);
+  };
+  this.showMoreAllocations = function() {
+    showMoreAllocations.show();
   };
   
   this.showClearButton = function() {
-    this.clearButton.fadeTo(166, 1.0);
+    clearButton.fadeTo(166, 1.0);
   };
   this.hideClearButton = function() {
-    this.clearButton.fadeTo(166, 0.0);
+    clearButton.fadeTo(166, 0.0);
   };
 
   this.selectAll = function() {
-    this.searchField.select();
+    searchField.select();
   };
 
   this.reset = function(clearSearchField) {
-    if (clearSearchField) { this.searchField.val(''); }
+    if (clearSearchField) { searchField.val(''); }
     this.hideClearButton();
     this.setSearchStatus('empty');
-    this.resultCounter.empty();
+    resultCounter.empty();
     this.hideAllocationCloud();
-    this.clearResults();
-    this.hideNoResults();
+    clearResults();
+    hideNoResults();
   };
   
-  this.updateResultCounter = function(total) {
-    this.resultCounter.text(total); // ((total > 999) ? '999+' : total); // TODO Decide on this.
-    this.flashResultCounter(total);
+  var updateResultCounter = function(total) {
+    resultCounter.text(total); // ((total > 999) ? '999+' : total); // TODO Decide on this.
+    flashResultCounter(total);
   };
+  this.updateResultCounter = updateResultCounter;
   
   var alertThreshold = 5;
-  this.flashResultCounter = function(total) {
+  var flashResultCounter = function(total) {
     if (total > 0 && total <= alertThreshold) {
-      this.resultCounter.fadeTo('fast', 0.5).fadeTo('fast', 1);
-      //TODO: should this be the feedback_area? feedback is/was the feedback-link
-      //this.feedback.fadeTo('fast', 0.9).fadeTo('fast', 1);
+      resultCounter.fadeTo('fast', 0.5).fadeTo('fast', 1);
     }
   };
   
   this.setSearchStatus = function(statusClass) {
-    this.dashboard.attr('class', 'dashboard ' + statusClass);
+    dashboard.attr('class', 'dashboard ' + statusClass);
   };
   
-  this.highlight = function(text, klass) {
+  var highlight = function(text, klass) {
     var selector = 'span' + (klass ? '.' + klass : '');
-    this.results.find(selector).highlight(text, { element:'em' });
+    results.find(selector).highlight(text, { element:'em' });
   };
+  this.highlight = highlight;
   
-  this.init();
+  init();
 };

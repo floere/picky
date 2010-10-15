@@ -33,20 +33,21 @@ function AllocationRenderer(allocation) {
   var explanations          = Localization.explanations && Localization.explanations[locale] || {};
   var location_delimiter    = Localization.location_delimiters[locale];
   var explanation_delimiter = Localization.explanation_delimiters[locale];
-
+  
   var combination = allocation.combination;
-
-  this.type  = allocation.type;
-  this.count = allocation.count;
-
+  var type        = allocation.type;
+  var count       = allocation.count;
+  
   // Those are of interest to the public.
   //
   this.text = '';
   this.query = '';
   this.explanation = '';
   
+  // TODO parametrize.
+  //
   var no_ellipses           = ['street_number', 'zipcode'];
-
+  
   // Contracts the originals of the zipped.
   //
   function contract(zipped) {
@@ -291,7 +292,7 @@ function AllocationRenderer(allocation) {
   //
   //
   this.listItem = function() {
-    return $('<li><div class="text">' + this.text + '</div><div class="count">' + this.count + '</div></li>');
-  }
+    return $('<li><div class="text">' + this.text + '</div><div class="count">' + count + '</div></li>');
+  };
 
 };

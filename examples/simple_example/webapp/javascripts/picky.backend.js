@@ -47,7 +47,7 @@ var LiveBackend = function(url) {
       };
     }
   });
-}
+};
 
 // Full search backend.
 //
@@ -66,7 +66,7 @@ var FullBackend = function(url) {
       };
     }
   });
-}
+};
 
 // Some specialized backend.
 //

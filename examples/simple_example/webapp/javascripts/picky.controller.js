@@ -15,7 +15,7 @@ var PickyController = function(searchEngine) {
     this.view = new PickyView(this);
     
     this.liveSearchTimer = $.timer(180, function(timer) {
-      self.liveSearch(self.view.searchField.val());
+      self.liveSearch(self.view.text());
       timer.stop();
     });
     // The timer is initially instantly stopped.
@@ -26,13 +26,28 @@ var PickyController = function(searchEngine) {
   this.focus = function() {
     self.view.focus();
   };
-  
   this.select = function() {
     self.view.select();
   };
+  this.highlight = function(text, klass) {
+    this.view.highlight(text, klass);
+  };
+  this.showAllocationCloud = function(data) {
+    this.view.showAllocationCloud(data);
+  };
+  this.showResults = function(data) {
+    this.view.showResults(data);
+  };
+  this.appendResults = function(data) {
+    this.view.appendResults(data);
+  };
+  this.showNoResults = function(data) {
+    this.view.setSearchStatus(this.searchStatus(data));
+    this.view.showNoResults(this.searchPeople, this.searchCompanies);
+  };
   
   this.insert = function(query, full) {
-    self.view.searchField.val(query);
+    self.view.insert(query);
     self.select();
     
     self.fullSearch(query);
@@ -88,11 +103,11 @@ var PickyController = function(searchEngine) {
   };
   
   this.keyUpEventHandler = function(event) {
-    if (this.view.searchField.val() == '') {
+    if (this.view.isTextEmpty()) {
       this.reset();
     } else {
       if (this.shouldTriggerSearch(event)) {
-        if (event.keyCode == 13) { this.fullSearch(this.view.searchField.val()); } else { this.liveSearchTimer.reset(); }
+        if (event.keyCode == 13) { this.fullSearch(this.view.text()); } else { this.liveSearchTimer.reset(); }
       }
       
       this.view.showClearButton();
@@ -105,13 +120,13 @@ var PickyController = function(searchEngine) {
   };
   
   this.searchButtonClickEventHandler = function(event) {
-    if (this.view.searchField.val() != '') {
-      this.fullSearch(this.view.searchField.val());
+    if (!self.view.isTextEmpty()) { // TODO Rename
+      this.fullSearch(this.view.text());
     }
   };
   
   this.addinationClickEventHandler = function(event) {
-    self.fullSearch(self.view.searchField.val(), event.data.offset);
+    self.fullSearch(self.view.text(), event.data.offset);
   };
   
   this.shouldTriggerSearch = function(event) {
@@ -128,23 +143,6 @@ var PickyController = function(searchEngine) {
     return $.inArray(event.keyCode, validTriggerKeys) > -1;
   };
   
-  this.showAllocationCloud = function(data) {
-    this.view.showAllocationCloud(data);
-  };
-  
-  this.showResults = function(data) {
-    this.view.showResults(data);
-  };
-  
-  this.appendResults = function(data) {
-    this.view.appendResults(data);
-  };
-  
-  this.showNoResults = function(data) {
-    this.view.setSearchStatus(this.searchStatus(data));
-    this.view.showNoResults(this.searchPeople, this.searchCompanies);
-  };
-  
   this.mustShowAllocationCloud = function(data) {
     return data.total > this.showResultsLimit && data.allocations.length > 1;
   };
@@ -153,10 +151,6 @@ var PickyController = function(searchEngine) {
     if (data.total == 0) { return 'none'; };
     if (this.mustShowAllocationCloud(data)) { return 'support'; }
     return 'ok';
-  };
-  
-  this.highlight = function(text, klass) {
-    this.view.highlight(text, klass);
   };
   
   this.reset = function() {

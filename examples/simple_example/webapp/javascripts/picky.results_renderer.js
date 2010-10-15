@@ -23,7 +23,7 @@ var PickyResultsRenderer = function(controller, data) {
     var rangeEnd = this.data.offset + allocation.entries.length;
     var rangeText = (rangeStart == rangeEnd) ? rangeStart : rangeStart + '-' + rangeEnd;
     var range = '<div class="range">' + rangeText + ' ' + t('common.of') + ' ' + this.data.total + '</div>';
-    var toTheTop = '<div class="tothetop"><a href="javascript:$.scrollTo(0,{ duration: 500 }); searchEngine.focus();">&uarr;</a></div>';
+    var toTheTop = '<div class="tothetop"><a href="javascript:$.scrollTo(0,{ duration: 500 });">&uarr;</a></div>'; // searchEngine.focus();
     
     // TODO Parametrize!
     var names = '';
@@ -45,11 +45,11 @@ var PickyResultsRenderer = function(controller, data) {
     if (data.offset > 0) {
       header_html += toTheTop;
     }
-    if (data.total > 20) {
-      // header_html += '<div class="clear"></div>'; // TODO
-      // header_html += names; // TODO
-      // header_html += range; // TODO
-    }
+    // if (data.total > 20) { // TODO Make settable.
+    //   // header_html += '<div class="clear"></div>'; // TODO
+    //   // header_html += names; // TODO
+    //   // header_html += range; // TODO
+    // }
     header_html += '<div class="clear"></div></div>';
     
     return header_html;

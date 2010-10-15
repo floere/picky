@@ -42,14 +42,14 @@ var PickyAllocationsCloudRenderer = function(view, data) {
       $.each(list.slice(maxSuggestions-1), function(i, item) {
         self.view.appendHiddenAllocation(item);
       });
-      view.showMoreAllocations.show();
+      view.showMoreAllocations();
     }
     else {
       $.each(list, function(i, item) {
         self.view.appendShownAllocation(item);
       });
     }
-    $('#search .allocations').show();
+    return $('#search .allocations').show();
   };
 
 };
