@@ -9,9 +9,8 @@ gem 'rack-mount',       '0.6.9'
 gem 'text',             '0.2.0'
 gem 'yajl-ruby',        '0.7.8', :require => 'yajl'
 
-# Should be optional.
+# Should be optional, but isn't yet.
 #
-gem 'activesupport',    '2.3.8', :require => 'active_support'
 gem 'activerecord',     '2.3.8', :require => 'active_record'
 
 # Optional.
