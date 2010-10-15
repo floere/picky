@@ -81,19 +81,7 @@ var PickyResultsRenderer = function(controller, data) {
     return parts.join(' ' + explanation_delimiter + ' ');
   };
   
-  this.renderAddination = function(data) {
-    var total = data.total;
-    var range = this.calculateAddinationData();
-    if (range.offset < total) {
-      var addination = $("<div class='addination current'>" + t('results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});'>&uarr;</a></div></div>");
-      addination.bind('click', { offset: range.offset }, this.controller.addinationClickEventHandler);
-      return addination;
-    } else {
-      return '';
-    }
-  };
-  
-  this.calculateAddinationData = function(correction) {
+  var calculateAddinationData = function(correction) {
     var correction = correction || 0;
     var results = 20; // Make parametrizable.
     var offset  = data.offset + results + correction;
@@ -101,5 +89,17 @@ var PickyResultsRenderer = function(controller, data) {
     var total   = data.total;
     if (total < end) { end = total; }
     return { offset:offset, start:(offset+1), end:end };
+  };
+  
+  this.renderAddination = function(data) {
+    var total = data.total;
+    var range = calculateAddinationData();
+    if (range.offset < total) {
+      var addination = $("<div class='addination current'>" + t('results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});'>&uarr;</a></div></div>");
+      addination.bind('click', { offset: range.offset }, this.controller.addinationClickEventHandler);
+      return addination;
+    } else {
+      return '';
+    }
   };
 };
