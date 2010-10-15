@@ -15,6 +15,23 @@ var PickyView = function(picky_controller, config) {
   var results       = $('#picky .results');
   var noResults     = $('#picky .no_results');
   
+  var clearResults = function() {
+    results.empty();
+  };
+  var showClearButton = function() {
+    clearButton.fadeTo(166, 1.0);
+  };
+  var hideClearButton = function() {
+    clearButton.fadeTo(166, 0.0);
+  };
+  
+  // Cleans the interface of any results or choices presented.
+  var clean = function() {
+    allocationsCloud.hide();
+    clearResults();
+    hideEmptyResults();
+  };
+  
   // Resets the whole view to the inital state.
   //
   var reset = function(to_text) {
@@ -22,9 +39,7 @@ var PickyView = function(picky_controller, config) {
     hideClearButton();
     setSearchStatus('empty');
     resultCounter.empty();
-    allocationsCloud.hide();
-    clearResults();
-    hideEmptyResults();
+    clean();
   };
   
   var bindEventHandlers = function() {
@@ -75,15 +90,14 @@ var PickyView = function(picky_controller, config) {
   };
   
   var showTooManyResults = function(data) {
-    clearResults();
+    clean();
     showClearButton();
     allocationsCloud.show(data);
     updateResultCounter(data.total);
   }
   var showEmptyResults = function() {
-    clearResults();
+    clean();
     updateResultCounter(0);
-    
     noResults.show();
     showClearButton();
   };
@@ -91,7 +105,7 @@ var PickyView = function(picky_controller, config) {
     noResults.hide();
   };
   var showResults = function(data) {
-    clearResults();
+    clean();
     updateResultCounter(data.total);
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
@@ -104,17 +118,6 @@ var PickyView = function(picky_controller, config) {
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
     $.scrollTo('#picky .results div.info:last', { duration: 500, offset: -12 });
-  };
-  
-  var clearResults = function() {
-    results.empty();
-  };
-  
-  var showClearButton = function() {
-    clearButton.fadeTo(166, 1.0);
-  };
-  var hideClearButton = function() {
-    clearButton.fadeTo(166, 0.0);
   };
   
   var updateResultCounter = function(total) {
