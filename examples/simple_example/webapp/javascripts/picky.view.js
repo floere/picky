@@ -24,9 +24,22 @@ var PickyView = function(picky_controller) {
     focus();
   };
   
+  // Resets the whole view to the inital state.
+  //
+  var reset = function(to_text) {
+    if (to_text) { searchField.val(''); }
+    hideClearButton();
+    setSearchStatus('empty');
+    resultCounter.empty();
+    hideAllocationCloud();
+    clearResults();
+    hideEmptyResults();
+  };
+  
   var bindEventHandlers = function() {
     searchField.keyup(function(event) {
       if (isTextEmpty()) {
+        reset();
         controller.searchTextCleared();
       } else {
         controller.searchTextEntered(event);
@@ -40,8 +53,9 @@ var PickyView = function(picky_controller) {
       }
     });
     
-    clearButton.click(function(event) {
-      controller.clearButtonClickEventHandler(event);
+    clearButton.click(function() {
+      reset('');
+      controller.clearButtonClicked();
     });
     
     showMoreAllocations.click(function() {
@@ -167,19 +181,6 @@ var PickyView = function(picky_controller) {
     results.find(selector).highlight(text, { element:'em' });
   };
   this.highlight = highlight;
-  
-  // Resets the whole view to the inital state.
-  //
-  reset = function(clearSearchField) {
-    if (clearSearchField) { searchField.val(''); }
-    hideClearButton();
-    setSearchStatus('empty');
-    resultCounter.empty();
-    hideAllocationCloud();
-    clearResults();
-    hideEmptyResults();
-  };
-  this.reset = function() { reset(true); }; // External calls always reset also the text.
   
   init();
 };

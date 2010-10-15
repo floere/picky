@@ -100,13 +100,13 @@ var PickyController = function(searchEngine) {
     self.afterCallback(data, query);
   };
   
-  this.clearButtonClickEventHandler = function(event) {
-    this.reset();
+  this.clearButtonClicked = function() {
+    this.liveSearchTimer.stop();
     this.focus();
   };
   
   this.searchTextCleared  = function() {
-    this.reset();
+    this.liveSearchTimer.stop();
   };
   this.searchTextEntered   = function(event) {
     if (this.shouldTriggerSearch(event)) {
@@ -143,11 +143,6 @@ var PickyController = function(searchEngine) {
     if (data.isEmpty()) { return 'none'; };
     if (mustShowAllocationCloud(data)) { return 'support'; }
     return 'ok';
-  };
-  
-  this.reset = function() {
-    this.liveSearchTimer.stop();
-    this.view.reset(true);
   };
   
   this.init();
