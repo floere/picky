@@ -26,10 +26,19 @@ var PickyView = function(picky_controller) {
   
   var bindEventHandlers = function() {
     searchField.keyup(function(event) {
-      controller.keyUpEventHandler(event);
+      if (isTextEmpty()) {
+        controller.searchTextCleared();
+      } else {
+        controller.searchTextEntered(event);
+        showClearButton();
+      }
     });
     
-    searchButton.click(controller.searchButtonClickEventHandler);
+    searchButton.click(function(event) {
+      if (!isTextEmpty()) {
+        controller.searchButtonClicked(text());
+      }
+    });
     
     clearButton.click(function(event) {
       controller.clearButtonClickEventHandler(event);
@@ -54,11 +63,12 @@ var PickyView = function(picky_controller) {
   this.insert = function(text) {
     searchField.val(text);
   };
-  this.text = function() {
+  var text = function() {
     return searchField.val();
   };
-  this.isTextEmpty = function() {
-    return this.text() == '';
+  this.text = text; // TODO Remove.
+  var isTextEmpty = function() {
+    return text() == '';
   };
   
   var focus = function() {
@@ -75,7 +85,7 @@ var PickyView = function(picky_controller) {
     updateResultCounter(0);
     
     noResults.show();
-    this.showClearButton();
+    showClearButton();
   };
 
   var hideNoResults = function(person, company) {
@@ -88,7 +98,7 @@ var PickyView = function(picky_controller) {
     var renderer = new PickyResultsRenderer(controller, data);
     renderer.render();
     results.show();
-    this.showClearButton();
+    showClearButton();
   };
   
   this.appendResults = function(data) {
@@ -107,7 +117,7 @@ var PickyView = function(picky_controller) {
     var renderer = new PickyAllocationsCloudRenderer(this, data);
     renderer.render();
     allocations.show();
-    this.showClearButton();
+    showClearButton();
   };
   var hideAllocationCloud = function() {
     allocations.hide();
@@ -127,7 +137,7 @@ var PickyView = function(picky_controller) {
     showMoreAllocations.show();
   };
   
-  this.showClearButton = function() {
+  var showClearButton = function() {
     clearButton.fadeTo(166, 1.0);
   };
   var hideClearButton = function() {

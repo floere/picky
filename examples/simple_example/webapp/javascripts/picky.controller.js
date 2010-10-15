@@ -102,29 +102,21 @@ var PickyController = function(searchEngine) {
     self.afterCallback(data, query);
   };
   
-  this.keyUpEventHandler = function(event) {
-    if (this.view.isTextEmpty()) {
-      this.reset();
-    } else {
-      if (this.shouldTriggerSearch(event)) {
-        if (event.keyCode == 13) { this.fullSearch(this.view.text()); } else { this.liveSearchTimer.reset(); }
-      }
-      
-      // TODO The view should know if there is Text and act accordingly.
-      // this.view.update() ?
-      this.view.showClearButton();
-    }
-  };
-  
   this.clearButtonClickEventHandler = function(event) {
     this.reset();
     this.focus();
   };
   
-  this.searchButtonClickEventHandler = function(event) {
-    if (!self.view.isTextEmpty()) { // TODO Rename
-      this.fullSearch(this.view.text());
+  this.searchTextCleared  = function() {
+    this.reset();
+  };
+  this.searchTextEntered   = function(event) {
+    if (this.shouldTriggerSearch(event)) {
+      if (event.keyCode == 13) { this.fullSearch(this.view.text()); } else { this.liveSearchTimer.reset(); }
     }
+  };
+  this.searchButtonClicked = function(text) {
+    this.fullSearch(text);
   };
   
   this.addinationClickEventHandler = function(event) {
