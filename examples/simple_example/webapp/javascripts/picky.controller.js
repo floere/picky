@@ -5,11 +5,15 @@ var PickyController = function(searchEngine) {
   this.searchEngine    = searchEngine;
   this.config          = searchEngine.config;
   
-  this.showResultsLimit = this.config.showResultsLimit || 10;
+  var showResultsLimit = this.config.showResultsLimit || 10;
   
   this.beforeCallback  = this.config.before; // || ...
   this.successCallback = this.config.success; // || ...
   this.afterCallback   = this.config.after; // || ...
+  
+  var mustShowAllocationCloud = function(data) {
+    return data.total > showResultsLimit && data.allocations.length > 1;
+  };
   
   this.init = function() {
     this.view = new PickyView(this);
@@ -133,10 +137,6 @@ var PickyController = function(searchEngine) {
                 ];
                 
     return $.inArray(event.keyCode, validTriggerKeys) > -1;
-  };
-  
-  var mustShowAllocationCloud = function(data) {
-    return data.total > this.showResultsLimit && data.allocations.length > 1;
   };
   
   this.searchStatus = function(data) {
