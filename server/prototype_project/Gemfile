@@ -13,8 +13,9 @@ gem 'yajl-ruby',        '0.7.8', :require => 'yajl'
 #
 gem 'activesupport',    '2.3.8', :require => 'active_support'
 gem 'activerecord',     '2.3.8', :require => 'active_record'
-gem 'rsolr',            '0.12.1'
-gem 'sunspot',          '1.1.0'
+
+# Optional.
+#
 gem 'rack_fast_escape', '2009.06.24'
 
 # Required by your project.
