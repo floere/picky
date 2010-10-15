@@ -2,130 +2,101 @@ var PickyController = function(searchEngine) {
   
   var self = this;
   
-  this.searchEngine    = searchEngine;
-  this.config          = searchEngine.config;
+  var searchEngine     = searchEngine;
+  var view             = new PickyView(this);
   
-  var showResultsLimit = this.config.showResultsLimit || 10;
+  var config           = searchEngine.config;
+  var showResultsLimit = config.showResultsLimit || 10;
+  var beforeCallback   = config.before; // || ...
+  var successCallback  = config.success; // || ...
+  var afterCallback    = config.after; // || ...
   
-  this.beforeCallback  = this.config.before; // || ...
-  this.successCallback = this.config.success; // || ...
-  this.afterCallback   = this.config.after; // || ...
-  
+  // TODO Move to view model?
   var mustShowAllocationCloud = function(data) {
     return data.total > showResultsLimit && data.allocations.length > 1;
   };
-  
-  this.init = function() {
-    this.view = new PickyView(this);
-    
-    this.liveSearchTimer = $.timer(180, function(timer) {
-      self.liveSearch(self.view.text());
-      timer.stop();
-    });
-    // The timer is initially instantly stopped.
-    //
-    this.liveSearchTimer.stop();
+  // TODO Move to view model?
+  var searchStatus = function(data) {
+    if (data.isEmpty()) { return 'none'; };
+    if (mustShowAllocationCloud(data)) { return 'support'; }
+    return 'ok';
   };
   
-  this.focus = function() {
-    self.view.focus();
-  };
-  this.select = function() {
-    self.view.select();
-  };
-  this.highlight = function(text, klass) {
-    this.view.highlight(text, klass);
-  };
-  
-  this.showResults = function(data) {
-    this.view.showResults(data);
-  };
-  this.appendResults = function(data) {
-    this.view.appendResults(data);
-  };
-  this.showEmptyResults = function(data) {
-    this.view.setSearchStatus(this.searchStatus(data));
-    this.view.showEmptyResults();
-  };
-  
-  this.insert = function(query, full) {
-    self.view.insert(query);
-    self.select();
+  var fullSearchCallback = function(data, query) {
+    data = successCallback(data, query) || data;
     
-    self.fullSearch(query);
-  };
-
-  this.fullSearch = function(query, offset, params) {
-    var params = params || {};
-    var offset = offset || 0;
-    this.liveSearchTimer.stop();
-    
-    params = this.beforeCallback(params, query, offset) || params;
-    
-    this.searchEngine.search('full', query, this.fullSearchCallback, offset, params);
-  };
-  
-  this.fullSearchCallback = function(data, query) {
-    data = self.successCallback(data, query) || data;
-    
-    if (data.total == 0) {
-      self.showEmptyResults(data);
+    if (data.isEmpty()) {
+      view.setSearchStatus(searchStatus(data));
+      view.showEmptyResults();
     } else if (mustShowAllocationCloud(data)) {
-      self.view.showAllocationCloud(data);
-      self.view.updateResultCounter(data.total);
+      view.showAllocationCloud(data);
+      view.updateResultCounter(data.total);
     } else {
       if (data.offset == 0) {
-        self.showResults(data);
+        view.showResults(data);
       } else {
-        self.appendResults(data);
+        view.appendResults(data);
       }
     };
-    self.view.setSearchStatus(self.searchStatus(data));
     
-    self.focus();
+    view.setSearchStatus(searchStatus(data));
+    view.focus();
     
-    self.afterCallback(data, query);
+    afterCallback(data, query);
   };
-
-  this.liveSearch = function(query, params) {
+  var fullSearch = function(query, offset, params) {
+    var params = params || {};
+    var offset = offset || 0;
+    liveSearchTimer.stop();
+    
+    params = beforeCallback(params, query, offset) || params;
+    
+    searchEngine.search('full', query, fullSearchCallback, offset, params);
+  };
+  
+  var liveSearchCallback = function(data, query) {
+    data = successCallback(data, query) || data;
+    
+    view.updateResultCounter(data.total);
+    view.setSearchStatus(searchStatus(data));
+    
+    afterCallback(data, query);
+  };
+  var liveSearch = function(query, params) {
     var params = params || {};
     
-    params = this.beforeCallback(params) || params;
+    params = beforeCallback(params) || params;
     
-    this.searchEngine.search('live', query, this.liveSearchCallback, 0);
+    searchEngine.search('live', query, liveSearchCallback, 0);
   };
-
-  this.liveSearchCallback = function(data, query) {
-    data = self.successCallback(data, query) || data;
+  
+  // The timer is initially instantly stopped.
+  //
+  var liveSearchTimer = $.timer(180, function(timer) {
+    liveSearch(view.text());
+    timer.stop();
+  });
+  liveSearchTimer.stop();
+  
+  this.highlight = view.highlight;
+  
+  this.insert = function(query, full) {
+    view.insert(query);
     
-    self.view.updateResultCounter(data.total);
-    self.view.setSearchStatus(self.searchStatus(data));
-    
-    self.afterCallback(data, query);
+    if (full) { fullSearch(query); } // TODO
   };
   
-  this.clearButtonClicked = function() {
-    this.liveSearchTimer.stop();
-    this.focus();
+  var clearButtonClicked = function() {
+    liveSearchTimer.stop();
   };
+  this.clearButtonClicked = clearButtonClicked;
   
-  this.searchTextCleared  = function() {
-    this.liveSearchTimer.stop();
+  var searchTextCleared  = function() {
+    liveSearchTimer.stop();
   };
-  this.searchTextEntered   = function(event) {
-    if (this.shouldTriggerSearch(event)) {
-      if (event.keyCode == 13) { this.fullSearch(this.view.text()); } else { this.liveSearchTimer.reset(); }
-    }
-  };
-  this.searchButtonClicked = function(text) {
-    this.fullSearch(text);
-  };
+  this.searchTextCleared = searchTextCleared;
   
-  this.addinationClickEventHandler = function(event) {
-    self.fullSearch(self.view.text(), event.data.offset);
-  };
-  
-  this.shouldTriggerSearch = function(event) {
+  var shouldTriggerSearch = function(event) {
     var validTriggerKeys = [
                   0,  // special char (ä ö ü etc...)
                   8,  // backspace
@@ -138,12 +109,25 @@ var PickyController = function(searchEngine) {
                 
     return $.inArray(event.keyCode, validTriggerKeys) > -1;
   };
-  
-  this.searchStatus = function(data) {
-    if (data.isEmpty()) { return 'none'; };
-    if (mustShowAllocationCloud(data)) { return 'support'; }
-    return 'ok';
+  var searchTextEntered = function(text, event) {
+    if (shouldTriggerSearch(event)) {
+      if (event.keyCode == 13) { fullSearch(text); } else { liveSearchTimer.reset(); }
+    }
   };
+  this.searchTextEntered = searchTextEntered;
   
-  this.init();
+  var searchButtonClicked = function(text) {
+    fullSearch(text);
+  };
+  this.searchButtonClicked = searchButtonClicked;
+  
+  var allocationChosen = function(text) {
+    fullSearch(text);
+  };
+  this.allocationChosen = allocationChosen;
+  
+  var addinationClickEventHandler = function(event) {
+    fullSearch(view.text(), event.data.offset);
+  };
+  this.addinationClickEventHandler = addinationClickEventHandler;
 };

@@ -27,7 +27,7 @@ var PickyView = function(picky_controller) {
   // Resets the whole view to the inital state.
   //
   var reset = function(to_text) {
-    if (to_text) { searchField.val(''); }
+    searchField.val(to_text);
     hideClearButton();
     setSearchStatus('empty');
     resultCounter.empty();
@@ -42,7 +42,7 @@ var PickyView = function(picky_controller) {
         reset();
         controller.searchTextCleared();
       } else {
-        controller.searchTextEntered(event);
+        controller.searchTextEntered(text(), event);
         showClearButton();
       }
     });
@@ -56,6 +56,7 @@ var PickyView = function(picky_controller) {
     clearButton.click(function() {
       reset('');
       controller.clearButtonClicked();
+      focus();
     });
     
     showMoreAllocations.click(function() {
@@ -68,14 +69,16 @@ var PickyView = function(picky_controller) {
   this.allocationsCloudClickEventHandler = function(event) {
     // TODO Callback?
     
-    searchField.val(event.data.query);
+    var text = event.data.query;
+    
+    searchField.val(text);
     hideAllocationCloud();
     
-    controller.fullSearch(event.data.query);
+    controller.allocationChosen(text);
   };
   
-  this.insert = function(text) {
-    searchField.val(text);
+  var select = function() {
+    searchField.select();
   };
   var text = function() {
     return searchField.val();
@@ -89,10 +92,6 @@ var PickyView = function(picky_controller) {
     searchField.focus();
   };
   this.focus = focus;
-  
-  this.select = function() {
-    searchField.select();
-  };
   
   this.showEmptyResults = function() {
     reset();
@@ -176,11 +175,21 @@ var PickyView = function(picky_controller) {
   };
   this.setSearchStatus = setSearchStatus;
   
+  // TODO Fix or remove.
+  //
   var highlight = function(text, klass) {
     var selector = 'span' + (klass ? '.' + klass : '');
     results.find(selector).highlight(text, { element:'em' });
   };
   this.highlight = highlight;
+  
+  // Insert a search text into the search field.
+  // Field is always selected when doing that.
+  //
+  this.insert = function(text) {
+    searchField.val(text);
+    select();
+  };
   
   init();
 };
