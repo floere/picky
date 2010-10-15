@@ -4,7 +4,7 @@ module Index
 
   # This is the ACTUAL index.
   #
-  # Handles full index, partial index, weights index, and similarity index.
+  # Handles exact index, partial index, weights index, and similarity index.
   #
   class Bundle
     
@@ -269,8 +269,8 @@ module Index
       generator = Cacher::PartialGenerator.new self.index
       self.index = generator.generate self.partial_strategy
     end
-    def generate_partial_from full_index
-      self.index = full_index
+    def generate_partial_from exact_index
+      self.index = exact_index
       self.generate_partial
       self
     end

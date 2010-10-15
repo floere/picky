@@ -6,7 +6,7 @@ describe Index::Bundle do
     @category         = stub :category, :name => :some_category
     @type             = stub :type, :name => :some_type
     @partial_strategy = Cacher::Partial::Subtoken.new :down_to => 1
-    @full             = Index::Bundle.new :some_name, @category, @type, @partial_strategy, nil, nil
+    @exact            = Index::Bundle.new :some_name, @category, @type, @partial_strategy, nil, nil
   end
 
   def generate_random_keys amount
@@ -28,11 +28,11 @@ describe Index::Bundle do
       before(:each) do
         random_keys  = generate_random_keys 500
         random_ids   = generate_random_ids  500
-        @full.index = Hash[random_keys.zip(random_ids)]
+        @exact.index = Hash[random_keys.zip(random_ids)]
       end
       it 'should be fast' do
         performance_of do
-          @full.generate_partial
+          @exact.generate_partial
         end.should < 0.2
       end
     end

@@ -10,16 +10,16 @@ describe Index::Category do
     @similarity = stub :similarity
     @category   = Index::Category.new @field, @type, :partial => @partial, :weights => @weights, :similarity => @similarity
 
-    @full    = stub :full, :dump => nil
-    @category.stub! :full => @full
+    @exact   = stub :exact, :dump => nil
+    @category.stub! :exact => @exact
 
     @partial = stub :partial, :dump => nil
     @category.stub! :partial => @partial
   end
 
   describe 'dump_caches' do
-    it 'should dump the full index' do
-      @full.should_receive(:dump).once.with
+    it 'should dump the exact index' do
+      @exact.should_receive(:dump).once.with
 
       @category.dump_caches
     end
@@ -38,21 +38,21 @@ describe Index::Category do
     end
   end
 
-  describe 'generate_derived_full' do
-    it 'should delegate to full' do
-      @full.should_receive(:generate_derived).once.with
+  describe 'generate_derived_exact' do
+    it 'should delegate to exact' do
+      @exact.should_receive(:generate_derived).once.with
 
-      @category.generate_derived_full
+      @category.generate_derived_exact
     end
   end
 
-  describe 'generate_indexes_from_full_index' do
+  describe 'generate_indexes_from_exact_index' do
     it 'should call three method in order' do
-      @category.should_receive(:generate_derived_full).once.with().ordered
+      @category.should_receive(:generate_derived_exact).once.with().ordered
       @category.should_receive(:generate_partial).once.with().ordered
       @category.should_receive(:generate_derived_partial).once.with().ordered
 
-      @category.generate_indexes_from_full_index
+      @category.generate_indexes_from_exact_index
     end
   end
 
@@ -70,12 +70,12 @@ describe Index::Category do
         @category.weight @token
       end
     end
-    context 'full bundle' do
+    context 'exact bundle' do
       before(:each) do
-        @category.stub! :bundle_for => @full
+        @category.stub! :bundle_for => @exact
       end
       it 'should receive weight with the token text' do
-        @full.should_receive(:weight).once.with :some_text
+        @exact.should_receive(:weight).once.with :some_text
 
         @category.weight @token
       end
@@ -96,12 +96,12 @@ describe Index::Category do
         @category.ids @token
       end
     end
-    context 'full bundle' do
+    context 'exact bundle' do
       before(:each) do
-        @category.stub! :bundle_for => @full
+        @category.stub! :bundle_for => @exact
       end
       it 'should receive ids with the token text' do
-        @full.should_receive(:ids).once.with :some_text
+        @exact.should_receive(:ids).once.with :some_text
 
         @category.ids @token
       end
@@ -137,7 +137,7 @@ describe Index::Category do
     it 'should return the right bundle' do
       token = stub :token, :partial? => false
 
-      @category.bundle_for(token).should == @full
+      @category.bundle_for(token).should == @exact
     end
     it 'should return the right bundle' do
       token = stub :token, :partial? => true
@@ -156,23 +156,23 @@ describe Index::Category do
 
   describe 'generate_partial' do
     it 'should return whatever the partial generation returns' do
-      @full.stub! :index
+      @exact.stub! :index
       @partial.stub! :generate_partial_from => :generation_returns
 
       @category.generate_partial
     end
-    it 'should use the full index to generate the partial index' do
-      full_index = stub :full_index
-      @full.stub! :index => full_index
-      @partial.should_receive(:generate_partial_from).once.with(full_index)
+    it 'should use the exact index to generate the partial index' do
+      exact_index = stub :exact_index
+      @exact.stub! :index => exact_index
+      @partial.should_receive(:generate_partial_from).once.with(exact_index)
 
       @category.generate_partial
     end
   end
 
   describe 'generate_caches_from_db' do
-    it 'should delegate to full' do
-      @full.should_receive(:generate_caches_from_db).once.with
+    it 'should delegate to exact' do
+      @exact.should_receive(:generate_caches_from_db).once.with
 
       @category.generate_caches_from_db
     end
@@ -193,7 +193,7 @@ describe Index::Category do
   
   describe 'load_from_cache' do
     it 'should call two methods' do
-      @full.should_receive(:load).once
+      @exact.should_receive(:load).once
       @partial.should_receive(:load).once
       
       @category.load_from_cache

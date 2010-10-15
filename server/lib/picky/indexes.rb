@@ -71,13 +71,13 @@ module Indexes
   #
   def self.backup_caches
     each_category do |category|
-      category.full.backup
+      category.exact.backup
       category.partial.backup
     end
   end
   def self.restore_caches
     each_category do |category|
-      category.full.restore
+      category.exact.restore
       category.partial.restore
     end
   end
@@ -122,7 +122,7 @@ module Indexes
   def self.check_caches
     each do |type|
       type.categories.each do |category|
-        category.full.raise_unless_cache_exists
+        category.exact.raise_unless_cache_exists
         category.partial.raise_unless_cache_exists
       end
     end
@@ -133,7 +133,7 @@ module Indexes
   def self.clear_caches
     each do |type|
       type.categories.each do |category|
-        category.full.delete_all
+        category.exact.delete_all
         category.partial.delete_all
       end
     end
@@ -144,8 +144,8 @@ module Indexes
   # TODO Should be on type?
   #
   def self.create_directory_structure
-    each_bundle do |full, partial|
-      full.create_directory
+    each_bundle do |exact, partial|
+      exact.create_directory
       partial.create_directory
     end
   end
@@ -167,7 +167,7 @@ module Indexes
   end
   def self.each_bundle
     each_category do |category|
-      yield category.full, category.partial
+      yield category.exact, category.partial
     end
   end
   

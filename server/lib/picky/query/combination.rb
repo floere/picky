@@ -58,7 +58,7 @@ module Query
       [identifier, *@token.to_result]
     end
     
-    # full/title:Flarbl:flarbl
+    # exact/title:Flarbl:flarbl
     #
     def to_s
       "#{bundle.name}/#{to_result.join(':')}"

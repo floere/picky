@@ -1,13 +1,13 @@
 module Index
   
-  # An index category holds a full and a partial index for a given field.
+  # An index category holds a exact and a partial index for a given field.
   #
-  # For example an index category for names holds a full and
+  # For example an index category for names holds a exact and
   # a partial index bundle for names.
   #
   class Category
     
-    attr_reader :name, :type, :full, :partial
+    attr_reader :name, :type, :exact, :partial
     
     #
     #
@@ -19,17 +19,17 @@ module Index
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @full    = options[:full_bundle]    || Bundle.new(:full,    self, type, Cacher::Partial::None.new, weights, similarity)
+      @exact   = options[:exact_bundle]   || Bundle.new(:exact,   self, type, Cacher::Partial::None.new, weights, similarity)
       @partial = options[:partial_bundle] || Bundle.new(:partial, self, type, partial, weights, Cacher::Similarity::None.new)
       
-      @full    = full_lambda.call(@full, @partial)    if full_lambda = options[:full_lambda]
-      @partial = partial_lambda.call(@full, @partial) if partial_lambda = options[:partial_lambda]
+      @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
+      @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
     end
     
     # Loads the index from cache.
     #
     def load_from_cache
-      full.load
+      exact.load
       partial.load
     end
     
@@ -50,16 +50,16 @@ module Index
       dump_caches
     end
     def generate_caches_from_db
-      full.generate_caches_from_db
+      exact.generate_caches_from_db
     end
     def generate_partial
-      partial.generate_partial_from full.index
+      partial.generate_partial_from exact.index
     end
     def generate_caches_from_memory
       partial.generate_caches_from_memory
     end
     def dump_caches
-      full.dump
+      exact.dump
       partial.dump
     end
     # TODO move to Kernel?
@@ -75,13 +75,13 @@ module Index
     
     # Used for testing.
     #
-    def generate_indexes_from_full_index
-      generate_derived_full
+    def generate_indexes_from_exact_index
+      generate_derived_exact
       generate_partial
       generate_derived_partial
     end
-    def generate_derived_full
-      full.generate_derived
+    def generate_derived_exact
+      exact.generate_derived
     end
     def generate_derived_partial
       partial.generate_derived
@@ -102,7 +102,7 @@ module Index
     # Returns the right index bundle for this token.
     #
     def bundle_for token
-      token.partial? ? partial : full
+      token.partial? ? partial : exact
     end
 
     #

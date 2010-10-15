@@ -2,10 +2,8 @@
 #
 module Index
 
-  # This index combines a full and partial index.
-  # It serves to order the results such that exact (full) hits are found first.
-  #
-  # TODO Rename full -> exact. exact/partial?
+  # This index combines an exact and partial index.
+  # It serves to order the results such that exact  hits are found first.
   #
   # TODO Need to use the right subtokens. Bake in?
   #
@@ -16,7 +14,7 @@ module Index
     delegate :similar,
              :identifier,
              :name,
-             :to => :@full
+             :to => :@exact
     delegate :type,
              :category,
              :weight,
@@ -27,19 +25,19 @@ module Index
              :load,
              :to => :@partial
     
-    # TODO initialize type_or_category # => installs itself on all full and partial
+    # TODO initialize type_or_category # => installs itself on all exact and partial
     #
-    def initialize full, partial
-      @full    = full
+    def initialize exact, partial
+      @exact   = exact
       @partial = partial
     end
     
     def ids text
-      @full.ids(text) + @partial.ids(text)
+      @exact.ids(text) + @partial.ids(text)
     end
     
     def weight text
-      [@full.weight(text) || 0, @partial.weight(text) || 0].max
+      [@exact.weight(text) || 0, @partial.weight(text) || 0].max
     end
     
   end

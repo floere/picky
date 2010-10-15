@@ -29,7 +29,7 @@ module Cacher
         codes.first.to_sym unless codes.empty?
       end
 
-      # Generates an index for the given index (in full index style).
+      # Generates an index for the given index (in exact index style).
       #
       # In the following form:
       # [:meier, :mueller, :peter, :pater] => { :MR => [:meier], :MLR => [:mueller], :PTR => [:peter, :pater] }
