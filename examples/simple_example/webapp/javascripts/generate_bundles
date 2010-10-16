@@ -20,6 +20,6 @@ compiler_command = "java -jar compiler.jar --compilation_level=SIMPLE_OPTIMIZATI
 p compiler_command
 system compiler_command
 
-gzip_command = "tar -czf picky.source.js.tar.gz #{picky_files.join(' ')}"
+gzip_command = "tar -cf picky.source.js.tar #{picky_files.join(' ')}"
 p gzip_command
 system gzip_command
