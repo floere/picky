@@ -17,7 +17,9 @@ picky_files = %w{
 
 js = picky_files.map { |filename| "--js=#{filename}" }.join(' ')
 compiler_command = "java -jar compiler.jar --compilation_level=SIMPLE_OPTIMIZATIONS #{js} --js_output_file=picky.min.js"
+p compiler_command
 system compiler_command
 
 gzip_command = "tar -czf picky.source.js.tar.gz #{picky_files.join(' ')}"
+p gzip_command
 system gzip_command
