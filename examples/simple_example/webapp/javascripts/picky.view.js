@@ -149,10 +149,11 @@ var PickyView = function(picky_controller, config) {
   // Insert a search text into the search field.
   // Field is always selected when doing that.
   //
-  this.insert = function(text) {
+  var insert = function(text) {
     searchField.val(text);
     select();
   };
+  this.insert = insert;
   
   // Callbacks.
   // 

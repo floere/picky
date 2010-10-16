@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+picky_files = %w{
+  picky.extensions.js
+  picky.translations.js
+  picky.data.js
+  picky.view.js
+  picky.backend.js
+  picky.controller.js
+  picky.client.js
+  picky.addination.js
+  picky.results_renderer.js
+  picky.allocation_renderer.js
+  picky.allocations_cloud.js
+}
+
+js = picky_files.map { |filename| "--js=#{filename}" }.join(' ')
+compiler_command = "java -jar compiler.jar --compilation_level=SIMPLE_OPTIMIZATIONS #{js} --js_output_file=picky.min.js"
+system compiler_command
+
+gzip_command = "tar -cz #{picky_files.join(' ')} > picky.source.js.tgz"
+system gzip_command

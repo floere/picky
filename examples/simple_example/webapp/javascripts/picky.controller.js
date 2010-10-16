@@ -1,14 +1,18 @@
-var PickyController = function(searchEngine, config) {
+var PickyController = function(config) {
   
+  var view = new PickyView(this, config);
+  
+  var backends         = config.backends;
   var beforeCallback   = config.before || function(params, query, offset) {  };
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
-  // TODO This is actually a client.
-  // Replace this with the search engine.
+  // If the given backend cannot be found, ignore the search request.
   //
-  var searchEngine      = searchEngine;
-  var view              = new PickyView(this, config);
+  var search = function(type, query, callback, offset, specificParams) {
+    var currentBackend = backends[type];
+    if (currentBackend) { currentBackend.search(query, callback, offset, specificParams); };
+  };
   
   var fullSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
@@ -17,14 +21,14 @@ var PickyController = function(searchEngine, config) {
     
     afterCallback(data, query);
   };
-  var fullSearch = function(query, offset, params) {
-    var params = params || {};
-    var offset = offset || 0;
+  var fullSearch = function(query, possibleOffset, possibleParams) {
+    var params = possibleParams || {};
+    var offset = possibleOffset || 0;
     liveSearchTimer.stop();
     
     params = beforeCallback(params, query, offset) || params;
     
-    searchEngine.search('full', query, fullSearchCallback, offset, params);
+    search('full', query, fullSearchCallback, offset, params);
   };
   var liveSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
@@ -33,12 +37,12 @@ var PickyController = function(searchEngine, config) {
     
     afterCallback(data, query);
   };
-  var liveSearch = function(query, params) {
-    var params = params || {};
+  var liveSearch = function(query, possibleParams) {
+    var params = possibleParams || {};
     
     params = beforeCallback(params) || params;
     
-    searchEngine.search('live', query, liveSearchCallback, 0);
+    search('live', query, liveSearchCallback, 0);
   };
   
   // The timer is initially instantly stopped.

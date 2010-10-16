@@ -2,74 +2,85 @@
 //
 var PickyBackend = function(url) {
   
-  return {
-    url: url,
-    get: function(timestamp, query, clientCallback, offset, specificParams) {
-      var params = specificParams || {};
-      params = $.extend({ query: query, offset: offset }, specificParams);
-      // wrap the data before returning it
-      //
-      var wrappedCallback = function(data_hash, query) {
-        var data = new PickyData(data_hash);
-        if (clientCallback) { data = clientCallback(data, query); }
-        return data;
-      };
-      $.ajax({ type: 'GET', url: this.url, data: params, success: this.callback(query, wrappedCallback, timestamp), dataType: 'json'});
-    },
-    // Override search in subclasses.
+  // Get returns the data without handling timestamps and whatnot.
+  //
+  var get = function(query, controllerCallback, offset, specificParams) {
+    var params = specificParams || {};
+    params = $.extend({ query: query, offset: offset }, specificParams);
+    
+    // Wrap any data returned in a PickyData object.
     //
-    search: function(query, clientCallback, offset, specificParams) {
-      get(query, clientCallback, offset, specificParams);
-    },
-    extend: function(properties) {
-      return $.extend({}, this, properties);
-    },
-    callback: function(query, clientCallback, date) {
-      return function(data) {
-        clientCallback(data);
-      };
-    }
+    var callback = function(data_hash) {
+      if (controllerCallback) { controllerCallback(new PickyData(data_hash)); }
+    };
+    
+    $.ajax({ type: 'GET', url: url, data: params, success: callback, dataType: 'json'});
   };
+  
+  var search = function(query, controllerCallback, offset, specificParams, specificTimestamps) {
+    // Wrap the given callback.
+    //
+    var callback = function(data) {
+      if (controllerCallback) { controllerCallback(specificTimestamps, data); }
+    };
+    
+    get(query, callback, offset, specificParams);
+  };
+  this.search = search;
 };
 
 // Live search backend.
 //
-var LiveBackend = function(url) {
-  return new PickyBackend(url).extend({
-    latestRequestTimestamp: new Date(),
-    search: function(query, engineCallback, offset, specificParams) {
-      latestRequestTimestamp = new Date();
-      this.get(latestRequestTimestamp, query, engineCallback, offset, specificParams);
-    },
-    callback: function(query, engineCallback, date) {
-      return function(data) {
-        if (date == latestRequestTimestamp) { engineCallback(data, query); }
+var LiveBackend = function(url, callback) {
+  var backend = new PickyBackend(url);
+  
+  var search = function(query, controllerCallback, offset, specificParams, fullTimestamps) {
+    var specificTimestamps = fullTimestamps || {};
+    
+    latestRequestTimestamp = new Date();
+    specificTimestamps.live = latestRequestTimestamp;
+    
+    // Wrap the given callback.
+    //
+    // Note: Binds the latest request timestamp for later comparison.
+    //
+    var callback = function(timestamps, data) {
+      if (!timestamps.live || timestamps.live == latestRequestTimestamp) {
+        if (controllerCallback) { controllerCallback(data); }
       };
-    }
-  });
+    };
+    
+    // Pass in the timestamp for later comparison.
+    //
+    backend.search(query, callback, offset, specificParams, specificTimestamps);
+  };
+  this.search = search;
 };
 
 // Full search backend.
 //
 var FullBackend = function(url) {
-  return new LiveBackend(url).extend({
-    latestFullRequestTimestamp: new Date(),
-    search: function(query, engineCallback, offset, specificParams) {
-      var requestTimestamp = new Date();
-      latestFullRequestTimestamp = requestTimestamp;
-      latestRequestTimestamp = requestTimestamp;
-      this.get(requestTimestamp, query, engineCallback, offset, specificParams);
-    },
-    callback: function(query, engineCallback, date) {
-      return function(data) {
-        if (date == latestFullRequestTimestamp) { engineCallback(data, query); }
+  var backend = new PickyBackend(url);
+  
+  var search = function(query, controllerCallback, offset, specificParams, givenTimestamps) {
+    var specificTimestamps = givenTimestamps || {};
+    
+    latestRequestTimestamp = new Date();
+    specificTimestamps.full = latestRequestTimestamp;
+    
+    // Wrap the given callback.
+    //
+    // Note: Binds the latest request timestamp for later comparison.
+    //
+    var callback = function(timestamps, data) {
+      if (!timestamps.full || timestamps.full == latestRequestTimestamp) {
+        if (controllerCallback) { controllerCallback(data); }
       };
-    }
-  });
+    };
+    
+    // Pass in the timestamp for later comparison.
+    //
+    backend.search(query, callback, offset, specificParams, specificTimestamps);
+  };
+  this.search = search;
 };
-
-// Some specialized backend.
-//
-// var SpecializedBackend = new FullBackend().extend({
-//   url: '/search/specialized'
-// });

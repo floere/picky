@@ -1,0 +1,92 @@
+!!!
+%html{ :lang => 'en' }
+  %head
+    %link{:href => "stylesheets/stylesheet.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    = js 'jquery-1.3.2'
+    = js 'jquery.scrollTo-1.4.2'
+    = js 'jquery.timer'
+    
+    = js 'picky.extensions'
+    = js 'picky.translations'
+    = js 'picky.data'
+    = js 'picky.view'
+    = js 'picky.backend'
+    = js 'picky.controller'
+    = js 'picky.client'
+    = js 'picky.addination'
+    = js 'picky.results_renderer'
+    = js 'picky.allocation_renderer'
+    = js 'picky.allocations_cloud'
+    
+    / = js 'picky.min'
+  %body
+    %img{:src => "images/picky.png"}/
+    %p
+      %a{:href => "http://floere.github.com/picky"} Back to the Picky documentation.
+    %p
+      Try a few examples
+      = succeed ":" do
+        %span.explanation (on a simple database with 540 books)
+    %p
+      A simple word,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('alan');"} alan
+      %span.explanation
+        (Finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.)
+        %span
+    %p
+      With qualifier,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('title:women');"} title:women
+      %span.explanation
+        (Finds "women*" in title)
+        %span
+    %p
+      With similarity,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('woman~');"} woman~
+      %span.explanation (Finds "women", note: Only title with similarity)
+    %p
+      With choice,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
+      %span.explanation (Finds "sp*" in many categories)
+    %p
+      More complex,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~ 2002');"} title:lyterature~ 2002
+      %span.explanation (Finds similar titles from 2002)
+    = Picky::Helper.cached_interface
+    :javascript
+      pickyClient = new PickyClient({
+        live: '/search/live',
+        full: '/search/full',
+        showResultsLimit: 10, // Optional. Default is 10.
+        
+        // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
+        // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+        // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+        
+        // This is used to generate the correct query strings, localized. E.g. "subject:war".
+        // Optional. If you don't give these, the field identifier given in the Picky server is used.
+        //
+        qualifiers: {
+          en:{
+            subjects:  'subject'
+          }
+        },
+        // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
+        // Optional. Default are the field identifiers from the Picky server.
+        //
+        explanations: {
+          en:{
+            title:     'titled',
+            author:    'written by',
+            isbn:      'ISBN-13',
+            year:      'published in',
+            publisher: 'published by',
+            subjects:  'topics'
+          }
+        }
+      });
+      pickyClient.insert('italy');
