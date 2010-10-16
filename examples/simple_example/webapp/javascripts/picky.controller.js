@@ -47,8 +47,6 @@ var PickyController = function(searchEngine) {
   });
   liveSearchTimer.stop();
   
-  this.highlight = view.highlight;
-  
   this.insert = function(query, full) {
     view.insert(query);
     
@@ -95,8 +93,9 @@ var PickyController = function(searchEngine) {
   };
   this.allocationChosen = allocationChosen;
   
-  var addinationClickEventHandler = function(event) {
-    fullSearch(view.text(), event.data.offset);
+  // Move to a view object.
+  var addinationClicked = function(text, event) {
+    fullSearch(text, event.data.offset);
   };
-  this.addinationClickEventHandler = addinationClickEventHandler;
+  this.addinationClicked = addinationClicked;
 };

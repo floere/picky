@@ -2,7 +2,6 @@
 var PickyView = function(picky_controller, config) {
   
   var controller       = picky_controller;
-  var allocationsCloud = new PickyAllocationsCloud(this);
   
   var showResultsLimit = config.showResultsLimit || 10;
   
@@ -12,12 +11,16 @@ var PickyView = function(picky_controller, config) {
   var resultCounter = $('#picky div.status');
   var dashboard     = $('#picky .dashboard');
   
-  var results       = $('#picky .results');
+  var results       = $('#picky .results'); // Push into results.
   var noResults     = $('#picky .no_results');
   
-  var clearResults = function() {
-    results.empty();
-  };
+  var addination    = new PickyAddination(this, results); // Push into results.
+  
+  var allocationsCloud = new PickyAllocationsCloud(this);
+  var resultsRenderer  = new PickyResultsRenderer(addination); // TODO Rename results.
+  
+  // Toggle the clear button visibility.
+  //
   var showClearButton = function() {
     clearButton.fadeTo(166, 1.0);
   };
@@ -25,7 +28,23 @@ var PickyView = function(picky_controller, config) {
     clearButton.fadeTo(166, 0.0);
   };
   
+  // TODO Move to results
+  var clearResults = function() {
+    results.empty();
+  };
+  var hideEmptyResults = function() {
+    noResults.hide();
+  };
+  
+  var focus = function() {
+    searchField.focus();
+  };
+  var select = function() {
+    searchField.select();
+  };
+  
   // Cleans the interface of any results or choices presented.
+  //
   var clean = function() {
     allocationsCloud.hide();
     clearResults();
@@ -66,17 +85,6 @@ var PickyView = function(picky_controller, config) {
     });
   };
   
-  this.allocationChosen = function(event) {
-    var text = event.data.query;
-    
-    searchField.val(text);
-    
-    controller.allocationChosen(text);
-  }
-  
-  var select = function() {
-    searchField.select();
-  };
   var text = function() {
     return searchField.val();
   };
@@ -85,38 +93,29 @@ var PickyView = function(picky_controller, config) {
     return text() == '';
   };
   
-  var focus = function() {
-    searchField.focus();
-  };
-  
-  var showTooManyResults = function(data) {
-    clean();
-    showClearButton();
-    allocationsCloud.show(data);
-    updateResultCounter(data.total);
-  }
   var showEmptyResults = function() {
     clean();
     updateResultCounter(0);
     noResults.show();
     showClearButton();
   };
-  var hideEmptyResults = function() {
-    noResults.hide();
+  var showTooManyResults = function(data) {
+    clean();
+    showClearButton();
+    allocationsCloud.show(data);
+    updateResultCounter(data.total);
   };
   var showResults = function(data) {
     clean();
     updateResultCounter(data.total);
-    var renderer = new PickyResultsRenderer(controller, data);
-    renderer.render();
+    resultsRenderer.render(data);
     results.show();
     showClearButton();
   };
   
   var appendResults = function(data) {
-    results.find('.addination').remove();
-    var renderer = new PickyResultsRenderer(controller, data);
-    renderer.render();
+    addination.remove(); // TODO Where should this be?
+    resultsRenderer.render(data);
     $.scrollTo('#picky .results div.info:last', { duration: 500, offset: -12 });
   };
   
@@ -132,23 +131,6 @@ var PickyView = function(picky_controller, config) {
     }
   };
   
-  // TODO Fix or remove.
-  //
-  var highlight = function(text, klass) {
-    var selector = 'span' + (klass ? '.' + klass : '');
-    results.find(selector).highlight(text, { element:'em' });
-  };
-  this.highlight = highlight;
-  
-  // Insert a search text into the search field.
-  // Field is always selected when doing that.
-  //
-  this.insert = function(text) {
-    searchField.val(text);
-    select();
-  };
-  
-  
   var tooManyResults = function(data) {
     return data.total > showResultsLimit && data.allocations.length > 1;
   };
@@ -162,8 +144,21 @@ var PickyView = function(picky_controller, config) {
   };
   var setSearchStatusFor = function(data) {
     setSearchStatus(resultStatusFor(data));
-  }
+  };
   
+  // Insert a search text into the search field.
+  // Field is always selected when doing that.
+  //
+  this.insert = function(text) {
+    searchField.val(text);
+    select();
+  };
+  
+  // Callbacks.
+  // 
+  
+  // Full results handling.
+  //
   var fullResultsCallback = function(data) {
     setSearchStatusFor(data);
     
@@ -183,12 +178,36 @@ var PickyView = function(picky_controller, config) {
   };
   this.fullResultsCallback = fullResultsCallback;
   
+  // Live results handling.
+  //
   var liveResultsCallback = function(data) {
     setSearchStatusFor(data);
+    
     updateResultCounter(data.total);
   };
   this.liveResultsCallback = liveResultsCallback;
   
+  // Callback for when an allocation has been chosen
+  // in the allocation cloud.
+  //
+  var allocationChosen = function(event) {
+    var text = event.data.query;
+    
+    searchField.val(text);
+    
+    controller.allocationChosen(text);
+  };
+  this.allocationChosen = allocationChosen;
+  
+  // Callback for when the addination has been clicked.
+  //
+  var addinationClicked = function(event) {
+    controller.addinationClicked(text(), event);
+  };
+  this.addinationClicked = addinationClicked;
+  
+  // 
+  //
   bindEventHandlers();
   focus();
 };

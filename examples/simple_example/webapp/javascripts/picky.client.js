@@ -33,11 +33,6 @@ var PickyClient = function(config) {
     if (currentBackend) { currentBackend.search(query, callback, offset, specificParams); };
   };
   
-  //
-  this.highlight = function(text, klass) {
-    this.controller.highlight(text, klass);
-  };
-  
   this.init();
   
 };
