@@ -9,8 +9,8 @@ var PickyBackend = function(url) {
       params = $.extend({ query: query, offset: offset }, specificParams);
       // wrap the data before returning it
       //
-      var wrappedCallback = function(data, query) {
-        var data = new PickyData(data);
+      var wrappedCallback = function(data_hash, query) {
+        var data = new PickyData(data_hash);
         if (clientCallback) { data = clientCallback(data, query); }
         return data;
       };

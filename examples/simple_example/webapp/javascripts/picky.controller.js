@@ -1,10 +1,12 @@
-var PickyController = function(searchEngine) {
+var PickyController = function(searchEngine, config) {
   
-  var config           = searchEngine.config;
   var beforeCallback   = config.before || function(params, query, offset) {  };
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
+  // TODO This is actually a client.
+  // Replace this with the search engine.
+  //
   var searchEngine      = searchEngine;
   var view              = new PickyView(this, config);
   
