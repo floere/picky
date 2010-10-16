@@ -1,14 +1,16 @@
 var PickyResultsRenderer = function(addination) {
   
-  // Adds "ellipses" to the last token.
+  // Adds asterisks to the last token.
   //
-  var no_ellipses = ['street_number', 'zipcode', 'title']; // TODO Works. Parametrize!
-  var ellipsifyLastToken = function(combination) {
+  var no_asterisks = ['street_number', 'zipcode']; // TODO Works. Parametrize!
+  var asteriskifyLastToken = function(combination) {
     var last_part = combination[combination.length-1];
     var parts = combination.slice(0, combination.length-1);
     if (parts == []) { parts = [parts]; }
-    if (!no_ellipses.include(last_part[0])) {
-      last_part[1] += '...';
+    if (!no_asterisks.include(last_part[0])) {
+      // Replace with * unless there is already one or a tilde.
+      //
+      if (last_part[1].match(/[^\*~]$/)) { last_part[1] += '*'; }
     }
     parts.push(last_part);
     return parts;
@@ -35,7 +37,7 @@ var PickyResultsRenderer = function(addination) {
   var explain = function(type, combination) {
     var explanation_delimiter = Localization.explanation_delimiters[PickyI18n.locale];
     
-    var parts = explainCategory(ellipsifyLastToken(combination));
+    var parts = explainCategory(asteriskifyLastToken(combination));
     var replaced = $.map(parts, function(part) {
       var category = part[0].replace(/([\w\sÄäÖöÜüéèà]+)/, "<strong>$1</strong>");
       var token    = part[1];
