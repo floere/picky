@@ -28,8 +28,8 @@ var PickyAllocationsCloud = function(view) {
   var renderListItem = function(allocationRenderer) {
      var item = allocationRenderer.listItem();
      item.bind('click', { query: allocationRenderer.query, type: allocationRenderer.type }, function(event) {
-       hide();
-       view.allocationChosen(event);
+       hide(); // TODO Move to callback.
+       view.allocationChosen(event); // TODO Move to callback.
      });
      return item;
   };
@@ -37,10 +37,14 @@ var PickyAllocationsCloud = function(view) {
   var createAllocationList = function(allocations) {
     var shown = [];
     allocations.each(function(i, allocation) {
-      var allocationRenderer = new AllocationRenderer(allocation);
-      allocationRenderer.generate();
+      // shown.push(allocationRenderer.render(allocation));
       
+      var allocationRenderer = new AllocationRenderer(allocation);
+      
+      // TODO Combine.
+      allocationRenderer.generate();
       var listItem = renderListItem(allocationRenderer);
+      
       shown.push(listItem);
     });
     return shown;

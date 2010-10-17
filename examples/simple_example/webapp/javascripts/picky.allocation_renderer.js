@@ -231,7 +231,7 @@ function AllocationRenderer(allocation) {
     } else if (who_parts.length > 0) {
       alloc_part = who_parts[who_parts.length-1];
     } // always results in a part
-    if (!no_ellipses.include(alloc_part[0])) { alloc_part[1] += '...'; }
+    if (!no_ellipses.include(alloc_part[0])) { alloc_part[1] += '...'; } // TODO *
 
     var rendered_who   = who(who_parts);
     var rendered_what  = what(what_parts);
@@ -246,16 +246,20 @@ function AllocationRenderer(allocation) {
   //
   // Note: &nbsp; to not disconnect the location delimiter (e.g. "in") from the location.
   //
+  // TODO Parametrize!
+  //
+  var who_what_join      = ', ';
+  var whowhat_where_join = ' ' + location_delimiter + '&nbsp;';
   function fuse(parts) {
     var who = parts[0], what = parts[1], where = parts[2];
     var who_what = '';
     if (who != '') {
-      if (what != '') { who_what = [who, what].join(', '); } else { who_what = who; }
+      if (what != '') { who_what = [who, what].join(who_what_join); } else { who_what = who; }
     } else {
       who_what = what;
     }
     if (where == '') { return who_what; };
-    return [who_what, where].join(' ' + location_delimiter + '&nbsp;');
+    return [who_what, where].join(whowhat_where_join);
   };
   this.fuse = fuse;
 
