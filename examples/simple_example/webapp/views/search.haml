@@ -26,7 +26,7 @@
     %p
       Try a few examples
       = succeed ":" do
-        %span.explanation (on a simple database with 540 books)
+        %span.explanation (on a simple database with 540 books - note that the server is on Heroku and needs a little time to ramp up)
     %p
       A simple word,
       = succeed "." do
@@ -39,18 +39,18 @@
       = succeed "." do
         %a{:href => "#", :onclick => "pickyClient.insert('title:women');"} title:women
       %span.explanation
-        (Finds "women*" in title)
+        (Finds "women*" just in titles.)
         %span
     %p
       With similarity,
       = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('woman~');"} woman~
-      %span.explanation (Finds "women", note: Only title with similarity)
+        %a{:href => "#", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
+      %span.explanation (Finds "pynchon", note: Only title in example with similarity. Uses a combination of double metaphone and Levenshtein.)
     %p
       With choice,
       = succeed "." do
         %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
-      %span.explanation (Finds "sp*" in many categories)
+      %span.explanation (Finds "sp*" in many categories. Choose the one you're looking for.)
     %p
       More complex,
       = succeed "." do
