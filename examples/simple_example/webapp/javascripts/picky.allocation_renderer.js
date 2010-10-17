@@ -1,30 +1,4 @@
-var Localization = {
-  // This is used to generate the correct query strings, localized.
-  //
-  // e.g with locale it:
-  // ['name'], ['Hanke'] => 'nome:Hanke'
-  //
-  // This needs to correspond to the parsing in the search engine.
-  //
-  qualifiers: {},
-  // This is used to explain the preceding word in the suggestion text.
-  //
-  // e.g. with locale it:
-  // ['name'], ['hanke'] => 'name (cognome)'
-  //
-  explanations: {},
-  // Located in the suggestion text between what and where.
-  //
-  // e.g. french:
-  // ['name', 'city'], ['Hanke', 'Zürich'] => 'Hanke (nom) à Zürich'
-  //
-  // TODO Remove.
-  //
-  location_delimiters: { de:'in', fr:'à', it:'a', en:'in', ch:'in' },
-  explanation_delimiters: { de:'und', fr:'et', it:'e', en:'and', ch:'und' }
-};
-
-function AllocationRenderer(allocation) {
+function AllocationRenderer(allocationChosenCallback) {
   var self = this;
 
   var locale                = PickyI18n.locale;
@@ -33,10 +7,6 @@ function AllocationRenderer(allocation) {
   var explanations          = Localization.explanations && Localization.explanations[locale] || {};
   var location_delimiter    = Localization.location_delimiters[locale];
   var explanation_delimiter = Localization.explanation_delimiters[locale];
-  
-  var combination = allocation.combination;
-  var type        = allocation.type;
-  var count       = allocation.count;
   
   // Those are of interest to the public.
   //
@@ -79,6 +49,7 @@ function AllocationRenderer(allocation) {
   
   // TODO Parametrize!
   var specialWhoCases = {
+    // Use the actual methods, not strings.
     "maiden_name" : { format:"(-%1$s)", method:'capitalize', ignoreSingle:true },
     "name"        : { format:"<strong>%1$s</strong>", method:'toUpperCase', ignoreSingle:true },
     "first_name"  : { format:"%1$s", method:"capitalize" }
@@ -204,6 +175,8 @@ function AllocationRenderer(allocation) {
   // [<who>, <what>, <where>]
   // Returns a reordered array.
   //
+  // TODO Rename "group".
+  //
   var who_qualifiers = ['first_name', 'name', 'maiden_name'];
   var where_qualifiers = ['zipcode', 'city'];
   function trisect(zipped) {
@@ -286,7 +259,7 @@ function AllocationRenderer(allocation) {
 
   // Generates the text and the link.
   //
-  this.generate = function() {
+  var generate = function() {
     this.query       = querify(combination);
     this.text        = suggestify(combination);
     
@@ -295,8 +268,24 @@ function AllocationRenderer(allocation) {
   
   //
   //
-  this.listItem = function() {
-    return $('<li><div class="text">' + this.text + '</div><div class="count">' + count + '</div></li>');
+  var listItem = function(text, count) {
+    return $('<li><div class="text">' + text + '</div><div class="count">' + count + '</div></li>');
   };
+  
+  var render = function(allocation) {
+    var combination = allocation.combination;
+    var type        = allocation.type;
+    var count       = allocation.count;
+    
+    var query       = querify(combination);
+    
+    var item = listItem(suggestify(combination), count);
+    
+    // TODO Move this outwards?
+    //
+    item.bind('click', { query: query }, allocationChosenCallback);
+    return item;
+  };
+  this.render = render;
 
 };

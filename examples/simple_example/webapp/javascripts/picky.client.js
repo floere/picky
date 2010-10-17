@@ -1,3 +1,10 @@
+var Localization = {
+  // TODO Remove.
+  location_delimiters: { de:'in', fr:'à', it:'a', en:'in', ch:'in' },
+  
+  explanation_delimiters: { de:'und', fr:'et', it:'e', en:'and', ch:'und' }
+};
+
 // The client handles parameters and
 // offers an insert method.
 //
@@ -6,8 +13,25 @@ var PickyClient = function(config) {
   // Params handling.
   //
   
-  Localization.qualifiers   = config.qualifiers;
-  Localization.explanations = config.explanations;
+  // This is used to generate the correct query strings, localized.
+  //
+  // e.g with locale it:
+  // ['title', 'ulysses', 'Ulysses'] => 'titolo:ulysses'
+  //
+  // This needs to correspond to the parsing in the search engine.
+  //
+  Localization.qualifiers   = config.qualifiers || {};
+  
+  // This is used to explain the preceding word in the suggestion text.
+  //
+  // e.g. with locale it:
+  // ['title', 'ulysses', 'Ulysses'] => 'Ulysses (titolo)'
+  //
+  Localization.explanations = config.explanations || {};
+  
+  // TODO Explain.
+  //
+  Localization.explanation_delimiters = { de:'und', fr:'et', it:'e', en:'and', ch:'und' };
   
   // Either you pass it a backends hash with full and live,
   // or you pass it full and live (urls), which will then
