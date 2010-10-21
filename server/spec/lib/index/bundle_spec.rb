@@ -14,7 +14,7 @@ describe Index::Bundle do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @index.identifier.should == 'some_name:some_type:some_category'
+      @index.identifier.should == 'some_name: some_type some_category'
     end
   end
 
@@ -141,7 +141,7 @@ describe Index::Bundle do
       it 'should raise' do
         lambda do
           @index.raise_unless_cache_exists
-        end.should raise_error("weights cache for some_name:some_type:some_category missing.")
+        end.should raise_error("weights cache for some_name: some_type some_category missing.")
       end
     end
     context 'similarity cache missing' do
@@ -153,7 +153,7 @@ describe Index::Bundle do
       it 'should raise' do
         lambda do
           @index.raise_unless_cache_exists
-        end.should raise_error("similarity cache for some_name:some_type:some_category missing.")
+        end.should raise_error("similarity cache for some_name: some_type some_category missing.")
       end
     end
     context 'index cache missing' do
@@ -165,7 +165,7 @@ describe Index::Bundle do
       it 'should raise' do
         lambda do
           @index.raise_unless_cache_exists
-        end.should raise_error("index cache for some_name:some_type:some_category missing.")
+        end.should raise_error("index cache for some_name: some_type some_category missing.")
       end
     end
     context 'all ok' do
