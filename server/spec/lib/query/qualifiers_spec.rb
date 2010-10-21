@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Query::Qualifiers do
   
   before(:each) do
-    Query::Qualifiers.instance << Query::Qualifier.new(:test1, [:t1, :tt1, :ttt1])
+    Query::Qualifiers.instance << Query::Qualifier.new(:test1, ['t1', 'tt1', 'ttt1'])
     Query::Qualifiers.instance << Query::Qualifier.new(:test2, [:t2, :tt2, :ttt2])
     Query::Qualifiers.instance << Query::Qualifier.new(:test3, [:t3, :tt3, :ttt3])
     Query::Qualifiers.instance.prepare

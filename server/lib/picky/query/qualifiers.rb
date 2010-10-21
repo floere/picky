@@ -13,7 +13,7 @@ module Query
     #
     def initialize normalized_qualifier, codes
       @normalized_qualifier = normalized_qualifier
-      @codes                = codes
+      @codes                = codes.map &:to_sym
     end
 
     # Will overwrite if the key is present in the hash.
