@@ -71,10 +71,11 @@ module Picky
         copy_all_files
         exclaim "\"#{name}\" is a great project name! Have fun :)\n"
         exclaim "Next steps:"
+        exclaim ""
         exclaim "cd #{name}"
-        exclaim "check Gemfile – do you need the mysql gem, for example?"
+        exclaim "cat Gemfile # <- Do you need the mysql gem, for example?"
         exclaim "bundle install"
-        exclaim "open app/application.rb and configure your Picky app"
+        exclaim "rake        # <- shows you where Picky needs input from you."
       end
       
       #

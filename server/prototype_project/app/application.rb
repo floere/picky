@@ -1,14 +1,10 @@
 # encoding: utf-8
 #
-# This is your application.
-#
-# Have fun with Picky!
-#
-class PickySearch < Application # The App Constant needs to be identical in config.ru.
+class PickySearch < Application
   
-  # This is an example with books that you can adapt.
+  # TODO Adapt the generated library example to what you need.
   #
-  # Note: Much more is possible, but let's start out super easy.
+  # Check the Wiki http://github.com/floere/picky/wiki for more options.
   #
   # Ask me if you have questions or specific requests.
   #

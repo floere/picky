@@ -2,6 +2,6 @@ require 'picky-tasks'
 
 desc "Finds what needs to be done for you."
 task :todo do
-  system "grep -e 'TOx*DO.*' -R *"
+  system "grep -e 'TOx*DO.*' -n --color=always -R *"
 end
 task :default => :todo
