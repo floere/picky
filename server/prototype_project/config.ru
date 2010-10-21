@@ -16,18 +16,19 @@ require 'picky'
 #
 Loader.load_application
 
-# Load the data. This loads data from cache files e.g. "some_index/*_index.dump" into Indexes[:some_index]
+# Load the indexes into the memory.
 #
 Indexes.load_from_cache
 
-# Use Harakiri middleware to kill unicorn child after X requests.
+# Use Harakiri middleware to kill worker child after X requests.
 #
-# See http://vimeo.com/12614970 for more info.
+# Works only with web servers that fork worker children and which
+# fork new children, like for example Unicorn.
 #
-    Rack::Harakiri.after = 50
+Rack::Harakiri.after = 50
 use Rack::Harakiri
 
-# Finalize the application and start accepting requests.
+# Start accepting requests.
 #
 # Note: Needs to be the same constant name as in app/application.rb.
 #
