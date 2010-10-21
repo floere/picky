@@ -21,7 +21,7 @@ module Indexers
     # TODO Rewrite such that it works in batches.
     #
     def index
-      puts "#{Time.now}: Indexing solr for #{type.name}:#{fields.join(', ')}"
+      timed_exclaim "Indexing solr for #{type.name}:#{fields.join(', ')}"
       statement = "SELECT indexed_id, #{fields.join(',')} FROM #{type.snapshot_table_name}"
       
       # TODO Rewrite.

@@ -16,7 +16,7 @@ module Indexes
 
     # Run in parallel.
     #
-    puts "Indexing using #{Cores.max_processors} processors."
+    timed_exclaim "Indexing using #{Cores.max_processors} processors."
     Cores.forked self.fields, :randomly => true do |field|
       # Reestablish DB connection.
       #

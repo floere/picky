@@ -90,6 +90,7 @@ module Loader
     
     # Load extensions.
     #
+    load_relative 'extensions/object'
     load_relative 'extensions/array'
     load_relative 'extensions/symbol'
     load_relative 'extensions/module'

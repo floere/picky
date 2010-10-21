@@ -74,7 +74,7 @@ module Cacher
         index.each_key do |token|
           i += 1
           if i == 5000
-            puts "#{Time.now}: Generating partial tokens for token #{token}. This appears every 5000 tokens."
+            timed_exclaim "Generating partial tokens for token #{token}. This appears every 5000 tokens."
             i = 0
           end
           generate_for token, index, result

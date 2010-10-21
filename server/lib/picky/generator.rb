@@ -154,6 +154,8 @@ module Picky
         exclaim "#{entry} \x1b[31mexists\x1b[m, skipping."
       end
       
+      # TODO Remove?
+      #
       def exclaim something
         puts something
       end

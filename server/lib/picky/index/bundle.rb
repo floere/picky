@@ -50,7 +50,7 @@ module Index
     # Identifier for this bundle.
     #
     def identifier
-      "#{name}:#{type.name}:#{category.name}"
+      "#{name}: #{type.name} #{category.name}"
     end
     
     # Point to category.
@@ -175,15 +175,15 @@ module Index
       self.send "#{index_method_name}=", Marshal.load(File.open(path, "r:binary")) if File.exists? path
     end
     def load_index
-      puts "#{Time.now}: Loading the index for #{identifier} from the cache."
+      timed_exclaim "Loading the index for #{identifier} from the cache."
       load_the :index, index_cache_path
     end
     def load_similarity
-      puts "#{Time.now}: Loading the similarity for #{identifier} from the cache."
+      timed_exclaim "Loading the similarity for #{identifier} from the cache."
       load_the :similarity, similarity_cache_path
     end
     def load_weights
-      puts "#{Time.now}: Loading the weights for #{identifier} from the cache."
+      timed_exclaim "Loading the weights for #{identifier} from the cache."
       load_the :weights, weights_cache_path
     end
     
@@ -195,13 +195,15 @@ module Index
     # * generates derived indexes
     # * dumps all the indexes into files
     #
+    # TODO Rename to Source!!!
+    #
     def generate_caches_from_db
       cache_from_db_generation_message
       load_from_index_file
       generate_caches_from_memory
     end
     def cache_from_db_generation_message
-      puts "#{Time.now}: Generating caches from db for #{identifier}."
+      timed_exclaim "CACHE FROM SOURCE #{identifier}."
     end
     # Generates derived indexes from the index and dumps.
     #
@@ -212,7 +214,7 @@ module Index
       generate_derived
     end
     def cache_from_memory_generation_message
-      puts "#{Time.now}: Generating derived caches from memory for #{identifier}."
+      timed_exclaim "CACHE FROM MEMORY #{identifier}."
     end
     
     # Generates the weights and similarity from the main index.

@@ -34,19 +34,19 @@ module Index
     end
     
     def identifier
-      "#{type.name}:#{name}"
+      "#{type.name} #{name}"
     end
     
     # Generates all caches for this category.
     #
     def generate_caches
-      timed_exclaim "Loading data from db for #{identifier}."
+      timed_exclaim "LOAD #{identifier}."
       generate_caches_from_db
-      timed_exclaim "Generating partial for #{identifier}."
+      timed_exclaim "PARTIAL #{identifier}."
       generate_partial
-      timed_exclaim "Generating caches from memory for #{identifier}."
+      timed_exclaim "CACHE #{identifier}."
       generate_caches_from_memory
-      timed_exclaim "Dumping all caches for #{identifier}."
+      timed_exclaim "DUMP #{identifier}."
       dump_caches
     end
     def generate_caches_from_db
@@ -61,16 +61,6 @@ module Index
     def dump_caches
       exact.dump
       partial.dump
-    end
-    # TODO move to Kernel?
-    #
-    def timed_exclaim text
-      exclaim "#{Time.now}: #{text}"
-    end
-    # TODO move to Kernel?
-    #
-    def exclaim text
-      puts text
     end
     
     # Used for testing.

@@ -35,7 +35,7 @@ module Indexers
       @field.source || raise_no_source
     end
     def raise_no_source
-      raise NoSourceSpecifiedException.new "No source given for #{@type.name}:#{@field.name}." # TODO field.identifier
+      raise NoSourceSpecifiedException.new "No source given for index:#{@type.name}, field:#{@field.name}." # TODO field.identifier
     end
     
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
@@ -61,7 +61,7 @@ module Indexers
     end
     
     def indexing_message
-      puts "#{Time.now}: Indexing #{@type.name}:#{@field.name}:#{@field.indexed_name}." # TODO field.identifier
+      timed_exclaim "INDEX #{@type.name}, #{@field.name}" #:#{@field.indexed_name}." # TODO field.identifier
     end
     
   end
