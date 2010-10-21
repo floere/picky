@@ -7,7 +7,7 @@ module Configuration
     attr_reader :name, :indexed_name, :virtual
     attr_accessor :type # convenience
     def initialize name, options = {}
-      @name            = name
+      @name            = name.to_sym
       
       # TODO Dup the options?
       # TODO add source as option
@@ -18,13 +18,16 @@ module Configuration
       @indexed_name   = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
       @virtual        = options.delete(:virtual)       || false
       
-      qualifiers = options[:qualifiers]
+      qualifiers = generate_qualifiers_from options
       Query::Qualifiers.add(name, qualifiers) if qualifiers
       
       # @remove          = options[:remove]        || false
       # @filter          = options[:filter]        || true
       
       @options = options
+    end
+    def generate_qualifiers_from options
+      options[:qualifiers] || options[:qualifier] && [options[:qualifier]] || [name]
     end
     def source
       @source || type.source
