@@ -2,7 +2,8 @@
 #
 class PickySearch < Application
   
-  # TODO Adapt the generated library example to what you need.
+  # TODO Adapt the generated example
+  #      (a library books finder) to what you need.
   #
   # Check the Wiki http://github.com/floere/picky/wiki for more options.
   #

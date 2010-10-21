@@ -2,7 +2,8 @@
 #
 # Note: ActiveRecord is used. Sorry.
 #
-# TODO Configure the database adapter or use a csv source.
+# TODO Configure the database adapter
+#      or ignore and use a csv source.
 #
 adapter: mysql
 host: localhost
