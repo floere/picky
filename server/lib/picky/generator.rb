@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 require 'fileutils'
 
 module Picky
@@ -67,7 +69,12 @@ module Picky
         exclaim "Setting up Picky project \"#{name}\"."
         create_target_directory
         copy_all_files
-        exclaim "\"#{name}\" is a great project name! Have fun :)"
+        exclaim "\"#{name}\" is a great project name! Have fun :)\n"
+        exclaim "Next steps:"
+        exclaim "cd #{name}"
+        exclaim "check Gemfile – do you need the mysql gem, for example?"
+        exclaim "bundle install"
+        exclaim "open app/application.rb and configure your Picky app"
       end
       
       #
