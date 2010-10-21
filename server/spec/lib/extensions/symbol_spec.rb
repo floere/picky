@@ -17,7 +17,7 @@ describe Symbol do
     it "should be fast" do
       timed do
         @token.each_subtoken do |subtoken| end
-      end.should < 0.0004
+      end.should < 0.0005
     end
   end
   

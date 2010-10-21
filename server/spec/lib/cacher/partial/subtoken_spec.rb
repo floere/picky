@@ -106,7 +106,7 @@ describe Cacher::Partial::Subtoken do
           end
         end
         it "should be fast" do
-          performance_of { @cacher.generate_from(@index) }.should < 0.005
+          performance_of { @cacher.generate_from(@index) }.should < 0.008
         end
       end
       describe "a bigger example with almost identical symbols" do
@@ -118,7 +118,7 @@ describe Cacher::Partial::Subtoken do
           end
         end
         it "should be fast" do
-          performance_of { @cacher.generate_from(@index) }.should < 0.003
+          performance_of { @cacher.generate_from(@index) }.should < 0.0045
         end
       end
     end
