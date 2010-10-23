@@ -70,12 +70,13 @@ module Picky
         create_target_directory
         copy_all_files
         exclaim "\"#{name}\" is a great project name! Have fun :)\n"
-        exclaim "Next steps:"
         exclaim ""
+        exclaim "Next steps:"
         exclaim "cd #{name}"
-        exclaim "cat Gemfile # <- Do you need the mysql gem, for example?"
+        exclaim "cat Gemfile    # Do you need the mysql gem, for example?"
         exclaim "bundle install"
-        exclaim "rake        # <- shows you where Picky needs input from you."
+        exclaim "rake           # shows you where Picky needs input from you."
+        exclaim ""
       end
       
       #
