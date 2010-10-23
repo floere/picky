@@ -172,7 +172,8 @@ module Index
       load_weights
     end
     def load_the index_method_name, path
-      self.send "#{index_method_name}=", Marshal.load(File.open(path, "r:binary")) if File.exists? path
+      self.send "#{index_method_name}=", Yajl::Parser.parse(File.open(path, 'r'))
+      # self.send "#{index_method_name}=", Marshal.load(File.open(path, "r:binary")) if File.exists? path
     end
     def load_index
       timed_exclaim "Loading the index for #{identifier} from the cache."

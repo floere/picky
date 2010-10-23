@@ -7,7 +7,10 @@ class Hash
   # TODO Still used? If yes, spec!
   #
   def dump_to path
-    File.open(path, 'w:binary') { |out_file| Marshal.dump self, out_file }
+    File.open(path, 'w:binary') do |out_file|
+      Yajl::Encoder.encode self, out_file
+      # Marshal.dump self, out_file
+    end
   end
   
   # Use yajl's encoding.
