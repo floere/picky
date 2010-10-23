@@ -152,7 +152,7 @@ module Index
     # Generates a cache path.
     #
     def cache_path text
-      File.join cache_directory, "#{name}_#{text}.dump"
+      File.join cache_directory, "#{name}_#{text}.json"
     end
     def index_cache_path
       cache_path "#{category.name}_index"
