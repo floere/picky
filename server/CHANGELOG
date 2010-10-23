@@ -1,3 +1,7 @@
+0.2.4 - hanke: Indexing output, output in general cleaned up.
+        hanke: Better info after generating a new project (thanks kschiess).
+        hanke: Indexer now uses json for the dump files (much faster, slightly larger, thanks niko).
+        hanke: JS files rewritten.
 0.2.3 - hanke: Indexer hits filesystem only seldomly.
         hanke: Internal rename from full index to exact index (visible in index filenames).
         hanke: Solr Indexing removed until someone needs it. Then we'll talk cash. Just kidding.
