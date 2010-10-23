@@ -58,10 +58,11 @@ module Query
       [identifier, *@token.to_result]
     end
     
-    # exact/title:Flarbl:flarbl
+    # Example:
+    #  "exact title:Peter*:peter"
     #
     def to_s
-      "#{bundle.name}/#{to_result.join(':')}"
+      "#{bundle.name} #{to_result.join(':')}"
     end
     
   end
