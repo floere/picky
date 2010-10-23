@@ -9,7 +9,6 @@ class Hash
   def dump_to path
     File.open(path, 'w:binary') do |out_file|
       Yajl::Encoder.encode self, out_file
-      # Marshal.dump self, out_file
     end
   end
   

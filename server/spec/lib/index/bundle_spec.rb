@@ -210,17 +210,17 @@ describe Index::Bundle do
 
   describe 'weights_cache_path' do
     it 'should return the correct file name' do
-      @index.weights_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_weights.dump'
+      @index.weights_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_weights.json'
     end
   end
   describe 'similarity_cache_path' do
     it 'should return the correct file name' do
-      @index.similarity_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_similarity.dump'
+      @index.similarity_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_similarity.json'
     end
   end
   describe 'index_cache_path' do
     it 'should return the correct file name' do
-      @index.index_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_index.dump'
+      @index.index_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_index.json'
     end
   end
 
