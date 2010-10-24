@@ -197,30 +197,62 @@ describe Index::Bundle do
       @index.load
     end
   end
-
+  describe "loading indexes" do
+    before(:each) do
+      @index.stub! :timed_exclaim
+    end
+    describe "load_index" do
+      it "uses the right file" do
+        Yajl::Parser.stub! :parse
+        
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_type/some_name_some_category_index.json', 'r'
+        
+        @index.load_index
+      end
+    end
+    describe "load_similarity" do
+      it "uses the right file" do
+        Marshal.stub! :load
+        
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_type/some_name_some_category_similarity.dump', 'r:binary'
+        
+        @index.load_similarity
+      end
+    end
+    describe "load_weights" do
+      it "uses the right file" do
+        Yajl::Parser.stub! :parse
+        
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_type/some_name_some_category_weights.json', 'r'
+        
+        @index.load_weights
+      end
+    end
+  end
+  
   describe 'dump' do
     it 'should trigger dumps' do
       @index.should_receive(:dump_index).once.with
       @index.should_receive(:dump_similarity).once.with
       @index.should_receive(:dump_weights).once.with
-
+      
       @index.dump
     end
   end
-
+  
   describe 'weights_cache_path' do
     it 'should return the correct file name' do
-      @index.weights_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_weights.json'
+      @index.weights_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_weights'
     end
   end
   describe 'similarity_cache_path' do
     it 'should return the correct file name' do
-      @index.similarity_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_similarity.json'
+      @index.similarity_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_similarity'
     end
   end
   describe 'index_cache_path' do
     it 'should return the correct file name' do
-      @index.index_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_index.json'
+      @index.index_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_index'
     end
   end
 

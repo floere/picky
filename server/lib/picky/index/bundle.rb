@@ -152,7 +152,7 @@ module Index
     # Generates a cache path.
     #
     def cache_path text
-      File.join cache_directory, "#{name}_#{text}.json"
+      File.join cache_directory, "#{name}_#{text}"
     end
     def index_cache_path
       cache_path "#{category.name}_index"
@@ -171,20 +171,23 @@ module Index
       load_similarity
       load_weights
     end
-    def load_the index_method_name, path
-      self.send "#{index_method_name}=", Yajl::Parser.parse(File.open(path, 'r'), :symbolize_keys => true)
+    def load_the_json path
+      Yajl::Parser.parse File.open("#{path}.json", 'r'), :symbolize_keys => true
+    end
+    def load_the_marshalled path
+      Marshal.load File.open("#{path}.dump", 'r:binary')
     end
     def load_index
       timed_exclaim "Loading the index for #{identifier} from the cache."
-      load_the :index, index_cache_path
+      self.index = load_the_json index_cache_path
     end
     def load_similarity
       timed_exclaim "Loading the similarity for #{identifier} from the cache."
-      load_the :similarity, similarity_cache_path
+      self.similarity = load_the_marshalled similarity_cache_path
     end
     def load_weights
       timed_exclaim "Loading the weights for #{identifier} from the cache."
-      load_the :weights, weights_cache_path
+      self.weights = load_the_json weights_cache_path
     end
     
     # Generation
@@ -299,13 +302,17 @@ module Index
       dump_weights
     end
     def dump_index
-      index.dump_to index_cache_path
+      index.dump_to_json index_cache_path
     end
+    # Note: We marshal the similarity, as the
+    #       Yajl json lib cannot load symbolized
+    #       values, just keys.
+    #
     def dump_similarity
-      similarity.dump_to similarity_cache_path
+      similarity.dump_to_marshalled similarity_cache_path
     end
     def dump_weights
-      weights.dump_to weights_cache_path
+      weights.dump_to_json weights_cache_path
     end
 
   end
