@@ -61,7 +61,7 @@ module Indexers
     end
     
     def indexing_message
-      timed_exclaim "INDEX #{@type.name}, #{@field.name}" #:#{@field.indexed_name}." # TODO field.identifier
+      timed_exclaim "INDEX #{@type.name} #{@field.name}" #:#{@field.indexed_name}." # TODO field.identifier
     end
     
   end

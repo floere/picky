@@ -16,7 +16,7 @@ module Indexes
 
     # Run in parallel.
     #
-    timed_exclaim "Indexing using #{Cores.max_processors} processors."
+    timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS."
     Cores.forked self.fields, :randomly => true do |field|
       # Reestablish DB connection.
       #
@@ -24,6 +24,7 @@ module Indexes
       field.index
       field.cache
     end
+    timed_exclaim "INDEXING FINISHED."
   end
   def self.index_solr
     configuration.index_solr

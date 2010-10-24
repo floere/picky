@@ -198,15 +198,9 @@ module Index
     # * generates derived indexes
     # * dumps all the indexes into files
     #
-    # TODO Rename to Source!!!
-    #
-    def generate_caches_from_db
-      cache_from_db_generation_message
+    def generate_caches_from_source
       load_from_index_file
       generate_caches_from_memory
-    end
-    def cache_from_db_generation_message
-      timed_exclaim "CACHE FROM SOURCE #{identifier}."
     end
     # Generates derived indexes from the index and dumps.
     #
@@ -230,8 +224,12 @@ module Index
     # Load the data from the db.
     #
     def load_from_index_file
+      load_from_index_generation_message
       clear
       retrieve
+    end
+    def load_from_index_generation_message
+      timed_exclaim "LOAD INDEX #{identifier}."
     end
     # Retrieves the data into the index.
     #
@@ -275,6 +273,7 @@ module Index
       self.index = generator.generate self.partial_strategy
     end
     def generate_partial_from exact_index
+      timed_exclaim "PARTIAL GENERATE #{identifier}."
       self.index = exact_index
       self.generate_partial
       self
@@ -302,6 +301,7 @@ module Index
       dump_weights
     end
     def dump_index
+      timed_exclaim "DUMP INDEX #{identifier}."
       index.dump_to_json index_cache_path
     end
     # Note: We marshal the similarity, as the
@@ -309,9 +309,11 @@ module Index
     #       values, just keys.
     #
     def dump_similarity
+      timed_exclaim "DUMP SIMILARITY #{identifier}."
       similarity.dump_to_marshalled similarity_cache_path
     end
     def dump_weights
+      timed_exclaim "DUMP WEIGHTS #{identifier}."
       weights.dump_to_json weights_cache_path
     end
 

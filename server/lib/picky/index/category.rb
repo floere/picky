@@ -40,17 +40,14 @@ module Index
     # Generates all caches for this category.
     #
     def generate_caches
-      timed_exclaim "LOAD #{identifier}."
-      generate_caches_from_db
-      timed_exclaim "PARTIAL #{identifier}."
+      generate_caches_from_source
       generate_partial
-      timed_exclaim "CACHE #{identifier}."
       generate_caches_from_memory
-      timed_exclaim "DUMP #{identifier}."
       dump_caches
+      timed_exclaim "CACHE FINISHED #{identifier}."
     end
-    def generate_caches_from_db
-      exact.generate_caches_from_db
+    def generate_caches_from_source
+      exact.generate_caches_from_source
     end
     def generate_partial
       partial.generate_partial_from exact.index

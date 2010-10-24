@@ -94,13 +94,13 @@ describe Index::Bundle do
     end
   end
 
-  describe 'generate_caches_from_db' do
+  describe 'generate_caches_from_source' do
     it 'should call two methods in order' do
-      @index.should_receive(:cache_from_db_generation_message).once.ordered
+      @index.should_receive(:load_from_source_generation_message).once.ordered
       @index.should_receive(:load_from_index_file).once.ordered
       @index.should_receive(:generate_caches_from_memory).once.ordered
 
-      @index.generate_caches_from_db
+      @index.generate_caches_from_source
     end
   end
 
