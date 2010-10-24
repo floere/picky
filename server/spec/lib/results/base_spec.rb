@@ -2,6 +2,30 @@ require 'spec_helper'
 
 describe Results do
   
+  describe "ids" do
+    before(:each) do
+      @allocations = stub :allocations
+      @results = Results::Base.new :unimportant, @allocations
+    end
+    it "delegates" do
+      @allocations.should_receive(:ids).once.with :anything
+      
+      @results.ids :anything
+    end
+  end
+  
+  describe "random_ids" do
+    before(:each) do
+      @allocations = stub :allocations
+      @results = Results::Base.new :unimportant, @allocations
+    end
+    it "delegates" do
+      @allocations.should_receive(:random_ids).once.with :anything
+      
+      @results.random_ids :anything
+    end
+  end
+  
   describe 'to_log' do
     before(:each) do
       time = stub :time, :to_s => '0-08-16 10:07:33'

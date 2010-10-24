@@ -122,7 +122,7 @@ describe Cacher::Partial::Subtoken do
         end
       end
     end
-    context 'starting_at -1' do
+    context 'starting_at set' do
       before(:each) do
         @cacher = Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => -2
       end
@@ -142,6 +142,34 @@ describe Cacher::Partial::Subtoken do
             :floria => [1],
             :flori => [1],
             :flor => [1],
+            :flavi => [2],
+            :flav => [2]
+          }
+        end
+      end
+    end
+    context 'starting_at set' do
+      before(:each) do
+        @cacher = Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => 0
+      end
+      describe 'starting_at' do
+        it 'should return the right value' do
+          @cacher.starting_at.should == 0
+        end
+      end
+      describe 'down_to' do
+        it 'should return the right value' do
+          @cacher.down_to.should == 4
+        end
+      end
+      describe 'generate_from' do
+        it 'should generate the right index' do
+          @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
+            :florian => [1],
+            :floria => [1],
+            :flori => [1],
+            :flor => [1],
+            :flavia => [2],
             :flavi => [2],
             :flav => [2]
           }
