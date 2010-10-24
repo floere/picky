@@ -26,4 +26,4 @@ gem 'unicorn'
 
 # Optional. Use your preferred database adapter.
 #
-gem 'mysql'
+# gem 'mysql'
