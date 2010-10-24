@@ -1,4 +1,5 @@
 0.3.0 - hanke: Uses json (index, index weights) and marshal (similarity index) to dump indexes.
+        hanke: Generator is more helpful (thanks kschiess)
 0.2.4 - hanke: Indexing output, output in general cleaned up.
         hanke: Better info after generating a new project (thanks kschiess).
         hanke: Indexer now uses json for the dump files (much faster, slightly larger, thanks niko).
