@@ -19,7 +19,7 @@ describe Picky::Generator do
         lambda { @generator.generator_for('project', 'some_project') }.should_not raise_error
       end
       it "should raise if a generator is not available" do
-        lambda { @generator.generator_for('blarf', 'gnorf') }.should raise_error(Picky::NoGeneratorException)
+        lambda { @generator.generator_for('blarf', 'gnorf') }.should raise_error(Picky::NoGeneratorError)
       end
       it "should return a generator if it is available" do
         @generator.generator_for('project', 'some_project').should be_kind_of(Picky::Generator::Project)
@@ -27,8 +27,8 @@ describe Picky::Generator do
     end
     
     describe "generate" do
-      it "should raise a NoGeneratorException if called with the wrong params" do
-        lambda { @generator.generate(['blarf', 'gnorf']) }.should raise_error(Picky::NoGeneratorException)
+      it "should raise a NoGeneratorError if called with the wrong params" do
+        lambda { @generator.generate(['blarf', 'gnorf']) }.should raise_error(Picky::NoGeneratorError)
       end
       it "should not raise on the right params" do
         @generator.stub! :generator_for_class => stub(:generator, :generate => nil)
