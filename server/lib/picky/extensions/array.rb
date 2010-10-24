@@ -13,18 +13,6 @@ class Array
     end
   end
 
-  #
-  #
-  def map_with_index!
-    each_with_index do |element, index| self[index] = yield(element, index); end
-  end
-
-  #
-  #
-  def map_with_index &block
-    dup.map_with_index! &block
-  end
-
   # Accesses a random element of this array.
   #
   def random
