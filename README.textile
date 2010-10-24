@@ -1,6 +1,8 @@
 h1. Picky
 
-Note: Currently in the 0.0.x version range, so don't get your hopes up ;)
+Dive into Picky at "the Getting Started section":http://floere.github.com/picky.
+
+Note: Currently in the 0.3 version range.
 
 h2. The combinatorial small-text search engine.
 
