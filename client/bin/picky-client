@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+#
+
+begin
+  require 'picky-client/generator'
+rescue LoadError => e
+  require 'rubygems'
+  picky_path = File.expand_path '../../lib', __FILE__
+  $:.unshift(picky_path) if File.directory?(picky_path) && !$:.include?(picky_path)
+  require 'picky-client/generator'
+end
+
+generator = Picky::Client::Generator.new
+generator.generate ARGV
