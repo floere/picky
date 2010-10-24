@@ -69,6 +69,7 @@ describe Index::Bundle do
 
   describe 'load_from_index_file' do
     it 'should call two methods in order' do
+      @index.should_receive(:load_from_index_generation_message).once.ordered
       @index.should_receive(:clear).once.ordered
       @index.should_receive(:retrieve).once.ordered
 
@@ -96,7 +97,6 @@ describe Index::Bundle do
 
   describe 'generate_caches_from_source' do
     it 'should call two methods in order' do
-      @index.should_receive(:load_from_source_generation_message).once.ordered
       @index.should_receive(:load_from_index_file).once.ordered
       @index.should_receive(:generate_caches_from_memory).once.ordered
 

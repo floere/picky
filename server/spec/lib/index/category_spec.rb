@@ -170,11 +170,11 @@ describe Index::Category do
     end
   end
 
-  describe 'generate_caches_from_db' do
+  describe 'generate_caches_from_source' do
     it 'should delegate to exact' do
-      @exact.should_receive(:generate_caches_from_db).once.with
+      @exact.should_receive(:generate_caches_from_source).once.with
 
-      @category.generate_caches_from_db
+      @category.generate_caches_from_source
     end
   end
 
@@ -183,7 +183,7 @@ describe Index::Category do
       @category.stub! :exclaim
     end
     it 'should call three method in order' do
-      @category.should_receive(:generate_caches_from_db).once.with().ordered
+      @category.should_receive(:generate_caches_from_source).once.with().ordered
       @category.should_receive(:generate_partial).once.with().ordered
       @category.should_receive(:generate_caches_from_memory).once.with().ordered
       
