@@ -48,7 +48,7 @@ module Configuration
       File.join search_index_root, PICKY_ENVIRONMENT, type.name.to_s
     end
     def search_index_file_name
-      File.join cache_directory, "#{type.name}_#{name}_index.txt"
+      File.join cache_directory, "prepared_#{name}_index.txt"
     end
     def index
       prepare_cache_directory
