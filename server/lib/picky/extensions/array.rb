@@ -15,6 +15,8 @@ class Array
 
   # Accesses a random element of this array.
   #
+  # TODO Remove?
+  #
   def random
     self[Kernel.rand(self.length)]
   end

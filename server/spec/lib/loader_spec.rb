@@ -7,7 +7,27 @@ describe Loader do
     Configuration.stub! :apply
     Indexes.stub! :setup
   end
-
+  
+  describe 'load_application' do
+    before(:each) do
+      Loader.stub! :load
+      Loader.stub! :exclaim
+    end
+    it "does ok" do
+      lambda { Loader.load_application }.should_not raise_error
+    end
+  end
+  
+  describe 'load_framework' do
+    before(:each) do
+      Loader.stub! :load
+      Loader.stub! :exclaim
+    end
+    it "does ok" do
+      lambda { Loader.load_framework }.should_not raise_error
+    end
+  end
+  
   describe 'load_self' do
     before(:each) do
       Loader.stub! :load
