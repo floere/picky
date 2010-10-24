@@ -76,9 +76,8 @@ module Picky
           exclaim ""
           exclaim "Next steps:"
           exclaim "cd #{name}"
-          exclaim "cat Gemfile    # Do you need the mysql gem, for example?"
           exclaim "bundle install"
-          exclaim "rake           # shows you where Picky needs input from you."
+          exclaim "unicorn -p 3000 # (optional) Or use your favorite web server."
           exclaim ""
         end
       
