@@ -2,9 +2,35 @@ require 'spec_helper'
 
 describe Hash do
 
-  describe 'dump_to' do
-    it 'should description' do
-      # TODO
+  describe 'dump_to_json' do
+    it 'uses the right file' do
+      File.should_receive(:open).once.with('some/file/path.json', 'w')
+      
+      {}.dump_to_json 'some/file/path'
+    end
+    it "uses the right encoder" do
+      file = stub :file
+      File.should_receive(:open).and_yield file
+      
+      Yajl::Encoder.should_receive(:encode).once.with({ :some => :hash }, file)
+      
+      { :some => :hash }.dump_to_json 'unimportant'
+    end
+  end
+  
+  describe 'dump_to_marshalled' do
+    it 'uses the right file' do
+      File.should_receive(:open).once.with('some/file/path.dump', 'w:binary')
+      
+      {}.dump_to_marshalled 'some/file/path'
+    end
+    it "uses the right encoder" do
+      file = stub :file
+      File.should_receive(:open).and_yield file
+      
+      Marshal.should_receive(:dump).once.with({ :some => :hash }, file)
+      
+      { :some => :hash }.dump_to_marshalled 'unimportant'
     end
   end
   
