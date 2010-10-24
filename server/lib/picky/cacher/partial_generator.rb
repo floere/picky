@@ -4,7 +4,7 @@ module Cacher
   #
   class PartialGenerator < Generator
     
-    # Generate a similarity index based on the given index.
+    # Generate a partial index based on the given index.
     #
     def generate strategy = Partial::Subtoken.new(:down_to => 1)
       strategy.generate_from self.index
