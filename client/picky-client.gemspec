@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.summary = 'picky Search Engine Client'
   s.executables = ['picky-client']
   s.default_executable = "picky-client"
-  s.files = Dir["lib/**/*.rb"]
+  s.files = Dir["lib/**/*.rb", "sinatra_prototype/**/*"]
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.has_rdoc = false
   s.extra_rdoc_files = ['README.rdoc']

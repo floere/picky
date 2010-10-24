@@ -47,21 +47,28 @@
         %a{:href => "#", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
       %span.explanation (Finds "pynchon", note: Only title in example with similarity. Uses a combination of double metaphone and Levenshtein.)
     %p
+      More complex,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~');"} title:lyterature~
+      %span.explanation (Finds similar titles)
+    %p
       With choice,
       = succeed "." do
         %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
-      %span.explanation (Finds "sp*" in many categories. Choose the one you're looking for.)
+      %span.explanation (Finds "sp*" in multiple categories. Choose the one you're looking for.)
     %p
       More complex,
       = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~ 2002');"} title:lyterature~ 2002
-      %span.explanation (Finds similar titles from 2002)
+        %a{:href => "#", :onclick => "pickyClient.insert('soc* s');"} soc* s
+      %span.explanation (this is where Picky really shines, "the title started with soc, and the author starts with s")
     = Picky::Helper.cached_interface
     :javascript
       pickyClient = new PickyClient({
-        live: '/search/live',
+        // A full query displays the rendered results.
         full: '/search/full',
-        showResultsLimit: 10, // Optional. Default is 10.
+        // A live query just updates the count.
+        live: '/search/live',
+        // showResultsLimit: 10, // Optional. Default is 10.
         
         // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
         // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
@@ -89,4 +96,5 @@
           }
         }
       });
+      // An initial search text, prefilled.
       pickyClient.insert('italy');

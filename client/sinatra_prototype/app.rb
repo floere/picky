@@ -10,8 +10,8 @@ set :haml, { :format => :html5 }
 
 # Sets up two query instances.
 #
-FullBooks = Picky::Client::Full.new :host => 'picky-simple-example-backend.heroku.com', :port => 80, :path => '/books/full'
-LiveBooks = Picky::Client::Live.new :host => 'picky-simple-example-backend.heroku.com', :port => 80, :path => '/books/live'
+FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
+LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
 
 set :static, true
 set :public, File.dirname(__FILE__)
@@ -44,11 +44,11 @@ get '/search/full' do
   ActiveSupport::JSON.encode results
 end
 
-# # For live results, you'd actually go directly to the search server without taking the detour.
-# #
-# get '/search/live' do
-#   LiveBooks.search :query => params[:query], :offset => params[:offset]
-# end
+# For live results, you'd actually go directly to the search server without taking the detour.
+#
+get '/search/live' do
+  LiveBooks.search :query => params[:query], :offset => params[:offset]
+end
 
 helpers do
   
