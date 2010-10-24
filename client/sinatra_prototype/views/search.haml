@@ -65,9 +65,13 @@
     :javascript
       pickyClient = new PickyClient({
         // A full query displays the rendered results.
+        //
         full: '/search/full',
+        
         // A live query just updates the count.
+        //
         live: '/search/live',
+        
         // showResultsLimit: 10, // Optional. Default is 10.
         
         // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
@@ -82,6 +86,7 @@
             subjects:  'subject'
           }
         },
+        
         // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
         // Optional. Default are the field identifiers from the Picky server.
         //
@@ -96,5 +101,7 @@
           }
         }
       });
+      
       // An initial search text, prefilled.
+      //
       pickyClient.insert('italy');
