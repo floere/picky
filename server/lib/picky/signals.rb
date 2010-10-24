@@ -1,4 +1,4 @@
-# TODO Cleanup and move to prototype_project.
+# TODO Cleanup and move to project_prototype.
 #
 # Signal.trap 'USR1' do
 #   Indexes.reload

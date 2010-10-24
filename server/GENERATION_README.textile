@@ -2,7 +2,7 @@ h1. Picky Generation
 
 h2. Explanation
 
-Generation uses a prototype project in prototype_project.
+Generation uses a prototype project in project_prototype.
 
 This is the project which is used for project generation.
 

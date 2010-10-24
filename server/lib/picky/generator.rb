@@ -56,11 +56,11 @@ module Picky
     #
     class Project
       
-      attr_reader :name, :prototype_project_basedir
+      attr_reader :name, :project_prototype_basedir
       
       def initialize identifier, name, *args
         @name = name
-        @prototype_project_basedir = File.expand_path '../../../project_prototype', __FILE__
+        @project_prototype_basedir = File.expand_path '../../../project_prototype', __FILE__
       end
       
       #
@@ -72,11 +72,11 @@ module Picky
         exclaim "\"#{name}\" is a great project name! Have fun :)\n"
         exclaim ""
         exclaim "Next steps:"
-        exclaim "cd #{name}"
-        exclaim "cat Gemfile    # Do you need the mysql gem, for example?"
-        exclaim "bundle install"
-        exclaim "rake           # shows you where Picky needs input from you."
-        exclaim ""
+        exclaim "1. cd #{name}"
+        exclaim "2. cat Gemfile    # Do you need the mysql gem, for example?"
+        exclaim "3. bundle install"
+        exclaim "4. rake           # (optional) shows you where Picky needs input from you"
+        exclaim "                  #            if you want to define your own search."
       end
       
       #
@@ -102,7 +102,7 @@ module Picky
       #
       #
       def target_filename_for filename
-        filename.gsub(%r{#{prototype_project_basedir}}, target_directory)
+        filename.gsub(%r{#{project_prototype_basedir}}, target_directory)
       end
       #
       #
@@ -146,7 +146,7 @@ module Picky
       #
       #
       def all_prototype_files
-        Dir[File.join(prototype_project_basedir, '**', '*')]
+        Dir[File.join(project_prototype_basedir, '**', '*')]
       end
       
       #

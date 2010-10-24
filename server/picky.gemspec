@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary = 'Picky the Search Engine'
   s.executables = ['picky']
   s.default_executable = "picky"
-  s.files = Dir["lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/ext/ruby19/performant.c", "prototype_project/**/*"]
+  s.files = Dir["lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/ext/ruby19/performant.c", "project_prototype/**/*"]
   s.test_files = Dir["spec/**/*_spec.rb"]
   
   s.extensions << 'lib/picky/ext/ruby19/extconf.rb'

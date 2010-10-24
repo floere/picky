@@ -48,7 +48,7 @@ describe Picky::Generator do
     context "after initialize" do
       it "should have a prototype project basedir" do
         lambda {
-          @generator.prototype_project_basedir
+          @generator.project_prototype_basedir
         }.should_not raise_error
       end
       it "should have a name" do
@@ -56,9 +56,9 @@ describe Picky::Generator do
       end
     end
     
-    describe "prototype_project_basedir" do
+    describe "project_prototype_basedir" do
       it "should be the right basedir" do
-        @generator.prototype_project_basedir.should == File.expand_path('../../../project_prototype', __FILE__)
+        @generator.project_prototype_basedir.should == File.expand_path('../../../project_prototype', __FILE__)
       end
     end
     
@@ -115,7 +115,7 @@ describe Picky::Generator do
       it "should return the right filename" do
         @generator.stub! :target_directory => 'some_target_directory'
         
-        test_filename = File.expand_path 'some/file/name', @generator.prototype_project_basedir
+        test_filename = File.expand_path 'some/file/name', @generator.project_prototype_basedir
         
         @generator.target_filename_for(test_filename).should == 'some_target_directory/some/file/name'
       end
