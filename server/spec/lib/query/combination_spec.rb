@@ -11,7 +11,16 @@ describe 'Query::Combination' do
 
     @combination = Query::Combination.new @token, @category
   end
-
+  
+  describe "to_s" do
+    it "shows the combination's info" do
+      @bundle.stub! :name => :bundle_name
+      @token.stub! :to_result => :token_result
+      
+      @combination.to_s.should == 'bundle_name some_category_name:token_result'
+    end
+  end
+  
   describe 'hash' do
     it 'should hash the token and the bundle' do
       @combination.hash.should == [@token.to_s, @bundle].hash
