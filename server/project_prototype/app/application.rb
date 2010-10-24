@@ -16,7 +16,7 @@ class PickySearch < Application
       
   books_index = index :books,
                       Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, :file => 'app/library.csv'),
-                      # Use a db as source:
+                      # Use a database as source:
                       # Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'), 
                       field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
                       field(:author),
