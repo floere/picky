@@ -42,6 +42,7 @@ class Cores
         break unless element
         
         Process.fork do
+          sleep 0.01*currently_processing
           yield element
         end
         
