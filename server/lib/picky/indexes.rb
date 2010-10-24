@@ -16,7 +16,11 @@ module Indexes
 
     # Run in parallel.
     #
-    timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS."
+    # TODO Make option to also use non-random.
+    #      rake index:random (default)
+    #      rake index:ordered
+    #
+    timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, RANDOM ORDER."
     Cores.forked self.fields, :randomly => true do |field|
       # Reestablish DB connection.
       #
