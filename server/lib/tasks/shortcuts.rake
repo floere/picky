@@ -1,6 +1,6 @@
-desc "Shortcut for indexing and caching."
+desc "Shortcut for index:generate."
 task :index => :application do
-  Indexes.index
+  Rake::Task[:'index:generate'].invoke
 end
 
 desc "shortcut for server:start"
