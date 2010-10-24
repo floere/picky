@@ -1,10 +1,16 @@
 require 'spec_helper'
-describe "Configuration::Field" do
+describe Configuration::Field do
   
   context "unit specs" do
     context "name symbol" do
       before(:each) do
         @field = Configuration::Field.new :some_name
+        @field.type = stub :type, :name => :some_type
+      end
+      describe "search_index_file_name" do
+        it "returns the right file name" do
+          @field.search_index_file_name.should == 'some/search/root/index/test/some_type/prepared_some_name_index.txt'
+        end
       end
       describe "generate_qualifiers_from" do
         context "with qualifiers" do
