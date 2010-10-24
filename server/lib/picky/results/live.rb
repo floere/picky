@@ -9,11 +9,5 @@ module Results
       ?. + super
     end
     
-    # The default response style for live results is to_json.
-    #
-    def to_response
-      to_json
-    end
-    
   end
 end
