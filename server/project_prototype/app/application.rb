@@ -7,7 +7,7 @@ class PickySearch < Application
   #
   # Check the Wiki http://github.com/floere/picky/wiki for more options.
   #
-  # Ask me if you have questions or specific requests.
+  # Ask me or the google group if you have questions or specific requests.
   #
   
   indexing.removes_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
@@ -15,7 +15,9 @@ class PickySearch < Application
   indexing.splits_text_on(/[\s\/\-\"\&\.]/)
       
   books_index = index :books,
-                      Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
+                      Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, :file => 'app/library.csv'),
+                      # Use a db as source:
+                      # Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'), 
                       field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
                       field(:author),
                       field(:isbn,  :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.
