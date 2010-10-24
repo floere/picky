@@ -8,7 +8,7 @@ class BookSearch < Application
     indexing.splits_text_on(/[\s\/\-\"\&\.]/)
     indexing.removes_characters_after_splitting(/[\.]/)
     
-    few_similarities = Similarity::DoubleLevenshtone.new(3)
+    few_similarities = Similarity::DoubleLevenshtone.new(2)
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
                                    :similarity => few_similarities
     author        = field :author, :qualifiers => [:a, :author, :auteur], :partial => Partial::Subtoken.new(:down_to => -2)
@@ -52,13 +52,19 @@ class BookSearch < Application
     full_main = Query::Full.new main_index, isbn_index, options
     live_main = Query::Live.new main_index, isbn_index, options
     
+    full_csv  = Query::Full.new csv_test_index, options
     live_csv  = Query::Live.new csv_test_index, options
+    
     full_isbn = Query::Full.new isbn_index, options
+    live_isbn = Query::Live.new isbn_index, options
     
     route %r{^/books/full} => full_main,
           %r{^/books/live} => live_main,
+          %r{^/csv/full}   => full_csv,
           %r{^/csv/live}   => live_csv,
-          %r{^/isbn/full}  => full_isbn
+          %r{^/isbn/full}  => full_isbn,
+          %r{^/all/full}   => Query::Full.new(main_index, csv_test_index, isbn_index),
+          %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index)
     
     root 200
   
