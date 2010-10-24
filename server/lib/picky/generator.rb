@@ -8,7 +8,29 @@ module Picky
   #   picky <command> <options>
   # is found.
   #
-  class NoGeneratorException < Exception; end
+  class NoGeneratorError < StandardError
+    
+    def initialize generator
+      super usage + possible_commands(generator.types)
+    end
+    
+    def usage
+      "\nUsage:\n" +
+      "picky <command> <params>\n" +
+      ?\n
+    end
+    
+    def possible_commands types
+      "Possible commands:\n" +
+      types.map do |name, klass_params|
+        result = "picky #{name}"
+        _, params = *klass_params
+        result << ' ' << [*params].map { |param| "<#{param}>" }.join(' ') if params
+        result
+      end.join(?\n) + ?\n
+    end
+    
+  end
   
   # This is a very simple project generator.
   # Not at all like Padrino's or Rails'.
@@ -22,7 +44,7 @@ module Picky
     
     def initialize
       @types = {
-        :project => Project
+        :project => [Project, :project_name]
       }
     end
     
@@ -38,8 +60,9 @@ module Picky
     #
     #
     def generator_for identifier, *args
-      generator_class = types[identifier.to_sym]
-      raise NoGeneratorException unless generator_class
+      generator_info = types[identifier.to_sym]
+      raise NoGeneratorError.new(self) unless generator_info
+      generator_class = generator_info.first
       generator_for_class generator_class, identifier, *args
     end
     
