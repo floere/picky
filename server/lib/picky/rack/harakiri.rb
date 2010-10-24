@@ -32,7 +32,7 @@ module Rack
     #
     def harakiri
       @requests = @requests + 1
-      Process.kill(:QUIT, Process.pid) if @requests > @quit_after_requests
+      Process.kill(:QUIT, Process.pid) if @requests >= @quit_after_requests
     end
     
   end
