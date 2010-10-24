@@ -257,7 +257,7 @@ module Index
     # TODO Use config object?
     #
     def search_index_file_name
-      File.join cache_directory, "#{type.name}_#{category.name}_index.txt"
+      File.join cache_directory, "prepared_#{category.name}_index.txt"
     end
     
     # Generators.
