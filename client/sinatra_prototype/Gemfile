@@ -1,0 +1,10 @@
+source :gemcutter
+gem 'i18n'
+gem 'activesupport', :require => 'active_support/core_ext'
+gem 'sinatra'
+gem 'picky-client'
+gem 'haml'
+
+group :development do
+  gem 'sinatra-reloader'
+end
