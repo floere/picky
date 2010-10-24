@@ -1,3 +1,4 @@
+0.3.1 - hanke: Generator gives more informative NoGeneratorError message.
 0.3.0 - hanke: Uses json (index, index weights) and marshal (similarity index) to dump indexes.
         hanke: Generator is more helpful (thanks kschiess)
 0.2.4 - hanke: Indexing output, output in general cleaned up.
