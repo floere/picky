@@ -11,3 +11,5 @@ server/doc
 
 config
 Gemfile.lock
+
+coverage
