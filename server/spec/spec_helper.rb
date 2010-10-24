@@ -1,5 +1,9 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.adapters.define 'picky' do
+  add_filter '/spec/'
+  add_group  'Libraries', 'lib'
+end
+SimpleCov.start 'picky'
 
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
