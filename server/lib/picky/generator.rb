@@ -40,7 +40,7 @@ module Picky
     def generator_for identifier, *args
       generator_class = types[identifier.to_sym]
       raise NoGeneratorException unless generator_class
-      generator_for_class generator_class, *args
+      generator_for_class generator_class, identifier, *args
     end
     
     #
@@ -58,9 +58,9 @@ module Picky
       
       attr_reader :name, :prototype_project_basedir
       
-      def initialize name, *args
+      def initialize identifier, name, *args
         @name = name
-        @prototype_project_basedir = File.expand_path '../../../prototype_project', __FILE__
+        @prototype_project_basedir = File.expand_path '../../../project_prototype', __FILE__
       end
       
       #

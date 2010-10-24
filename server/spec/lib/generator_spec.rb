@@ -10,7 +10,7 @@ describe Picky::Generator do
     
     describe "generator_for_class" do
       it "should return me a generator for the given class" do
-        @generator.generator_for_class(Picky::Generator::Project, :some_args).should be_kind_of(Picky::Generator::Project)
+        @generator.generator_for_class(Picky::Generator::Project, :some_identifier, :some_args).should be_kind_of(Picky::Generator::Project)
       end
     end
     
@@ -41,7 +41,7 @@ describe Picky::Generator do
   describe Picky::Generator::Project do
     
     before(:each) do
-      @generator = Picky::Generator::Project.new 'some_name', []
+      @generator = Picky::Generator::Project.new :identifier, 'some_name', []
       @generator.stub! :exclaim
     end
     
@@ -58,7 +58,7 @@ describe Picky::Generator do
     
     describe "prototype_project_basedir" do
       it "should be the right basedir" do
-        @generator.prototype_project_basedir.should == File.expand_path('../../../prototype_project', __FILE__)
+        @generator.prototype_project_basedir.should == File.expand_path('../../../project_prototype', __FILE__)
       end
     end
     
