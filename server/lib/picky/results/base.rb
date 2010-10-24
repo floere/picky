@@ -17,21 +17,13 @@ module Results
       @allocations = allocations || Query::Allocations.new
     end
 
-    def add more_results
-      @added = more_results
-      self
-    end
-    def added
-      @added || {}
-    end
-
     #
     #
     def serialize
-      added.merge(:allocations => allocations.to_result,
-                  :offset      => offset,
-                  :duration    => duration,
-                  :total       => total)
+      { :allocations => allocations.to_result,
+        :offset      => offset,
+        :duration    => duration,
+        :total       => total }
     end
     # The default format is json.
     #
