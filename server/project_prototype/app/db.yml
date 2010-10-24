@@ -9,5 +9,5 @@ adapter: mysql
 host: localhost
 username: root
 password:
-database: books_database # Needs to contain the DB source in app/application.rb.
+database: your_database # Load this configuration and use a DB source in app/application.rb.
 encoding: utf8
