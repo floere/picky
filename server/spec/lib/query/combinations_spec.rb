@@ -7,7 +7,18 @@ describe 'Query::Combinations' do
   before(:each) do
     @combinations_ary = stub :combinations_ary
     
-    @combinations = Query::Combinations.new :some_type, @combinations_ary
+    type = stub :type, :result_type => :some_type
+    
+    @combinations = Query::Combinations.new type, @combinations_ary
+  end
+  
+  describe "pack_into_allocation" do
+    it "return an Allocation" do
+      @combinations.pack_into_allocation.should be_kind_of(Query::Allocation)
+    end
+    it "returns an Allocation with specific result_type" do
+      @combinations.pack_into_allocation.result_type.should == :some_type
+    end
   end
   
   describe "to_result" do
