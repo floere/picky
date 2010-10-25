@@ -34,7 +34,7 @@ class Application
     #
     delegate :route, :root, :to => :routing
     
-    # 
+    # TODO Rename to default_indexing?
     #
     def indexing
       @indexing ||= Configuration::Indexes.new
@@ -44,7 +44,7 @@ class Application
     end
     delegate :type, :field, :to => :indexing
     
-    #
+    # TODO Rename to default_querying?
     #
     def querying
       @queries ||= Configuration::Queries.new
