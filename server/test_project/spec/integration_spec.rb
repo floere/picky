@@ -1,34 +1,42 @@
 # coding: utf-8
 #
-require File.expand_path '../spec_helper', __FILE__
+require 'spec_helper'
 
 describe "Cases" do
   
-  # # 1. Load data into db.
-  # # 2. Index the data in the db.
-  # # 3. Cache it, and load into memory.
-  # #
-  # before(:all) do
-  #   `cat data/generate_test_db.sql | sqlite3 data/test.db`
-  #   Indexes.index
-  #   Indexes.load_from_cache
-  # end
-  # 
-  # def self.it_should_find_ids_in_main_full text, expected_ids
-  #   it 'should return the right ids' do
-  #     @full.search_with_text(text).ids.should == expected_ids
-  #   end
-  # end
-  # def ids_of results
-  #   results.serialize[:allocations].inject([]) { |ids, allocation| ids + allocation[4] }
-  # end
-  # 
-  # before(:each) do
-  #   @full = Query::Full.new Indexes[:main]
-  # end
-  # 
-  # describe 'description' do
-  #   it_should_find_ids_in_main_full 'Soledad', [1]
-  # end
+  # 1. Load data into db.
+  # 2. Index the data in the db.
+  # 3. Cache it, and load into memory.
+  #
+  before(:all) do
+    Indexes.load_from_cache
+  end
+  before(:each) do
+    @full = Query::Full.new Indexes[:csv_test]
+  end
+  
+  def self.it_should_find_ids_in_main_full text, expected_ids
+    it 'should return the right ids' do
+      @full.search_with_text(text).ids.should == expected_ids
+    end
+  end
+  def ids_of results
+    results.serialize[:allocations].inject([]) { |ids, allocation| ids + allocation[4] }
+  end
+  
+  describe 'test cases' do
+    # Standard
+    #
+    it_should_find_ids_in_main_full 'Soledad Human', [72]
+    it_should_find_ids_in_main_full 'First Three Minutes Weinberg', [1]
+    
+    # Partial
+    #
+    it_should_find_ids_in_main_full 'Gover* Systems', [7]
+    
+    # Similarity
+    #
+    it_should_find_ids_in_main_full 'Hystori~ Leeward', [4, 4]
+  end
   
 end
