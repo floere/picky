@@ -32,23 +32,23 @@ class Routing
     routes.call env
   end
   
-  # Set the defaults.
-  # 
-  # Options are:
-  #  * :query_key  => :query # default
-  #  * :offset_key => :offset # default
-  #  
-  #  * :tokenizer  => Tokenizers::Query.new # default
-  #
-  def defaults options = {}
-    @defaults[:query_key]    = options[:query_key].to_s  if options[:query_key]
-    @defaults[:offset_key]   = options[:offset_key].to_s if options[:offset_key]
-    
-    @defaults[:tokenizer]    = options[:tokenizer]       if options[:tokenizer]
-    @defaults[:content_type] = options[:content_type]    if options[:content_type]
-    
-    @defaults
-  end
+  # # Set the defaults.
+  # # 
+  # # Options are:
+  # #  * :query_key  => :query # default
+  # #  * :offset_key => :offset # default
+  # #  
+  # #  * :tokenizer  => Tokenizers::Query.new # default
+  # #
+  # def defaults options = {}
+  #   @defaults[:query_key]    = options[:query_key].to_s  if options[:query_key]
+  #   @defaults[:offset_key]   = options[:offset_key].to_s if options[:offset_key]
+  #   
+  #   @defaults[:tokenizer]    = options[:tokenizer]       if options[:tokenizer]
+  #   @defaults[:content_type] = options[:content_type]    if options[:content_type]
+  #   
+  #   @defaults
+  # end
   
   #
   #
