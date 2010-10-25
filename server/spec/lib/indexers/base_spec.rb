@@ -11,12 +11,28 @@ describe Indexers::Base do
                   :search_index_file_name => :some_search_index_name,
                   :indexed_name => :some_indexed_field_name
     @indexer = Indexers::Base.new @type, @field
-    @indexer.stub! :indexing_message
+    @indexer.stub! :timed_exclaim
+  end
+  
+  describe "tokenizer" do
+    it "delegates to the field" do
+      @field.should_receive(:tokenizer).once.with
+      
+      @indexer.tokenizer
+    end
+  end
+  
+  describe "indexing_message" do
+    it "informs the user about what it is going to index" do
+      @indexer.should_receive(:timed_exclaim).once.with 'INDEX some_type some_field_name'
+      
+      @indexer.indexing_message
+    end
   end
   
   describe "tokenizer" do
     it "should delegate to field" do
-      @field.should_receive(:tokenizer).once.with
+      @indexer.should_receive(:tokenizer).once.with
       
       @indexer.tokenizer
     end
