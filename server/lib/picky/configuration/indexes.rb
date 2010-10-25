@@ -10,10 +10,8 @@ module Configuration
       @types = []
     end
     
-    # Push into field.
-    #
     def default_tokenizer
-      @default_tokenizer ||= Tokenizers::Default
+      @default_tokenizer ||= Tokenizers::Default::Index
     end
     
     # Delegates

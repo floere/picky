@@ -173,7 +173,9 @@ module Loader
     load_relative 'tokenizers/base'
     load_relative 'tokenizers/index'
     load_relative 'tokenizers/query'
-    load_relative 'tokenizers/default'
+    
+    load_relative 'tokenizers/default/index'
+    load_relative 'tokenizers/default/query'
     
     # Query combinations, qualifiers, weigher.
     #

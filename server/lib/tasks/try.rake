@@ -6,7 +6,7 @@ namespace :try do
   task :index, [:text, :type_and_field] => :application do |_, options|
     text, type_and_field = options.text, options.type_and_field
     
-    tokenizer = type_and_field ? Indexes.find(*type_and_field.split(':')).tokenizer : Tokenizers::Default
+    tokenizer = type_and_field ? Indexes.find(*type_and_field.split(':')).tokenizer : Tokenizers::Default::Index
     
     puts "\"#{text}\" is index tokenized as #{tokenizer.tokenize(text).to_a}"
   end
@@ -19,7 +19,7 @@ namespace :try do
     #
     # TODO Use the Query Tokenizer.
     #
-    puts "\"#{text}\" is query tokenized as #{Tokenizers::Default.tokenize(text.dup).to_a.map(&:to_s)}"
+    puts "\"#{text}\" is query tokenized as #{Tokenizers::Default::Query.tokenize(text.dup).to_a.map(&:to_s)}"
   end
   
   desc "Try the given text with both the index and the query (type:field optional)."
