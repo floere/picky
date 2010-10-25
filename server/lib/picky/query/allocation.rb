@@ -61,7 +61,7 @@ module Query
     # Transform the allocation into result form.
     #
     def to_result
-      [self.result_type, self.score, count, @combinations.to_result, self.ids] if count = self.count > 0
+      [self.result_type, self.score, self.count, @combinations.to_result, self.ids] if count = self.count > 0
     end
 
     # Json representation of this allocation.

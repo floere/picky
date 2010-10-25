@@ -7,6 +7,31 @@ describe Query::Allocation do
     @allocation = Query::Allocation.new @combinations
   end
   
+  describe "hash" do
+    it "delegates to the combinations" do
+      @combinations.should_receive(:hash).once.with
+      
+      @allocation.hash
+    end
+  end
+  
+  describe "to_s" do
+    before(:each) do
+      @combinations.stub! :to_result => 'combinations_result'
+    end
+    context "allocation.count > 0" do
+      before(:each) do
+        @allocation.stub! :count => 10
+        @allocation.stub! :result_type => :result_type
+        @allocation.stub! :score => :score
+        @allocation.stub! :ids => :ids
+      end
+      it "represents correctly" do
+        @allocation.to_s.should == "Allocation: result_type, score, 10, combinations_result, ids"
+      end
+    end
+  end
+  
   describe 'remove' do
     it 'should delegate to the combinations' do
       @combinations.should_receive(:remove).once.with [:some_identifiers]
