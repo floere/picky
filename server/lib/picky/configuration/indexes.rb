@@ -13,8 +13,7 @@ module Configuration
     #
     #
     def default_index
-      # @default_index ||= Tokenizers::Index.new
-      Tokenizers::Index
+      @default_index ||= Tokenizers::Index.new
     end
     
     # Delegates

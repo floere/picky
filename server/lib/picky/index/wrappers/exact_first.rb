@@ -39,7 +39,7 @@ module Index
         end
       end
       def self.wrap_each_of categories
-        categories.collect! { |category| p category; new(category) }
+        categories.collect! { |category| new(category) }
       end
       
       def ids text

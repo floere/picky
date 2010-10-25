@@ -13,15 +13,6 @@ module Tokenizers
   #
   class Query < Base
     
-    # Default query tokenizer behaviour. Override in config.
-    #
-    removes_characters(//)
-    stopwords(//)
-    contracts_expressions(//, '')
-    splits_text_on(/\s/)
-    normalizes_words([])
-    removes_characters_after_splitting(//)
-    
     def preprocess text
       remove_illegals text             # Remove illegal characters
       remove_non_single_stopwords text # remove stop words

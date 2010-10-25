@@ -16,15 +16,14 @@ describe Tokenizers::Base do
         it 'should define a method remove_stopwords that does nothing' do
           @tokenizer.remove_stopwords('from this text').should == nil
         end
-        it 'should not define a method remove_non_single_stopwords' do
-          lambda { @tokenizer.remove_non_single_stopwords('from this text') }.should raise_error(NoMethodError)
+        it 'should define a method remove_non_single_stopwords' do
+          lambda { @tokenizer.remove_non_single_stopwords('from this text') }.should_not raise_error
+          
         end
       end
       context 'with stopwords given' do
         before(:each) do
-          class << @tokenizer
-            stopwords(/r|e/)
-          end
+          @tokenizer.stopwords(/r|e/)
         end
         it 'should define a method remove_stopwords' do
           lambda { @tokenizer.remove_stopwords('from this text') }.should_not raise_error
@@ -44,9 +43,7 @@ describe Tokenizers::Base do
       end
       context 'error case' do
         before(:each) do
-          class << @tokenizer
-            stopwords(/any/)
-          end
+          @tokenizer.stopwords(/any/)
         end
         it 'should not remove non-single stopwords with a star' do
           @tokenizer.remove_non_single_stopwords('a*').should == 'a*'

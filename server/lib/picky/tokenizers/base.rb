@@ -4,75 +4,79 @@ module Tokenizers
   #
   class Base
     
+    # TODO use frozen EMPTY_STRING for ''
+    #
+    
     # Stopwords.
     #
-    def self.stopwords regexp
-      define_method :remove_stopwords do |text|
-        text.gsub! regexp, ''
-      end
-      # Use this method if you don't want to remove
-      # stopwords if it is just one word.
-      #
-      @@non_single_stopword_regexp = /^\b[\w:]+?\b[\.\*\~]?\s?$/
-      define_method :remove_non_single_stopwords do |text|
-        return text if text.match @@non_single_stopword_regexp
-        remove_stopwords text
-      end
+    def stopwords regexp
+      @remove_stopwords_regexp = regexp
     end
-    def remove_stopwords text; end
+    def remove_stopwords text
+      text.gsub! @remove_stopwords_regexp, '' if @remove_stopwords_regexp
+    end
+    @@non_single_stopword_regexp = /^\b[\w:]+?\b[\.\*\~]?\s?$/
+    def remove_non_single_stopwords text
+      return text if text.match @@non_single_stopword_regexp
+      remove_stopwords text
+    end
     
     # Contraction.
     #
-    def self.contracts_expressions what, to_what
-      define_method :contract do |text|
-        text.gsub! what, to_what
-      end
+    def contracts_expressions what, to_what
+      @contract_what    = what
+      @contract_to_what = to_what
     end
-    def contract text; end
+    def contract text
+      text.gsub! @contract_what, @contract_to_what if @contract_what
+    end
     
     # Illegals.
     #
     # TODO Should there be a legal?
     #
-    def self.removes_characters regexp
-      define_method :remove_illegals do |text|
-        text.gsub! regexp, ''
-      end
+    def removes_characters regexp
+      @removes_characters_regexp = regexp
     end
-    def remove_illegals text; end
+    def remove_illegals text
+      text.gsub! @removes_characters_regexp, '' if @removes_characters_regexp
+      text
+    end
     
     # Splitting.
     #
-    def self.splits_text_on regexp
-      define_method :split do |text|
-        text.split regexp
-      end
+    def splits_text_on regexp
+      @splits_text_on_regexp = regexp
     end
-    def split text; end
+    def split text
+      text.split @splits_text_on_regexp
+    end
     
     # Normalizing.
     #
-    def self.normalizes_words regexp_replaces
-      define_method :normalize_with_patterns do |text|
-        regexp_replaces.each do |regex, replace|
-          # This should be sufficient
-          #
-          text.gsub!(regex, replace) and break
-        end
-        remove_after_normalizing_illegals text
-        text
-      end
+    def normalizes_words regexp_replaces
+      @normalizes_words_regexp_replaces
     end
-    def normalize_with_patterns text; end
+    def normalize_with_patterns text
+      return text unless @normalizes_words_regexp_replaces
+      
+      @normalizes_words_regexp_replaces.each do |regex, replace|
+        # This should be sufficient
+        #
+        text.gsub!(regex, replace) and break
+      end
+      remove_after_normalizing_illegals text
+      text
+    end
     
     # Illegal after normalizing.
     #
-    def self.removes_characters_after_splitting regexp
-      define_method :remove_after_normalizing_illegals do |text|
-        text.gsub! regexp, ''
-      end
+    def removes_characters_after_splitting regexp
+      @removes_characters_after_splitting_regexp = regexp
     end
-    def remove_after_normalizing_illegals text; end
+    def remove_after_normalizing_illegals text
+      text.gsub! @removes_characters_after_splitting_regexp, '' if @removes_characters_after_splitting_regexp
+    end
     
     # Returns a number of tokens, generated from the given text.
     #
@@ -93,6 +97,10 @@ module Tokenizers
     
     def initialize substituter = UmlautSubstituter.new
       @substituter = substituter
+      
+      # TODO Default handling.
+      #
+      splits_text_on(/\s/)
     end
     
     # Hooks.

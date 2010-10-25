@@ -5,15 +5,6 @@ module Tokenizers
   #
   class Index < Base
     
-    # Default handling definitions. Override in config.
-    #
-    removes_characters(//)
-    stopwords(//)
-    contracts_expressions(//, '')
-    splits_text_on(/\s/)
-    normalizes_words([])
-    removes_characters_after_splitting(//)
-    
     # Default indexing preprocessing hook.
     #
     # Does:
