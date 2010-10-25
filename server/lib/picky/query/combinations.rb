@@ -19,14 +19,17 @@ module Query
       @combinations.hash
     end
 
-    #
-    #
-    # TODO Rewrite.
+    # Uses user specific weights to calculate a score for the combinations.
     #
     def calculate_score weights
-      @score  = @combinations.sum &:weight
-      @score += weights.score @combinations
-      @score
+      @score ||= sum_score
+      @score + add_score(weights) # TODO Ok to just cache the weights?
+    end
+    def sum_score
+      @combinations.sum &:weight
+    end
+    def add_score weights
+      weights.score @combinations
     end
 
     # Gets all ids for the allocations.

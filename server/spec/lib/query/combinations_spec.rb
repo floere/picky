@@ -6,10 +6,78 @@ describe 'Query::Combinations' do
 
   before(:each) do
     @combinations_ary = stub :combinations_ary
-
+    
     @combinations = Query::Combinations.new :some_type, @combinations_ary
   end
-
+  
+  describe "to_result" do
+    before(:each) do
+      @combination1 = stub :combination1, :to_result => :result1
+      @combination2 = stub :combination2, :to_result => :result2
+      
+      @combinations_ary = [@combination1, @combination2]
+      
+      @combinations = Query::Combinations.new :some_type, @combinations_ary
+    end
+    it "resultifies the combinations" do
+      @combinations.to_result.should == [:result1, :result2]
+    end
+  end
+  
+  describe "add_score" do
+    it "uses the weights' score method" do
+      weights = stub :weights
+      weights.should_receive(:score).once.with @combinations_ary
+      
+      @combinations.add_score weights
+    end
+  end
+  
+  describe "sum_score" do
+    before(:each) do
+      @combination1 = stub :combination1, :weight => 3.14
+      @combination2 = stub :combination2, :weight => 2.76
+      
+      @combinations_ary = [@combination1, @combination2]
+      
+      @combinations = Query::Combinations.new :some_type, @combinations_ary
+    end
+    it "sums the scores" do
+      @combinations.sum_score.should == 5.90
+    end
+  end
+  
+  describe "calculate_score" do
+    before(:each) do
+      @combinations.stub! :sum_score => 0
+      @combinations.stub! :add_score => 0
+    end
+    it "first sums, then weighs" do
+      @combinations.should_receive(:sum_score).once.ordered.and_return 0
+      @combinations.should_receive(:add_score).once.ordered.and_return 0
+      
+      @combinations.calculate_score :anything
+    end
+    it "calls sum_score" do
+      @combinations.should_receive(:sum_score).once.with.and_return 0
+      
+      @combinations.calculate_score :anything
+    end
+    it "calls sum_score" do
+      @combinations.should_receive(:add_score).once.with(:weights).and_return 0
+      
+      @combinations.calculate_score :weights
+    end
+  end
+  
+  describe 'hash' do
+    it "delegates to the combinations array" do
+      @combinations_ary.should_receive(:hash).once.with
+      
+      @combinations.hash
+    end
+  end
+  
   describe 'remove' do
     before(:each) do
       @combination1 = stub :combination1, :in? => false

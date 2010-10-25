@@ -3,6 +3,49 @@ require 'spec_helper'
 
 describe Cores do
   
+  describe ".forked" do
+    before(:each) do
+      Process.should_receive(:fork).any_number_of_times.and_yield
+    end
+    context "with array" do
+      context "with block" do
+        it "runs ok" do
+          Cores.forked([1, 2]) do |e|
+            
+          end
+        end
+        it "yields the elements" do
+          result = []
+          Cores.forked([1, 2]) do |e|
+            result << e
+          end
+          result.should == [1, 2]
+        end
+      end
+      context "without block" do
+        it "fails" do
+          lambda {
+            Cores.forked [1, 2]
+          }.should raise_error(LocalJumpError)
+        end
+      end
+    end
+    context "with empty array" do
+      context "with block" do
+        it "runs ok" do
+          Cores.forked([]) do
+            
+          end
+        end
+      end
+      context "without block" do
+        it "runs ok" do
+          Cores.forked []
+        end
+      end
+    end
+  end
+  
   describe 'number_of_cores' do
     before(:each) do
       @linux  = mock :linux,  :null_object => true
