@@ -22,7 +22,8 @@ module Sources
     
     #
     #
-    def get_data &block
+    def get_data
+      @generated_id ||= 0
       @posts ||= WWW::Delicious.new(@username, @password).posts_recent(:count => 100)
       @posts.each do |post|
         data = {
@@ -30,7 +31,8 @@ module Sources
           :tags  => post.tags.join(' '),
           :url   => post.url.to_s
         }
-        block.call post.uid, data
+        @generated_id += 1
+        yield @generated_id, data
       end
     end
     
