@@ -40,7 +40,7 @@ class BookSearch < Application
     querying.maximum_tokens 5
     querying.removes_characters(/[\(\)\']/)
     querying.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr')
-    querying.stopwords(/\b(and|the|or|on)/i)
+    querying.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)
     querying.splits_text_on(/[\s\/\-\,\&]+/) #
     querying.normalizes_words([
       [/Deoxyribonucleic Acid/i, 'DNA']
