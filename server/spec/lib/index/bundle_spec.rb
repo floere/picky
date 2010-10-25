@@ -128,56 +128,6 @@ describe Index::Bundle do
     end
   end
 
-  describe 'raise_unless_cache_exists' do
-    before(:each) do
-      @index.stub! :cache_small? => false
-    end
-    context 'weights cache missing' do
-      before(:each) do
-        @index.stub! :cache_ok? => true
-        @index.stub! :weights_cache_path => 'weights_cache_path'
-        @index.should_receive(:cache_ok?).any_number_of_times.with('weights_cache_path').and_return false
-      end
-      it 'should raise' do
-        lambda do
-          @index.raise_unless_cache_exists
-        end.should raise_error("weights cache for some_name: some_type some_category missing.")
-      end
-    end
-    context 'similarity cache missing' do
-      before(:each) do
-        @index.stub! :cache_ok? => true
-        @index.stub! :similarity_cache_path => 'similarity_cache_path'
-        @index.should_receive(:cache_ok?).any_number_of_times.with('similarity_cache_path').and_return false
-      end
-      it 'should raise' do
-        lambda do
-          @index.raise_unless_cache_exists
-        end.should raise_error("similarity cache for some_name: some_type some_category missing.")
-      end
-    end
-    context 'index cache missing' do
-      before(:each) do
-        @index.stub! :cache_ok? => true
-        @index.stub! :index_cache_path => 'index_cache_path'
-        @index.should_receive(:cache_ok?).any_number_of_times.with('index_cache_path').and_return false
-      end
-      it 'should raise' do
-        lambda do
-          @index.raise_unless_cache_exists
-        end.should raise_error("index cache for some_name: some_type some_category missing.")
-      end
-    end
-    context 'all ok' do
-      before(:each) do
-        @index.stub! :cache_ok? => true
-      end
-      it 'should not raise' do
-        lambda { @index.raise_unless_cache_exists }.should_not raise_error
-      end
-    end
-  end
-
   describe 'delete_all' do
     it 'should call delete with all paths' do
       @index.should_receive(:delete).once.with @index.index_cache_path
