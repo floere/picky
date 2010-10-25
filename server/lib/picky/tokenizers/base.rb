@@ -56,7 +56,7 @@ module Tokenizers
     # Normalizing.
     #
     def normalizes_words regexp_replaces
-      @normalizes_words_regexp_replaces
+      @normalizes_words_regexp_replaces = regexp_replaces
     end
     def normalize_with_patterns text
       return text unless @normalizes_words_regexp_replaces
