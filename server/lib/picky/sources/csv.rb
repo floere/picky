@@ -1,5 +1,3 @@
-require 'csv'
-
 module Sources
   
   # Describes a CSV source, a file with csv in it.
@@ -12,6 +10,7 @@ module Sources
     attr_reader :file_name, :field_names
     
     def initialize *field_names, options
+      require 'csv'
       @field_names = field_names
       @file_name   = Hash === options && options[:file] || raise_no_file_given(field_names)
     end
