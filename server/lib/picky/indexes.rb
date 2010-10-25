@@ -22,9 +22,6 @@ module Indexes
     #
     timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, IN #{randomly ? 'RANDOM' : 'GIVEN'} ORDER."
     Cores.forked self.fields, { :randomly => randomly } do |field, cores|
-      # Reestablish source backends connection.
-      #
-      connect_backends
       field.index
       field.cache
     end
@@ -32,14 +29,6 @@ module Indexes
   end
   def self.index_solr
     configuration.index_solr
-  end
-  
-  # TODO Push into configuration.
-  #
-  def self.connect_backends
-    configuration.types.each do |type|
-      type.connect_backend
-    end
   end
   
   # Returns an array of fields.
@@ -115,6 +104,8 @@ module Indexes
   end
   # Loads all indexes from the caches.
   #
+  # TODO Rename load_indexes.
+  #
   def self.load_from_cache
     each &:load_from_cache
   end
@@ -136,11 +127,9 @@ module Indexes
   # Removes the cache files.
   #
   def self.clear_caches
-    each do |type|
-      type.categories.each do |category|
-        category.exact.delete_all
-        category.partial.delete_all
-      end
+    each_bundle do |exact, partial|
+      exact.delete_all
+      partial.delete_all
     end
   end
 
