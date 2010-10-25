@@ -6,7 +6,7 @@ describe Sources::DB do
     @type       = stub :type, :name => 'some_type_name'
     
     @connection = stub :connection
-    @adapter          = stub :adapter, :connection => @connection
+    @adapter    = stub :adapter, :connection => @connection
     
     @select_statement = stub :statement
     
@@ -14,6 +14,36 @@ describe Sources::DB do
     
     @source.stub! :database => @adapter
     @source.stub! :connect_backend
+  end
+  
+  describe "get_data" do
+    it "delegates" do
+      type  = stub :type, :name => :some_type
+      field = stub :field, :name => :some_field
+      
+      @connection.should_receive(:execute).once.with 'SELECT indexed_id, some_field FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000'
+      
+      @source.get_data type, field, :some_offset
+    end
+  end
+  
+  describe "configure" do
+    it "works" do
+      lambda { @source.configure({}) }.should_not raise_error
+    end
+    context "with file" do
+      it "opens the config file relative to root" do
+        File.should_receive(:open).once.with 'some/search/root/app/bla.yml'
+        
+        @source.configure :file => 'app/bla.yml'
+      end
+    end
+  end
+  
+  describe "connect_backend" do
+    it "works" do
+      lambda { @source.connect_backend }.should_not raise_error
+    end
   end
   
   describe "chunksize" do
