@@ -37,6 +37,32 @@ describe Query::Combinator do
       @combinator = Query::Combinator.new @categories
     end
     
+    describe "possible_combinations_for" do
+      before(:each) do
+        @token = stub :token
+      end
+      context "with similar token" do
+        before(:each) do
+          @token.stub :similar? => true
+        end
+        it "calls the right method" do
+          @combinator.should_receive(:similar_possible_for).once.with @token
+          
+          @combinator.possible_combinations_for @token
+        end
+      end
+      context "with non-similar token" do
+        before(:each) do
+          @token.stub :similar? => false
+        end
+        it "calls the right method" do
+          @combinator.should_receive(:possible_for).once.with @token
+          
+          @combinator.possible_combinations_for @token
+        end
+      end
+    end
+    
     describe 'possible_for' do
       context 'without preselected categories' do
         context 'user defined exists' do
