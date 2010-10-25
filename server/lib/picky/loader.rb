@@ -208,6 +208,7 @@ module Loader
     load_relative 'sources/base'
     load_relative 'sources/db'
     load_relative 'sources/csv'
+    load_relative 'sources/delicious'
     
     # Indexes.
     #
