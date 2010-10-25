@@ -13,6 +13,7 @@ module Configuration
     #
     #
     def default_index
+      # @default_index ||= Tokenizers::Index.new
       Tokenizers::Index
     end
     
