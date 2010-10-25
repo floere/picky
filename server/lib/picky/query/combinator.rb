@@ -31,13 +31,19 @@ module Query
       token.similar? ? similar_possible_for(token) : possible_for(token)
     end
     
-    # TODO Break apart.
-    #
+    # 
+    # 
     def similar_possible_for token
       # Get as many similar tokens as necessary
       #
+      tokens = similar_tokens_for token
+      # possible combinations
+      #
+      inject_possible_for tokens
+    end
+    def similar_tokens_for token
       text = token.text
-      tokens = categories.inject([]) do |result, category|
+      categories.inject([]) do |result, category|
         next_token = token
         # TODO adjust either this or the amount of similar in index
         #
@@ -46,8 +52,8 @@ module Query
         end
         result
       end
-      # possible combinations
-      #
+    end
+    def inject_possible_for tokens
       tokens.inject([]) do |result, token|
         possible = possible_categories token
         result + possible_for(token, possible)

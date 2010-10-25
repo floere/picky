@@ -27,6 +27,25 @@ describe Query::Combinator do
     end
   end
   
+  context "with real categories" do
+    before(:each) do
+      @category1 = Index::Category.new :some_name, :some_type
+      @category2 = Index::Category.new :some_name, :some_type
+      @category3 = Index::Category.new :some_name, :some_type
+      @categories = [@category1, @category2, @category3]
+      
+      @combinator = Query::Combinator.new @categories
+    end
+    describe "similar_possible_for" do
+      before(:each) do
+        @token = Query::Token.processed 'similar~'
+      end
+      it "returns possible categories" do
+        @combinator.similar_possible_for(@token).should == []
+      end
+    end
+  end
+  
   context 'without options' do
     before(:each) do
       @category1 = stub :category1, :name => :category1
