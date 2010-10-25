@@ -8,6 +8,30 @@ describe Query::Token do
     Query::Qualifiers.instance.prepare
   end
   
+  describe "generate_similarity_for" do
+    before(:each) do
+      @bundle = stub :bundle
+      
+      @token = Query::Token.processed 'flarb~'
+    end
+    context "with similar" do
+      before(:each) do
+        @bundle.stub! :similar => [:array, :of, :similar]
+      end
+      it "returns an enumerator" do
+        @token.generate_similarity_for(@bundle).to_a.size.should == 3
+      end
+    end
+    context "without similar" do
+      before(:each) do
+        @bundle.stub! :similar => nil
+      end
+      it "returns an enumerator with 0 entries" do
+        @token.generate_similarity_for(@bundle).to_a.size.should == 0
+      end
+    end
+  end
+  
   describe 'to_solr' do
     def self.it_should_solr text, expected_result
       it "should solrify into #{expected_result} from #{text}" do
