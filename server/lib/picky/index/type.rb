@@ -16,7 +16,10 @@ module Index
       @name        = name
       @result_type = result_type # TODO Move.
       @categories  = categories # for each_delegate
-      @combinator  = Query::Combinator.new @categories, :ignore_unassigned_tokens => ignore_unassigned_tokens # TODO pass this in?
+      @combinator  = combinator_for categories, ignore_unassigned_tokens
+    end
+    def combinator_for categories, ignore_unassigned_tokens
+       Query::Combinator.new @categories, :ignore_unassigned_tokens => ignore_unassigned_tokens
     end
     
     #
