@@ -197,6 +197,11 @@ describe Routing do
         
         @routing.root 200
       end
+      it 'should call answer' do
+        @routing.should_receive(:answer).once.with %r{^/$}, Routing::STATUSES[404]
+        
+        @routing.root 404
+      end
     end
     
     describe 'answer' do
