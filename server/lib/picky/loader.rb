@@ -237,11 +237,5 @@ module Loader
     #
     load_relative 'generator'
   end
-  
-  # Silenceable puts.
-  #
-  def self.exclaim text
-    puts text
-  end
 
 end
