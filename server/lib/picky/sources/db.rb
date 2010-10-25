@@ -50,7 +50,6 @@ module Sources
     #
     def connect_backend
       configure @options
-      return if PICKY_ENVIRONMENT.to_s == 'test' # TODO Unclean.
       raise "Database backend not configured" unless connection_options
       database.establish_connection connection_options
     end
