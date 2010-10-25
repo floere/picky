@@ -39,7 +39,7 @@ describe Configuration::Field do
     describe "tokenizer" do
       context "with specific tokenizer" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, Tokenizers::Default.new
+          @field = Configuration::Field.new :some_name, Tokenizers::Index.new
           
           @field.type = :some_type
         end
@@ -47,7 +47,7 @@ describe Configuration::Field do
           @field.tokenizer.should == @field.tokenizer
         end
         it "returns an instance" do
-          @field.tokenizer.should be_kind_of(Tokenizers::Default)
+          @field.tokenizer.should be_kind_of(Tokenizers::Index)
         end
       end
     end

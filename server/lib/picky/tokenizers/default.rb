@@ -1,3 +1,5 @@
 module Tokenizers
-  Default = Index
+  # Default is always an instance.
+  #
+  Default = Index.new
 end

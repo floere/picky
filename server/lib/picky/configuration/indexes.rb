@@ -12,11 +12,8 @@ module Configuration
     
     # Push into field.
     #
-    # TODO Clean up.
-    #
-    ::CurrentTokenizer = Tokenizers::Default.new
     def default_tokenizer
-      @default_tokenizer ||= ::CurrentTokenizer
+      @default_tokenizer ||= Tokenizers::Default
     end
     
     # Delegates
