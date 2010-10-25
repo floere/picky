@@ -6,16 +6,15 @@ module Configuration
   class Field
     attr_reader :name, :indexed_name, :virtual, :tokenizer
     attr_accessor :type # convenience
-    def initialize name, options = {}
+    def initialize name, tokenizer, options = {}
       @name            = name.to_sym
+      @tokenizer       = tokenizer
       
       # TODO Dup the options?
       
       @source          = options.delete :source
       
       @indexer_class   = options.delete(:indexer)   || Indexers::Default
-      
-      @tokenizer       = options.delete :tokenizer
       
       @indexed_name    = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
       @virtual         = options.delete(:virtual)       || false

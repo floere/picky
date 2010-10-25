@@ -10,7 +10,7 @@ module Configuration
       @types = []
     end
     
-    #
+    # Push into field.
     #
     def default_tokenizer
       @default_tokenizer ||= Tokenizers::Default.new
@@ -32,9 +32,9 @@ module Configuration
       generated
     end
     def field name, options = {}
-      options[:tokenizer] ||= default_tokenizer
+      tokenizer = options[:tokenizer] || default_tokenizer
       
-      Field.new name, options
+      Field.new name, tokenizer, options
     end
     
     #
