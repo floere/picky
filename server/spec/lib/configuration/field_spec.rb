@@ -2,6 +2,146 @@ require 'spec_helper'
 describe Configuration::Field do
   
   context "unit specs" do
+    describe "virtual?" do
+      context "with virtual true" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :virtual => true
+        end
+        it "returns the right value" do
+          @field.virtual?.should == true
+        end
+      end
+      context "with virtual object" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :virtual => 123.6
+        end
+        it "returns the right value" do
+          @field.virtual?.should == true
+        end
+      end
+      context "with virtual nil" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :virtual => nil
+        end
+        it "returns the right value" do
+          @field.virtual?.should == false
+        end
+      end
+      context "with virtual false" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :virtual => false
+        end
+        it "returns the right value" do
+          @field.virtual?.should == false
+        end
+      end
+    end
+    describe "tokenizer" do
+      context "with default tokenizer" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name
+        end
+        it "caches" do
+          @field.tokenizer.should == @field.tokenizer
+        end
+      end
+      context "with specific tokenizer" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :tokenizer => Tokenizers::Default
+          
+          @field.type = :some_type
+        end
+        it "caches" do
+          @field.tokenizer.should == @field.tokenizer
+        end
+        it "returns an instance" do
+          @field.tokenizer.should be_kind_of(Tokenizers::Default)
+        end
+        it "creates a new instance of the right class" do
+          Tokenizers::Default.should_receive(:new).once.with
+          
+          @field.tokenizer
+        end
+      end
+    end
+    describe "indexer" do
+      context "with default indexer" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name
+        end
+        it "caches" do
+          @field.indexer.should == @field.indexer
+        end
+      end
+      context "with specific indexer" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :indexer => Indexers::Default
+          
+          @field.type = :some_type
+        end
+        it "caches" do
+          @field.indexer.should == @field.indexer
+        end
+        it "returns an instance" do
+          @field.indexer.should be_kind_of(Indexers::Default)
+        end
+        it "creates a new instance of the right class" do
+          Indexers::Default.should_receive(:new).once.with :some_type, @field
+          
+          @field.indexer
+        end
+      end
+    end
+    describe "cache" do
+      before(:each) do
+        @field = Configuration::Field.new :some_name
+        @field.stub! :prepare_cache_directory
+        
+        @generated = stub :generated, :generate_caches => nil
+        @field.stub! :generate => @generated
+      end
+      it "prepares the cache directory" do
+        @field.should_receive(:prepare_cache_directory).once.with
+        
+        @field.cache
+      end
+      it "tells the indexer to index" do
+        @generated.should_receive(:generate_caches).once.with
+        
+        @field.cache
+      end
+    end
+    describe "prepare_cache_directory" do
+      before(:each) do
+        @field = Configuration::Field.new :some_name
+        
+        @field.stub! :cache_directory => :some_cache_directory
+      end
+      it "tells the FileUtils to mkdir_p" do
+        FileUtils.should_receive(:mkdir_p).once.with :some_cache_directory
+        
+        @field.prepare_cache_directory
+      end
+    end
+    describe "index" do
+      before(:each) do
+        @field = Configuration::Field.new :some_name
+        @field.stub! :prepare_cache_directory
+        
+        @indexer = stub :indexer, :index => nil
+        @field.stub! :indexer => @indexer
+      end
+      it "prepares the cache directory" do
+        @field.should_receive(:prepare_cache_directory).once.with
+        
+        @field.index
+      end
+      it "tells the indexer to index" do
+        @indexer.should_receive(:index).once.with
+        
+        @field.index
+      end
+    end
     describe "source" do
       context "with source" do
         before(:each) do

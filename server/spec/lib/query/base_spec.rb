@@ -3,6 +3,43 @@ require 'spec_helper'
 
 describe 'Query::Base' do
   
+  describe "empty_results" do
+    before(:each) do
+      @query = Query::Full.new
+      
+      @result_type = stub :result_type
+      @query.stub! :result_type => @result_type
+    end
+    it "returns a new result type" do
+      @result_type.should_receive(:new).once.with :some_offset
+      
+      @query.empty_results :some_offset
+    end
+    it "returns a new result type with default offset" do
+      @result_type.should_receive(:new).once.with 0
+      
+      @query.empty_results
+    end
+  end
+  
+  describe "search_with_text" do
+    before(:each) do
+      @query = Query::Full.new
+    end
+    it "delegates to search" do
+      @query.stub! :tokenized => :tokens
+      
+      @query.should_receive(:search).once.with :tokens, :offset
+      
+      @query.search_with_text :text, :offset
+    end
+    it "uses the tokenizer" do
+      @query.should_receive(:tokenized).once.with :text
+      
+      @query.search_with_text :text, :anything
+    end
+  end
+  
   describe 'reduce' do
     context 'real' do
       before(:each) do
