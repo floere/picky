@@ -2,10 +2,36 @@ require 'spec_helper'
 describe Configuration::Field do
   
   context "unit specs" do
+    describe "source" do
+      context "with source" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name, :source => :some_given_source
+
+          @type = stub :type, :name => :some_type
+          @field.type = @type
+        end
+        it "returns the given source" do
+          @field.source.should == :some_given_source
+        end
+      end
+      context "without source" do
+        before(:each) do
+          @field = Configuration::Field.new :some_name
+
+          @type = stub :type, :name => :some_type, :source => :some_type_source
+          @field.type = @type
+        end
+        it "returns the type's source" do
+          @field.source.should == :some_type_source
+        end
+      end
+    end
     context "name symbol" do
       before(:each) do
         @field = Configuration::Field.new :some_name
-        @field.type = stub :type, :name => :some_type
+        
+        @type = stub :type, :name => :some_type
+        @field.type = @type
       end
       describe "search_index_file_name" do
         it "returns the right file name" do

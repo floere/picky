@@ -10,13 +10,14 @@ module Configuration
       @name            = name.to_sym
       
       # TODO Dup the options?
-      # TODO add source as option
+      
+      @source          = options.delete :source
       
       @indexer_class   = options.delete(:indexer)   || Indexers::Default
       @tokenizer_class = options.delete(:tokenizer) || Tokenizers::Index # Default
       
-      @indexed_name   = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
-      @virtual        = options.delete(:virtual)       || false
+      @indexed_name    = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
+      @virtual         = options.delete(:virtual)       || false
       
       qualifiers = generate_qualifiers_from options
       Query::Qualifiers.add(name, qualifiers) if qualifiers
