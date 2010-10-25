@@ -13,8 +13,9 @@ namespace :index do
   # end
   
   desc "Takes a snapshot, indexes, and caches."
-  task :generate => :application do
-    Indexes.index
+  task :generate, [:order] => :application do |_, options|
+    randomly = (options.order == 'ordered') ? false : true
+    Indexes.index randomly
   end
   
   desc "Generates the index snapshots."

@@ -11,7 +11,7 @@ module Indexes
   end
   # Runs the indexers in parallel (index + cache).
   #
-  def self.index
+  def self.index randomly = true
     Indexes.take_snapshot
 
     # Run in parallel.
@@ -20,9 +20,9 @@ module Indexes
     #      rake index:random (default)
     #      rake index:ordered
     #
-    timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, RANDOM ORDER."
-    Cores.forked self.fields, :randomly => true do |field|
-      # Reestablish DB connection.
+    timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, IN #{randomly ? 'RANDOM' : 'GIVEN'} ORDER."
+    Cores.forked self.fields, { :randomly => randomly } do |field, cores|
+      # Reestablish source backends connection.
       #
       connect_backends
       field.index

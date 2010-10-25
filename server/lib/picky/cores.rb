@@ -25,8 +25,7 @@ class Cores
     
     # 
     #
-    while generator
-      
+    loop do
       # Ramp it up to num processors.
       #
       while currently_processing < max
