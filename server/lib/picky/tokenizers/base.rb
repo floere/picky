@@ -14,6 +14,7 @@ module Tokenizers
     end
     def remove_stopwords text
       text.gsub! @remove_stopwords_regexp, '' if @remove_stopwords_regexp
+      text
     end
     @@non_single_stopword_regexp = /^\b[\w:]+?\b[\.\*\~]?\s?$/
     def remove_non_single_stopwords text

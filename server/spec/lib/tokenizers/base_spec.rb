@@ -6,7 +6,7 @@ describe Tokenizers::Base do
   before(:each) do
     @tokenizer = Tokenizers::Base.new
   end
-
+  
   context 'stopwords' do
     describe '.stopwords' do
       context 'without stopwords given' do
@@ -14,7 +14,7 @@ describe Tokenizers::Base do
           lambda { @tokenizer.remove_stopwords('from this text') }.should_not raise_error
         end
         it 'should define a method remove_stopwords that does nothing' do
-          @tokenizer.remove_stopwords('from this text').should == nil
+          @tokenizer.remove_stopwords('from this text').should == 'from this text'
         end
         it 'should define a method remove_non_single_stopwords' do
           lambda { @tokenizer.remove_non_single_stopwords('from this text') }.should_not raise_error

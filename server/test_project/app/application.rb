@@ -4,7 +4,7 @@ class BookSearch < Application
     
     indexing.removes_characters(/[',\(\)#:!@;\?]/)
     indexing.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
-    indexing.stopwords(/\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/)
+    indexing.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)
     indexing.splits_text_on(/[\s\/\-\"\&\.]/)
     indexing.removes_characters_after_splitting(/[\.]/)
     
