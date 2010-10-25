@@ -47,7 +47,7 @@ describe Configuration::Field do
       end
       context "with specific tokenizer" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :tokenizer => Tokenizers::Default
+          @field = Configuration::Field.new :some_name, :tokenizer => Tokenizers::Default.new
           
           @field.type = :some_type
         end
@@ -56,11 +56,6 @@ describe Configuration::Field do
         end
         it "returns an instance" do
           @field.tokenizer.should be_kind_of(Tokenizers::Default)
-        end
-        it "creates a new instance of the right class" do
-          Tokenizers::Default.should_receive(:new).once.with
-          
-          @field.tokenizer
         end
       end
     end

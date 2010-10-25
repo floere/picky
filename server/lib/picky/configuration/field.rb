@@ -4,7 +4,7 @@ module Configuration
   # (title is a category of a books index, for example).
   #
   class Field
-    attr_reader :name, :indexed_name, :virtual
+    attr_reader :name, :indexed_name, :virtual, :tokenizer
     attr_accessor :type # convenience
     def initialize name, options = {}
       @name            = name.to_sym
@@ -14,7 +14,8 @@ module Configuration
       @source          = options.delete :source
       
       @indexer_class   = options.delete(:indexer)   || Indexers::Default
-      @tokenizer_class = options.delete(:tokenizer) || Tokenizers::Index # Default
+      
+      @tokenizer       = options.delete :tokenizer
       
       @indexed_name    = options.delete(:indexed_field) || name # TODO Rename to indexed_as?
       @virtual         = options.delete(:virtual)       || false
@@ -64,9 +65,6 @@ module Configuration
     end
     def indexer
       @indexer || @indexer = @indexer_class.new(type, self)
-    end
-    def tokenizer
-      @tokenizer || @tokenizer = @tokenizer_class.new
     end
     def virtual?
       !!virtual

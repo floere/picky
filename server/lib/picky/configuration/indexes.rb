@@ -12,13 +12,13 @@ module Configuration
     
     #
     #
-    def default_index
-      @default_index ||= Tokenizers::Index.new
+    def default_tokenizer
+      @default_tokenizer ||= Tokenizers::Default.new
     end
     
     # Delegates
     #
-    delegate :removes_characters, :contracts_expressions, :stopwords, :splits_text_on, :normalizes_words, :removes_characters_after_splitting, :to => :default_index
+    delegate :removes_characters, :contracts_expressions, :stopwords, :splits_text_on, :normalizes_words, :removes_characters_after_splitting, :to => :default_tokenizer
     
     # TODO Rewrite all this configuration handling.
     #
@@ -32,6 +32,8 @@ module Configuration
       generated
     end
     def field name, options = {}
+      options[:tokenizer] ||= default_tokenizer
+      
       Field.new name, options
     end
     
