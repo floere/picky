@@ -10,7 +10,7 @@ h2. Releases
     
   * hanke: Jump to 0.9.0 to work on API, release 1.0.0 soon.
   * hanke: Partial indexing now only down to -3, e.g. florian -> partial: floria, flori, flor.
-             If you want down_to the first character, use:
+             If you want down_to the first character (florian, floria, flori, flor, flo, fl, f), use:
              field(:some_field_name, :partial => Partial::Subtoken.new(:down_to => 1))
   * hanke: Sources::Delicious.new(user, pass) for indexing your delicious posts.
   * hanke: indexing and querying config now done on tokenizer instances.
