@@ -67,8 +67,7 @@ h2. Releases
 0.0.8
 
   * hanke: Application#add_index instead of Application#type.
-    
-             Simplified scaffolding.
+  * hanke: Simplified scaffolding.
 
 0.0.7
     
