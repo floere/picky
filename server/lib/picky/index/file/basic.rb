@@ -10,6 +10,10 @@ module Index
         @cache_path = "#{cache_path}.#{extension}"
       end
       
+      def extension
+        :index
+      end
+      
       # Backup.
       #
       def backup
