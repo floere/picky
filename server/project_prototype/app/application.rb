@@ -17,14 +17,16 @@ class PickySearch < Application
   books_index = index :books,
                       Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, :file => 'app/library.csv'),
                       # Use a database as source:
-                      # Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'), 
+                      # Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
+                      # Or delicious:
+                      # Sources::Delicious.new('username', 'password'), # offers title, tags, url fields.
                       field(:title,
-                            :partial => Partial::Substring.new(:from => 1), # Index partial down to character 1 (default: -3),
-                                                                              # e.g. florian -> floria, flori, flor, flo, fl, f
-                                                                              # Like this, you'll find florian even when entering just an "f".
-                            :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
+                            :partial => Partial::Substring.new(:from => 1), # Index substrings upwards from character 1 (default: -3),
+                                                                              # e.g. picky -> p, pi, pic, pick, picky
+                                                                              # Like this, you'll find picky even when entering just a "p".
+                            :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed (default: no similarity).
                       field(:author, :partial => Partial::Substring.new(:from => 1)),
-                      field(:isbn,   :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense, neither does similarity.
+                      field(:isbn,   :partial => Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
   
   # Defines the maximum tokens (words) that pass through to the engine.
   #
