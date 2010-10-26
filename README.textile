@@ -11,6 +11,7 @@ h2. Releases
   * hanke: Delicious missing gem notice if www-delicious gem is missing.
   * hanke: Partial::Subtoken renamed to Partial::Substring.
              Options: down_to -> from, starting_at -> to
+  * hanke: Index bundle file handling extracted into specific Index::Files backend.
 
 0.9.0
     
