@@ -10,8 +10,8 @@ module Index
   #
   class Bundle
     
-    attr_reader   :category
-    attr_reader   :checker,          :files,            :identifier
+    attr_reader   :identifier, :category
+    attr_reader   :files
     attr_accessor :index,            :weights,          :similarity
     attr_accessor :partial_strategy, :weights_strategy, :similarity_strategy
     
@@ -35,7 +35,6 @@ module Index
       @weights_strategy    = weights_strategy
       @similarity_strategy = similarity_strategy
       
-      @checker = Checker.new self
       @files   = Files.new name, category, type
     end
     
@@ -186,6 +185,26 @@ module Index
       timed_exclaim "Loading the weights for #{identifier} from the cache."
       self.weights = files.load_weights
     end
+    
+    # Alerts the user if an index is missing.
+    #
+    def raise_unless_cache_exists
+      warn_cache_small :index      if files.index_cache_small?
+      warn_cache_small :similarity if files.similarity_cache_small?
+      warn_cache_small :weights    if files.weights_cache_small?
 
+      raise_cache_missing :index      unless files.index_cache_ok?
+      raise_cache_missing :similarity unless files.similarity_cache_ok?
+      raise_cache_missing :weights    unless files.weights_cache_ok?
+    end
+    def warn_cache_small what
+      puts "#{what} cache for #{identifier} smaller than 16 bytes."
+    end
+    # Raises an appropriate error message.
+    #
+    def raise_cache_missing what
+      raise "#{what} cache for #{identifier} missing."
+    end
+    
   end
 end

@@ -166,6 +166,50 @@ describe Index::Bundle do
     end
   end
   
+  describe 'raise_unless_cache_exists' do
+    before(:each) do
+      @files = stub :files
+      @files.stub! :index_cache_ok? => true
+      @files.stub! :similarity_cache_ok? => true
+      @files.stub! :weights_cache_ok? => true
+      @files.stub! :index_cache_small? => false
+      @files.stub! :similarity_cache_small? => false
+      @files.stub! :weights_cache_small? => false
+      
+      @index.stub! :files => @files
+    end
+    context 'weights cache missing' do
+      before(:each) do
+        @files.stub! :weights_cache_ok? => false
+      end
+      it 'should raise' do
+        lambda do
+          @index.raise_unless_cache_exists
+        end.should raise_error("weights cache for some_name: some_type some_category missing.")
+      end
+    end
+    context 'similarity cache missing' do
+      before(:each) do
+        @files.stub! :similarity_cache_ok? => false
+      end
+      it 'should raise' do
+        lambda do
+          @index.raise_unless_cache_exists
+        end.should raise_error("similarity cache for some_name: some_type some_category missing.")
+      end
+    end
+    context 'index cache missing' do
+      before(:each) do
+        @files.stub! :index_cache_ok? => false
+      end
+      it 'should raise' do
+        lambda do
+          @index.raise_unless_cache_exists
+        end.should raise_error("index cache for some_name: some_type some_category missing.")
+      end
+    end
+  end
+  
   describe 'initialization' do
     before(:each) do
       @category = stub :category, :name => :some_category
