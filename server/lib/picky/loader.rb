@@ -161,7 +161,8 @@ module Loader
     load_relative 'index/category'
     load_relative 'index/type'
     
-    load_relative 'index/bundle_checker'
+    load_relative 'index/files'
+    load_relative 'index/checker'
     
     load_relative 'index/wrappers/exact_first'
     

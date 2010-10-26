@@ -6,10 +6,12 @@ module Index
   #
   # Handles exact index, partial index, weights index, and similarity index.
   #
+  # Delegates file handling and checking to a Index::Files object.
+  #
   class Bundle
     
-    attr_reader   :checker
-    attr_reader   :name,             :category,         :type
+    attr_reader   :category
+    attr_reader   :checker,          :files,            :identifier
     attr_accessor :index,            :weights,          :similarity
     attr_accessor :partial_strategy, :weights_strategy, :similarity_strategy
     
@@ -19,19 +21,22 @@ module Index
     # Path is in which directory the cache is located.
     #
     def initialize name, category, type, partial_strategy, weights_strategy, similarity_strategy
+      @identifier = "#{name}: #{type.name} #{category.name}"
+      
       @index      = {}
       @weights    = {}
       @similarity = {}
       
-      @name     = name
+      # TODO Used in weights, try to remove!
+      #
       @category = category
-      @type     = type
       
       @partial_strategy    = partial_strategy
       @weights_strategy    = weights_strategy
       @similarity_strategy = similarity_strategy
       
-      @checker = BundleChecker.new self
+      @checker = Checker.new self
+      @files   = Files.new name, category, type
     end
     
     # Get the ids for the text.
@@ -49,109 +54,6 @@ module Index
     def similar text
       code = similarity_strategy.encoded text
       code && @similarity[code] || []
-    end
-
-    # Identifier for this bundle.
-    #
-    def identifier
-      "#{name}: #{type.name} #{category.name}"
-    end
-    
-    # Point to category.
-    #
-    def search_index_root
-      File.join PICKY_ROOT, 'index'
-      # category.search_index_root
-    end
-
-    # Copies the indexes to the "backup" directory.
-    #
-    def backup
-      target = backup_path
-      FileUtils.mkdir target unless Dir.exists?(target)
-      FileUtils.cp index_cache_path,      target, :verbose => true
-      FileUtils.cp similarity_cache_path, target, :verbose => true
-      FileUtils.cp weights_cache_path,    target, :verbose => true
-    end
-    def backup_path
-      File.join File.dirname(index_cache_path), 'backup'
-    end
-
-    # Restores the indexes from the "backup" directory.
-    #
-    def restore
-      FileUtils.cp backup_file_path_of(index_cache_path), index_cache_path, :verbose => true
-      FileUtils.cp backup_file_path_of(similarity_cache_path), similarity_cache_path, :verbose => true
-      FileUtils.cp backup_file_path_of(weights_cache_path), weights_cache_path, :verbose => true
-    end
-    def backup_file_path_of path
-      dir, name = File.split path
-      File.join dir, 'backup', name
-    end
-
-    # Delete the file at path.
-    #
-    def delete path
-      `rm -Rf #{path}`
-    end
-    # Delete all index files.
-    #
-    def delete_all
-      delete index_cache_path
-      delete similarity_cache_path
-      delete weights_cache_path
-    end
-
-    # Create directory and parent directories.
-    #
-    def create_directory
-      FileUtils.mkdir_p cache_directory
-    end
-    # TODO Move to config. Duplicate Code in field.rb.
-    #
-    def cache_directory
-      File.join search_index_root, PICKY_ENVIRONMENT, type.name.to_s
-    end
-
-    # Generates a cache path.
-    #
-    def cache_path text
-      File.join cache_directory, "#{name}_#{text}"
-    end
-    def index_cache_path
-      cache_path "#{category.name}_index"
-    end
-    def similarity_cache_path
-      cache_path "#{category.name}_similarity"
-    end
-    def weights_cache_path
-      cache_path "#{category.name}_weights"
-    end
-    
-    # Loads all indexes into this category.
-    #
-    def load
-      load_index
-      load_similarity
-      load_weights
-    end
-    def load_the_json path
-      Yajl::Parser.parse File.open("#{path}.json", 'r'), :symbolize_keys => true
-    end
-    def load_the_marshalled path
-      Marshal.load File.open("#{path}.dump", 'r:binary')
-    end
-    def load_index
-      timed_exclaim "Loading the index for #{identifier} from the cache."
-      self.index = load_the_json index_cache_path
-    end
-    def load_similarity
-      timed_exclaim "Loading the similarity for #{identifier} from the cache."
-      self.similarity = load_the_marshalled similarity_cache_path
-    end
-    def load_weights
-      timed_exclaim "Loading the weights for #{identifier} from the cache."
-      self.weights = load_the_json weights_cache_path
     end
     
     # Generation
@@ -200,28 +102,16 @@ module Index
     # TODO Beautify.
     #
     def retrieve
-      # TODO Make r:binary configurable!
-      #
-      File.open(search_index_file_name, 'r:binary') do |file|
-        file.each_line do |line|
-          indexed_id, token = line.split ?,,2
-          token.chomp!
-          token = token.to_sym
-          
-          initialize_index_for token
-          index[token] << indexed_id.to_i
-        end
+      files.retrieve do |indexed_id, token|
+        token.chomp!
+        token = token.to_sym
+        
+        initialize_index_for token
+        index[token] << indexed_id.to_i
       end
     end
     def initialize_index_for token
       index[token] ||= []
-    end
-    # TODO Duplicate code!
-    #
-    # TODO Use config object?
-    #
-    def search_index_file_name
-      File.join cache_directory, "prepared_#{category.name}_index.txt"
     end
     
     # Generators.
@@ -266,19 +156,35 @@ module Index
     end
     def dump_index
       timed_exclaim "DUMP INDEX #{identifier}."
-      index.dump_to_json index_cache_path
+      files.dump_index index
     end
-    # Note: We marshal the similarity, as the
-    #       Yajl json lib cannot load symbolized
-    #       values, just keys.
-    #
     def dump_similarity
       timed_exclaim "DUMP SIMILARITY #{identifier}."
-      similarity.dump_to_marshalled similarity_cache_path
+      files.dump_similarity similarity
     end
     def dump_weights
       timed_exclaim "DUMP WEIGHTS #{identifier}."
-      weights.dump_to_json weights_cache_path
+      files.dump_weights weights
+    end
+    
+    # Loads all indexes into this category.
+    #
+    def load
+      load_index
+      load_similarity
+      load_weights
+    end
+    def load_index
+      timed_exclaim "Loading the index for #{identifier} from the cache."
+      self.index = files.load_index
+    end
+    def load_similarity
+      timed_exclaim "Loading the similarity for #{identifier} from the cache."
+      self.similarity = files.load_similarity
+    end
+    def load_weights
+      timed_exclaim "Loading the weights for #{identifier} from the cache."
+      self.weights = files.load_weights
     end
 
   end

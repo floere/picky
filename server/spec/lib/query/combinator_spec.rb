@@ -29,9 +29,11 @@ describe Query::Combinator do
   
   context "with real categories" do
     before(:each) do
-      @category1 = Index::Category.new :some_name, :some_type
-      @category2 = Index::Category.new :some_name, :some_type
-      @category3 = Index::Category.new :some_name, :some_type
+      @type1     = stub :type1, :name => :some_type
+      
+      @category1 = Index::Category.new :some_name, @type1
+      @category2 = Index::Category.new :some_name, @type1
+      @category3 = Index::Category.new :some_name, @type1
       @categories = [@category1, @category2, @category3]
       
       @combinator = Query::Combinator.new @categories

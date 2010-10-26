@@ -4,8 +4,11 @@ describe Index::Type do
   
   context "with categories" do
     before(:each) do
-      @category1 = Index::Category.new :some_category_name1, :some_type1
-      @category2 = Index::Category.new :some_category_name2, :some_type2
+      @some_type1 = stub :some_type1, :name => :some_type1
+      @some_type2 = stub :some_type2, :name => :some_type2
+      
+      @category1 = Index::Category.new :some_category_name1, @some_type1
+      @category2 = Index::Category.new :some_category_name2, @some_type2
       
       @index = Index::Type.new :some_name, :some_result_type, false, @category1, @category2
     end
