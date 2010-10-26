@@ -19,6 +19,8 @@ module Indexers
     end
     # Convenience methods for user subclasses.
     #
+    # TODO Duplicate code in Index::Files.
+    #
     def search_index_file_name
       @field.search_index_file_name
     end
@@ -48,6 +50,8 @@ module Indexers
       
       indexing_message
       
+      # TODO Move open to Index::File. 
+      #
       File.open(search_index_file_name, 'w:binary') do |file|
         result = []
         source.harvest(@type, @field) do |indexed_id, text|

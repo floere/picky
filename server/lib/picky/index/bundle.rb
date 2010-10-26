@@ -11,9 +11,9 @@ module Index
   class Bundle
     
     attr_reader   :identifier, :category
-    attr_reader   :files
     attr_accessor :index,            :weights,          :similarity
     attr_accessor :partial_strategy, :weights_strategy, :similarity_strategy
+    attr_reader   :files
     
     delegate :[], :[]=, :clear, :to => :index
     delegate :raise_unless_cache_exists, :to => :checker
@@ -35,7 +35,7 @@ module Index
       @weights_strategy    = weights_strategy
       @similarity_strategy = similarity_strategy
       
-      @files   = Files.new name, category, type
+      @files   = Files.new name, category.name, type.name
     end
     
     # Get the ids for the text.

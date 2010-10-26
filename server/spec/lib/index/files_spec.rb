@@ -3,10 +3,12 @@ require 'spec_helper'
 describe Index::Files do
 
   before(:each) do
-    @category    = stub :category, :name => :some_category
-    @type        = stub :type, :name => :some_type
     @files_class = Index::Files
-    @files       = @files_class.new :some_name, @category, @type
+    @files       = @files_class.new :some_name, :some_category, :some_type
+    
+    @index       = @files.index
+    @similarity  = @files.similarity
+    @weights     = @files.weights
   end
 
   describe 'create_directory' do
@@ -37,11 +39,11 @@ describe Index::Files do
 
   describe 'delete_all' do
     it 'should call delete with all paths' do
-      @files.should_receive(:delete).once.with @files.index_cache_path
-      @files.should_receive(:delete).once.with @files.similarity_cache_path
-      @files.should_receive(:delete).once.with @files.weights_cache_path
+      @index.should_receive(:delete).once.with
+      @similarity.should_receive(:delete).once.with
+      @weights.should_receive(:delete).once.with
       
-      @files.delete_all
+      @files.delete
     end
   end
   
@@ -78,34 +80,18 @@ describe Index::Files do
     end
   end
   
-  describe 'weights_cache_path' do
-    it 'should return the correct file name' do
-      @files.weights_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_weights'
-    end
-  end
-  describe 'similarity_cache_path' do
-    it 'should return the correct file name' do
-      @files.similarity_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_similarity'
-    end
-  end
-  describe 'index_cache_path' do
-    it 'should return the correct file name' do
-      @files.index_cache_path.should == 'some/search/root/index/test/some_type/some_name_some_category_index'
-    end
-  end
-
   describe 'initialization' do
     before(:each) do
       @files = @files_class.new :some_name, :some_category, :some_type
     end
     it 'should initialize the name correctly' do
-      @files.name.should == :some_name
+      @files.bundle_name.should == :some_name
     end
     it 'should initialize the name correctly' do
-      @files.category.should == :some_category
+      @files.category_name.should == :some_category
     end
     it 'should initialize the name correctly' do
-      @files.type.should == :some_type
+      @files.type_name.should == :some_type
     end
   end
 

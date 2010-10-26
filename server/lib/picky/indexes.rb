@@ -128,8 +128,8 @@ module Indexes
   #
   def self.clear_caches
     each_bundle do |exact, partial|
-      exact.delete_all
-      partial.delete_all
+      exact.delete
+      partial.delete
     end
   end
 

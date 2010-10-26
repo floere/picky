@@ -155,13 +155,19 @@ module Loader
     load_relative 'cacher/weights_generator'
     load_relative 'cacher/similarity_generator'
     
+    # Index file handling.
+    #
+    load_relative 'index/file/basic'
+    load_relative 'index/file/text'
+    load_relative 'index/file/marshal'
+    load_relative 'index/file/json'
+    load_relative 'index/files'
+    
     # Index types.
     #
     load_relative 'index/bundle'
     load_relative 'index/category'
     load_relative 'index/type'
-    
-    load_relative 'index/files'
     
     load_relative 'index/wrappers/exact_first'
     
