@@ -6,6 +6,8 @@ describe Index::Files do
     @files_class = Index::Files
     @files       = @files_class.new :some_name, :some_category, :some_type
     
+    @prepared    = @files.prepared
+    
     @index       = @files.index
     @similarity  = @files.similarity
     @weights     = @files.weights
@@ -25,25 +27,35 @@ describe Index::Files do
     end
   end
   
-  # TODO
-  #
-  # describe 'retrieve' do
-  #   it 'should call the other methods correctly' do
-  #     results = stub :results
-  #     @files.stub! :execute_query => results
-  #     @files.should_receive(:extract).once.with results
-  #     
-  #     @files.retrieve
-  #   end
-  # end
-
-  describe 'delete_all' do
-    it 'should call delete with all paths' do
-      @index.should_receive(:delete).once.with
-      @similarity.should_receive(:delete).once.with
-      @weights.should_receive(:delete).once.with
+  describe "retrieve" do
+    it "delegates to the prepared" do
+      @prepared.should_receive(:retrieve).once.with
       
-      @files.delete
+      @files.retrieve
+    end
+  end
+  
+  describe "dump indexes" do
+    describe "dump_index" do
+      it "uses the right file" do
+        @index.should_receive(:dump).once.with :some_hash
+        
+        @files.dump_index :some_hash
+      end
+    end
+    describe "dump_similarity" do
+      it "uses the right file" do
+        @similarity.should_receive(:dump).once.with :some_hash
+        
+        @files.dump_similarity :some_hash
+      end
+    end
+    describe "dump_weights" do
+      it "uses the right file" do
+        @weights.should_receive(:dump).once.with :some_hash
+        
+        @files.dump_weights :some_hash
+      end
     end
   end
   
@@ -77,6 +89,82 @@ describe Index::Files do
         
         @files.load_weights
       end
+    end
+  end
+  
+  describe "dump indexes" do
+    describe "index_cache_ok?" do
+      it "uses the right method" do
+        @index.should_receive(:cache_ok?).once.with
+        
+        @files.index_cache_ok?
+      end
+    end
+    describe "similarity_cache_ok?" do
+      it "uses the right method" do
+        @similarity.should_receive(:cache_ok?).once.with
+        
+        @files.similarity_cache_ok?
+      end
+    end
+    describe "weights_cache_ok?" do
+      it "uses the right method" do
+        @weights.should_receive(:cache_ok?).once.with
+        
+        @files.weights_cache_ok?
+      end
+    end
+  end
+  
+  describe "dump indexes" do
+    describe "index_cache_small?" do
+      it "uses the right method" do
+        @index.should_receive(:cache_small?).once.with
+        
+        @files.index_cache_small?
+      end
+    end
+    describe "similarity_cache_small?" do
+      it "uses the right method" do
+        @similarity.should_receive(:cache_small?).once.with
+        
+        @files.similarity_cache_small?
+      end
+    end
+    describe "weights_cache_small?" do
+      it "uses the right method" do
+        @weights.should_receive(:cache_small?).once.with
+        
+        @files.weights_cache_small?
+      end
+    end
+  end
+  
+  describe 'backup' do
+    it 'should call backup on all' do
+      @index.should_receive(:backup).once.with
+      @similarity.should_receive(:backup).once.with
+      @weights.should_receive(:backup).once.with
+      
+      @files.backup
+    end
+  end
+  describe 'restore' do
+    it 'should call delete on all' do
+      @index.should_receive(:restore).once.with
+      @similarity.should_receive(:restore).once.with
+      @weights.should_receive(:restore).once.with
+      
+      @files.restore
+    end
+  end
+  describe 'delete' do
+    it 'should call delete on all' do
+      @index.should_receive(:delete).once.with
+      @similarity.should_receive(:delete).once.with
+      @weights.should_receive(:delete).once.with
+      
+      @files.delete
     end
   end
   
