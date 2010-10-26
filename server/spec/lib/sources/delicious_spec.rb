@@ -3,7 +3,15 @@ require 'spec_helper'
 describe Sources::Delicious do
   
   context "with file" do
-
+    
+    describe "check_gem" do
+      # TODO How to actually test this?
+      #
+      it "checks if the gem is there" do
+        lambda { Sources::Delicious.new(:username, :password) }.should_not raise_error
+      end
+    end
+    
     describe "harvest" do
       before(:each) do
         @source = Sources::Delicious.new(:username, :password)

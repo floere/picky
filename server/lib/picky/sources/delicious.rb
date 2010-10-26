@@ -3,9 +3,15 @@ module Sources
   class Delicious < Base
     
     def initialize username, password
-      require 'www/delicious'
+      check_gem
       @username = username
       @password = password
+    end
+    def check_gem
+      require 'www/delicious'
+    rescue LoadError
+      puts "Delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n  2. Then, run:\n     bundle update\n"
+      exit(1)
     end
     
     # Harvests the data to index.
