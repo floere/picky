@@ -11,7 +11,7 @@ module Index
         Yajl::Parser.parse ::File.open(cache_path, 'r'), :symbolize_keys => true
       end
       def dump hash
-        hash.dump_to_json cache_path
+        hash.dump_json cache_path
       end
       def retrieve
         raise "Can't retrieve from marshalled file. Use text file."

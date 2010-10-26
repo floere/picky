@@ -11,7 +11,7 @@ module Index
         ::Marshal.load ::File.open(cache_path, 'r:binary')
       end
       def dump hash
-        hash.dump_to_marshalled cache_path
+        hash.dump_marshalled cache_path
       end
       def retrieve
         raise "Can't retrieve from marshalled file. Use text file."

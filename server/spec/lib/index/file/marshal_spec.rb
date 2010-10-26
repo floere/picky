@@ -10,7 +10,7 @@ describe Index::File::Marshal do
     it "delegates to the given hash" do
       hash = stub :hash
       
-      hash.should_receive(:dump_to_marshalled).once.with "some_cache_path.dump"
+      hash.should_receive(:dump_marshalled).once.with "some_cache_path.dump"
       
       @file.dump hash
     end

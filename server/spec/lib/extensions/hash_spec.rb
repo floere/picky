@@ -6,7 +6,7 @@ describe Hash do
     it 'uses the right file' do
       File.should_receive(:open).once.with('some/file/path.json', 'w')
       
-      {}.dump_to_json 'some/file/path'
+      {}.dump_json 'some/file/path.json'
     end
     it "uses the right encoder" do
       file = stub :file
@@ -14,7 +14,7 @@ describe Hash do
       
       Yajl::Encoder.should_receive(:encode).once.with({ :some => :hash }, file)
       
-      { :some => :hash }.dump_to_json 'unimportant'
+      { :some => :hash }.dump_json 'unimportant'
     end
   end
   
@@ -22,7 +22,7 @@ describe Hash do
     it 'uses the right file' do
       File.should_receive(:open).once.with('some/file/path.dump', 'w:binary')
       
-      {}.dump_to_marshalled 'some/file/path'
+      {}.dump_marshalled 'some/file/path.dump'
     end
     it "uses the right encoder" do
       file = stub :file
@@ -30,7 +30,7 @@ describe Hash do
       
       Marshal.should_receive(:dump).once.with({ :some => :hash }, file)
       
-      { :some => :hash }.dump_to_marshalled 'unimportant'
+      { :some => :hash }.dump_marshalled 'unimportant'
     end
   end
   

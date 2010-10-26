@@ -10,7 +10,7 @@ describe Index::File::JSON do
     it "delegates to the given hash" do
       hash = stub :hash
       
-      hash.should_receive(:dump_to_json).once.with "some_cache_path.json"
+      hash.should_receive(:dump_json).once.with "some_cache_path.json"
       
       @file.dump hash
     end
