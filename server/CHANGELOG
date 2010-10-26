@@ -1,3 +1,6 @@
+0.9.1 - hanke: Delicious missing gem notice if www-delicious gem is missing.
+        hanke: Partial::Subtoken renamed to Partial::Substring.
+               Options: down_to -> from, starting_at -> to
 0.9.0 - hanke: Partial indexing now only down to -3, e.g. florian -> partial: floria, flori, flor.
                If you want down_to the first character, use:
                field(:some_field_name, :partial => Partial::Subtoken.new(:down_to => 1))

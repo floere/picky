@@ -6,6 +6,12 @@ Take a dive with Picky in "the Getting Started section":http://floere.github.com
 
 h2. Releases
 
+0.9.1
+
+  * hanke: Delicious missing gem notice if www-delicious gem is missing.
+  * hanke: Partial::Subtoken renamed to Partial::Substring.
+             Options: down_to -> from, starting_at -> to
+
 0.9.0
     
   * hanke: Jump to 0.9.0 to work on API, release 1.0.0 soon.
