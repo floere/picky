@@ -7,3 +7,101 @@ Note: Currently in the 0.3 version range.
 h2. The combinatorial small-text search engine.
 
 Picky is split into a server (picky) and a client (picky-client) which is to be used in e.g. Rails.
+
+h2. Releases
+
+* 0.9.0
+    
+    * hanke: Jump to 0.9.0 to work on API, release 1.0.0 soon.
+    * hanke: Partial indexing now only down to -3, e.g. florian -> partial: floria, flori, flor.
+             If you want down_to the first character, use:
+             field(:some_field_name, :partial => Partial::Subtoken.new(:down_to => 1))
+    * hanke: Sources::Delicious.new(user, pass) for indexing your delicious posts.
+    * hanke: indexing and querying config now done on tokenizer instances.
+    
+* 0.3.1
+
+    * hanke: Generator gives more informative NoGeneratorError message.
+
+* 0.3.0
+
+    * hanke: Uses json (index, index weights) and marshal (similarity index) to dump indexes.
+    * hanke: Server generator is more helpful (thanks kschiess)
+    * hanke: Generator for a Sinatra project. (picky-client sinatra project_name)
+    * hanke: Helpful client generator. (thanks kschiess)
+
+* 0.2.4
+
+    * hanke: Indexing output, output in general cleaned up.
+    * hanke: Better info after generating a new project (thanks kschiess).
+    * hanke: Indexer now uses json for the dump files (much faster, slightly larger, thanks niko).
+    * hanke: JS files rewritten.
+
+* 0.2.3
+
+    * hanke: Indexer hits filesystem only seldomly.
+    * hanke: Internal rename from full index to exact index (visible in index filenames).
+    * hanke: Solr Indexing removed until someone needs it. Then we'll talk cash. Just kidding.
+    * hanke: Improved Gemfile.
+    
+* 0.2.2
+
+    * hanke: Umlaut handling (i.e. character substitution) now pluggable.
+    * hanke: Apps finalization now handled through Ruby callback (thanks to severin).
+
+* 0.2.1
+
+    * hanke: Fix for negative partial index values (:partial => Partial::Subtoken.new(:down_to => -3))
+
+* 0.2.0
+
+    * hanke: Server only uses JSON to encode results.
+    * hanke: Client uses only JSON for full and partial queries.
+
+* 0.1.0
+
+    * hanke: Application interface rewrite. See a freshly created
+             project (using picky project <name>).
+             Application#add_index.
+
+* 0.0.9
+
+    * hanke: Cleanup. Frontend example.
+
+* 0.0.8
+
+    * hanke: Application#add_index instead of Application#type.
+    
+             Simplified scaffolding.
+
+* 0.0.7
+    
+    * hanke: Gem compiles on install. Do not compile on run.
+
+* 0.0.6
+
+    * hanke: Removed unnecessary gem dependencies (thanks to niko).
+    * hanke: Added CSV to the possible Sources. Sources::CSV.new(:title, :author, :isbn, :file => 'data/books.csv'),
+    * hanke: Renamed all instances of SEARCH_* constants to PICKY_*. (Uses RACK_ENV)
+
+* 0.0.5
+
+    * hanke: config.ru, unicorn.ru now top level in newly created project (more standard).
+    * hanke: Port now defined in unicorn.ru (use listen 'host:port').
+    * hanke: Enriched callbacks in the JS interface definition (before, success, after).
+
+* 0.0.4
+
+    * hanke: Interface now created using Picky::Helper.interface or .cached_interface (if you only have a single language in your app).
+
+* 0.0.3
+
+    * hanke: C-Code cleaned up, removed warnings.
+    
+* 0.0.2
+
+    * hanke: Newly created application better documented.
+    
+* 0.0.1
+
+    * hanke: Initial project. Server (picky) and basic frontend client (picky-client) available.
