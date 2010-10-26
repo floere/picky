@@ -25,4 +25,7 @@ task :simplecov do
   SimpleCov.start 'picky'
 end
 
-task :cov => [:simplecov, :spec]
+task :cov do
+  Rake::Task['simplecov'].invoke
+  Rake::Task['spec'].invoke
+end
