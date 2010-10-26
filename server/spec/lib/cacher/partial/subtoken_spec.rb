@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Cacher::Partial::Subtoken do
+describe Cacher::Partial::Substring do
   
-  context 'default down_to' do
+  context 'default from' do
     before(:each) do
-      @cacher = Cacher::Partial::Subtoken.new
+      @cacher = Cacher::Partial::Substring.new
     end
-    describe 'down_to' do
+    describe 'from' do
       it 'should return the right value' do
-        @cacher.down_to.should == 1
+        @cacher.from.should == 1
       end
     end
     describe 'generate_from' do
@@ -40,10 +40,10 @@ describe Cacher::Partial::Subtoken do
       end
     end
   end
-  context 'down_to set' do
-    describe 'negative down_to' do
+  context 'from set' do
+    describe 'negative from' do
       before(:each) do
-        @cacher = Cacher::Partial::Subtoken.new :down_to => -2
+        @cacher = Cacher::Partial::Substring.new :from => -2
       end
       it 'should generate the right index' do
         @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
@@ -54,9 +54,9 @@ describe Cacher::Partial::Subtoken do
         }
       end
     end
-    context "large down_to" do
+    context "large from" do
       before(:each) do
-        @cacher = Cacher::Partial::Subtoken.new :down_to => 10
+        @cacher = Cacher::Partial::Substring.new :from => 10
       end
       describe 'generate_from' do
         it 'should generate the right index' do
@@ -68,18 +68,18 @@ describe Cacher::Partial::Subtoken do
         end
       end
     end
-    context 'default starting_at' do
+    context 'default to' do
       before(:each) do
-        @cacher = Cacher::Partial::Subtoken.new :down_to => 4
+        @cacher = Cacher::Partial::Substring.new :from => 4
       end
-      describe 'starting_at' do
+      describe 'to' do
         it 'should return the right value' do
-          @cacher.starting_at.should == -1
+          @cacher.to.should == -1
         end
       end
-      describe 'down_to' do
+      describe 'from' do
         it 'should return the right value' do
-          @cacher.down_to.should == 4
+          @cacher.from.should == 4
         end
       end
       describe 'generate_from' do
@@ -122,18 +122,18 @@ describe Cacher::Partial::Subtoken do
         end
       end
     end
-    context 'starting_at set' do
+    context 'to set' do
       before(:each) do
-        @cacher = Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => -2
+        @cacher = Cacher::Partial::Substring.new :from => 4, :to => -2
       end
-      describe 'starting_at' do
+      describe 'to' do
         it 'should return the right value' do
-          @cacher.starting_at.should == -2
+          @cacher.to.should == -2
         end
       end
-      describe 'down_to' do
+      describe 'from' do
         it 'should return the right value' do
-          @cacher.down_to.should == 4
+          @cacher.from.should == 4
         end
       end
       describe 'generate_from' do
@@ -148,18 +148,18 @@ describe Cacher::Partial::Subtoken do
         end
       end
     end
-    context 'starting_at set' do
+    context 'to set' do
       before(:each) do
-        @cacher = Cacher::Partial::Subtoken.new :down_to => 4, :starting_at => 0
+        @cacher = Cacher::Partial::Substring.new :from => 4, :to => 0
       end
-      describe 'starting_at' do
+      describe 'to' do
         it 'should return the right value' do
-          @cacher.starting_at.should == 0
+          @cacher.to.should == 0
         end
       end
-      describe 'down_to' do
+      describe 'from' do
         it 'should return the right value' do
-          @cacher.down_to.should == 4
+          @cacher.from.should == 4
         end
       end
       describe 'generate_from' do

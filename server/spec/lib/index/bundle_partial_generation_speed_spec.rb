@@ -5,7 +5,7 @@ describe Index::Bundle do
   before(:each) do
     @category         = stub :category, :name => :some_category
     @type             = stub :type, :name => :some_type
-    @partial_strategy = Cacher::Partial::Subtoken.new :down_to => 1
+    @partial_strategy = Cacher::Partial::Substring.new :from => 1
     @exact            = Index::Bundle.new :some_name, @category, @type, @partial_strategy, nil, nil
   end
 

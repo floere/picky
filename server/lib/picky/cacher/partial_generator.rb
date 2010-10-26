@@ -6,7 +6,7 @@ module Cacher
     
     # Generate a partial index based on the given index.
     #
-    def generate strategy = Partial::Subtoken.new(:down_to => 1)
+    def generate strategy = Partial::Substring.new(:from => 1)
       strategy.generate_from self.index
     end
 

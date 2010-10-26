@@ -19,11 +19,11 @@ class PickySearch < Application
                       # Use a database as source:
                       # Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'), 
                       field(:title,
-                            :partial => Partial::Subtoken.new(:down_to => 1), # Index partial down to character 1 (default: -3),
+                            :partial => Partial::Substring.new(:from => 1), # Index partial down to character 1 (default: -3),
                                                                               # e.g. florian -> floria, flori, flor, flo, fl, f
                                                                               # Like this, you'll find florian even when entering just an "f".
                             :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
-                      field(:author, :partial => Partial::Subtoken.new(:down_to => 1)),
+                      field(:author, :partial => Partial::Substring.new(:from => 1)),
                       field(:isbn,   :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense, neither does similarity.
   
   # Defines the maximum tokens (words) that pass through to the engine.

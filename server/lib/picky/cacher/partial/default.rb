@@ -1,5 +1,5 @@
 module Cacher
   module Partial
-    Default = Subtoken.new :down_to => -3, :starting_at => -1
+    Default = Substring.new :from => -3, :to => -1
   end
 end

@@ -4,20 +4,20 @@ module Cacher
     
     # Generates the right subtokens for use in the subtoken strategy.
     #
-    class SubtokenGenerator
+    class SubstringGenerator
       
-      attr_reader :down_to, :starting_at
+      attr_reader :from, :to
       
-      def initialize down_to, starting_at
-        @down_to, @starting_at = down_to, starting_at
+      def initialize from, to
+        @from, @to = from, to
         
-        if @starting_at.zero?
+        if @to.zero?
           def each_subtoken token, &block
-            token.each_subtoken @down_to, &block
+            token.each_subtoken @from, &block
           end
         else
           def each_subtoken token, &block
-            token[0..@starting_at].intern.each_subtoken @down_to, &block
+            token[0..@to].intern.each_subtoken @from, &block
           end
         end
         
@@ -36,31 +36,31 @@ module Cacher
     # "flo"
     # "fl"
     # "f"
-    # Depending on what the given down_to value is. (Example with down_to == 1)
+    # Depending on what the given from value is. (Example with from == 1)
     #
-    class Subtoken < Strategy
+    class Substring < Strategy
       
       # Down to is how far it will go down in generating the subtokens.
       #
       # Examples:
-      # With :hello, and starting_at -1
+      # With :hello, and to -1
       # * down to == 1: [:hello, :hell, :hel, :he, :h]
       # * down to == 4: [:hello, :hell]
       #
-      # With :hello, and starting_at -2
+      # With :hello, and to -2
       # * down to == 1: [:hell, :hel, :he, :h]
       # * down to == 4: [:hell]
       #
       def initialize options = {}
-        down_to     = options[:down_to] || 1
-        starting_at = options[:starting_at] || -1
-        @generator = SubtokenGenerator.new down_to, starting_at
+        from     = options[:from] || 1
+        to = options[:to] || -1
+        @generator = SubstringGenerator.new from, to
       end
-      def down_to
-        @generator.down_to
+      def from
+        @generator.from
       end
-      def starting_at
-        @generator.starting_at
+      def to
+        @generator.to
       end
       
       # Generates a partial index from the given index.
