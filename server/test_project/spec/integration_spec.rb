@@ -33,6 +33,7 @@ describe "Cases" do
     # Partial
     #
     it_should_find_ids_in_main_full 'Gover* Systems', [7]
+    it_should_find_ids_in_main_full 'A*', [2, 5, 21, 22, 23, 24, 27, 36, 39, 41, 47, 51, 71, 103, 110, 120, 149, 171, 213, 231]
     
     # Similarity
     #
