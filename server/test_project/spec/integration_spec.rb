@@ -10,8 +10,6 @@ describe "Cases" do
   #
   before(:all) do
     Indexes.load_from_cache
-  end
-  before(:each) do
     @full = Query::Full.new Indexes[:csv_test]
   end
   

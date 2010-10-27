@@ -10,8 +10,10 @@ class BookSearch < Application
     
     few_similarities = Similarity::DoubleLevenshtone.new(2)
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
+                                   :partial => Partial::Substring.new(:from => 1),
                                    :similarity => few_similarities
-    author        = field :author, :qualifiers => [:a, :author, :auteur], :partial => Partial::Substring.new(:from => -2)
+    author        = field :author, :qualifiers => [:a, :author, :auteur],
+                                   :partial => Partial::Substring.new(:from => -2)
     year          = field :year,   :qualifiers => [:y, :year, :annee]
     isbn          = field :isbn,   :qualifiers => [:i, :isbn]
     
