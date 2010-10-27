@@ -5,15 +5,15 @@ var PickyI18n = { };
 // Set the correct locale for all js code.
 //
 $(function() {
-  PickyI18n.locale = $('html').attr('lang') || 'en';
+  PickyI18n.locale = $('html').attr('lang').split('-')[0] || 'en';
 });
 
 var dictionary = {
   common:{
-    join:   {de:'und',fr:'et',it:'e',en:'and',ch:'und'},
-    'with': {de:'mit',fr:'avec',it:'con',en:'with',ch:'mit'},
-    of: {de:'von',fr:'de',it:'di',en:'of',ch:'vo'},
-    to: {de:'bis',fr:'à',it:'alla',en:'to',ch:'bis'}
+    join:   { de: 'und', fr: 'et',  it: 'e',    en: 'and',  ch: 'und' },
+    'with': { de: 'mit', fr: 'avec',it: 'con',  en: 'with', ch: 'mit' },
+    of:     { de: 'von', fr: 'de',  it: 'di',   en: 'of',   ch: 'vo' },
+    to:     { de: 'bis', fr: 'à',   it: 'alla', en: 'to',   ch: 'bis' }
   },
   results:{
     addination:{
