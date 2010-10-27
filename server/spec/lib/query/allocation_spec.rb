@@ -7,6 +7,14 @@ describe Query::Allocation do
     @allocation = Query::Allocation.new @combinations
   end
   
+  describe "eql?" do
+    # TODO This works, but is not acceptable.
+    #
+    it "returns true" do
+      @allocation.eql?(:anything).should == true
+    end
+  end
+  
   describe "hash" do
     it "delegates to the combinations" do
       @combinations.should_receive(:hash).once.with
