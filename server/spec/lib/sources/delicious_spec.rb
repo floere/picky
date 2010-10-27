@@ -1,14 +1,33 @@
 require 'spec_helper'
 
+# TODO Slow spec.
+#
 describe Sources::Delicious do
   
   context "with file" do
     
     describe "check_gem" do
-      # TODO How to actually test this?
-      #
-      it "checks if the gem is there" do
-        lambda { Sources::Delicious.new(:username, :password) }.should_not raise_error
+      before(:each) do
+        @source = Sources::Delicious.allocate
+      end
+      context "doesn't find www/delicious" do
+        before(:each) do
+          @source.should_receive(:require).any_number_of_times.and_raise LoadError
+        end
+        it "puts & exits" do
+          @source.should_receive(:puts).once.with "Delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n  2. Then, run:\n     bundle update\n"
+          @source.should_receive(:exit).once.with 1
+          
+          @source.check_gem
+        end
+      end
+      context "finds www/delicious" do
+        before(:each) do
+          @source.should_receive(:require).any_number_of_times.and_return
+        end
+        it "checks if the gem is there" do
+          lambda { @source.check_gem }.should_not raise_error
+        end
       end
     end
     
