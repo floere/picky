@@ -43,7 +43,7 @@ describe Cacher::Partial::Substring do
   context 'from set' do
     describe 'negative from' do
       before(:each) do
-        @cacher = Cacher::Partial::Substring.new :from => -2
+        @cacher = Cacher::Partial::Substring.new from: -2
       end
       it 'should generate the right index' do
         @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
@@ -56,7 +56,7 @@ describe Cacher::Partial::Substring do
     end
     context "large from" do
       before(:each) do
-        @cacher = Cacher::Partial::Substring.new :from => 10
+        @cacher = Cacher::Partial::Substring.new from: 10
       end
       describe 'generate_from' do
         it 'should generate the right index' do
@@ -70,7 +70,7 @@ describe Cacher::Partial::Substring do
     end
     context 'default to' do
       before(:each) do
-        @cacher = Cacher::Partial::Substring.new :from => 4
+        @cacher = Cacher::Partial::Substring.new from: 4
       end
       describe 'to' do
         it 'should return the right value' do
@@ -124,7 +124,7 @@ describe Cacher::Partial::Substring do
     end
     context 'to set' do
       before(:each) do
-        @cacher = Cacher::Partial::Substring.new :from => 4, :to => -2
+        @cacher = Cacher::Partial::Substring.new from: 4, to: -2
       end
       describe 'to' do
         it 'should return the right value' do
@@ -150,7 +150,7 @@ describe Cacher::Partial::Substring do
     end
     context 'to set' do
       before(:each) do
-        @cacher = Cacher::Partial::Substring.new :from => 4, :to => 0
+        @cacher = Cacher::Partial::Substring.new from: 4, to: 0
       end
       describe 'to' do
         it 'should return the right value' do
