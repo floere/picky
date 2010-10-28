@@ -5,9 +5,9 @@ require 'rack/mount'
 class Routing
   
   @@defaults = {
-    :query_key    => 'query'.freeze,
-    :offset_key   => 'offset'.freeze,
-    :content_type => 'application/octet-stream'.freeze
+    query_key:    'query'.freeze,
+    offset_key:   'offset'.freeze,
+    content_type: 'application/octet-stream'.freeze
   }
   
   def initialize
@@ -31,24 +31,6 @@ class Routing
   def call env
     routes.call env
   end
-  
-  # # Set the defaults.
-  # # 
-  # # Options are:
-  # #  * :query_key  => :query # default
-  # #  * :offset_key => :offset # default
-  # #  
-  # #  * :tokenizer  => Tokenizers::Query.new # default
-  # #
-  # def defaults options = {}
-  #   @defaults[:query_key]    = options[:query_key].to_s  if options[:query_key]
-  #   @defaults[:offset_key]   = options[:offset_key].to_s if options[:offset_key]
-  #   
-  #   @defaults[:tokenizer]    = options[:tokenizer]       if options[:tokenizer]
-  #   @defaults[:content_type] = options[:content_type]    if options[:content_type]
-  #   
-  #   @defaults
-  # end
   
   #
   #
@@ -101,7 +83,7 @@ class Routing
   def default_options url, route_options = {}
     url = normalized url
     
-    options = { :request_method => 'GET' }.merge route_options
+    options = { request_method: 'GET' }.merge route_options
     
     options[:path_info] = url if url
     

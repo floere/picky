@@ -42,7 +42,7 @@ module Query
 
         index_types.each do |index|
           begin
-            response = server.select :q => new_query, :fq => "type:#{index.name}", :hl => true, :'hl.fl' => '*', :'hl.simple.pre' => '<', :'hl.simple.post' => '>', :facet => true
+            response = server.select q: new_query, fq: "type:#{index.name}", hl: true, :'hl.fl' => '*', :'hl.simple.pre' => '<', :'hl.simple.post' => '>', facet: true
           rescue RSolr::RequestError => re
             return results
           end
@@ -58,7 +58,7 @@ module Query
           similar[index.name] = possibilities unless possibilities.empty?
         end
 
-        results.add :similar => similar
+        results.add similar: similar
       end
 
       # TODO

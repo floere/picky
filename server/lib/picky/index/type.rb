@@ -19,7 +19,7 @@ module Index
       @combinator  = combinator_for categories, ignore_unassigned_tokens
     end
     def combinator_for categories, ignore_unassigned_tokens
-       Query::Combinator.new @categories, :ignore_unassigned_tokens => ignore_unassigned_tokens
+       Query::Combinator.new @categories, ignore_unassigned_tokens: ignore_unassigned_tokens
     end
     
     #

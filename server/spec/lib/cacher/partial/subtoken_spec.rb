@@ -13,29 +13,29 @@ describe Cacher::Partial::Substring do
     end
     describe 'generate_from' do
       it 'should generate the right index' do
-        @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
-          :florian => [1],
-          :floria => [1],
-          :flori => [1],
-          :flor => [1],
-          :flo => [1],
-          :fl => [1, 2],
-          :f => [1, 2], 
-          :flavia => [2],
-          :flavi => [2],
-          :flav => [2],
-          :fla => [2]
+        @cacher.generate_from(florian: [1], flavia: [2]).should == {
+          florian: [1],
+          floria:  [1],
+          flori:   [1],
+          flor:    [1],
+          flo:     [1],
+          fl:   [1, 2],
+          f:    [1, 2], 
+          flavia:  [2],
+          flavi:   [2],
+          flav:    [2],
+          fla:     [2]
         }
       end
       it "should be fast" do
-        performance_of { @cacher.generate_from( :florian => [1], :flavia => [2] ) }.should < 0.0001
+        performance_of { @cacher.generate_from(florian: [1], flavia: [2]) }.should < 0.0001
       end
       it "should handle duplicate ids" do
-        @cacher.generate_from( :flo => [1], :fla => [1] ).should == {
-          :flo => [1],
-          :fl => [1],
-          :f => [1],
-          :fla => [1]
+        @cacher.generate_from(flo: [1], fla: [1]).should == {
+          flo: [1],
+          fl:  [1],
+          f:   [1],
+          fla: [1]
         }
       end
     end

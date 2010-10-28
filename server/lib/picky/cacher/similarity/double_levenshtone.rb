@@ -32,7 +32,7 @@ module Cacher
       # Generates an index for the given index (in exact index style).
       #
       # In the following form:
-      # [:meier, :mueller, :peter, :pater] => { :MR => [:meier], :MLR => [:mueller], :PTR => [:peter, :pater] }
+      # [:meier, :mueller, :peter, :pater] => { MR: [:meier], MLR: [:mueller], PTR: [:peter, :pater] }
       #
       def generate_from index
         hash = hashify index.keys

@@ -18,7 +18,7 @@ module Index
       #
       def backup
         prepare_backup backup_path
-        FileUtils.cp cache_path, target, :verbose => true
+        FileUtils.cp cache_path, target, verbose: true
       end
       def backup_path
         ::File.join ::File.dirname(cache_path), 'backup'
@@ -30,7 +30,7 @@ module Index
       # Restore.
       #
       def restore
-        FileUtils.cp backup_file_path_of(cache_path), cache_path, :verbose => true
+        FileUtils.cp backup_file_path_of(cache_path), cache_path, verbose: true
       end
       def backup_file_path_of path
         dir, name = ::File.split path

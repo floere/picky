@@ -44,7 +44,7 @@ module Picky
     
     def initialize
       @types = {
-        :project => [Project, :project_name]
+        project: [Project, :project_name]
       }
     end
     

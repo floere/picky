@@ -30,12 +30,12 @@ module Sources
     #
     def get_data
       @generated_id ||= 0
-      @posts ||= WWW::Delicious.new(@username, @password).posts_recent(:count => 100)
+      @posts ||= WWW::Delicious.new(@username, @password).posts_recent(count: 100)
       @posts.each do |post|
         data = {
-          :title => post.title,
-          :tags  => post.tags.join(' '),
-          :url   => post.url.to_s
+          title: post.title,
+          tags:  post.tags.join(' '),
+          url:   post.url.to_s
         }
         @generated_id += 1
         yield @generated_id, data

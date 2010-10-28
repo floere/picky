@@ -40,7 +40,7 @@ module Indexers
       
       results.each do |indexed_id, *values|
         values.each &:downcase!
-        documents << hashed(values).merge(:id => indexed_id, :type => type_name)
+        documents << hashed(values).merge(id: indexed_id, type: type_name)
       end
 
       solr.add documents

@@ -21,7 +21,7 @@ module Indexes
     #      rake index:ordered
     #
     timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, IN #{randomly ? 'RANDOM' : 'GIVEN'} ORDER."
-    Cores.forked self.fields, { :randomly => randomly } do |field, cores|
+    Cores.forked self.fields, { randomly: randomly } do |field, cores|
       field.index
       field.cache
     end

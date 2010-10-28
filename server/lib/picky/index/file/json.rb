@@ -8,7 +8,7 @@ module Index
         :json
       end
       def load
-        Yajl::Parser.parse ::File.open(cache_path, 'r'), :symbolize_keys => true
+        Yajl::Parser.parse ::File.open(cache_path, 'r'), symbolize_keys: true
       end
       def dump hash
         hash.dump_json cache_path

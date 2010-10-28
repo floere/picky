@@ -7,7 +7,7 @@ module Sources
     
     attr_reader :select_statement, :database, :connection_options
     
-    def initialize select_statement, options = { :file => 'app/db.yml' }
+    def initialize select_statement, options = { file: 'app/db.yml' }
       @select_statement = select_statement
       @database         = create_database_adapter
       @options          = options

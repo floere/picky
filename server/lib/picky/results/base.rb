@@ -20,10 +20,10 @@ module Results
     #
     #
     def serialize
-      { :allocations => allocations.to_result,
-        :offset      => offset,
-        :duration    => duration,
-        :total       => total }
+      { allocations: allocations.to_result,
+        offset:      offset,
+        duration:    duration,
+        total:       total }
     end
     # The default format is json.
     #
