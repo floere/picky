@@ -44,10 +44,6 @@ module Loader
   # Load the user's application.
   #
   def self.load_application
-    # Load the user's application.
-    #
-    exclaim 'Loading Application.'
-    
     # Add lib dir to load path.
     #
     # add_lib_dir
@@ -80,7 +76,7 @@ module Loader
     #
     Query::Qualifiers.instance.prepare
     
-    exclaim "Application loaded."
+    exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
   end
   
   # Loads the framework.
