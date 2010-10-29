@@ -44,7 +44,7 @@
 	<key>Creator</key>
 	<string>Florian Hanke</string>
 	<key>DisplayScale</key>
-	<string>1 0/72 in = 1 0/72 in</string>
+	<string>1 0/72 in = 1.0000 in</string>
 	<key>GraphDocumentVersion</key>
 	<integer>6</integer>
 	<key>GraphicsList</key>
@@ -373,7 +373,7 @@ from IDs}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{537.667, 341.999}, {86, 30}}</string>
+			<string>{{531.667, 341.999}, {98, 30}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -429,7 +429,7 @@ from IDs}</string>
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
 
 \f0\fs24 \cf2 Returns IDs and\
-metadata}</string>
+metadata (JSON)}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -903,7 +903,7 @@ Picky Server}</string>
 			<key>Points</key>
 			<array>
 				<string>{463.417, 268.197}</string>
-				<string>{526.833, 268.09}</string>
+				<string>{526.833, 268.091}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1171,7 +1171,7 @@ Picky Server}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2010-10-22 16:43:15 +0200</string>
+	<string>2010-10-29 09:35:26 +0200</string>
 	<key>Modifier</key>
 	<string>Florian Hanke</string>
 	<key>NotesVisible</key>
