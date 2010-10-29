@@ -42,13 +42,21 @@ describe "Cases" do
     #
     it_should_find_ids_in_main_full "title:history author:fergus", [4]
     
+    # Splitting
+    #
+    it_should_find_ids_in_main_full "history/fergus-history/fergus,history&fergus", [4, 4, 4, 4, 4, 4, 4, 4]
+    
+    # Character Removal
+    #
+    it_should_find_ids_in_main_full "'(history)' '(fergus)'", [4, 4]
+    
     # Contraction
     #
-    it_should_find_ids_in_main_full ""
+    # it_should_find_ids_in_main_full ""
     
     # Stopwords
     #
-    it_should_find_ids_in_main_full "and the history or the fergus", [4]
+    it_should_find_ids_in_main_full "and the history or fergus", [4, 4]
     
     # Breakage
     #
