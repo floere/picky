@@ -32,10 +32,28 @@ describe "Cases" do
     #
     it_should_find_ids_in_main_full 'Gover* Systems', [7]
     it_should_find_ids_in_main_full 'A*', [2, 5, 21, 22, 23, 24, 27, 36, 39, 41, 47, 51, 71, 103, 110, 120, 149, 171, 213, 231]
+    it_should_find_ids_in_main_full 'a* b* c* d* f', [110, 416]
     
     # Similarity
     #
     it_should_find_ids_in_main_full 'Hystori~ Leeward', [4, 4]
+    
+    # Qualifiers
+    #
+    it_should_find_ids_in_main_full "title:history author:fergus", [4]
+    
+    # Contraction
+    #
+    it_should_find_ids_in_main_full ""
+    
+    # Stopwords
+    #
+    it_should_find_ids_in_main_full "and the history or the fergus", [4]
+    
+    # Breakage
+    #
+    it_should_find_ids_in_main_full "%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}", []
+    it_should_find_ids_in_main_full "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", []
   end
   
 end
