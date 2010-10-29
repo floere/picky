@@ -67,9 +67,14 @@ module Picky
     # have populated the results.
     #
     def entries limit = 20
-      entries = []
-      allocations.each { |allocation| allocation[5].each { |id| break if entries.size > limit; entries << id } }
-      entries
+      if block_given?
+        i = 0
+        allocations.each { |allocation| allocation[5].collect! { |ar_or_rendered| break if i >= limit; i = i + 1; yield ar_or_rendered } }
+      else
+        entries = []
+        allocations.each { |allocation| allocation[5].each { |ar_or_rendered| break if entries.size >= limit; entries << ar_or_rendered } }
+        entries
+      end
     end
     
     # The ids need to come in the order which the ids were returned by the ids method.
