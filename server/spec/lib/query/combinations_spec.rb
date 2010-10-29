@@ -35,16 +35,16 @@ describe 'Query::Combinations' do
     end
   end
   
-  describe "add_score" do
+  describe "weighted_score" do
     it "uses the weights' score method" do
       weights = stub :weights
       weights.should_receive(:score).once.with @combinations_ary
       
-      @combinations.add_score weights
+      @combinations.weighted_score weights
     end
   end
   
-  describe "sum_score" do
+  describe "total_score" do
     before(:each) do
       @combination1 = stub :combination1, :weight => 3.14
       @combination2 = stub :combination2, :weight => 2.76
@@ -54,28 +54,28 @@ describe 'Query::Combinations' do
       @combinations = Query::Combinations.new :some_type, @combinations_ary
     end
     it "sums the scores" do
-      @combinations.sum_score.should == 5.90
+      @combinations.total_score.should == 5.90
     end
   end
   
   describe "calculate_score" do
     before(:each) do
-      @combinations.stub! :sum_score => 0
-      @combinations.stub! :add_score => 0
+      @combinations.stub! :total_score => 0
+      @combinations.stub! :weighted_score => 0
     end
     it "first sums, then weighs" do
-      @combinations.should_receive(:sum_score).once.ordered.and_return 0
-      @combinations.should_receive(:add_score).once.ordered.and_return 0
+      @combinations.should_receive(:total_score).once.ordered.and_return 0
+      @combinations.should_receive(:weighted_score).once.ordered.and_return 0
       
       @combinations.calculate_score :anything
     end
     it "calls sum_score" do
-      @combinations.should_receive(:sum_score).once.with.and_return 0
+      @combinations.should_receive(:total_score).once.with.and_return 0
       
       @combinations.calculate_score :anything
     end
     it "calls sum_score" do
-      @combinations.should_receive(:add_score).once.with(:weights).and_return 0
+      @combinations.should_receive(:weighted_score).once.with(:weights).and_return 0
       
       @combinations.calculate_score :weights
     end

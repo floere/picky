@@ -24,7 +24,7 @@ module Query
     # Scores its combinations and caches the result.
     #
     def calculate_score weights
-      @score || @score = @combinations.calculate_score(weights)
+      @score ||= @combinations.calculate_score(weights)
     end
 
     # Asks the combinations for the (intersected) ids.
