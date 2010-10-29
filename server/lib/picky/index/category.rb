@@ -29,6 +29,7 @@ module Index
     # Loads the index from cache.
     #
     def load_from_cache
+      timed_exclaim "Loading index #{identifier}."
       exact.load
       partial.load
     end

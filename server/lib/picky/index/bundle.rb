@@ -174,15 +174,12 @@ module Index
       load_weights
     end
     def load_index
-      timed_exclaim "Loading the index for #{identifier} from the cache."
       self.index = files.load_index
     end
     def load_similarity
-      timed_exclaim "Loading the similarity for #{identifier} from the cache."
       self.similarity = files.load_similarity
     end
     def load_weights
-      timed_exclaim "Loading the weights for #{identifier} from the cache."
       self.weights = files.load_weights
     end
     

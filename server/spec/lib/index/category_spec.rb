@@ -15,6 +15,7 @@ describe Index::Category do
 
     @partial = stub :partial, :dump => nil
     @category.stub! :partial => @partial
+    @category.stub! :exclaim
   end
 
   describe 'dump_caches' do
@@ -179,9 +180,6 @@ describe Index::Category do
   end
 
   describe 'generate_caches' do
-    before(:each) do
-      @category.stub! :exclaim
-    end
     it 'should call three method in order' do
       @category.should_receive(:generate_caches_from_source).once.with().ordered
       @category.should_receive(:generate_partial).once.with().ordered
