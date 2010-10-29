@@ -3,6 +3,7 @@ h1. Picky
 h2. The combinatorial small-text search engine.
 
 Take a dive with Picky in "the Getting Started section":http://floere.github.com/picky.
+Fine everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h2. Releases
 
