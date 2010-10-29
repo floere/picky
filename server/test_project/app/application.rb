@@ -7,6 +7,9 @@ class BookSearch < Application
     indexing.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)
     indexing.splits_text_on(/[\s\/\-\"\&\.]/)
     indexing.removes_characters_after_splitting(/[\.]/)
+    # indexing.normalizes_words([
+    #   [/\$(\w+)/i, '\1 dollars']
+    # ])
     
     few_similarities = Similarity::DoubleLevenshtone.new(2)
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
@@ -44,9 +47,6 @@ class BookSearch < Application
     querying.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
     querying.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)
     querying.splits_text_on(/[\s\/\-\,\&]+/) #
-    querying.normalizes_words([
-      [/Deoxyribonucleic Acid/i, 'DNA']
-    ])
     querying.removes_characters_after_splitting(/[\.]/)
     
     options = { :weights => Query::Weights.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }

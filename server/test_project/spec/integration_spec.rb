@@ -28,6 +28,13 @@ describe "Cases" do
     it_should_find_ids_in_main_full 'Soledad Human', [72]
     it_should_find_ids_in_main_full 'First Three Minutes Weinberg', [1]
     
+    # Complex cases
+    #
+    it_should_find_ids_in_main_full 'title:le* title:hystoree~', [4, 250, 428]
+    it_should_find_ids_in_main_full 'Hystori~ author:ferg', []
+    it_should_find_ids_in_main_full 'Hystori~ author:fergu', [4, 4]
+    it_should_find_ids_in_main_full 'Hystori~ author:fergus', [4, 4]
+    
     # Partial
     #
     it_should_find_ids_in_main_full 'Gover* Systems', [7]
@@ -37,6 +44,7 @@ describe "Cases" do
     # Similarity
     #
     it_should_find_ids_in_main_full 'Hystori~ Leeward', [4, 4]
+    it_should_find_ids_in_main_full 'Strutigic~ Guvurnance~', [7]
     
     # Qualifiers
     #
@@ -57,6 +65,14 @@ describe "Cases" do
     # Stopwords
     #
     it_should_find_ids_in_main_full "and the history or fergus", [4, 4]
+    
+    # Normalization
+    #
+    # it_should_find_ids_in_main_full "Deoxyribonucleic Acid", []
+    
+    # Remove after splitting.
+    #
+    # it_should_find_ids_in_main_full "history.fergus", [4, 4]
     
     # Breakage
     #

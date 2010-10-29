@@ -22,6 +22,8 @@ module Tokenizers
     
     # Split the text and put some back together.
     #
+    # TODO Make the same as in indexing?
+    #
     def pretokenize text
       split text
     end
