@@ -6,6 +6,10 @@ Take a dive with Picky in "the Getting Started section":http://floere.github.com
 
 h2. Releases
 
+0.9.3
+
+  * hanke: Fixed: Querying parameters were ignored. Not anymore.
+
 0.9.2
 
   * hanke: Fixed result_hash.entries to return the right amount of entries.
