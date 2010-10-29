@@ -142,4 +142,15 @@ class Routing
     String === url ? %r{#{url}} : url
   end
   
+  # TODO Beautify.
+  #
+  def to_s
+    routes.instance_variable_get(:@routes).map do |route|
+      path_info = route.conditions[:path_info]
+      anchored = Rack::Mount::Utils.regexp_anchored?(path_info)
+      anchored_ok = anchored ? "\u2713" : " "
+      "#{anchored_ok}  #{path_info.source}"
+    end.join "\n"
+  end
+  
 end

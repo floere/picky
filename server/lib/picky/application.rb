@@ -3,6 +3,8 @@
 class Application
   class << self
     
+    attr_reader :apps
+    
     # Finalize the subclass as soon as it
     # has finished loading.
     #
@@ -48,6 +50,12 @@ class Application
     #
     def querying
       @queries ||= Configuration::Queries.new
+    end
+    
+    # TODO Add more info.
+    #
+    def to_s
+      "#{self.name}:\n#{routing}"
     end
     
   end

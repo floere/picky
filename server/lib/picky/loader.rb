@@ -72,6 +72,8 @@ module Loader
     
     # Finalize the applications.
     #
+    # TODO Problem: Reload Routes.
+    #
     Application.finalize_apps
     
     # TODO Rewrite
