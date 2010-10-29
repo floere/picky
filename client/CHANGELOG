@@ -1,3 +1,4 @@
+0.9.3 -
 0.9.2 - hanke: Fixed result_hash.entries to return the right amount of entries.
       - hanke: The result_hash#entries now takes a block and replaces the e.g. AR instances with e.g rendered results.
       - hanke: Locale handling fixed.
