@@ -28,6 +28,12 @@ describe Picky::Convenience do
           end
           amount.size.should == 20
         end
+        it "replaces all entries" do
+          @convenience.entries do |entry|
+            entry + 1
+          end
+          @convenience.entries.should == (2..21).to_a
+        end
       end
     end
     context "with value" do
@@ -59,6 +65,12 @@ describe Picky::Convenience do
             amount[entry] = true
           end
           amount.size.should == 23
+        end
+        it "replaces all entries" do
+          @convenience.entries(30) do |entry|
+            entry + 1
+          end
+          @convenience.entries(30).should == (2..24).to_a
         end
       end
     end
