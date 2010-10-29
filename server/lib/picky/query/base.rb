@@ -16,7 +16,7 @@ module Query
       options      = Hash === index_types.last ? index_types.pop : {}
       @index_types = index_types
       @weigher     = Weigher.new index_types
-      @tokenizer   = (options[:tokenizer]  || Tokenizers::Query.new)
+      @tokenizer   = (options[:tokenizer]  || Tokenizers::Default::Query)
       @weights     = (options[:weights] || Weights.new)
     end
     
