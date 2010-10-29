@@ -15,9 +15,9 @@ module Query
     def initialize *index_types
       options      = Hash === index_types.last ? index_types.pop : {}
       @index_types = index_types
-      @weigher     = Weigher.new index_types
-      @tokenizer   = (options[:tokenizer]  || Tokenizers::Default::Query)
-      @weights     = (options[:weights] || Weights.new)
+      @weigher     = options[:weigher]   || Weigher.new(index_types)
+      @tokenizer   = options[:tokenizer] || Tokenizers::Default::Query
+      @weights     = options[:weights]   || Weights.new
     end
     
     # Convenience method.
@@ -63,12 +63,20 @@ module Query
     #
     # TODO Smallify.
     #
+    # TODO Rename: allocations
+    #
     def sorted_allocations tokens
       # Get the allocations.
+      #
+      # TODO Pass in reduce_to_amount (aka max_allocations)
+      #
+      # TODO uniq, score, sort in there
       #
       allocations = @weigher.allocations_for tokens
       
       # Callbacks.
+      #
+      # TODO Reduce before sort?
       #
       reduce allocations
       remove_from allocations
@@ -99,12 +107,12 @@ module Query
     def remove_from allocations
       allocations.remove(identifiers_to_remove) if remove_identifiers?
     end
-    # Override.
+    # Override. TODO No, redesign.
     #
     def identifiers_to_remove
-      @identifiers_to_remove || @identifiers_to_remove = []
+      @identifiers_to_remove ||= []
     end
-
+    
     # Packs the sorted allocations into results.
     #
     # This generates the id intersections. Lots of work going on.
