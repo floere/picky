@@ -46,11 +46,11 @@ describe Cacher::Partial::Substring do
         @cacher = Cacher::Partial::Substring.new from: -2
       end
       it 'should generate the right index' do
-        @cacher.generate_from( :florian => [1], :flavia => [2] ).should == {
-          :florian => [1],
-          :floria => [1],
-          :flavia => [2],
-          :flavi => [2]
+        @cacher.generate_from(florian: [1], flavia: [2]).should == {
+          florian: [1],
+          floria:  [1],
+          flavia:  [2],
+          flavi:   [2]
         }
       end
     end
@@ -60,7 +60,7 @@ describe Cacher::Partial::Substring do
       end
       describe 'generate_from' do
         it 'should generate the right index' do
-          @cacher.generate_from( :florian => [1], :'01234567890' => [2] ).should == {
+          @cacher.generate_from(florian: [1], :'01234567890' => [2] ).should == {
             :florian => [1],
             :'01234567890' => [2],
             :'0123456789' => [2]
