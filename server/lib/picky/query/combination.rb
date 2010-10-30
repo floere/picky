@@ -9,13 +9,13 @@ module Query
   #
   class Combination
 
-    attr_reader :token, :bundle
+    attr_reader :token, :bundle, :category_name
 
     def initialize token, category
-      @token    = token
-      @category = category
-      @bundle   = category.bundle_for token
-      @text     = @token.text # don't want to use reset_similar already
+      @token         = token
+      @category_name = category.name
+      @bundle        = category.bundle_for token
+      @text          = @token.text # don't want to use reset_similar already
     end
     
     # Note: Required for uniq!
@@ -26,20 +26,24 @@ module Query
     
     # Returns the weight of this combination.
     #
+    # TODO Really cache?
+    #
     def weight
-      @weight || @weight = @bundle.weight(@text)
+      @weight ||= @bundle.weight(@text)
     end
     
     # Returns an array of ids for the given text.
     #
+    # TODO Really cache?
+    #
     def ids
-      @ids || @ids = @bundle.ids(@text)
+      @ids ||= @bundle.ids(@text)
     end
     
     # The identifier for this combination.
     #
     def identifier
-      @category.name
+      @category_name
     end
     
     # Is the identifier in the given identifiers?

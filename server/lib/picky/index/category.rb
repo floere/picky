@@ -34,8 +34,10 @@ module Index
       partial.load
     end
     
+    # TODO Move to initializer?
+    #
     def identifier
-      "#{type.name} #{name}"
+      @identifier ||= "#{type.name} #{name}"
     end
     
     # Generates all caches for this category.

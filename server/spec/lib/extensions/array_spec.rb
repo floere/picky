@@ -17,7 +17,25 @@ describe Array do
       left.should be_empty
     end
   end
-
+  
+  describe "clustered_uniq_fast" do
+    it "should generate a new array" do
+      ary = [:test1, :test2, :test1]
+      ary.clustered_uniq_fast.object_id.should_not == ary.object_id
+    end
+    it "should not change clusteredly unique arrays" do
+      [:test1, :test2, :test1].clustered_uniq_fast.should == [:test1, :test2, :test1]
+    end
+    it "should not skip interspersed elements" do
+      [:test1, :test1, :test2, :test1].clustered_uniq_fast.should == [:test1, :test2, :test1]
+    end
+    it "should work like uniq if no interspersed elements exist" do
+      [:test1, :test1, :test2, :test2, :test3].clustered_uniq_fast.should == [:test1, :test2, :test3]
+    end
+    it "is fast" do
+      performance_of { [:test1, :test1, :test2, :test2, :test3].clustered_uniq_fast }.should < 0.00001
+    end
+  end
   describe "clustered_uniq" do
     it "should generate a new array" do
       ary = [:test1, :test2, :test1]
@@ -31,6 +49,9 @@ describe Array do
     end
     it "should work like uniq if no interspersed elements exist" do
       [:test1, :test1, :test2, :test2, :test3].clustered_uniq.should == [:test1, :test2, :test3]
+    end
+    it "is fast" do
+      performance_of { [:test1, :test1, :test2, :test2, :test3].clustered_uniq }.should < 0.00001
     end
   end
 

@@ -35,20 +35,14 @@ module Query
     #
     # Just kidding. It's far more complicated than that. Ha ha ha ha ;)
     #
-    include Helpers::Cache
+    # Note: Cache this if more complicated weighings become necessary.
+    #
     def score combinations
-      # TODO Rewrite to use the category
+      # TODO Beautify?
       #
-      categories = combinations.map { |combination| combination.bundle.category }.clustered_uniq
-      
-      # Note: Caching will not be necessary anymore if the
-      #       mapping is not necessary anymore.
-      #
-      cached @weights_cache, categories do
-        categories.map! &:name
-        weight_for categories
-      end
+      # weight_for combinations.map(&:category).clustered_uniq_fast.map!(&:name)
+      weight_for combinations.map(&:category_name).clustered_uniq_fast
     end
-
+    
   end
 end

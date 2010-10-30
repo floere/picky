@@ -12,6 +12,21 @@ class Array
       result
     end
   end
+  # Around 10% faster than the above.
+  #
+  # Returns a copy.
+  #
+  def clustered_uniq_fast
+    result = []
+    self.inject(nil) do |last, element|
+      if last == element
+        last
+      else
+        result << element && element
+      end
+    end
+    result
+  end
 
   # Accesses a random element of this array.
   #
