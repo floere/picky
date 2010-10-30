@@ -21,7 +21,20 @@ describe Index::File::Text do
     end
   end
   describe "retrieve" do
-    it
+    before(:each) do
+      @io = stub :io
+      @io.should_receive(:each_line).once.with.and_yield '123456,some_nice_token'
+      File.should_receive(:open).any_number_of_times.and_yield @io
+    end
+    it "yields split lines and returns the id and token text" do
+      @file.retrieve do |id, token|
+        id.should    == 123456
+        token.should == :some_nice_token
+      end
+    end
+    it "is fast" do
+      performance_of { @file.retrieve { |id, token| } }.should < 0.00005
+    end
   end
   
 end

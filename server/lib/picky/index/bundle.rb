@@ -98,15 +98,10 @@ module Index
     end
     # Retrieves the data into the index.
     #
-    # TODO Beautify.
-    #
     def retrieve
-      files.retrieve do |indexed_id, token|
-        token.chomp!
-        token = token.to_sym
-        
+      files.retrieve do |id, token|
         initialize_index_for token
-        index[token] << indexed_id.to_i
+        index[token] << id
       end
     end
     def initialize_index_for token
