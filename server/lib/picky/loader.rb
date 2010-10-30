@@ -104,6 +104,10 @@ module Loader
     load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
     
+    # Character Substitution
+    #
+    load_relative 'character_substitution/european'
+    
     # Signal handling
     #
     load_relative 'signals'
@@ -111,7 +115,6 @@ module Loader
     # Various.
     #
     load_relative 'loggers/search'
-    load_relative 'umlaut_substituter'
 
     # Index generation strategies.
     #

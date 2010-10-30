@@ -96,7 +96,7 @@ module Tokenizers
     attr_accessor :substituter
     alias substituter? substituter
     
-    def initialize substituter = UmlautSubstituter.new
+    def initialize substituter = CharacterSubstitution::European.new
       @substituter = substituter
       
       # TODO Default handling.

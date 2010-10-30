@@ -1,9 +1,10 @@
 # encoding: utf-8
+#
 require 'spec_helper'
 
-describe UmlautSubstituter do
+describe CharacterSubstitution do
   before(:each) do
-    @substituter = UmlautSubstituter.new
+    @substituter = CharacterSubstitution::European.new
   end
 
   # A bit of metaprogramming to help with the myriads of its.
@@ -81,6 +82,16 @@ describe UmlautSubstituter do
     # it_should_substitute 'ø', 'o'
     it_should_substitute 'å', 'a'
     it_should_substitute 'Å', 'A'
+  end
+  
+  describe "diacritic" do
+    it_should_substitute 'ñ', 'n'
+  end
+  
+  describe "speed" do
+    it "is fast" do
+      performance_of { @substituter.substitute('ä') }.should < 0.00006
+    end
   end
 
 end
