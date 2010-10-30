@@ -38,8 +38,8 @@ class PickySearch < Application
   full_books = Query::Full.new books_index    # A Full query returns ids, combinations, and counts.
   live_books = Query::Live.new books_index    # A Live query does return all that Full returns, except ids.
   
-  route %r{^/books/full} => full_books        # Routing is simple: url_path_regexp => query
-  route %r{^/books/live} => live_books        # 
+  route %r{\A/books/full\Z} => full_books        # Routing is simple: url_path_regexp => query
+  route %r{\A/books/live\Z} => live_books        # 
   
   # Note: You can pass a query multiple indexes and it will query in all of them.
   
