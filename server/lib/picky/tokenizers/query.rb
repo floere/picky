@@ -13,7 +13,10 @@ module Tokenizers
   #
   class Query < Base
     
-    cattr_accessor :default
+    cattr_writer :default
+    def self.default
+      @default ||= new
+    end
     
     attr_reader :maximum_tokens
     

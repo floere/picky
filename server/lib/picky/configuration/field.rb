@@ -8,7 +8,7 @@ module Configuration
     attr_accessor :type # convenience TODO Still needed?
     def initialize name, options = {}
       @name            = name.to_sym
-      @tokenizer       = options[:tokenizer] || Tokenizers::Index.default || Tokenizers::Index.new # TODO Ok?
+      @tokenizer       = options[:tokenizer] || Tokenizers::Index.default
       
       # TODO Dup the options?
       
