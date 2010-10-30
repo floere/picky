@@ -2,14 +2,20 @@
 #
 class BookSearch < Application
     
-    indexing.removes_characters(/[',\(\)#:!@;\?]/)
-    indexing.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
-    indexing.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)
-    indexing.splits_text_on(/[\s\/\-\"\&\.]/)
-    indexing.removes_characters_after_splitting(/[\.]/)
-    # indexing.normalizes_words([
-    #   [/\$(\w+)/i, '\1 dollars']
-    # ])
+    default_indexing removes_characters:                 /[',\(\)#:!@;\?]/,
+                     contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
+                     stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
+                     splits_text_on:                     /[\s\/\-\"\&\.]/,
+                     removes_characters_after_splitting: /[\.]/,
+                     normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']]
+    
+    default_querying maximum_tokens:                     5,
+                     substitutes_characters_with:        CharacterSubstitution::European.new,
+                     removes_characters:                 /[\(\)\']/,
+                     contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
+                     stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
+                     splits_text_on:                     /[\s\/\-\,\&]+/,
+                     removes_characters_after_splitting: /[\.]/
     
     few_similarities = Similarity::DoubleLevenshtone.new(2)
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
@@ -39,16 +45,6 @@ class BookSearch < Application
                            field(:publisher, :qualifiers => [:p, :publisher]),
                            field(:subjects, :qualifiers => [:s, :subject])
                            
-    # TODO Should these be definable per Query?
-    #      And serve only as defaults if the query cannot find them?
-    #
-    querying.maximum_tokens 5
-    querying.substitutes_characters_with CharacterSubstitution::European.new
-    querying.removes_characters(/[\(\)\']/)
-    querying.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
-    querying.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)
-    querying.splits_text_on(/[\s\/\-\,\&]+/) #
-    querying.removes_characters_after_splitting(/[\.]/)
     
     options = { :weights => Query::Weights.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
     

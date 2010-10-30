@@ -18,47 +18,10 @@ describe Configuration::Indexes do
   
   describe "default_tokenizer" do
     it "is a default tokenizer" do
-      @config.default_tokenizer.should == Tokenizers::Default::Index
+      @config.default_tokenizer.should be_kind_of(Tokenizers::Index)
     end
     it "caches" do
       @config.default_tokenizer.should == @config.default_tokenizer
-    end
-  end
-  
-  describe "delegates" do
-    before(:each) do
-      @receiver = mock :receiver
-      @config.stub! :default_tokenizer => @receiver
-    end
-    it "delegates" do
-      @receiver.should_receive(:removes_characters).once
-      
-      @config.removes_characters
-    end
-    it "delegates" do
-      @receiver.should_receive(:contracts_expressions).once
-      
-      @config.contracts_expressions
-    end
-    it "delegates" do
-      @receiver.should_receive(:stopwords).once
-      
-      @config.stopwords
-    end
-    it "delegates" do
-      @receiver.should_receive(:splits_text_on).once
-      
-      @config.splits_text_on
-    end
-    it "delegates" do
-      @receiver.should_receive(:normalizes_words).once
-      
-      @config.normalizes_words
-    end
-    it "delegates" do
-      @receiver.should_receive(:removes_characters_after_splitting).once
-      
-      @config.removes_characters_after_splitting
     end
   end
   

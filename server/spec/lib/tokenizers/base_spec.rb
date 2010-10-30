@@ -81,6 +81,9 @@ describe Tokenizers::Base do
       it 'should define a method split that splits by default on \s' do
         @tokenizer.split('a b/c.d').should == ['a', 'b/c.d']
       end
+      it 'splits text on /\s/ by default' do
+        @tokenizer.split('this is a test').should == ['this', 'is', 'a', 'test']
+      end
     end
     context "with removes_characters called" do
       before(:each) do

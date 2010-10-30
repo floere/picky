@@ -6,11 +6,6 @@ module Query
   #
   class Tokens
     
-    #
-    #
-    cattr_accessor :maximum
-    self.maximum = 5
-    
     # Basically delegates to its internal tokens array.
     #
     self.delegate *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, { :to => :@tokens }].flatten
@@ -52,13 +47,11 @@ module Query
 
     # Caps the tokens to the maximum.
     #
-    # Note: We could parametrize this if necessary.
-    #
-    def cap
-      @tokens.slice!(@@maximum..-1) if cap?
+    def cap maximum
+      @tokens.slice!(maximum..-1) if cap?(maximum)
     end
-    def cap?
-      @tokens.size > @@maximum
+    def cap? maximum
+      @tokens.size > maximum
     end
     
     # Rejects blank tokens.

@@ -1,65 +1,46 @@
 # encoding: utf-8
 #
+# TODO Adapt the generated example
+#      (a library books finder) to what you need.
+#
+# Check the Wiki http://github.com/floere/picky/wiki for more options.
+# Ask me or the google group if you have questions or specific requests.
+#
 class PickySearch < Application
   
-  # TODO Adapt the generated example
-  #      (a library books finder) to what you need.
+  # Indexing: How text is indexed.
+  # Querying: How query text is handled.
   #
-  # Check the Wiki http://github.com/floere/picky/wiki for more options.
+  default_indexing removes_characters: /[^a-zA-Z0-9\s\/\-\"\&\.]/,
+                   stopwords:          /\b(and|the|of|it|in|for)\b/,
+                   splits_text_on:     /[\s\/\-\"\&\.]/
+                   
+  default_querying removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/, # Picky needs control chars *"~: to pass through.
+                   stopwords:          /\b(and|the|of|it|in|for)\b/,
+                   splits_text_on:     /[\s\/\-\,\&]+/,
+                   
+                   maximum_tokens: 5, # Max amount of tokens passing into a query. 5 is the default.
+                   substitutes_characters_with: CharacterSubstitution::European.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+                   
+  # Define an index. Use a database etc. source? http://github.com/floere/picky/wiki/Sources-Configuration#sources
   #
-  # Ask me or the google group if you have questions or specific requests.
-  #
-  
-  indexing.removes_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
-  indexing.stopwords(/\b(and|the|of|it|in|for)\b/)
-  indexing.splits_text_on(/[\s\/\-\"\&\.]/)
-      
   books_index = index :books,
-                      Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, :file => 'app/library.csv'),
-                      # Use a database as source:
-                      # Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
-                      # Or delicious:
-                      # Sources::Delicious.new('username', 'password'), # offers title, tags, url fields.
+                      Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'app/library.csv'),
                       field(:title,
-                            :partial => Partial::Substring.new(:from => 1), # Index substrings upwards from character 1 (default: -3),
-                                                                              # e.g. picky -> p, pi, pic, pick, picky
-                                                                              # Like this, you'll find picky even when entering just a "p".
-                            :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed (default: no similarity).
-                      field(:author, :partial => Partial::Substring.new(:from => 1)),
-                      field(:isbn,   :partial => Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
+                            :partial => Partial::Substring.new(:from => 1), # Indexes substrings upwards from character 1 (default: -3),
+                                                                            # You'll find "picky" even when entering just a "p".
+                            :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed (default: No similarity).
+                      field(:author,
+                            :partial => Partial::Substring.new(from: 1)),
+                      field(:isbn,
+                            :partial => Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
   
-  # Defines the maximum tokens (words) that pass through to the engine.
-  #
-  querying.maximum_tokens 5
+  full_books = Query::Full.new books_index    # A Full query returns ids, combinations, and counts.
+  live_books = Query::Live.new books_index    # A Live query does return all that Full returns, except ids.
   
-  # Normalizes special user input.
-  # This example replaces "european" special characters, like Ä -> Ae, ñ -> n, etc.
-  #
-  # Note: Remove this line if you don't need it.
-  #
-  querying.substitutes_characters_with CharacterSubstitution::European.new
+  route %r{^/books/full} => full_books        # Routing is simple: url_path_regexp => query
+  route %r{^/books/live} => live_books        # 
   
-  # Note that Picky needs the following characters to
-  # pass through, as they are control characters: *"~:
-  #
-  querying.removes_characters(/[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/)
-  querying.stopwords(/\b(and|the|of|it|in|for)\b/)
-  querying.splits_text_on(/[\s\/\-\,\&]+/)
-  
-  # The example defines two queries that use the same index(es).
-  #
-  # A Full query returns ids, combinations, and counts.
-  # A Live query does return all that Full returns, without ids.
-  #
-  # Note: You can pass a query multiple indexes and it will combine them.
-  #
-  full_books = Query::Full.new books_index
-  live_books = Query::Live.new books_index
-  
-  # Routing is simple.
-  # A path regexp pointing to a query that will be run.
-  #
-  route %r{^/books/full} => full_books
-  route %r{^/books/live} => live_books
+  # Note: You can pass a query multiple indexes and it will query in all of them.
   
 end

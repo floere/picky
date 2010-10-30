@@ -10,20 +10,9 @@ module Configuration
       @types = []
     end
     
-    def default_tokenizer
-      @default_tokenizer ||= Tokenizers::Default::Index
+    def default_tokenizer options = {}
+      @default_tokenizer ||= Tokenizers::Index.new(options)
     end
-    
-    # Delegates
-    #
-    delegate :removes_characters,
-             :contracts_expressions,
-             :stopwords,
-             :splits_text_on,
-             :normalizes_words,
-             :removes_characters_after_splitting,
-             :substitutes_characters_with,
-             :to => :default_tokenizer
     
     # TODO Rewrite all this configuration handling.
     #

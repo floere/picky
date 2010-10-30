@@ -36,15 +36,7 @@ describe Query::Tokens do
       @tokens.instance_variable_get(:@tokens).should == [@nonblank, @nonblank]
     end
   end
-
-  describe "class variables" do
-    describe "maximal query words" do
-      it "should answer" do
-        lambda { Query::Tokens.maximum }.should_not raise_error
-      end
-    end
-  end
-
+  
   describe 'cap' do
     context 'one token' do
       before(:each) do

@@ -7,6 +7,15 @@ describe Tokenizers::Query do
     @tokenizer = Tokenizers::Query.new
   end
   
+  describe "maximum_tokens" do
+    it "should be set to 5 by default" do
+      @tokenizer.maximum_tokens.should == 5
+    end
+    it "should be settable" do
+      Tokenizers::Query.new(maximum_tokens: 3).maximum_tokens.should == 3
+    end
+  end
+  
   describe 'preprocess' do
     it 'should call methods in order' do
       text = stub :text

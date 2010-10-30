@@ -109,10 +109,17 @@ module Tokenizers
     attr_reader :substituter
     alias substituter? substituter
     
-    def initialize
-      # TODO Default handling.
+    def initialize options = {}
+      removes_characters options[:removes_characters]                                 if options[:removes_characters]
+      contracts_expressions *options[:contracts_expressions]                          if options[:contracts_expressions]
+      stopwords options[:stopwords]                                                   if options[:stopwords]
+      normalizes_words options[:normalizes_words]                                     if options[:normalizes_words]
+      removes_characters_after_splitting options[:removes_characters_after_splitting] if options[:removes_characters_after_splitting]
+      substitutes_characters_with options[:substitutes_characters_with]               if options[:substitutes_characters_with]
+      
+      # Defaults.
       #
-      splits_text_on(/\s/)
+      splits_text_on options[:splits_text_on] || /\s/
     end
     
     # Hooks.

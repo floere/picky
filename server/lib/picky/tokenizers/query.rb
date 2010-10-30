@@ -13,6 +13,13 @@ module Tokenizers
   #
   class Query < Base
     
+    attr_reader :maximum_tokens
+    
+    def initialize options = {}
+      super options
+      @maximum_tokens = options[:maximum_tokens] || 5
+    end
+    
     def preprocess text
       remove_illegals text             # Remove illegal characters
       remove_non_single_stopwords text # remove stop words
@@ -33,9 +40,9 @@ module Tokenizers
     #
     def process tokens
       tokens.tokenize_with self
-      tokens.reject          # Reject any tokens that don't meet criteria
-      tokens.cap             # Cut off superfluous tokens
-      tokens.partialize_last # Set certain tokens as partial
+      tokens.reject              # Reject any tokens that don't meet criteria
+      tokens.cap maximum_tokens  # Cut off superfluous tokens
+      tokens.partialize_last     # Set certain tokens as partial
       tokens
     end
     
