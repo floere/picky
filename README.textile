@@ -7,6 +7,11 @@ Fine everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h2. Releases
 
+0.10.0
+  
+  * hanke: (BREAKING) Total rewrite/exploration of the Application API.
+           Stay on 0.9.4 if you don't want to update right now.
+
 0.9.4
 
   * hanke: rake routes: Shows all current URL paths, and if they are processable fast.

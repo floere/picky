@@ -65,7 +65,7 @@ describe Hash do
       lambda { @obj.to_json(:some => :option) }.should_not raise_error
     end
     it "should be fast" do
-      performance_of { @obj.to_json }.should < 0.00006
+      performance_of { @obj.to_json }.should < 0.000065
     end
   end
 
