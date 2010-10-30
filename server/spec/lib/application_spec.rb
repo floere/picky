@@ -10,27 +10,23 @@ describe Application do
         # TODO Add all possible cases.
         #
         class TestApplication < Application
-          indexing.removes_characters(/[^a-zA-Z0-9\s\/\-\"\&\.]/)
-          indexing.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
-          indexing.stopwords(/\b(and|the|of|it|in|for)\b/)
-          indexing.splits_text_on(/[\s\/\-\"\&\.]/)
-          indexing.removes_characters_after_splitting(/[\.]/)
+          default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
+                           contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
+                           stopwords:                          /\b(and|the|of|it|in|for)\b/,
+                           splits_text_on:                     /[\s\/\-\"\&\.]/,
+                           removes_characters_after_splitting: /[\.]/
+                           
+          default_querying removes_characters: /[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/,
+                           stopwords:          /\b(and|the|of|it|in|for)\b/,
+                           splits_text_on:     /[\s\/\-\,\&]+/,
+                           normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
+                           maximum_tokens:     5
           
           books_index = index Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
                               field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
                               field(:author),
                               field(:isbn,  :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.
                               
-          # Note that Picky needs the following characters to
-          # pass through, as they are control characters: *"~:
-          #
-          querying.removes_characters(/[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/)
-          querying.stopwords(/\b(and|the|of|it|in|for)\b/)
-          querying.splits_text_on(/[\s\/\-\,\&]+/)
-          querying.normalizes_words([
-            [/Deoxyribonucleic Acid/i, 'DNA']
-          ])
-          querying.maximum_tokens 5
           
           full = Query::Full.new books_index
           live = Query::Live.new books_index

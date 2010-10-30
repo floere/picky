@@ -1,6 +1,7 @@
 # The Picky application wherein the indexing and querying is defined.
 #
 class Application
+  
   class << self
     
     # Returns a configured tokenizer that
@@ -45,16 +46,20 @@ class Application
     # Finalize the subclass as soon as it
     # has finished loading.
     #
-    # Note: finalize finalizes the routes.
-    #
     attr_reader :apps
-    def inherited app
+    def initialize_apps
       @apps ||= []
-      @apps << app
+    end
+    def inherited app
+      initialize_apps
+      apps << app
     end
     def finalize_apps
-      @apps.each &:finalize
+      initialize_apps
+      apps.each &:finalize
     end
+    # Finalizes the routes.
+    #
     def finalize
       routing.freeze
     end
