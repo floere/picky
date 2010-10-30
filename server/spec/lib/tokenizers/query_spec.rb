@@ -7,6 +7,29 @@ describe Tokenizers::Query do
     @tokenizer = Tokenizers::Query.new
   end
   
+  describe "default*" do
+    before(:all) do
+      @old = Tokenizers::Query.default
+    end
+    after(:all) do
+      Tokenizers::Query.default = @old
+    end
+    it "has a reader" do
+      lambda { Tokenizers::Query.default }.should_not raise_error
+    end
+    it "returns by default a new Index" do
+      Tokenizers::Query.default.should be_kind_of(Tokenizers::Query)
+    end
+    it "has a writer" do
+      lambda { Tokenizers::Query.default = :bla }.should_not raise_error
+    end
+    it "returns what has been written, if something has been written" do
+      Tokenizers::Query.default = :some_default
+      
+      Tokenizers::Query.default.should == :some_default
+    end
+  end
+  
   describe "maximum_tokens" do
     it "should be set to 5 by default" do
       @tokenizer.maximum_tokens.should == 5

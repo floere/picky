@@ -51,7 +51,7 @@ describe Array do
       [:test1, :test1, :test2, :test2, :test3].clustered_uniq.should == [:test1, :test2, :test3]
     end
     it "is fast" do
-      performance_of { [:test1, :test1, :test2, :test2, :test3].clustered_uniq }.should < 0.00001
+      performance_of { [:test1, :test1, :test2, :test2, :test3].clustered_uniq }.should < 0.000012
     end
   end
 

@@ -20,8 +20,8 @@ describe Configuration::Indexes do
     it "is a default tokenizer" do
       @config.default_tokenizer.should be_kind_of(Tokenizers::Index)
     end
-    it "caches" do
-      @config.default_tokenizer.should == @config.default_tokenizer
+    it "does not cache" do
+      @config.default_tokenizer.should_not == @config.default_tokenizer
     end
   end
   

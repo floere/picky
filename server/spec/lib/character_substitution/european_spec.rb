@@ -90,7 +90,8 @@ describe CharacterSubstitution do
   
   describe "speed" do
     it "is fast" do
-      performance_of { @substituter.substitute('ä') }.should < 0.00006
+      result = performance_of { @substituter.substitute('ä') }
+      result.should < 0.00009
     end
   end
 
