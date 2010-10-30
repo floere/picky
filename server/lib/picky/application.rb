@@ -3,13 +3,15 @@
 class Application
   class << self
     
-    # Returns a configured tokenizer.
+    # Returns a configured tokenizer that
+    # is used for indexing by default.
     # 
     def default_indexing options = {}
       indexing.default_tokenizer options
     end
     
-    # Returns a configured tokenizer.
+    # Returns a configured tokenizer that
+    # is used for querying by default.
     # 
     def default_querying options = {}
       querying.default_tokenizer options
@@ -18,8 +20,12 @@ class Application
     # Routes.
     #
     delegate :route, :root, :to => :routing
-    delegate :type, :field, :to => :indexing
-    def index *args; self.type *args; end
+    # Index, Field.
+    #
+    # TODO Rename category.
+    #
+    delegate :field, :to => :indexing
+    def index *args; indexing.define_index *args; end
     
     # An application simply delegates to the routing to handle a request.
     #
