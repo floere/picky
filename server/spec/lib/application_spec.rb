@@ -10,7 +10,7 @@ describe Application do
         class MinimalTestApplication < Application
           books = index :books,
                         Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml'),
-                        field(:title)
+                        category(:title)
                               
           
           full = Query::Full.new books
@@ -44,9 +44,9 @@ describe Application do
           
           books_index = index :books,
                               Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
-                              field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
-                              field(:author),
-                              field(:isbn,  :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.
+                              category(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
+                              category(:author),
+                              category(:isbn,  :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.
                               
           
           full = Query::Full.new books_index
