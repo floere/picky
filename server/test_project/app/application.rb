@@ -17,10 +17,9 @@ class BookSearch < Application
                      splits_text_on:                     /[\s\/\-\,\&]+/,
                      removes_characters_after_splitting: /[\.]/
     
-    few_similarities = Similarity::DoubleLevenshtone.new(2)
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
                                    :partial => Partial::Substring.new(:from => 1),
-                                   :similarity => few_similarities
+                                   :similarity =>  Similarity::DoubleLevenshtone.new(2)
     author        = field :author, :qualifiers => [:a, :author, :auteur],
                                    :partial => Partial::Substring.new(:from => -2)
     year          = field :year,   :qualifiers => [:y, :year, :annee]
@@ -66,5 +65,5 @@ class BookSearch < Application
           %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index)
     
     root 200
-  
+    
 end

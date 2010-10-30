@@ -7,7 +7,7 @@ module Configuration
     #
     #
     def default_tokenizer options = {}
-      @default_tokenizer ||= Tokenizers::Query.new(options)
+      Tokenizers::Query.default ||= Tokenizers::Query.new(options)
     end
     
   end

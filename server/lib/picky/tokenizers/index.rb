@@ -5,6 +5,8 @@ module Tokenizers
   #
   class Index < Base
     
+    cattr_accessor :default
+    
     # Default indexing preprocessing hook.
     #
     # Does:

@@ -9,6 +9,27 @@ describe Application do
       lambda {
         # TODO Add all possible cases.
         #
+        class MinimalTestApplication < Application
+          
+          books_index = index :books,
+                              Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
+                              field(:title)
+                              
+          
+          full = Query::Full.new books_index
+          live = Query::Live.new books_index
+          
+          route %r{^/books/full} => full
+          route %r{^/books/live} => live
+        end
+        Tokenizers::Index.default.tokenize 'some text'
+        Tokenizers::Query.default.tokenize 'some text'
+      }.should_not raise_error
+    end
+    it "should run ok" do
+      lambda {
+        # TODO Add all possible cases.
+        #
         class TestApplication < Application
           default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
                            contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
@@ -22,7 +43,8 @@ describe Application do
                            normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
                            maximum_tokens:     5
           
-          books_index = index Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
+          books_index = index :books,
+                              Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
                               field(:title, :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed.
                               field(:author),
                               field(:isbn,  :partial => Partial::None.new) # Partially searching on an ISBN makes not much sense.

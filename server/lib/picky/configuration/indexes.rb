@@ -11,7 +11,7 @@ module Configuration
     end
     
     def default_tokenizer options = {}
-      @default_tokenizer ||= Tokenizers::Index.new(options)
+      Tokenizers::Index.default ||= Tokenizers::Index.new(options)
     end
     
     # TODO Rewrite all this configuration handling.
@@ -26,9 +26,7 @@ module Configuration
       generated
     end
     def field name, options = {}
-      tokenizer = options[:tokenizer] || default_tokenizer
-      
-      Field.new name, tokenizer, options
+      Field.new name, options
     end
     
     #

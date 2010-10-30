@@ -13,6 +13,8 @@ module Tokenizers
   #
   class Query < Base
     
+    cattr_accessor :default
+    
     attr_reader :maximum_tokens
     
     def initialize options = {}

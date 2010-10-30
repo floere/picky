@@ -5,10 +5,10 @@ module Configuration
   #
   class Field
     attr_reader :name, :indexed_name, :virtual, :tokenizer
-    attr_accessor :type # convenience
-    def initialize name, tokenizer, options = {}
+    attr_accessor :type # convenience TODO Still needed?
+    def initialize name, options = {}
       @name            = name.to_sym
-      @tokenizer       = tokenizer
+      @tokenizer       = options[:tokenizer] || Tokenizers::Index.default || Tokenizers::Index.new # TODO Ok?
       
       # TODO Dup the options?
       
