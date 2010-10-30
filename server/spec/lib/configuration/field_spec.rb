@@ -5,7 +5,7 @@ describe Configuration::Field do
     describe "virtual?" do
       context "with virtual true" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :some_tokenizer, :virtual => true
+          @field = Configuration::Field.new :some_name, :virtual => true
         end
         it "returns the right value" do
           @field.virtual?.should == true
@@ -13,7 +13,7 @@ describe Configuration::Field do
       end
       context "with virtual object" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :some_tokenizer, :virtual => 123.6
+          @field = Configuration::Field.new :some_name, :virtual => 123.6
         end
         it "returns the right value" do
           @field.virtual?.should == true
@@ -39,7 +39,7 @@ describe Configuration::Field do
     describe "tokenizer" do
       context "with specific tokenizer" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, Tokenizers::Index.new
+          @field = Configuration::Field.new :some_name, tokenizer: Tokenizers::Index.new
           
           @field.type = :some_type
         end
@@ -54,7 +54,7 @@ describe Configuration::Field do
     describe "indexer" do
       context "with default indexer" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :some_tokenizer
+          @field = Configuration::Field.new :some_name
         end
         it "caches" do
           @field.indexer.should == @field.indexer
@@ -62,7 +62,7 @@ describe Configuration::Field do
       end
       context "with specific indexer" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :indexer => Indexers::Default
+          @field = Configuration::Field.new :some_name, tokenizer: Indexers::Default
           
           @field.type = :some_type
         end
@@ -81,7 +81,7 @@ describe Configuration::Field do
     end
     describe "cache" do
       before(:each) do
-        @field = Configuration::Field.new :some_name, :some_tokenizer
+        @field = Configuration::Field.new :some_name
         @field.stub! :prepare_cache_directory
         
         @generated = stub :generated, :generate_caches => nil
@@ -100,7 +100,7 @@ describe Configuration::Field do
     end
     describe "prepare_cache_directory" do
       before(:each) do
-        @field = Configuration::Field.new :some_name, :some_tokenizer
+        @field = Configuration::Field.new :some_name
         
         @field.stub! :cache_directory => :some_cache_directory
       end
@@ -112,7 +112,7 @@ describe Configuration::Field do
     end
     describe "index" do
       before(:each) do
-        @field = Configuration::Field.new :some_name, :some_tokenizer
+        @field = Configuration::Field.new :some_name
         @field.stub! :prepare_cache_directory
         
         @indexer = stub :indexer, :index => nil
@@ -132,7 +132,7 @@ describe Configuration::Field do
     describe "source" do
       context "with source" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :some_tokenizer, :source => :some_given_source
+          @field = Configuration::Field.new :some_name, :source => :some_given_source
 
           @type = stub :type, :name => :some_type
           @field.type = @type
@@ -143,7 +143,7 @@ describe Configuration::Field do
       end
       context "without source" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :some_tokenizer
+          @field = Configuration::Field.new :some_name
 
           @type = stub :type, :name => :some_type, :source => :some_type_source
           @field.type = @type
@@ -155,7 +155,7 @@ describe Configuration::Field do
     end
     context "name symbol" do
       before(:each) do
-        @field = Configuration::Field.new :some_name, :some_tokenizer
+        @field = Configuration::Field.new :some_name
         
         @type = stub :type, :name => :some_type
         @field.type = @type
@@ -189,7 +189,7 @@ describe Configuration::Field do
     end
     context "name string" do
       before(:each) do
-        @field = Configuration::Field.new 'some_name', :some_tokenizer
+        @field = Configuration::Field.new 'some_name'
       end
       describe "generate_qualifiers_from" do
         context "without qualifiers" do
