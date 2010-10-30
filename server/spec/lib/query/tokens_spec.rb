@@ -43,16 +43,19 @@ describe Query::Tokens do
         @token = Query::Token.processed 'Token'
         @tokens = Query::Tokens.new [@token]
       end
-      it 'should not cut it down' do
-        @tokens.cap
-
+      it 'does not cut it down' do
+        @tokens.cap 5
+        
         @tokens.instance_variable_get(:@tokens).should == [@token]
+      end
+      it 'cuts it down' do
+        @tokens.cap 0
+        
+        @tokens.instance_variable_get(:@tokens).should == []
       end
     end
     context 'many tokens' do
       before(:each) do
-        @old_maximum = Query::Tokens.maximum
-        Query::Tokens.maximum = 3
         @first = Query::Token.processed 'Hello'
         @second = Query::Token.processed 'I'
         @third = Query::Token.processed 'Am'
@@ -64,12 +67,9 @@ describe Query::Tokens do
           Query::Token.processed('Token')
         ]
       end
-      after(:each) do
-        Query::Tokens.maximum = @old_maximum
-      end
       it 'should cap the number of tokens' do
-        @tokens.cap
-
+        @tokens.cap 3
+        
         @tokens.instance_variable_get(:@tokens).should == [@first, @second, @third]
       end
     end
