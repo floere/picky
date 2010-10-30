@@ -11,6 +11,7 @@ h2. Releases
   
   * hanke: (BREAKING) Total rewrite/exploration of the Application API.
            Stay on 0.9.4 if you don't want to update right now.
+  * hanke: Character substitution now configurable. Default is no character substitution.
 
 0.9.4
 

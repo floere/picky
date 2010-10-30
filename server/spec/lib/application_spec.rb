@@ -38,6 +38,8 @@ describe Application do
                            stopwords:          /\b(and|the|of|it|in|for)\b/,
                            splits_text_on:     /[\s\/\-\,\&]+/,
                            normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
+                           
+                           substitutes_characters_with: CharacterSubstitution::European.new,
                            maximum_tokens:     5
           
           books_index = index :books,
