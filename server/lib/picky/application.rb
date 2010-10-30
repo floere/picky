@@ -26,7 +26,8 @@ class Application
     # TODO Rename category.
     #
     delegate :field, :to => :indexing
-    def index *args; indexing.define_index *args; end
+    def category *args; indexing.field *args;        end
+    def index *args;    indexing.define_index *args; end
     
     # An application simply delegates to the routing to handle a request.
     #

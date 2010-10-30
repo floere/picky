@@ -4,7 +4,7 @@ source :gemcutter
 #
 gem 'picky',            '~> 0.10.0'
 gem 'rake'
-gem 'bundler',          '~> 0.9.26'
+gem 'bundler'
 gem 'rack',             '~> 1.2.1'
 gem 'rack-mount',       '~> 0.6.9'
 gem 'text',             '~> 0.2.0'
