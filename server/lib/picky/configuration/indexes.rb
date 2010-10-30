@@ -16,7 +16,7 @@ module Configuration
     
     # TODO Rewrite all this configuration handling.
     #
-    def type name, source, *fields
+    def define_index name, source, *fields
       new_type = Type.new name, source, *fields
       types << new_type
       ::Indexes.configuration ||= self
