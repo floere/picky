@@ -11,7 +11,7 @@ namespace :server do
     pid.blank? ? nil : pid.chomp
   end
   
-  desc "Start the unicorns. (Wehee!)"
+  # desc "Start the unicorns. (Wehee!)"
   task :start => :framework do
     chdir_to_root
     # Rake::Task[:"solr:start"].invoke # TODO Move to better place.
@@ -21,13 +21,13 @@ namespace :server do
     exec command
   end
   
-  desc "Stop the unicorns. (Blam!)"
+  # desc "Stop the unicorns. (Blam!)"
   task :stop => :framework do
     `kill -QUIT #{current_pid}` if current_pid
     # Rake::Task[:"solr:stop"].invoke # TODO Move to better place.
   end
   
-  desc "Restart the unicorns."
+  # desc "Restart the unicorns."
   task :restart do
     Rake::Task[:"server:stop"].invoke
     sleep 5
