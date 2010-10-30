@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'Query::Combination' do
 
   before(:each) do
-    @bundle      = stub :bundle
+    @bundle      = stub :bundle, :identifier => :bundle_name
     @token       = stub :token, :text => :some_text, :partial => false, :similar? => true
     @category    = stub :category, :bundle_for => @bundle, :name => :some_category_name
 
@@ -14,7 +14,6 @@ describe 'Query::Combination' do
   
   describe "to_s" do
     it "shows the combination's info" do
-      @bundle.stub! :name => :bundle_name
       @token.stub! :to_result => :token_result
       
       @combination.to_s.should == 'bundle_name some_category_name:token_result'

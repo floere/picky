@@ -22,15 +22,11 @@ module Query
         
         # Optimization for ignoring tokens that allocate to nothing and
         # can be ignored.
-        # For example in a context search, where "florian" is not
+        # For example in a special search, where "florian" is not
         # mapped to city, zip, or category.
         #
         possible_combinations.compact!
         expanded_combinations = expand_combinations_from possible_combinations
-        
-        # TODO Rewrite.
-        #
-        # expanded_combinations.map! { |expanded_combination| Combinations.new(index, expanded_combination) }
         
         #
         #
@@ -51,15 +47,22 @@ module Query
         #  [c,e]
         # ]
         #
-        expanded_combinations = expanded_combinations.shift.zip(*expanded_combinations)
+        expanded_combinations = expanded_combinations.shift.zip *expanded_combinations
         
         # Wrap into a real combination.
         #
-        expanded_combinations.map! { |expanded_combination| Combinations.new(index, expanded_combination) }
+        # expanded_combinations.map! { |expanded_combination| Combinations.new(expanded_combination).pack_into_allocation(index.result_type) }
         
         # Add the possible allocations to the ones we already have.
         #
-        previous_allocations + expanded_combinations.map(&:pack_into_allocation)
+        # previous_allocations + expanded_combinations.map(&:pack_into_allocation)
+        
+        
+        # Add the wrapped possible allocations to the ones we already have.
+        #
+        previous_allocations + expanded_combinations.map! do |expanded_combination|
+          Combinations.new(expanded_combination).pack_into_allocation(index.result_type) # TODO Do not extract result_type. Remove pack_into_allocation.
+        end
       end)
     end
     

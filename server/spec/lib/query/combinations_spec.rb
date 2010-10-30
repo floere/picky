@@ -7,17 +7,15 @@ describe 'Query::Combinations' do
   before(:each) do
     @combinations_ary = stub :combinations_ary
     
-    type = stub :type, :result_type => :some_type
-    
-    @combinations = Query::Combinations.new type, @combinations_ary
+    @combinations = Query::Combinations.new @combinations_ary
   end
   
   describe "pack_into_allocation" do
     it "return an Allocation" do
-      @combinations.pack_into_allocation.should be_kind_of(Query::Allocation)
+      @combinations.pack_into_allocation(:some_result_type).should be_kind_of(Query::Allocation)
     end
     it "returns an Allocation with specific result_type" do
-      @combinations.pack_into_allocation.result_type.should == :some_type
+      @combinations.pack_into_allocation(:some_result_type).result_type.should == :some_result_type
     end
   end
   
@@ -28,7 +26,7 @@ describe 'Query::Combinations' do
       
       @combinations_ary = [@combination1, @combination2]
       
-      @combinations = Query::Combinations.new :some_type, @combinations_ary
+      @combinations = Query::Combinations.new @combinations_ary
     end
     it "resultifies the combinations" do
       @combinations.to_result.should == [:result1, :result2]
@@ -51,7 +49,7 @@ describe 'Query::Combinations' do
       
       @combinations_ary = [@combination1, @combination2]
       
-      @combinations = Query::Combinations.new :some_type, @combinations_ary
+      @combinations = Query::Combinations.new @combinations_ary
     end
     it "sums the scores" do
       @combinations.total_score.should == 5.90
@@ -95,7 +93,7 @@ describe 'Query::Combinations' do
       @combination2 = stub :combination2, :in? => true
       @combination3 = stub :combination3, :in? => true
 
-      @combinations = Query::Combinations.new :some_type, [@combination1, @combination2, @combination3]
+      @combinations = Query::Combinations.new [@combination1, @combination2, @combination3]
     end
     it 'should remove the combinations' do
       @combinations.remove([:any]).should == [@combination1]
@@ -108,7 +106,7 @@ describe 'Query::Combinations' do
       @combination2 = stub :combination2, :in? => true
       @combination3 = stub :combination3, :in? => true
 
-      @combinations = Query::Combinations.new :some_type, [@combination1, @combination2, @combination3]
+      @combinations = Query::Combinations.new [@combination1, @combination2, @combination3]
     end
     it 'should filter the combinations' do
       @combinations.keep([:any]).should == [@combination2, @combination3]
@@ -120,7 +118,7 @@ describe 'Query::Combinations' do
       @combination1 = stub :combination1
       @combination2 = stub :combination2
       @combination3 = stub :combination3
-      @combinations = Query::Combinations.new :some_type, [@combination1, @combination2, @combination3]
+      @combinations = Query::Combinations.new [@combination1, @combination2, @combination3]
     end
     it "should intersect correctly" do
       @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a

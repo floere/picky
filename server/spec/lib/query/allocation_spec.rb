@@ -4,7 +4,7 @@ describe Query::Allocation do
   
   before(:each) do
     @combinations = stub :combinations
-    @allocation = Query::Allocation.new @combinations
+    @allocation = Query::Allocation.new @combinations, :some_result_type
   end
   
   describe "eql?" do
@@ -30,12 +30,11 @@ describe Query::Allocation do
     context "allocation.count > 0" do
       before(:each) do
         @allocation.stub! :count => 10
-        @allocation.stub! :result_type => :result_type
         @allocation.stub! :score => :score
         @allocation.stub! :ids => :ids
       end
       it "represents correctly" do
-        @allocation.to_s.should == "Allocation: result_type, score, 10, combinations_result, ids"
+        @allocation.to_s.should == "Allocation: some_result_type, score, 10, combinations_result, ids"
       end
     end
   end
@@ -105,9 +104,8 @@ describe Query::Allocation do
   describe 'to_result' do
     context 'with few combinations' do
       before(:each) do
-        @allocation = Query::Allocation.new stub(:combinations, :ids => [1,2,3], :to_result => [:some_result])
+        @allocation = Query::Allocation.new stub(:combinations, :ids => [1,2,3], :to_result => [:some_result]), :some_result_type
         @allocation.instance_variable_set :@score, :some_score
-        @allocation.result_type = :some_result_type
       end
       context 'with ids' do
         it 'should output an array of information' do
@@ -120,9 +118,8 @@ describe Query::Allocation do
     context 'with results' do
       before(:each) do
         combinations = stub :combinations, :ids => [1,2,3], :to_result => [:some_result1, :some_result2]
-        @allocation = Query::Allocation.new combinations
+        @allocation = Query::Allocation.new combinations, :some_result_type
         @allocation.instance_variable_set :@score, :some_score
-        @allocation.result_type = :some_result_type
       end
       context 'with ids' do
         it 'should output an array of information' do
@@ -134,7 +131,7 @@ describe Query::Allocation do
     end
     context 'without results' do
       before(:each) do
-        @allocation = Query::Allocation.new stub(:combinations, :ids => [], :to_result => [])
+        @allocation = Query::Allocation.new stub(:combinations, :ids => [], :to_result => []), :some_result_type
         @allocation.instance_variable_set :@score, :some_score
       end
       it 'should return nil' do
@@ -147,9 +144,8 @@ describe Query::Allocation do
 
   describe 'to_json' do
     before(:each) do
-      @allocation = Query::Allocation.new stub(:combination, :ids => [1,2,3,4,5,6,7], :to_result => [:some_result1, :some_result2])
+      @allocation = Query::Allocation.new stub(:combination, :ids => [1,2,3,4,5,6,7], :to_result => [:some_result1, :some_result2]), :some_result_type
       @allocation.instance_variable_set :@score, :some_score
-      @allocation.result_type = :some_result_type
     end
     it 'should output the correct json string' do
       @allocation.process! 20, 0
@@ -168,9 +164,9 @@ describe Query::Allocation do
 
   describe "<=>" do
     it "should sort higher first" do
-      first = Query::Allocation.new []
+      first = Query::Allocation.new [], :some_result_type
       first.instance_variable_set :@score, 20
-      second = Query::Allocation.new []
+      second = Query::Allocation.new [], :some_result_type
       second.instance_variable_set :@score, 10
 
       first.<=>(second).should == -1
@@ -179,11 +175,11 @@ describe Query::Allocation do
 
   describe "sort!" do
     it "should sort correctly" do
-      first = Query::Allocation.new :whatever
+      first = Query::Allocation.new :whatever, :some_result_type
       first.instance_variable_set :@score, 20
-      second = Query::Allocation.new :whatever
+      second = Query::Allocation.new :whatever, :some_result_type
       second.instance_variable_set :@score, 10
-      third = Query::Allocation.new :whatever
+      third = Query::Allocation.new :whatever, :some_result_type
       third.instance_variable_set :@score, 5
 
       allocations = [second, third, first]

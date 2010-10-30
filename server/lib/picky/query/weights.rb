@@ -41,6 +41,9 @@ module Query
       # TODO Beautify?
       #
       # weight_for combinations.map(&:category).clustered_uniq_fast.map!(&:name)
+      
+      # TODO combinations could cluster uniq as combinations are added (since combinations don't change).
+      #
       weight_for combinations.map(&:category_name).clustered_uniq_fast
     end
     

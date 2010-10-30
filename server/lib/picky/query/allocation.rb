@@ -4,13 +4,13 @@ module Query
   #
   class Allocation
 
-    attr_reader   :count, :ids, :score, :combinations
-    attr_accessor :result_type
-
+    attr_reader :count, :ids, :score, :combinations, :result_type
+    
     #
     #
-    def initialize combinations
+    def initialize combinations, result_type
       @combinations = combinations
+      @result_type  = result_type
     end
 
     def hash

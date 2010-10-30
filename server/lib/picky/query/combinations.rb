@@ -2,16 +2,15 @@ module Query
 
   # Combinations are a number of Combination-s.
   #
-  # They are, in effect, the core of an allocation.
+  # They are the core of an allocation.
   #
   class Combinations
 
-    attr_reader :type, :combinations
+    attr_reader :combinations
 
     delegate :empty?, :to => :@combinations
 
-    def initialize type, combinations = []
-      @type         = type # TODO Remove.
+    def initialize combinations = []
       @combinations = combinations
     end
 
@@ -57,20 +56,18 @@ module Query
       #      this precondition for a fast algorithm is always given.
       #
       id_arrays.sort! { |this_array, that_array| this_array.size <=> that_array.size }
-
+      
       # Call the optimized C algorithm.
       #
       Performant::Array.memory_efficient_intersect id_arrays
     end
-
+    
+    # Wrap the combinations into an allocation with the result_type
     #
-    #
-    def pack_into_allocation
-      allocation = Allocation.new self
-      allocation.result_type = @type.result_type # TODO Rewrite.
-      allocation
+    def pack_into_allocation result_type
+      Allocation.new self, result_type
     end
-
+    
     # Filters the tokens and identifiers such that only identifiers
     # that are passed in, remain, including their tokens.
     #

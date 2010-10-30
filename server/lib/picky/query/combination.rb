@@ -66,7 +66,7 @@ module Query
     #  "exact title:Peter*:peter"
     #
     def to_s
-      "#{bundle.name} #{to_result.join(':')}"
+      "#{bundle.identifier} #{to_result.join(':')}"
     end
     
   end
