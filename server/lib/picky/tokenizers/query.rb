@@ -44,10 +44,10 @@ module Tokenizers
     # TODO Perhaps move to Normalizer?
     #
     def normalize text
-      text = substituter.substitute text if substituter? # Substitute special characters TODO Move to subclass
-      text.downcase!                                     # Downcase all text
-      normalize_with_patterns text                       # normalize
-      text.to_sym                                        # symbolize
+      text = substitute_characters text # Substitute special characters TODO Move to subclass
+      text.downcase!                    # Downcase all text
+      normalize_with_patterns text      # normalize
+      text.to_sym                       # symbolize
     end
     
     # Returns a token for a word.

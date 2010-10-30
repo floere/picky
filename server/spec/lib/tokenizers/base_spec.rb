@@ -1,10 +1,27 @@
-# coding: utf-8
+# encoding: utf-8
+#
 require 'spec_helper'
 
 describe Tokenizers::Base do
 
   before(:each) do
     @tokenizer = Tokenizers::Base.new
+  end
+  
+  describe "substitute(s)_characters*" do
+    it "doesn't substitute if there is no substituter" do
+      @tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzäöü'
+    end
+    it "uses the substituter to replace characters" do
+      @tokenizer.substitutes_characters_with CharacterSubstitution::European.new
+      
+      @tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
+    end
+    it "uses the european substituter as default" do
+      @tokenizer.substitutes_characters_with
+      
+      @tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
+    end
   end
   
   describe "removes_characters_after_splitting" do

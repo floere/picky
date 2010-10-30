@@ -15,7 +15,7 @@ module Tokenizers
     #   5. Remove non-single stopwords. (Stopwords that occur with other words)
     #
     def preprocess text
-      text = substituter.substitute text if substituter?
+      text = substitute_characters text
       text.downcase!
       remove_illegals text
       contract text

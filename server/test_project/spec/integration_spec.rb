@@ -74,6 +74,10 @@ describe "Cases" do
     #
     # it_should_find_ids_in_main_full "history.fergus", [4, 4]
     
+    # Character Substitution.
+    #
+    it_should_find_ids_in_main_full "hïstôry Educåtioñ fërgus", [4, 4, 4, 4]
+    
     # Breakage
     #
     it_should_find_ids_in_main_full "%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}", []

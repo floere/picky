@@ -79,6 +79,19 @@ module Tokenizers
       text.gsub! @removes_characters_after_splitting_regexp, '' if @removes_characters_after_splitting_regexp
     end
     
+    # Substitute Characters with this substituter.
+    #
+    # Default is European Character substitution.
+    #
+    def substitutes_characters_with substituter = CharacterSubstitution::European.new
+      # TODO Raise if it doesn't quack substitute?
+      @substituter = substituter
+    end
+    def substitute_characters text
+      substituter?? substituter.substitute(text) : text 
+    end
+    
+    
     # Returns a number of tokens, generated from the given text.
     #
     # Note:
@@ -93,12 +106,10 @@ module Tokenizers
                process tokens   # processing tokens / strings
     end
     
-    attr_accessor :substituter
+    attr_reader :substituter
     alias substituter? substituter
     
-    def initialize substituter = CharacterSubstitution::European.new
-      @substituter = substituter
-      
+    def initialize
       # TODO Default handling.
       #
       splits_text_on(/\s/)

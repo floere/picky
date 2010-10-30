@@ -32,6 +32,13 @@ class PickySearch < Application
   #
   querying.maximum_tokens 5
   
+  # Normalizes special user input.
+  # This example replaces "european" special characters, like Ä -> Ae, ñ -> n, etc.
+  #
+  # Note: Remove this line if you don't need it.
+  #
+  querying.substitutes_characters_with CharacterSubstitution::European.new
+  
   # Note that Picky needs the following characters to
   # pass through, as they are control characters: *"~:
   #

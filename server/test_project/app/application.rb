@@ -43,6 +43,7 @@ class BookSearch < Application
     #      And serve only as defaults if the query cannot find them?
     #
     querying.maximum_tokens 5
+    querying.substitutes_characters_with CharacterSubstitution::European.new
     querying.removes_characters(/[\(\)\']/)
     querying.contracts_expressions(/mr\.\s*|mister\s*/i, 'mr ')
     querying.stopwords(/\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/)

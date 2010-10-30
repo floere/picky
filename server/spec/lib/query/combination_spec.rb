@@ -46,7 +46,7 @@ describe 'Query::Combination' do
         @combination = Query::Combination.new token, @category
       end
       it 'should return a correct result' do
-        @combination.to_result.should == [:some_category_name, 'Blä~', :blae]
+        @combination.to_result.should == [:some_category_name, 'Blä~', :blä] # Note: Characters not substituted. That's ok.
       end
     end
     it 'should return a correct result' do
