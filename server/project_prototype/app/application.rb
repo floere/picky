@@ -26,14 +26,14 @@ class PickySearch < Application
   #
   books_index = index :books,
                       Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'app/library.csv'),
-                      field(:title,
-                            :partial => Partial::Substring.new(:from => 1), # Indexes substrings upwards from character 1 (default: -3),
-                                                                            # You'll find "picky" even when entering just a "p".
-                            :similarity => Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed (default: No similarity).
-                      field(:author,
-                            :partial => Partial::Substring.new(from: 1)),
-                      field(:isbn,
-                            :partial => Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
+                      category(:title,
+                               partial: Partial::Substring.new(from: 1), # Indexes substrings upwards from character 1 (default: -3),
+                                                                         # You'll find "picky" even when entering just a "p".
+                               similarity: Similarity::DoubleLevenshtone.new(3)), # Up to three similar title word indexed (default: No similarity).
+                      category(:author,
+                               partial: Partial::Substring.new(from: 1)),
+                      category(:isbn,
+                               partial: Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
   
   full_books = Query::Full.new books_index    # A Full query returns ids, combinations, and counts.
   live_books = Query::Live.new books_index    # A Live query does return all that Full returns, except ids.
