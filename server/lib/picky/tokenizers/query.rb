@@ -13,7 +13,9 @@ module Tokenizers
   #
   class Query < Base
     
-    cattr_writer :default
+    def self.default= new_default
+      @default = new_default
+    end
     def self.default
       @default ||= new
     end

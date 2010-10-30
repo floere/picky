@@ -9,14 +9,16 @@ class BookSearch < Application
                      removes_characters_after_splitting: /[\.]/,
                      normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']]
     
-    default_querying maximum_tokens:                     5,
-                     substitutes_characters_with:        CharacterSubstitution::European.new,
-                     removes_characters:                 /[\(\)\']/,
+    default_querying removes_characters:                 /[\(\)\']/,
                      contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
-                     removes_characters_after_splitting: /[\.]/
-    
+                     removes_characters_after_splitting: /[\.]/,
+                     
+                     maximum_tokens:                     5,
+                     substitutes_characters_with:        CharacterSubstitution::European.new
+                     
+                     
     similar_title = field :title,  :qualifiers => [:t, :title, :titre],
                                    :partial => Partial::Substring.new(:from => 1),
                                    :similarity =>  Similarity::DoubleLevenshtone.new(2)

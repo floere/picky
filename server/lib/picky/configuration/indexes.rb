@@ -11,7 +11,7 @@ module Configuration
     end
     
     def default_tokenizer options = {}
-      Tokenizers::Index.default ||= Tokenizers::Index.new(options)
+      Tokenizers::Index.default = Tokenizers::Index.new(options)
     end
     
     # TODO Rewrite all this configuration handling.

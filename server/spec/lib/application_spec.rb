@@ -7,17 +7,14 @@ describe Application do
   describe "integration" do
     it "should run ok" do
       lambda {
-        # TODO Add all possible cases.
-        #
         class MinimalTestApplication < Application
-          
-          books_index = index :books,
-                              Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
-                              field(:title)
+          books = index :books,
+                        Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml'),
+                        field(:title)
                               
           
-          full = Query::Full.new books_index
-          live = Query::Live.new books_index
+          full = Query::Full.new books
+          live = Query::Live.new books
           
           route %r{^/books/full} => full
           route %r{^/books/live} => live
