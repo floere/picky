@@ -7,6 +7,10 @@ Fine everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h2. Releases
 
+0.10.4
+
+  * hanke: Typo fixed. (Thanks github.com/stanley!)
+
 0.10.3
   
   * hanke: Helpful configuration page in the client at /configure.
