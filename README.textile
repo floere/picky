@@ -7,6 +7,10 @@ Fine everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h2. Releases
 
+0.10.3
+  
+  * hanke: Helpful configuration page at /configure.
+
 0.10.2
 
   * hanke: Phonetic similarity (e.g. lyterature~) available through Similarity::Phonetic.new(4), see example.

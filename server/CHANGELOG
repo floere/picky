@@ -1,3 +1,4 @@
+0.10.3 -
 0.10.2 - hanke: Phonetic similarity (e.g. lyterature~) available through Similarity::Phonetic.new(4), see example.
 0.10.1 - hanke: :weights option for queries also ok in the form: { [:cat1, :cat2] => 4 }, where 4 is any weight.
 0.10.0 - hanke: (breaking changes in API) Total rewrite of the Application API.
