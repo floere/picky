@@ -9,7 +9,7 @@ h2. Releases
 
 0.10.3
   
-  * hanke: Helpful configuration page at /configure.
+  * hanke: Helpful configuration page in the client at /configure.
 
 0.10.2
 
