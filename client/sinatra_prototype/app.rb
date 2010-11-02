@@ -23,6 +23,12 @@ get '/' do
   haml :'/search'
 end
 
+# Configure. The configuration info page.
+#
+get '/configure' do
+  haml :'/configure'
+end
+
 # For full results, you get the ids from the picky server
 # and then populate the result with models (rendered, even).
 #
