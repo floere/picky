@@ -27,9 +27,9 @@ class PickySearch < Application
   books_index = index :books,
                       Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'app/library.csv'),
                       category(:title,
-                               similarity: Similarity::Phonetic.new(3)), # Up to three similar title word indexed (default: No similarity).
-                               partial: Partial::Substring.new(from: 1)  # Indexes substrings upwards from character 1 (default: -3),
-                                                                         # You'll find "picky" even when entering just a "p".
+                               similarity: Similarity::Phonetic.new(3),   # Up to three similar title word indexed (default: No similarity).
+                               partial: Partial::Substring.new(from: 1)), # Indexes substrings upwards from character 1 (default: -3),
+                                                                          # You'll find "picky" even when entering just a "p".
                       category(:author,
                                partial: Partial::Substring.new(from: 1)),
                       category(:isbn,
