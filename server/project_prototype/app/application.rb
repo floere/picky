@@ -28,12 +28,13 @@ class PickySearch < Application
                       Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'app/library.csv'),
                       category(:title,
                                similarity: Similarity::Phonetic.new(3)), # Up to three similar title word indexed (default: No similarity).
-                               partial: Partial::Substring.new(from: 1) # Indexes substrings upwards from character 1 (default: -3),
+                               partial: Partial::Substring.new(from: 1)  # Indexes substrings upwards from character 1 (default: -3),
                                                                          # You'll find "picky" even when entering just a "p".
                       category(:author,
                                partial: Partial::Substring.new(from: 1)),
                       category(:isbn,
-                               partial: Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
+                               partial: Partial::None.new) # Partial substring searching on an ISBN does not make
+                                                           # much sense, neither does similarity.
   
   query_options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for ordered combinations.
   
