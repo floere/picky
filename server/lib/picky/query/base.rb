@@ -10,14 +10,20 @@ module Query
     attr_writer   :tokenizer
     attr_accessor :reduce_to_amount, :weights
     
-    # Run a query on the given text, with the offset and these indexes.
+    # Takes:
+    #  * A number of indexes
+    #  * Options hash (optional) with:
+    #    * weigher:   A weigher. Query::Weigher by default.
+    #    * tokenizer: Tokenizers::Query.default by default.
+    #    * weights:   A hash of weights, or a Query::Weights object.
     #
     def initialize *index_types
       options      = Hash === index_types.last ? index_types.pop : {}
       @index_types = index_types
       @weigher     = options[:weigher]   || Weigher.new(index_types)
       @tokenizer   = options[:tokenizer] || Tokenizers::Query.default
-      @weights     = options[:weights]   || Weights.new
+      weights      = options[:weights]
+      @weights     = Hash === weights ? Weights.new(weights) : weights
     end
     
     # Convenience method.

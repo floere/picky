@@ -3,6 +3,19 @@ require 'spec_helper'
 
 describe 'Query::Base' do
   
+  describe "weights handling" do
+    it "handles :weights options when not yet wrapped" do
+      query = Query::Base.new :weights => { [:a, :b] => +3 }
+      
+      query.weights.should be_kind_of(Query::Weights)
+    end
+    it "handles :weights options when already wrapped" do
+      query = Query::Base.new :weights => Query::Weights.new([:a, :b] => +3)
+      
+      query.weights.should be_kind_of(Query::Weights)
+    end
+  end
+  
   describe "empty_results" do
     before(:each) do
       @query = Query::Full.new

@@ -35,11 +35,13 @@ class PickySearch < Application
                       category(:isbn,
                                partial: Partial::None.new) # Partial substring searching on an ISBN makes not much sense, neither does similarity.
   
-  full_books = Query::Full.new books_index    # A Full query returns ids, combinations, and counts.
-  live_books = Query::Live.new books_index    # A Live query does return all that Full returns, except ids.
+  query_options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for ordered combinations.
   
-  route %r{\A/books/full\Z} => full_books        # Routing is simple: url_path_regexp => query
-  route %r{\A/books/live\Z} => live_books        # 
+  full_books = Query::Full.new books_index, query_options    # A Full query returns ids, combinations, and counts.
+  live_books = Query::Live.new books_index, query_options    # A Live query does return all that Full returns, except ids.
+  
+  route %r{\A/books/full\Z} => full_books                    # Routing is simple: url_path_regexp => query
+  route %r{\A/books/live\Z} => live_books                    # 
   
   # Note: You can pass a query multiple indexes and it will query in all of them.
   
