@@ -22,7 +22,7 @@ module Query
       @index_types = index_types
       @weigher     = options[:weigher]   || Weigher.new(index_types)
       @tokenizer   = options[:tokenizer] || Tokenizers::Query.default
-      weights      = options[:weights]
+      weights      = options[:weights] || Weights.new
       @weights     = Hash === weights ? Weights.new(weights) : weights
     end
     

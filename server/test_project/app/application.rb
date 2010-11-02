@@ -7,7 +7,9 @@ class BookSearch < Application
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
                      splits_text_on:                     /[\s\/\-\"\&\.]/,
                      removes_characters_after_splitting: /[\.]/,
-                     normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']]
+                     normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
+                     
+                     substitutes_characters_with:        CharacterSubstitution::European.new
     
     default_querying removes_characters:                 /[\(\)\']/,
                      contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
@@ -69,8 +71,8 @@ class BookSearch < Application
           %r{^/csv/full}   => full_csv,
           %r{^/csv/live}   => live_csv,
           %r{^/isbn/full}  => full_isbn,
-          %r{^/all/full}   => Query::Full.new(main_index, csv_test_index, isbn_index),
-          %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index)
+          %r{^/all/full}   => Query::Full.new(main_index, csv_test_index, isbn_index, options),
+          %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index, options)
     
     root 200
     

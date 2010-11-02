@@ -4,6 +4,11 @@ require 'spec_helper'
 describe 'Query::Base' do
   
   describe "weights handling" do
+    it "creates a default weight when no weights are given" do
+      query = Query::Base.new
+      
+      query.weights.should be_kind_of(Query::Weights)
+    end
     it "handles :weights options when not yet wrapped" do
       query = Query::Base.new :weights => { [:a, :b] => +3 }
       
