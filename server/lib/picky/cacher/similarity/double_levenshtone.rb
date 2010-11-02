@@ -67,6 +67,10 @@ module Cacher
         end
 
     end
+    
+    # ... aka Phonetic.
+    #
+    Phonetic = DoubleLevenshtone
 
   end
 

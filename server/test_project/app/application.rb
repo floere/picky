@@ -23,7 +23,7 @@ class BookSearch < Application
                      
     similar_title = category :title,  :qualifiers => [:t, :title, :titre],
                                    :partial => Partial::Substring.new(:from => 1),
-                                   :similarity =>  Similarity::DoubleLevenshtone.new(2)
+                                   :similarity =>  Similarity::Phonetic.new(2)
     author        = category :author, :qualifiers => [:a, :author, :auteur],
                                    :partial => Partial::Substring.new(:from => -2)
     year          = category :year,   :qualifiers => [:y, :year, :annee]

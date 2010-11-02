@@ -56,5 +56,11 @@ describe Cacher::Similarity::DoubleLevenshtone do
       index[code].should == [:mair, :maier, :meier, :meira, :mairai]
     end
   end
+  
+  context "alias" do
+    it "works also with Phonetic" do
+      lambda { Cacher::Similarity::Phonetic.new(1) }.should_not raise_error
+    end
+  end
 
 end
