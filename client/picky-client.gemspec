@@ -4,6 +4,8 @@ Gem::Specification.new do |s|
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky-client@gmail.com'
   s.homepage = 'http://floere.github.com/picky'
+  s.rubyforge_project = 'http://rubyforge.org/projects/picky'
+  s.description = 'Fast Combinatorial Ruby Search Engine Client'
   s.platform = Gem::Platform::RUBY
   s.summary = 'picky Search Engine Client'
   s.executables = ['picky-client']
