@@ -8,6 +8,15 @@ img {
 p span.explanation {
   color: #999999; }
 
+pre {
+  padding: 10px;
+  background-color: #efede5; }
+
+div.content {
+  width: 800px;
+  margin: 0 auto;
+  text-align: left; }
+
 #picky {
   text-align: left;
   margin: 0px auto;
