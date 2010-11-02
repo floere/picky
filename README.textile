@@ -7,6 +7,10 @@ Fine everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h2. Releases
 
+0.10.1
+
+  * hanke: :weights option for queries also ok in the form: { [:cat1, :cat2] => 4 }, where 4 is any weight.
+
 0.10.0
   
   * hanke: (BREAKING) Total rewrite/exploration of the Application API.
