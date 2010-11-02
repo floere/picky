@@ -47,7 +47,13 @@ class BookSearch < Application
                            category(:subjects, :qualifiers => [:s, :subject])
                            
     
-    options = { :weights => Query::Weights.new([:author] => 6, [:title, :author] => 5, [:author, :year] => 2) }
+    options = {
+      :weights => {
+        [:author]         => 6,
+        [:title, :author] => 5,
+        [:author, :year]  => 2
+      }
+    }
     
     full_main = Query::Full.new main_index, isbn_index, options
     live_main = Query::Live.new main_index, isbn_index, options
