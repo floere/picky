@@ -15,3 +15,8 @@ group :test do
   gem 'simplecov', '>= 0.3.5', :require => false # Will install simplecov-html as a dependency
   gem 'www-delicious'
 end
+
+# You will need this only if your data comes form CouchDB
+group :couchdb do
+  gem 'rest-client'
+end
