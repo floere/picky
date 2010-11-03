@@ -17,6 +17,6 @@ group :test do
 end
 
 # You will need this only if your data comes form CouchDB
-group :couchdb do
-  gem 'rest-client'
-end
+# group :couchdb do
+#   gem 'rest-client'
+# end
