@@ -39,6 +39,13 @@ class BookSearch < Application
                        Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml'),
                        field(:isbn, :qualifiers => [:i, :isbn])
     
+    # geo_index  = index :geo,
+    #                    Sources::CSV.new(:location, :x, :y, :file => 'data/locations.csv'),
+    #                    category(:location),
+    #                    location(:x, radius: 10.k),
+    #                    location(:y, radius: 10.k),
+    #                    location(:z, radius: 10.k)
+    
     csv_test_index = index :csv_test,
                            Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
                            similar_title,
