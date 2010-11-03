@@ -7,9 +7,13 @@ Fine everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h2. Releases
 
+0.10.5
+
+  * hanke: Source CouchDB added (thanks to github.com/stanley).
+
 0.10.4
 
-  * hanke: Typo fixed. (Thanks github.com/stanley!)
+  * hanke: Typo fixed (thanks to github.com/stanley).
 
 0.10.3
   
@@ -66,15 +70,15 @@ h2. Releases
 0.3.0
 
   * hanke: Uses json (index, index weights) and marshal (similarity index) to dump indexes.
-  * hanke: Server generator is more helpful (thanks kschiess)
+  * hanke: Server generator is more helpful (thanks to github.com/kschiess)
   * hanke: Generator for a Sinatra project. (picky-client sinatra project_name)
-  * hanke: Helpful client generator. (thanks kschiess)
+  * hanke: Helpful client generator. (thanks to github.com/kschiess)
 
 0.2.4
 
   * hanke: Indexing output, output in general cleaned up.
   * hanke: Better info after generating a new project (thanks kschiess).
-  * hanke: Indexer now uses json for the dump files (much faster, slightly larger, thanks niko).
+  * hanke: Indexer now uses json for the dump files (much faster, slightly larger, thanks to github.com/niko).
   * hanke: JS files rewritten.
 
 0.2.3
@@ -87,7 +91,7 @@ h2. Releases
 0.2.2
 
   * hanke: Umlaut handling (i.e. character substitution) now pluggable.
-  * hanke: Apps finalization now handled through Ruby callback (thanks to severin).
+  * hanke: Apps finalization now handled through Ruby callback (thanks to github.com/severin).
 
 0.2.1
 
