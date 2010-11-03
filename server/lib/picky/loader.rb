@@ -84,7 +84,7 @@ module Loader
   def self.load_framework
     # Load compiled C code.
     #
-    require_relative 'initializers/ext'
+    require_relative 'ext/maybe_compile'
     
     # Load extensions.
     #
