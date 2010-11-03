@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Sources::COUCH do
+describe Sources::Couch do
   
   context "without database" do
     it "should fail correctly" do
-      lambda { @source = Sources::COUCH.new(:a, :b, :c) }.should raise_error(Sources::NoCouchDBGiven)
+      lambda { @source = Sources::Couch.new(:a, :b, :c) }.should raise_error(Sources::NoCouchDBGiven)
     end
   end
 
   context "with database" do
     before(:each) do
-      @source = Sources::COUCH.new :a, :b, :c, {url:'http://localhost:5984/picky'}
+      @source = Sources::Couch.new :a, :b, :c, {url:'http://localhost:5984/picky'}
       RestClient::Request.should_receive(:execute).any_number_of_times.and_return %{{"rows":[{"doc":{"_id":"7","a":"a data","b":"b data","c":"c data"}}]}}
     end
 
