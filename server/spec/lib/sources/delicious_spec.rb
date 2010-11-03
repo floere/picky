@@ -41,12 +41,6 @@ describe Sources::Delicious do
         post1.title = "VIBRAM - FiveFingers"
         post1.url   = URI.parse('http://www.vibramfivefingers.it/')
         
-        # post2       = WWW::Delicious::Post.new
-        # post2.uid   = "d0b16f4b7e998a3386052bc95ad0d695"
-        # post2.tags  = ["floating", "title", "scrolling", "css", "javascript", "ui"]
-        # post2.title = "Floating Title when Scrolling"
-        # post2.url   = URI.parse('http://mesh.scribblelive.com/Event/Value_Judgements_in_Interface_Design5')
-        
         delicious = stub :delicious, :posts_recent => [post1]
         
         WWW::Delicious.should_receive(:new).and_return delicious
@@ -79,12 +73,6 @@ describe Sources::Delicious do
         post1.tags  = ["barefoot", "running", "shoe"]
         post1.title = "VIBRAM - FiveFingers"
         post1.url   = URI.parse('http://www.vibramfivefingers.it/')
-        
-        # post2       = WWW::Delicious::Post.new
-        # post2.uid   = "d0b16f4b7e998a3386052bc95ad0d695"
-        # post2.tags  = ["floating", "title", "scrolling", "css", "javascript", "ui"]
-        # post2.title = "Floating Title when Scrolling"
-        # post2.url   = URI.parse('http://mesh.scribblelive.com/Event/Value_Judgements_in_Interface_Design5')
         
         delicious = stub :delicious, :posts_recent => [post1]
         
