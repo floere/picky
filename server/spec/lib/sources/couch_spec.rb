@@ -10,7 +10,7 @@ describe Sources::Couch do
 
   context "with database" do
     before(:each) do
-      @source = Sources::Couch.new :a, :b, :c, {url:'http://localhost:5984/picky'}
+      @source = Sources::Couch.new :a, :b, :c, url: 'http://localhost:5984/picky'
       RestClient::Request.should_receive(:execute).any_number_of_times.and_return %{{"rows":[{"doc":{"_id":"7","a":"a data","b":"b data","c":"c data"}}]}}
     end
 
@@ -27,7 +27,7 @@ describe Sources::Couch do
     describe "get_data" do
       it "should yield each line" do
         @source.get_data do |data|
-          data.should == {"_id"=>"7", "a"=>"a data", "b"=>"b data", "c"=>"c data"}
+          data.should == { "_id" => "7", "a" => "a data", "b" => "b data", "c" => "c data" }
         end.should have(1).item
       end
     end
