@@ -65,10 +65,12 @@ describe "Cases" do
     # Stopwords
     #
     it_should_find_ids_in_main_full "and the history or fergus", [4, 4]
+    it_should_find_ids_in_main_full "und and the or on of in is to from as at an history fergus", [4, 4]
     
     # Normalization
     #
     # it_should_find_ids_in_main_full "Deoxyribonucleic Acid", []
+    # it_should_find_ids_in_main_full '800 dollars', []
     
     # Remove after splitting.
     #
