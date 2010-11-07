@@ -42,9 +42,10 @@ class BookSearch < Application
     # geo_index  = index :geo,
     #                    Sources::CSV.new(:location, :x, :y, :file => 'data/locations.csv'),
     #                    category(:location),
-    #                    location(:x, radius: 10.k),
-    #                    location(:y, radius: 10.k),
-    #                    location(:z, radius: 10.k)
+    #                    geo_location(:x, grid: 10_000),
+    #                    geo_location(:y, grid: 10_000)
+    #                    # geo_location(:x, grid: 20_000, :as => :x20k),
+    #                    # geo_location(:y, grid: 20_000, :as => :y20k)
     
     csv_test_index = index :csv_test,
                            Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
@@ -78,8 +79,10 @@ class BookSearch < Application
           %r{^/csv/full}   => full_csv,
           %r{^/csv/live}   => live_csv,
           %r{^/isbn/full}  => full_isbn,
-          %r{^/all/full}   => Query::Full.new(main_index, csv_test_index, isbn_index, options),
-          %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index, options)
+          %r{^/geo/live}   => live_geo,
+          %r{^/geo/full}   => full_geo,
+          %r{^/all/full}   => Query::Full.new(main_index, csv_test_index, isbn_index, geo_index, options),
+          %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index, geo_index, options)
     
     root 200
     
