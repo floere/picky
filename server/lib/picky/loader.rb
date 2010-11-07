@@ -219,6 +219,9 @@ module Loader
     load_relative 'sources/delicious'
     load_relative 'sources/couch'
     
+    load_relative 'sources/wrappers/base'
+    load_relative 'sources/wrappers/location'
+    
     # Indexes.
     #
     load_relative 'indexes'

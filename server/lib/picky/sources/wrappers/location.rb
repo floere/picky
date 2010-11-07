@@ -1,0 +1,90 @@
+module Sources
+  
+  module Wrappers
+    
+    class Location < Base
+      
+      attr_reader :precision, :grid
+      
+      def initialize backend, options = {}
+        super backend
+        
+        @user_grid = extract_user_grid options
+        @precision = extract_precision options
+        
+        @grid      = @user_grid * 0.666
+      end
+      
+      #
+      #
+      def extract_user_grid options
+        options[:grid] || raise # TODO
+      end
+      # Extracts an amount of grids that this 
+      # Precision is given in a value.
+      # 1 is low (up to 16.6% error), 5 is very high (up to 5% error).
+      #
+      # We don't recommend using values higher than 5.
+      #
+      # Default is 1.
+      #
+      def extract_precision options
+        options[:precision] || 1
+      end
+      
+      def reset
+        @min = -1.0/0
+        @max = 1.0/0
+      end
+      
+      # Yield the data (id, text for id) for the given type and field.
+      #
+      def harvest type, field
+        reset
+        
+        # Cache. TODO Make option?
+        #
+        locations = []
+        
+        # Gather min/max.
+        #
+        backend.harvest type, field do |indexed_id, location|
+          @min = location if location < @min
+          @max = location if location > @max
+          locations << [indexed_id, location]
+        end
+        
+        marginize
+        
+        # Recalculate locations.
+        #
+        locations.each do |indexed_id, location|
+          locations_for(location).each do |new_location|
+            yield indexed_id, new_location
+          end
+        end
+      end
+      
+      def marginize
+        @min -= @user_grid
+        @max += @user_grid
+      end
+      
+      # Put location onto multiple places on a grid.
+      #
+      # Note: Always returns an integer.
+      #
+      def locations_for location
+        new_location = ((location - @min) / grid).floor
+        
+        min_location = new_location - precision
+        max_location = new_location + precision
+        
+        (min_location..max_location).to_a
+      end
+    
+    end
+    
+  end
+  
+end
