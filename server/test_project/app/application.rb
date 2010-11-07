@@ -40,12 +40,12 @@ class BookSearch < Application
                        field(:isbn, :qualifiers => [:i, :isbn])
     
     # geo_index  = index :geo,
-    #                    Sources::CSV.new(:location, :x, :y, :file => 'data/locations.csv'),
+    #                    Sources::CSV.new(:location, :north, :east, :file => 'data/locations.csv'),
     #                    category(:location),
-    #                    geo_location(:x, grid: 10_000),
-    #                    geo_location(:y, grid: 10_000)
-    #                    # geo_location(:x, grid: 20_000, :as => :x20k),
-    #                    # geo_location(:y, grid: 20_000, :as => :y20k)
+    #                    geo_location(:north, grid: 10_000),
+    #                    geo_location(:east, grid: 10_000)
+    #                    # geo_location(:north, grid: 20_000, :as => :n20k),
+    #                    # geo_location(:east, grid: 20_000, :as => :e20k)
     
     csv_test_index = index :csv_test,
                            Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'),
