@@ -38,8 +38,10 @@ module Index
           new type_or_category
         end
       end
+      # TODO Do not extract categories!
+      #
       def self.wrap_each_of categories
-        categories.collect! { |category| new(category) }
+        categories.categories.collect! { |category| new(category) }
       end
       
       def ids text

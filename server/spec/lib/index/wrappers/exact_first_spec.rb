@@ -13,18 +13,16 @@ describe Index::Wrappers::ExactFirst do
   describe "self.wrap" do
     context "type" do
       it "wraps each category" do
-        category = stub :category, :name => :some_category, :exact => :exact, :partial => :partial
-        
-        type = Index::Type.new :type_name, :result_type, false, category
+        type = Index::Type.new :type_name
+        type.add_category :some_category
         
         Index::Wrappers::ExactFirst.wrap type
         
-        type.categories.first.should be_kind_of(Index::Wrappers::ExactFirst)
+        type.categories.should be_kind_of(Index::Wrappers::ExactFirst)
       end
       it "returns the type" do
-        category = stub :category, :name => :some_category, :exact => :exact, :partial => :partial
-        
-        type = Index::Type.new :type_name, :result_type, false, category
+        type = Index::Type.new :type_name
+        type.add_category :some_category
         
         Index::Wrappers::ExactFirst.wrap(type).should == type
       end

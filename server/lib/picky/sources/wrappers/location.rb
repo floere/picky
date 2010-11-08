@@ -66,8 +66,6 @@ module Sources
             yield indexed_id, new_location.to_s
           end
         end
-        
-        p [@min, @grid]
       end
       
       def marginize
