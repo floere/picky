@@ -20,7 +20,7 @@ module Index
     # TODO Spec. Doc.
     #
     def add_category name, options = {}
-      combinator << Index::Category.new(name, self, options)
+      combinator << Category.new(name, self, options)
     end
     
     #

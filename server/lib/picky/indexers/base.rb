@@ -7,22 +7,22 @@ module Indexers
   #
   class Base
     
-    def initialize type, field
+    def initialize type, category
       @type       = type
-      @field      = field
+      @category   = category
     end
     
     # Convenience method for getting the right Tokenizer.
     #
     def tokenizer
-      @field.tokenizer
+      @category.tokenizer
     end
     # Convenience methods for user subclasses.
     #
     # TODO Duplicate code in Index::Files.
     #
     def search_index_file_name
-      @field.search_index_file_name
+      @category.search_index_file_name
     end
     
     # Executes the specific strategy.
@@ -34,10 +34,10 @@ module Indexers
     # Get the source where the data is taken from.
     #
     def source
-      @field.source || raise_no_source
+      @category.source || raise_no_source
     end
     def raise_no_source
-      raise NoSourceSpecifiedException.new "No source given for index:#{@type.name}, field:#{@field.name}." # TODO field.identifier
+      raise NoSourceSpecifiedException.new "No source given for index:#{@type.name}, category:#{@category.name}." # TODO field.identifier
     end
     
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
@@ -54,7 +54,7 @@ module Indexers
       #
       File.open(search_index_file_name, 'w:binary') do |file|
         result = []
-        source.harvest(@type, @field) do |indexed_id, text|
+        source.harvest(@type, @category) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
             result << indexed_id << comma << token_text << newline
           end
@@ -65,7 +65,7 @@ module Indexers
     end
     
     def indexing_message
-      timed_exclaim "INDEX #{@type.name} #{@field.name}" #:#{@field.indexed_name}." # TODO field.identifier
+      timed_exclaim "INDEX #{@type.name} #{@category.name}" #:#{@category.indexed_as}." # TODO field.identifier
     end
     
   end

@@ -26,14 +26,16 @@ class Index
     indexing.add_category name, options
     index.add_category    name, options
   end
-  def location name, options = {}
-    grid      = options.delete :grid
-    precision = options.delete :precision
-    
-    options[:tokenizer] ||= Tokenizers::Index.new # TODO Or a specific location tokenizer.
-    
-    new_category = category name, options
-    :source => Sources::Wrappers::Location.new(source, grid:2), :tokenizer => Tokenizers::Index.new
-  end
+  # def location name, options = {}
+  #   grid      = options.delete :grid
+  #   precision = options.delete :precision
+  #   
+  #   options[:index_tokenizer] ||= Tokenizers::Index.new # TODO Or a specific location tokenizer.
+  #   options[:query_tokenizer] ||= Tokenizers::Query.new # TODO Or a specific location tokenizer.
+  #   options[:source_wrapper]  ||= Sources::Wrappers::Location.new(options)
+  #   
+  #   new_category = category name, options
+  #   :source => Sources::Wrappers::Location.new(source, grid:2), :tokenizer => Tokenizers::Index.new
+  # end
   
 end

@@ -9,20 +9,14 @@ module Index
     
     attr_reader :name, :type, :exact, :partial
     
-    attr_accessor :source
-    
     #
     #
     def initialize name, type, options = {}
       @name = name
       @type = type
       
-      partial    = options[:partial]    || Cacher::Partial::Default
-      weights    = options[:weights]    || Cacher::Weights::Default
-      similarity = options[:similarity] || Cacher::Similarity::Default
-      
-      @exact   = options[:exact_bundle]   || Bundle.new(:exact,   self, type, Cacher::Partial::None.new, weights, similarity)
-      @partial = options[:partial_bundle] || Bundle.new(:partial, self, type, partial, weights, Cacher::Similarity::None.new)
+      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   self, type)
+      @partial = options[:partial_index_bundle] || Bundle.new(:partial, self, type)
       
       @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
       @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]

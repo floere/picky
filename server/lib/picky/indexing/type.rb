@@ -31,7 +31,7 @@ module Indexing
     # TODO Spec. Doc.
     #
     def add_category name, options = {}
-      categories << Indexing::Category.new(name, self, options)
+      categories << Category.new(name, self, options)
     end
     
     # Indexing.

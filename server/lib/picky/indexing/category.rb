@@ -10,15 +10,25 @@ module Indexing
       @type = type
       
       @source        = options[:source]
+      
       @tokenizer     = options[:tokenizer] || Tokenizers::Index.default
       @indexer_class = options[:indexer]   || Indexers::Default
       @indexed_as    = options[:as]        || name
       @virtual       = options[:virtual]   || false # TODO What is this again?
       
+      # TODO Push into Bundle.
+      #
+      partial    = options[:partial]    || Cacher::Partial::Default
+      weights    = options[:weights]    || Cacher::Weights::Default
+      similarity = options[:similarity] || Cacher::Similarity::Default
+      
+      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, type, Cacher::Partial::None.new, weights, similarity)
+      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, type, partial, weights, Cacher::Similarity::None.new)
+      
       # @remove          = options[:remove]        || false
       # @filter          = options[:filter]        || true
       
-      @options = options
+      @options = options # TODO Remove?
     end
     
     # Note: Most of the time the source of the type is used.
