@@ -30,7 +30,7 @@ describe "Cases" do
     
     # Complex cases
     #
-    it_should_find_ids_in_main_full 'title:le* title:hystoree~', [4, 10, 115, 148, 256, 428, 4, 250, 428]
+    it_should_find_ids_in_main_full 'title:le* title:hystoree~', [4, 250, 428]
     it_should_find_ids_in_main_full 'Hystori~ author:ferg', []
     it_should_find_ids_in_main_full 'Hystori~ author:fergu', [4, 4]
     it_should_find_ids_in_main_full 'Hystori~ author:fergus', [4, 4]
@@ -48,7 +48,7 @@ describe "Cases" do
     
     # Qualifiers
     #
-    it_should_find_ids_in_main_full "title:history author:fergus", [4, 4]
+    it_should_find_ids_in_main_full "title:history author:fergus", [4]
     
     # Splitting
     #
