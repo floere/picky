@@ -4,8 +4,6 @@ describe Loader do
 
   before(:each) do
     @loader_path = File.absolute_path("#{File.dirname(__FILE__)}/../../lib/picky/loader.rb")
-    Configuration.stub! :apply
-    Indexes.stub! :setup
   end
   
   describe 'load_application' do
