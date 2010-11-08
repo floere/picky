@@ -1,6 +1,6 @@
 class Bundle
   
-  attr_reader   :identifier, :category, :files
+  attr_reader   :identifier, :files
   attr_accessor :index, :weights, :similarity, :similarity_strategy
   
   delegate :[], :[]=, :clear, :to => :index
