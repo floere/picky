@@ -1,145 +1,149 @@
+h2. Version 0.11.1
+
+  * hanke: (server) Better error reporting in Rake tasks. Task naming improved.
+
 h2. Version 0.11.0
 
-  * hanke: Major API and internals rewrite. See generated project for help.
+  * hanke: (server) Major API and internals rewrite. See generated project for help.
 
 h2. Version 0.10.5
 
-  * hanke: Source CouchDB added (thanks to github.com/stanley).
+  * hanke: (server) Source CouchDB added (thanks to github.com/stanley).
 
 h2. Version 0.10.4
 
-  * hanke: Typo fixed (thanks to github.com/stanley).
+  * hanke: (server) Typo fixed (thanks to github.com/stanley).
 
 h2. Version 0.10.3
 
-  * hanke: Helpful configuration page in the client at /configure.
+  * hanke: (client) Helpful configuration page in the client at /configure.
 
 h2. Version 0.10.2
 
-  * hanke: Phonetic similarity (e.g. lyterature~) available through Similarity::Phonetic.new(4), see example.
+  * hanke: (server) Phonetic similarity (e.g. lyterature~) available through Similarity::Phonetic.new(4), see example.
 
 h2. Version 0.10.1
 
-  * hanke: :weights option for queries also ok in the form: { [:cat1, :cat2] => 4 }, where 4 is any weight.
+  * hanke: (server) :weights option for queries also ok in the form: { [:cat1, :cat2] => 4 }, where 4 is any weight.
 
 h2. Version 0.10.0
 
-  * hanke: (BREAKING) Total rewrite/exploration of the Application API.
+  * hanke: (server) (BREAKING) Total rewrite/exploration of the Application API.
            Stay on 0.9.4 if you don't want to update right now.
-  * hanke: Character substitution now configurable. Default is no character substitution.
+  * hanke: (server) Character substitution now configurable. Default is no character substitution.
 
 h2. Version 0.9.4
 
-  * hanke: rake routes: Shows all current URL paths, and if they are processable fast.
+  * hanke: (server) rake routes: Shows all current URL paths, and if they are processable fast.
 
 h2. Version 0.9.3
 
-  * hanke: Fixed: Querying parameters are not ignored anymore.
+  * hanke: (server) Fixed: Querying parameters are not ignored anymore.
 
 h2. Version 0.9.2
 
-  * hanke: Fixed result_hash.entries to return the right amount of entries.
-  * hanke: The result_hash#entries now takes a block and replaces the e.g. AR instances with e.g rendered results.
-  * hanke: Locale handling fixed.
+  * hanke: (client) Fixed result_hash.entries to return the right amount of entries.
+  * hanke: (client) The result_hash#entries now takes a block and replaces the e.g. AR instances with e.g rendered results.
+  * hanke: (client) Locale handling fixed. Uses the locale of the HTML tag by default.
 
 h2. Version 0.9.1
 
-  * hanke: Delicious missing gem notice if www-delicious gem is missing.
-  * hanke: Partial::Subtoken renamed to Partial::Substring.
+  * hanke: (server) Delicious missing gem notice if www-delicious gem is missing.
+  * hanke: (server)Partial::Subtoken renamed to Partial::Substring.
              Options: down_to -> from, starting_at -> to
-  * hanke: Index bundle file handling extracted into specific Index::Files backend.
+  * hanke: (server) Index bundle file handling extracted into specific Index::Files backend.
 
 h2. Version 0.9.0
 
-  * hanke: Jump to 0.9.0 to work on API, release 1.0.0 soon.
-  * hanke: Partial indexing now only down to -3, e.g. florian -> partial: floria, flori, flor.
+  * hanke: (server/client) Jump to 0.9.0 to work on API, release 1.0.0 soon.
+  * hanke: (server) Partial indexing now only down to -3, e.g. florian -> partial: floria, flori, flor.
              If you want down_to the first character (florian, floria, flori, flor, flo, fl, f), use:
              field(:some_field_name, :partial => Partial::Subtoken.new(:down_to => 1))
-  * hanke: Sources::Delicious.new(user, pass) for indexing your delicious posts.
-  * hanke: indexing and querying config now done on tokenizer instances.
+  * hanke: (server) Sources::Delicious.new(user, pass) for indexing your delicious posts.
+  * hanke: (server) indexing and querying config now done on tokenizer instances.
 
 h2. Version 0.3.1
 
-  * hanke: Generator gives more informative NoGeneratorError message.
+  * hanke: (server) Generator gives more informative NoGeneratorError message.
 
 h2. Version 0.3.0
 
-  * hanke: Uses json (index, index weights) and marshal (similarity index) to dump indexes.
-  * hanke: Server generator is more helpful (thanks to github.com/kschiess)
-  * hanke: Generator for a Sinatra project. (picky-client sinatra project_name)
-  * hanke: Helpful client generator. (thanks to github.com/kschiess)
+  * hanke: (server) Uses json (index, index weights) and marshal (similarity index) to dump indexes.
+  * hanke: (server) Generator is more helpful (thanks to github.com/kschiess)
+  * hanke: (server) Generator for a Sinatra project. (picky-client sinatra project_name)
+  * hanke: (client) Helpful generator. (thanks to github.com/kschiess)
 
 h2. Version 0.2.4
 
-  * hanke: Indexing output, output in general cleaned up.
-  * hanke: Better info after generating a new project (thanks kschiess).
-  * hanke: Indexer now uses json for the dump files (much faster, slightly larger, thanks to github.com/niko).
-  * hanke: JS files rewritten.
+  * hanke: (server) Indexing output, output in general cleaned up.
+  * hanke: (server) Better info after generating a new project (thanks kschiess).
+  * hanke: (server) Indexer now uses json for the dump files (much faster, slightly larger, thanks to github.com/niko).
+  * hanke: (client) JS files rewritten.
 
 h2. Version 0.2.3
 
-  * hanke: Indexer hits filesystem only seldomly.
-  * hanke: Internal rename from full index to exact index (visible in index filenames).
-  * hanke: Solr Indexing removed until someone needs it. Then we'll talk cash. Just kidding.
-  * hanke: Improved Gemfile.
+  * hanke: (server) Explicit index buffering: Indexer hits filesystem only seldomly.
+  * hanke: (server) Internal rename from full index to exact index (visible in index filenames).
+  * hanke: (server) Solr Indexing removed until someone needs it. Then we'll talk cash. Just kidding.
+  * hanke: (server) Improved Gemfile.
 
 h2. Version 0.2.2
 
-  * hanke: Umlaut handling (i.e. character substitution) now pluggable.
-  * hanke: Apps finalization now handled through Ruby callback (thanks to github.com/severin).
+  * hanke: (server) Umlaut handling (i.e. character substitution) now pluggable.
+  * hanke: (server) Apps finalization now handled through Ruby callback (thanks to github.com/severin).
 
 h2. Version 0.2.1
 
-  * hanke: Fix for negative partial index values (:partial => Partial::Subtoken.new(:down_to => -3))
+  * hanke: (server) Fix for negative partial index values (:partial => Partial::Subtoken.new(:down_to => -3))
 
 h2. Version 0.2.0
 
-  * hanke: Server only uses JSON to encode results.
-  * hanke: Client uses only JSON for full and partial queries.
+  * hanke: (server) Only uses JSON to encode results.
+  * hanke: (client) Only uses JSON for full and partial queries.
 
 h2. Version 0.1.0
 
-  * hanke: Application interface rewrite. See a freshly created
+  * hanke: (server) Application interface rewrite. See a freshly created
              project (using picky project <name>).
              Application#add_index.
 
 h2. Version 0.0.9
 
-  * hanke: Cleanup. Frontend example.
+  * hanke: (client) Cleanup. Frontend example.
 
 h2. Version 0.0.8
 
-  * hanke: Application#add_index instead of Application#type.
-  * hanke: Simplified scaffolding.
+  * hanke: (server) Application#add_index instead of Application#type.
+  * hanke: (server) Simplified scaffolding.
 
 h2. Version 0.0.7
 
-  * hanke: Gem compiles on install. Do not compile on run.
+  * hanke: (server) Gem compiles on install. Do not compile on run.
 
 h2. Version 0.0.6
 
-  * hanke: Removed unnecessary gem dependencies (thanks to niko).
-  * hanke: Added CSV to the possible Sources. Sources::CSV.new(:title, :author, :isbn, :file => 'data/books.csv'),
-  * hanke: Renamed all instances of SEARCH_* constants to PICKY_*. (Uses RACK_ENV)
+  * hanke: (server) Removed unnecessary gem dependencies (thanks to niko).
+  * hanke: (server) Added CSV to the possible Sources. Sources::CSV.new(:title, :author, :isbn, :file => 'data/books.csv'),
+  * hanke: (server) Renamed all instances of SEARCH_* constants to PICKY_*. (Uses RACK_ENV)
 
 h2. Version 0.0.5
 
-  * hanke: config.ru, unicorn.ru now top level in newly created project (more standard).
-  * hanke: Port now defined in unicorn.ru (use listen 'host:port').
-  * hanke: Enriched callbacks in the JS interface definition (before, success, after).
+  * hanke: (server) config.ru, unicorn.ru now top level in newly created project (more standard).
+  * hanke: (server) Port now defined in unicorn.ru (use listen 'host:port').
+  * hanke: (client) Enriched callbacks in the JS interface definition (before, success, after).
 
 h2. Version 0.0.4
 
-  * hanke: Interface now created using Picky::Helper.interface or .cached_interface (if you only have a single language in your app).
+  * hanke: (client) Interface now created using Picky::Helper.interface or .cached_interface (if you only have a single language in your app).
 
 h2. Version 0.0.3
 
-  * hanke: C-Code cleaned up, removed warnings.
+  * hanke: (server) C-Code cleaned up, removed warnings.
 
 h2. Version 0.0.2
 
-  * hanke: Newly created application better documented.
+  * hanke: (server) Newly created application better documented.
 
 h2. Version 0.0.1
 
-  * hanke: Initial project. Server (picky) and basic frontend client (picky-client) available.
+  * hanke: (server/client) Initial project. Server (picky) and basic frontend client (picky-client) available.
