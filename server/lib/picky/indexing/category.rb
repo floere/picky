@@ -90,6 +90,10 @@ module Indexing
     
     # Generates all caches for this category.
     #
+    def cache
+      prepare_cache_directory
+      generate_caches
+    end
     def generate_caches
       generate_caches_from_source
       generate_partial
@@ -128,10 +132,6 @@ module Indexing
     end
     def prepare_cache_directory
       FileUtils.mkdir_p cache_directory
-    end
-    def cache
-      prepare_cache_directory
-      generate_caches
     end
     def indexer
       @indexer || @indexer = @indexer_class.new(type, self)
