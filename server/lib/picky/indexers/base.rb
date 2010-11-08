@@ -54,7 +54,15 @@ module Indexers
       
       # TODO Move open to Index::File.
       #
-      # @category.files
+      # @category.prepared_index do |file|
+      #   source.harvest(@type, @category) do |indexed_id, text|
+      #     tokenizer.tokenize(text).each do |token_text|
+      #       next unless token_text
+      #       file.buffer indexed_id << comma << token_text << newline
+      #     end
+      #     file.write_maybe
+      #   end
+      # end
       #
       File.open(search_index_file_name, 'w:binary') do |file|
         result = []
