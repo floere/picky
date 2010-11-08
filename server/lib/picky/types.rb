@@ -8,7 +8,8 @@ class Types
            :load_from_cache,
            :to => :@indexes
   
-  delegate :index,
+  delegate :find,
+           :index,
            :index_for_tests,
            :generate_index_only,
            :generate_cache_only,

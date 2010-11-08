@@ -1,6 +1,6 @@
-desc "Generate the index."
+desc "Generate the index (random order)."
 task :index => :application do
-  Rake::Task[:'index:generate'].invoke
+  Rake::Task[:'index:randomly'].invoke
 end
 
 desc "Try the given text in the indexer/query (type:field optional)."

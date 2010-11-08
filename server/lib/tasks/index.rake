@@ -12,23 +12,13 @@ namespace :index do
   #   end
   # end
   
-  # TODO Make option to also use non-random.
-  #      rake index:randomly (default)
-  #      rake index:ordered
-  #
   desc "Takes a snapshot, indexes, and caches in random order."
-  task :generate => :application do
-    Rake::Task['index:generate:randomly'].execute
+  task :randomly => :application do
+    Indexes.index true
   end
-  namespace :generate do
-    desc "Takes a snapshot, indexes, and caches in random order."
-    task :randomly => :application do
-      Indexes.index true
-    end
-    desc "Takes a snapshot, indexes, and caches in order given."
-    task :ordered => :application do
-      Indexes.index false
-    end
+  desc "Takes a snapshot, indexes, and caches in order given."
+  task :ordered => :application do
+    Indexes.index false
   end
   
   # desc "Generates the index snapshots."
