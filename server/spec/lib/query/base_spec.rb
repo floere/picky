@@ -107,11 +107,16 @@ describe 'Query::Base' do
     end
   end
   
+  before(:each) do
+    @type      = stub :type
+    @index     = stub :some_index, :index => @type
+  end
+  
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
         @tokenizer = stub :tokenizer, :tokenize => :some_tokenized_text
-        @query     = Query::Full.new 'some query', :some_index, :tokenizer => @tokenizer
+        @query     = Query::Full.new @index, tokenizer: @tokenizer
       end
       it 'should tokenize using the tokenizer' do
         @query.tokenized('some text').should == :some_tokenized_text
@@ -122,7 +127,7 @@ describe 'Query::Base' do
   describe "results_from" do
     describe 'Full' do
       before(:each) do
-        @query = Query::Full.new 'some query', :some_index
+        @query = Query::Full.new @index
       end
       it "should work" do
         allocations = stub :allocations, :process! => true
@@ -132,27 +137,13 @@ describe 'Query::Base' do
     end
     describe 'Live' do
       before(:each) do
-        @query = Query::Live.new 'some query', :some_index
+        @query = Query::Live.new @index
       end
       it "should work" do
         allocations = stub :allocations, :process! => true
 
         @query.results_from allocations
       end
-    end
-  end
-
-  describe "sorted_allocations" do
-    before(:each) do
-      @index_class = stub :index_class
-      @query = Query::Base.new @index_class
-    end
-    it "should generate the right kind of allocations" do
-      tokens = @query.tokenized 'some query'
-      
-      @index_class.stub! :possible_combinations => []
-      
-      @query.sorted_allocations(tokens).should be_kind_of(Query::Allocations)
     end
   end
 
