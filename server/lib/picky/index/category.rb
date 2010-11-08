@@ -37,8 +37,6 @@ module Index
     
     # Loads the index from cache.
     #
-    # TODO Metaprogram delegation? each_delegate?
-    #
     def load_from_cache
       timed_exclaim "Loading index #{identifier}."
       exact.load
