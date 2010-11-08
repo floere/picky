@@ -3,60 +3,23 @@ require 'spec_helper'
 describe Index::Category do
 
   before(:each) do
-    @field      = stub :field, :name => :some_name
     @type       = stub :type, :name => :some_type
     @partial    = stub :partial
     @weights    = stub :weights
     @similarity = stub :similarity
-    @category   = Index::Category.new @field, @type, :partial => @partial, :weights => @weights, :similarity => @similarity
-
+    @category   = Index::Category.new :some_name, @type, :partial    => @partial,
+                                                         :weights    => @weights,
+                                                         :similarity => @similarity,
+                                                         :qualifiers => [:q, :qualifier]
+    
     @exact   = stub :exact, :dump => nil
     @category.stub! :exact => @exact
-
+    
     @partial = stub :partial, :dump => nil
     @category.stub! :partial => @partial
     @category.stub! :exclaim
   end
-
-  describe 'dump_caches' do
-    it 'should dump the exact index' do
-      @exact.should_receive(:dump).once.with
-
-      @category.dump_caches
-    end
-    it 'should dump the partial index' do
-      @partial.should_receive(:dump).once.with
-
-      @category.dump_caches
-    end
-  end
-
-  describe 'generate_derived_partial' do
-    it 'should delegate to partial' do
-      @partial.should_receive(:generate_derived).once.with
-
-      @category.generate_derived_partial
-    end
-  end
-
-  describe 'generate_derived_exact' do
-    it 'should delegate to exact' do
-      @exact.should_receive(:generate_derived).once.with
-
-      @category.generate_derived_exact
-    end
-  end
-
-  describe 'generate_indexes_from_exact_index' do
-    it 'should call three method in order' do
-      @category.should_receive(:generate_derived_exact).once.with().ordered
-      @category.should_receive(:generate_partial).once.with().ordered
-      @category.should_receive(:generate_derived_partial).once.with().ordered
-
-      @category.generate_indexes_from_exact_index
-    end
-  end
-
+  
   describe 'weight' do
     before(:each) do
       @token = stub :token, :text => :some_text
@@ -144,48 +107,6 @@ describe Index::Category do
       token = stub :token, :partial? => true
 
       @category.bundle_for(token).should == @partial
-    end
-  end
-
-  describe 'generate_caches_from_memory' do
-    it 'should delegate to partial' do
-      @partial.should_receive(:generate_caches_from_memory).once.with
-
-      @category.generate_caches_from_memory
-    end
-  end
-
-  describe 'generate_partial' do
-    it 'should return whatever the partial generation returns' do
-      @exact.stub! :index
-      @partial.stub! :generate_partial_from => :generation_returns
-
-      @category.generate_partial
-    end
-    it 'should use the exact index to generate the partial index' do
-      exact_index = stub :exact_index
-      @exact.stub! :index => exact_index
-      @partial.should_receive(:generate_partial_from).once.with(exact_index)
-
-      @category.generate_partial
-    end
-  end
-
-  describe 'generate_caches_from_source' do
-    it 'should delegate to exact' do
-      @exact.should_receive(:generate_caches_from_source).once.with
-
-      @category.generate_caches_from_source
-    end
-  end
-
-  describe 'generate_caches' do
-    it 'should call three method in order' do
-      @category.should_receive(:generate_caches_from_source).once.with().ordered
-      @category.should_receive(:generate_partial).once.with().ordered
-      @category.should_receive(:generate_caches_from_memory).once.with().ordered
-      
-      @category.generate_caches
     end
   end
   

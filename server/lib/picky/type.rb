@@ -28,6 +28,8 @@ class Type
     
     indexing.add_category name, options
     index.add_category    name, options
+    
+    self
   end
   # def location name, options = {}
   #   grid      = options.delete :grid
