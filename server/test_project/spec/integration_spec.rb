@@ -2,13 +2,14 @@
 #
 require 'spec_helper'
 
-describe "Cases" do
+describe "Integration Tests" do
   
   # 1. Load data into db.
   # 2. Index the data in the db.
   # 3. Cache it, and load into memory.
   #
   before(:all) do
+    Indexes.index_for_tests
     Indexes.load_from_cache
     @full = Query::Full.new Indexes[:csv_test]
   end

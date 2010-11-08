@@ -9,6 +9,7 @@ class Types
            :to => :@indexes
   
   delegate :index,
+           :index_for_tests,
            :generate_index_only,
            :generate_cache_only,
            :to => :@indexings

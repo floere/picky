@@ -43,19 +43,18 @@ class BookSearch < Application
     # geo_location(:north, grid: 20_000, :as => :n20k),
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
-    csv_test_index = index :csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv')
-    csv_test_index.category :title,
-                            qualifiers: [:t, :title, :titre],
-                            partial:    Partial::Substring.new(:from => 1),
-                            similarity: Similarity::Phonetic.new(2)
-    csv_test_index.category :author,
-                            qualifiers: [:a, :author, :auteur],
-                            partial:    Partial::Substring.new(:from => -2)
-    csv_test_index.category :year,
-                            qualifiers: [:y, :year, :annee]
-    csv_test_index.category :publisher, :qualifiers => [:p, :publisher]
-    csv_test_index.category :subjects, :qualifiers => [:s, :subject]
-    
+    csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'))
+                       .category(:title,
+                                 qualifiers: [:t, :title, :titre],
+                                 partial:    Partial::Substring.new(:from => 1),
+                                 similarity: Similarity::Phonetic.new(2))
+                       .category(:author,
+                                 qualifiers: [:a, :author, :auteur],
+                                 partial:    Partial::Substring.new(:from => -2))
+                       .category(:year,
+                                 qualifiers: [:y, :year, :annee])
+                       .category(:publisher, :qualifiers => [:p, :publisher])
+                       .category(:subjects, :qualifiers => [:s, :subject])
     
     options = {
       :weights => {

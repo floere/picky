@@ -46,6 +46,17 @@ module Indexing
       timed_exclaim "INDEXING FINISHED."
     end
     
+    # For testing.
+    #
+    def index_for_tests
+      take_snapshot
+      
+      self.types.each do |type|
+        type.index
+        type.cache
+      end
+    end
+    
     # TODO Spec
     #
     def generate_index_only type_name, field_name
