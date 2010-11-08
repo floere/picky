@@ -6,13 +6,15 @@ module Sources
       
       attr_reader :precision, :grid
       
+      # TODO Save min and grid!
+      #
       def initialize backend, options = {}
         super backend
         
         @user_grid = extract_user_grid options
         @precision = extract_precision options
         
-        @grid      = @user_grid * 0.666
+        @grid      = @user_grid / (@precision + 0.5)
       end
       
       #
@@ -33,8 +35,7 @@ module Sources
       end
       
       def reset
-        @min = -1.0/0
-        @max = 1.0/0
+        @min = 1.0/0
       end
       
       # Yield the data (id, text for id) for the given type and field.
@@ -49,25 +50,28 @@ module Sources
         # Gather min/max.
         #
         backend.harvest type, field do |indexed_id, location|
+          location = location.to_f
           @min = location if location < @min
-          @max = location if location > @max
           locations << [indexed_id, location]
         end
         
+        # Add a margin.
+        #
         marginize
         
         # Recalculate locations.
         #
         locations.each do |indexed_id, location|
           locations_for(location).each do |new_location|
-            yield indexed_id, new_location
+            yield indexed_id, new_location.to_s
           end
         end
+        
+        p [@min, @grid]
       end
       
       def marginize
         @min -= @user_grid
-        @max += @user_grid
       end
       
       # Put location onto multiple places on a grid.

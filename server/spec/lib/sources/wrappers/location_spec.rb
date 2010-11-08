@@ -36,10 +36,26 @@ describe Sources::Wrappers::Location do
     end
     context "with grid and precision option" do
       before(:each) do
-        @wrapper = Sources::Wrappers::Location.new @backend, grid:10, precision:3
+        @wrapper = Sources::Wrappers::Location.new @backend, grid:4, precision:2
       end
       it "uses the given precision" do
-        @wrapper.precision.should == 3
+        @wrapper.precision.should == 2
+      end
+      
+      describe "locations_for" do
+        before(:each) do
+          @wrapper.instance_variable_set :@min, -3
+          @wrapper.marginize
+        end
+        it "returns the right array" do
+          @wrapper.locations_for(17).should == [13, 14, 15, 16, 17] # TODO Correct?
+        end
+        it "returns the right array" do
+          @wrapper.locations_for(-3).should == [0, 1, 2, 3, 4]
+        end
+        it "returns the right array" do
+          @wrapper.locations_for(20).should == [14, 15, 16, 17, 18]
+        end
       end
     end
   end

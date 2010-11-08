@@ -55,7 +55,9 @@ module Indexers
       File.open(search_index_file_name, 'w:binary') do |file|
         result = []
         source.harvest(@type, @field) do |indexed_id, text|
+          p [indexed_id, text] if [1,2,3,4,5].include?(indexed_id)
           tokenizer.tokenize(text).each do |token_text|
+            p token_text if [1,2,3,4,5].include?(indexed_id)
             result << indexed_id << comma << token_text << newline
           end
           file.write(result.join) && result.clear if result.size > 100_000

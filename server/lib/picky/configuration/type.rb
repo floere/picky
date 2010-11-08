@@ -7,16 +7,16 @@ module Configuration
                 :result_type,
                 :ignore_unassigned_tokens,
                 :solr
-    def initialize name, source, *fields, options
-      if Configuration::Field === options
-        fields << options
-        options = {}
-      end
+    def initialize name, source, options # *fields, 
+      # if Configuration::Field === options
+      #   fields << options
+      #   options = {}
+      # end
       
       @name                     = name
       @source                   = source
                                   # dup, if field is reused. TODO Rewrite.
-      @fields                   = fields.map { |field| field = field.dup; field.type = self; field }
+      # @fields                   = fields.map { |field| field = field.dup; field.type = self; field }
       
       @after_indexing           = options[:after_indexing]
       @result_type              = options[:result_type] || name
@@ -24,8 +24,8 @@ module Configuration
       # @solr                     = options[:solr] || nil
     end
     def generate
-      categories = fields.map { |field| field.generate }
-      Index::Type.new name, result_type, ignore_unassigned_tokens, *categories
+      # categories = fields.map { |field| field.generate } # TODO Move.
+      Index::Type.new name, result_type, ignore_unassigned_tokens #, *categories
     end
     def take_snapshot
       source.take_snapshot self

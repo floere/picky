@@ -7,16 +7,25 @@ module Query
     attr_reader :categories, :category_hash
     attr_reader :ignore_unassigned_tokens # TODO Should this actually be determined by the query? Probably, yes.
     
-    def initialize categories, options = {}
-      @categories               = categories
-      @category_hash            = hashify categories
+    def initialize options = {} # categories, 
+      @categories               = [] # categories
+      @category_hash            = {} # hashify categories
       
       @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false
+    end
+    
+    # TODO Spec.
+    #
+    def add category
+      categories << category
+      category_hash[category.name] = [category] # TODO An array seems silly.
     end
     
     # TODO Move somewhere else.
     #
     # TODO Or use active_support's?
+    #
+    # TODO Remove.
     #
     def hashify category_array
       category_array.inject({}) do |hash, category|

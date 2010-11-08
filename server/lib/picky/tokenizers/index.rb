@@ -61,8 +61,11 @@ module Tokenizers
     #
     # Override in subclasses to redefine behaviour.
     #
+    # TODO Make parametrizable! reject { |token| }
+    #
     def reject tokens
-      tokens.reject! { |token| token.to_s.size < 2 }
+      tokens
+      # tokens.reject! { |token| token.to_s.size < 2 }
     end
     
   end

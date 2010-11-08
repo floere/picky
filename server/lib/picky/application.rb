@@ -25,7 +25,7 @@ class Application
     #
     # TODO Rename category.
     #
-    delegate :field, :to => :indexing
+    delegate :field, :location, :to => :indexing
     def category *args; indexing.field *args;        end
     def index *args;    indexing.define_index *args; end
     

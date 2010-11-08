@@ -68,6 +68,7 @@ describe Tokenizers::Index do
       #
       it_should_tokenize_token "splitting on \\s", [:splitting, :on, :"\\s"]
       it_should_tokenize_token 'und', [:und]
+      it_should_tokenize_token '7',   [:'7']
     end
   end
 

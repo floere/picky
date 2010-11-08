@@ -4,7 +4,7 @@ module Configuration
   # (title is a category of a books index, for example).
   #
   class Field
-    attr_reader :name, :indexed_name, :virtual, :tokenizer
+    attr_reader :name, :indexed_name, :virtual, :tokenizer, :source
     attr_accessor :type # convenience TODO Still needed?
     def initialize name, options = {}
       @name            = name.to_sym
@@ -32,6 +32,9 @@ module Configuration
     end
     def source
       @source || type.source
+    end
+    def generate_with type
+      Index::Category.new self.name, type, @options
     end
     def generate
       Index::Category.new self.name, type, @options
