@@ -23,8 +23,8 @@ module Indexing
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, type, Cacher::Partial::None.new, weights, similarity)
-      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, type, partial, weights, Cacher::Similarity::None.new)
+      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, type, similarity, Cacher::Partial::None.new, weights)
+      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, type, Cacher::Similarity::None.new, partial, weights)
       
       # @remove          = options[:remove]        || false
       # @filter          = options[:filter]        || true

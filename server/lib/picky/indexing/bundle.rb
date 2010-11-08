@@ -10,24 +10,16 @@ module Indexing
   #
   class Bundle < ::Bundle
     
-    attr_accessor :partial_strategy, :weights_strategy, :similarity_strategy
+    attr_accessor :partial_strategy, :weights_strategy
     attr_reader   :files
     
     # Path is in which directory the cache is located.
     #
-    def initialize name, category, type, partial_strategy, weights_strategy, similarity_strategy
-      super name, category, type
+    def initialize name, category, type, similarity_strategy, partial_strategy, weights_strategy
+      super name, category, type, similarity_strategy
       
       @partial_strategy    = partial_strategy
       @weights_strategy    = weights_strategy
-      @similarity_strategy = similarity_strategy
-    end
-    
-    # Get a list of similar texts.
-    #
-    def similar text
-      code = similarity_strategy.encoded text
-      code && @similarity[code] || []
     end
     
     # Generation

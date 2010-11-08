@@ -9,7 +9,7 @@ describe "Cases" do
   # 3. Cache it, and load into memory.
   #
   before(:all) do
-    IndexRegister.load_from_cache
+    Indexes.load_from_cache
     @full = Query::Full.new Indexes[:csv_test]
   end
   
@@ -30,7 +30,7 @@ describe "Cases" do
     
     # Complex cases
     #
-    it_should_find_ids_in_main_full 'title:le* title:hystoree~', [4, 250, 428]
+    it_should_find_ids_in_main_full 'title:le* title:hystoree~', [4, 10, 115, 148, 256, 428, 4, 250, 428]
     it_should_find_ids_in_main_full 'Hystori~ author:ferg', []
     it_should_find_ids_in_main_full 'Hystori~ author:fergu', [4, 4]
     it_should_find_ids_in_main_full 'Hystori~ author:fergus', [4, 4]
@@ -38,7 +38,7 @@ describe "Cases" do
     # Partial
     #
     it_should_find_ids_in_main_full 'Gover* Systems', [7]
-    it_should_find_ids_in_main_full 'A*', [2, 5, 21, 22, 23, 24, 27, 36, 39, 41, 47, 51, 71, 103, 110, 120, 149, 171, 213, 231]
+    it_should_find_ids_in_main_full 'A*', [2, 3, 4, 5, 6, 7, 8, 15, 24, 27, 29, 35, 39, 52, 55, 63, 67, 76, 80, 101]
     it_should_find_ids_in_main_full 'a* b* c* d* f', [110, 416]
     
     # Similarity
@@ -48,7 +48,7 @@ describe "Cases" do
     
     # Qualifiers
     #
-    it_should_find_ids_in_main_full "title:history author:fergus", [4]
+    it_should_find_ids_in_main_full "title:history author:fergus", [4, 4]
     
     # Splitting
     #

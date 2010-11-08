@@ -19,12 +19,12 @@ namespace :index do
   desc "Takes a snapshot, indexes, and caches."
   task :generate, [:order] => :application do |_, options|
     randomly = (options.order == 'ordered') ? false : true
-    IndexingRegister.index randomly
+    Indexes.index randomly
   end
   
   desc "Generates the index snapshots."
   task :generate_snapshots => :application do
-    IndexingRegister.take_snapshot
+    Indexes.take_snapshot
   end
   
   # desc "E.g. Generates a specific index table. Note: intermediate indexes need to be there."
@@ -36,8 +36,8 @@ namespace :index do
   desc "Generates a specific index from index snapshots."
   task :specific, [:type, :field] => :application do |_, options|
     type, field = options.type, options.field
-    IndexingRegister.generate_index_only type.to_sym, field.to_sym
-    IndexingRegister.generate_cache_only type.to_sym, field.to_sym
+    Indexes.generate_index_only type.to_sym, field.to_sym
+    Indexes.generate_cache_only type.to_sym, field.to_sym
   end
   
 end

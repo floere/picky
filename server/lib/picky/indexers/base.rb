@@ -56,6 +56,7 @@ module Indexers
         result = []
         source.harvest(@type, @category) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
+            next unless token_text
             result << indexed_id << comma << token_text << newline
           end
           file.write(result.join) && result.clear if result.size > 100_000

@@ -20,12 +20,6 @@ module Index
     def weight text
       @weights[text]
     end
-    # Get a list of similar texts.
-    #
-    def similar text
-      code = similarity_strategy.encoded text
-      code && @similarity[code] || []
-    end
     
     # Load the data from the db.
     #

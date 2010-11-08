@@ -11,7 +11,7 @@ Loader.load_application
 
 # Load the data. This loads data from cache files e.g. "some_index/*_index.dump" into constant Indexes::SomeIndex.
 #
-IndexRegister.load_from_cache
+Indexes.load_from_cache
 
 # Use Harakiri middleware to kill unicorn child after X requests.
 #

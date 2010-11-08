@@ -44,15 +44,15 @@ class BookSearch < Application
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
     csv_test_index = index :csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv')
-    main_index.category :title,
-                        qualifiers: [:t, :title, :titre],
-                        partial:    Partial::Substring.new(:from => 1),
-                        similarity: Similarity::Phonetic.new(2)
-    main_index.category :author,
-                        qualifiers: [:a, :author, :auteur],
-                        partial:    Partial::Substring.new(:from => -2)
-    main_index.category :year,
-                        qualifiers: [:y, :year, :annee]
+    csv_test_index.category :title,
+                            qualifiers: [:t, :title, :titre],
+                            partial:    Partial::Substring.new(:from => 1),
+                            similarity: Similarity::Phonetic.new(2)
+    csv_test_index.category :author,
+                            qualifiers: [:a, :author, :auteur],
+                            partial:    Partial::Substring.new(:from => -2)
+    csv_test_index.category :year,
+                            qualifiers: [:y, :year, :annee]
     csv_test_index.category :publisher, :qualifiers => [:p, :publisher]
     csv_test_index.category :subjects, :qualifiers => [:s, :subject]
     

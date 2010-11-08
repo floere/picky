@@ -15,8 +15,10 @@ module Index
       @name = name
       @type = type
       
-      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   self, type)
-      @partial = options[:partial_index_bundle] || Bundle.new(:partial, self, type)
+      similarity = options[:similarity] || Cacher::Similarity::Default
+      
+      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   self, type, similarity)
+      @partial = options[:partial_index_bundle] || Bundle.new(:partial, self, type, similarity)
       
       @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
       @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
