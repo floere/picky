@@ -38,7 +38,4 @@ module Index
     
   end
   
-  # Alias # TODO Move?
-  #
-  ::Indexes = Types.new
 end

@@ -9,7 +9,7 @@ describe "Cases" do
   # 3. Cache it, and load into memory.
   #
   before(:all) do
-    Indexes.load_from_cache
+    IndexRegister.load_from_cache
     @full = Query::Full.new Indexes[:csv_test]
   end
   

@@ -23,7 +23,7 @@ module Indexing
       @types = []
     end
     
-    # TODO Spec
+    # TODO Spec. Superclass?
     #
     def register type
       self.types << type
@@ -69,10 +69,6 @@ module Indexing
         return found if found
       end
     end
-    
-    # Alias # TODO Move? Rename?
-    #
-    ::IndexingRegister = Types.new
     
   end
 end

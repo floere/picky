@@ -48,6 +48,8 @@ module Loader
     #
     # add_lib_dir
     
+    load_relative 'alias_instances'
+    
     # Picky autoloading.
     #
     begin
@@ -167,6 +169,7 @@ module Loader
     # Index types.
     #
     load_relative 'bundle'
+    load_relative 'types'
     load_relative 'type'
     
     load_relative 'indexing/bundle'
