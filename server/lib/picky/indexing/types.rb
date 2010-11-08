@@ -59,12 +59,12 @@ module Indexing
     
     # TODO Spec
     #
-    def generate_index_only type_name, field_name
-      found = find type_name, field_name
+    def generate_index_only type_name, category_name
+      found = find type_name, category_name
       found.index if found
     end
     def generate_cache_only type_name, category_name
-      found = find type_name, field_name
+      found = find type_name, category_name
       found.generate_caches if found
     end
     
@@ -79,6 +79,8 @@ module Indexing
         found = type.categories.find category_name
         return found if found
       end
+      
+      raise %Q{Index "#{type_name}" not found. Possible indexes: "#{types.map(&:name).join('", "')}".}
     end
     
   end

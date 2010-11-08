@@ -76,19 +76,19 @@ class BookSearch < Application
     full_geo  = Query::Full.new geo_index
     live_geo  = Query::Live.new geo_index
     
-    route %r{^/books/full} => full_main,
-          %r{^/books/live} => live_main,
+    route %r{\A/books/full\Z} => full_main,
+          %r{\A/books/live\Z} => live_main,
           
-          %r{^/csv/full}   => full_csv,
-          %r{^/csv/live}   => live_csv,
+          %r{\A/csv/full\Z}   => full_csv,
+          %r{\A/csv/live\Z}   => live_csv,
           
-          %r{^/isbn/full}  => full_isbn,
+          %r{\A/isbn/full\Z}  => full_isbn,
           
-          %r{^/geo/full}   => full_geo,
-          %r{^/geo/live}   => live_geo,
+          %r{\A/geo/full\Z}   => full_geo,
+          %r{\A/geo/live\Z}   => live_geo,
           
-          %r{^/all/full}   => Query::Full.new(main_index, csv_test_index, isbn_index, geo_index, options),
-          %r{^/all/live}   => Query::Live.new(main_index, csv_test_index, isbn_index, geo_index, options)
+          %r{\A/all/full\Z}   => Query::Full.new(main_index, csv_test_index, isbn_index, geo_index, options),
+          %r{\A/all/live\Z}   => Query::Live.new(main_index, csv_test_index, isbn_index, geo_index, options)
     
     root 200
     

@@ -29,6 +29,8 @@ module Indexing
         next unless category.name == category_name
         return category
       end
+      
+      raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
     end
     
   end

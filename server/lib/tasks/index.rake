@@ -16,13 +16,22 @@ namespace :index do
   #      rake index:randomly (default)
   #      rake index:ordered
   #
-  desc "Takes a snapshot, indexes, and caches."
-  task :generate, [:order] => :application do |_, options|
-    randomly = (options.order == 'ordered') ? false : true
-    Indexes.index randomly
+  desc "Takes a snapshot, indexes, and caches in random order."
+  task :generate => :application do
+    Rake::Task['index:generate:randomly'].execute
+  end
+  namespace :generate do
+    desc "Takes a snapshot, indexes, and caches in random order."
+    task :randomly => :application do
+      Indexes.index true
+    end
+    desc "Takes a snapshot, indexes, and caches in order given."
+    task :ordered => :application do
+      Indexes.index false
+    end
   end
   
-  desc "Generates the index snapshots."
+  # desc "Generates the index snapshots."
   task :generate_snapshots => :application do
     Indexes.take_snapshot
   end
