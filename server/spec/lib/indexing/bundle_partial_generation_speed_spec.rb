@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Index::Bundle do
+describe Indexing::Bundle do
 
   before(:each) do
     @category         = stub :category, :name => :some_category
     @type             = stub :type, :name => :some_type
     @partial_strategy = Cacher::Partial::Substring.new :from => 1
-    @exact            = Index::Bundle.new :some_name, @category, @type, @partial_strategy, nil, nil
+    @exact            = Indexing::Bundle.new :some_name, @category, @type, nil, @partial_strategy, nil
   end
 
   def generate_random_keys amount
