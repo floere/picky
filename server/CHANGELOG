@@ -1,3 +1,4 @@
+0.11.0 - hanke: Major API and internals rewrite. See generated project for help.
 0.10.5 - hanke: Source CouchDB added (thanks to github.com/stanley).
 0.10.4 - hanke: Typo fixed. (thanks to github.com/stanley)
 0.10.3 -
