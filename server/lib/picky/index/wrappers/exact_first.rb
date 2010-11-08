@@ -2,6 +2,8 @@
 #
 module Index
   
+  # FIXME and spec
+  #
   module Wrappers
     
     # This index combines an exact and partial index.

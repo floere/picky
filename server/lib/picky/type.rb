@@ -16,7 +16,7 @@ class Type
     
     # Centralized registry.
     #
-    Indexes.register self
+    ::Indexes.register self
   end
   
   # API.
