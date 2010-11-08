@@ -5,12 +5,13 @@ describe Query::Live do
   before(:each) do
     # @category1  = Index::Category.new
     # @type_index = Index::Type.new :some_name, :some_result_type, @category1
-    @index = stub :index
+    @type  = stub :type
+    @index = stub :index, :index => @type
   end
 
   describe 'result_type' do
     before(:each) do
-      @query = Query::Live.new 'some query', 0, @index
+      @query = Query::Live.new @index
     end
     it "should return a specific type" do
       @query.result_type.should == Results::Live
@@ -40,7 +41,7 @@ describe Query::Live do
   describe "results_from" do
     describe "with empty ids" do
       before(:each) do
-        @query = Query::Live.new 'some query', @index
+        @query = Query::Live.new @index
         @allocations = stub :allocations, :total => 0, :ids => [], :to_result => :some_results, :process! => nil
       end
       it "should generate a result" do

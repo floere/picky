@@ -1,11 +1,11 @@
 require 'spec_helper'
-describe Configuration::Field do
+describe Indexing::Category do
   
   context "unit specs" do
     describe "virtual?" do
       context "with virtual true" do
         before(:each) do
-          @field = Configuration::Field.new :some_name, :virtual => true
+          @field = Indexing::Category.new :some_name, virtual: true
         end
         it "returns the right value" do
           @field.virtual?.should == true

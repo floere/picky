@@ -3,16 +3,13 @@ require 'spec_helper'
 describe Query::Full do
 
   before(:each) do
-    @index = stub :index
+    @type  = stub :type
+    @index = stub :index, :index => @type
   end
 
   describe 'result_type' do
     before(:each) do
-      @tokens = [
-          Query::Token.processed('some'),
-          Query::Token.processed('query')
-        ]
-      @query = Query::Full.new @tokens, @index
+      @query = Query::Full.new @index
     end
     it "should return a specific type" do
       @query.result_type.should == Results::Full

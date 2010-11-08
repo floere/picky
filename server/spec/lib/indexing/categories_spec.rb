@@ -1,61 +1,57 @@
 require 'spec_helper'
 
-describe Query::Combinator do
+describe Index::Categories do
   
   context 'with option ignore_unassigned_tokens' do
-    before(:each) do
-      @category1 = stub :category1, :name => :category1
-      @category2 = stub :category2, :name => :category2
-      @category3 = stub :category3, :name => :category3
-      @categories = [@category1, @category2, @category3]
-    end
     context 'ignore_unassigned_tokens true' do
       before(:each) do
-        @combinator = Query::Combinator.new @categories, :ignore_unassigned_tokens => true
+        @categories = Index::Categories.new ignore_unassigned_tokens: true
       end
       it 'should return the right value' do
-        @combinator.ignore_unassigned_tokens.should == true
+        @categories.ignore_unassigned_tokens.should == true
       end
     end
     context 'ignore_unassigned_tokens false' do
       before(:each) do
-        @combinator = Query::Combinator.new @categories, :ignore_unassigned_tokens => false
+        @categories = Index::Categories.new ignore_unassigned_tokens: false
       end
       it 'should return the right value' do
-        @combinator.ignore_unassigned_tokens.should == false
+        @categories.ignore_unassigned_tokens.should == false
       end
     end
   end
   
   context "with real categories" do
     before(:each) do
-      @type1     = stub :type1, :name => :some_type
+      @type1 = stub :type1, :name => :some_type
       
-      @category1 = Index::Category.new :some_name, @type1
-      @category2 = Index::Category.new :some_name, @type1
-      @category3 = Index::Category.new :some_name, @type1
-      @categories = [@category1, @category2, @category3]
-      
-      @combinator = Query::Combinator.new @categories
+      @categories = Index::Categories.new
+      @categories << Index::Category.new(:category1, @type1)
+      @categories << Index::Category.new(:category2, @type1)
+      @categories << Index::Category.new(:category3, @type1)
     end
     describe "similar_possible_for" do
       before(:each) do
         @token = Query::Token.processed 'similar~'
       end
       it "returns possible categories" do
-        @combinator.similar_possible_for(@token).should == []
+        @categories.similar_possible_for(@token).should == []
       end
     end
   end
   
   context 'without options' do
     before(:each) do
-      @category1 = stub :category1, :name => :category1
-      @category2 = stub :category2, :name => :category2
-      @category3 = stub :category3, :name => :category3
-      @categories = [@category1, @category2, @category3]
+      @type1 = stub :type1, :name => :some_type
       
-      @combinator = Query::Combinator.new @categories
+      @category1 = Index::Category.new :category1, @type1
+      @category2 = Index::Category.new :category2, @type1
+      @category3 = Index::Category.new :category3, @type1
+      
+      @categories = Index::Categories.new
+      @categories << @category1
+      @categories << @category2
+      @categories << @category3
     end
     
     describe "possible_combinations_for" do
@@ -67,9 +63,9 @@ describe Query::Combinator do
           @token.stub :similar? => true
         end
         it "calls the right method" do
-          @combinator.should_receive(:similar_possible_for).once.with @token
+          @categories.should_receive(:similar_possible_for).once.with @token
           
-          @combinator.possible_combinations_for @token
+          @categories.possible_combinations_for @token
         end
       end
       context "with non-similar token" do
@@ -77,9 +73,9 @@ describe Query::Combinator do
           @token.stub :similar? => false
         end
         it "calls the right method" do
-          @combinator.should_receive(:possible_for).once.with @token
+          @categories.should_receive(:possible_for).once.with @token
           
-          @combinator.possible_combinations_for @token
+          @categories.possible_combinations_for @token
         end
       end
     end
@@ -96,7 +92,7 @@ describe Query::Combinator do
               @category2.stub! :combination_for => @combination
             end
             it 'should return the right combinations' do
-              @combinator.possible_for(@token).should == [@combination]
+              @categories.possible_for(@token).should == [@combination]
             end
           end
           context 'combination does not exist' do
@@ -104,7 +100,7 @@ describe Query::Combinator do
               @category2.stub! :combination_for => nil
             end
             it 'should return the right combinations' do
-              @combinator.possible_for(@token).should == []
+              @categories.possible_for(@token).should == []
             end
           end
         end
@@ -123,7 +119,7 @@ describe Query::Combinator do
           @token = stub :token, :user_defined_category_name => :category2
         end
         it 'should return the right categories' do
-          @combinator.possible_categories(@token).should == [@category2]
+          @categories.possible_categories(@token).should == [@category2]
         end
       end
       context 'user defined does not exist' do
@@ -131,7 +127,7 @@ describe Query::Combinator do
           @token = stub :token, :user_defined_category_name => nil
         end
         it 'should return all categories' do
-          @combinator.possible_categories(@token).should == @categories
+          @categories.possible_categories(@token).should == @categories
         end
       end
     end
@@ -142,7 +138,7 @@ describe Query::Combinator do
           @token = stub :token, :user_defined_category_name => :category2
         end
         it 'should return the right categories' do
-          @combinator.user_defined_categories(@token).should == [@category2]
+          @categories.user_defined_categories(@token).should == [@category2]
         end
       end
       context 'category does not exist' do
@@ -150,7 +146,7 @@ describe Query::Combinator do
           @token = stub :token, :user_defined_category_name => :gnoergel
         end
         it 'should return nil' do
-          @combinator.user_defined_categories(@token).should == nil
+          @categories.user_defined_categories(@token).should == nil
         end
       end
     end
