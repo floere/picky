@@ -18,7 +18,7 @@ module Sources
     #
     #
     def raise_no_file_given field_names
-      raise NoCSVFileGiven.new field_names.join(', ')
+      raise NoCSVFileGiven.new(field_names.join(', '))
     end
     
     # Harvests the data to index.

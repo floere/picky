@@ -37,7 +37,7 @@ module Sources
     end
 
     def raise_no_db_given field_names
-      raise NoCouchDBGiven.new field_names.join(', ')
+      raise NoCouchDBGiven.new(field_names.join(', '))
     end
   end
 end

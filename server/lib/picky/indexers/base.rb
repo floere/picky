@@ -39,7 +39,7 @@ module Indexers
       @category.source || raise_no_source
     end
     def raise_no_source
-      raise NoSourceSpecifiedException.new "No source given for index:#{@type.name}, category:#{@category.name}." # TODO field.identifier
+      raise NoSourceSpecifiedException.new("No source given for index:#{@type.name}, category:#{@category.name}.") # TODO field.identifier
     end
     
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
