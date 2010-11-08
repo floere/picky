@@ -1,6 +1,7 @@
 h2. Version 0.11.1
 
   * hanke: (server) Better error reporting in Rake tasks. Task naming improved.
+  * hanke: (server) Internal cleanup.
 
 h2. Version 0.11.0
 
