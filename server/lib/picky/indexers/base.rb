@@ -21,6 +21,8 @@ module Indexers
     #
     # TODO Duplicate code in Index::Files.
     #
+    # TODO Rename to prepared_index_file_name.
+    #
     def search_index_file_name
       @category.search_index_file_name
     end
@@ -50,7 +52,9 @@ module Indexers
       
       indexing_message
       
-      # TODO Move open to Index::File. 
+      # TODO Move open to Index::File.
+      #
+      # @category.files
       #
       File.open(search_index_file_name, 'w:binary') do |file|
         result = []

@@ -18,6 +18,8 @@ class Bundle
     #
     # TODO Move Files somewhere. Shared?
     #
+    # Files and the identifier are parametrized, the rest is not!
+    #
     @files = Index::Files.new name, category.name, type.name
   end
   

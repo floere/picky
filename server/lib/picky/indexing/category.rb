@@ -26,6 +26,8 @@ module Indexing
       @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, type, similarity, Cacher::Partial::None.new, weights)
       @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, type, Cacher::Similarity::None.new, partial, weights)
       
+      # TODO Move to Query.
+      #
       # @remove          = options[:remove]        || false
       # @filter          = options[:filter]        || true
       
@@ -66,27 +68,11 @@ module Indexing
       exact.delete
       partial.delete
     end
-    def create_directory_structure
-      timed_exclaim "Creating directory structure for #{identifier}."
-      exact.create_directory
-      partial.create_directory
-    end
-    
-    # Used for testing.
-    #
-    # TODO Remove?
-    #
-    def generate_indexes_from_exact_index
-      generate_derived_exact
-      generate_partial
-      generate_derived_partial
-    end
-    def generate_derived_exact
-      exact.generate_derived
-    end
-    def generate_derived_partial
-      partial.generate_derived
-    end
+    # def create_directory_structure
+    #   timed_exclaim "Creating directory structure for #{identifier}."
+    #   exact.create_directory
+    #   partial.create_directory
+    # end
     
     # Generates all caches for this category.
     #
@@ -117,6 +103,8 @@ module Indexing
     
     # TODO Partially move to type. Duplicate Code in indexers/field.rb.
     #
+    # TODO Use the Files object.
+    #
     def search_index_root
       File.join PICKY_ROOT, 'index'
     end
@@ -128,6 +116,7 @@ module Indexing
     end
     def index
       prepare_cache_directory
+      # files.create_directory # TODO Make this possible!
       indexer.index
     end
     def prepare_cache_directory

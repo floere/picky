@@ -1,3 +1,3 @@
 module Indexers
-  Default = Field
+  Default = Base
 end

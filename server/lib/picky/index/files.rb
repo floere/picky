@@ -1,7 +1,5 @@
 module Index
   
-  # TODO Think about using 3 instances of this in the bundle.
-  #
   class Files
     
     attr_reader :bundle_name, :category_name, :type_name

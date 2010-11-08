@@ -24,41 +24,15 @@ describe Indexing::Category do
         @category.dump_caches
       end
     end
-
-    describe 'generate_derived_partial' do
-      it 'should delegate to partial' do
-        @partial.should_receive(:generate_derived).once.with
-
-        @category.generate_derived_partial
-      end
-    end
-
-    describe 'generate_derived_exact' do
-      it 'should delegate to exact' do
-        @exact.should_receive(:generate_derived).once.with
-
-        @category.generate_derived_exact
-      end
-    end
-
-    describe 'generate_indexes_from_exact_index' do
-      it 'should call three method in order' do
-        @category.should_receive(:generate_derived_exact).once.with().ordered
-        @category.should_receive(:generate_partial).once.with().ordered
-        @category.should_receive(:generate_derived_partial).once.with().ordered
-
-        @category.generate_indexes_from_exact_index
-      end
-    end
     
     describe 'generate_caches_from_memory' do
       it 'should delegate to partial' do
         @partial.should_receive(:generate_caches_from_memory).once.with
-
+        
         @category.generate_caches_from_memory
       end
     end
-
+    
     describe 'generate_partial' do
       it 'should return whatever the partial generation returns' do
         @exact.stub! :index
