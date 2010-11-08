@@ -20,6 +20,7 @@ module Index
     
     def << category
       categories << category
+      category_hash[category.name] = [category] # TODO Why an Array?
     end
     
     #

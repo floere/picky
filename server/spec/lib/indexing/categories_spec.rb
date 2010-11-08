@@ -127,7 +127,7 @@ describe Index::Categories do
           @token = stub :token, :user_defined_category_name => nil
         end
         it 'should return all categories' do
-          @categories.possible_categories(@token).should == @categories
+          @categories.possible_categories(@token).should == [@category1, @category2, @category3]
         end
       end
     end
