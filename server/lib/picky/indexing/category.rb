@@ -2,11 +2,12 @@ module Indexing
   
   class Category
     
-    attr_reader :name, :indexed_as, :virtual, :tokenizer, :source
+    attr_reader :name, :type, :indexed_as, :virtual, :tokenizer, :source, :exact, :partial
     
     # TODO Dup the options?
     #
     def initialize name, type, options = {}
+      @name = name
       @type = type
       
       @source        = options[:source]
@@ -31,13 +32,86 @@ module Indexing
       @options = options # TODO Remove?
     end
     
+    # TODO Move to initializer?
+    #
+    def identifier
+      @identifier ||= "#{type.name} #{name}"
+    end
+    
     # Note: Most of the time the source of the type is used.
     #
     def source
       @source || type.source
     end
     
-    # TODO Move to config. Duplicate Code in indexers/field.rb.
+    # TODO Spec.
+    #
+    def backup_caches
+      timed_exclaim "Backing up #{identifier}."
+      exact.backup
+      partial.backup
+    end
+    def restore_caches
+      timed_exclaim "Restoring #{identifier}."
+      exact.restore
+      partial.restore
+    end
+    def check_caches
+      timed_exclaim "Checking #{identifier}."
+      exact.raise_unless_cache_exists
+      partial.raise_unless_cache_exists
+    end
+    def clear_caches
+      timed_exclaim "Deleting #{identifier}."
+      exact.delete
+      partial.delete
+    end
+    def create_directory_structure
+      timed_exclaim "Creating directory structure for #{identifier}."
+      exact.create_directory
+      partial.create_directory
+    end
+    
+    # Used for testing.
+    #
+    # TODO Remove?
+    #
+    def generate_indexes_from_exact_index
+      generate_derived_exact
+      generate_partial
+      generate_derived_partial
+    end
+    def generate_derived_exact
+      exact.generate_derived
+    end
+    def generate_derived_partial
+      partial.generate_derived
+    end
+    
+    # Generates all caches for this category.
+    #
+    def generate_caches
+      generate_caches_from_source
+      generate_partial
+      generate_caches_from_memory
+      dump_caches
+      timed_exclaim "CACHE FINISHED #{identifier}."
+    end
+    def generate_caches_from_source
+      exact.generate_caches_from_source
+    end
+    def generate_partial
+      partial.generate_partial_from exact.index
+    end
+    def generate_caches_from_memory
+      partial.generate_caches_from_memory
+    end
+    def dump_caches
+      exact.dump
+      partial.dump
+    end
+    
+    # TODO Partially move to type. Duplicate Code in indexers/field.rb.
     #
     def search_index_root
       File.join PICKY_ROOT, 'index'
@@ -57,7 +131,7 @@ module Indexing
     end
     def cache
       prepare_cache_directory
-      generate.generate_caches
+      generate_caches
     end
     def indexer
       @indexer || @indexer = @indexer_class.new(type, self)

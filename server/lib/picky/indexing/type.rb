@@ -2,7 +2,7 @@ module Indexing
   
   class Type
     
-    attr_reader :source, :categories, :after_indexing
+    attr_reader :name, :source, :categories, :after_indexing
     
     # Delegators for indexing.
     #
@@ -10,8 +10,8 @@ module Indexing
              :to => :source
              
     delegate :index,
+             :cache,
              :generate_caches,
-             :load_from_cache,
              :backup_caches,
              :restore_caches,
              :check_caches,
@@ -19,7 +19,7 @@ module Indexing
              :create_directory_structure,
              :to => :categories
     
-    def initialize name, source
+    def initialize name, source, options = {}
       @name   = name
       @source = source
       

@@ -14,7 +14,9 @@ class Bundle
     
     # TODO inject files.
     #
-    @files = Files.new name, category.name, type.name
+    # TODO Move Files somewhere. Shared?
+    #
+    @files = Index::Files.new name, category.name, type.name
   end
   
 end

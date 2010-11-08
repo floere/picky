@@ -6,7 +6,10 @@ module Index
   #
   class Type
     
-    attr_reader :name, :result_type, :combinator
+    attr_reader :name, :result_type, :combinator, :categories
+    
+    delegate :load_from_cache,
+             :to => :categories
     
     def initialize name, options = {}
       @name                     = name
@@ -14,19 +17,19 @@ module Index
       @result_type              = options[:result_type] || name
       ignore_unassigned_tokens  = options[:ignore_unassigned_tokens] || false # TODO Move to query, somehow.
       
-      @combinator  = Query::Combinator.new ignore_unassigned_tokens: ignore_unassigned_tokens
+      @categories = Categories.new ignore_unassigned_tokens: ignore_unassigned_tokens
     end
     
     # TODO Spec. Doc.
     #
     def add_category name, options = {}
-      combinator << Category.new(name, self, options)
+      categories << Category.new(name, self, options)
     end
     
     #
     #
     def possible_combinations token
-      combinator.possible_combinations_for token
+      categories.possible_combinations_for token
     end
     
   end

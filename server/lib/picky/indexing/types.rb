@@ -1,6 +1,6 @@
 module Indexing
   
-  class Types << ::Types
+  class Types
     
     attr_reader :types
     
@@ -20,7 +20,7 @@ module Indexing
     # TODO Spec.
     #
     def clear
-      @types        = []
+      @types = []
     end
     
     # TODO Spec
@@ -69,6 +69,10 @@ module Indexing
         return found if found
       end
     end
+    
+    # Alias # TODO Move? Rename?
+    #
+    ::IndexingRegister = Types.new
     
   end
 end

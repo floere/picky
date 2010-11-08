@@ -1,6 +1,6 @@
 module Index
   
-  class Types < ::Types
+  class Types
     
     attr_reader :types, :type_mapping
     

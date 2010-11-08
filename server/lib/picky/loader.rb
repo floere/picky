@@ -166,6 +166,15 @@ module Loader
     
     # Index types.
     #
+    load_relative 'bundle'
+    load_relative 'type'
+    
+    load_relative 'indexing/bundle'
+    load_relative 'indexing/category'
+    load_relative 'indexing/categories'
+    load_relative 'indexing/type'
+    load_relative 'indexing/types'
+    
     load_relative 'index/bundle'
     load_relative 'index/category'
     load_relative 'index/categories'
@@ -195,7 +204,6 @@ module Loader
     
     load_relative 'query/qualifiers'
     load_relative 'query/weigher'
-    load_relative 'query/combinator'
     
     load_relative 'query/weights'
     

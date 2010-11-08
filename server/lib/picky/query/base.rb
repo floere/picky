@@ -17,10 +17,11 @@ module Query
     #    * tokenizer: Tokenizers::Query.default by default.
     #    * weights:   A hash of weights, or a Query::Weights object.
     #
-    def initialize *index_types
-      options      = Hash === index_types.last ? index_types.pop : {}
-      @index_types = index_types
-      @weigher     = options[:weigher]   || Weigher.new(index_types)
+    def initialize *index_type_definitions
+      options      = Hash === index_type_definitions.last ? index_type_definitions.pop : {}
+      indexes      = index_type_definitions.map &:index
+      
+      @weigher     = options[:weigher]   || Weigher.new(indexes)
       @tokenizer   = options[:tokenizer] || Tokenizers::Query.default
       weights      = options[:weights] || Weights.new
       @weights     = Hash === weights ? Weights.new(weights) : weights
