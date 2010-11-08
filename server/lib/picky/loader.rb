@@ -168,7 +168,9 @@ module Loader
     #
     load_relative 'index/bundle'
     load_relative 'index/category'
+    load_relative 'index/categories'
     load_relative 'index/type'
+    load_relative 'index/types'
     
     load_relative 'index/wrappers/exact_first'
     
@@ -222,14 +224,8 @@ module Loader
     load_relative 'sources/wrappers/base'
     load_relative 'sources/wrappers/location'
     
-    # Indexes.
-    #
-    load_relative 'indexes'
-    
     # Configuration.
     #
-    load_relative 'configuration/field'
-    load_relative 'configuration/type'
     load_relative 'configuration/indexes'
     
     # ... in Application.

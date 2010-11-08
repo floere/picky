@@ -1,3 +1,5 @@
+# TODO Delete!
+#
 module Configuration
   
   # Describes the configuration of a "field", a category
@@ -7,7 +9,7 @@ module Configuration
     attr_reader :name, :indexed_name, :virtual, :tokenizer, :source
     attr_accessor :type # convenience TODO Still needed?
     def initialize name, options = {}
-      @name            = name.to_sym
+      # @name            = name.to_sym
       @tokenizer       = options[:tokenizer] || Tokenizers::Index.default
       
       # TODO Dup the options?
@@ -33,12 +35,12 @@ module Configuration
     def source
       @source || type.source
     end
-    def generate_with type
-      Index::Category.new self.name, type, @options
-    end
-    def generate
-      Index::Category.new self.name, type, @options
-    end
+    # def generate_with type
+    #   Index::Category.new self.name, type, @options
+    # end
+    # def generate
+    #   Index::Category.new self.name, type, @options
+    # end
     # TODO Duplicate code in bundle. Move to application.
     #
     # TODO Move to type, and use in bundle from there.

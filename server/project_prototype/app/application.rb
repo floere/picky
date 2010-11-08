@@ -22,18 +22,19 @@ class PickySearch < Application
                    maximum_tokens: 5, # Max amount of tokens passing into a query. 5 is the default.
                    substitutes_characters_with: CharacterSubstitution::European.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                    
-  # Define an index. Use a database etc. source? http://github.com/floere/picky/wiki/Sources-Configuration#sources
+  # Define an index. Use a database etc. source?
+  # See http://github.com/floere/picky/wiki/Sources-Configuration#sources
   #
   books_index = index(:books, Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'app/library.csv'))
-                  .category(:title,
-                            similarity: Similarity::Phonetic.new(3),  # Up to three similar title word indexed (default: No similarity).
-                            partial: Partial::Substring.new(from: 1)) # Indexes substrings upwards from character 1 (default: -3),
-                                                                      # You'll find "picky" even when entering just a "p".
-                  .category(:author,
-                            partial: Partial::Substring.new(from: 1))
-                  .category(:isbn,
-                            partial: Partial::None.new) # Partial substring searching on an ISBN does not make
-                                                        # much sense, neither does similarity.
+  books_index.category :title,
+                       similarity: Similarity::Phonetic.new(3), # Up to three similar title word indexed (default: No similarity).
+                       partial: Partial::Substring.new(from: 1) # Indexes substrings upwards from character 1 (default: -3),
+                                                                # You'll find "picky" even when entering just a "p".
+  books_index.category :author,
+                       partial: Partial::Substring.new(from: 1)
+  books_index.category :isbn,
+                       partial: Partial::None.new # Partial substring searching on an ISBN does not make
+                                                  # much sense, neither does similarity.
   
   query_options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for ordered combinations.
   

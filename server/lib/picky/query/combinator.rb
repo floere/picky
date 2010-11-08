@@ -2,36 +2,25 @@ module Query
   
   # Combines tokens and category indexes into combinations.
   #
+  # TODO Rename Index::Categories.
+  #
   class Combinator
     
     attr_reader :categories, :category_hash
     attr_reader :ignore_unassigned_tokens # TODO Should this actually be determined by the query? Probably, yes.
     
-    def initialize options = {} # categories, 
-      @categories               = [] # categories
-      @category_hash            = {} # hashify categories
+    def initialize options = {}
+      @categories               = [] # TODO Use the Index::Categories!
+      @category_hash            = {} # TODO Use the Index::Categories!
       
       @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false
     end
     
     # TODO Spec.
     #
-    def add category
+    def << category
       categories << category
       category_hash[category.name] = [category] # TODO An array seems silly.
-    end
-    
-    # TODO Move somewhere else.
-    #
-    # TODO Or use active_support's?
-    #
-    # TODO Remove.
-    #
-    def hashify category_array
-      category_array.inject({}) do |hash, category|
-        hash[category.name] = [category]
-        hash
-      end
     end
     
     #

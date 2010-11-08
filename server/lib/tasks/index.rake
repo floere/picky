@@ -12,6 +12,10 @@ namespace :index do
   #   end
   # end
   
+  # TODO Make option to also use non-random.
+  #      rake index:randomly (default)
+  #      rake index:ordered
+  #
   desc "Takes a snapshot, indexes, and caches."
   task :generate, [:order] => :application do |_, options|
     randomly = (options.order == 'ordered') ? false : true

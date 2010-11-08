@@ -21,13 +21,6 @@ class Application
     # Routes.
     #
     delegate :route, :root, :to => :routing
-    # Index, Field.
-    #
-    # TODO Rename category.
-    #
-    delegate :field, :location, :to => :indexing
-    def category *args; indexing.field *args;        end
-    def index *args;    indexing.define_index *args; end
     
     # An application simply delegates to the routing to handle a request.
     #
@@ -42,6 +35,12 @@ class Application
     end
     def querying
       @queries ||= Configuration::Queries.new
+    end
+    
+    # "API".
+    #
+    def index *args
+      Index.new *args
     end
     
     # Finalize the subclass as soon as it

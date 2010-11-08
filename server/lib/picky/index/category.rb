@@ -9,6 +9,8 @@ module Index
     
     attr_reader :name, :type, :exact, :partial
     
+    attr_accessor :source
+    
     #
     #
     def initialize name, type, options = {}
@@ -24,14 +26,54 @@ module Index
       
       @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
       @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
+      
+      # Extract?
+      #
+      qualifiers = generate_qualifiers_from options
+      Query::Qualifiers.add(name, qualifiers) if qualifiers
+    end
+    
+    # TODO Move to Index.
+    #
+    def generate_qualifiers_from options
+      options[:qualifiers] || options[:qualifier] && [options[:qualifier]] || [name]
     end
     
     # Loads the index from cache.
+    #
+    # TODO Metaprogram delegation? each_delegate?
     #
     def load_from_cache
       timed_exclaim "Loading index #{identifier}."
       exact.load
       partial.load
+    end
+    # TODO Spec.
+    #
+    def backup_caches
+      timed_exclaim "Backing up #{identifier}."
+      exact.backup
+      partial.backup
+    end
+    def restore_caches
+      timed_exclaim "Restoring #{identifier}."
+      exact.restore
+      partial.restore
+    end
+    def check_caches
+      timed_exclaim "Checking #{identifier}."
+      exact.raise_unless_cache_exists
+      partial.raise_unless_cache_exists
+    end
+    def clear_caches
+      timed_exclaim "Deleting #{identifier}."
+      exact.delete
+      partial.delete
+    end
+    def create_directory_structure
+      timed_exclaim "Creating directory structure for #{identifier}."
+      exact.create_directory
+      partial.create_directory
     end
     
     # TODO Move to initializer?

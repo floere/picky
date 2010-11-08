@@ -19,38 +19,40 @@ class BookSearch < Application
                      
                      maximum_tokens:                     5,
                      substitutes_characters_with:        CharacterSubstitution::European.new
-                     
-                     
-    similar_title = category :title,  :qualifiers => [:t, :title, :titre],
-                                      :partial => Partial::Substring.new(:from => 1),
-                                      :similarity =>  Similarity::Phonetic.new(2)
-    author        = category :author, :qualifiers => [:a, :author, :auteur],
-                                      :partial => Partial::Substring.new(:from => -2)
-    year          = category :year,   :qualifiers => [:y, :year, :annee]
-    isbn          = category :isbn,   :qualifiers => [:i, :isbn]
     
     main_index = index :main, Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml')
-    main_index.category similar_title
-    main_index.category author
-    main_index.category year
+    main_index.category :title,
+                        qualifiers: [:t, :title, :titre],
+                        partial:    Partial::Substring.new(:from => 1),
+                        similarity: Similarity::Phonetic.new(2)
+    main_index.category :author,
+                        qualifiers: [:a, :author, :auteur],
+                        partial:    Partial::Substring.new(:from => -2)
+    main_index.category :year,
+                        qualifiers: [:y, :year, :annee]
     
     isbn_index = index :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
     isbn_index.category :isbn, :qualifiers => [:i, :isbn]
     
     geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, :file => 'data/locations.csv')
-    geo_index.category :location),
-    geo_index.category :north, :source => Sources::Wrappers::Location.new(source, grid:2), :tokenizer => Tokenizers::Index.new
-    geo_index.category :east,  :source => Sources::Wrappers::Location.new(source, grid:2), :tokenizer => Tokenizers::Index.new
+    geo_index.category :location
+    geo_index.location :north, grid: 2
+    geo_index.location :east,  grid: 2
     # geo_index.location :north, grid: 2 # TODO partial does not make sense!
     # geo_index.location :east,  grid: 2
     # geo_location(:north, grid: 20_000, :as => :n20k),
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
     csv_test_index = index :csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv')
-    csv_test_index.category similar_title
-    csv_test_index.category author
-    csv_test_index.category isbn
-    csv_test_index.category year
+    main_index.category :title,
+                        qualifiers: [:t, :title, :titre],
+                        partial:    Partial::Substring.new(:from => 1),
+                        similarity: Similarity::Phonetic.new(2)
+    main_index.category :author,
+                        qualifiers: [:a, :author, :auteur],
+                        partial:    Partial::Substring.new(:from => -2)
+    main_index.category :year,
+                        qualifiers: [:y, :year, :annee]
     csv_test_index.category :publisher, :qualifiers => [:p, :publisher]
     csv_test_index.category :subjects, :qualifiers => [:s, :subject]
     
