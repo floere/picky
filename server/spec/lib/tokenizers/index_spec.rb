@@ -39,11 +39,7 @@ describe Tokenizers::Index do
 
   describe "reject!" do
     it "should reject tokens if blank" do
-      t1 = stub(:token, :to_s => '')
-      t2 = stub(:token, :to_s => 'not blank')
-      t3 = stub(:token, :to_s => '')
-      
-      @tokenizer.reject([t1, t2, t3]).should == [t2]
+      @tokenizer.reject(['', 'not blank', '']).should == ['not blank']
     end
   end
   

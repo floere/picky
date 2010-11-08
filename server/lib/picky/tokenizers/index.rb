@@ -64,7 +64,7 @@ module Tokenizers
     # TODO Make parametrizable! reject { |token| }
     #
     def reject tokens
-      tokens
+      tokens.reject! &:blank?
       # tokens.reject! { |token| token.to_s.size < 2 }
     end
     
