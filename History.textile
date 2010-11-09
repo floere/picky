@@ -1,3 +1,7 @@
+h2. Version 0.11.2
+
+  * hanke: (server) Rake task index:check will check if all necessary index files are generated. (Nice to use before restarting.)
+
 h2. Version 0.11.1
 
   * hanke: (server) Better error reporting in Rake tasks. Task naming improved.
