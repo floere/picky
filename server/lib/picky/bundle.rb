@@ -6,7 +6,7 @@ class Bundle
   delegate :[], :[]=, :clear, :to => :index
   
   def initialize name, category, type, similarity_strategy
-    @identifier = "#{name}: #{type.name} #{category.name}"
+    @identifier = "#{type.name}: #{name} #{category.name}"
     
     @index      = {}
     @weights    = {}

@@ -2,6 +2,8 @@ module Cacher
   module Weights
     # Superclass for weighing strategies.
     #
-    class Strategy; end
+    class Strategy < Cacher::Strategy
+      
+    end
   end
 end

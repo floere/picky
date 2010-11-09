@@ -12,7 +12,7 @@ describe Index::Bundle do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @index.identifier.should == 'some_name: some_type some_category'
+      @index.identifier.should == 'some_type: some_name some_category'
     end
   end
   

@@ -14,7 +14,7 @@ describe Indexing::Bundle do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @index.identifier.should == 'some_name: some_type some_category'
+      @index.identifier.should == 'some_type: some_name some_category'
     end
   end
   
@@ -99,47 +99,114 @@ describe Indexing::Bundle do
       @index.dump
     end
   end
-  
+
   describe 'raise_unless_cache_exists' do
-    before(:each) do
-      @files = stub :files
-      @files.stub! :index_cache_ok? => true
-      @files.stub! :similarity_cache_ok? => true
-      @files.stub! :weights_cache_ok? => true
-      @files.stub! :index_cache_small? => false
-      @files.stub! :similarity_cache_small? => false
-      @files.stub! :weights_cache_small? => false
+    it "calls methods in order" do
+      @index.should_receive(:raise_unless_index_exists).once.ordered
+      @index.should_receive(:raise_unless_similarity_exists).once.ordered
       
-      @index.stub! :files => @files
+      @index.raise_unless_cache_exists
     end
-    context 'weights cache missing' do
+  end
+  describe 'raise_unless_index_exists' do
+    context 'partial strategy saved' do
       before(:each) do
-        @files.stub! :weights_cache_ok? => false
+        strategy = stub :strategy, :saved? => true
+        @index.stub! :partial_strategy => strategy
       end
-      it 'should raise' do
-        lambda do
-          @index.raise_unless_cache_exists
-        end.should raise_error("weights cache for some_name: some_type some_category missing.")
+      it "calls the methods in order" do
+        @index.should_receive(:warn_if_index_small).once.ordered
+        @index.should_receive(:raise_unless_index_ok).once.ordered
+        
+        @index.raise_unless_index_exists
       end
     end
-    context 'similarity cache missing' do
+    context 'partial strategy not saved' do
+      before(:each) do
+        strategy = stub :strategy, :saved? => false
+        @index.stub! :partial_strategy => strategy
+      end
+      it "calls nothing" do
+        @index.should_receive(:warn_if_index_small).never
+        @index.should_receive(:raise_unless_index_ok).never
+        
+        @index.raise_unless_index_exists
+      end
+    end
+  end
+  describe 'raise_unless_similarity_exists' do
+    context 'similarity strategy saved' do
+      before(:each) do
+        strategy = stub :strategy, :saved? => true
+        @index.stub! :similarity_strategy => strategy
+      end
+      it "calls the methods in order" do
+        @index.should_receive(:warn_if_similarity_small).once.ordered
+        @index.should_receive(:raise_unless_similarity_ok).once.ordered
+        
+        @index.raise_unless_similarity_exists
+      end
+    end
+    context 'similarity strategy not saved' do
+      before(:each) do
+        strategy = stub :strategy, :saved? => false
+        @index.stub! :similarity_strategy => strategy
+      end
+      it "calls nothing" do
+        @index.should_receive(:warn_if_similarity_small).never
+        @index.should_receive(:raise_unless_similarity_ok).never
+        
+        @index.raise_unless_similarity_exists
+      end
+    end
+  end
+  describe 'warn_if_similarity_small' do
+    before(:each) do
+      @files = @index.files
+    end
+    context "files similarity cache small" do
+      before(:each) do
+        @files.stub! :similarity_cache_small? => true
+      end
+      it "warns" do
+        @index.should_receive(:warn_cache_small).once.with :similarity
+        
+        @index.warn_if_similarity_small
+      end
+    end
+    context "files similarity cache not small" do
+      before(:each) do
+        @files.stub! :similarity_cache_small? => false
+      end
+      it "does not warn" do
+        @index.should_receive(:warn_cache_small).never
+        
+        @index.warn_if_similarity_small
+      end
+    end
+  end
+  describe 'raise_unless_similarity_ok' do
+    before(:each) do
+      @files = @index.files
+    end
+    context "files similarity cache ok" do
+      before(:each) do
+        @files.stub! :similarity_cache_ok? => true
+      end
+      it "warns" do
+        @index.should_receive(:raise_cache_missing).never
+        
+        @index.raise_unless_similarity_ok
+      end
+    end
+    context "files similarity cache not ok" do
       before(:each) do
         @files.stub! :similarity_cache_ok? => false
       end
-      it 'should raise' do
-        lambda do
-          @index.raise_unless_cache_exists
-        end.should raise_error("similarity cache for some_name: some_type some_category missing.")
-      end
-    end
-    context 'index cache missing' do
-      before(:each) do
-        @files.stub! :index_cache_ok? => false
-      end
-      it 'should raise' do
-        lambda do
-          @index.raise_unless_cache_exists
-        end.should raise_error("index cache for some_name: some_type some_category missing.")
+      it "does not warn" do
+        @index.should_receive(:raise_cache_missing).once.with :similarity
+        
+        @index.raise_unless_similarity_ok
       end
     end
   end

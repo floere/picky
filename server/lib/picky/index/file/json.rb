@@ -14,7 +14,7 @@ module Index
         hash.dump_json cache_path
       end
       def retrieve
-        raise "Can't retrieve from marshalled file. Use text file."
+        raise "Can't retrieve from JSON file. Use text file."
       end
       
     end

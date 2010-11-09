@@ -11,6 +11,12 @@ module Cacher
       def generate_from index
         {}
       end
+      
+      # Returns if this strategy's generated file is saved.
+      #
+      def saved?
+        false
+      end
 
     end
 

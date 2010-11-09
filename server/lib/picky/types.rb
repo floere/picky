@@ -8,11 +8,12 @@ class Types
            :load_from_cache,
            :to => :@indexes
   
-  delegate :find,
+  delegate :check_caches,
+           :find,
+           :generate_cache_only,
+           :generate_index_only,
            :index,
            :index_for_tests,
-           :generate_index_only,
-           :generate_cache_only,
            :to => :@indexings
   
   def initialize

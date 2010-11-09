@@ -19,7 +19,7 @@ describe Index::File::JSON do
     it "raises" do
       lambda do
         @file.retrieve
-      end.should raise_error("Can't retrieve from marshalled file. Use text file.")
+      end.should raise_error("Can't retrieve from JSON file. Use text file.")
     end
   end
   

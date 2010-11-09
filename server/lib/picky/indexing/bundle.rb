@@ -131,16 +131,39 @@ module Indexing
     # Alerts the user if an index is missing.
     #
     def raise_unless_cache_exists
-      warn_cache_small :index      if files.index_cache_small?
+      raise_unless_index_exists
+      raise_unless_similarity_exists
+    end
+    def raise_unless_index_exists
+      if partial_strategy.saved?
+        warn_if_index_small
+        raise_unless_index_ok
+      end
+    end
+    def raise_unless_similarity_exists
+      if similarity_strategy.saved?
+        warn_if_similarity_small
+        raise_unless_similarity_ok
+      end
+    end
+    def warn_if_similarity_small
       warn_cache_small :similarity if files.similarity_cache_small?
-      warn_cache_small :weights    if files.weights_cache_small?
-
-      raise_cache_missing :index      unless files.index_cache_ok?
+    end
+    def raise_unless_similarity_ok
       raise_cache_missing :similarity unless files.similarity_cache_ok?
-      raise_cache_missing :weights    unless files.weights_cache_ok?
+    end
+    # TODO Spec on down.
+    #
+    def warn_if_index_small
+      warn_cache_small :index   if files.index_cache_small?
+      warn_cache_small :weights if files.weights_cache_small?
+    end
+    def raise_unless_index_ok
+      raise_cache_missing :index   unless files.index_cache_ok?
+      raise_cache_missing :weights unless files.weights_cache_ok?
     end
     def warn_cache_small what
-      puts "#{what} cache for #{identifier} smaller than 16 bytes."
+      puts "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
     end
     # Raises an appropriate error message.
     #

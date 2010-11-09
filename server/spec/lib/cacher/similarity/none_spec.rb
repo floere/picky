@@ -7,7 +7,13 @@ describe Cacher::Similarity::None do
   before(:each) do
     @similarity = Cacher::Similarity::None.new
   end
-
+  
+  describe "saved?" do
+    it "returns the right answer" do
+      @similarity.saved?.should == false
+    end
+  end
+  
   describe 'encode' do
     it 'should always return nil' do
       @similarity.encoded(:whatever).should == nil

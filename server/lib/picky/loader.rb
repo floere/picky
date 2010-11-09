@@ -123,7 +123,11 @@ module Loader
     load_relative 'indexers/default'
     #
     # load_relative 'indexers/solr'
-
+    
+    # Cacher.
+    #
+    load_relative 'cacher/strategy'
+    
     # Partial index generation strategies.
     #
     load_relative 'cacher/partial/strategy'
