@@ -49,7 +49,7 @@ module Index
       # Is the cache small?
       #
       def cache_small?
-        size_of(cache_path) < 16
+        size_of(cache_path) < 8
       end
       # Is the cache ok? I.e. larger than four Bytes in size.
       #
