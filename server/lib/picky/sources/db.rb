@@ -93,8 +93,6 @@ module Sources
     # Example:
     #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
     #
-    # TODO Perhaps it should be just harvest field.
-    #
     def harvest type, field
       connect_backend
       
