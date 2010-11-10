@@ -27,38 +27,39 @@ module Cacher
     
     # The subtoken partial strategy.
     #
-    # If given
-    # "florian"
-    # will index
-    # "floria"
-    # "flori"
-    # "flor"
-    # "flo"
-    # "fl"
-    # "f"
-    # Depending on what the given from value is. (Example with from == 1)
+    # If given "florian"
+    # it will index "floria", "flori", "flor", "flo", "fl", "f"
+    # (Depending on what the given from value is, the example is with option from: 1)
     #
     class Substring < Strategy
       
-      # Down to is how far it will go down in generating the subtokens.
+      # The from option signifies where in the symbol it
+      # will start in generating the subtokens.
       #
       # Examples:
-      # With :hello, and to -1
-      # * down to == 1: [:hello, :hell, :hel, :he, :h]
-      # * down to == 4: [:hello, :hell]
       #
-      # With :hello, and to -2
-      # * down to == 1: [:hell, :hel, :he, :h]
-      # * down to == 4: [:hell]
+      # With :hello, and to: -1 (default)
+      # * from: 1 # => [:hello, :hell, :hel, :he, :h]
+      # * from: 4 # => [:hello, :hell]
+      #
+      # With :hello, and to: -2
+      # * from: 1 # => [:hell, :hel, :he, :h]
+      # * from: 4 # => [:hell]
       #
       def initialize options = {}
         from     = options[:from] || 1
         to = options[:to] || -1
         @generator = SubstringGenerator.new from, to
       end
+      
+      # Delegator to generator#from.
+      #
       def from
         @generator.from
       end
+      
+      # Delegator to generator#to.
+      #
       def to
         @generator.to
       end
