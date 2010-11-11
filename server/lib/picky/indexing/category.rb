@@ -2,13 +2,13 @@ module Indexing
   
   class Category
     
-    attr_reader :name, :type, :indexed_as, :virtual, :tokenizer, :source, :exact, :partial
+    attr_reader :name, :index, :indexed_as, :virtual, :tokenizer, :source, :exact, :partial
     
     # TODO Dup the options?
     #
-    def initialize name, type, options = {}
-      @name = name
-      @type = type
+    def initialize name, index, options = {}
+      @name  = name
+      @index = index
       
       @source        = options[:source]
       
@@ -23,8 +23,8 @@ module Indexing
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, type, similarity, Cacher::Partial::None.new, weights)
-      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, type, Cacher::Similarity::None.new, partial, weights)
+      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, index, similarity, Cacher::Partial::None.new, weights)
+      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, index, Cacher::Similarity::None.new, partial, weights)
       
       # TODO Move to Query.
       #
@@ -37,13 +37,13 @@ module Indexing
     # TODO Move to initializer?
     #
     def identifier
-      @identifier ||= "#{type.name} #{name}"
+      @identifier ||= "#{index.name} #{name}"
     end
     
-    # Note: Most of the time the source of the type is used.
+    # Note: Most of the time the source of the index is used.
     #
     def source
-      @source || type.source
+      @source || index.source
     end
     
     # TODO Spec.
@@ -101,7 +101,7 @@ module Indexing
       partial.dump
     end
     
-    # TODO Partially move to type. Duplicate Code in indexers/field.rb.
+    # TODO Partially move to index. Duplicate Code in indexers/field.rb.
     #
     # TODO Use the Files object.
     #
@@ -109,7 +109,7 @@ module Indexing
       File.join PICKY_ROOT, 'index'
     end
     def cache_directory
-      File.join search_index_root, PICKY_ENVIRONMENT, type.name.to_s
+      File.join search_index_root, PICKY_ENVIRONMENT, index.name.to_s
     end
     def search_index_file_name
       File.join cache_directory, "prepared_#{name}_index.txt"
@@ -123,7 +123,7 @@ module Indexing
       FileUtils.mkdir_p cache_directory
     end
     def indexer
-      @indexer || @indexer = @indexer_class.new(type, self)
+      @indexer || @indexer = @indexer_class.new(index, self)
     end
     def virtual?
       !!virtual

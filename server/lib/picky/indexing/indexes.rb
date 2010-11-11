@@ -1,8 +1,8 @@
 module Indexing
   
-  class Types
+  class Indexes
     
-    attr_reader :types
+    attr_reader :indexes
     
     each_delegate :take_snapshot,
                   :generate_caches,
@@ -11,7 +11,7 @@ module Indexing
                   :check_caches,
                   :clear_caches,
                   :create_directory_structure,
-                  :to => :types
+                  :to => :indexes
     
     def initialize
       clear
@@ -20,13 +20,13 @@ module Indexing
     # TODO Spec.
     #
     def clear
-      @types = []
+      @indexes = []
     end
     
     # TODO Spec. Superclass?
     #
-    def register type
-      self.types << type
+    def register index
+      self.indexes << index
     end
     
     # Runs the indexers in parallel (index + cache).
@@ -39,9 +39,9 @@ module Indexing
       # Run in parallel.
       #
       timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, IN #{randomly ? 'RANDOM' : 'GIVEN'} ORDER."
-      Cores.forked self.types, { randomly: randomly } do |type|
-        type.index
-        type.cache
+      Cores.forked self.indexes, { randomly: randomly } do |an_index|
+        index.index
+        index.cache
       end
       timed_exclaim "INDEXING FINISHED."
     end
@@ -51,36 +51,36 @@ module Indexing
     def index_for_tests
       take_snapshot
       
-      self.types.each do |type|
-        type.index
-        type.cache
+      self.indexes.each do |index|
+        index.index
+        index.cache
       end
     end
     
     # TODO Spec
     #
-    def generate_index_only type_name, category_name
-      found = find type_name, category_name
+    def generate_index_only index_name, category_name
+      found = find index_name, category_name
       found.index if found
     end
-    def generate_cache_only type_name, category_name
-      found = find type_name, category_name
+    def generate_cache_only index_name, category_name
+      found = find index_name, category_name
       found.generate_caches if found
     end
     
     # TODO Spec
     #
-    def find type_name, category_name
-      type_name     = type_name.to_sym
+    def find index_name, category_name
+      index_name     = index_name.to_sym
       
-      types.each do |type|
-        next unless type.name == type_name
+      indexes.each do |index|
+        next unless index.name == index_name
         
-        found = type.categories.find category_name
+        found = index.categories.find category_name
         return found if found
       end
       
-      raise %Q{Index "#{type_name}" not found. Possible indexes: "#{types.map(&:name).join('", "')}".}
+      raise %Q{Index "#{index_name}" not found. Possible indexes: "#{indexes.map(&:name).join('", "')}".}
     end
     
   end

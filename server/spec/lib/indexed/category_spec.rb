@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Index::Category do
+describe Indexed::Category do
 
   before(:each) do
     @type       = stub :type, :name => :some_type
     @partial    = stub :partial
     @weights    = stub :weights
     @similarity = stub :similarity
-    @category   = Index::Category.new :some_name, @type, :partial    => @partial,
-                                                         :weights    => @weights,
-                                                         :similarity => @similarity,
-                                                         :qualifiers => [:q, :qualifier]
+    @category   = Indexed::Category.new :some_name, @type, :partial    => @partial,
+                                                           :weights    => @weights,
+                                                           :similarity => @similarity,
+                                                           :qualifiers => [:q, :qualifier]
     
     @exact   = stub :exact, :dump => nil
     @category.stub! :exact => @exact

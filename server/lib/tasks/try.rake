@@ -3,10 +3,10 @@
 namespace :try do
   
   # desc "Try how a given word would be tokenized when indexing (type:field optional)."
-  task :index, [:text, :type_and_field] => :application do |_, options|
-    text, type_and_field = options.text, options.type_and_field
+  task :index, [:text, :index_and_field] => :application do |_, options|
+    text, index_and_field = options.text, options.index_and_field
     
-    tokenizer = type_and_field ? Indexes.find(*type_and_field.split(':')).tokenizer : Tokenizers::Index.default
+    tokenizer = index_and_field ? Indexes.find(*index_and_field.split(':')).tokenizer : Tokenizers::Index.default
     
     puts "\"#{text}\" is index tokenized as #{tokenizer.tokenize(text.dup).to_a}"
   end
@@ -19,10 +19,10 @@ namespace :try do
   end
   
   # desc "Try the given text with both the index and the query (type:field optional)."
-  task :both, [:text, :type_and_field] => :application do |_, options|
-    text, type_and_field = options.text, options.type_and_field
+  task :both, [:text, :index_and_field] => :application do |_, options|
+    text, index_and_field = options.text, options.index_and_field
     
-    Rake::Task[:"try:index"].invoke text, type_and_field
+    Rake::Task[:"try:index"].invoke text, index_and_field
     Rake::Task[:"try:query"].invoke text
   end
   

@@ -1,11 +1,11 @@
-module Index
+module Indexed
   
-  class Types
+  class Indexes
     
-    attr_reader :types, :type_mapping
+    attr_reader :indexes, :index_mapping
     
     each_delegate :load_from_cache,
-                  :to => :types
+                  :to => :indexes
     
     def initialize
       clear
@@ -14,8 +14,8 @@ module Index
     # TODO Spec.
     #
     def clear
-      @types        = []
-      @type_mapping = {}
+      @indexes       = []
+      @index_mapping = {}
     end
     
     # TODO Spec.
@@ -26,14 +26,14 @@ module Index
     
     # TODO Spec
     #
-    def register type
-      self.types << type
-      self.type_mapping[type.name] = type
+    def register index
+      self.indexes << index
+      self.index_mapping[index.name] = index
     end
     def [] name
       name = name.to_sym
       
-      type_mapping[name]
+      index_mapping[name]
     end
     
   end

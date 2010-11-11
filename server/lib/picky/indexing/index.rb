@@ -1,6 +1,6 @@
 module Indexing
   
-  class Type
+  class Index
     
     attr_reader :name, :source, :categories, :after_indexing
     

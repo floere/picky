@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Index::Categories do
+describe Indexed::Categories do
   
   context 'with option ignore_unassigned_tokens' do
     context 'ignore_unassigned_tokens true' do
       before(:each) do
-        @categories = Index::Categories.new ignore_unassigned_tokens: true
+        @categories = Indexed::Categories.new ignore_unassigned_tokens: true
       end
       it 'should return the right value' do
         @categories.ignore_unassigned_tokens.should == true
@@ -13,7 +13,7 @@ describe Index::Categories do
     end
     context 'ignore_unassigned_tokens false' do
       before(:each) do
-        @categories = Index::Categories.new ignore_unassigned_tokens: false
+        @categories = Indexed::Categories.new ignore_unassigned_tokens: false
       end
       it 'should return the right value' do
         @categories.ignore_unassigned_tokens.should == false
@@ -25,10 +25,10 @@ describe Index::Categories do
     before(:each) do
       @type1 = stub :type1, :name => :some_type
       
-      @categories = Index::Categories.new
-      @categories << Index::Category.new(:category1, @type1)
-      @categories << Index::Category.new(:category2, @type1)
-      @categories << Index::Category.new(:category3, @type1)
+      @categories = Indexed::Categories.new
+      @categories << Indexed::Category.new(:category1, @type1)
+      @categories << Indexed::Category.new(:category2, @type1)
+      @categories << Indexed::Category.new(:category3, @type1)
     end
     describe "similar_possible_for" do
       before(:each) do
@@ -44,11 +44,11 @@ describe Index::Categories do
     before(:each) do
       @type1 = stub :type1, :name => :some_type
       
-      @category1 = Index::Category.new :category1, @type1
-      @category2 = Index::Category.new :category2, @type1
-      @category3 = Index::Category.new :category3, @type1
+      @category1 = Indexed::Category.new :category1, @type1
+      @category2 = Indexed::Category.new :category2, @type1
+      @category3 = Indexed::Category.new :category3, @type1
       
-      @categories = Index::Categories.new
+      @categories = Indexed::Categories.new
       @categories << @category1
       @categories << @category2
       @categories << @category3

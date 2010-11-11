@@ -6,9 +6,7 @@ module Indexing
   # It does all menial tasks that have nothing to do
   # with the actual index running etc.
   #
-  # TODO Superclass?
-  #
-  class Bundle < ::Bundle
+  class Bundle < Index::Bundle
     
     attr_accessor :partial_strategy, :weights_strategy
     attr_reader   :files

@@ -1,60 +1,53 @@
-# encoding: utf-8
-#
 module Index
-
-  # This is the _actual_ index.
+  # A Bundle is a number of indexes
+  # per [index, category] combination.
   #
-  # Handles exact/partial index, weights index, and similarity index.
+  # At most, there are three indexes:
+  # * *core* index (always used)
+  # * *weights* index (always used)
+  # * *similarity* index (used with similarity)
+  # 
+  # In Picky, indexing is separated from the index
+  # handling itself through a parallel structure.
   #
-  # Delegates file handling and checking to a Index::Files object.
+  # Both use methods provided by this base class, but
+  # have very different goals:
   #
-  class Bundle < ::Bundle
+  # * *Indexing*::*Bundle* is just concerned with creating index files
+  #   and providing helper functions to e.g. check the indexes.
+  #
+  # * *Index*::*Bundle* is concerned with loading these index files into
+  #   memory and looking up search data as fast as possible.
+  #
+  class Bundle
     
-    # Get the ids for the given symbol.
-    #
-    def ids sym
-      @index[sym] || []
-    end
-    # Get a weight for the given symbol.
-    #
-    def weight sym
-      @weights[sym]
+    attr_reader   :identifier, :files
+    attr_accessor :index, :weights, :similarity, :similarity_strategy
+    
+    delegate :[], :[]=, :clear, :to => :index
+    
+    def initialize name, category, index, similarity_strategy
+      @identifier = "#{index.name}: #{name} #{category.name}"
+      # TODO inject files.
+      #
+      # TODO Move Files somewhere. Shared?
+      #
+      # Files and the identifier are parametrized, the rest is not!
+      #
+      @files = Files.new name, category.name, index.name
+      
+      @index      = {}
+      @weights    = {}
+      @similarity = {}
+      
+      @similarity_strategy = similarity_strategy
     end
     
-    # Load the data from the db.
+    # Get a list of similar texts.
     #
-    def load_from_index_file
-      load_from_index_generation_message
-      clear
-      retrieve
-    end
-    # Notifies the user that the index is being loaded.
-    #
-    def load_from_index_generation_message
-      timed_exclaim "LOAD INDEX #{identifier}."
-    end
-    
-    # Loads all indexes.
-    #
-    def load
-      load_index
-      load_similarity
-      load_weights
-    end
-    # Loads the core index.
-    #
-    def load_index
-      self.index = files.load_index
-    end
-    # Loads the weights index.
-    #
-    def load_weights
-      self.weights = files.load_weights
-    end
-    # Loads the similarity index.
-    #
-    def load_similarity
-      self.similarity = files.load_similarity
+    def similar text
+      code = similarity_strategy.encoded text
+      code && @similarity[code] || []
     end
     
   end

@@ -1,4 +1,4 @@
-module Index
+module Indexed
   
   # An index category holds a exact and a partial index for a given field.
   #
@@ -7,18 +7,18 @@ module Index
   #
   class Category
     
-    attr_reader :name, :type, :exact, :partial
+    attr_reader :name, :index, :exact, :partial
     
     #
     #
-    def initialize name, type, options = {}
-      @name = name
-      @type = type
+    def initialize name, index, options = {}
+      @name  = name
+      @index = index
       
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   self, type, similarity)
-      @partial = options[:partial_index_bundle] || Bundle.new(:partial, self, type, similarity)
+      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   self, index, similarity)
+      @partial = options[:partial_index_bundle] || Bundle.new(:partial, self, index, similarity)
       
       @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
       @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
@@ -46,7 +46,7 @@ module Index
     # TODO Move to initializer?
     #
     def identifier
-      @identifier ||= "#{type.name} #{name}"
+      @identifier ||= "#{index.name} #{name}"
     end
     
     # Gets the weight for this token's text.

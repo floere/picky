@@ -7,9 +7,9 @@ module Indexers
   #
   class Base
     
-    def initialize type, category
-      @type       = type
-      @category   = category
+    def initialize index, category
+      @index    = index
+      @category = category
     end
     
     # Convenience method for getting the right Tokenizer.
@@ -55,7 +55,7 @@ module Indexers
       # TODO Move open to Index::File.
       #
       # @category.prepared_index do |file|
-      #   source.harvest(@type, @category) do |indexed_id, text|
+      #   source.harvest(@index, @category) do |indexed_id, text|
       #     tokenizer.tokenize(text).each do |token_text|
       #       next unless token_text
       #       file.buffer indexed_id << comma << token_text << newline
@@ -66,7 +66,7 @@ module Indexers
       #
       File.open(search_index_file_name, 'w:binary') do |file|
         result = []
-        source.harvest(@type, @category) do |indexed_id, text|
+        source.harvest(@index, @category) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
             next unless token_text
             result << indexed_id << comma << token_text << newline
@@ -78,7 +78,7 @@ module Indexers
     end
     
     def indexing_message
-      timed_exclaim "INDEX #{@type.name} #{@category.name}" #:#{@category.indexed_as}." # TODO field.identifier
+      timed_exclaim "INDEX #{@index.name} #{@category.name}" #:#{@category.from}." # TODO field.identifier
     end
     
   end

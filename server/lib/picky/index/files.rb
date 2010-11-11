@@ -2,13 +2,13 @@ module Index
   
   class Files
     
-    attr_reader :bundle_name, :category_name, :type_name
+    attr_reader :bundle_name, :category_name, :index_name
     attr_reader :prepared, :index, :similarity, :weights
     
-    def initialize bundle_name, category_name, type_name
+    def initialize bundle_name, category_name, index_name
       @bundle_name   = bundle_name
       @category_name = category_name
-      @type_name     = type_name
+      @index_name    = index_name
       
       # Note: We marshal the similarity, as the
       #       Yajl json lib cannot load symbolized
@@ -43,7 +43,7 @@ module Index
     # TODO Move to config. Duplicate Code in field.rb.
     #
     def cache_directory
-      "#{search_index_root}/#{PICKY_ENVIRONMENT}/#{type_name}"
+      "#{search_index_root}/#{PICKY_ENVIRONMENT}/#{index_name}"
     end
     def retrieve &block
       prepared.retrieve &block

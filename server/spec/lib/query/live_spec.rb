@@ -3,8 +3,6 @@ require 'spec_helper'
 describe Query::Live do
 
   before(:each) do
-    # @category1  = Index::Category.new
-    # @type_index = Index::Type.new :some_name, :some_result_type, @category1
     @type  = stub :type
     @index = stub :index, :index => @type
   end

@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Index::Type do
+describe Indexed::Index do
   
   context "with categories" do
     before(:each) do
       @categories = stub :categories
       
-      @index = Index::Type.new :some_name
+      @index = Indexed::Index.new :some_name
       @index.add_category :some_category_name1
       @index.add_category :some_category_name2
       
@@ -31,7 +31,7 @@ describe Index::Type do
   
   context "no categories" do
     it "works" do
-      Index::Type.new :some_name
+      Indexed::Index.new :some_name
     end
   end
   

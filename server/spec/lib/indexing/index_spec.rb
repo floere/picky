@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexing::Type do
+describe Indexing::Index do
   
   context "with categories" do
     before(:each) do
@@ -8,7 +8,7 @@ describe Indexing::Type do
       
       @categories = stub :categories
       
-      @index = Indexing::Type.new :some_name, @source
+      @index = Indexing::Index.new :some_name, @source
       @index.add_category :some_category_name1
       @index.add_category :some_category_name2
       
@@ -25,7 +25,7 @@ describe Indexing::Type do
   
   context "no categories" do
     it "works" do
-      Indexing::Type.new :some_name, @source
+      Indexing::Index.new :some_name, @source
     end
   end
   

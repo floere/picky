@@ -39,7 +39,7 @@ describe Application do
                            normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
                            
                            substitutes_characters_with: CharacterSubstitution::European.new,
-                           maximum_tokens:     5
+                           maximum_tokens: 5
           
           books_index = index :books, Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
           books_index.category :title, similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.

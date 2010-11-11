@@ -167,27 +167,27 @@ module Loader
     load_relative 'index/file/json'
     load_relative 'index/files'
     
-    # Index types.
+    # Indexing and Indexed things.
     #
-    load_relative 'bundle'
+    load_relative 'index/bundle'
     
     load_relative 'indexing/bundle'
     load_relative 'indexing/category'
     load_relative 'indexing/categories'
-    load_relative 'indexing/type'
-    load_relative 'indexing/types'
+    load_relative 'indexing/index'
+    load_relative 'indexing/indexes'
     
-    load_relative 'index/bundle'
-    load_relative 'index/category'
-    load_relative 'index/categories'
-    load_relative 'index/type'
-    load_relative 'index/types'
+    load_relative 'indexed/bundle'
+    load_relative 'indexed/category'
+    load_relative 'indexed/categories'
+    load_relative 'indexed/index'
+    load_relative 'indexed/indexes'
     
-    load_relative 'types'
+    load_relative 'indexes_api'
     load_relative 'alias_instances'
-    load_relative 'type'
+    load_relative 'index_api'
     
-    load_relative 'index/wrappers/exact_first'
+    load_relative 'indexed/wrappers/exact_first'
     
     # Tokens.
     #

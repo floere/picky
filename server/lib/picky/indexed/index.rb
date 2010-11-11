@@ -1,10 +1,8 @@
-module Index
+module Indexed
   
-  # This class is for multiple types.
   #
-  # For example, you could have types books, isbn.
   #
-  class Type
+  class Index
     
     attr_reader :name, :result_type, :combinator, :categories
     

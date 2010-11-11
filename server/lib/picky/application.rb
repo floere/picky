@@ -40,7 +40,7 @@ class Application
     # "API".
     #
     def index *args
-      ::Type.new *args
+      ::IndexAPI.new *args
     end
     
     # Finalize the subclass as soon as it

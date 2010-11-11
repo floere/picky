@@ -1,4 +1,4 @@
-module Index
+module Indexed
   
   class Categories
     

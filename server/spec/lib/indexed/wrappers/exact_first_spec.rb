@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Index::Wrappers::ExactFirst do
+describe Indexed::Wrappers::ExactFirst do
   
   before(:each) do
     @exact    = stub :exact
     @partial  = stub :partial
     @category = stub :category, :exact => @exact, :partial => @partial
     
-    @wrapper  = Index::Wrappers::ExactFirst.new @category
+    @wrapper  = Indexed::Wrappers::ExactFirst.new @category
   end
   
   describe "self.wrap" do
@@ -23,17 +23,17 @@ describe Index::Wrappers::ExactFirst do
       #   type.categories.should be_kind_of(Index::Wrappers::ExactFirst)
       # end
       it "returns the type" do
-        type = Index::Type.new :type_name
+        type = Indexed::Index.new :type_name
         type.add_category :some_category
         
-        Index::Wrappers::ExactFirst.wrap(type).should == type
+        Indexed::Wrappers::ExactFirst.wrap(type).should == type
       end
     end
     context "category" do
       it "wraps each category" do
         category = stub :category, :exact => :exact, :partial => :partial
         
-        Index::Wrappers::ExactFirst.wrap(category).should be_kind_of(Index::Wrappers::ExactFirst)
+        Indexed::Wrappers::ExactFirst.wrap(category).should be_kind_of(Indexed::Wrappers::ExactFirst)
       end
     end
   end
