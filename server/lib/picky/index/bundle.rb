@@ -33,21 +33,6 @@ module Index
     def load_from_index_generation_message
       timed_exclaim "LOAD INDEX #{identifier}."
     end
-    # # Retrieves the data into the index.
-    # #
-    # # This is in preparation for
-    # #
-    # def retrieve
-    #   files.retrieve do |id, token|
-    #     initialize_index_for token
-    #     index[token] << id
-    #   end
-    # end
-    # # Sets up an index fir the given token.
-    # #
-    # def initialize_index_for token
-    #   index[token] ||= []
-    # end
     
     # Loads all indexes into this category.
     #

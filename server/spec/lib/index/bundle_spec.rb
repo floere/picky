@@ -15,41 +15,6 @@ describe Index::Bundle do
       @index.identifier.should == 'some_type: some_name some_category'
     end
   end
-  
-  describe 'initialize_index_for' do
-    context 'token not yet assigned' do
-      before(:each) do
-        @index.stub! :index => {}
-      end
-      it 'should assign it an empty array' do
-        @index.initialize_index_for :some_token
-
-        @index.index[:some_token].should == []
-      end
-    end
-    context 'token already assigned' do
-      before(:each) do
-        @index.stub! :index => { :some_token => :already_assigned }
-      end
-      it 'should not assign it anymore' do
-        @index.initialize_index_for :some_token
-
-        @index.index[:some_token].should == :already_assigned
-      end
-    end
-  end
-  
-  # TODO
-  #
-  # describe 'retrieve' do
-  #   it 'should call the other methods correctly' do
-  #     results = stub :results
-  #     @index.stub! :execute_query => results
-  #     @index.should_receive(:extract).once.with results
-  #     
-  #     @index.retrieve
-  #   end
-  # end
 
   describe 'load_from_index_file' do
     it 'should call two methods in order' do
