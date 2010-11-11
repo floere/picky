@@ -4,8 +4,12 @@ module Rack
   #
   # Use as follows in e.g. your rackup File:
   #
-  # Rack::Harakiri.after = 50
-  # use Rack::Harakiri
+  #   Rack::Harakiri.after = 100
+  #   use Rack::Harakiri
+  #
+  # Then the Unicorn will commit suicide after 100 requests (50 is the default).
+  #
+  # The Master Unicorn process forks a new child Unicorn to replace the old one.
   #
   class Harakiri
     
@@ -21,6 +25,9 @@ module Rack
       @quit_after_requests = self.class.after || 50
     end
     
+    # Harakiri is a middleware, so it passes the call on after checking if it
+    # is time to honorably retire.
+    #
     def call env
       harakiri
       @app.call env
