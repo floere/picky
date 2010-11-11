@@ -34,21 +34,27 @@ module Index
       timed_exclaim "LOAD INDEX #{identifier}."
     end
     
-    # Loads all indexes into this category.
+    # Loads all indexes.
     #
     def load
       load_index
       load_similarity
       load_weights
     end
+    # Loads the core index.
+    #
     def load_index
       self.index = files.load_index
     end
-    def load_similarity
-      self.similarity = files.load_similarity
-    end
+    # Loads the weights index.
+    #
     def load_weights
       self.weights = files.load_weights
+    end
+    # Loads the similarity index.
+    #
+    def load_similarity
+      self.similarity = files.load_similarity
     end
     
   end
