@@ -132,7 +132,7 @@ module Loader
     #
     load_relative 'cacher/partial/strategy'
     load_relative 'cacher/partial/none'
-    load_relative 'cacher/partial/subtoken'
+    load_relative 'cacher/partial/substring'
     load_relative 'cacher/partial/default'
 
     # Weight index generation strategies.

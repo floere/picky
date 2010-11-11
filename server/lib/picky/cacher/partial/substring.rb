@@ -2,7 +2,7 @@ module Cacher
 
   module Partial
     
-    # Generates the right subtokens for use in the subtoken strategy.
+    # Generates the right substrings for use in the substring strategy.
     #
     class SubstringGenerator
       

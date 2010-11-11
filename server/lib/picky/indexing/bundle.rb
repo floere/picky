@@ -176,20 +176,28 @@ module Indexing
     def raise_unless_similarity_ok
       raise_cache_missing :similarity unless files.similarity_cache_ok?
     end
+    
     # TODO Spec on down.
+    #
+    
+    # Warns the user if the core or weights indexes are small.
     #
     def warn_if_index_small
       warn_cache_small :index   if files.index_cache_small?
       warn_cache_small :weights if files.weights_cache_small?
     end
+    # Alerts the user if the core or weights indexes are not there.
+    #
     def raise_unless_index_ok
       raise_cache_missing :index   unless files.index_cache_ok?
       raise_cache_missing :weights unless files.weights_cache_ok?
     end
+    # Outputs a warning for the given cache.
+    #
     def warn_cache_small what
       puts "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
     end
-    # Raises an appropriate error message.
+    # Raises an appropriate error message for the given cache.
     #
     def raise_cache_missing what
       raise "#{what} cache for #{identifier} missing."
