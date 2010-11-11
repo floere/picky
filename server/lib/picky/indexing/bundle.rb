@@ -63,7 +63,11 @@ module Indexing
     def load_from_index_generation_message
       timed_exclaim "LOAD INDEX #{identifier}."
     end
-    # Retrieves the data into the index.
+    # Retrieves the prepared index data into the index.
+    #
+    # This is in preparation for generating
+    # derived indexes (like weights, similarity)
+    # and later dumping the optimized index.
     #
     def retrieve
       files.retrieve do |id, token|
@@ -71,6 +75,8 @@ module Indexing
         index[token] << id
       end
     end
+    # Sets up a piece of the index for the given token.
+    #
     def initialize_index_for token
       index[token] ||= []
     end
@@ -81,12 +87,14 @@ module Indexing
     #
     
     # Generates a new index (writes its index) using the
-    # given partial caching strategy.
+    # partial caching strategy of this bundle.
     #
     def generate_partial
       generator = Cacher::PartialGenerator.new self.index
       self.index = generator.generate self.partial_strategy
     end
+    # Generate a partial index from the given exact index.
+    #
     def generate_partial_from exact_index
       timed_exclaim "PARTIAL GENERATE #{identifier}."
       self.index = exact_index
@@ -108,24 +116,30 @@ module Indexing
       self.weights = generator.generate self.weights_strategy
     end
 
-    # Saves the index in a dump file.
+    # Saves the indexes in a dump file.
     #
     def dump
       dump_index
       dump_similarity
       dump_weights
     end
+    # Dumps the core index.
+    #
     def dump_index
       timed_exclaim "DUMP INDEX #{identifier}."
       files.dump_index index
     end
-    def dump_similarity
-      timed_exclaim "DUMP SIMILARITY #{identifier}."
-      files.dump_similarity similarity
-    end
+    # Dumps the weights index.
+    #
     def dump_weights
       timed_exclaim "DUMP WEIGHTS #{identifier}."
       files.dump_weights weights
+    end
+    # Dumps the similarity index.
+    #
+    def dump_similarity
+      timed_exclaim "DUMP SIMILARITY #{identifier}."
+      files.dump_similarity similarity
     end
     
     # Alerts the user if an index is missing.
@@ -134,21 +148,31 @@ module Indexing
       raise_unless_index_exists
       raise_unless_similarity_exists
     end
+    # Alerts the user if one of the necessary indexes
+    # (core, weights) is missing.
+    #
     def raise_unless_index_exists
       if partial_strategy.saved?
         warn_if_index_small
         raise_unless_index_ok
       end
     end
+    # Alerts the user if the similarity
+    # index is missing (given that it's used).
+    #
     def raise_unless_similarity_exists
       if similarity_strategy.saved?
         warn_if_similarity_small
         raise_unless_similarity_ok
       end
     end
+    # Warns the user if the similarity index is small.
+    #
     def warn_if_similarity_small
       warn_cache_small :similarity if files.similarity_cache_small?
     end
+    # Alerts the user if the similarity index is not there.
+    #
     def raise_unless_similarity_ok
       raise_cache_missing :similarity unless files.similarity_cache_ok?
     end
