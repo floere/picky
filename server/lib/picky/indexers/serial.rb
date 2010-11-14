@@ -8,13 +8,13 @@ module Indexers
     
     attr_reader :source, :tokenizer
     
-    def initialize index, , source, tokenizer
+    def initialize configuration, source, tokenizer
       @configuration = configuration
       @source        = source || raise_no_source
       @tokenizer     = tokenizer
     end
     
-    delegate :prepared_index_file_name, :index_name, :category_name, :to => :@configuration
+    delegate :prepared_index_file_name, :to => :@configuration
     
     # Raise a no source exception.
     #
@@ -46,9 +46,9 @@ module Indexers
       #   end
       # end
       #
-      File.open(prepared_index_file_name, 'w:binary') do |file|
+      @configuration.prepared_index_file do |file|
         result = []
-        source.harvest(index_name, category_name) do |indexed_id, text|
+        source.harvest(@configuration.index, @configuration.category) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
             next unless token_text
             result << indexed_id << comma << token_text << newline
