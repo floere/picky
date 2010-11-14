@@ -21,21 +21,21 @@ class BookSearch < Application
                      substitutes_characters_with:        CharacterSubstitution::European.new
     
     main_index = index :main, Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml')
-    main_index.category :title,
-                        qualifiers: [:t, :title, :titre],
-                        partial:    Partial::Substring.new(:from => 1),
-                        similarity: Similarity::Phonetic.new(2)
-    main_index.category :author,
-                        qualifiers: [:a, :author, :auteur],
-                        partial:    Partial::Substring.new(:from => -2)
-    main_index.category :year,
-                        qualifiers: [:y, :year, :annee]
+    main_index.define_category :title,
+                               qualifiers: [:t, :title, :titre],
+                               partial:    Partial::Substring.new(:from => 1),
+                               similarity: Similarity::Phonetic.new(2)
+    main_index.define_category :author,
+                               qualifiers: [:a, :author, :auteur],
+                               partial:    Partial::Substring.new(:from => -2)
+    main_index.define_category :year,
+                               qualifiers: [:y, :year, :annee]
     
     isbn_index = index :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
-    isbn_index.category :isbn, :qualifiers => [:i, :isbn]
+    isbn_index.define_category :isbn, :qualifiers => [:i, :isbn]
     
     geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, :file => 'data/locations.csv')
-    geo_index.category :location
+    geo_index.define_category :location
     # geo_index.location :north, grid: 2
     # geo_index.location :east,  grid: 2
     # geo_index.location :north, grid: 2 # TODO partial does not make sense!
@@ -44,17 +44,17 @@ class BookSearch < Application
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
     csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'))
-                       .category(:title,
+                       .define_category(:title,
                                  qualifiers: [:t, :title, :titre],
                                  partial:    Partial::Substring.new(:from => 1),
                                  similarity: Similarity::Phonetic.new(2))
-                       .category(:author,
+                       .define_category(:author,
                                  qualifiers: [:a, :author, :auteur],
                                  partial:    Partial::Substring.new(:from => -2))
-                       .category(:year,
+                       .define_category(:year,
                                  qualifiers: [:y, :year, :annee])
-                       .category(:publisher, :qualifiers => [:p, :publisher])
-                       .category(:subjects, :qualifiers => [:s, :subject])
+                       .define_category(:publisher, :qualifiers => [:p, :publisher])
+                       .define_category(:subjects, :qualifiers => [:s, :subject])
     
     options = {
       :weights => {

@@ -25,7 +25,7 @@ class IndexAPI
   #
   # Rename?
   #
-  def category category_name, options = {}
+  def define_category category_name, options = {}
     category_name = category_name.to_sym
     
     indexing.add_category category_name, options
@@ -33,6 +33,8 @@ class IndexAPI
     
     self
   end
+  alias category  define_category
+  alias add_field define_category
   # def location name, options = {}
   #   grid      = options[:grid]
   #   precision = options[:precision]
