@@ -41,6 +41,13 @@ module Index
         end
       end
       
+      #
+      #
+      def open_for_indexing &block
+        ::File.open cache_path, 'w:binary', &block
+      end
+      
+      
     end
     
   end

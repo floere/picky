@@ -30,7 +30,11 @@ module Configuration
     # Was: search_index_file_name
     #
     def prepared_index_file_name
-      @prepared_index_file_name ||= "#{index_directory}/prepared_#{category_name}_index.txt"
+      @prepared_index_file_name ||= "#{index_directory}/prepared_#{category_name}_index"
+    end
+    def prepared_index_file &block
+      @prepared_index_file ||= ::Index::File::Text.new prepared_index_file_name
+      @prepared_index_file.open_for_indexing &block
     end
     
     # def file_name
