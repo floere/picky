@@ -14,8 +14,6 @@ module Indexers
       @tokenizer     = tokenizer
     end
     
-    delegate :prepared_index_file_name, :to => :@configuration
-    
     # Raise a no source exception.
     #
     def raise_no_source

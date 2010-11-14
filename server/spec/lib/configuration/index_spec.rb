@@ -61,12 +61,12 @@ describe 'Configuration::Index' do
       @config.index_directory.should == 'some/search/root/index/test/some_index'
     end
   end
-  describe "prepared_index_file_name" do
+  describe "prepared_index_path" do
     it "caches" do
-      @config.prepared_index_file_name.should equal(@config.prepared_index_file_name)
+      @config.prepared_index_path.should equal(@config.prepared_index_path)
     end
     it "returns the right thing" do
-      @config.prepared_index_file_name.should == 'some/search/root/index/test/some_index/prepared_some_category_index.txt'
+      @config.prepared_index_path.should == 'some/search/root/index/test/some_index/prepared_some_category_index'
     end
   end
   describe "prepare_index_directory" do

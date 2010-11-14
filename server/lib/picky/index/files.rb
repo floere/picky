@@ -15,7 +15,7 @@ module Index
       #       Yajl json lib cannot load symbolized
       #       values, just keys.
       #
-      @prepared   = File::Text.new    configuration.prepared_index_file_name # "#{cache_directory}/prepared_#{category_name}_index"
+      @prepared   = File::Text.new    configuration.prepared_index_path
       @index      = File::JSON.new    configuration.index_path(bundle_name, :index)
       @similarity = File::Marshal.new configuration.index_path(bundle_name, :similarity)
       @weights    = File::JSON.new    configuration.index_path(bundle_name, :weights)

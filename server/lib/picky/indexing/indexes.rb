@@ -51,7 +51,7 @@ module Indexing
     def index_for_tests
       take_snapshot
       
-      self.indexes.each do |index|
+      self.indexes.each do |an_index|
         an_index.index
         an_index.cache
       end

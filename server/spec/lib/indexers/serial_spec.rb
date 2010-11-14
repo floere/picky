@@ -35,12 +35,6 @@ describe Indexers::Serial do
     end
   end
   
-  describe 'prepared_index_file_name' do
-    it 'should return a specific name' do
-      @indexer.prepared_index_file_name.should == "some/search/root/index/test/some_index/prepared_some_category_index.txt"
-    end
-  end
-  
   describe "index" do
     it "should execute! the indexer" do
       @indexer.should_receive(:process).once.with
