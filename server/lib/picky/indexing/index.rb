@@ -31,8 +31,11 @@ module Indexing
     # TODO Spec. Doc.
     #
     def add_category category_name, options = {}
-      options = options.merge default_category_options
-      categories << Category.new(category_name, self, options)
+      options = default_category_options.merge options
+      
+      new_category = Category.new category_name, self, options
+      categories << new_category
+      new_category
     end
     
     # By default, the category uses the index's source.

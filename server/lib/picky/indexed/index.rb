@@ -21,7 +21,9 @@ module Indexed
     # TODO Spec. Doc.
     #
     def add_category category_name, options = {}
-      categories << Category.new(category_name, self, options)
+      new_category = Category.new category_name, self, options
+      categories << new_category
+      new_category
     end
     
     #
