@@ -5,7 +5,7 @@ end
 
 desc "Try the given text in the indexer/query (index:field optional)."
 task :try, [:text, :index_and_field] => :application do |_, options|
-  text, type_and_field = options.text, options.index_and_field
+  text, index_and_field = options.text, options.index_and_field
   
   Rake::Task[:'try:both'].invoke text, index_and_field
 end
