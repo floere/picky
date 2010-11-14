@@ -40,8 +40,8 @@ module Indexing
       #
       timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, IN #{randomly ? 'RANDOM' : 'GIVEN'} ORDER."
       Cores.forked self.indexes, { randomly: randomly } do |an_index|
-        index.index
-        index.cache
+        an_index.index
+        an_index.cache
       end
       timed_exclaim "INDEXING FINISHED."
     end
@@ -52,8 +52,8 @@ module Indexing
       take_snapshot
       
       self.indexes.each do |index|
-        index.index
-        index.cache
+        an_index.index
+        an_index.cache
       end
     end
     
