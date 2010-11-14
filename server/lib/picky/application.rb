@@ -11,14 +11,14 @@ class Application
     # is used for indexing by default.
     # 
     def default_indexing options = {}
-      Tokenizers::Index.default ||= Tokenizers::Index.new(options)
+      Tokenizers::Index.default = Tokenizers::Index.new(options)
     end
     
     # Returns a configured tokenizer that
     # is used for querying by default.
     # 
     def default_querying options = {}
-      Tokenizers::Query.default ||= Tokenizers::Query.new(options)
+      Tokenizers::Query.default = Tokenizers::Query.new(options)
     end
     
     # Returns a new index frontend for configuring the index.
