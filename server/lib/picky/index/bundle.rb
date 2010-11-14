@@ -26,15 +26,9 @@ module Index
     
     delegate :[], :[]=, :clear, :to => :index
     
-    def initialize name, category, index, similarity_strategy
-      @identifier = "#{index.name}: #{name} #{category.name}"
-      # TODO inject files.
-      #
-      # TODO Move Files somewhere. Shared?
-      #
-      # Files and the identifier are parametrized, the rest is not!
-      #
-      @files = Files.new name, category.name, index.name
+    def initialize name, configuration, similarity_strategy
+      @identifier = "#{configuration.identifier} (#{name})"
+      @files      = Files.new name, configuration
       
       @index      = {}
       @weights    = {}

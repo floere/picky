@@ -19,7 +19,7 @@ module Query
     #
     def initialize *index_type_definitions
       options      = Hash === index_type_definitions.last ? index_type_definitions.pop : {}
-      indexes      = index_type_definitions.map &:index
+      indexes      = index_type_definitions.map &:indexed
       
       @weigher     = options[:weigher]   || Weigher.new(indexes)
       @tokenizer   = options[:tokenizer] || Tokenizers::Query.default

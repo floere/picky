@@ -7,32 +7,35 @@ module Indexed
   #
   class Category
     
-    attr_reader :name, :index, :exact, :partial
+    attr_reader :exact, :partial, :identifier, :name
     
     #
     #
     def initialize name, index, options = {}
-      @name  = name
-      @index = index
+      @name = name
+      
+      configuration = Configuration::Index.new index, self
+      
+      @identifier    = configuration.identifier
       
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   self, index, similarity)
-      @partial = options[:partial_index_bundle] || Bundle.new(:partial, self, index, similarity)
+      @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   configuration, similarity)
+      @partial = options[:partial_index_bundle] || Bundle.new(:partial, configuration, similarity)
       
       @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
       @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
       
       # Extract?
       #
-      qualifiers = generate_qualifiers_from options
-      Query::Qualifiers.add(name, qualifiers) if qualifiers
+      qualifiers = generate_qualifiers_from options || [name]
+      Query::Qualifiers.add(configuration.category_name, qualifiers) if qualifiers
     end
     
     # TODO Move to Index.
     #
     def generate_qualifiers_from options
-      options[:qualifiers] || options[:qualifier] && [options[:qualifier]] || [name]
+      options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
     end
     
     # Loads the index from cache.
@@ -41,12 +44,6 @@ module Indexed
       timed_exclaim "Loading index #{identifier}."
       exact.load
       partial.load
-    end
-    
-    # TODO Move to initializer?
-    #
-    def identifier
-      @identifier ||= "#{index.name} #{name}"
     end
     
     # Gets the weight for this token's text.

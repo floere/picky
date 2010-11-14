@@ -4,7 +4,7 @@ describe Query::Full do
 
   before(:each) do
     @type  = stub :type
-    @index = stub :index, :index => @type
+    @index = stub :index, :indexed => @type
   end
 
   describe 'result_type' do

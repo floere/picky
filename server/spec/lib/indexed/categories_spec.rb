@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Indexed::Categories do
-  
   context 'with option ignore_unassigned_tokens' do
     context 'ignore_unassigned_tokens true' do
       before(:each) do
@@ -23,12 +22,12 @@ describe Indexed::Categories do
   
   context "with real categories" do
     before(:each) do
-      @type1 = stub :type1, :name => :some_type
+      @index1 = stub :index1, :name => :some_index
       
       @categories = Indexed::Categories.new
-      @categories << Indexed::Category.new(:category1, @type1)
-      @categories << Indexed::Category.new(:category2, @type1)
-      @categories << Indexed::Category.new(:category3, @type1)
+      @categories << Indexed::Category.new(:category1, @index1)
+      @categories << Indexed::Category.new(:category2, @index1)
+      @categories << Indexed::Category.new(:category3, @index1)
     end
     describe "similar_possible_for" do
       before(:each) do
@@ -42,11 +41,11 @@ describe Indexed::Categories do
   
   context 'without options' do
     before(:each) do
-      @type1 = stub :type1, :name => :some_type
+      @index1 = stub :index1, :name => :some_index
       
-      @category1 = Indexed::Category.new :category1, @type1
-      @category2 = Indexed::Category.new :category2, @type1
-      @category3 = Indexed::Category.new :category3, @type1
+      @category1 = Indexed::Category.new :category1, @index1
+      @category2 = Indexed::Category.new :category2, @index1
+      @category3 = Indexed::Category.new :category3, @index1
       
       @categories = Indexed::Categories.new
       @categories << @category1

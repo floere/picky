@@ -20,8 +20,8 @@ module Indexed
     
     # TODO Spec. Doc.
     #
-    def add_category name, options = {}
-      categories << Category.new(name, self, options)
+    def add_category category_name, options = {}
+      categories << Category.new(category_name, self, options)
     end
     
     #

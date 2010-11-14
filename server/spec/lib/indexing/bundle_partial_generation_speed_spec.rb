@@ -4,9 +4,11 @@ describe Indexing::Bundle do
 
   before(:each) do
     @category         = stub :category, :name => :some_category
-    @type             = stub :type, :name => :some_type
+    @index            = stub :index, :name => :some_index
+    @configuration    = Configuration::Index.new @index, @category
+    
     @partial_strategy = Cacher::Partial::Substring.new :from => 1
-    @exact            = Indexing::Bundle.new :some_name, @category, @type, nil, @partial_strategy, nil
+    @exact            = Indexing::Bundle.new :some_name, @configuration, nil, @partial_strategy, nil
   end
 
   def generate_random_keys amount

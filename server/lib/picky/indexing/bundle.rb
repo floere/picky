@@ -13,8 +13,8 @@ module Indexing
     
     # Path is in which directory the cache is located.
     #
-    def initialize name, category, type, similarity_strategy, partial_strategy, weights_strategy
-      super name, category, type, similarity_strategy
+    def initialize name, configuration, similarity_strategy, partial_strategy, weights_strategy
+      super name, configuration, similarity_strategy
       
       @partial_strategy    = partial_strategy
       @weights_strategy    = weights_strategy

@@ -1,44 +1,23 @@
 # encoding: utf-8
 #
-# TODO Move into category.
-#
 module Indexers
-  # Indexer.
+  
+  # The indexer defines the control flow.
   #
-  # 1. Gets data from the original table and copies it into a "snapshot table".
-  # 3. Processes the data. I.e. takes the snapshot table data words and tokenizes etc. them. Writes the result into a txt file.
-  #
-  class Base
+  class Serial
     
-    # TODO Use combination [index:category] here!
-    #
-    def initialize configuration, source, tokenizer
+    attr_reader :source, :tokenizer
+    
+    def initialize index, , source, tokenizer
       @configuration = configuration
-      @source        = source
+      @source        = source || raise_no_source
       @tokenizer     = tokenizer
     end
     
-    # Convenience methods for user subclasses.
-    #
-    # TODO Duplicate code in Index::Files.
-    #
-    # TODO Rename to prepared_index_file_name.
-    #
-    def prepared_index_file_name
-      @configuration.prepared_index_file_name
-    end
+    delegate :prepared_index_file_name, :index_name, :category_name, :to => :@configuration
     
-    # Executes the specific strategy.
+    # Raise a no source exception.
     #
-    def index
-      process
-    end
-    
-    # Get the source where the data is taken from.
-    #
-    def source
-      @source || raise_no_source
-    end
     def raise_no_source
       raise NoSourceSpecifiedException.new("No source given for #{@configuration.identifier}.")
     end
@@ -47,13 +26,15 @@ module Indexers
     #
     # Note: Puts together the parts first in an array, then releasing the array from time to time by joining.
     #
+    def index
+      indexing_message
+      process
+    end
     def process
       comma   = ?,
       newline = ?\n
       
-      indexing_message
-      
-      # TODO Move open to Index::File.
+      # TODO Move open to config?
       #
       # @category.prepared_index do |file|
       #   source.harvest(@index, @category) do |indexed_id, text|
@@ -67,7 +48,7 @@ module Indexers
       #
       File.open(prepared_index_file_name, 'w:binary') do |file|
         result = []
-        source.harvest(@configuration.index_name, @configuration.category_name) do |indexed_id, text|
+        source.harvest(index_name, category_name) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
             next unless token_text
             result << indexed_id << comma << token_text << newline
@@ -77,7 +58,6 @@ module Indexers
         file.write result.join
       end
     end
-    
     def indexing_message
       timed_exclaim "INDEX #{@configuration.identifier}"
     end

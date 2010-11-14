@@ -32,7 +32,7 @@ module Indexed
         @partial = category.partial
       end
       
-      def self.wrap type_or_category
+      def self.wrap index_or_category
         if index_or_category.respond_to? :categories
           wrap_each_of index_or_category.categories
           index_or_category

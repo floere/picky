@@ -2,20 +2,18 @@ module Indexing
   
   class Category
     
-    attr_reader :name, :index, :indexed_as, :virtual, :tokenizer, :source, :exact, :partial
+    attr_reader :exact, :partial, :name, :configuration, :indexer
     
-    # TODO Dup the options?
-    #
     def initialize name, index, options = {}
-      @name  = name
-      @index = index
+      @name = name
       
-      @source        = options[:source]
+      # Now we have enough info to combine the index and the category.
+      #
+      @configuration = Configuration::Index.new index, self
       
-      @tokenizer     = options[:tokenizer] || Tokenizers::Index.default
-      @indexer_class = options[:indexer]   || Indexers::Default
-      @indexed_as    = options[:as]        || name
-      @virtual       = options[:virtual]   || false # TODO What is this again?
+      @source    = options[:source]
+      @tokenizer = options[:tokenizer] || Tokenizers::Index.default
+      @indexer = Indexers::Serial.new configuration, @source, @tokenizer #, :as => options[:as] # TODO option as.
       
       # TODO Push into Bundle.
       #
@@ -23,28 +21,11 @@ module Indexing
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   self, index, similarity, Cacher::Partial::None.new, weights)
-      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, self, index, Cacher::Similarity::None.new, partial, weights)
-      
-      # TODO Move to Query.
-      #
-      # @remove          = options[:remove]        || false
-      # @filter          = options[:filter]        || true
-      
-      @options = options # TODO Remove?
+      @exact   = options[:exact_indexing_bundle]   || Bundle.new(:exact,   configuration, similarity, Cacher::Partial::None.new, weights)
+      @partial = options[:partial_indexing_bundle] || Bundle.new(:partial, configuration, Cacher::Similarity::None.new, partial, weights)
     end
     
-    # TODO Move to initializer?
-    #
-    def identifier
-      @identifier ||= "#{index.name} #{name}"
-    end
-    
-    # Note: Most of the time the source of the index is used.
-    #
-    def source
-      @source || index.source
-    end
+    delegate :identifier, :prepare_index_directory, :to => :configuration
     
     # TODO Spec.
     #
@@ -68,16 +49,16 @@ module Indexing
       exact.delete
       partial.delete
     end
-    # def create_directory_structure
-    #   timed_exclaim "Creating directory structure for #{identifier}."
-    #   exact.create_directory
-    #   partial.create_directory
-    # end
+    
+    def index
+      prepare_index_directory
+      indexer.index
+    end
     
     # Generates all caches for this category.
     #
     def cache
-      prepare_cache_directory
+      prepare_index_directory
       generate_caches
     end
     def generate_caches
@@ -99,34 +80,6 @@ module Indexing
     def dump_caches
       exact.dump
       partial.dump
-    end
-    
-    # TODO Partially move to index. Duplicate Code in indexers/field.rb.
-    #
-    # TODO Use the Files object.
-    #
-    def search_index_root
-      File.join PICKY_ROOT, 'index'
-    end
-    def cache_directory
-      File.join search_index_root, PICKY_ENVIRONMENT, index.name.to_s
-    end
-    def search_index_file_name
-      File.join cache_directory, "prepared_#{name}_index.txt"
-    end
-    def index
-      prepare_cache_directory
-      # files.create_directory # TODO Make this possible!
-      indexer.index
-    end
-    def prepare_cache_directory
-      FileUtils.mkdir_p cache_directory
-    end
-    def indexer
-      @indexer || @indexer = @indexer_class.new(index, self)
-    end
-    def virtual?
-      !!virtual
     end
     
   end

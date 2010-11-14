@@ -104,6 +104,10 @@ module Loader
     load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
     
+    # Configuration.
+    #
+    load_relative 'configuration/index'
+    
     # Character Substitution
     #
     load_relative 'character_substitution/european'
@@ -119,8 +123,7 @@ module Loader
     # Index generation strategies.
     #
     load_relative 'indexers/no_source_specified_error'
-    load_relative 'indexers/base'
-    load_relative 'indexers/default'
+    load_relative 'indexers/serial'
     #
     # load_relative 'indexers/solr'
     
@@ -237,14 +240,6 @@ module Loader
     
     load_relative 'sources/wrappers/base'
     load_relative 'sources/wrappers/location'
-    
-    # Configuration.
-    #
-    load_relative 'configuration/indexes'
-    
-    # ... in Application.
-    #
-    load_relative 'configuration/queries'
     
     # Application and routing.
     #

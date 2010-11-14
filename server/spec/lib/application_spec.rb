@@ -88,34 +88,4 @@ describe Application do
     end
   end
   
-  describe "indexes" do
-    
-  end
-  describe "indexing" do
-    it 'should be there' do
-      lambda { Application.indexing }.should_not raise_error
-    end
-    it "should return a new Routing instance" do
-      Application.indexing.should be_kind_of(Configuration::Indexes)
-    end
-    it "should cache the instance" do
-      Application.indexing.should == Application.indexing
-    end
-  end
-  
-  describe "queries" do
-    
-  end
-  describe "querying" do
-    it 'should be there' do
-      lambda { Application.querying }.should_not raise_error
-    end
-    it "should return a new Routing instance" do
-      Application.querying.should be_kind_of(Configuration::Queries)
-    end
-    it "should cache the instance" do
-      Application.querying.should == Application.querying
-    end
-  end
-  
 end

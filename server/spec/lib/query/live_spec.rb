@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Query::Live do
 
   before(:each) do
-    @type  = stub :type
-    @index = stub :index, :index => @type
+    @indexed  = stub :indexed
+    @index = stub :index, :indexed => @indexed
   end
 
   describe 'result_type' do

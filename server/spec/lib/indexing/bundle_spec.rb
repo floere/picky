@@ -3,18 +3,19 @@ require 'spec_helper'
 describe Indexing::Bundle do
 
   before(:each) do
-    @category    = stub :category, :name => :some_category
-    @type        = stub :type, :name => :some_type
+    @index         = stub :index, :name => :some_index
+    @category      = stub :category, :name => :some_category
+    @configuration = Configuration::Index.new @index, @category
+    
     @partial     = stub :partial
     @weights     = stub :weights
     @similarity  = stub :similarity
-    @index_class = Indexing::Bundle
-    @index       = @index_class.new :some_name, @category, @type, @partial, @weights, @similarity
+    @index       = Indexing::Bundle.new :some_name, @configuration, @similarity, @partial, @weights
   end
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @index.identifier.should == 'some_type: some_name some_category'
+      @index.identifier.should == 'some_index some_category (some_name)'
     end
   end
   
@@ -212,12 +213,6 @@ describe Indexing::Bundle do
   end
   
   describe 'initialization' do
-    before(:each) do
-      @category = stub :category, :name => :some_category
-      @type     = stub :type, :name => :some_type
-      
-      @index = @index_class.new :some_name, @category, @type, :similarity, :partial, :weights
-    end
     it 'should initialize the index correctly' do
       @index.index.should == {}
     end
@@ -228,13 +223,13 @@ describe Indexing::Bundle do
       @index.similarity.should == {}
     end
     it 'should initialize the partial strategy correctly' do
-      @index.partial_strategy.should == :partial
+      @index.partial_strategy.should == @partial
     end
     it 'should initialize the weights strategy correctly' do
-      @index.weights_strategy.should == :weights
+      @index.weights_strategy.should == @weights
     end
     it 'should initialize the similarity strategy correctly' do
-      @index.similarity_strategy.should == :similarity
+      @index.similarity_strategy.should == @similarity
     end
   end
 

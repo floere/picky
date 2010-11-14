@@ -109,7 +109,7 @@ describe 'Query::Base' do
   
   before(:each) do
     @type      = stub :type
-    @index     = stub :some_index, :index => @type
+    @index     = stub :some_index, :indexed => @type
   end
   
   describe 'initializer' do

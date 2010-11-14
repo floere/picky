@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Indexed::Category do
 
   before(:each) do
-    @type       = stub :type, :name => :some_type
+    @index      = stub :index, :name => :some_index
     @partial    = stub :partial
     @weights    = stub :weights
     @similarity = stub :similarity
-    @category   = Indexed::Category.new :some_name, @type, :partial    => @partial,
+    @category   = Indexed::Category.new :some_name, @index, :partial    => @partial,
                                                            :weights    => @weights,
                                                            :similarity => @similarity,
                                                            :qualifiers => [:q, :qualifier]

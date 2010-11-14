@@ -26,10 +26,10 @@ class IndexesAPI
   
   def register index
     self.indexes << index
-    self.index_mapping[type.name] = index
+    self.index_mapping[index.name] = index
     
     @indexing.register index.indexing
-    @indexed.register  index.index # TODO Even necessary?
+    @indexed.register  index.indexed # TODO Even necessary?
   end
   
   def [] name

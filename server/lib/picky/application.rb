@@ -4,23 +4,36 @@ class Application
   
   class << self
     
+    # API
+    #
+    
     # Returns a configured tokenizer that
     # is used for indexing by default.
     # 
     def default_indexing options = {}
-      indexing.default_tokenizer options
+      Tokenizers::Index.default ||= Tokenizers::Index.new(options)
     end
     
     # Returns a configured tokenizer that
     # is used for querying by default.
     # 
     def default_querying options = {}
-      querying.default_tokenizer options
+      Tokenizers::Query.default ||= Tokenizers::Query.new(options)
+    end
+    
+    # Returns a new index frontend for configuring the index.
+    #
+    def index *args
+      IndexAPI.new *args
     end
     
     # Routes.
     #
     delegate :route, :root, :to => :routing
+    
+    #
+    # API
+    
     
     # An application simply delegates to the routing to handle a request.
     #
@@ -29,18 +42,6 @@ class Application
     end
     def routing
       @routing ||= Routing.new
-    end
-    def indexing
-      @indexing ||= Configuration::Indexes.new
-    end
-    def querying
-      @queries ||= Configuration::Queries.new
-    end
-    
-    # "API".
-    #
-    def index *args
-      ::IndexAPI.new *args
     end
     
     # Finalize the subclass as soon as it
@@ -64,7 +65,7 @@ class Application
       routing.freeze
     end
     
-    # TODO Add more info.
+    # TODO Add more info if possible.
     #
     def to_s
       "#{self.name}:\n#{routing}"

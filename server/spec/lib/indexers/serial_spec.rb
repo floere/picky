@@ -1,0 +1,68 @@
+require 'spec_helper'
+
+describe Indexers::Serial do
+
+  before(:each) do
+    @index         = stub :index, :name => :some_index
+    @category      = stub :category, :name => :some_category
+    @configuration = Configuration::Index.new @index, @category
+    
+    @source    = stub :source
+    @tokenizer = stub :tokenizer
+    @indexer = Indexers::Serial.new @configuration, @source, @tokenizer
+    @indexer.stub! :timed_exclaim
+  end
+  
+  describe "tokenizer" do
+    it "returns the right one" do
+      @indexer.tokenizer.should == @tokenizer
+    end
+  end
+  
+  describe "indexing_message" do
+    it "informs the user about what it is going to index" do
+      @indexer.should_receive(:timed_exclaim).once.with 'INDEX some_index some_category'
+      
+      @indexer.indexing_message
+    end
+  end
+  
+  describe "tokenizer" do
+    it "returns it" do
+      @indexer.should_receive(:tokenizer).once.with
+      
+      @indexer.tokenizer
+    end
+  end
+  
+  describe 'prepared_index_file_name' do
+    it 'should return a specific name' do
+      @indexer.prepared_index_file_name.should == "some/search/root/index/test/some_index/prepared_some_category_index.txt"
+    end
+  end
+  
+  describe "index" do
+    it "should execute! the indexer" do
+      @indexer.should_receive(:process).once.with
+      
+      @indexer.index
+    end
+  end
+  
+  describe "source" do
+    it "returns the one given to is" do
+      @indexer.source.should == @source
+    end
+  end
+  
+  describe "raise_no_source" do
+    it "should raise" do
+      lambda { @indexer.raise_no_source }.should raise_error(Indexers::NoSourceSpecifiedException)
+    end
+  end
+  
+  describe "chunked" do
+    
+  end
+  
+end

@@ -25,11 +25,11 @@ class IndexAPI
   #
   # Rename?
   #
-  def category name, options = {}
-    name = name.to_sym
+  def category category_name, options = {}
+    category_name = category_name.to_sym
     
-    indexing.add_category name, options
-    indexed.add_category  name, options
+    indexing.add_category category_name, options
+    indexed.add_category  category_name, options
     
     self
   end

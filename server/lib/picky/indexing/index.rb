@@ -30,8 +30,15 @@ module Indexing
     
     # TODO Spec. Doc.
     #
-    def add_category name, options = {}
-      categories << Category.new(name, self, options)
+    def add_category category_name, options = {}
+      options = options.merge default_category_options
+      categories << Category.new(category_name, self, options)
+    end
+    
+    # By default, the category uses the index's source.
+    #
+    def default_category_options
+      { :source => @source }
     end
     
     # Indexing.

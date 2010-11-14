@@ -5,14 +5,16 @@ describe Indexed::Bundle do
   before(:each) do
     @category     = stub :category, :name => :some_category
     @index        = stub :index, :name => :some_index
+    @configuration = Configuration::Index.new @index, @category
+    
     @similarity   = stub :similarity
     @bundle_class = Indexed::Bundle
-    @bundle       = @bundle_class.new :some_name, @category, @index, @similarity
+    @bundle       = @bundle_class.new :some_name, @configuration, @similarity
   end
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @bundle.identifier.should == 'some_index: some_name some_category'
+      @bundle.identifier.should == 'some_index some_category (some_name)'
     end
   end
 
@@ -67,7 +69,7 @@ describe Indexed::Bundle do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_name_some_category_index.json', 'r'
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_index.json', 'r'
         
         @bundle.load_index
       end
@@ -76,7 +78,7 @@ describe Indexed::Bundle do
       it "uses the right file" do
         Marshal.stub! :load
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_name_some_category_similarity.dump', 'r:binary'
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_similarity.dump', 'r:binary'
         
         @bundle.load_similarity
       end
@@ -85,7 +87,7 @@ describe Indexed::Bundle do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_name_some_category_weights.json', 'r'
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_weights.json', 'r'
         
         @bundle.load_weights
       end
@@ -96,8 +98,9 @@ describe Indexed::Bundle do
     before(:each) do
       @category = stub :category, :name => :some_category
       @index    = stub :index, :name => :some_index
+      @configuration = Configuration::Index.new @index, @category
       
-      @bundle = @bundle_class.new :some_name, @category, @index, :similarity
+      @bundle = @bundle_class.new :some_name, @configuration, :similarity
     end
     it 'should initialize the index correctly' do
       @bundle.index.should == {}

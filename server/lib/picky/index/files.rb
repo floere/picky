@@ -2,58 +2,33 @@ module Index
   
   class Files
     
-    attr_reader :bundle_name, :category_name, :index_name
+    attr_reader :bundle_name
     attr_reader :prepared, :index, :similarity, :weights
     
-    def initialize bundle_name, category_name, index_name
+    delegate :index_name, :category_name, :to => :@configuration
+    
+    def initialize bundle_name, configuration
       @bundle_name   = bundle_name
-      @category_name = category_name
-      @index_name    = index_name
+      @configuration = configuration
       
       # Note: We marshal the similarity, as the
       #       Yajl json lib cannot load symbolized
       #       values, just keys.
       #
-      @prepared   = File::Text.new    "#{cache_directory}/prepared_#{category_name}_index"
-      @index      = File::JSON.new    cache_path(:index)
-      @similarity = File::Marshal.new cache_path(:similarity)
-      @weights    = File::JSON.new    cache_path(:weights)
+      @prepared   = File::Text.new    configuration.prepared_index_file_name # "#{cache_directory}/prepared_#{category_name}_index"
+      @index      = File::JSON.new    configuration.index_path(bundle_name, :index)
+      @similarity = File::Marshal.new configuration.index_path(bundle_name, :similarity)
+      @weights    = File::JSON.new    configuration.index_path(bundle_name, :weights)
     end
-    
-    # Paths.
-    #
-    
-    # Cache path, for File-s.
-    #
-    def cache_path name
-      ::File.join cache_directory, "#{bundle_name}_#{category_name}_#{name}"
-    end
-    
-    # Point to category.
-    #
-    def search_index_root
-      ::File.join PICKY_ROOT, 'index'
-    end
-    
-    # Create directory and parent directories.
-    #
-    def create_directory
-      FileUtils.mkdir_p cache_directory
-    end
-    # TODO Move to config. Duplicate Code in field.rb.
-    #
-    def cache_directory
-      "#{search_index_root}/#{PICKY_ENVIRONMENT}/#{index_name}"
-    end
-    def retrieve &block
-      prepared.retrieve &block
-    end
-    
-    # Single index/similarity/weights files delegation.
-    #
     
     # Delegators.
     #
+    
+    # Retrieving data.
+    #
+    def retrieve &block
+      prepared.retrieve &block
+    end
     
     # Dumping.
     #

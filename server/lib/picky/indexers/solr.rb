@@ -2,9 +2,7 @@
 #
 require 'rsolr'
 module Indexers
-  # This is an indexer in its own right.
-  #
-  # TODO Perhaps merge with the existing indexer.
+  # TODO Totally deprecated. This should be a source.
   #
   class Solr
 
