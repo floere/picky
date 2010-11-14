@@ -24,8 +24,9 @@ module Sources
     # Harvests the data to index.
     #
     def harvest type, field
+      field_name = field.name.to_s
       get_data do |doc|
-        yield doc['_id'].to_i, doc[field.name.to_s] || next
+        yield doc['_id'].to_i, doc[field_name] || next
       end
     end
 
@@ -35,7 +36,7 @@ module Sources
         map{|row| row['doc']}.
         each &block
     end
-
+    
     def raise_no_db_given field_names
       raise NoCouchDBGiven.new(field_names.join(', '))
     end
