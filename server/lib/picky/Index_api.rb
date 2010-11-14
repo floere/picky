@@ -23,26 +23,27 @@ class IndexAPI
   #
   # TODO Spec! Doc!
   #
-  # Rename?
-  #
   def define_category category_name, options = {}
     category_name = category_name.to_sym
     
-    indexing.add_category category_name, options
-    indexed.add_category  category_name, options
+    indexing_category = indexing.add_category category_name, options
+    indexed_category  = indexed.add_category  category_name, options
+    
+    yield indexing_category, indexed_category if block_given?
     
     self
   end
-  alias category  define_category
-  alias add_field define_category
-  # def location name, options = {}
-  #   grid      = options[:grid]
-  #   precision = options[:precision]
-  #   
-  #   new_category = category name, options
-  #   source = indexing.source
-  #   new_category.source    = Sources::Wrappers::Location.new source, grid: grid, precision: precision
-  #   new_category.tokenizer = Tokenizers::Index.new
-  # end
+  alias category define_category
+  
+  def define_location name, options = {}
+    grid      = options[:grid]
+    precision = options[:precision]
+    
+    define_category name, options do |indexing, _|
+      indexing.source    = Sources::Wrappers::Location.new indexing.source, grid: grid, precision: precision
+      indexing.tokenizer = Tokenizers::Index.new
+    end
+  end
+  alias location define_location
   
 end
