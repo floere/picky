@@ -104,10 +104,6 @@ module Loader
     load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
     
-    # Configuration.
-    #
-    load_relative 'configuration/index'
-    
     # Character Substitution
     #
     load_relative 'character_substitution/european'
@@ -240,6 +236,10 @@ module Loader
     
     load_relative 'sources/wrappers/base'
     load_relative 'sources/wrappers/location'
+    
+    # Configuration.
+    #
+    load_relative 'configuration/index'
     
     # Application and routing.
     #
