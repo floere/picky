@@ -6,7 +6,7 @@ module Indexers
   #
   class Serial
     
-    attr_reader :source, :tokenizer
+    attr_accessor :tokenizer, :source
     
     def initialize configuration, source, tokenizer
       @configuration = configuration
