@@ -9,7 +9,7 @@ describe Application do
       lambda {
         class MinimalTestApplication < Application
           books = index :books, Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
-          books.category :title
+          books.define_category :title
                               
           
           full = Query::Full.new books
@@ -42,9 +42,9 @@ describe Application do
                            maximum_tokens: 5
           
           books_index = index :books, Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
-          books_index.category :title, similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.
-          books_index.category :author
-          books_index.category :isbn, partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
+          books_index.define_category :title, similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.
+          books_index.define_category :author
+          books_index.define_category :isbn, partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
           full = Query::Full.new books_index
           live = Query::Live.new books_index
