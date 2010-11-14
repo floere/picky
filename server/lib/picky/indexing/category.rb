@@ -11,9 +11,8 @@ module Indexing
       #
       @configuration = Configuration::Index.new index, self
       
-      @source    = options[:source]
       @tokenizer = options[:tokenizer] || Tokenizers::Index.default
-      @indexer = Indexers::Serial.new configuration, @source, @tokenizer #, :as => options[:as] # TODO option as.
+      @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer #, :as => options[:as] # TODO option as.
       
       # TODO Push into Bundle.
       #
@@ -26,6 +25,7 @@ module Indexing
     end
     
     delegate :identifier, :prepare_index_directory, :to => :configuration
+    delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
     
     # TODO Spec.
     #
