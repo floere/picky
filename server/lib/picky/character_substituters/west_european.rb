@@ -1,11 +1,11 @@
 # encoding: utf-8
 #
-module CharacterSubstitution
+module CharacterSubstituters
   # Substitutes Umlauts like
   # ä, ö, ü => ae, oe, ue.
   # (and more, see specs)
   #
-  class European
+  class WestEuropean
     
     def initialize
       @chars = ActiveSupport::Multibyte.proxy_class

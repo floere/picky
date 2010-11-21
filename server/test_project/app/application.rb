@@ -9,7 +9,7 @@ class BookSearch < Application
                      removes_characters_after_splitting: /[\.]/,
                      normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
                      
-                     substitutes_characters_with:        CharacterSubstitution::European.new
+                     substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
     default_querying removes_characters:                 /[^ïôåñëa-zA-Z0-9\s\/\-\,\&\"\~\*\:]/,
                      contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
@@ -18,7 +18,7 @@ class BookSearch < Application
                      removes_characters_after_splitting: /[\.]/,
                      
                      maximum_tokens:                     5,
-                     substitutes_characters_with:        CharacterSubstitution::European.new
+                     substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
     main_index = index :main, Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml')
     main_index.define_category :title,

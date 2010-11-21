@@ -13,7 +13,7 @@ describe Tokenizers::Base do
       @tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzäöü'
     end
     it "uses the substituter to replace characters" do
-      @tokenizer.substitutes_characters_with CharacterSubstitution::European.new
+      @tokenizer.substitutes_characters_with CharacterSubstituters::WestEuropean.new
       
       @tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
     end

@@ -104,9 +104,9 @@ module Loader
     load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
     
-    # Character Substitution
+    # Character Substituters
     #
-    load_relative 'character_substitution/european'
+    load_relative 'character_substituters/west_european'
     
     # Signal handling
     #

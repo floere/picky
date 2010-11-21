@@ -20,7 +20,7 @@ class PickySearch < Application
                    splits_text_on:     /[\s\/\-\,\&]+/,
                    
                    maximum_tokens: 5, # Max amount of tokens passing into a query. 5 is the default.
-                   substitutes_characters_with: CharacterSubstitution::European.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+                   substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                    
   # Define an index. Use a database etc. source?
   # See http://github.com/floere/picky/wiki/Sources-Configuration#sources

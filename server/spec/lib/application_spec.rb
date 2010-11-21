@@ -38,7 +38,7 @@ describe Application do
                            splits_text_on:     /[\s\/\-\,\&]+/,
                            normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
                            
-                           substitutes_characters_with: CharacterSubstitution::European.new,
+                           substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
                            maximum_tokens: 5
           
           books_index = index :books, Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')

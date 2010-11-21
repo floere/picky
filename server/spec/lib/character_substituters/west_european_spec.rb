@@ -2,9 +2,9 @@
 #
 require 'spec_helper'
 
-describe CharacterSubstitution do
+describe CharacterSubstituters do
   before(:each) do
-    @substituter = CharacterSubstitution::European.new
+    @substituter = CharacterSubstituters::WestEuropean.new
   end
 
   # A bit of metaprogramming to help with the myriads of its.

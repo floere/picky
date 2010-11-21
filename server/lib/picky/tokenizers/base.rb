@@ -83,7 +83,7 @@ module Tokenizers
     #
     # Default is European Character substitution.
     #
-    def substitutes_characters_with substituter = CharacterSubstitution::European.new
+    def substitutes_characters_with substituter = CharacterSubstituters::WestEuropean.new
       # TODO Raise if it doesn't quack substitute?
       @substituter = substituter
     end
