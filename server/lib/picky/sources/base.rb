@@ -10,21 +10,8 @@ module Sources
   # * take_snapshot: Optional, called once for each type.
   class Base
     
-    # Note: Methods listed for illustrative purposes.
+    # Note: Default methods do nothing.
     #
-    
-    # Called by the indexer when gathering data.
-    #
-    # Yields the data (id, text for id) for the given type and field.
-    #
-    # When implementing or overriding your own,
-    # be sure to <tt>yield</tt> (or <tt>block.call</tt>) an id (as string or integer)
-    # and a corresponding text for the given type symbol and
-    # category symbol.
-    #
-    def harvest type, category
-      # yields nothing
-    end
     
     # Connect to the backend.
     #
@@ -45,6 +32,19 @@ module Sources
     #
     def take_snapshot type
       
+    end
+    
+    # Called by the indexer when gathering data.
+    #
+    # Yields the data (id, text for id) for the given type and field.
+    #
+    # When implementing or overriding your own,
+    # be sure to <tt>yield</tt> (or <tt>block.call</tt>) an id (as string or integer)
+    # and a corresponding text for the given type symbol and
+    # category symbol.
+    #
+    def harvest type, category
+      # yields nothing
     end
     
   end
