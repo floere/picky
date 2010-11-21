@@ -93,6 +93,10 @@ describe CharacterSubstituters do
       result = performance_of { @substituter.substitute('ä') }
       result.should < 0.00009
     end
+    it "is fast" do
+      result = performance_of { @substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
+      result.should < 0.00015
+    end
   end
 
 end
