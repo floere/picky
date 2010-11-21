@@ -23,10 +23,10 @@ module Sources
     
     # Harvests the data to index.
     #
-    def harvest _, field
-      index = field_names.index field.name
+    def harvest _, category
+      index = field_names.index category.name
       get_data do |ary|
-        indexed_id = ary.shift.to_i
+        indexed_id = ary.shift.to_i # TODO is to_i necessary?
         text       = ary[index]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
