@@ -38,9 +38,9 @@ module Sources
         @min = 1.0/0
       end
       
-      # Yield the data (id, text for id) for the given type and field.
+      # Yield the data (id, text for id) for the given type and category.
       #
-      def harvest type, field
+      def harvest type, category
         reset
         
         # Cache. TODO Make option?
@@ -49,7 +49,7 @@ module Sources
         
         # Gather min/max.
         #
-        backend.harvest type, field do |indexed_id, location|
+        backend.harvest type, category do |indexed_id, location|
           location = location.to_f
           @min = location if location < @min
           locations << [indexed_id, location]

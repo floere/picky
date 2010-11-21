@@ -8,9 +8,9 @@ module Sources
 
   class Couch < Base
     
-    def initialize *field_names, options
+    def initialize *category_names, options
       check_gem
-      Hash === options && options[:url] || raise_no_db_given(field_names)
+      Hash === options && options[:url] || raise_no_db_given(category_names)
       @db = RestClient::Resource.new options.delete(:url), options
     end
     
@@ -23,10 +23,10 @@ module Sources
 
     # Harvests the data to index.
     #
-    def harvest type, field
-      field_name = field.name.to_s
+    def harvest type, category
+      category_name = category.name.to_s
       get_data do |doc|
-        yield doc['_id'].to_i, doc[field_name] || next
+        yield doc['_id'].to_i, doc[category_name] || next
       end
     end
 
@@ -37,8 +37,8 @@ module Sources
         each &block
     end
     
-    def raise_no_db_given field_names
-      raise NoCouchDBGiven.new(field_names.join(', '))
+    def raise_no_db_given category_names
+      raise NoCouchDBGiven.new(category_names.join(', '))
     end
   end
 end

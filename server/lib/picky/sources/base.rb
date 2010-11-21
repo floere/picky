@@ -36,7 +36,7 @@ module Sources
     
     # Called by the indexer when gathering data.
     #
-    # Yields the data (id, text for id) for the given type and field.
+    # Yields the data (id, text for id) for the given type and category.
     #
     # When implementing or overriding your own,
     # be sure to <tt>yield</tt> (or <tt>block.call</tt>) an id (as string or integer)

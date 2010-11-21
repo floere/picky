@@ -93,11 +93,11 @@ module Sources
     # Example:
     #   "SELECT indexed_id, value FROM bla_table st WHERE kind = 'bla'"
     #
-    def harvest type, field
+    def harvest type, category
       connect_backend
       
       (0..count(type)).step(chunksize) do |offset|
-        get_data(type, field, offset).each do |indexed_id, text|
+        get_data(type, category, offset).each do |indexed_id, text|
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed?
           yield indexed_id, text
@@ -107,16 +107,16 @@ module Sources
     
     # Gets database from the backend.
     #
-    def get_data type, field, offset
-      database.connection.execute harvest_statement_with_offset(type, field, offset)
+    def get_data type, category, offset
+      database.connection.execute harvest_statement_with_offset(type, category, offset)
     end
     
     # Builds a harvest statement for getting data to index.
     #
     # TODO Use the adapter for this.
     #
-    def harvest_statement_with_offset type, field, offset
-      statement = harvest_statement type, field
+    def harvest_statement_with_offset type, category, offset
+      statement = harvest_statement type, category
       
       statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
       
@@ -125,8 +125,8 @@ module Sources
     
     # Base harvest statement for dbs.
     #
-    def harvest_statement type, field
-      "SELECT indexed_id, #{field.name} FROM #{snapshot_table_name(type)} st"
+    def harvest_statement type, category
+      "SELECT indexed_id, #{category.name} FROM #{snapshot_table_name(type)} st"
     end
     
     # Override in subclasses.

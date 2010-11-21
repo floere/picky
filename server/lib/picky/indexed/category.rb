@@ -1,6 +1,6 @@
 module Indexed
   
-  # An index category holds a exact and a partial index for a given field.
+  # An index category holds a exact and a partial index for a given category.
   #
   # For example an index category for names holds a exact and
   # a partial index bundle for names.

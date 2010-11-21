@@ -16,10 +16,10 @@ module Sources
     
     # Harvests the data to index.
     #
-    def harvest _, field
+    def harvest _, category
       get_data do |uid, data|
         indexed_id = uid
-        text = data[field.name]
+        text = data[category.name]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
         yield indexed_id, text

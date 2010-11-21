@@ -17,10 +17,10 @@ namespace :index do
   end
   
   desc "Generates a specific index from index snapshots."
-  task :specific, [:index, :field] => :application do |_, options|
-    index, field = options.index, options.field
-    Indexes.generate_index_only index.to_sym, field.to_sym
-    Indexes.generate_cache_only index.to_sym, field.to_sym
+  task :specific, [:index, :category] => :application do |_, options|
+    index, category = options.index, options.category
+    Indexes.generate_index_only index.to_sym, category.to_sym
+    Indexes.generate_cache_only index.to_sym, category.to_sym
   end
   
   desc 'Checks the index files for files that are suspiciously small or missing.'
