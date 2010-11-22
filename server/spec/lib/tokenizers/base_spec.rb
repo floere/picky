@@ -121,29 +121,6 @@ describe Tokenizers::Base do
     end
   end
   
-  describe 'contracts_expressions' do
-    context 'without contract_expressions called' do
-      it 'should define a method contract' do
-        lambda { @tokenizer.contract('from this text') }.should_not raise_error
-      end
-      it 'should define a method contract that does nothing' do
-        unchanging = stub :unchanging
-        @tokenizer.contract unchanging
-      end
-    end
-    context 'with contracts_expressions called' do
-      before(:each) do
-        @tokenizer.contracts_expressions(/Mister|Mr./, 'mr')
-      end
-      it 'should define a method remove_stopwords' do
-        lambda { @tokenizer.contract('from this text') }.should_not raise_error
-      end
-      it 'should define a method contract that contracts expressions' do
-        @tokenizer.contract('Mister Meyer, Mr. Peter').should == 'mr Meyer, mr Peter'
-      end
-    end
-  end
-  
   describe 'stopwords' do
     context 'without stopwords given' do
       it 'should define a method remove_stopwords' do

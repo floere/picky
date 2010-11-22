@@ -25,7 +25,6 @@ module Tokenizers
       text = substitute_characters text
       text.downcase!
       remove_illegals text
-      contract text
       # we do not remove single stopwords for an entirely different
       # reason than in the query tokenizer.
       # An indexed thing with just name "UND" (a stopword) should not lose its name.

@@ -30,7 +30,6 @@ module Tokenizers
     def preprocess text
       remove_illegals text             # Remove illegal characters
       remove_non_single_stopwords text # remove stop words
-      contract text                    # contract st sankt etc
       text
     end
     

@@ -45,7 +45,6 @@ describe Tokenizers::Query do
       
       @tokenizer.should_receive(:remove_illegals).once.ordered.with text
       @tokenizer.should_receive(:remove_non_single_stopwords).once.ordered.with text
-      @tokenizer.should_receive(:contract).once.ordered
       
       @tokenizer.preprocess text
     end

@@ -22,16 +22,6 @@ module Tokenizers
       remove_stopwords text
     end
     
-    # Contraction.
-    #
-    def contracts_expressions what, to_what
-      @contract_what    = what
-      @contract_to_what = to_what
-    end
-    def contract text
-      text.gsub! @contract_what, @contract_to_what if @contract_what
-    end
-    
     # Illegals.
     #
     # TODO Should there be a legal?

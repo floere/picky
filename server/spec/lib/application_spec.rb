@@ -28,7 +28,6 @@ describe Application do
         #
         class TestApplication < Application
           default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
-                           contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
                            stopwords:                          /\b(and|the|of|it|in|for)\b/,
                            splits_text_on:                     /[\s\/\-\"\&\.]/,
                            removes_characters_after_splitting: /[\.]/

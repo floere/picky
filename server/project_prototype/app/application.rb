@@ -19,7 +19,7 @@ class PickySearch < Application
                    stopwords:          /\b(and|the|of|it|in|for)\b/,
                    splits_text_on:     /[\s\/\-\,\&]+/,
                    
-                   maximum_tokens: 5, # Max amount of tokens passing into a query. 5 is the default.
+                   maximum_tokens: 5, # Amount of tokens passing into a query (5 = default).
                    substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                    
   # Define an index. Use a database etc. source?
