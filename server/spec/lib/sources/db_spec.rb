@@ -112,21 +112,20 @@ describe Sources::DB do
 
   describe "harvest_statement_with_offset" do
     before(:each) do
-      @source.should_receive(:type_name).any_number_of_times.and_return :books
-      @field = stub :field, :name => :some_field
-      @type  = stub :type,  :name => :some_type
+      @category = stub :category, :name => :some_category
+      @type     = stub :type,     :name => :some_type
     end
     it "should get a harvest statement and the chunksize to put the statement together" do
-      @source.should_receive(:harvest_statement).once.and_return 'some_example_statement'
-      @source.harvest_statement_with_offset(@type, @field, :some_offset)
+      @source.should_receive(:harvest_statement).once.with(@type, @category).and_return 'some_example_statement'
+      @source.harvest_statement_with_offset(@type, @category, :some_offset)
     end
     it "should add an AND if it already contains a WHERE statement" do
       @source.should_receive(:harvest_statement).and_return 'WHERE'
-      @source.harvest_statement_with_offset(@type, @field, :some_offset).should == "WHERE AND st.id > some_offset LIMIT 25000"
+      @source.harvest_statement_with_offset(@type, @category, :some_offset).should == "WHERE AND st.id > some_offset LIMIT 25000"
     end
     it "should add a WHERE if it doesn't already contain one" do
       @source.should_receive(:harvest_statement).and_return 'some_statement'
-      @source.harvest_statement_with_offset(@type, @field, :some_offset).should == "some_statement WHERE st.id > some_offset LIMIT 25000"
+      @source.harvest_statement_with_offset(@type, @category, :some_offset).should == "some_statement WHERE st.id > some_offset LIMIT 25000"
     end
   end
   
