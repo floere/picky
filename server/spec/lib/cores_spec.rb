@@ -26,7 +26,7 @@ describe Cores do
         it "fails" do
           lambda {
             Cores.forked [1, 2]
-          }.should raise_error(LocalJumpError)
+          }.should raise_error("Block argument needed when running Cores.forked")
         end
       end
     end

@@ -15,6 +15,9 @@ class Cores
   #  * max: Maximum # of processors to use. Default is all it can get.
   #
   def self.forked ary_or_generator, options = {}
+    return if ary_or_generator.empty?
+    raise "Block argument needed when running Cores.forked" unless block_given?
+    
     ary_or_generator = ary_or_generator.sort_by { rand } if options[:randomly]
     generator        = ary_or_generator.each
     
