@@ -1,3 +1,8 @@
+h2. Version 0.12.0 (1.0.0 pre)
+
+ * hanke: (server) API change in application.rb: Use #define_category instead of #category on an index. (category still possible, but deprecated)
+ * hanke: (server) Internal rewrite.
+
 h2. Version 0.11.2
 
   * hanke: (server) Rake task index:check will check if all necessary index files are generated. (Nice to use before restarting.)
