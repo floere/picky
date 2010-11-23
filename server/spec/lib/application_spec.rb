@@ -40,10 +40,13 @@ describe Application do
                            substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
                            maximum_tokens: 5
           
-          books_index = index :books, Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
-          books_index.define_category :title, similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.
+          books_index = index :books,
+                              Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
+          books_index.define_category :title,
+                                      similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.
           books_index.define_category :author
-          books_index.define_category :isbn, partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
+          books_index.define_category :isbn,
+                                      partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
           full = Query::Full.new books_index
           live = Query::Live.new books_index

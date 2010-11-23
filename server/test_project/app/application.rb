@@ -3,7 +3,6 @@
 class BookSearch < Application
     
     default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
-                     contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
                      splits_text_on:                     /[\s\/\-\"\&\.]/,
                      removes_characters_after_splitting: /[\.]/,
@@ -12,7 +11,6 @@ class BookSearch < Application
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
     default_querying removes_characters:                 /[^ïôåñëa-zA-Z0-9\s\/\-\,\&\"\~\*\:]/,
-                     contracts_expressions:              [/mr\.\s*|mister\s*/i, 'mr '],
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
                      removes_characters_after_splitting: /[\.]/,
