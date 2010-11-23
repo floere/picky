@@ -6,19 +6,19 @@
     = js 'jquery.scrollTo-1.4.2'
     = js 'jquery.timer'
     
-    = js 'picky.extensions'
-    = js 'picky.translations'
-    = js 'picky.data'
-    = js 'picky.view'
-    = js 'picky.backend'
-    = js 'picky.controller'
-    = js 'picky.client'
-    = js 'picky.addination'
-    = js 'picky.results_renderer'
-    = js 'picky.allocation_renderer'
-    = js 'picky.allocations_cloud'
+    / = js 'picky.extensions'
+    / = js 'picky.translations'
+    / = js 'picky.data'
+    / = js 'picky.view'
+    / = js 'picky.backend'
+    / = js 'picky.controller'
+    / = js 'picky.client'
+    / = js 'picky.addination'
+    / = js 'picky.results_renderer'
+    / = js 'picky.allocation_renderer'
+    / = js 'picky.allocations_cloud'
     
-    / = js 'picky.min'
+    = js 'picky.min'
   %body
     %img{:src => "images/picky.png"}/
     %p
@@ -96,10 +96,9 @@
           en:{
             title:     'titled',
             author:    'written by',
-            isbn:      'ISBN-13',
-            year:      'published in',
-            publisher: 'published by',
-            subjects:  'topics'
+            year:      'published in'
+            // publisher: 'published by',
+            // subjects:  'topics'
           }
         }
       });
