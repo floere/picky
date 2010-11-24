@@ -83,8 +83,8 @@ module Cacher
         
         # Remove duplicate ids.
         #
-        # TODO If it is unique for a subtoken, it is
-        #      unique for all derived longer tokens.
+        # THINK If it is unique for a subtoken, it is
+        #       unique for all derived longer tokens.
         #
         result.each_value &:uniq!
         
@@ -99,14 +99,14 @@ module Cacher
         #
         # "token" here means just text.
         #
-        # TODO Could be improved by appending the aforegoing ids?
+        # THINK Could be improved by appending the aforegoing ids?
         #
         def generate_for token, index, result
           @generator.each_subtoken(token) do |subtoken|
             if result[subtoken]
               result[subtoken] += index[token] # unique
             else
-              result[subtoken] = index[token].dup # TODO Spec this dup
+              result[subtoken] = index[token].dup
             end
           end
         end
