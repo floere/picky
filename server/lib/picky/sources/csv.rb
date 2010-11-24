@@ -7,12 +7,14 @@ module Sources
   
   class CSV < Base
     
-    attr_reader :file_name, :category_names
+    attr_reader :file_name, :csv_options, :category_names
     
     def initialize *category_names, options
       require 'csv'
       @category_names = category_names
-      @file_name   = Hash === options && options[:file] || raise_no_file_given(category_names)
+      
+      @csv_options    = Hash === options && options || {}
+      @file_name      = @csv_options.delete(:file) || raise_no_file_given(category_names)
     end
     
     #
@@ -37,7 +39,7 @@ module Sources
     #
     #
     def get_data &block
-      ::CSV.foreach file_name, &block
+      ::CSV.foreach file_name, csv_options, &block
     end
     
   end

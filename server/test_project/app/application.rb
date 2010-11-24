@@ -18,7 +18,7 @@ class BookSearch < Application
                      maximum_tokens:                     5,
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
-    main_index = index :main, Sources::DB.new('SELECT id, title, author, year FROM books', :file => 'app/db.yml')
+    main_index = index :main, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
     main_index.define_category :title,
                                qualifiers: [:t, :title, :titre],
                                partial:    Partial::Substring.new(:from => 1),
@@ -31,14 +31,16 @@ class BookSearch < Application
     isbn_index = index :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
     isbn_index.define_category :isbn, :qualifiers => [:i, :isbn]
     
-    geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, :file => 'data/locations.csv')
+    geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/locations.csv', col_sep: ';')
     geo_index.define_category :location
-    geo_index.define_location :north, grid: 2
-    geo_index.define_location :east,  grid: 2
+    geo_index.define_location :north, grid: 2 #, from: :north
+    geo_index.define_location :east,  grid: 2 #, from: :east
+    # geo_index.define_location :north, grid: 0.5 #, from: :north
+    # geo_index.define_location :east,  grid: 0.5 #, from: :east
     # geo_location(:north, grid: 20_000, :as => :n20k),
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
-    csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, :file => 'data/books.csv'))
+    csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,
                                  qualifiers: [:t, :title, :titre],
                                  partial:    Partial::Substring.new(:from => 1),
