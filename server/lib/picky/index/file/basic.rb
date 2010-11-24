@@ -33,15 +33,13 @@ module Index
       # the directory the index file is in.
       #
       def backup
-        prepare_backup backup_path
+        prepare_backup backup_directory
         FileUtils.cp cache_path, target, verbose: true
       end
       # The backup directory of this file.
       # Equal to the file's dirname plus /backup
       #
-      # TODO: Rename to backup_dir.
-      #
-      def backup_path
+      def backup_directory
         ::File.join ::File.dirname(cache_path), 'backup'
       end
       # Prepares the backup directory for the file.
