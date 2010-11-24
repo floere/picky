@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'csv'
 
 describe Sources::CSV do
   
