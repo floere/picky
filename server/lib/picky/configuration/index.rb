@@ -9,6 +9,8 @@ module Configuration
     
     attr_reader :index, :category
     
+    # TODO Implement :as or :from.
+    #
     def initialize index, category
       @index    = index
       @category = category
