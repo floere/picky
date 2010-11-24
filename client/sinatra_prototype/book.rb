@@ -27,8 +27,8 @@ class Book
   
   attr_reader :id
   
-  def initialize id, title, author, isbn, year, publisher, subjects
-    @id, @title, @author, @isbn, @year, @publisher, @subjects = id, title, author, isbn, year, publisher, subjects
+  def initialize id, title, author, year, publisher, subjects
+    @id, @title, @author, @year, @publisher, @subjects = id, title, author, year, publisher, subjects
   end
   
   # "Rendering" ;)
@@ -36,7 +36,7 @@ class Book
   # Note: This is just an example. Please do not render in the model.
   #
   def to_s
-    "<div class='book'><p>\"#{@title}\", by #{@author}</p><p>#{@year}, #{@publisher}, #{@isbn}</p><p>#{@subjects}</p></div>"
+    "<div class='book'><p>\"#{@title}\", by #{@author}</p><p>#{@year}, #{@publisher}</p><p>#{@subjects}</p></div>"
   end
   
 end
