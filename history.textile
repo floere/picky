@@ -1,3 +1,7 @@
+h2. Version 0.12.2 (1.0.0 pre3)
+
+ * hanke: (server) CSV source uses FasterCSV with all its options (like col_sep, row_sep etc.)
+
 h2. Version 0.12.1 (1.0.0 pre2)
 
  * hanke: (server) Fixed a bug where the default qualifier definition (like the author in the query author:tolkien) for categories were ignored.
