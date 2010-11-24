@@ -56,8 +56,6 @@ module Index
       end
       # The backup filename.
       #
-      # TODO: Duplicate work done here?
-      #
       def backup_file_path_of path
         dir, name = ::File.split path
         ::File.join dir, 'backup', name
