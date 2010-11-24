@@ -8,14 +8,14 @@ namespace :try do
     
     tokenizer = index_and_category ? Indexes.find(*index_and_category.split(':')).tokenizer : Tokenizers::Index.default
     
-    puts "\"#{text}\" is index tokenized as #{tokenizer.tokenize(text.dup).to_a}"
+    puts "\"#{text}\" is saved in the index as             #{tokenizer.tokenize(text.dup).to_a}"
   end
   
   # desc "Try how a given word would be tokenized when querying."
   task :query, [:text] => :application do |_, options|
     text = options.text
     
-    puts "\"#{text}\" is query tokenized as #{Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
+    puts "\"#{text}\" as a query will be preprocessed into #{Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
   end
   
   # desc "Try the given text with both the index and the query (type:category optional)."
