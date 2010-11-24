@@ -1,6 +1,7 @@
 h2. Version 0.12.2 (1.0.0 pre3)
 
- * hanke: (server) CSV source uses FasterCSV with all its options (like col_sep, row_sep etc.)
+ * hanke: (server) CSV source uses FasterCSV with all its options (col_sep, row_sep etc.)
+ * hanke: (server) More understandable output for rake try, rake try:index, rake try:query.
 
 h2. Version 0.12.1 (1.0.0 pre2)
 

@@ -86,6 +86,15 @@ describe "Integration Tests" do
     #
     it_should_find_ids_in_main_full "%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}", []
     it_should_find_ids_in_main_full "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", []
+    
+    # Categorization.
+    #
+    it 'uses categorization correctly' do
+      @full.search_with_text('t:religion').ids.should == @full.search_with_text('title:religion').ids
+    end
+    it 'uses categorization' do
+      @full.search_with_text('title:religion').ids.should_not == @full.search_with_text('subject:religion').ids
+    end
   end
   
 end
