@@ -57,7 +57,7 @@ module Indexers
       end
     end
     def indexing_message
-      timed_exclaim "INDEX #{@configuration.identifier}"
+      timed_exclaim "INDEX #{@configuration.identifier}" # TODO from ...
     end
     
   end

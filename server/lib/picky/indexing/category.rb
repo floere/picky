@@ -9,10 +9,10 @@ module Indexing
       
       # Now we have enough info to combine the index and the category.
       #
-      @configuration = Configuration::Index.new index, self
+      @configuration = Configuration::Index.new index, self #, :as => options[:as] # TODO option as.
       
       @tokenizer = options[:tokenizer] || Tokenizers::Index.default
-      @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer #, :as => options[:as] # TODO option as.
+      @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer
       
       # TODO Push into Bundle.
       #
