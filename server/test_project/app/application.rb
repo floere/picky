@@ -33,10 +33,10 @@ class BookSearch < Application
     
     geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/locations.csv', col_sep: ';')
     geo_index.define_category :location
-    geo_index.define_location :north2, grid: 2, from: :north
-    geo_index.define_location :east2,  grid: 2, from: :east
-    # geo_index.define_location :north, grid: 0.5 #, from: :north
-    # geo_index.define_location :east,  grid: 0.5 #, from: :east
+    geo_index.define_location :north2,  grid: 2,   from: :north
+    geo_index.define_location :east2,   grid: 2,   from: :east
+    geo_index.define_location :north05, grid: 0.5, from: :north
+    geo_index.define_location :east05,  grid: 0.5, from: :east
     # geo_location(:north, grid: 20_000, :as => :n20k),
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
