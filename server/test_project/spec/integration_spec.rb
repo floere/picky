@@ -35,6 +35,7 @@ describe "Integration Tests" do
     it_should_find_ids_in_main_full 'Hystori~ author:ferg', []
     it_should_find_ids_in_main_full 'Hystori~ author:fergu', [4, 4]
     it_should_find_ids_in_main_full 'Hystori~ author:fergus', [4, 4]
+    it_should_find_ids_in_main_full 'author:fergus', [4]
     
     # Partial
     #

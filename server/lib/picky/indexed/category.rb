@@ -26,10 +26,9 @@ module Indexed
       @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
       @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
       
-      # Extract?
+      # TODO Extract?
       #
-      qualifiers = generate_qualifiers_from options || [name]
-      Query::Qualifiers.add(configuration.category_name, qualifiers) if qualifiers
+      Query::Qualifiers.add(configuration.category_name, generate_qualifiers_from(options) || [name])
     end
     
     # TODO Move to Index.

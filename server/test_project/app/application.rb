@@ -24,7 +24,6 @@ class BookSearch < Application
                                partial:    Partial::Substring.new(:from => 1),
                                similarity: Similarity::Phonetic.new(2)
     main_index.define_category :author,
-                               qualifiers: [:a, :author, :auteur],
                                partial:    Partial::Substring.new(:from => -2)
     main_index.define_category :year,
                                qualifiers: [:y, :year, :annee]

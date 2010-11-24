@@ -20,6 +20,24 @@ describe Indexed::Category do
     @category.stub! :exclaim
   end
   
+  describe 'generate_qualifiers_from' do
+    context 'with qualifiers' do
+      it 'returns that' do
+        @category.generate_qualifiers_from(:qualifiers => [:a, :b]).should == [:a, :b]
+      end
+    end
+    context 'without anything' do
+      it 'returns that' do
+        @category.generate_qualifiers_from({}).should == nil
+      end
+    end
+    context 'with qualifier' do
+      it 'returns that' do
+        @category.generate_qualifiers_from(:qualifier => :a).should == [:a]
+      end
+    end
+  end
+  
   describe 'weight' do
     before(:each) do
       @token = stub :token, :text => :some_text
