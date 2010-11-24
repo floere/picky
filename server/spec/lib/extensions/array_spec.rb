@@ -7,16 +7,6 @@ describe Array do
       ['fish', 'flash', 'flush', 'smooch'].sort_by_levenshtein!(:fush).should == ['fish', 'flush', 'flash', 'smooch']
     end
   end
-
-  describe 'random' do
-    it 'should choose one element from the array' do
-      left = [1,2,3]
-      100.times do
-        left.delete [1,2,3].random
-      end
-      left.should be_empty
-    end
-  end
   
   describe "clustered_uniq_fast" do
     it "should generate a new array" do

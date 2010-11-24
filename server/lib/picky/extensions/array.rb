@@ -28,14 +28,6 @@ class Array
     result
   end
 
-  # Accesses a random element of this array.
-  #
-  # TODO Remove?
-  #
-  def random
-    self[Kernel.rand(self.length)]
-  end
-
   # Sort the array using distance from levenshtein.
   #
   # Will raise if encounters not to_s-able element.
