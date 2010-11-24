@@ -4,12 +4,29 @@ module Indexing
     
     attr_reader :exact, :partial, :name, :configuration, :indexer
     
+    # Mandatory params:
+    #  * name: Category name to use as identifier and file names.
+    #  * index: Index to which this category is attached to.
+    # Options:
+    #  * partial: Partial::None.new, Partial::Substring.new(from:start_char, to:up_to_char) (defaults from:-3, to:-1)
+    #  * similarity: Similarity::None.new (default), Similarity::Phonetic.new(amount_of_similarly_linked_words)
+    #  * source: Use if the category should use a different source.
+    #  * from: The source category identifier to take the data from.
+    #
+    # Advanced Options (TODO):
+    #
+    #  * weights: 
+    #  * tokenizer: 
+    #  * exact_indexing_bundle: 
+    #  * partial_indexing_bundle: 
+    #
     def initialize name, index, options = {}
       @name = name
+      @from = options[:from]
       
       # Now we have enough info to combine the index and the category.
       #
-      @configuration = Configuration::Index.new index, self #, :as => options[:as] # TODO option as.
+      @configuration = Configuration::Index.new index, self
       
       @tokenizer = options[:tokenizer] || Tokenizers::Index.default
       @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer
@@ -26,6 +43,10 @@ module Indexing
     
     delegate :identifier, :prepare_index_directory, :to => :configuration
     delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
+    
+    def from
+      @from || name
+    end
     
     # TODO Spec.
     #

@@ -126,7 +126,7 @@ module Sources
     # Base harvest statement for dbs.
     #
     def harvest_statement type, category
-      "SELECT indexed_id, #{category.name} FROM #{snapshot_table_name(type)} st"
+      "SELECT indexed_id, #{category.from} FROM #{snapshot_table_name(type)} st"
     end
     
     # Override in subclasses.

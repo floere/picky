@@ -26,7 +26,7 @@ module Sources
     # Harvests the data to index.
     #
     def harvest _, category
-      index = category_names.index category.name
+      index = category_names.index category.from
       get_data do |ary|
         indexed_id = ary.shift.to_i # TODO is to_i necessary?
         text       = ary[index]

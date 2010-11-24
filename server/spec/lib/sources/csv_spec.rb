@@ -43,7 +43,7 @@ describe Sources::CSV do
       end
       describe "harvest" do
         it "should yield the right data" do
-          field = stub :b, :name => :b
+          field = stub :b, :from => :b
           @source.harvest :anything, field do |id, token|
             [id, token].should == [7, 'b data']
           end

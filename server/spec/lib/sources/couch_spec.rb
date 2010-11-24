@@ -16,7 +16,7 @@ describe Sources::Couch do
     
     describe "harvest" do
       it "yields the right data" do
-        field = stub :b, :name => :b
+        field = stub :b, :from => :b
         @source.harvest :anything, field do |id, token|
           id.should    eql(7) 
           token.should eql('b data')

@@ -18,12 +18,12 @@ describe Sources::DB do
   
   describe "get_data" do
     it "delegates" do
-      type  = stub :type, :name => :some_type
-      field = stub :field, :name => :some_field
+      type     = stub :type,     :name => :some_type
+      category = stub :category, :from => :some_category
       
-      @connection.should_receive(:execute).once.with 'SELECT indexed_id, some_field FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000'
+      @connection.should_receive(:execute).once.with 'SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000'
       
-      @source.get_data type, field, :some_offset
+      @source.get_data type, category, :some_offset
     end
   end
   
@@ -112,7 +112,7 @@ describe Sources::DB do
 
   describe "harvest_statement_with_offset" do
     before(:each) do
-      @category = stub :category, :name => :some_category
+      @category = stub :category, :from => :some_category
       @type     = stub :type,     :name => :some_type
     end
     it "should get a harvest statement and the chunksize to put the statement together" do

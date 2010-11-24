@@ -19,7 +19,7 @@ module Sources
     def harvest _, category
       get_data do |uid, data|
         indexed_id = uid
-        text = data[category.name]
+        text = data[category.from]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
         yield indexed_id, text
