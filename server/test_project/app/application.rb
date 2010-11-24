@@ -34,9 +34,7 @@ class BookSearch < Application
     geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, :file => 'data/locations.csv')
     geo_index.define_category :location
     geo_index.define_location :north, grid: 2
-    # geo_index.location :east,  grid: 2
-    # geo_index.location :north, grid: 2 # TODO partial does not make sense!
-    # geo_index.location :east,  grid: 2
+    geo_index.define_location :east,  grid: 2
     # geo_location(:north, grid: 20_000, :as => :n20k),
     # geo_location(:east, grid: 20_000, :as => :e20k)
     
