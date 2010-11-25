@@ -1,7 +1,7 @@
 h2. Version 0.12.2 (1.0.0 pre3)
 
- * hanke: (server) New :from option. Assume you have a source @Sources::CSV.new(:title, file:'some_file.csv')@ but you want the category to be called differently. The you use from: @define_category(:similar_title, :from => :title)@.
- * hanke: (server) CSV source uses FasterCSV with all its options (col_sep, row_sep et cetera).
+ * hanke: (server) New :from option. Assume you have a source @Sources::CSV.new(:title, file:'some_file.csv')@ but you want the category to be called differently. Use the from option as follows: @define_category(:similar_title, :from => :title)@.
+ * hanke: (server) CSV source uses @FasterCSV@, passing through all its options (@col_sep@, @row_sep@ et cetera).
  * hanke: (server) More understandable output for rake try, rake try:index, rake try:query.
 
 h2. Version 0.12.1 (1.0.0 pre2)
