@@ -21,19 +21,6 @@ module Indexed
       @weights[sym]
     end
     
-    # Load the data from the db.
-    #
-    def load_from_index_file
-      load_from_index_generation_message
-      clear
-      retrieve
-    end
-    # Notifies the user that the index is being loaded.
-    #
-    def load_from_index_generation_message
-      timed_exclaim "LOAD INDEX #{identifier}."
-    end
-    
     # Loads all indexes.
     #
     def load
