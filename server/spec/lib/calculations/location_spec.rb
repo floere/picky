@@ -2,27 +2,32 @@ require 'spec_helper'
 
 describe Calculations::Location do
   
-  before(:each) do
-    @calculation = Calculations::Location.new 1, 3
+  context 'without margin' do
+    before(:each) do
+      @calculation = Calculations::Location.new 3, 1
+      @calculation.minimum = 5
+    end
+    describe 'reposition' do
+      it 'calculates correctly' do
+        @calculation.recalculate(13).should == 5
+      end
+      it 'calculates correctly' do
+        @calculation.recalculate(5).should == 1
+      end
+    end
   end
   
   context 'without margin' do
-    describe 'reposition' do
-      it 'calculates correctly' do
-        @calculation.reposition(13).should == 4
-      end
-      it 'calculates correctly' do
-        @calculation.reposition(1).should == 0
-      end
-    end
-  end
-  context 'with margin' do
     before(:each) do
-      @calculation.add_margin 5
+      @calculation = Calculations::Location.new 3, 3
+      @calculation.minimum = 5
     end
     describe 'reposition' do
       it 'calculates correctly' do
-        @calculation.reposition(13).should == 5
+        @calculation.recalculate(13).should == 12
+      end
+      it 'calculates correctly' do
+        @calculation.recalculate(5).should == 3
       end
     end
   end

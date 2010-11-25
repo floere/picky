@@ -108,6 +108,10 @@ module Loader
     #
     load_relative 'character_substituters/west_european'
     
+    # Calculations.
+    #
+    load_relative 'calculations/location'
+    
     # Signal handling
     #
     load_relative 'signals'
@@ -187,6 +191,12 @@ module Loader
     load_relative 'index_api'
     
     load_relative 'indexed/wrappers/exact_first'
+    
+    # Bundle Wrapper
+    #
+    load_relative 'indexed/wrappers/bundle/wrapper'
+    load_relative 'indexed/wrappers/bundle/calculation'
+    load_relative 'indexed/wrappers/bundle/location'
     
     # Tokens.
     #

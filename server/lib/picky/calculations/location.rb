@@ -9,9 +9,17 @@ module Calculations
   #
   class Location
     
-    def initialize minimum, gridlength
-      @minimum    = minimum
-      @gridlength = gridlength
+    attr_reader :minimum
+    
+    def initialize user_grid, precision = nil
+      @user_grid = user_grid
+      @precision = precision || 1
+      @grid      = @user_grid / (@precision + 0.5)
+    end
+    
+    def minimum= minimum
+      minimum -= @user_grid
+      @minimum = minimum
     end
     
     #
@@ -22,8 +30,8 @@ module Calculations
     
     #
     #
-    def reposition location
-      ((location - @minimum) / @gridlength).floor
+    def recalculate location
+      ((location - @minimum) / @grid).floor
     end
     
   end

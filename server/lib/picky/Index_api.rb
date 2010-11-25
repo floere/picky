@@ -35,13 +35,20 @@ class IndexAPI
   end
   alias category define_category
   
+  # TODO Rewrite wrap_exact, wrap_source ?
+  #
   def define_location name, options = {}
-    grid      = options[:grid]
+    grid      = options[:grid] || raise("Grid size needs to be given to a location")
     precision = options[:precision]
     
-    define_category name, options do |indexing, _|
-      indexing.source    = Sources::Wrappers::Location.new indexing.source, grid: grid, precision: precision
+    define_category name, options do |indexing, indexed|
+      indexing.source    = Sources::Wrappers::Location.new indexing, grid: grid, precision: precision
       indexing.tokenizer = Tokenizers::Index.new
+      # indexing.partial = Partial::None.new
+      
+      exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: grid
+      indexed.exact   = exact_bundle
+      indexed.partial = exact_bundle
     end
   end
   alias location define_location

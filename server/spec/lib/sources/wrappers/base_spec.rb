@@ -2,13 +2,17 @@ require 'spec_helper'
 
 describe Sources::Wrappers::Base do
   
+  before(:each) do
+    @backend  = stub :backend
+    @category = stub :category, :source => @backend
+  end
+  
   context "with backend" do
     it "doesn't fail" do
-      lambda { Sources::Wrappers::Base.new(:something) }.should_not raise_error
+      lambda { Sources::Wrappers::Base.new(@category) }.should_not raise_error
     end
     before(:each) do
-      @backend = stub :backend
-      @wrapper = Sources::Wrappers::Base.new @backend
+      @wrapper  = Sources::Wrappers::Base.new @category
     end
     it "delegates harvest" do
       @backend.should_receive(:harvest).once.with :some_type, :some_field

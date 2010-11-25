@@ -4,12 +4,13 @@ module Sources
     
     class Base
       
-      attr_reader :backend
+      attr_reader :backend, :category
       
-      # Wraps a backend
+      # Wraps an indexing category.
       #
-      def initialize backend
-        @backend = backend
+      def initialize category
+        @category = category
+        @backend  = category.source
       end
       
       # Default is delegation for all methods

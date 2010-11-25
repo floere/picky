@@ -3,22 +3,23 @@ module Index
   class Files
     
     attr_reader :bundle_name
-    attr_reader :prepared, :index, :similarity, :weights
+    attr_reader :prepared, :index, :weights, :similarity, :configuration
     
-    delegate :index_name, :category_name, :to => :@configuration
+    delegate :index_name, :category_name, :to => :@config
     
-    def initialize bundle_name, configuration
-      @bundle_name   = bundle_name
-      @configuration = configuration
+    def initialize bundle_name, config
+      @bundle_name = bundle_name
+      @config      = config
       
       # Note: We marshal the similarity, as the
       #       Yajl json lib cannot load symbolized
       #       values, just keys.
       #
-      @prepared   = File::Text.new    configuration.prepared_index_path
-      @index      = File::JSON.new    configuration.index_path(bundle_name, :index)
-      @similarity = File::Marshal.new configuration.index_path(bundle_name, :similarity)
-      @weights    = File::JSON.new    configuration.index_path(bundle_name, :weights)
+      @prepared      = File::Text.new    config.prepared_index_path
+      @index         = File::JSON.new    config.index_path(bundle_name, :index)
+      @weights       = File::JSON.new    config.index_path(bundle_name, :weights)
+      @similarity    = File::Marshal.new config.index_path(bundle_name, :similarity)
+      @configuration = File::JSON.new    config.index_path(bundle_name, :configuration)
     end
     
     # Delegators.
@@ -35,11 +36,14 @@ module Index
     def dump_index index_hash
       index.dump index_hash
     end
+    def dump_weights weights_hash
+      weights.dump weights_hash
+    end
     def dump_similarity similarity_hash
       similarity.dump similarity_hash
     end
-    def dump_weights weights_hash
-      weights.dump weights_hash
+    def dump_configuration configuration_hash
+      configuration.dump configuration_hash
     end
     
     # Loading.
@@ -52,6 +56,9 @@ module Index
     end
     def load_weights
       weights.load
+    end
+    def load_configuration
+      configuration.load
     end
     
     # Cache ok?
@@ -82,16 +89,18 @@ module Index
     #
     def backup
       index.backup
-      similarity.backup
       weights.backup
+      similarity.backup
+      configuration.backup
     end
     
     # Restores the indexes from the "backup" directory.
     #
     def restore
       index.restore
-      similarity.restore
       weights.restore
+      similarity.restore
+      configuration.restore
     end
     
     
@@ -99,8 +108,9 @@ module Index
     #
     def delete
       index.delete
-      similarity.delete
       weights.delete
+      similarity.delete
+      configuration.delete
     end
     
   end

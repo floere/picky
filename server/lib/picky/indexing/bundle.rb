@@ -120,6 +120,7 @@ module Indexing
       dump_index
       dump_similarity
       dump_weights
+      dump_configuration
     end
     # Dumps the core index.
     #
@@ -138,6 +139,12 @@ module Indexing
     def dump_similarity
       timed_exclaim "DUMP SIMILARITY #{identifier}."
       files.dump_similarity similarity
+    end
+    # Dumps the similarity index.
+    #
+    def dump_configuration
+      timed_exclaim "DUMP CONFIGURATION #{identifier}."
+      files.dump_configuration configuration
     end
     
     # Alerts the user if an index is missing.

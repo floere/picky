@@ -94,8 +94,9 @@ describe Indexing::Bundle do
   describe 'dump' do
     it 'should trigger dumps' do
       @index.should_receive(:dump_index).once.with
-      @index.should_receive(:dump_similarity).once.with
       @index.should_receive(:dump_weights).once.with
+      @index.should_receive(:dump_similarity).once.with
+      @index.should_receive(:dump_configuration).once.with
       
       @index.dump
     end
@@ -221,6 +222,9 @@ describe Indexing::Bundle do
     end
     it 'should initialize the similarity index correctly' do
       @index.similarity.should == {}
+    end
+    it 'should initialize the configuration correctly' do
+      @index.configuration.should == {}
     end
     it 'should initialize the partial strategy correctly' do
       @index.partial_strategy.should == @partial

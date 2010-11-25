@@ -7,7 +7,8 @@ module Indexed
   #
   class Category
     
-    attr_reader :exact, :partial, :identifier, :name
+    attr_accessor :exact, :partial
+    attr_reader   :identifier, :name
     
     #
     #

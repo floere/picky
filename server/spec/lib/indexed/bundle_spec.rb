@@ -45,8 +45,9 @@ describe Indexed::Bundle do
   describe 'load' do
     it 'should trigger loads' do
       @bundle.should_receive(:load_index).once.with
-      @bundle.should_receive(:load_similarity).once.with
       @bundle.should_receive(:load_weights).once.with
+      @bundle.should_receive(:load_similarity).once.with
+      @bundle.should_receive(:load_configuration).once.with
       
       @bundle.load
     end
@@ -64,6 +65,15 @@ describe Indexed::Bundle do
         @bundle.load_index
       end
     end
+    describe "load_weights" do
+      it "uses the right file" do
+        Yajl::Parser.stub! :parse
+        
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_weights.json', 'r'
+        
+        @bundle.load_weights
+      end
+    end
     describe "load_similarity" do
       it "uses the right file" do
         Marshal.stub! :load
@@ -73,13 +83,13 @@ describe Indexed::Bundle do
         @bundle.load_similarity
       end
     end
-    describe "load_weights" do
+    describe "load_configuration" do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_weights.json', 'r'
+        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_configuration.json', 'r'
         
-        @bundle.load_weights
+        @bundle.load_configuration
       end
     end
   end
@@ -100,6 +110,9 @@ describe Indexed::Bundle do
     end
     it 'should initialize the similarity index correctly' do
       @bundle.similarity.should == {}
+    end
+    it 'should initialize the configuration correctly' do
+      @bundle.configuration.should == {}
     end
     it 'should initialize the similarity strategy correctly' do
       @bundle.similarity_strategy.should == :similarity

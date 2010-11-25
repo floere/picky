@@ -25,8 +25,9 @@ module Indexed
     #
     def load
       load_index
-      load_similarity
       load_weights
+      load_similarity
+      load_configuration
     end
     # Loads the core index.
     #
@@ -42,6 +43,11 @@ module Indexed
     #
     def load_similarity
       self.similarity = files.load_similarity
+    end
+    # Loads the configuration.
+    #
+    def load_configuration
+      self.configuration = files.load_configuration
     end
     
   end

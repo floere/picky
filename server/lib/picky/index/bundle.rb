@@ -22,17 +22,19 @@ module Index
   class Bundle
     
     attr_reader   :identifier, :files
-    attr_accessor :index, :weights, :similarity, :similarity_strategy
+    attr_accessor :index, :weights, :similarity, :configuration, :similarity_strategy
     
-    delegate :[], :[]=, :clear, :to => :index
+    delegate :clear,    :to => :index
+    delegate :[], :[]=, :to => :configuration
     
     def initialize name, configuration, similarity_strategy
       @identifier = "#{configuration.identifier} (#{name})"
       @files      = Files.new name, configuration
       
-      @index      = {}
-      @weights    = {}
-      @similarity = {}
+      @index         = {}
+      @weights       = {}
+      @similarity    = {}
+      @configuration = {} # A hash with config options.
       
       @similarity_strategy = similarity_strategy
     end
