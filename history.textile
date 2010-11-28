@@ -1,3 +1,7 @@
+h2. Version 0.12.3 (1.0.0 pre4)
+
+ * hanke: (server) Fixed cased file name (led to problems under Linux, thanks Bernd Schoeller)
+
 h2. Version 0.12.2 (1.0.0 pre3)
 
  * hanke: (server) New :from option. Assume you have a source @Sources::CSV.new(:title, file:'some_file.csv')@ but you want the category to be called differently. Use the from option as follows: @define_category(:similar_title, :from => :title)@.

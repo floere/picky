@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'picky-client'
-  s.version = '0.12.2'
+  s.version = '0.12.3'
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky-client@gmail.com'
   s.homepage = 'http://floere.github.com/picky'
