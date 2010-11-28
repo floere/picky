@@ -95,7 +95,7 @@ describe "Integration Tests" do
     
     # Location based search.
     #
-    it_should_find_ids_in_geo "north2:47.5 east2:7.5", [3, 5]
+    it_should_find_ids_in_geo "north2:47.5 east2:7.5", [18255]
     
     # Categorization.
     #
