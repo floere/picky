@@ -2,7 +2,7 @@
 #
 class BookSearch < Application
     
-    default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
+    default_indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/,
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
                      splits_text_on:                     /[\s\/\-\"\&]/,
                      removes_characters_after_splitting: /[\.]/,
@@ -10,7 +10,7 @@ class BookSearch < Application
                      
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
-    default_querying removes_characters:                 /[^ïôåñëa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/,
+    default_querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/,
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
                      removes_characters_after_splitting: //,
@@ -42,8 +42,10 @@ class BookSearch < Application
     
     geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     geo_index.define_category :location
-    geo_index.define_location :north001, grid: 0.01, precision: 1, from: :north # TODO grid is too internal!
-    geo_index.define_location :east001,  grid: 0.01, precision: 1, from: :east
+    geo_index.define_location :north1001, grid: 0.01, precision: 1, from: :north # TODO grid is too internal! radius?
+    geo_index.define_location :east1001,  grid: 0.01, precision: 1, from: :east
+    # geo_index.define_location :north3001, grid: 0.01, precision: 3, from: :north # TODO grid is too internal! radius?
+    # geo_index.define_location :east3001,  grid: 0.01, precision: 3, from: :east
     
     csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,

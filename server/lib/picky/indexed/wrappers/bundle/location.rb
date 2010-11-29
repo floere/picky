@@ -28,7 +28,7 @@ module Indexed
           # Load first the bundle, then extract the config.
           #
           bundle.load
-          minimum = bundle[:location_minimum] || raise("Configuration :location_minimum for #{bundle.identifier} missing.")
+          minimum = bundle[:location_minimum] || raise("Configuration :location_minimum for #{bundle.identifier} missing. Did you run rake index already?")
           @calculation.minimum = minimum
         end
         
