@@ -1,0 +1,78 @@
+!!!
+%html{ :lang => 'en' }
+  %head
+    %link{:href => "stylesheets/stylesheet.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    = js 'jquery-1.4.3.min'
+    = js 'jquery.scrollTo-1.4.2'
+    = js 'jquery.timer'
+    
+    / = js 'picky.extensions'
+    / = js 'picky.translations'
+    / = js 'picky.data'
+    / = js 'picky.view'
+    / = js 'picky.backend'
+    / = js 'picky.controller'
+    / = js 'picky.client'
+    / = js 'picky.addination'
+    / = js 'picky.results_renderer'
+    / = js 'picky.allocation_renderer'
+    / = js 'picky.allocations_cloud'
+    
+    = js 'picky.min'
+  %body
+    %img{:src => "images/picky.png"}/
+    %p
+      %a{:href => "http://floere.github.com/picky"} To the Picky Homepage
+      \/
+      %a{:href => '/configure' } Configuring this app server
+    %p
+      Try a location search in Switzerland. For example, the area around Grüningen:
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('north1:47.283 east1:8.762');"} north1:47.283 east1:8.762
+    %p
+      It also works without qualifiers, as it knows what you mean:
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('47.283, 8.762');"} 47.283, 8.762
+    = Picky::Helper.cached_interface
+    :javascript
+      pickyClient = new PickyClient({
+        // A full query displays the rendered results.
+        //
+        full: '/search/full',
+        
+        // A live query just updates the count.
+        //
+        live: '/search/live',
+        
+        // showResultsLimit: 10, // Optional. Default is 10.
+        
+        // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
+        // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+        // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+        
+        // This is used to generate the correct query strings, localized. E.g. "subject:war".
+        // Optional. If you don't give these, the field identifier given in the Picky server is used.
+        //
+        qualifiers: {
+          en:{
+            subjects:  'subject'
+          }
+        },
+        
+        // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
+        // Optional. Default are the field identifiers from the Picky server.
+        //
+        explanations: {
+          en:{
+            title:     'titled',
+            author:    'written by',
+            year:      'published in'
+            // publisher: 'published by',
+            // subjects:  'topics'
+          }
+        }
+      });
+      
+      // An initial search text, prefilled.
+      //
+      //pickyClient.insert('italy');
