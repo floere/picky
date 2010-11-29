@@ -42,10 +42,8 @@ class BookSearch < Application
     
     geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     geo_index.define_category :location
-    geo_index.define_location :north1001, grid: 0.01, precision: 1, from: :north # TODO grid is too internal! radius?
-    geo_index.define_location :east1001,  grid: 0.01, precision: 1, from: :east
-    # geo_index.define_location :north3001, grid: 0.01, precision: 3, from: :north # TODO grid is too internal! radius?
-    # geo_index.define_location :east3001,  grid: 0.01, precision: 3, from: :east
+    geo_index.define_map_location :north1, radius: 1, from: :north
+    geo_index.define_map_location :east1,  radius: 1, precision: 1, from: :east
     
     csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,

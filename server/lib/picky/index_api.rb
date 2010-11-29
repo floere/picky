@@ -38,7 +38,7 @@ class IndexAPI
   # TODO Rewrite wrap_exact, wrap_source ?
   #
   def define_location name, options = {}
-    grid      = options[:grid] || options[:radius] || raise("Grid size or radius needs to be set, it defines the search grid width or radius.")
+    grid      = options[:radius] || raise("Option :radius needs to be set on define_location, it defines the search radius.")
     precision = options[:precision]
     
     options = { partial: Partial::None.new }.merge options
@@ -54,4 +54,23 @@ class IndexAPI
   end
   alias location define_location
   
+  # Options
+  # * radius (in km).
+  #
+  def define_map_location name, options = {}
+    radius = options[:radius] || raise("Option :radius needs to be set on define_map_location, it defines the search radius.")
+    
+    # The radius is given as if all the locations were on the equator.
+    #
+    # TODO Need to recalculate since not many locations are on the equator ;) This is just a prototype.
+    #
+    # This calculates km -> longitude (degrees).
+    #
+    # A degree on the equator is equal to ~111,319.9 meters.
+    # So a km on the equator is equal to 0.00898312 degrees.
+    #
+    options[:radius] = radius * 0.00898312
+    
+    define_location name, options
+  end
 end
