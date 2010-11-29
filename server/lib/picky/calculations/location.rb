@@ -18,7 +18,15 @@ module Calculations
     end
     
     def minimum= minimum
+      # Add a margin of 1 user grid.
+      #
       minimum -= @user_grid
+      
+      # Add plus 1 grid so that the index key never falls on 0.
+      # Why? to_i maps by default to 0.
+      #
+      minimum -= @grid
+      
       @minimum = minimum
     end
     
