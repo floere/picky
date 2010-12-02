@@ -44,7 +44,7 @@ module Picky
     
     def initialize
       @types = {
-        project: [Project, :project_name]
+        project => [Project, :project_name]
       }
     end
     
@@ -148,7 +148,7 @@ module Picky
       rescue Errno::EISDIR
         # p "EISDIR #{filename} -> #{target}"
         FileUtils.rm target
-        FileUtils.mkdir_p target unless Dir.exists?(target)
+        FileUtils.mkdir_p target unless File.exist?(target)
         created target
       rescue Errno::EEXIST
         # p "EEXIST #{filename} -> #{target}"
