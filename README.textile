@@ -7,9 +7,15 @@ Ask questions in the "Picky Mailing List":http://groups.google.com/group/picky-r
 See the "changelog":http://github.com/floere/picky/blob/master/history.textile.
 Find everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
-h1. Installation
+h1. System Requirements
 
-Note that Picky only runs on Ruby 1.9. I recommend "RVM":http://rvm.beginrescueend.com/ for installing and managing Ruby versions.
+* OSX / Linux
+* "Ruby 1.9":http://www.ruby-lang.org/en/downloads/
+* "Bundler Gem":http://gembundler.com/
+
+I recommend "RVM":http://rvm.beginrescueend.com/ for installing and managing Ruby versions.
+
+h1. Installation
 
 <pre><code>gem install picky picky-client</code></pre>
 
