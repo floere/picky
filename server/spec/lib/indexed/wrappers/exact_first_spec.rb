@@ -16,7 +16,7 @@ describe Indexed::Wrappers::ExactFirst do
       #
       # it "wraps each category" do
       #   type = Index::Type.new :type_name
-      #   type.add_category :some_category
+      #   type.define_category :some_category
       #   
       #   Index::Wrappers::ExactFirst.wrap type
       #   
@@ -24,7 +24,7 @@ describe Indexed::Wrappers::ExactFirst do
       # end
       it "returns the type" do
         type = Indexed::Index.new :type_name
-        type.add_category :some_category
+        type.define_category :some_category
         
         Indexed::Wrappers::ExactFirst.wrap(type).should == type
       end

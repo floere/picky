@@ -1,5 +1,7 @@
 # This class defines the indexing and index API.
 #
+# It provides a single front for both indexing and index options.
+#
 # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
 #
 class IndexAPI
@@ -26,8 +28,8 @@ class IndexAPI
   def define_category category_name, options = {}
     category_name = category_name.to_sym
     
-    indexing_category = indexing.add_category category_name, options
-    indexed_category  = indexed.add_category  category_name, options
+    indexing_category = indexing.define_category category_name, options
+    indexed_category  = indexed.define_category  category_name, options
     
     yield indexing_category, indexed_category if block_given?
     

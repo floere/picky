@@ -9,8 +9,8 @@ describe Indexing::Index do
       @categories = stub :categories
       
       @index = Indexing::Index.new :some_name, @source
-      @index.add_category :some_category_name1
-      @index.add_category :some_category_name2
+      @index.define_category :some_category_name1
+      @index.define_category :some_category_name2
       
       @index.stub! :categories => @categories
     end

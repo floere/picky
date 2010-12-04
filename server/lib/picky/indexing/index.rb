@@ -30,7 +30,7 @@ module Indexing
     
     # TODO Spec. Doc.
     #
-    def add_category category_name, options = {}
+    def define_category category_name, options = {}
       options = default_category_options.merge options
       
       new_category = Category.new category_name, self, options
