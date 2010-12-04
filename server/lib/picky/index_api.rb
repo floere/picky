@@ -1,4 +1,4 @@
-# This class defines the indexing and index API.
+# This class defines the indexing and index API that is exposed to the user.
 #
 # It provides a single front for both indexing and index options.
 #
@@ -6,11 +6,10 @@
 #
 class IndexAPI
   
-  # TODO Delegation.
-  #
-  
   attr_reader :name, :indexing, :indexed
   
+  # TODO Doc.
+  #
   def initialize name, source, options = {}
     @name     = name
     @indexing = Indexing::Index.new name, source, options
@@ -21,9 +20,7 @@ class IndexAPI
     Indexes.register self
   end
   
-  # API.
-  #
-  # TODO Spec! Doc!
+  # TODO Doc.
   #
   def define_category category_name, options = {}
     category_name = category_name.to_sym
@@ -51,7 +48,7 @@ class IndexAPI
       
       exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: grid, precision: precision
       indexed.exact   = exact_bundle
-      indexed.partial = exact_bundle
+      indexed.partial = exact_bundle # A partial token also uses the exact index.
     end
   end
   alias location define_location
