@@ -1,4 +1,5 @@
-module Solr
+module Solr # :nodoc:all
+  
   class SchemaGenerator
 
     attr_reader :types

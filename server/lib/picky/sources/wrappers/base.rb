@@ -1,6 +1,8 @@
 module Sources
   
-  module Wrappers
+  # TODO Document.
+  #
+  module Wrappers # :nodoc:all
     
     class Base
       

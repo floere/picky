@@ -1,4 +1,4 @@
-module Tokenizers
+module Tokenizers # :nodoc:all
   
   # Defines tokenizing processes used both in indexing and querying.
   #

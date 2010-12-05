@@ -3,7 +3,7 @@
 #
 # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
 #
-class IndexAPI
+class IndexAPI # :nodoc:all
   
   attr_reader :name, :indexing, :indexed
   

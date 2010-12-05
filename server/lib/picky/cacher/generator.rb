@@ -1,4 +1,4 @@
-module Cacher
+module Cacher # :nodoc:all
   
   # A cache generator holds an index.
   #
