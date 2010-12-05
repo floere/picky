@@ -33,7 +33,7 @@ class IndexAPI
   end
   alias category define_category
   
-  # TODO Rewrite wrap_exact, wrap_source ?
+  # 
   #
   def define_location name, options = {}
     grid      = options[:radius] || raise("Option :radius needs to be set on define_location, it defines the search radius.")
@@ -45,8 +45,6 @@ class IndexAPI
       indexing.source    = Sources::Wrappers::Location.new indexing, grid: grid, precision: precision
       indexing.tokenizer = Tokenizers::Index.new
       
-      # TODO Indexed::Bundle::Wrappers::Location
-      #
       exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: grid, precision: precision
       indexed.exact   = exact_bundle
       indexed.partial = exact_bundle # A partial token also uses the exact index.
