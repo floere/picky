@@ -2,10 +2,10 @@ module Sources # :nodoc:
   
   # Sources are where your data comes from.
   #
-  # A source has 1-3 methods:
-  # * connect_backend: Optional, called once for each type/category pair.
+  # A source has 1 mandatory and 2 optional methods:
+  # * connect_backend (_optional_): called once for each type/category pair.
   # * harvest: Used by the indexer to gather data. Yields an indexed_id (string or integer) and a string value.
-  # * take_snapshot: Optional, called once for each type.
+  # * take_snapshot (_optional_): called once for each type.
   #
   # This base class "implements" all these methods, but they don't do anything.
   # Override the methods in your source to do something.
