@@ -1,5 +1,4 @@
 # This class defines the indexing and index API that is exposed to the user.
-#
 # It provides a single front for both indexing and index options.
 #
 # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
@@ -46,6 +45,8 @@ class IndexAPI
       indexing.source    = Sources::Wrappers::Location.new indexing, grid: grid, precision: precision
       indexing.tokenizer = Tokenizers::Index.new
       
+      # TODO Indexed::Bundle::Wrappers::Location
+      #
       exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: grid, precision: precision
       indexed.exact   = exact_bundle
       indexed.partial = exact_bundle # A partial token also uses the exact index.

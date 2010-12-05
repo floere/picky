@@ -5,6 +5,9 @@ require 'spec_helper'
 describe IndexAPI do
   
   context 'initializer' do
+    it 'works' do
+      lambda { IndexAPI.new :some_index_name, :some_source }.should_not raise_error
+    end
     it 'registers with the indexes' do
       @api = IndexAPI.allocate
       
