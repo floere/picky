@@ -1,1 +1,1 @@
-rdoc -f darkfish -x spec\.rb lib
+rdoc --main lib/picky/application.rb -o ../../picky.pagez/doc -f darkfish -x spec\.rb lib
