@@ -8,7 +8,7 @@ module Sources # :nodoc:
   # * take_snapshot (_optional_): called once for each type.
   #
   # This base class "implements" all these methods, but they don't do anything.
-  # Override the methods in your source to do something.
+  # Subclass this class <tt>class MySource < Base</tt> and override the methods in your source to do something.
   #
   class Base
     
