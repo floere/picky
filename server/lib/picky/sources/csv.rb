@@ -3,16 +3,34 @@ module Sources
   # Raised when a CSV source is instantiated without a file.
   #
   # Example:
-  #   Sources::CSV.new(:column1, :column2)
+  #   Sources::CSV.new(:column1, :column2) # without file option
   #
   class NoCSVFileGiven < StandardError; end
   
-  # Describes a CSV source, a file with csv in it.
-  # Give it a sequence of category names and a file option with the filename.
+  # Describes a CSV source, a file with comma separated values in it.
+  # 
+  # The first column is implicitly assumed to be the id column.
+  #
+  # It takes the same options as the Ruby 1.9 CSV class.
+  #
+  # Examples:
+  #  Sources::CSV.new(:title, :author, :isbn, file:'data/a_csv_file.csv')
+  #  Sources::CSV.new(:title, :author, :isbn, file:'data/a_csv_file.csv', col_sep:';')
+  #  Sources::CSV.new(:title, :author, :isbn, file:'data/a_csv_file.csv', row_sep:"\n")
   #
   class CSV < Base
     
-    attr_reader :file_name, :csv_options, :category_names
+    # The CSV file's path, relative to PICKY_ROOT.
+    #
+    attr_reader :file_name
+    
+    # The options that were passed into #new.
+    #
+    attr_reader :csv_options
+    
+    # The data category names.
+    #
+    attr_reader :category_names
     
     def initialize *category_names, options
       require 'csv'
@@ -22,9 +40,9 @@ module Sources
       @file_name      = @csv_options.delete(:file) || raise_no_file_given(category_names)
     end
     
+    # Raises a NoCSVFileGiven exception.
     #
-    #
-    def raise_no_file_given category_names
+    def raise_no_file_given category_names # :nodoc:
       raise NoCSVFileGiven.new(category_names.join(', '))
     end
     
@@ -43,7 +61,7 @@ module Sources
     
     #
     #
-    def get_data &block
+    def get_data &block # :nodoc:
       ::CSV.foreach file_name, csv_options, &block
     end
     
