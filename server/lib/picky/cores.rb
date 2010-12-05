@@ -2,7 +2,7 @@ Infinity = 1.0/0
 
 # Handles processing over multiple cores.
 #
-class Cores
+class Cores # :nodoc:all
   
   # Pass it an ary or generator.
   #
