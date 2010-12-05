@@ -1,4 +1,4 @@
-module Rack
+module Rack # :nodoc:
   
   # Simple Rack Middleware to kill Unicorns after X requests.
   #
@@ -16,7 +16,6 @@ module Rack
     # Set the amount of requests before the Unicorn commits Harakiri.
     #
     cattr_accessor :after
-    attr_reader :quit_after_requests
     
     def initialize app
       @app = app
@@ -25,8 +24,10 @@ module Rack
       @quit_after_requests = self.class.after || 50
     end
     
-    # Harakiri is a middleware, so it passes the call on after checking if it
-    # is time to honorably retire.
+    # #call interface method.
+    #
+    # Harakiri is a middleware, so it delegates the the app or
+    # the next middleware after checking if it is time to honorably retire.
     #
     def call env
       harakiri
@@ -37,9 +38,17 @@ module Rack
     #
     # If yes, kills itself (Unicorn will answer the request, honorably).
     #
+    # Note: Sends its process a QUIT signal if it is time.
+    #
     def harakiri
       @requests = @requests + 1
-      Process.kill(:QUIT, Process.pid) if @requests >= @quit_after_requests
+      Process.kill(:QUIT, Process.pid) if harakiri?
+    end
+    
+    # Is it time to honorably retire?
+    #
+    def harakiri?
+      @requests >= @quit_after_requests
     end
     
   end
