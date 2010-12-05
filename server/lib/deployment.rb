@@ -1,7 +1,7 @@
 require File.expand_path '../constants', __FILE__
 
 module Picky
-  module Capistrano
+  module Capistrano # :nodoc:all
     
     # Include all 
     #

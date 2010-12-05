@@ -1,4 +1,4 @@
-module Index
+module Index # :nodoc:all
   # A Bundle is a number of indexes
   # per [index, category] combination.
   #

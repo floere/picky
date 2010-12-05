@@ -1,6 +1,6 @@
 # Loads the search engine and itself.
 #
-module Loader
+module Loader # :nodoc:all
   
   # Reloads the whole app.
   # First itself, then the app.

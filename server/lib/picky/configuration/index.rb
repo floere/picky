@@ -1,4 +1,4 @@
-module Configuration
+module Configuration # :nodoc:all
   
   # Holds the configuration for a
   # index/category combination.

@@ -1,3 +1,5 @@
+# TODO Not used anymore? Remove.
+#
 module Helpers
   module GC
     def gc_disabled &block

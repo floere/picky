@@ -1,6 +1,6 @@
 # Extending the Symbol class.
 #
-class Symbol
+class Symbol # :nodoc:all
   
   # :keys.each_subtoken    # => yields each of [:keys, :key, :ke, :k]
   # :keys.each_subtoken(2) # => yields each of [:keys, :key, :ke]

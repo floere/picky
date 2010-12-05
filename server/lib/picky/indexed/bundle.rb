@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-module Indexed
+module Indexed # :nodoc:all
 
   # This is the _actual_ index.
   #

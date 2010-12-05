@@ -1,6 +1,6 @@
 # Extensions for the Hash.
 #
-class Hash
+class Hash # :nodoc:all
   
   # Dumps jsonized self to the path given. Minus extension.
   #

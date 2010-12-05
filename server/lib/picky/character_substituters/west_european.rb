@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-module CharacterSubstituters
+module CharacterSubstituters # :nodoc:all
   # Substitutes Umlauts like
   # ä, ö, ü => ae, oe, ue.
   # (and more, see specs)

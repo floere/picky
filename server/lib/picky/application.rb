@@ -1,5 +1,7 @@
 # The Picky application wherein the indexing and querying is defined.
 #
+# TODO Documentation.
+#
 class Application
   
   class << self

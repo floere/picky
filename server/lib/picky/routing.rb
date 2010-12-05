@@ -2,7 +2,7 @@ require 'rack/mount'
 
 # 
 #
-class Routing
+class Routing # :nodoc:all
   
   @@defaults = {
     query_key:    'query'.freeze,

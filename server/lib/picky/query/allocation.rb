@@ -1,4 +1,4 @@
-module Query
+module Query # :nodoc:all
   # An allocation has a number of combinations:
   # [token, index] [other_token, other_index], ...
   #

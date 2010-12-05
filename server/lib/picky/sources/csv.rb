@@ -1,10 +1,15 @@
 module Sources
   
-  # Describes a CSV source, a file with csv in it.
-  # Give it a sequence of category names and a file option with the filename.
+  # Raised when a CSV source is instantiated without a file.
+  #
+  # Example:
+  #   Sources::CSV.new(:column1, :column2)
   #
   class NoCSVFileGiven < StandardError; end
   
+  # Describes a CSV source, a file with csv in it.
+  # Give it a sequence of category names and a file option with the filename.
+  #
   class CSV < Base
     
     attr_reader :file_name, :csv_options, :category_names

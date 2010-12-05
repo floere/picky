@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-module Indexing
+module Indexing # :nodoc:all
 
   # This is the indexing bundle.
   # It does all menial tasks that have nothing to do

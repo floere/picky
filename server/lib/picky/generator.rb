@@ -8,7 +8,7 @@ module Picky
   #   picky <command> <options>
   # is found.
   #
-  class NoGeneratorError < StandardError
+  class NoGeneratorError < StandardError # :nodoc:all
     
     def initialize generator
       super usage + possible_commands(generator.types)
@@ -38,7 +38,7 @@ module Picky
   #
   # Basically copies a prototype project into a newly generated directory.
   #
-  class Generator
+  class Generator # :nodoc:all
     
     attr_reader :types
     

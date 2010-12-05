@@ -1,6 +1,6 @@
 # Comfortable API convenience class, splits methods to indexes.
 #
-class IndexesAPI
+class IndexesAPI # :nodoc:all
   
   attr_reader :indexes, :index_mapping
   

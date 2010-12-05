@@ -1,4 +1,4 @@
-module Results
+module Results # :nodoc:all
 
   # This is the internal results object. Usually, to_marshal, or to_json
   # is called on it to get a string for the answer.

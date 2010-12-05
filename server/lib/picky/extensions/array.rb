@@ -1,6 +1,6 @@
 # The Array class we all know and love.
 #
-class Array
+class Array # :nodoc:all
 
   # Cluster-uniqs equal neighborly elements.
   #

@@ -1,4 +1,4 @@
-module Indexers
+module Indexers # :nodoc:all
   
   # Raised if no source is available on a category.
   #
