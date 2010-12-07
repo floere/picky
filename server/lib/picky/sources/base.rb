@@ -1,3 +1,5 @@
+# = Data Sources
+#
 # Currently, Picky offers the following Sources:
 # * CSV (comma – or other – separated file)
 # * Couch (CouchDB, key-value store)
