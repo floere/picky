@@ -1,4 +1,15 @@
-module Sources # :nodoc:
+# Currently, Picky offers the following Sources:
+# * CSV
+# * Couch
+# * DB
+# * Delicious
+# See also:
+# http://github.com/floere/picky/wiki/Sources-Configuration
+# 
+# Don't worry if your source isn't here. Adding your own is easy:
+# http://github.com/floere/picky/wiki/Contributing-sources
+#
+module Sources
   
   # Sources are where your data comes from.
   #
@@ -33,7 +44,7 @@ module Sources # :nodoc:
     # be sure to <tt>yield(id, text_for_id)</tt> (or <tt>block.call(id, text_for_id)</tt>)
     # for the given type symbol and category symbol.
     #
-    def harvest type, category # :yields: id, text_for_id
+    def harvest index, category # :yields: id, text_for_id
       # This concrete implementation yields "nothing", override in subclasses.
     end
     
@@ -44,7 +55,7 @@ module Sources # :nodoc:
     # Example:
     # * In a DB source, a table based on the source's select statement is created.
     #
-    def take_snapshot type
+    def take_snapshot index
       
     end
     
