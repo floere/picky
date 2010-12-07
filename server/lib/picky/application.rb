@@ -1,4 +1,8 @@
+# = Picky Applications
+#
 # A Picky Application is where you configure the whole search engine.
+#
+# This is a step-by-step description on how to configure your Picky app.
 #
 # Start by subclassing Application:
 #   class MyGreatSearch < Application
@@ -8,6 +12,8 @@
 #   $ picky project project_name
 # will generate an example <tt>project_name/app/application.rb</tt> file for you
 # with some example code inside.
+#
+# == index(name, source)
 #
 # Next, define where your data comes from. You use the <tt>index</tt> method for that:
 #   my_index = index :some_index_name, some_source
@@ -19,8 +25,12 @@
 #   end
 # Now we have an index <tt>books</tt>.
 # 
-# That on itself won't do much good. Picky needs us to define categories on the data.
-# 
+# That on itself won't do much good.
+#
+# == index.define_category(identifier, options = {})
+#
+# Picky needs us to define categories on the data.
+#
 # Categories help your user find data.
 # It's best if you look at an example yourself: http://floere.github.com/picky/examples.html
 #
@@ -33,7 +43,12 @@
 #   end
 # Now we could already run the indexer:
 #   $ rake index
-# Now we have indexed data, but nobody to ask the index anything.
+#
+# (You can define similarity or partial search capabilities on a category, see http://github.com/floere/picky/wiki/Categories-configuration for info)
+#
+# So now we have indexed data (the title), but nobody to ask the index anything.
+#
+# == Query::Full.new(*indexes, options = {})
 #
 # We need somebody who asks the index (a Query object, also see http://github.com/floere/picky/wiki/Queries-Configuration). That works like this:
 #    full_books_query = Query::Full.new books
@@ -42,6 +57,8 @@
 # 
 # Now we have somebody we can ask about the index. But no external interface.
 # 
+# == route(/regexp1/ => query1, /regexp2/ => query2, ...)
+#
 # Let's add a URL path (a Route, see http://github.com/floere/picky/wiki/Routing-configuration) to which we can send our queries. We do that with the route method:
 #   route %r{^/books/full$} => full_books_query
 # In full glory:
@@ -67,20 +84,29 @@
 #
 # Maybe you don't find everything. We need to process the data before it goes into the index.
 #
+# == default_indexing(options = {})
+#
 # That's what the <tt>default_indexing</tt> method is for:
 #   default_indexing options
 # Read more about the options here: http://github.com/floere/picky/wiki/Indexing-configuration
 #
 # Same thing with the search text – we need to process that as well.
 #
+# == default_querying(options = {})
+#
 # Analog to the default_indexing method, we use the <tt>default_querying</tt> method.
 #   default_querying options
 # Read more about the options here: http://github.com/floere/picky/wiki/Querying-Configuration
 #
 # And that's all there is. It's incredibly powerful though, as you can combine, weigh, refine to the max.
+#
+# == Wiki
+#
 # Read more in the Wiki: http://github.com/floere/picky/wiki
 #
 # Have fun!
+#
+# == Full example
 #
 # Our example, fully fleshed out with indexing, querying, and weights:
 #   class MyGreatSearch < Application
@@ -103,7 +129,13 @@
 #                      maximum_tokens: 4
 #     
 #     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
-#     books.define_category :title
+#     books.define_category :title,
+#                           qualifiers: [:t, :title, :titre],
+#                           partial:    Partial::Substring.new(:from => 1),
+#                           similarity: Similarity::Phonetic.new(2)
+#     books.define_category :author,
+#                           partial: Partial::Substring.new(:from => -2)
+#     books.define_category :isbn
 #     
 #     query_options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
 #     
