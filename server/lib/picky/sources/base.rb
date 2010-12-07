@@ -1,8 +1,8 @@
 # Currently, Picky offers the following Sources:
-# * CSV
-# * Couch
-# * DB
-# * Delicious
+# * CSV (comma – or other – separated file)
+# * Couch (CouchDB, key-value store)
+# * DB (Databases, foremost MySQL)
+# * Delicious (http://del.icio.us, online bookmarking service)
 # See also:
 # http://github.com/floere/picky/wiki/Sources-Configuration
 # 
