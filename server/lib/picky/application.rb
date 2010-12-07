@@ -35,15 +35,15 @@
 #   $ rake index
 # Now we have indexed data, but nobody to ask the index anything.
 #
-# We need somebody who asks the index (a Query object). That works like this:
+# We need somebody who asks the index (a Query object, also see http://github.com/floere/picky/wiki/Queries-Configuration). That works like this:
 #    full_books_query = Query::Full.new books
 # Full just means that the ids are returned with the results.
 # Picky also offers a Query that returns live results, Query::Live. But that's not important right now.
 # 
 # Now we have somebody we can ask about the index. But no external interface.
 # 
-# Let's add a URL path to which we can send our queries. We do that with the route method:
-#   route %r{\A/books/full\Z} => full_books_query
+# Let's add a URL path (a Route, see http://github.com/floere/picky/wiki/Routing-configuration) to which we can send our queries. We do that with the route method:
+#   route %r{^/books/full$} => full_books_query
 # In full glory:
 #   class MyGreatSearch < Application
 #     
@@ -52,7 +52,7 @@
 #
 #     full_books_query = Query::Full.new books
 #
-#     route %r{\Abooks/full\Z} => full_books_query
+#     route %r{^/books/full$} => full_books_query
 #
 #   end
 # That's it!
@@ -62,6 +62,59 @@
 #   $ rake start
 # Run your first query:
 #   $ curl 'localhost:8080/books/full?query=hello server'
+#
+# Nice, right? Your first query!
+#
+# Maybe you don't find everything. We need to process the data before it goes into the index.
+#
+# That's what the <tt>default_indexing</tt> method is for:
+#   default_indexing options
+# Read more about the options here: http://github.com/floere/picky/wiki/Indexing-configuration
+#
+# Same thing with the search text – we need to process that as well.
+#
+# Analog to the default_indexing method, we use the <tt>default_querying</tt> method.
+#   default_querying options
+# Read more about the options here: http://github.com/floere/picky/wiki/Querying-Configuration
+#
+# And that's all there is. It's incredibly powerful though, as you can combine, weigh, refine to the max.
+# Read more in the Wiki: http://github.com/floere/picky/wiki
+#
+# Have fun!
+#
+# Our example, fully fleshed out with indexing, querying, and weights:
+#   class MyGreatSearch < Application
+#     
+#     default_indexing removes_characters: /[^a-zA-Z0-9\.]/,
+#                      stopwords: /\b(and|or|in|on|is|has)\b/,
+#                      splits_text_on: /\s/,
+#                      removes_characters_after_splitting: /\./,
+#                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+#                      normalizes_words: [
+#                        [/(.*)hausen/, 'hn'],
+#                        [/\b(\w*)str(eet)?/, 'st']
+#                      ]
+#
+#     default_querying removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/,
+#                      stopwords: /\b(and|the|of|it|in|for)\b/,
+#                      splits_text_on: /[\s\/\-\,\&]+/,
+#                      removes_characters_after_splitting: /\./,
+#                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+#                      maximum_tokens: 4
+#     
+#     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#     books.define_category :title
+#     
+#     query_options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
+#     
+#     full_books_query = Query::Full.new books, query_options
+#     live_books_query = Query::Full.new books, query_options
+#     
+#     route %r{^/books/full$} => full_books_query
+#     route %r{^/books/live$} => live_books_query
+#     
+#   end
+# That's actually already a full-blown Picky App!
 #
 class Application
   
