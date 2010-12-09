@@ -1,9 +1,13 @@
 # coding: utf-8
+#
+
+#
+#
 module Query
 
   # A single qualifier.
   #
-  class Qualifier
+  class Qualifier # :nodoc:all
 
     attr_reader :normalized_qualifier, :codes
 
@@ -28,7 +32,7 @@ module Query
 
   # Collection class for qualifiers.
   #
-  class Qualifiers
+  class Qualifiers # :nodoc:all
 
     include Singleton
 

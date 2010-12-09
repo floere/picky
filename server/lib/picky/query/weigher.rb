@@ -2,7 +2,7 @@ module Query
 
   # Weighs the given tokens, generates Allocations -> Allocation -> Combinations.
   #
-  class Weigher
+  class Weigher # :nodoc:all
 
     attr_reader :indexes
 

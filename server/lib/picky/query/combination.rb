@@ -7,7 +7,7 @@ module Query
   #
   # An allocation consists of a number of combinations.
   #
-  class Combination
+  class Combination # :nodoc:all
 
     attr_reader :token, :bundle, :category_name
 

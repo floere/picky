@@ -1,10 +1,13 @@
 # encoding: utf-8
 #
+
+#
+#
 module Query
   
   # This class primarily handles switching through similar token constellations.
   #
-  class Tokens
+  class Tokens # :nodoc:all
     
     # Basically delegates to its internal tokens array.
     #

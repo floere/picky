@@ -1,4 +1,5 @@
 module Query
+  
   # This is a query token. Together with other tokens it makes up a query.
   #
   # It remembers the original form, and and a normalized form.
@@ -7,7 +8,7 @@ module Query
   #
   # TODO Make partial / similarity char configurable.
   #
-  class Token
+  class Token # :nodoc:all
 
     attr_reader :text, :original
     attr_writer :similar

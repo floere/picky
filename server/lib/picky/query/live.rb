@@ -1,17 +1,19 @@
 module Query
 
-  # This is the query class for live queries.
+  # This Query class performs live queries.
   #
-  # It does:
-  #  * Return a count of results.
+  # It is useful for updating counters, or any job where you don't need the result ids.
   #
-  # It does NOT:
-  #  * Sort results geographically.
-  #  * Do any postprocessing.
+  # It includes in its results:
+  # * A count of results.
+  # * All possible combinations with its weights.
+  #
+  # But not:
+  # * The top X result ids.
   #
   class Live < Base
 
-    # Generates results from allocations.
+    # Returns Results::Live as its result type.
     #
     def result_type
       Results::Live

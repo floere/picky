@@ -4,7 +4,7 @@ module Query
 
   #
   #
-  class Solr < Base
+  class Solr < Base # :nodoc:all
 
     attr_reader :server, :index_types
 

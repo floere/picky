@@ -2,7 +2,7 @@ module Query
 
   # Calculates weights for certain combinations.
   #
-  class Weights
+  class Weights # :nodoc:all
     
     #
     #

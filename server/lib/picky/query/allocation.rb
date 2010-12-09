@@ -1,8 +1,8 @@
-module Query # :nodoc:all
+module Query
   # An allocation has a number of combinations:
   # [token, index] [other_token, other_index], ...
   #
-  class Allocation
+  class Allocation # :nodoc:all
 
     attr_reader :count, :ids, :score, :combinations, :result_type
     

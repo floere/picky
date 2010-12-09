@@ -1,7 +1,7 @@
 module Query
   # Container class for allocations.
   #
-  class Allocations
+  class Allocations # :nodoc:all
 
     # TODO Remove size
     #

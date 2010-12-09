@@ -4,7 +4,7 @@ module Query
   #
   # They are the core of an allocation.
   #
-  class Combinations
+  class Combinations # :nodoc:all
 
     attr_reader :combinations
 
