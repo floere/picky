@@ -1,3 +1,8 @@
+h2. Version 1.0.0
+
+ * hanke: Lots of API RDoc, see http://floere.github.com/picky/doc/index.html.
+ * hanke: Yaaaay! Finally :)
+
 h2. Version 0.12.3 (1.0.0 pre4)
 
  * hanke: (server) Fixed cased file name (led to problems under Linux, thanks Bernd Schoeller)
