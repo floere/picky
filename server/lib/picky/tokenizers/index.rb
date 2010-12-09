@@ -1,4 +1,5 @@
 module Tokenizers
+  
   # The base indexing tokenizer.
   #
   # Override in indexing subclasses and define in configuration.
@@ -15,11 +16,10 @@ module Tokenizers
     # Default indexing preprocessing hook.
     #
     # Does:
-    #   1. Umlaut substitution.
-    #   2. Downcasing.
-    #   3. Remove illegal expressions.
-    #   4. Contraction.
-    #   5. Remove non-single stopwords. (Stopwords that occur with other words)
+    # 1. Character substitution.
+    # 2. Downcasing.
+    # 3. Remove illegal expressions.
+    # 4. Remove non-single stopwords. (Stopwords that occur with other words)
     #
     def preprocess text
       text = substitute_characters text
@@ -27,7 +27,7 @@ module Tokenizers
       remove_illegals text
       # we do not remove single stopwords for an entirely different
       # reason than in the query tokenizer.
-      # An indexed thing with just name "UND" (a stopword) should not lose its name.
+      # An indexed thing with just name "UND" (a possible stopword) should not lose its name.
       #
       remove_non_single_stopwords text
       text
@@ -36,8 +36,8 @@ module Tokenizers
     # Default indexing pretokenizing hook.
     #
     # Does:
-    #   1. Split the text into words.
-    #   2. Normalize each word.
+    # 1. Split the text into words.
+    # 2. Normalize each word.
     #
     # TODO Rename into wordize? Or somesuch?
     #
@@ -60,7 +60,7 @@ module Tokenizers
     #
     # Override in subclasses to redefine behaviour.
     #
-    # TODO Make parametrizable! reject { |token| }
+    # TODO TODO TODO Make parametrizable! reject { |token| }
     #
     def reject tokens
       tokens.reject! &:blank?
