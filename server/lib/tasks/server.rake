@@ -14,7 +14,6 @@ namespace :server do
   # desc "Start the unicorns. (Wehee!)"
   task :start => :framework do
     chdir_to_root
-    # Rake::Task[:"solr:start"].invoke # TODO Move to better place.
     daemonize = PICKY_ENVIRONMENT == 'production' ? '-D' : ''
     command = "export PICKY_ENV=#{PICKY_ENVIRONMENT}; unicorn -c unicorn.ru #{daemonize}".strip
     puts "Running \`#{command}\`."
@@ -24,7 +23,6 @@ namespace :server do
   # desc "Stop the unicorns. (Blam!)"
   task :stop => :framework do
     `kill -QUIT #{current_pid}` if current_pid
-    # Rake::Task[:"solr:stop"].invoke # TODO Move to better place.
   end
   
   # desc "Restart the unicorns."
