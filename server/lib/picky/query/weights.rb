@@ -38,7 +38,7 @@ module Query
     # Note: Cache this if more complicated weighings become necessary.
     #
     def score combinations
-      # TODO Beautify?
+      # TODO Beautify? Use categories for weights?
       #
       # weight_for combinations.map(&:category).clustered_uniq_fast.map!(&:name)
       

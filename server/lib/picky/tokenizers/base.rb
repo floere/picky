@@ -4,8 +4,9 @@ module Tokenizers # :nodoc:all
   #
   class Base
     
-    # TODO use frozen EMPTY_STRING for ''
+    # TODO Move EMPTY_STRING top level.
     #
+    EMPTY_STRING = ''.freeze
     
     # Stopwords.
     #
@@ -13,7 +14,7 @@ module Tokenizers # :nodoc:all
       @remove_stopwords_regexp = regexp
     end
     def remove_stopwords text
-      text.gsub! @remove_stopwords_regexp, '' if @remove_stopwords_regexp
+      text.gsub! @remove_stopwords_regexp, EMPTY_STRING if @remove_stopwords_regexp
       text
     end
     @@non_single_stopword_regexp = /^\b[\w:]+?\b[\.\*\~]?\s?$/
@@ -30,7 +31,7 @@ module Tokenizers # :nodoc:all
       @removes_characters_regexp = regexp
     end
     def remove_illegals text
-      text.gsub! @removes_characters_regexp, '' if @removes_characters_regexp
+      text.gsub! @removes_characters_regexp, EMPTY_STRING if @removes_characters_regexp
       text
     end
     
@@ -66,7 +67,7 @@ module Tokenizers # :nodoc:all
       @removes_characters_after_splitting_regexp = regexp
     end
     def remove_after_normalizing_illegals text
-      text.gsub! @removes_characters_after_splitting_regexp, '' if @removes_characters_after_splitting_regexp
+      text.gsub! @removes_characters_after_splitting_regexp, EMPTY_STRING if @removes_characters_after_splitting_regexp
     end
     
     # Substitute Characters with this substituter.
