@@ -47,6 +47,8 @@ module Query
         #  [c,e]
         # ]
         #
+        # TODO Use transpose?
+        #
         expanded_combinations = expanded_combinations.shift.zip *expanded_combinations
         
         # Wrap into a real combination.
