@@ -21,7 +21,11 @@ module Picky
       def initialize identifier, name, prototype_path, *args
         @identifier        = identifier
         @name              = name
-        @prototype_basedir = File.expand_path "../../../../prototypes/#{prototype_path}", __FILE__
+        @prototype_basedir = expand_prototype_path prototype_path
+      end
+      
+      def expand_prototype_path prototype_path
+        File.expand_path "../../../../prototypes/#{prototype_path}", __FILE__
       end
       
       #
@@ -91,6 +95,7 @@ module Picky
       #
       #
       def all_prototype_files from = nil
+        p [:FROM, from]
         from ||= prototype_basedir
         Dir[File.join(from, '**', '*')]
       end

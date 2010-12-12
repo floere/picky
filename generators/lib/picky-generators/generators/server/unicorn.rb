@@ -4,7 +4,7 @@ module Picky
   
     module Server
 
-      # Generates a new Picky Unicorn Server.
+      # Generates a new Picky Unicorn Server Example.
       #
       # Example:
       #   > picky-generate unicorn_server my_lovely_unicorn
@@ -20,6 +20,7 @@ module Picky
         def generate
           exclaim "Setting up Picky Unicorn Server \"#{name}\"."
           create_target_directory
+          copy_all_files expand_prototype_path('server/shared_unicorn')
           copy_all_files
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""

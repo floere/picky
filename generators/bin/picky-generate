@@ -2,7 +2,8 @@
 #
 
 begin
-  require 'picky-generators'
+  raise LoadError
+  #require 'picky-generators'
 rescue LoadError => e
   require 'rubygems'
   picky_path = File.expand_path '../../lib', __FILE__
