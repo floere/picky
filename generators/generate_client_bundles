@@ -31,3 +31,5 @@ system min_js_copy_command
 gzip_command = "tar -cf javascripts/picky.source.js.tar #{picky_files.join(' ')}"
 p gzip_command
 system gzip_command
+
+puts "\nSUCCESS!"
