@@ -12,7 +12,7 @@ module Picky
       class Unicorn < Picky::Generators::Base
   
         def initialize identifier, name, *args
-          super indentifier, name, 'server/unicorn', *args
+          super identifier, name, 'server/unicorn', *args
         end
   
         #
