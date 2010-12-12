@@ -19,15 +19,15 @@ module Picky
       #
       # This will "route" the commands to the right specific generator.
       #
-      def generate args
+      def generate *args
         generator = generator_for *args
         generator.generate
       end
 
       #
       #
-      def generator_for identifier, *args
-        generator_info = types[identifier.to_sym]
+      def generator_for identifier = nil, *args
+        generator_info = types[identifier.to_sym] if identifier
         raise NotFoundException.new(self) unless generator_info
         generator_class = generator_info.first
         generator_for_class generator_class, identifier, *args
