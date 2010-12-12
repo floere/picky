@@ -29,12 +29,12 @@ describe Picky::Generators::Selector do
     
     describe "generate" do
       it "should raise a NoGeneratorException if called with the wrong params" do
-        lambda { @selector.generate(['blarf', 'gnorf']) }.should raise_error(Picky::Generators::NotFoundException)
+        lambda { @selector.generate('blarf', 'gnorf') }.should raise_error(Picky::Generators::NotFoundException)
       end
       it "should not raise on the right params" do
         @selector.stub! :generator_for_class => stub(:generator, :generate => nil)
         
-        lambda { @selector.generate(['sinatra_client', 'some_project']) }.should_not raise_error
+        lambda { @selector.generate('sinatra_client', 'some_project') }.should_not raise_error
       end
     end
   end

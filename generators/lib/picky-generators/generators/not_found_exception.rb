@@ -14,7 +14,7 @@ module Picky
 
       def usage
         "\n\nUsage:\n" +
-        "  picky-generate project_type [params]\n" +
+        "  picky-generate <project_type> [params]\n" +
         ?\n
       end
 
