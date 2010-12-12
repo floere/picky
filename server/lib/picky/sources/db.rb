@@ -107,22 +107,23 @@ module Sources
     
     # Harvests the data to index in chunks.
     #
-    def harvest type, category
+    def harvest type, category, &block
       connect_backend
       
       (0..count(type)).step(chunksize) do |offset|
-        get_data(type, category, offset).each do |indexed_id, text|
-          next unless text
-          text.force_encoding 'utf-8' # TODO Still needed?
-          yield indexed_id, text
-        end
+        get_data type, category, offset, &block
       end
     end
     
     # Gets the data from the backend.
     #
-    def get_data type, category, offset # :nodoc:
-      database.connection.execute harvest_statement_with_offset(type, category, offset)
+    def get_data type, category, offset, &block # :nodoc:
+      select_statement = harvest_statement_with_offset(type, category, offset)
+      database.connection.execute(select_statement).each do |indexed_id, text|
+        next unless text
+        text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
+        yield indexed_id, text
+      end
     end
     
     # Builds a harvest statement for getting data to index.
