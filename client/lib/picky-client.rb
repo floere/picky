@@ -1,8 +1,6 @@
-$KCODE = 'UTF-8' unless RUBY_VERSION > '1.8.7'
+$KCODE = 'UTF-8' if RUBY_VERSION < '1.9.0'
 
 require 'rubygems'
-
-# require 'active_support'
 require 'yajl'
 
 dir = File.dirname __FILE__
