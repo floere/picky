@@ -1,3 +1,7 @@
+h2. Version 1.1.1
+
+ * hanke: (server and client) Removed generator projects that have been moved to picky-generators. Gems now much smaller :)
+
 h2. Version 1.1.0
 
  * hanke: (server and client) Generators extracted into picky-generators gem.
