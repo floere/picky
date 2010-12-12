@@ -15,10 +15,10 @@ Gem::Specification.new do |s|
   s.description = 'Fast Ruby small-text search engine with comfortable single field interface.'
   s.summary = 'Picky: Helps you find your data.'
   
-  # s.executables = ['picky']
-  # s.default_executable = "picky"
+  s.executables = ['picky']
+  s.default_executable = "picky"
   
-  s.files = Dir["lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/ext/ruby19/performant.c", "project_prototype/**/*"]
+  s.files = Dir["lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/ext/ruby19/performant.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
   
   s.extensions << 'lib/picky/ext/ruby19/extconf.rb'
