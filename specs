@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+#
+
+require File.expand_path '../version', __FILE__
+
+puts "Running all specs."
+system "cd generators; rake"
+system "cd client;     rake"
+system "cd server;     rake; cd test_project; rake"
