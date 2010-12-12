@@ -1,0 +1,13 @@
+# Just an example, see application.rb on how this file is used.
+#
+# Note: ActiveRecord is used. Sorry.
+#
+# TODO Configure the database adapter
+#      or ignore and use a csv source.
+#
+adapter: mysql
+host: localhost
+username: root
+password:
+database: your_database # Load this configuration and use a DB source in app/application.rb.
+encoding: utf8

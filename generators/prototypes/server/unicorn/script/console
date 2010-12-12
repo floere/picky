@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+irb = 'irb'
+
+require 'optparse'
+options = { :sandbox => false, :irb => irb }
+OptionParser.new do |opt|
+  opt.banner = "Usage: console [environment] [options]"
+  opt.on("--irb=[#{irb}]", 'Invoke a different irb.') { |v| options[:irb] = v }
+  opt.parse!(ARGV)
+end
+
+libs =  " -r irb/completion"
+libs << %( -r "picky" )
+
+mapping = {
+  'p' => 'production',
+  'd' => 'development',
+  't' => 'test'
+}
+given_env = ARGV.first
+ENV['PICKY_ENV'] = mapping[given_env] || given_env || ENV['PICKY_ENV'] || 'development'
+
+puts "Use \x1b[1;30mLoader.load_application\x1b[m to load app."
+puts "Use \x1b[1;30mIndexes.load_from_cache\x1b[m after that to load indexes."
+puts "Copy the following line to do just that:"
+puts "\x1b[1;30mLoader.load_application; Indexes.load_from_cache; nil\x1b[m"
+puts ""
+puts "Now you can for example create a query instance."
+puts "\x1b[1;30mfull_books = Query::Full.new(Indexes[:books]); nil\x1b[m"
+puts "and search on it"
+puts "\x1b[1;30mfull_books.search_with_text 'bla'\x1b[m"
+exec "#{options[:irb]} #{libs} --simple-prompt"

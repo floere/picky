@@ -1,0 +1,30 @@
+source :gemcutter
+
+# Gems required by Picky.
+#
+gem 'picky',            '~> 1.0.0'
+gem 'rake'
+gem 'bundler'
+gem 'rack',             '~> 1.2.1'
+gem 'rack-mount',       '~> 0.6.9'
+gem 'text',             '~> 0.2.0'
+gem 'yajl-ruby',        '~> 0.7.8', :require => 'yajl'
+
+# Should be optional, but isn't yet. Sorry.
+#
+gem 'activerecord',     '~> 2.3.8', :require => 'active_record'
+
+
+
+
+# Optional. Makes rack faster.
+#
+gem 'rack_fast_escape', '2009.06.24'
+
+# Optional. Use your preferred web server.
+#
+gem 'unicorn'
+
+# Optional. Use your preferred database adapter.
+#
+# gem 'mysql'
