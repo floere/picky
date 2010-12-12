@@ -11,4 +11,4 @@ rescue LoadError => e
 end
 
 generator_selector = Picky::Generators::Selector.new
-generator_selector.generate ARGV
+generator_selector.generate *ARGV

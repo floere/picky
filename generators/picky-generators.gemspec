@@ -13,8 +13,8 @@ Gem::Specification.new do |s|
   s.description = 'Generators for Picky.'
   s.summary = 'Generators for Picky the Ruby Search Engine.'
   
-  s.executables = ['picky-generator']
-  s.default_executable = "picky-generator"
+  s.executables = ['picky-generate']
+  s.default_executable = "picky-generate"
   
   s.files = Dir["lib/**/*.rb"]
   
