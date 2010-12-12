@@ -13,19 +13,19 @@ module Picky
       end
 
       def usage
-        "\nUsage:\n" +
-        "picky generate <type> <params>\n" +
+        "\n\nUsage:\n" +
+        "  picky-generate project_type [params]\n" +
         ?\n
       end
 
       def possible_commands types
         "Possible commands:\n" +
         types.map do |name, klass_params|
-          result = "picky generate #{name}"
+          result = "  picky-generate #{name}"
           _, params = *klass_params
           result << ' ' << [*params].map { |param| "<#{param}>" }.join(' ') if params
           result
-        end.join(?\n) + ?\n
+        end.join(?\n) + ?\n + ?\n
       end
 
     end
