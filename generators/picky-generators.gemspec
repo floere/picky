@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.executables = ['picky-generate']
   s.default_executable = "picky-generate"
   
-  s.files = Dir["lib/**/*.rb"]
+  s.files = Dir["lib/**/*.rb", "prototypes/**/*"]
   
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.add_development_dependency 'rspec'
