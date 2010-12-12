@@ -44,19 +44,19 @@ module Picky
       def copy_all_files from = nil
         all_prototype_files(from).each do |filename|
           next if filename.match(/\.textile$/)
-          copy_single_file filename
+          copy_single_file filename, from
         end
       end
 
       #
       #
-      def target_filename_for filename
-        filename.gsub(%r{#{prototype_basedir}}, target_directory)
+      def target_filename_for filename, from = nil
+        filename.gsub(%r{#{from || prototype_basedir}}, target_directory)
       end
       #
       #
-      def copy_single_file filename
-        target = target_filename_for filename
+      def copy_single_file filename, from = nil
+        target = target_filename_for filename, from
         if File.exists? target
           exists target
         else
@@ -95,7 +95,6 @@ module Picky
       #
       #
       def all_prototype_files from = nil
-        p [:FROM, from]
         from ||= prototype_basedir
         Dir[File.join(from, '**', '*')]
       end

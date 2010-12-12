@@ -25,7 +25,7 @@ describe Picky::Generators::Server::Unicorn do
     it "should do things in order" do
       @unicorn.should_receive(:exclaim).once.ordered # Initial explanation
       @unicorn.should_receive(:create_target_directory).once.ordered
-      @unicorn.should_receive(:copy_all_files).once.ordered
+      @unicorn.should_receive(:copy_all_files).twice
       @unicorn.should_receive(:exclaim).at_least(9).times.ordered # Some user steps to do
       
       @unicorn.generate
