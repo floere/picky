@@ -14,14 +14,14 @@ module Picky
 
       def usage
         "\nUsage:\n" +
-        "picky <command> <params>\n" +
+        "picky generate <type> <params>\n" +
         ?\n
       end
 
       def possible_commands types
         "Possible commands:\n" +
         types.map do |name, klass_params|
-          result = "picky #{name}"
+          result = "picky generate #{name}"
           _, params = *klass_params
           result << ' ' << [*params].map { |param| "<#{param}>" }.join(' ') if params
           result
