@@ -24,9 +24,9 @@ h2. The server
 The server generates a library example, which you can run right away.
 
 <pre><code># Generates a directory "app_name"
-# with a new Picky project.
+# with a new Picky unicorn server project.
 
-picky project app_name</code></pre>
+picky-generate unicorn_server app_name</code></pre>
 
 <pre><code>cd app_name
 bundle install</code></pre>
@@ -52,9 +52,9 @@ h2. The client
 The client generates an example app for the "library" example backend, using Sinatra.
 
 <pre><code># Generates a directory "app_name"
-# with a new Picky Client Webapp project.
+# with a new Picky Client Sinatra Webapp project.
 
-picky-client sinatra app_name</code></pre>
+picky-generate sinatra_client app_name</code></pre>
 
 <pre><code>cd app_name
 bundle install</code></pre>

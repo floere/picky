@@ -8,7 +8,7 @@ h3. Installation
 
 Create a new project directory:
 
-<pre><code>picky project project_name</code></pre>
+<pre><code>picky-generate unicorn_server project_name</code></pre>
 
 Enter the newly created project directory:
 

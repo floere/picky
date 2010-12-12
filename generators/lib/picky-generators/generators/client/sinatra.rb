@@ -18,7 +18,7 @@ module Picky
         #
         #
         def generate
-          exclaim "Setting up Picky project \"#{name}\"."
+          exclaim "Setting up Picky Sinatra Client \"#{name}\"."
           create_target_directory
           copy_all_files
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"

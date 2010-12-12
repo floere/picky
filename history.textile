@@ -104,7 +104,7 @@ h2. Version 0.3.0
 
   * hanke: (server) Uses json (index, index weights) and marshal (similarity index) to dump indexes.
   * hanke: (server) Generator is more helpful (thanks to github.com/kschiess)
-  * hanke: (server) Generator for a Sinatra project. (picky-client sinatra project_name)
+  * hanke: (server) Generator for a Sinatra project. (picky-client sinatra project_name <- Note: Changed to picky-generate sinatra_client project_name)
   * hanke: (client) Helpful generator. (thanks to github.com/kschiess)
 
 h2. Version 0.2.4
@@ -138,7 +138,7 @@ h2. Version 0.2.0
 h2. Version 0.1.0
 
   * hanke: (server) Application interface rewrite. See a freshly created
-             project (using picky project <name>).
+             project (using picky project <name> <- Note: Renamed picky-generate unicorn_server <name>).
              Application#add_index.
 
 h2. Version 0.0.9

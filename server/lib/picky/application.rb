@@ -9,7 +9,7 @@
 #     # Your configuration goes here.
 #   end
 # The generator
-#   $ picky project project_name
+#   $ picky-generate unicorn_server project_name
 # will generate an example <tt>project_name/app/application.rb</tt> file for you
 # with some example code inside.
 #
