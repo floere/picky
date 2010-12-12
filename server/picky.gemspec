@@ -1,6 +1,8 @@
+require File.expand_path '../../version', __FILE__
+
 Gem::Specification.new do |s|
   s.name = 'picky'
-  s.version = '1.0.0'
+  s.version = Picky::VERSION
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky@gmail.com'
   s.homepage = 'http://floere.github.com/picky'
