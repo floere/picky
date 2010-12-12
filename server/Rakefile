@@ -25,7 +25,7 @@ task :cov do
   Rake::Task['spec'].invoke
 end
 
-# TODO Very pedestrian cloc.
+# Very pedestrian, coder only cloc.
 #
 task :stats do
   %w|project_prototype lib spec test_project|.each do |dir|
