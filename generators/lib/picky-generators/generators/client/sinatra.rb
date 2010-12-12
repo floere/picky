@@ -7,7 +7,7 @@ module Picky
       # Generates a new Picky Sinatra Client Example.
       #
       # Example:
-      #   > picky-generate sinatra my_lovely_sinatra
+      #   > picky-generate sinatra_client my_lovely_sinatra
       #
       class Sinatra < Picky::Generators::Base
   

@@ -7,7 +7,7 @@ module Picky
       # Generates a new Picky Unicorn Server.
       #
       # Example:
-      #   > picky-generate unicorn my_lovely_unicorn
+      #   > picky-generate unicorn_server my_lovely_unicorn
       #
       class Unicorn < Picky::Generators::Base
   
