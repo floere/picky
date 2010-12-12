@@ -1,3 +1,8 @@
+h2. Version 1.1.0
+
+ * hanke: (server and client) Generators extracted into picky-generators gem.
+ * hanke: (generators) Generators and example projects for both server and client.
+
 h2. Version 1.0.0
 
  * hanke: Lots of "API RDoc":http://floere.github.com/picky/doc/index.html.
