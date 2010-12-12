@@ -17,7 +17,7 @@ I recommend "RVM":http://rvm.beginrescueend.com/ for installing and managing Rub
 
 h1. Installation
 
-<pre><code>gem install picky picky-client</code></pre>
+<pre><code>gem install picky picky-client picky-generators</code></pre>
 
 h2. The server
 
