@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   
   s.has_rdoc = false
   
-  s.files = Dir["lib/**/*.rb", "sinatra_prototype/**/*"]
+  s.files = Dir["lib/**/*.rb"]
   
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.extra_rdoc_files = ['README.rdoc']
