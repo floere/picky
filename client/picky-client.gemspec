@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.email = 'florian.hanke+picky-client@gmail.com'
   s.homepage = 'http://floere.github.com/picky'
   s.rubyforge_project = 'http://rubyforge.org/projects/picky'
-  s.description = 'Fast Combinatorial Ruby Search Engine Client'
+  s.description = 'Picky Client'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'picky Search Engine Client'
+  s.summary = 'picky Ruby Search Engine Client'
   s.executables = ['picky-client']
   s.default_executable = "picky-client"
   s.files = Dir["lib/**/*.rb", "sinatra_prototype/**/*"]
