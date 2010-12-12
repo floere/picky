@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+
+# Note: This is a coder file. It generates the min js and tarred packages for download by end users.
+#
+
+picky_files = %w{
+  extensions
+  translations
+  data
+  view
+  backend
+  controller
+  client
+  addination
+  results_renderer
+  allocation_renderer
+  allocations_cloud
+}.map { |name| "javascripts/picky.#{name}.js" }
+
+js = picky_files.map { |filename| "--js=#{filename}" }.join(' ')
+compiler_command = "java -jar javascripts/compiler.jar --compilation_level=SIMPLE_OPTIMIZATIONS #{js} --js_output_file=javascripts/picky.min.js"
+p compiler_command
+system compiler_command
+
+min_js_copy_command = "cp javascripts/picky.min.js prototypes/client/sinatra/javascripts/"
+p min_js_copy_command
+system min_js_copy_command
+
+gzip_command = "tar -cf javascripts/picky.source.js.tar #{picky_files.join(' ')}"
+p gzip_command
+system gzip_command

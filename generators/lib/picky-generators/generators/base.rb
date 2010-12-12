@@ -21,7 +21,7 @@ module Picky
       def initialize identifier, name, prototype_path, *args
         @identifier        = identifier
         @name              = name
-        @prototype_basedir = File.expand_path "../../../prototypes/#{prototype_path}", __FILE__
+        @prototype_basedir = File.expand_path "../../../../prototypes/#{prototype_path}", __FILE__
       end
       
       #
@@ -37,8 +37,8 @@ module Picky
 
       #
       #
-      def copy_all_files
-        all_prototype_files.each do |filename|
+      def copy_all_files from = nil
+        all_prototype_files(from).each do |filename|
           next if filename.match(/\.textile$/)
           copy_single_file filename
         end
@@ -90,8 +90,9 @@ module Picky
 
       #
       #
-      def all_prototype_files
-        Dir[File.join(prototype_basedir, '**', '*')]
+      def all_prototype_files from = nil
+        from ||= prototype_basedir
+        Dir[File.join(from, '**', '*')]
       end
 
       #

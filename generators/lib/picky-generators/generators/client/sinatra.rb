@@ -2,17 +2,17 @@ module Picky
 
   module Generators
   
-    module Server
+    module Client
 
       # Generates a new Picky Sinatra Client Example.
       #
       # Example:
       #   > picky-generate sinatra my_lovely_sinatra
       #
-      class Sinatra < Base
+      class Sinatra < Picky::Generators::Base
   
         def initialize identifier, name, *args
-          super indentifier, name, 'client/sinatra', *args
+          super identifier, name, 'client/sinatra', *args
         end
   
         #

@@ -10,8 +10,8 @@ module Picky
 
       def initialize
         @types = {
-          sinatra_client: [Client::Sinatra, :sinatra_project_name]
-          unicorn_server: [Server::Unicorn, :unicorn_project_name]
+          :sinatra_client => [Client::Sinatra, :sinatra_project_name],
+          :unicorn_server => [Server::Unicorn, :unicorn_project_name]
         }
       end
 

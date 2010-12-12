@@ -9,7 +9,7 @@ module Picky
       # Example:
       #   > picky-generate unicorn my_lovely_unicorn
       #
-      class Unicorn < Base
+      class Unicorn < Picky::Generators::Base
   
         def initialize identifier, name, *args
           super indentifier, name, 'server/unicorn', *args
