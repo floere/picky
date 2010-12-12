@@ -4,6 +4,7 @@ require 'spec_helper'
 describe Rack::Harakiri do
   before(:each) do
     @app = stub :app
+    Process.stub! :kill # not taking any chances
   end
   context "defaults" do
     before(:each) do
