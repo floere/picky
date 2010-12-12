@@ -28,7 +28,7 @@ module Picky
       #
       def generator_for identifier, *args
         generator_info = types[identifier.to_sym]
-        raise NotFoundError.new(self) unless generator_info
+        raise NotFoundException.new(self) unless generator_info
         generator_class = generator_info.first
         generator_for_class generator_class, identifier, *args
       end

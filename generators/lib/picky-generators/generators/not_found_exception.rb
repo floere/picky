@@ -6,7 +6,7 @@ module Picky
     #   picky <command> <options>
     # is found.
     #
-    class NotFoundError < StandardError # :nodoc:all
+    class NotFoundException < StandardError # :nodoc:all
 
       def initialize selector
         super usage + possible_commands(selector.types)
