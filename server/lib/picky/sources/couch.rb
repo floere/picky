@@ -9,6 +9,21 @@ module Sources
   
   # A Couch database source.
   #
+  # <b>IMPORTANT NOTE:
+  #
+  # Since Picky currently only handles integer ids (we're working on this),
+  # and CouchDB uses hexadecimal ids, this source automatically
+  # recalculates a couch id such as
+  # fa3f2577a8dbc6a91d7f9989cdffd38e
+  # into
+  # 332634873577882511228481564366832915342
+  # using String#hex.
+  #
+  # When using the integer ids in a webapp to get your
+  # objects from CouchDB, please do a Integer#to_s(16) on the
+  # ids you get from Picky before you use them to get your object from CouchDB.</b>
+  # 
+  #
   # Options:
   # * url
   # and all the options of a <tt>RestClient::Resource</tt>.
