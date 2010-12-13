@@ -52,10 +52,12 @@ module Sources
 
     # Harvests the data to index.
     #
+    # See important note, above.
+    #
     def harvest type, category
       category_name = category.from.to_s
       get_data do |doc|
-        yield doc['_id'].to_i, doc[category_name] || next
+        yield doc['_id'].hex, doc[category_name] || next
       end
     end
     
