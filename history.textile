@@ -1,3 +1,7 @@
+h2. Version 1.1.2
+
+ * hanke: (generators) Added generator for empty unicorn projects, use @picky generate empty_unicorn_project <project_name>@ to generate one.
+
 h2. Version 1.1.1
 
  * hanke: (server and client) Removed generator projects that have been moved to picky-generators. Gems now much smaller :)
