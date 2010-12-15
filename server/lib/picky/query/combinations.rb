@@ -62,10 +62,10 @@ module Query
       Performant::Array.memory_efficient_intersect id_arrays
     end
     
-    # Wrap the combinations into an allocation with the result_type
+    # Wrap the combinations into an allocation with the result_identifier.
     #
-    def pack_into_allocation result_type
-      Allocation.new self, result_type
+    def pack_into_allocation result_identifier
+      Allocation.new self, result_identifier
     end
     
     # Filters the tokens and identifiers such that only identifiers

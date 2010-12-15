@@ -1,7 +1,7 @@
 # This class defines the indexing and index API that is exposed to the user
 # as the #index method inside the Application class.
 #
-# It provides a single front for both indexing and index options.
+# It provides a single front for both indexing and index options. We suggest to always use the index API.
 #
 # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
 #
@@ -11,11 +11,12 @@ class IndexAPI
   
   # Create a new index with a given source.
   #
-  # Parameters:
+  # === Parameters
   # * name: A name that will be used for the index directory and in the Picky front end.
   # * source: Where the data comes from, e.g. Sources::CSV.new(...)
   #
-  # Options:
+  # === Options
+  # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
   # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
   #
   def initialize name, source, options = {}
@@ -30,10 +31,10 @@ class IndexAPI
   
   # Defines a searchable category on the index.
   #
-  # Parameters:
-  # category_name: This identifier is used in the front end, but also to categorize query text. For example, “title:hobbit” will narrow the hobbit query on categories with the identifier :title.
+  # === Parameters
+  # * category_name: This identifier is used in the front end, but also to categorize query text. For example, “title:hobbit” will narrow the hobbit query on categories with the identifier :title.
   #
-  # Options:
+  # === Options
   # * partial: Partial::None.new or Partial::Substring.new(from: starting_char, to: ending_char). Default is Partial::Substring.new(from: -3, to: -1).
   # * similarity: Similarity::None.new or Similarity::Phonetic.new(similar_words_searched). Default is Similarity::None.new.
   # * qualifiers: An array of qualifiers with which you can define which category you’d like to search, for example “title:hobbit” will search for hobbit in just title categories. Example: qualifiers: [:t, :titre, :title] (use it for example with multiple languages). Default is the name of the category.
@@ -74,7 +75,7 @@ class IndexAPI
   #
   # We suggest not to use much more than 5 as a higher precision is more performance intensive for less and less precision gain.
   #
-  # Protip:
+  # == Protip 1
   #
   # Create two ranged categories to make an area search:
   #   index.define_ranged_category :x, 1
@@ -96,15 +97,21 @@ class IndexAPI
   #
   # Note: The area does not need to be square, but can be rectangular.
   #
-  # Parameters:
+  # == Protip 2
+  #
+  # Create three ranged categories to make a volume search.
+  #
+  # Or go crazy and use 4 ranged categories for a space/time search! ;)
+  #
+  # === Parameters
   # * category_name: The category_name as used in #define_category.
   # * range: The range (in the units of your data values) around the query point where we search for results.
   #
   #  -----|<- range  ->*------------|-----
   #
-  # Options
+  # === Options
   # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
-  # * ... # all options of #define_category.
+  # * ... all options of #define_category.
   #
   def define_ranged_category category_name, range, options = {}
     precision = options[:precision]
@@ -150,7 +157,7 @@ class IndexAPI
   # * precision: Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
   # * from: The data category to take the data for this category from.
   #
-  # TODO Redo.
+  # TODO Redo. Probably extract into define_latitude_category, define_longitude_category.
   #
   def define_map_location name, radius, options = {} # :nodoc:
     # The radius is given as if all the locations were on the equator.

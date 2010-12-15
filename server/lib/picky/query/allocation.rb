@@ -4,13 +4,13 @@ module Query
   #
   class Allocation # :nodoc:all
 
-    attr_reader :count, :ids, :score, :combinations, :result_type
+    attr_reader :count, :ids, :score, :combinations, :result_identifier
     
     #
     #
-    def initialize combinations, result_type
-      @combinations = combinations
-      @result_type  = result_type
+    def initialize combinations, result_identifier
+      @combinations      = combinations
+      @result_identifier = result_identifier
     end
 
     def hash
@@ -61,7 +61,7 @@ module Query
     # Transform the allocation into result form.
     #
     def to_result
-      [self.result_type, self.score, self.count, @combinations.to_result, self.ids] if self.count > 0
+      [self.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count > 0
     end
 
     # Json representation of this allocation.

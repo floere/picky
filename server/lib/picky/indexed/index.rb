@@ -4,7 +4,7 @@ module Indexed
   #
   class Index
     
-    attr_reader :name, :result_type, :combinator, :categories
+    attr_reader :name, :result_identifier, :combinator, :categories
     
     delegate :load_from_cache,
              :to => :categories
@@ -12,7 +12,7 @@ module Indexed
     def initialize name, options = {}
       @name                     = name
       
-      @result_type              = options[:result_type] || name
+      @result_identifier        = options[:result_identifier] || name
       ignore_unassigned_tokens  = options[:ignore_unassigned_tokens] || false # TODO Move to query, somehow.
       
       @categories = Categories.new ignore_unassigned_tokens: ignore_unassigned_tokens

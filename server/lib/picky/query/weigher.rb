@@ -53,7 +53,7 @@ module Query
         
         # Wrap into a real combination.
         #
-        # expanded_combinations.map! { |expanded_combination| Combinations.new(expanded_combination).pack_into_allocation(index.result_type) }
+        # expanded_combinations.map! { |expanded_combination| Combinations.new(expanded_combination).pack_into_allocation(index.result_identifier) }
         
         # Add the possible allocations to the ones we already have.
         #
@@ -63,7 +63,7 @@ module Query
         # Add the wrapped possible allocations to the ones we already have.
         #
         previous_allocations + expanded_combinations.map! do |expanded_combination|
-          Combinations.new(expanded_combination).pack_into_allocation(index.result_type) # TODO Do not extract result_type. Remove pack_into_allocation.
+          Combinations.new(expanded_combination).pack_into_allocation(index.result_identifier) # TODO Do not extract result_identifier. Remove pack_into_allocation.
         end
       end)
     end
