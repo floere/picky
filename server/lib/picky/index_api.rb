@@ -70,9 +70,9 @@ class IndexAPI
   #  my_index.define_location :values_inside_1_100, 2, precision: 5
   #
   # This will force Picky to maximally be wrong 5% of the given range value
-  # (5% of 2 = 0.1).
+  # (5% of 2 = 0.1) instead of the default 20% (20% of 2 = 0.4).
   #
-  # We suggest not to use more than 5 as a higher precision is more performance intensive.
+  # We suggest not to use much more than 5 as a higher precision is more performance intensive for less and less precision gain.
   #
   # Parameters:
   # * name: The name as used in #define_category.
