@@ -33,33 +33,56 @@ class IndexAPI # :nodoc:all
   end
   alias category define_category
   
-  # 
+  # Parameters:
+  # * name: The name as used in #define_category.
+  # * radius: The range (in km) around the query point which we search for results.
   #
-  def define_location name, options = {}
-    # TODO Make mandatory.
-    #
-    grid      = options[:radius] || raise("Option :radius needs to be set on define_location, it defines the search radius.")
+  #        <---range---|
+  #  -----|------------*------------|-----
+  #
+  # Options
+  # * precision # Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+  #
+  def define_location name, range, options = {}
     precision = options[:precision]
     
     options = { partial: Partial::None.new }.merge options
     
     define_category name, options do |indexing, indexed|
-      indexing.source    = Sources::Wrappers::Location.new indexing, grid: grid, precision: precision
+      indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
       indexing.tokenizer = Tokenizers::Index.new
       
-      exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: grid, precision: precision
+      exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: range, precision: precision
       indexed.exact   = exact_bundle
       indexed.partial = exact_bundle # A partial token also uses the exact index.
     end
   end
   alias location define_location
   
-  # Options
-  # * radius (in km).
+  # Parameters:
+  # * name: The name as used in #define_category.
+  # * radius: The distance (in km) around the query point which we search for results.
   #
-  def define_map_location name, options = {}
-    radius = options[:radius] || raise("Option :radius needs to be set on define_map_location, it defines the search radius.")
-    
+  # Note: Picky uses a square, not a circle.
+  #
+  #  -----------------------------
+  #  |                           |
+  #  |                           |
+  #  |                           |
+  #  |                           |
+  #  |                           |
+  #  |             *<-  radius ->|
+  #  |                           |
+  #  |                           |
+  #  |                           |
+  #  |                           |
+  #  |                           |
+  #  -----------------------------
+  #
+  # Options
+  # * precision # Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+  #
+  def define_map_location name, radius, options = {}
     # The radius is given as if all the locations were on the equator.
     #
     # TODO Need to recalculate since not many locations are on the equator ;) This is just a prototype.
@@ -69,8 +92,6 @@ class IndexAPI # :nodoc:all
     # A degree on the equator is equal to ~111,319.9 meters.
     # So a km on the equator is equal to 0.00898312 degrees.
     #
-    options[:radius] = radius * 0.00898312
-    
-    define_location name, options
+    define_location name, radius * 0.00898312, options
   end
 end
