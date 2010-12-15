@@ -19,7 +19,16 @@ class IndexAPI # :nodoc:all
     Indexes.register self
   end
   
-  # TODO Doc.
+  # Parameters:
+  # category_name: This identifier is used in the front end, but also to categorize query text. For example, “title:hobbit” will narrow the hobbit query on categories with the identifier :title.
+  #
+  # Options:
+  # * partial: Partial::None.new or Partial::Substring.new(from: starting_char, to: ending_char). Default is Partial::Substring.new(from: -3, to: -1).
+  # * similarity: Similarity::None.new or Similarity::Phonetic.new(similar_words_searched). Default is Similarity::None.new.
+  # * qualifiers: An array of qualifiers with which you can define which category you’d like to search, for example “title:hobbit” will search for hobbit in just title categories. Example: qualifiers: [:t, :titre, :title] (use it for example with multiple languages). Default is the name of the category.
+  # * qualifier: Convenience options if you just need a single qualifier, see above. Example: qualifiers => :title. Default is the name of the category.
+  # * source: Use a different source than the index uses. If you think you need that, there might be a better solution to your problem. Please post to the mailing list first with your application.rb :)
+  # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: define_category(:similar_title, :from => :title).
   #
   def define_category category_name, options = {}
     category_name = category_name.to_sym
@@ -42,6 +51,7 @@ class IndexAPI # :nodoc:all
   #
   # Options
   # * precision # Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+  # * from: # The data category to take the data for this category from.
   #
   def define_location name, range, options = {}
     precision = options[:precision]
@@ -80,7 +90,8 @@ class IndexAPI # :nodoc:all
   #  -----------------------------
   #
   # Options
-  # * precision # Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+  # * precision: Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+  # * from: The data category to take the data for this category from.
   #
   def define_map_location name, radius, options = {}
     # The radius is given as if all the locations were on the equator.
