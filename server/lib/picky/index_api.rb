@@ -1,13 +1,22 @@
-# This class defines the indexing and index API that is exposed to the user.
+# This class defines the indexing and index API that is exposed to the user
+# as the #index method inside the Application class.
+#
 # It provides a single front for both indexing and index options.
 #
 # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
 #
-class IndexAPI # :nodoc:all
+class IndexAPI
   
   attr_reader :name, :indexing, :indexed
   
-  # TODO Doc.
+  # Create a new index with a given source.
+  #
+  # Parameters:
+  # * name: A name that will be used for the index directory and in the Picky front end.
+  # * source: Where the data comes from, e.g. Sources::CSV.new(...)
+  #
+  # Options:
+  # * after_indexing: Currently only used in the db source. Executes the given after_indexing as SQL after the indexing process.
   #
   def initialize name, source, options = {}
     @name     = name
@@ -19,6 +28,8 @@ class IndexAPI # :nodoc:all
     Indexes.register self
   end
   
+  # Defines a searchable category on the index.
+  #
   # Parameters:
   # category_name: This identifier is used in the front end, but also to categorize query text. For example, “title:hobbit” will narrow the hobbit query on categories with the identifier :title.
   #
@@ -42,6 +53,20 @@ class IndexAPI # :nodoc:all
   end
   alias category define_category
   
+  # EXPERIMENTAL Make this category range searchable.
+  #
+  # Example:
+  # You have data values inside 1..100, and you want to have Picky return
+  # not only the results for 47 if you search for 47, but also results for
+  # 45, 46, or 47.2, 48.9, in a range of 2 around 47, so (45..49).
+  # Then you use:
+  #  my_index.define_location :values_inside_1_100, 2
+  # Optionally, you give it a precision value to reduce the error margin
+  # around 47 (Picky is a bit liberal).
+  #  my_index.define_location :values_inside_1_100, 2, precision: 5
+  # This will force Picky to maximally be wrong 5% of the given range value
+  # (5% of 2 = 0.1).
+  #
   # Parameters:
   # * name: The name as used in #define_category.
   # * radius: The range (in km) around the query point which we search for results.
@@ -69,6 +94,10 @@ class IndexAPI # :nodoc:all
   end
   alias location define_location
   
+  # EXPERIMENTAL Also a range search see #define_location, but on the earth's surface.
+  #
+  # 
+  #
   # Parameters:
   # * name: The name as used in #define_category.
   # * radius: The distance (in km) around the query point which we search for results.
