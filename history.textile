@@ -1,3 +1,7 @@
+h2. Version 1.1.4
+
+ * hanke: (generators) Removed unnecessary jquery-1.3.2 from client, since it wasn't referenced anyway.
+
 h2. Version 1.1.3
 
   * hanke: (server) The CouchDB source now uses a little trick/hack to make its ids work in Picky. They are translated into decimal numbers from its hex string representations. Recalculate using #to_s(16) before getting objects from CouchDB in a webapp.
