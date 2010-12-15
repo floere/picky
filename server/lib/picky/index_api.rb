@@ -53,7 +53,7 @@ class IndexAPI
   end
   alias category define_category
   
-  #  HIGHLY EXPERIMENTAL
+  #  HIGHLY EXPERIMENTAL Try if you feel "beta" ;)
   #
   # Make this category range searchable with a fixed range. If you need other ranges, define another category with a different range value.
   #
@@ -63,33 +63,55 @@ class IndexAPI
   # 45, 46, or 47.2, 48.9, in a range of 2 around 47, so (45..49).
   #
   # Then you use:
-  #  my_index.define_location :values_inside_1_100, 2
+  #  my_index.define_ranged_category :values_inside_1_100, 2
   #
   # Optionally, you give it a precision value to reduce the error margin
   # around 47 (Picky is a bit liberal).
-  #  my_index.define_location :values_inside_1_100, 2, precision: 5
+  #  my_index.define_ranged_category :values_inside_1_100, 2, precision: 5
   #
   # This will force Picky to maximally be wrong 5% of the given range value
   # (5% of 2 = 0.1) instead of the default 20% (20% of 2 = 0.4).
   #
   # We suggest not to use much more than 5 as a higher precision is more performance intensive for less and less precision gain.
   #
+  # Protip:
+  #
+  # Create two ranged categories to make an area search:
+  #   index.define_ranged_category :x, 1
+  #   index.define_ranged_category :y, 1
+  #
+  # Search for it using for example:
+  #   x:133, y:120
+  #
+  # This will search this square area (* = 133, 120: The "search" point entered):
+  # 
+  #    132       134
+  #     |         |
+  #   --|---------|-- 121
+  #     |         |
+  #     |    *    |
+  #     |         |
+  #   --|---------|-- 119
+  #     |         | 
+  #
+  # Note: The area does not need to be square, but can be rectangular.
+  #
   # Parameters:
-  # * name: The name as used in #define_category.
-  # * radius: The range (in km) around the query point which we search for results.
+  # * category_name: The category_name as used in #define_category.
+  # * range: The range (in the units of your data values) around the query point where we search for results.
   #
   #  -----|<- range  ->*------------|-----
   #
   # Options
   # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
-  # * from: The data category to take the data for this category from.
+  # * ... # all options of #define_category.
   #
-  def define_location name, range, options = {}
+  def define_ranged_category category_name, range, options = {}
     precision = options[:precision]
     
     options = { partial: Partial::None.new }.merge options
     
-    define_category name, options do |indexing, indexed|
+    define_category category_name, options do |indexing, indexed|
       indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
       indexing.tokenizer = Tokenizers::Index.new
       
@@ -98,11 +120,11 @@ class IndexAPI
       indexed.partial = exact_bundle # A partial token also uses the exact index.
     end
   end
-  alias location define_location
+  alias ranged_category define_ranged_category
   
   #  HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
   #
-  # Also a range search see #define_location, but on the earth's surface.
+  # Also a range search see #define_ranged_category, but on the earth's surface.
   #
   # Parameters:
   # * name: The name as used in #define_category.
@@ -128,6 +150,8 @@ class IndexAPI
   # * precision: Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
   # * from: The data category to take the data for this category from.
   #
+  # TODO Redo.
+  #
   def define_map_location name, radius, options = {} # :nodoc:
     # The radius is given as if all the locations were on the equator.
     #
@@ -138,7 +162,7 @@ class IndexAPI
     # A degree on the equator is equal to ~111,319.9 meters.
     # So a km on the equator is equal to 0.00898312 degrees.
     #
-    define_location name, radius * 0.00898312, options
+    define_ranged_category name, radius * 0.00898312, options
   end
   alias map_location define_map_location
 end
