@@ -1,0 +1,2 @@
+rm -r ../../picky.pagez/doc/client
+sdoc --main lib/picky-client/engine.rb -o ../../picky.pagez/doc/client -x spec\.rb lib
