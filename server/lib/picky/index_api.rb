@@ -16,7 +16,7 @@ class IndexAPI
   # * source: Where the data comes from, e.g. Sources::CSV.new(...)
   #
   # Options:
-  # * after_indexing: Currently only used in the db source. Executes the given after_indexing as SQL after the indexing process.
+  # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
   #
   def initialize name, source, options = {}
     @name     = name
@@ -55,7 +55,7 @@ class IndexAPI
   
   #  HIGHLY EXPERIMENTAL
   #
-  # Make this category range searchable.
+  # Make this category range searchable with a fixed range. If you need other ranges, define another category with a different range value.
   #
   # Example:
   # You have data values inside 1..100, and you want to have Picky return
@@ -81,8 +81,8 @@ class IndexAPI
   #  -----|<- range  ->*------------|-----
   #
   # Options
-  # * precision # Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
-  # * from: # The data category to take the data for this category from.
+  # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+  # * from: The data category to take the data for this category from.
   #
   def define_location name, range, options = {}
     precision = options[:precision]
@@ -128,7 +128,7 @@ class IndexAPI
   # * precision: Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
   # * from: The data category to take the data for this category from.
   #
-  def define_map_location name, radius, options = {}
+  def define_map_location name, radius, options = {} # :nodoc:
     # The radius is given as if all the locations were on the equator.
     #
     # TODO Need to recalculate since not many locations are on the equator ;) This is just a prototype.
