@@ -1,3 +1,7 @@
+h2. Version 1.1.5
+
+ * hanke: (server) Passing in a similarity search (e.g. with text "hello") will never return "hello" as a similar token.
+
 h2. Version 1.1.4
 
  * hanke: (generators) Removed unnecessary jquery-1.3.2 from client, since it wasn't referenced anyway.
