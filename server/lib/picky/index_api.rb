@@ -36,6 +36,8 @@ class IndexAPI # :nodoc:all
   # 
   #
   def define_location name, options = {}
+    # TODO Make mandatory.
+    #
     grid      = options[:radius] || raise("Option :radius needs to be set on define_location, it defines the search radius.")
     precision = options[:precision]
     
