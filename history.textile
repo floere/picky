@@ -1,3 +1,7 @@
+h2. Version 1.1.6
+
+ * hanke: (server) Enabled beta feature "low/high limited range search", see "API RDoc":http://floere.github.com/picky/doc/index.html (IndexAPI class).
+
 h2. Version 1.1.5
 
  * hanke: (server) Passing in a similarity search (e.g. with text "hello") will never return "hello" as a similar token.
