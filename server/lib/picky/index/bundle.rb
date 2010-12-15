@@ -41,9 +41,13 @@ module Index # :nodoc:all
     
     # Get a list of similar texts.
     #
+    # Note: Does not return itself.
+    #
     def similar text
       code = similarity_strategy.encoded text
-      code && @similarity[code] || []
+      similar_codes = code && @similarity[code]
+      similar_codes.delete text if similar_codes
+      similar_codes || []
     end
     
   end
