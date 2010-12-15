@@ -53,6 +53,7 @@ describe "Integration Tests" do
     #
     it_should_find_ids_in_csv 'Hystori~ Leeward', [4, 4]
     it_should_find_ids_in_csv 'Strutigic~ Guvurnance~', [7]
+    it_should_find_ids_in_csv 'strategic~ governance~', [] # Does not find itself.
     
     # Qualifiers
     #
