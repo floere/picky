@@ -53,26 +53,32 @@ class IndexAPI
   end
   alias category define_category
   
-  # EXPERIMENTAL Make this category range searchable.
+  #  HIGHLY EXPERIMENTAL
+  #
+  # Make this category range searchable.
   #
   # Example:
   # You have data values inside 1..100, and you want to have Picky return
   # not only the results for 47 if you search for 47, but also results for
   # 45, 46, or 47.2, 48.9, in a range of 2 around 47, so (45..49).
+  #
   # Then you use:
   #  my_index.define_location :values_inside_1_100, 2
+  #
   # Optionally, you give it a precision value to reduce the error margin
   # around 47 (Picky is a bit liberal).
   #  my_index.define_location :values_inside_1_100, 2, precision: 5
+  #
   # This will force Picky to maximally be wrong 5% of the given range value
   # (5% of 2 = 0.1).
+  #
+  # We suggest not to use more than 5 as a higher precision is more performance intensive.
   #
   # Parameters:
   # * name: The name as used in #define_category.
   # * radius: The range (in km) around the query point which we search for results.
   #
-  #        <---range---|
-  #  -----|------------*------------|-----
+  #  -----|<- range  ->*------------|-----
   #
   # Options
   # * precision # Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
@@ -94,15 +100,15 @@ class IndexAPI
   end
   alias location define_location
   
-  # EXPERIMENTAL Also a range search see #define_location, but on the earth's surface.
+  #  HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
   #
-  # 
+  # Also a range search see #define_location, but on the earth's surface.
   #
   # Parameters:
   # * name: The name as used in #define_category.
   # * radius: The distance (in km) around the query point which we search for results.
   #
-  # Note: Picky uses a square, not a circle.
+  # Note: Picky uses a square, not a circle. We hope that's ok for most usages.
   #
   #  -----------------------------
   #  |                           |
@@ -134,4 +140,5 @@ class IndexAPI
     #
     define_location name, radius * 0.00898312, options
   end
+  alias map_location define_map_location
 end
