@@ -35,6 +35,25 @@ describe Routing do
       "rack.input"=>'' }
   end
   
+  context 'empty?' do
+    context 'no routes' do
+      before(:each) do
+        @routing.reset_routes
+      end
+      it 'returns the right answer' do
+        @routing.empty?.should == true
+      end
+    end
+    context 'with routes' do
+      before(:each) do
+        @routing.route %r{something} => :some_query
+      end
+      it 'returns the right answer' do
+        @routing.empty?.should == false
+      end
+    end
+  end
+  
   context 'real routes' do
     before(:each) do
       @routing.reset_routes

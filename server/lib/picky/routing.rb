@@ -142,6 +142,12 @@ class Routing # :nodoc:all
     String === url ? %r{#{url}} : url
   end
   
+  # Returns true if there are no routes defined.
+  #
+  def empty?
+    routes.length.zero?
+  end
+  
   # TODO Beautify.
   #
   def to_s
