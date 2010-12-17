@@ -23,4 +23,12 @@ describe Object do
     end
   end
   
+  describe 'puts_gem_missing' do
+    it 'should puts right' do
+      @object.should_receive(:puts).once.with "gnorf gem missing!\nTo use gnarble gnarf, you need to:\n  1. Add the following line to Gemfile:\n     gem 'gnorf'\n  2. Then, run:\n     bundle update\n"
+      
+      @object.puts_gem_missing 'gnorf', 'gnarble gnarf'
+    end
+  end
+  
 end
