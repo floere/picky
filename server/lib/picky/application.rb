@@ -222,7 +222,22 @@ class Application
     # Finalizes the routes.
     #
     def finalize # :nodoc:
+      check
       routing.freeze
+    end
+    # Checks app for missing things.
+    #
+    # Warns if something is missing.
+    #
+    # TODO Good specs.
+    #
+    def check # :nodoc:
+      warnings = []
+      warnings << check_external_interface
+      puts "\n#{warnings.join(?\n)}\n\n" unless warnings.all? &:nil?
+    end
+    def check_external_interface
+      "WARNING: No routes defined for application configuration in #{self.class}." if routing.empty?
     end
     
     # TODO Add more info if possible.
