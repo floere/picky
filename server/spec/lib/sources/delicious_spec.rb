@@ -15,7 +15,7 @@ describe Sources::Delicious do
           @source.should_receive(:require).any_number_of_times.and_raise LoadError
         end
         it "puts & exits" do
-          @source.should_receive(:puts).once.with "Delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n  2. Then, run:\n     bundle update\n"
+          @source.should_receive(:puts).once.with "www-delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n  2. Then, run:\n     bundle update\n"
           @source.should_receive(:exit).once.with 1
           
           @source.check_gem

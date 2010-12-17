@@ -20,7 +20,7 @@ module Sources
     def check_gem # :nodoc:
       require 'www/delicious'
     rescue LoadError
-      puts "Delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n  2. Then, run:\n     bundle update\n"
+      puts_gem_missing 'www-delicious', 'the delicious source'
       exit 1
     end
     
