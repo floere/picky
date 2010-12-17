@@ -2,6 +2,31 @@ require 'spec_helper'
 
 describe Sources::Couch do
   
+  describe 'UUIDKeys' do
+    before(:each) do
+      @keys = Sources::Couch::UUIDKeys.new
+    end
+    it 'converts uuids' do
+      @keys.to_i('550e8400-e29b-41d4-a716-446655440000').should == 113059749145936325402354257176981405696
+    end
+  end
+  describe 'HexKeys' do
+    before(:each) do
+      @keys = Sources::Couch::HexKeys.new
+    end
+    it 'converts uuids' do
+      @keys.to_i('7f').should == 127
+    end
+  end
+  describe 'IntegerKeys' do
+    before(:each) do
+      @keys = Sources::Couch::IntegerKeys.new
+    end
+    it 'converts uuids' do
+      @keys.to_i('123').should == '123'
+    end
+  end
+  
   describe 'special keys' do
     context 'uuid keys' do
       context "with database" do

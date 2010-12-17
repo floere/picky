@@ -35,6 +35,12 @@ module Sources
   #
   class Couch < Base
     
+    # If your Couch DB uses UUID keys, use
+    #  Sources::Couch.new(:title, keys: Sources::Couch::UUIDKeys.new)
+    # Do not forget to reconvert the UUID Key from an integer in the client:
+    #  uuid = UUIDTools::UUID.parse_int(id)
+    #  uuid.to_s
+    #
     class UUIDKeys
       def initialize
         # Tries to require the uuidtools gem.
@@ -42,9 +48,7 @@ module Sources
         begin
           require 'uuidtools'
         rescue LoadError
-          # TODO Extract since it is duplicated code.
-          #
-          puts "uuidtools gem missing!\nTo use UUID keys in a CouchDB source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'uuidtools'\n  2. Then, run:\n     bundle update\n"
+          puts_gem_missing 'uuidtools', 'UUID keys in a CouchDB source'
           exit 1
         end
       end
@@ -53,17 +57,29 @@ module Sources
         uuid.to_i
       end
     end
+    
+    # If your Couch DB uses Hex keys, use
+    #  Sources::Couch.new(:title, keys: Sources::Couch::HexKeys.new)
+    # Do not forget to reconvert the Hex Key from an integer in the client:
+    #  id.to_s(16)
+    #
     class HexKeys
       def to_i id
         id.hex
       end
     end
+    
+    # If your Couch DB uses Integer keys, use
+    #  Sources::Couch.new(:title, keys: Sources::Couch::IntegerKeys.new)
+    #
     class IntegerKeys
       def to_i id
         id
       end
     end
     
+    #
+    #
     def initialize *category_names, options
       check_gem
       
@@ -78,7 +94,7 @@ module Sources
     def check_gem # :nodoc:
       require 'rest_client'
     rescue LoadError
-      puts "Rest-client gem missing!\nTo use the CouchDB source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'rest-client'\n  2. Then, run:\n     bundle update\n"
+      puts_gem_missing 'rest-client', 'the CouchDB source'
       exit 1
     end
 
