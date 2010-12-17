@@ -125,7 +125,7 @@ describe Picky::Convenience do
     end
     it 'should populate with the entries' do
       new_ids = (11..31).to_a # +10
-      @results.replace_ids_with new_ids
+      @results.amend_ids_with new_ids
       @results.entries.should == (11..30).to_a
     end
   end

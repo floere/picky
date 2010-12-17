@@ -1,16 +1,52 @@
+# Ruby Search Client Frontend for the Picky search engine.
+#
+# === Usage
+#
+# ==== 1. Set up search clients.
+# 
+#   # Create search client instances e.g. in your development.rb, production.rb etc.
+#   #
+#   # Use the right host, port where your Picky server runs. Then, choose a URL path as defined
+#   # in your <tt>app/application.rb</tt> in the server.
+#   #
+#   FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
+#   LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+#
+# ==== 2. Get results.
+#
+#   # Then, in your search methods, call #search.
+#   #
+#   # You will get back a Hash with categorized results.
+#   # 
+#   results = FullBooks.search 'my query', :offset => 10
+#   
+# ==== 3. Work with the results.
+#
+#   # To make the Hash more useful, extend it with a few convenience methods.
+#   # See Picky::Convenience.
+#   #
+#   results.extend Picky::Convenience
+#
+#   # One of the added Methods is:
+#   #   populate_with(ModelThatSupportsFind, &optional_block_where_you_get_model_instance_and_you_can_render)
+#   # This adds the rendered models to the results Hash.
+#   #
+#   results.populate_with Book do |book|
+#     book.to_s
+#   end
+#   
+# ==== 4. Last step is encoding it back into JSON.
+#
+#   # Encode the results in JSON and return it to the Javascript Client (or your frontend). 
+#   #
+#   ActiveSupport::JSON.encode results
+#
+# Note: The client might be rewritten such that instead of an http request it connects through tcp/0mq.
+#
 require 'net/http'
 
 module Picky
-  # Frontend for the search client.
-  #
-  # Configure a search by passing the options in the initializer:
-  #   * host
-  #   * port
-  #   * path
-  #
-  # TODO Rewrite such that instead of an http request we connect through tcp.
-  # Or use EventMachine.
-  #
+  
   module Client
 
     class Base

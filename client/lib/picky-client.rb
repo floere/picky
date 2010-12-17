@@ -4,6 +4,6 @@ require 'rubygems'
 require 'yajl'
 
 dir = File.dirname __FILE__
-require File.expand_path('picky-client/engine', dir)
+require File.expand_path('picky-client/client', dir)
 require File.expand_path('picky-client/convenience', dir)
 require File.expand_path('picky-client/helper', dir)

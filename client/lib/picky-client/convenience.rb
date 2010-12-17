@@ -1,5 +1,6 @@
 module Picky
-  # Use this class to extend the hash the serializer returns.
+  
+  # Use this class to extend the hash that the client returns.
   #
   module Convenience
 
@@ -8,42 +9,59 @@ module Picky
     def empty?
       allocations.empty?
     end
-    # Returns the topmost limit results.
+    
+    # Returns the topmost n results.
+    # (Note that not all ids are returned with the results. By default only maximally 20.)
+    #
+    # === Parameters
+    # * limit: The amount of ids to return. Default is 20.
     #
     def ids limit = 20
       ids = []
       allocations.each { |allocation| allocation[4].each { |id| break if ids.size > limit; ids << id } }
       ids
     end
-    # Removes the ids from each allocation.
+    
+    # Removes all ids of each allocation.
     #
     def clear_ids
       allocations.each { |allocation| allocation[4].clear }
     end
 
-    # Caching readers.
+    # Returns the allocations.
     #
     def allocations
       @allocations || @allocations = self[:allocations]
     end
+    # Returns the number of allocations.
+    #
     def allocations_size
       @allocations_size || @allocations_size = allocations.size
     end
+    # Returns the total of results.
+    #
     def total
       @total || @total = self[:total]
     end
     
-    # Populating the results.
+    # Populates the ids with (rendered) model instances.
     #
     # Give it an AR class and options for the find and it
     # will yield each found result for you to render.
     #
     # If you don't pass it a block, it will just use the AR results.
     #
-    def populate_with klass, amount = 20, options = {}, &block
+    # === Parameters
+    # * model_class: The model to use for the results. Will call #find on the given class.
+    # * amount: Amount of results to populate. Default 20.
+    #
+    # === Options
+    # * options are directly passed through to the ModelClass.find(ids, options) method. Default is {}.
+    #
+    def populate_with model_class, amount = 20, options = {}, &block
       the_ids = ids amount
       
-      objects = klass.find the_ids, options
+      objects = model_class.find the_ids, options
       
       # Put together a mapping.
       #
@@ -58,13 +76,18 @@ module Picky
       
       objects.collect! &block if block_given?
       
-      replace_ids_with objects
+      amend_ids_with objects
       clear_ids
       
       objects
     end
-    # The rendered results or AR instances if you
-    # have populated the results.
+    
+    # Returns either
+    # * the rendered entries, if you have used #populate_with _with_ a block
+    # OR
+    # * the model instances, if you have used #populate_with _without_ a block
+    #
+    # Or, if you haven't called #populate_with yet, you will get an empty array.
     #
     def entries limit = 20
       if block_given?
@@ -79,7 +102,7 @@ module Picky
     
     # The ids need to come in the order which the ids were returned by the ids method.
     #
-    def replace_ids_with entries
+    def amend_ids_with entries # :nodoc:
       i = 0
       self.allocations.each do |allocation|
         allocation[5] = allocation[4].map do |_|
