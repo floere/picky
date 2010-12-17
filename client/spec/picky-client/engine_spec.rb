@@ -104,15 +104,32 @@ describe Picky::Client do
     end
 
     describe "search" do
+      describe 'ok search term given' do
+        it 'calls send_search correctly' do
+          @full.should_receive(:send_search).once.with :query => 'hello'
+          
+          @full.search 'hello'
+        end
+      end
+      describe 'no search term given' do
+        it "should raise an ArgumentError" do
+          lambda { @full.search }.should raise_error(ArgumentError)
+        end
+      end
       describe "with nil as search term" do
         before(:each) do
           @query = nil
         end
-        it "should return a Search::Results for bla" do
-          @full.search(:query => @query).should be_kind_of(Hash)
+        it "should return a Search::Results" do
+          @full.search(@query).should be_kind_of(Hash)
         end
         it "should return an empty Search::Results" do
-          @full.search(:query => @query).should be_empty
+          @full.search(@query).should be_empty
+        end
+        it 'calls send_search correctly' do
+          @full.should_receive(:send_search).never
+          
+          @full.search @query
         end
       end
       describe "with '' as search term" do
@@ -120,10 +137,15 @@ describe Picky::Client do
           @query = ''
         end
         it "should return a Search::Results" do
-          @full.search(:query => @query).should be_kind_of(Hash)
+          @full.search(@query).should be_kind_of(Hash)
         end
         it "should return an empty Search::Results" do
-          @full.search(:query => @query).should be_empty
+          @full.search(@query).should be_empty
+        end
+        it 'calls send_search correctly' do
+          @full.should_receive(:send_search).never
+          
+          @full.search @query
         end
       end
     end
@@ -170,15 +192,32 @@ describe Picky::Client do
     end
 
     describe "search" do
+      describe 'ok search term given' do
+        it 'calls send_search correctly' do
+          @live.should_receive(:send_search).once.with :query => 'hello'
+          
+          @live.search 'hello'
+        end
+      end
+      describe 'no search term given' do
+        it "should raise an ArgumentError" do
+          lambda { @live.search }.should raise_error(ArgumentError)
+        end
+      end
       describe "with nil as search term" do
         before(:each) do
           @query = nil
         end
         it "should return a Search::Results" do
-          @live.search(:query => @query).should be_kind_of(Hash)
+          @live.search(@query).should be_kind_of(Hash)
         end
         it "should return an empty Search::Results" do
-          @live.search(:query => @query).should be_empty
+          @live.search(@query).should be_empty
+        end
+        it 'calls send_search correctly' do
+          @live.should_receive(:send_search).never
+          
+          @live.search @query
         end
       end
       describe "with '' as search term" do
@@ -186,10 +225,15 @@ describe Picky::Client do
           @query = ''
         end
         it "should return a Search::Results" do
-          @live.search(:query => @query).should be_kind_of(Hash)
+          @live.search(@query).should be_kind_of(Hash)
         end
         it "should return an empty Search::Results" do
-          @live.search(:query => @query).should be_empty
+          @live.search(@query).should be_empty
+        end
+        it 'calls send_search correctly' do
+          @live.should_receive(:send_search).never
+          
+          @live.search @query
         end
       end
     end

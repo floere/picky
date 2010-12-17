@@ -52,10 +52,10 @@ module Picky
       #
       # Returns a hash. Extend with Convenience.
       #
-      def search params = {}
-        return {} unless params[:query] && !params[:query].empty?
+      def search query, params = {}
+        return {} unless query && !query.empty?
         
-        send_search params
+        send_search params.merge :query => query
       end
       
       # Sends a search to the configured address.
