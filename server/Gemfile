@@ -20,4 +20,5 @@ group :test do
   #
   gem 'www-delicious'
   gem 'rest-client'
+  gem 'uuidtools'
 end

@@ -35,10 +35,42 @@ module Sources
   #
   class Couch < Base
     
+    class UUIDKeys
+      def initialize
+        # Tries to require the uuidtools gem.
+        #
+        begin
+          require 'uuidtools'
+        rescue LoadError
+          # TODO Extract since it is duplicated code.
+          #
+          puts "uuidtools gem missing!\nTo use UUID keys in a CouchDB source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'uuidtools'\n  2. Then, run:\n     bundle update\n"
+          exit 1
+        end
+      end
+      def to_i id
+        uuid = UUIDTools::UUID.parse id
+        uuid.to_i
+      end
+    end
+    class HexKeys
+      def to_i id
+        id.hex
+      end
+    end
+    class IntegerKeys
+      def to_i id
+        id
+      end
+    end
+    
     def initialize *category_names, options
       check_gem
+      
       Hash === options && options[:url] || raise_no_db_given(category_names)
       @db = RestClient::Resource.new options.delete(:url), options
+      
+      @to_i_strategy = options.delete(:keys) || HexKeys.new
     end
     
     # Tries to require the rest_client gem.
@@ -54,10 +86,11 @@ module Sources
     #
     # See important note, above.
     #
+    @@id_key = '_id'
     def harvest type, category
       category_name = category.from.to_s
       get_data do |doc|
-        yield doc['_id'].hex, doc[category_name] || next
+        yield @to_i_strategy.to_i(doc[@@id_key]), doc[category_name] || next
       end
     end
     
