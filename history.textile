@@ -1,3 +1,7 @@
+h2. Version 1.2.0
+
+ * hanke: (client): (BREAKING) Picky::Client::Base.search(:query => 'bla') has changed to Picky::Client::Base.search('bla'), as the query itself is not optional. The rest of the options is still passed in as a Hash through the second parameter.
+
 h2. Version 1.1.7 (1.2.0 pre)
 
  * hanke: (server) Redefined API for 1.1.6 beta feature, ranged search.
