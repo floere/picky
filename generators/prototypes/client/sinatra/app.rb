@@ -33,7 +33,7 @@ end
 # and then populate the result with models (rendered, even).
 #
 get '/search/full' do
-  results = FullBooks.search :query => params[:query], :offset => params[:offset]
+  results = FullBooks.search params[:query], :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
     book.to_s
@@ -53,7 +53,7 @@ end
 # For live results, you'd actually go directly to the search server without taking the detour.
 #
 get '/search/live' do
-  LiveBooks.search :query => params[:query], :offset => params[:offset]
+  LiveBooks.search params[:query], :offset => params[:offset]
 end
 
 helpers do
