@@ -10,40 +10,45 @@ module Statistics
     
     #
     #
-    def initialize pattern
-      @pattern = pattern
+    def initialize *patterns
+      @patterns = patterns
       
       @count = 0
     end
     
     # Calculate the value starting from the given byte offset. 
     #
-    def from offset
-      
+    def from filename
+      @patterns.inject(0) do |total, pattern|
+        total + count(pattern, filename)
+      end
     end
     
-    def reset_from
-      @count = from offset
+    # Calculate and reset the value starting from the given byte offset.
+    #
+    def reset_from filename
+      @count = from filename
     end
     
     # Calculate and add the value starting from the given byte offset.
     #
-    def add_from offset
-      @count += from offset
+    def add_from filename
+      @count += from filename
     end
     
     # Count the pattern.
     #
-    def count pattern, options = {}
+    def count pattern, filename, options = {}
       extended       = options[:extended] ? '-E' : '-G'
       nonmatching    = options[:nonmatching] ? '-v' : ''
-      count_lines "#{extended} #{nonmatching} -i -s -e \"#{pattern}\" ", "#{@path}/tmp.log"
+      count_lines "#{extended} #{nonmatching} -i -s -e \"#{pattern}\"", filename
     end
     
     # Count the amount of lines the pattern matches.
     #
-    def count_lines pattern, filename
-      sys_i "grep -c #{pattern} #{filename}"
+    def count_lines extended_pattern, filename
+      puts "grep -c #{extended_pattern} #{filename}"
+      sys_i "grep -c #{extended_pattern} #{filename}"
     end
     
     # Convert the system's response into an integer.
@@ -59,7 +64,7 @@ module Statistics
     end
     
     def to_s
-      @count
+      @count.to_s
     end
     
   end
