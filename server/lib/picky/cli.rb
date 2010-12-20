@@ -4,10 +4,6 @@ module Picky
   #
   class CLI # :nodoc:all
     
-    def self.mapping
-      @@mapping
-    end
-    
     # Execute a command.
     #
     # Note: By default, help is displayed. I.e. when no command is given.
@@ -24,6 +20,27 @@ module Picky
       end
       def params_to_s params
         params.map { |param| "<#{param}>" }.join(' ') if params
+      end
+    end
+    class Statistics < Base
+      def execute name, args, params
+        relative_log_file            = args.shift
+        port                         = args.shift
+        
+        usage(name, params) || exit(1) unless relative_log_file
+        
+        ENV['PICKY_LOG_FILE']        = File.expand_path relative_log_file  
+        ENV['PICKY_STATISTICS_PORT'] = port
+        
+        begin
+          require 'picky-statistics'
+        rescue LoadError => e
+          require 'picky/extensions/object'
+          puts_gem_missing 'picky-statistics', 'the Picky statistics'
+          exit 1
+        end
+        
+        require 'picky-statistics/application/app'
       end
     end
     class Generate < Base
@@ -50,8 +67,12 @@ module Picky
     #
     @@mapping = {
       :generate => [Generate, 'thing_to_generate: e.g. "unicorn_server"', :parameters],
-      :help     => [Help]
+      :help     => [Help],
+      :stats    => [Statistics, 'logfile_to_use: e.g. log/search.log', 'port (optional)']
     }
+    def self.mapping
+      @@mapping
+    end
     
   end
   
