@@ -37,19 +37,16 @@ module Statistics
     end
     def initialize_full_totals
       full[:totals] = {}
-      full[:totals][0] = Count.new "^>|.*|       0|"
-      full[:totals][1] = Count.new "^>|.*|       1|"
-      full[:totals][2] = Count.new "^>|.*|       2|"
-      full[:totals][3] = Count.new "^>|.*|       3|"
-      
-      full[:totals][:'4+'] = Count.new("^>|.*|       [4-9]|", # 4-9, with one or more allocs
-                                       "^>|.*|      [1-9].|") # but less than 100
+      full[:totals][0]         = Count.new "^>|.*|       0|"
+      full[:totals][1]         = Count.new "^>|.*|       1|"
+      full[:totals][2]         = Count.new "^>|.*|       2|"
+      full[:totals][3]         = Count.new "^>|.*|       3|"
+      full[:totals][:'4+']     = Count.new("^>|.*|       [4-9]|", "^>|.*|      [1-9][0-9]|") # 4-9, 10+, but less than 100
+      full[:totals][:'100+']   = Count.new "^>|.*|.*|     [1-9][0-9][0-9]|"
+      full[:totals][:'1000+']  = Count.new "^>|.*|.*|....[0-9]...|"
                                        
       full[:totals][:cloud]     = Count.new("^>|.*|[1-9].|",                      # allocs 10+
                                             "^>|.*|.*|......[1-9].|....|.[2-9]|") # allocs 2-9, more than 10 results
-      
-      full[:totals][:'100+']   = Count.new "^>|.*|.*|     [1-9]..|"
-      full[:totals][:'1000+']  = Count.new "^>|.*|.*|....[0-9]...|"
     end
     def initialize_live_totals
       
