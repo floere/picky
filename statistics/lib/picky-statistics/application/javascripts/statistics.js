@@ -51,6 +51,9 @@ function updateSpeed(data) {
 function updateStatistics() {
   $.ajax({
     url: 'index.json',
+    beforeSend: function() {
+      $('.inlinesparkline').css('background-color', '#eee');
+    },
     success: function(data) {
       // alert(data);
       data = $.parseJSON(data);
@@ -58,6 +61,13 @@ function updateStatistics() {
       updateResults(data);
       updateOffset(data);
       updateSpeed(data);
+      $('.inlinesparkline').css('background-color', 'white');
     }
   });
+};
+
+function updateStatisticsPeriodically(seconds) {
+  var refreshId = setInterval(function() {
+       updateStatistics();
+  }, 1000*seconds);
 };

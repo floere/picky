@@ -7,7 +7,11 @@
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
     
   %body
-    %a{ :href => '#', :onclick => 'javascript:updateStatistics();' } New Data
+    %a{ :href => '#', :onclick => 'javascript:updateStatistics();' } Update now
+    %a{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(5);' } Update every 5 seconds
+    %a{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(30);' } Update every 30 seconds
+    %a{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(600);' } Update every 5 minutes
+    / #refresh{ :style => 'opacity:0.1;' } Refreshing...
     %h1 Search Statistics
     %h2 Totals
     #full_live_graph.inlinesparkline
