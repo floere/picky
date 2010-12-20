@@ -2,11 +2,21 @@
 %html{ :lang => 'en' }
   %head
     %link{ :href => 'stylesheets/statistics.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css' }/
+    %script{ :src => 'javascripts/jquery-1.4.4.min.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/jquery.sparkline-1.6.min.js', :type => 'text/javascript' }
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
-    / = js 'jquery-1.4.3.min'
     
   %body
+    %a{ :href => '#', :onclick => 'javascript:updateStatistics();' } New Data
     %h1 Search Statistics
     %h2 Totals
+    #full_live_graph.inlinesparkline
     %h2 Number of Results
+    #results_graph.inlinesparkline
+    %h2 Offset
+    #offset_graph.inlinesparkline
+    %h2 Performance
+    #speed_graph.inlinesparkline
+  :javascript
+    updateStatistics();
     

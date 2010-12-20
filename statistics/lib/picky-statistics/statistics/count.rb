@@ -18,22 +18,22 @@ module Statistics
     
     # Calculate the value starting from the given byte offset. 
     #
-    def from filename
+    def from filename, options = {}
       @patterns.inject(0) do |total, pattern|
-        total + count(pattern, filename)
+        total + count(pattern, filename, options)
       end
     end
     
     # Calculate and reset the value starting from the given byte offset.
     #
-    def reset_from filename
-      @count = from filename
+    def reset_from filename, options = {}
+      @count = from filename, options
     end
     
     # Calculate and add the value starting from the given byte offset.
     #
-    def add_from filename
-      @count += from filename
+    def add_from filename, options = {}
+      @count += from filename, options
     end
     
     # Count the pattern.

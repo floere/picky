@@ -37,7 +37,7 @@ module Statistics
     end
     def initialize_full_totals
       full[:totals] = {}
-      full[:totals][0] = Count.new "|>|.*|       0|"
+      full[:totals][0] = Count.new "^>|.*|       0|"
       full[:totals][1] = Count.new "^>|.*|       1|"
       full[:totals][2] = Count.new "^>|.*|       2|"
       full[:totals][3] = Count.new "^>|.*|       3|"
@@ -47,7 +47,7 @@ module Statistics
       full[:totals][:cloud]     = Count.new("^>|.*|[1-9].|",          # allocs 10+
                                             "^>|.*|.*|......[1-9].|....|.[2-9]|")        # allocs 2-9, more than 10 results
       
-      full[:totals][:'100+']   = Count.new "^>|.*|.*|.....[0-9]..|"
+      full[:totals][:'100+']   = Count.new "^>|.*|.*|     [1-9]..|"
       full[:totals][:'1000+']  = Count.new "^>|.*|.*|....[0-9]...|"
     end
     def initialize_live_totals
@@ -58,17 +58,16 @@ module Statistics
       full[:long_running]      = Count.new "^>|.\\+\\?|0\\.[1-9].....|"
       full[:very_long_running] = Count.new "^>|.\\+\\?|[1-9]\\.......|"
       
-      full[:offset]            = Count.new "^>|.\\+\\?|.*|..[0-9].|" # with offset?
+      full[:offset]            = Count.new "^>|.*|   0|" # with offset?
     end
 
     #
     #
     def since_last
-      with_temp_file(@last_offset || 0) do |statistics|
-        
-        # TODO set last offset
-        #
-        # @last_offset = statistics, wc -l
+      @last_offset ||= 0
+      puts "Parsing log files from last parse point at line #{@last_offset}."
+      with_temp_file(@last_offset) do |statistics|
+        calculate_last_offset_from statistics
         
         puts "Generating statistics."
         full[:total].add_from statistics
@@ -89,11 +88,16 @@ module Statistics
         full[:long_running].add_from statistics
         full[:very_long_running].add_from statistics
         
-        full[:offset].add_from statistics
+        full[:offset].add_from statistics, :nonmatching => true # TODO Move to initializer
         
         puts "Finished generating statistics."
       end
       @counts
+    end
+    
+    def calculate_last_offset_from statistics
+      lines = `wc -l #{statistics}`.to_i
+      @last_offset = lines + 2 if lines > 0
     end
 
     #
@@ -111,11 +115,11 @@ module Statistics
       # Tempfile.open 'picky' do |temp_file|
       File.open('picky_statistics.tmp', 'w+') do |temp_file|
         temp_path = temp_file.path
-        p temp_path
         puts "Copying #{@path} to #{temp_path} beginning at line #{offset}."
         `tail -n +#{offset} #{@path} > #{temp_path}`
         puts "Finished copying."
         yield temp_path
+        # TODO rm temp file
       end
     end
   
