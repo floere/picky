@@ -1,6 +1,6 @@
 h2. Version 1.2.1
 
- * hanke: (statistics) (BETA) New statistics gem for Picky. Run "picky stats &lt;relative_logfile_location&gt;(default is log/search.log) &lt;port&gt;(optional)" in your Picky Server directory to generate statistics. Go to "http://localhost:4567":http://localhost:4567 after running the command to take a look.
+ * hanke: (statistics) (BETA) New statistics gem for Picky. Run @picky stats path/to/your/search.log [port]@ in your Picky Server directory to start a statistics server. Go to "http://localhost:4567":http://localhost:4567 after running the command to take a look.
 
 h2. Version 1.2.0
 
