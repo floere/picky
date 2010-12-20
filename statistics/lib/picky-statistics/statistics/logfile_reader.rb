@@ -59,7 +59,8 @@ module Statistics
       full[:long_running]      = Count.new "^>|.\\+\\?|0\\.[1-9].....|"
       full[:very_long_running] = Count.new "^>|.\\+\\?|[1-9]\\.......|"
       
-      full[:offset]            = Count.new "^>|.*|   0|" # with offset?
+      full[:offset]            = Count.new("^>|.*|[ 1-9][ 0-9][0-9][0-9]|", # offset 10+
+                                           "^>|.*|   [1-9]") # offset 1-9
     end
 
     #
@@ -88,7 +89,7 @@ module Statistics
         full[:long_running].add_from statistics
         full[:very_long_running].add_from statistics
         
-        full[:offset].add_from statistics, :nonmatching => true # TODO Move to initializer
+        full[:offset].add_from statistics
       end
       
       puts "Statistics generated."
