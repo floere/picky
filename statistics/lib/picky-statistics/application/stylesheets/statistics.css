@@ -1,0 +1,48 @@
+body {
+  font-family: Futura, 'Century Gothic', 'URW Gothic L', Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-weight: normal;
+  margin: 0.5em 0em 0.5em; 
+}
+h1 { font-size: 1.3em; }
+h2 { font-size: 1.2em; }
+h3 { font-size: 1.1em; }
+h4 { font-size: 1.1em; }
+
+.push {
+  overflow: hidden;
+}
+
+.stats {
+  float: left;
+  padding: 10px;
+  width: 200px;
+}
+
+.legend {
+  clear: both;
+  margin-top: 10px;
+}
+.legend .color {
+  float: left;
+  width: 0.8em;
+  height: 0.8em;
+  color: green;
+  margin: 3px 0px 1px 3px;
+}
+.legend .text {
+  float: left;
+  font-size: 0.8em;
+  margin: 0px 5px;
+}
+.legend .color.green { background-color: #6c0; }
+.legend .color.darkgreen { background-color: #690; }
+.legend .color.browngreen { background-color: #660; }
+.legend .color.brownorange { background-color: #960; }
+.legend .color.orange { background-color: #f90; }
+.legend .color.brownred { background-color: #f93; }
+.legend .color.red { background-color: red; }
+.legend .color.black { background-color: black; }
+.legend .color.grey { background-color: #999; }

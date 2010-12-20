@@ -42,8 +42,8 @@ module Statistics
       full[:totals][2] = Count.new "^>|.*|       2|"
       full[:totals][3] = Count.new "^>|.*|       3|"
       
-      full[:totals][:four_plus] = Count.new("^>|.*|       [4-9]|....|.[1-9]|", # 2-9, with one or more allocs
-                                            "^>|.*|......[0-9].|....|.1|")     # any number higher than 9, with one alloc
+      full[:totals][:'4+'] = Count.new("^>|.*|       [4-9]|....|.[1-9]|", # 2-9, with one or more allocs
+                                       "^>|.*|......[0-9].|....|.1|")     # any number higher than 9, with one alloc
       full[:totals][:cloud]     = Count.new("^>|.*|[1-9].|",          # allocs 10+
                                             "^>|.*|.*|......[1-9].|....|.[2-9]|")        # allocs 2-9, more than 10 results
       
@@ -78,7 +78,7 @@ module Statistics
         full[:totals][2].add_from statistics
         full[:totals][3].add_from statistics
         
-        full[:totals][:four_plus].add_from statistics
+        full[:totals][:'4+'].add_from statistics
         full[:totals][:cloud].add_from statistics
         
         full[:totals][:'100+'].add_from statistics
