@@ -42,8 +42,9 @@ module Statistics
       full[:totals][2] = Count.new "^>|.*|       2|"
       full[:totals][3] = Count.new "^>|.*|       3|"
       
-      full[:totals][:'4+'] = Count.new("^>|.*|       [4-9]|....|.[1-9]|", # 2-9, with one or more allocs
-                                       "^>|.*|......[0-9].|....|.1|")     # any number higher than 9, with one alloc
+      full[:totals][:'4+'] = Count.new("^>|.*|       [4-9]|", # 4-9, with one or more allocs
+                                       "^>|.*|      [1-9].|")     # but less than 100
+                                       
       full[:totals][:cloud]     = Count.new("^>|.*|[1-9].|",          # allocs 10+
                                             "^>|.*|.*|......[1-9].|....|.[2-9]|")        # allocs 2-9, more than 10 results
       
@@ -69,7 +70,6 @@ module Statistics
       with_temp_file(@last_offset) do |statistics|
         calculate_last_offset_from statistics
         
-        puts "Generating statistics."
         full[:total].add_from statistics
         live[:total].add_from statistics
         
@@ -89,15 +89,15 @@ module Statistics
         full[:very_long_running].add_from statistics
         
         full[:offset].add_from statistics, :nonmatching => true # TODO Move to initializer
-        
-        puts "Finished generating statistics."
       end
+      
+      puts "Statistics generated."
+      
       @counts
     end
     
     def calculate_last_offset_from statistics
-      lines = `wc -l #{statistics}`.to_i
-      @last_offset = lines + 2 if lines > 0
+      @last_offset += `wc -l #{statistics}`.to_i
     end
 
     #
@@ -112,14 +112,13 @@ module Statistics
     # Use the offset to speed up statistics gathering.
     #
     def with_temp_file offset = 0
-      # Tempfile.open 'picky' do |temp_file|
+      # Tempfile.open 'picky' do |temp_file| # TODO Use temp file.
       File.open('picky_statistics.tmp', 'w+') do |temp_file|
         temp_path = temp_file.path
         puts "Copying #{@path} to #{temp_path} beginning at line #{offset}."
         `tail -n +#{offset} #{@path} > #{temp_path}`
-        puts "Finished copying."
         yield temp_path
-        # TODO rm temp file
+        File.delete temp_path
       end
     end
   

@@ -47,7 +47,7 @@ module Statistics
     # Count the amount of lines the pattern matches.
     #
     def count_lines extended_pattern, filename
-      puts "grep -c #{extended_pattern} #{filename}"
+      # puts "grep -c #{extended_pattern} #{filename}"
       sys_i "grep -c #{extended_pattern} #{filename}"
     end
     

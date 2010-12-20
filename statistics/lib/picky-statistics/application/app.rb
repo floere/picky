@@ -1,15 +1,15 @@
 # This is a sinatra app packaged in a gem, running directly from the gem.
 #
-STATISTICS_DIR = Dir.pwd
+raise "ENV['PICKY_LOG_FILE'] needs to be set for the statistics app to be run. Use either it, or run 'picky stats <logfile> <port>'." unless ENV['PICKY_LOG_FILE']
+
+log_file = File.expand_path ENV['PICKY_LOG_FILE'], Dir.pwd
+port     = ENV['PICKY_STATISTICS_PORT'] || 4567
+
+Dir.chdir File.expand_path('..', __FILE__)
 
 require 'sinatra'
 require 'haml'
 require 'json'
-
-set :static, true
-set :public, File.dirname(__FILE__)
-set :views,  File.expand_path('../views', __FILE__)
-set :haml, { :format => :html5 }
 
 begin
   require File.expand_path '../../../picky-statistics', __FILE__
@@ -17,17 +17,27 @@ rescue LoadError => e
   require 'picky-statistics'
 end
 
-Stats = Statistics::LogfileReader.new 'spec/data/search.log'
+Stats = Statistics::LogfileReader.new log_file
 
-# Returns an index page with all the statistics.
-#
-get '/' do
-  haml :'/index'
+class PickyStatistics < Sinatra::Base
+  
+  set :static, true
+  set :public, File.expand_path('..', __FILE__)
+  set :views,  File.expand_path('../views', __FILE__)
+  set :haml, { :format => :html5 }
+  
+  # Returns an index page with all the statistics.
+  #
+  get '/' do
+    haml :'/index'
+  end
+
+  # Returns statistics data in JSON for the index page.
+  #
+  get '/index.json' do
+    Stats.since_last.to_json
+  end
+  
 end
 
-# Returns statistics data in JSON for the index page.
-#
-get '/index.json' do
-  stats = Stats.since_last
-  stats.to_json
-end
+PickyStatistics.run! :port => port

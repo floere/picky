@@ -7,12 +7,14 @@
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
     
   %body
-    %h1 Picky Statistics
+    %h1 Picky Statistics (Experimental)
     .actions
-      %a{ :href => '#', :onclick => 'javascript:updateStatistics();' } Update now
-      %a{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(5);' } Update every 5 seconds
-      %a{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(30);' } Update every 30 seconds
-      %a{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(600);' } Update every 5 minutes
+      %button{ :href => '#', :onclick => 'javascript:updateStatistics();' } Update now
+      |
+      %button{ :href => '#', :onclick => 'javascript:stopUpdatingStatistics();' } Stop Updating
+      %button{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(5);' } Update every 5 seconds
+      %button{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(30);' } Update every 30 seconds
+      %button{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(600);' } Update every 5 minutes
     .overview.push
       %h2 Overview
       #full_live_graph.stats
@@ -45,6 +47,7 @@
         .inlinesparkline
         = haml :legend, {}, :color => :black, :type => :with_offset, :text => 'with offset'
         = haml :legend, {}, :color => :grey, :type => :without_offset, :text => 'without offset'
+    Disclaimer: "Designed" by myself. If anyone wants to contribute a better design, please do! :)
   :javascript
     updateStatistics();
     
