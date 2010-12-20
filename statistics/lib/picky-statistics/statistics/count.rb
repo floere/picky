@@ -6,8 +6,6 @@ module Statistics
   #
   class Count
     
-    attr_reader :count
-    
     #
     #
     def initialize *patterns

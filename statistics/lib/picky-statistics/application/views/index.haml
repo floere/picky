@@ -20,8 +20,8 @@
       #full_live_graph.stats
         %h2 Totals
         .inlinesparkline
-        = haml :legend, {}, :color => :black, :type => :full, :text => 'full'
-        = haml :legend, {}, :color => :grey, :type => :live, :text => 'live'
+        = haml :legend, {}, :color => :black, :type => :full, :text => 'full requests'
+        = haml :legend, {}, :color => :grey, :type => :live, :text => 'live requests'
         = haml :legend, {}, :color => :white, :type => :total, :text => 'total'
     .full.push
       %h2 Full Results

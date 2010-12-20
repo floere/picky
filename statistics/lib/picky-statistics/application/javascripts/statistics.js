@@ -72,11 +72,13 @@ function updateSpeed(data) {
   $('#speed_graph .inlinesparkline').sparkline(values, pieOptions);
 };
 
+var intervalUpdating = false;
+
 function updateStatistics() {
   $.ajax({
     url: 'index.json',
     beforeSend: function() {
-      $('body').css('background-color', '#eeeecc');
+      $('body .actions').css('background-color', '#eec');
     },
     success: function(data) {
       // alert(data);
@@ -85,7 +87,11 @@ function updateStatistics() {
       updateResults(data);
       updateOffset(data);
       updateSpeed(data);
-      $('body').css('background-color', 'white');
+      if (intervalUpdating) {
+        $('body .actions').css('background-color', '#eee');
+      } else {
+        $('body .actions').css('background-color', 'white');
+      };
     }
   });
 };
@@ -97,8 +103,12 @@ function updateStatisticsPeriodically(seconds) {
   periodicalUpdaterId = setInterval(function() {
        updateStatistics();
   }, 1000*seconds);
+  intervalUpdating = true;
+  $('body .actions').css('background-color', '#eee');
 };
 
 function stopUpdatingStatistics() {
   clearInterval(periodicalUpdaterId);
+  intervalUpdating = false;
+  $('body .actions').css('background-color', 'white');
 };

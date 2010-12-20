@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.description = 'Statistics interface for Picky, the fast Ruby search engine.'
   s.summary = 'Displays search statistics for Picky.'
   
-  s.files = Dir["lib/**/*.rb"]
+  s.files = Dir["lib/**/*"]
   s.test_files = Dir["spec/**/*_spec.rb"]
   
   s.add_development_dependency 'rspec'
