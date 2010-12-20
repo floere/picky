@@ -8,3 +8,4 @@ gets
 system "cd server;     gem release"
 system "cd client;     gem release"
 system "cd generators; gem release"
+system "cd statistics; gem release"
