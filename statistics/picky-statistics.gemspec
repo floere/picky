@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir["lib/**/*"]
   s.test_files = Dir["spec/**/*_spec.rb"]
   
-  s.add_dependency 'sinatra'
+  s.add_dependency 'sinatra', '~> 1.0'
   
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec', '>= 1.3.0'
 end
