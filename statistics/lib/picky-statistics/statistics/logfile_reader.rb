@@ -63,7 +63,7 @@ module Statistics
     #
     #
     def since_last
-      @last_offset ||= 0
+      @last_offset ||= 0 # TODO Should this be 1?
       
       log_offset = @last_offset
       start_time = Time.now
