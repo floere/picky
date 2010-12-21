@@ -64,7 +64,10 @@ module Statistics
     #
     def since_last
       @last_offset ||= 0
-      puts "Parsing log files from last parse point at line #{@last_offset}."
+      
+      log_offset = @last_offset
+      start_time = Time.now
+      
       with_temp_file(@last_offset) do |statistics|
         calculate_last_offset_from statistics
         
@@ -89,7 +92,8 @@ module Statistics
         full[:offset].add_from statistics
       end
       
-      puts "Statistics generated."
+      duration = Time.now - start_time
+      puts "Parsed log from line #{log_offset} in #{duration}s"
       
       @counts
     end
@@ -110,14 +114,13 @@ module Statistics
     # Use the offset to speed up statistics gathering.
     #
     def with_temp_file offset = 0
-      # Tempfile.open 'picky' do |temp_file| # TODO Use temp file.
-      File.open('picky_statistics.tmp', 'w+') do |temp_file|
-        temp_path = temp_file.path
-        puts "Copying #{@path} to #{temp_path} beginning at line #{offset}."
-        `tail -n +#{offset} #{@path} > #{temp_path}`
-        yield temp_path
-        File.delete temp_path
-      end
+      temp_file = Tempfile.new 'picky'
+      
+      temp_path = temp_file.path
+      `tail -n +#{offset} #{@path} > #{temp_path}`
+      yield temp_path
+      
+      temp_file.delete
     end
   
   end
