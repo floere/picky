@@ -53,8 +53,17 @@ class Routing # :nodoc:all
     [mappings, route_options]
   end
   def route_one url, query, route_options = {}
+    raise TargetQueryNilError.new(url) unless query
     query.tokenizer = @defaults[:tokenizer] if @defaults[:tokenizer]
     routes.add_route generate_app(query, route_options), default_options(url, route_options)
+  end
+  class TargetQueryNilError < StandardError
+    def initialize url
+      @url = url
+    end
+    def to_s
+      "Routing for #{@url.inspect} was defined with a nil query object."
+    end
   end
   #
   #

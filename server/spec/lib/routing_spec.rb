@@ -178,6 +178,9 @@ describe Routing do
         
         @routing.route %r{regexp1} => :query1, %r{regexp2} => :query2, :some => :option
       end
+      it 'does not accept nil queries' do
+        lambda { @routing.route %r{some/regexp} => nil }.should raise_error(Routing::TargetQueryNilError, /Routing for \/some\\\/regexp\/ was defined with a nil query object/)
+      end
     end
     
     describe 'route_one' do
