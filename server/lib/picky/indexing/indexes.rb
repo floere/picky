@@ -17,7 +17,7 @@ module Indexing
       clear
     end
     
-    # TODO Spec.
+    # TODO Doc.
     #
     def clear
       @indexes = []
