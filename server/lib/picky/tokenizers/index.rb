@@ -39,8 +39,6 @@ module Tokenizers
     # 1. Split the text into words.
     # 2. Normalize each word.
     #
-    # TODO Rename into wordize? Or somesuch?
-    #
     def pretokenize text
       words = split text
       words.collect! do |word|
@@ -54,17 +52,6 @@ module Tokenizers
     #
     def token_for text
       symbolize text
-    end
-    
-    # Rejects tokens if they are too short (or blank).
-    #
-    # Override in subclasses to redefine behaviour.
-    #
-    # TODO TODO TODO Make parametrizable! reject { |token| }
-    #
-    def reject tokens
-      tokens.reject! &:blank?
-      # tokens.reject! { |token| token.to_s.size < 2 }
     end
     
   end
