@@ -3,7 +3,7 @@
 require 'spec'
 require 'spec/rake/spectask'
 
-spec_root = File.join(File.dirname(__FILE__), 'spec')
+spec_root = File.expand_path '../../spec', __FILE__
 
 desc "Run specs."
 Spec::Rake::SpecTask.new(:spec) do |t|

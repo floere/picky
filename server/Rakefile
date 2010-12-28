@@ -1,9 +1,9 @@
 require 'rake'
 
+task :default => :spec
+
 all_rake_files = File.expand_path '../tasks/*.rake', __FILE__
 
 Dir[all_rake_files].each do |rakefile|
   load rakefile
 end
-
-task :default => :spec
