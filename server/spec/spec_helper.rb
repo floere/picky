@@ -16,7 +16,7 @@ require 'spec'
 # Set some spec preconditions.
 #
 Object.send :remove_const, :PICKY_ROOT
-PICKY_ROOT = 'some/search/root'
+PICKY_ROOT = 'spec/test_directory'
 puts "Redefined PICKY_ROOT to '#{PICKY_ROOT}' for the tests."
 
 PickyLog = Loggers::Search.new ::Logger.new(STDOUT)

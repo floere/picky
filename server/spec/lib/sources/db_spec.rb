@@ -53,7 +53,7 @@ describe Sources::DB do
     end
     context "with file" do
       it "opens the config file relative to root" do
-        File.should_receive(:open).once.with 'some/search/root/app/bla.yml'
+        File.should_receive(:open).once.with 'spec/test_directory/app/bla.yml'
         
         @source.configure :file => 'app/bla.yml'
       end

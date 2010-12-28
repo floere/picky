@@ -24,7 +24,7 @@ describe 'Configuration::Index' do
       @config.index_path(:some_bundle, :some_name).should_not equal(@config.index_path(:some_bundle, :some_name))
     end
     it "returns the right thing" do
-      @config.index_path(:some_bundle, :some_name).should == 'some/search/root/index/test/some_index/some_category_some_bundle_some_name'
+      @config.index_path(:some_bundle, :some_name).should == 'spec/test_directory/index/test/some_index/some_category_some_bundle_some_name'
     end
   end
   
@@ -50,7 +50,7 @@ describe 'Configuration::Index' do
       @config.index_root.should equal(@config.index_root)
     end
     it "returns the right thing" do
-      @config.index_root.should == 'some/search/root/index'
+      @config.index_root.should == 'spec/test_directory/index'
     end
   end
   describe "index_directory" do
@@ -58,7 +58,7 @@ describe 'Configuration::Index' do
       @config.index_directory.should equal(@config.index_directory)
     end
     it "returns the right thing" do
-      @config.index_directory.should == 'some/search/root/index/test/some_index'
+      @config.index_directory.should == 'spec/test_directory/index/test/some_index'
     end
   end
   describe "prepared_index_path" do
@@ -66,12 +66,12 @@ describe 'Configuration::Index' do
       @config.prepared_index_path.should equal(@config.prepared_index_path)
     end
     it "returns the right thing" do
-      @config.prepared_index_path.should == 'some/search/root/index/test/some_index/prepared_some_category_index'
+      @config.prepared_index_path.should == 'spec/test_directory/index/test/some_index/prepared_some_category_index'
     end
   end
   describe "prepare_index_directory" do
     it "calls the right thing" do
-      FileUtils.should_receive(:mkdir_p).once.with 'some/search/root/index/test/some_index'
+      FileUtils.should_receive(:mkdir_p).once.with 'spec/test_directory/index/test/some_index'
       
       @config.prepare_index_directory
     end

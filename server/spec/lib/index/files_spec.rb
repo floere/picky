@@ -64,7 +64,7 @@ describe Index::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_index.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_index.json', 'r'
         
         @files.load_index
       end
@@ -73,7 +73,7 @@ describe Index::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_weights.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.json', 'r'
         
         @files.load_weights
       end
@@ -82,7 +82,7 @@ describe Index::Files do
       it "uses the right file" do
         Marshal.stub! :load
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_similarity.dump', 'r:binary'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump', 'r:binary'
         
         @files.load_similarity
       end
@@ -91,7 +91,7 @@ describe Index::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'some/search/root/index/test/some_index/some_category_some_name_configuration.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.json', 'r'
         
         @files.load_configuration
       end
