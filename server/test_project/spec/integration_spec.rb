@@ -48,6 +48,7 @@ describe "Integration Tests" do
     it_should_find_ids_in_csv 'Gover* Systems', [7]
     it_should_find_ids_in_csv 'A*', [2, 3, 4, 5, 6, 7, 8, 15, 24, 27, 29, 35, 39, 52, 55, 63, 67, 76, 80, 101]
     it_should_find_ids_in_csv 'a* b* c* d* f', [110, 416]
+    it_should_find_ids_in_csv '1977', [86, 394]
     
     # Similarity
     #
