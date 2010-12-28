@@ -29,7 +29,7 @@ class IndexesAPI # :nodoc:all
     self.index_mapping[index.name] = index
     
     @indexing.register index.indexing
-    @indexed.register  index.indexed # TODO Even necessary?
+    @indexed.register  index.indexed
   end
   
   def [] name
