@@ -179,7 +179,7 @@ class Application
     # * source: The source the data comes from. See Sources::Base. # TODO Sources (all).
     #
     # Options:
-    # * result_identifier: # TODO Rename.
+    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
     #
     def index name, source, options = {}
       IndexAPI.new name, source, options
