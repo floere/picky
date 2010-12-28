@@ -1,3 +1,7 @@
+h2. Version 1.2.3
+
+ * hanke: (server) Fixed a bug where the partial strategy @Partial::None@ was not correctly used: A query like @Peter@ did not return results even if "Peter" could be found using quotes: "Peter" (FYI, double quotes force Picky to use the exact index instead of the partial one. While, conversely, the asterisk * forces Picky to use the partial index instead of the exact one).
+
 h2. Version 1.2.2
 
  * hanke: (statistics) Statistics server handles logfile reading in a cleaner way when the gem has been installed by root.
