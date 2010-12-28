@@ -7,6 +7,7 @@ class BookSearch < Application
                      splits_text_on:                     /[\s\/\-\"\&]/,
                      removes_characters_after_splitting: /[\.]/,
                      normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
+                     reject_token_if:                    lambda { |token| token.blank? || token == :amistad },
                      
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     

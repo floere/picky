@@ -90,6 +90,10 @@ describe "Integration Tests" do
     #
     it_should_find_ids_in_csv "hïstôry Educåtioñ fërgus", [4, 4, 4, 4]
     
+    # Token Rejection
+    #
+    it_should_find_ids_in_csv 'Amistad', []
+    
     # Breakage
     #
     it_should_find_ids_in_csv "%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}", []
