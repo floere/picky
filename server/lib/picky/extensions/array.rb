@@ -35,8 +35,6 @@ class Array # :nodoc:all
   def sort_by_levenshtein! from
     from = from.to_s
     sort! do |this, that|
-      # TODO Cache for speed?
-      #
       Text::Levenshtein.distance(this.to_s, from) <=> Text::Levenshtein.distance(that.to_s, from)
     end
   end
