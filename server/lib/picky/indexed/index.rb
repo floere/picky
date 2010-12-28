@@ -18,7 +18,7 @@ module Indexed
       @categories = Categories.new ignore_unassigned_tokens: ignore_unassigned_tokens
     end
     
-    # TODO Spec. Doc.
+    # TODO Doc.
     #
     def define_category category_name, options = {}
       new_category = Category.new category_name, self, options
@@ -26,7 +26,9 @@ module Indexed
       new_category
     end
     
+    # Return the possible combinations for this token.
     #
+    # A combination is a tuple <token, index_bundle>.
     #
     def possible_combinations token
       categories.possible_combinations_for token

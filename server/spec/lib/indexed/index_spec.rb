@@ -2,7 +2,24 @@ require 'spec_helper'
 
 describe Indexed::Index do
   
-  context "with categories" do
+  context 'without stubbed categories' do
+    before(:each) do
+      @index = Indexed::Index.new :some_index_name
+    end
+    
+    describe 'define_category' do
+      it 'adds a new category to the categories' do
+        @index.define_category :some_category_name
+        
+        @index.categories.categories.size.should == 1 
+      end
+      it 'returns the new category' do
+        @index.define_category(:some_category_name).should be_kind_of(Indexed::Category)
+      end
+    end
+  end
+  
+  context "with stubbed categories" do
     before(:each) do
       @categories = stub :categories
       
@@ -12,7 +29,7 @@ describe Indexed::Index do
       
       @index.stub! :categories => @categories
     end
-
+    
     describe "load_from_cache" do
       it "delegates to each category" do
         @categories.should_receive(:load_from_cache).once.with
