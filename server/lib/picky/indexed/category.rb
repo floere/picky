@@ -65,7 +65,7 @@ module Indexed
     # Returns the right index bundle for this token.
     #
     def bundle_for token
-      token.partial? ? partial : exact
+      token.partial?? partial : exact
     end
     
     # The partial strategy defines whether to really use the partial index.
