@@ -1,5 +1,4 @@
 require 'rake'
-require 'rake/gempackagetask' # TODO Remove.
 
 task :default => :spec
 
