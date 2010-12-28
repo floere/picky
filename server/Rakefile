@@ -28,12 +28,16 @@ end
 # Very pedestrian, coder only cloc.
 #
 task :stats do
-  %w|project_prototype lib spec test_project|.each do |dir|
+  %w|lib spec test_project|.each do |dir|
     original_dir = dir
     dir = "#{dir}/*.rb"
     dirs = 5.times.inject([dir]) do |dirs, _|
       dirs << dirs.last.gsub(%r{/*.rb}, '/**/*.rb')
     end
-    puts original_dir << ': ' << `wc -l #{dirs.join(' ')} 2>/dev/null`.chop.split("\n").last.gsub(/(\d+)\stotal$/, '\1')
+    total = `grep -c -e \'\s\' #{dirs.join(' ')} 2>/dev/null`.split("\n").inject(0) do |total, line|
+      amount = line.split(':').last.to_i
+      total + amount
+    end
+    puts "#{original_dir}: #{total}"
   end
 end
