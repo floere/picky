@@ -101,7 +101,6 @@ module Loader # :nodoc:all
     # Requiring Helpers
     #
     load_relative 'helpers/gc'
-    load_relative 'helpers/cache'
     load_relative 'helpers/measuring'
     
     # Character Substituters
