@@ -1,42 +1,9 @@
 require 'rake'
 
+all_rake_files = File.expand_path '../tasks/*.rake', __FILE__
+
+Dir[all_rake_files].each do |rakefile|
+  load rakefile
+end
+
 task :default => :spec
-
-# Specs.
-#
-require 'spec'
-require 'spec/rake/spectask'
-
-spec_root = File.join(File.dirname(__FILE__), 'spec')
-
-desc "Run specs"
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_opts = ['--options', "\"#{File.join(spec_root, 'spec.opts')}\""]
-  t.spec_files = FileList[File.join(spec_root, '**', '*_spec.rb')]
-end
-
-task :simplecov do
-  ENV['COV'] = 'yes'
-end
-
-task :cov do
-  Rake::Task['simplecov'].invoke
-  Rake::Task['spec'].invoke
-end
-
-# Very pedestrian, coder only cloc.
-#
-task :stats do
-  %w|lib spec test_project|.each do |dir|
-    original_dir = dir
-    dir = "#{dir}/*.rb"
-    dirs = 5.times.inject([dir]) do |dirs, _|
-      dirs << dirs.last.gsub(%r{/*.rb}, '/**/*.rb')
-    end
-    total = `grep -c -e \'\s\' #{dirs.join(' ')} 2>/dev/null`.split("\n").inject(0) do |total, line|
-      amount = line.split(':').last.to_i
-      total + amount
-    end
-    puts "#{original_dir}: #{total}"
-  end
-end
