@@ -60,12 +60,10 @@ module Indexed
     
     # Returns possible Combinations for the token.
     #
-    # The categories param is an optimization.
+    # The preselected_categories param is an optimization.
     #
     # TODO Return [RemovedCategory(token, nil)]
     #      If the search is ...
-    #
-    # TODO Make categories also a collection class.
     #
     # TODO Return [] if not ok, nil if needs to be removed?
     #      Somehow unnice, but…
