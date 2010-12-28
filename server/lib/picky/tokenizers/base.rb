@@ -82,6 +82,17 @@ module Tokenizers # :nodoc:all
       substituter?? substituter.substitute(text) : text 
     end
     
+    # Reject tokens after tokenizing based on the given criteria.
+    #
+    # Note: Currently only for indexing. TODO Redesign and write for both!
+    #
+    def reject_token_if &condition
+      @reject_condition = condition
+    end
+    def reject tokens
+      tokens.reject! &@reject_condition
+    end
+    
     
     # Returns a number of tokens, generated from the given text.
     #
@@ -111,6 +122,7 @@ module Tokenizers # :nodoc:all
       # Defaults.
       #
       splits_text_on options[:splits_text_on] || /\s/
+      reject_token_if &(options[:reject_token_if] || :blank?)
     end
     
     # Hooks.
@@ -125,15 +137,10 @@ module Tokenizers # :nodoc:all
     # Postprocessing.
     #
     def process tokens
-      reject tokens    # Reject any tokens that don't meet criteria
+      reject tokens # Reject any tokens that don't meet criteria
       tokens
     end
     
-    # Rejects blank tokens.
-    #
-    def reject tokens
-      tokens.reject! &:blank?
-    end
     # Converts words into real tokens.
     #
     def tokens_for words
