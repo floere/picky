@@ -63,12 +63,10 @@ module Picky
     
     # Maps commands to the other gem's command.
     #
-    # TODO Add optional params.
-    #
     @@mapping = {
-      :generate => [Generate, 'thing_to_generate: e.g. "unicorn_server"', :parameters],
+      :generate => [Generate, 'sinatra_client | unicorn_server | empty_unicorn_server', 'app_directory_name (optional)'],
       :help     => [Help],
-      :stats    => [Statistics, 'logfile_to_use: e.g. log/search.log', 'port (optional)']
+      :stats    => [Statistics, 'logfile, e.g. log/search.log', 'port (optional)']
     }
     def self.mapping
       @@mapping
