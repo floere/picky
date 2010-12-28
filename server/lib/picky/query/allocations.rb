@@ -63,7 +63,6 @@ module Query
     # But still TODO try for a faster one.
     #
     def random_ids amount = 1
-      # TODO can there be no @allocations???
       return [] if @allocations.empty?
       ids = @allocations.first.ids
       indexes = Array.new(ids.size) { |id| id }.sort_by { rand }
