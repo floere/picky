@@ -17,6 +17,12 @@ module Cacher
       def saved?
         false
       end
+      
+      # Do not use the partial bundle for getting ids and weights.
+      #
+      def use_exact_for_partial?
+        true
+      end
 
     end
 

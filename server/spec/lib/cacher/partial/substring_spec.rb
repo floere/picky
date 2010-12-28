@@ -6,6 +6,11 @@ describe Cacher::Partial::Substring do
     before(:each) do
       @cacher = Cacher::Partial::Substring.new
     end
+    describe 'use_exact_for_partial?' do
+      it 'returns false' do
+        Cacher::Partial::Substring.new.use_exact_for_partial?.should == false
+      end
+    end
     describe 'from' do
       it 'should return the right value' do
         @cacher.from.should == 1

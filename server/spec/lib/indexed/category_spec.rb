@@ -3,21 +3,38 @@ require 'spec_helper'
 describe Indexed::Category do
 
   before(:each) do
-    @index      = stub :index, :name => :some_index
-    @partial    = stub :partial
-    @weights    = stub :weights
-    @similarity = stub :similarity
-    @category   = Indexed::Category.new :some_name, @index, :partial    => @partial,
-                                                           :weights    => @weights,
-                                                           :similarity => @similarity,
-                                                           :qualifiers => [:q, :qualifier]
+    @index               = stub :index, :name => :some_index
+    @partial_strategy    = stub :partial, :use_exact_for_partial? => false
+    @weights_strategy    = stub :weights
+    @similarity_strategy = stub :similarity
     
     @exact   = stub :exact, :dump => nil
-    @category.stub! :exact => @exact
-    
     @partial = stub :partial, :dump => nil
-    @category.stub! :partial => @partial
+    
+    @category = Indexed::Category.new :some_name, @index, :partial    => @partial_strategy,
+                                                          :weights    => @weights_strategy,
+                                                          :similarity => @similarity_strategy,
+                                                          :qualifiers => [:q, :qualifier],
+                                                          :exact_index_bundle => @exact,
+                                                          :partial_index_bundle => @partial
+    
     @category.stub! :exclaim
+  end
+  
+  describe 'partial' do
+    context 'with a partial strategy that uses the exact index' do
+      before(:each) do
+        @partial_strategy.stub! :use_exact_for_partial? => true
+      end
+      it 'returns the partial index' do
+        @category.partial.should == @exact
+      end
+    end
+    context 'with a partial strategy that uses the partial index (default)' do
+      it 'returns the partial index' do
+        @category.partial.should == @partial
+      end
+    end
   end
   
   describe 'generate_qualifiers_from' do

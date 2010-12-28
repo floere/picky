@@ -19,6 +19,9 @@ module Indexed
       
       @identifier    = configuration.identifier
       
+      # TODO Push the defaults out into the index.
+      #
+      @partial_strategy = options[:partial] || Cacher::Partial::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
       @exact   = options[:exact_index_bundle]   || Bundle.new(:exact,   configuration, similarity)
@@ -62,6 +65,12 @@ module Indexed
     #
     def bundle_for token
       token.partial? ? partial : exact
+    end
+    
+    # The partial strategy defines whether to really use the partial index.
+    #
+    def partial
+      @partial_strategy.use_exact_for_partial?? @exact : @partial
     end
     
     #
