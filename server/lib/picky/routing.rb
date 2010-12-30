@@ -123,7 +123,7 @@ class Routing # :nodoc:all
       
       results = query.search_with_text *extracted(params)
       
-      PickyLog.log results.to_log(params[query_key]) # TODO Save the original query in the results object.
+      PickyLog.log results.to_log(params[query_key])
       
       respond_with results.to_response, content_type
     end
