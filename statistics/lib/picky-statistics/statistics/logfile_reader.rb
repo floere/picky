@@ -1,7 +1,11 @@
+require 'tempfile'
+require 'json'
+
 module Statistics
 
   class LogfileReader
-
+    
+    attr_reader :last_offset
     attr_writer :path
 
     #

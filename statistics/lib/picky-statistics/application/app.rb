@@ -9,7 +9,6 @@ Dir.chdir File.expand_path('..', __FILE__)
 
 require 'sinatra'
 require 'haml'
-require 'json'
 
 begin
   require File.expand_path '../../../picky-statistics', __FILE__
