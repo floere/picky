@@ -24,13 +24,15 @@ describe Application do
     end
     it "should run ok" do
       lambda {
-        # TODO Add all possible cases.
+        # Here we just test if the API can be called ok.
         #
         class TestApplication < Application
           default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
                            stopwords:                          /\b(and|the|of|it|in|for)\b/,
                            splits_text_on:                     /[\s\/\-\"\&\.]/,
-                           removes_characters_after_splitting: /[\.]/
+                           removes_characters_after_splitting: /[\.]/,
+                           normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
+                           reject_token_if:                    lambda { |token| token.blank? || token == :amistad }
                            
           default_querying removes_characters: /[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/,
                            stopwords:          /\b(and|the|of|it|in|for)\b/,
@@ -47,6 +49,11 @@ describe Application do
           books_index.define_category :author
           books_index.define_category :isbn,
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
+          
+          geo_index = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+          geo_index.define_category :location
+          geo_index.define_ranged_category(:north1, 1, precision: 3, from: :north)
+                   .define_ranged_category(:east1,  1, precision: 3, from: :east)
           
           full = Query::Full.new books_index
           live = Query::Live.new books_index
