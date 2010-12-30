@@ -74,6 +74,8 @@ module Query
     #
     # Note: Internal method, use #search_with_text.
     #
+    # TODO Call results.prepare!
+    #
     def execute tokens, offset
       result_type.from offset, sorted_allocations(tokens)
     end
