@@ -124,27 +124,4 @@ describe 'Query::Base' do
     end
   end
 
-  describe "results_from" do
-    describe 'Full' do
-      before(:each) do
-        @query = Query::Full.new @index
-      end
-      it "should work" do
-        allocations = stub :allocations, :process! => true
-
-        @query.results_from allocations
-      end
-    end
-    describe 'Live' do
-      before(:each) do
-        @query = Query::Live.new @index
-      end
-      it "should work" do
-        allocations = stub :allocations, :process! => true
-
-        @query.results_from allocations
-      end
-    end
-  end
-
 end

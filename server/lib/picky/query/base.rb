@@ -23,7 +23,7 @@ module Query
     
     include Helpers::Measuring
     
-    attr_writer   :tokenizer
+    attr_writer   :tokenizer, :identifiers_to_remove
     attr_accessor :reduce_to_amount, :weights
     
     # Takes:
@@ -75,7 +75,7 @@ module Query
     # Note: Internal method, use #search_with_text.
     #
     def execute tokens, offset
-      results_from offset, sorted_allocations(tokens)
+      result_type.from offset, sorted_allocations(tokens)
     end
     
     # Returns an empty result with default values.
@@ -140,28 +140,16 @@ module Query
     def reduce allocations # :nodoc:
       allocations.reduce_to reduce_to_amount if reduce_to_amount
     end
-    def remove_identifiers? # :nodoc:
-      identifiers_to_remove.present?
-    end
+    
+    #
+    #
     def remove_from allocations # :nodoc:
-      allocations.remove(identifiers_to_remove) if remove_identifiers?
+      allocations.remove identifiers_to_remove
     end
-    # Override. TODO No, redesign.
+    #
     #
     def identifiers_to_remove # :nodoc:
       @identifiers_to_remove ||= []
-    end
-    
-    # Packs the sorted allocations into results.
-    #
-    # This generates the id intersections. Lots of work going on.
-    #
-    # TODO Move to results. result_type.from allocations, offset
-    #
-    def results_from offset = 0, allocations = nil # :nodoc:
-      results = result_type.new offset, allocations
-      results.prepare!
-      results
     end
 
   end

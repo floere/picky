@@ -12,9 +12,16 @@ module Results # :nodoc:all
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize offset = 0, allocations = nil
+    def initialize offset = 0, allocations = Query::Allocations.new
       @offset = offset
-      @allocations = allocations || Query::Allocations.new
+      @allocations = allocations # || Query::Allocations.new
+    end
+    # Create new results and calculate the ids.
+    #
+    def self.from offset, allocations
+      results = new offset, allocations
+      results.prepare!
+      results
     end
 
     #

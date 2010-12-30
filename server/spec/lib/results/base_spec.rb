@@ -1,6 +1,18 @@
 require 'spec_helper'
 
-describe Results do
+describe Results::Base do
+  
+  describe "from" do
+    before(:each) do
+      @results = stub :results
+      Results::Base.stub! :new => @results
+      
+      @results.stub! :prepare!
+    end
+    it "should generate a result" do
+      Results::Base.from(0, @allocations).should == @results
+    end
+  end
   
   describe "ids" do
     before(:each) do
