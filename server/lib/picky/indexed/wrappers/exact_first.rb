@@ -2,7 +2,7 @@
 #
 module Indexed
   
-  # FIXME and spec
+  # TODO Spec
   #
   module Wrappers
     
