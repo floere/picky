@@ -1,6 +1,6 @@
 h2. Version 1.2.4
 
- * hanke: (server) default_indexing provides a new option @reject_token_if => some_lambda@, e.g.: @reject_token_if: lambda { |token| token.nil? || token == :hello }@ where you can define which tokens go into the index, and which do not. Default lambda is: &:empty?. This means that only non-empty tokens are saved in the index. You could, for example, not save tokens that have length < 2 (since they might be too small for your purposes). Note that tokens are passed into the hash as symbols.
+ * hanke: (server) @default_indexing@ (in the application.rb) provides a new option @reject_token_if => some_lambda@, e.g.: @reject_token_if: lambda { |token| token.nil? || token == :hello }@ where you can define which tokens go into the index, and which do not. Default lambda is: &:empty?. This means that only non-empty tokens are saved in the index. You could, for example, not save tokens that have length < 2 (since they might be too small for your purposes). Note that tokens are passed into the hash as symbols.
  * hanke: (statistics) Fixed a bug where the last line in the log file was counted once a second time after reloading the stats.
  * hanke: (statistics) Slight interface redesign.
 
