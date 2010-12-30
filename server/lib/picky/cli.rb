@@ -9,9 +9,12 @@ module Picky
     # Note: By default, help is displayed. I.e. when no command is given.
     #
     def execute selector = nil, *args
-      executor_class, *params = selector && @@mapping[selector.to_sym] || Help
+      executor_class, *params = executor_class_for selector
       executor = executor_class.new
       executor.execute selector, args, params
+    end
+    def executor_class_for selector = nil
+      selector && @@mapping[selector.to_sym] || [Help]
     end
     
     class Base

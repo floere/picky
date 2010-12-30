@@ -10,6 +10,26 @@ require File.expand_path '../../../lib/picky/cli', __FILE__
 #
 describe Picky::CLI do
   
+  describe 'instance' do
+    before(:each) do
+      @cli = Picky::CLI.new
+    end
+    describe 'executor_class_for' do
+      it 'returns Help by default' do
+        @cli.executor_class_for.should == [Picky::CLI::Help]
+      end
+      it 'returns Generator for generate' do
+        @cli.executor_class_for(:generate).should == [Picky::CLI::Generate, "sinatra_client | unicorn_server | empty_unicorn_server", "app_directory_name (optional)"]
+      end
+      it 'returns Help for help' do
+        @cli.executor_class_for(:help).should == [Picky::CLI::Help]
+      end
+      it 'returns Statistics for stats' do
+        @cli.executor_class_for(:stats).should == [Picky::CLI::Statistics, "logfile, e.g. log/search.log", "port (optional)"]
+      end
+    end
+  end
+  
   describe Picky::CLI::Base do
     before(:each) do
       @executor = Picky::CLI::Base.new
