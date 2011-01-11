@@ -138,7 +138,7 @@ class Routing # :nodoc:all
     ]
   end
   def respond_with response, content_type
-    [200, { 'Content-Type' => content_type, 'Content-Length' => response.size.to_s, }, [response]]
+    [200, { 'Content-Type' => content_type, 'Content-Length' => response.size.to_s }, [response]]
   end
   
   # Setup a route that answers using the given app.
@@ -147,8 +147,10 @@ class Routing # :nodoc:all
     routes.add_route (app || STATUSES[200]), default_options(url)
   end
   
+  # Returns a regular expression for the url.
+  #
   def normalized url
-    String === url ? %r{#{url}} : url
+    url.respond_to?(:to_str) ? %r{#{url}} : url
   end
   
   # Returns true if there are no routes defined.
