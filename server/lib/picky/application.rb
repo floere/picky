@@ -187,7 +187,7 @@ class Application
     
     # Routes.
     #
-    delegate :route, :root, :to => :routing
+    delegate :route, :root, :to => :rack_adapter
     
     #
     # API
@@ -198,10 +198,10 @@ class Application
     # Delegates to its routing to handle a request.
     #
     def call env
-      routing.call env
+      rack_adapter.call env
     end
-    def routing # :nodoc:
-      @routing ||= Routing.new
+    def rack_adapter # :nodoc:
+      @rack_adapter ||= FrontendAdapters::Rack.new
     end
     
     # Finalize the subclass as soon as it
@@ -223,7 +223,7 @@ class Application
     #
     def finalize # :nodoc:
       check
-      routing.freeze
+      rack_adapter.freeze
     end
     # Checks app for missing things.
     #
@@ -237,13 +237,13 @@ class Application
       puts "\n#{warnings.join(?\n)}\n\n" unless warnings.all? &:nil?
     end
     def check_external_interface
-      "WARNING: No routes defined for application configuration in #{self.class}." if routing.empty?
+      "WARNING: No routes defined for application configuration in #{self.class}." if rack_adapter.empty?
     end
     
     # TODO Add more info if possible.
     #
     def to_s # :nodoc:
-      "#{self.name}:\n#{routing}"
+      "#{self.name}:\n#{rack_adapter}"
     end
     
   end

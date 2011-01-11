@@ -67,28 +67,28 @@ describe Application do
   
   describe 'delegation' do
     it "should delegate route" do
-      Application.routing.should_receive(:route).once.with :path => :query
+      Application.rack_adapter.should_receive(:route).once.with :path => :query
       
       Application.route :path => :query
     end
   end
   
-  describe 'routing' do
+  describe 'rack_adapter' do
     it 'should be there' do
-      lambda { Application.routing }.should_not raise_error
+      lambda { Application.rack_adapter }.should_not raise_error
     end
-    it "should return a new Routing instance" do
-      Application.routing.should be_kind_of(Routing)
+    it "should return a new FrontendAdapters::Rack instance" do
+      Application.rack_adapter.should be_kind_of(FrontendAdapters::Rack)
     end
     it "should cache the instance" do
-      Application.routing.should == Application.routing
+      Application.rack_adapter.should == Application.rack_adapter
     end
   end
   
   describe 'call' do
     before(:each) do
       @routes = stub :routes
-      Application.stub! :routing => @routes
+      Application.stub! :rack_adapter => @routes
     end
     it 'should delegate' do
       @routes.should_receive(:call).once.with :env

@@ -251,7 +251,7 @@ module Loader # :nodoc:all
     
     # Application and routing.
     #
-    load_relative 'routing'
+    load_relative 'frontend_adapters/rack'
     load_relative 'application'
     
     # Load tools.
