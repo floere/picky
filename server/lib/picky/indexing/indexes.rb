@@ -39,8 +39,14 @@ module Indexing
       # Run in parallel.
       #
       timed_exclaim "INDEXING USING #{Cores.max_processors} PROCESSORS, IN #{randomly ? 'RANDOM' : 'GIVEN'} ORDER."
+      
+      # TODO Think about having serial work units.
+      #
       Cores.forked self.indexes, { randomly: randomly } do |an_index|
         an_index.index
+      # TODO
+      # end
+      # Cores.forked self.indexes, { randomly: randomly } do |an_index|
         an_index.cache
       end
       timed_exclaim "INDEXING FINISHED."
