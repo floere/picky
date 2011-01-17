@@ -69,8 +69,8 @@ module Query
 
     # If the text ends with *, partialize it. If with ", don't.
     #
-    @@no_partial = /\"$/
-    @@partial    = /\*$/
+    @@no_partial = /\"\Z/
+    @@partial    = /\*\Z/
     def partialize
       self.partial = false and return if @text =~ @@no_partial
       self.partial = true if @text =~ @@partial
@@ -78,8 +78,8 @@ module Query
 
     # If the text ends with ~ similarize it. If with ", don't.
     #
-    @@no_similar = /\"$/
-    @@similar    = /\~$/
+    @@no_similar = /\"\Z/
+    @@similar    = /\~\Z/
     def similarize
       self.similar = false and return if @text =~ @@no_similar
       self.similar = true if @text =~ @@similar
