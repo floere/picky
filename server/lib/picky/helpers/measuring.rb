@@ -1,7 +1,5 @@
 # Helper methods for measuring, benchmarking, logging.
 #
-# TODO Not used anymore? Remove.
-#
 module Helpers
   module Measuring
     
