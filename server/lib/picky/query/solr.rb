@@ -13,21 +13,6 @@ module Query
       super *index_types
     end
 
-    # # This runs the actual search.
-    # #
-    # # TODO Remove!
-    # #
-    # def search tokens, offset = 0
-    #   results = nil
-    #
-    #   duration = timed do
-    #     results = execute(tokens, offset) || empty_results # TODO Does not work yet
-    #   end
-    #   results.duration = duration
-    #
-    #   results
-    # end
-
     #
     #
     def execute tokens, offset = 0
@@ -61,8 +46,6 @@ module Query
         results.add similar: similar
       end
 
-      # TODO
-      #
       class << results
         def to_log query
           ?* + super

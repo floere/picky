@@ -157,7 +157,7 @@ class IndexAPI
   # * precision: Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
   # * from: The data category to take the data for this category from.
   #
-  # TODO Redo. Probably extract into define_latitude_category, define_longitude_category.
+  # TODO Redo. Will have to write a wrapper that combines two categories that are indexed simultaneously.
   #
   def define_map_location name, radius, options = {} # :nodoc:
     # The radius is given as if all the locations were on the equator.
