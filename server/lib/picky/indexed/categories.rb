@@ -60,13 +60,10 @@ module Indexed
     
     # Returns possible Combinations for the token.
     #
-    # The preselected_categories param is an optimization.
-    #
-    # TODO Return [RemovedCategory(token, nil)]
-    #      If the search is ...
+    # Note: The preselected_categories param is an optimization.
     #
     # TODO Return [] if not ok, nil if needs to be removed?
-    #      Somehow unnice, but…
+    #      Somehow unnice, but way to go?
     #
     def possible_for token, preselected_categories = nil
       possible = (preselected_categories || possible_categories(token)).map { |category| category.combination_for(token) }
