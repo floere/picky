@@ -2,7 +2,7 @@
 #
 require 'rsolr'
 module Indexers
-  # TODO Totally deprecated. This should be a source.
+  # TODO Deprecated. This should be handled in a special bundle which goes through Solr.
   #
   class Solr
 
@@ -16,14 +16,10 @@ module Indexers
       @solr   = RSolr.connect
     end
 
-    # TODO Rewrite such that it works in batches.
-    #
     def index
       timed_exclaim "Indexing solr for #{type.name}:#{fields.join(', ')}"
       statement = "SELECT indexed_id, #{fields.join(',')} FROM #{type.snapshot_table_name}"
       
-      # TODO Rewrite.
-      #
       DB.connect
       results   = DB.connection.execute statement
       
