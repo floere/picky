@@ -8,6 +8,73 @@ describe Query::Token do
     Query::Qualifiers.instance.prepare
   end
   
+  describe 'next_similar_token' do
+    before(:each) do
+      @bundle   = stub :bundle, :similar => [:array, :of, :similar]
+      @category = stub :category, :bundle_for => @bundle
+      
+      @token = Query::Token.processed 'similar~'
+    end
+    it 'returns the right next tokens' do
+      next_token = @token.next_similar_token @category
+      next_token.text.should == :array
+      next_token = next_token.next_similar_token @category
+      next_token.text.should == :of
+      next_token = next_token.next_similar_token @category
+      next_token.text.should == :similar
+      next_token = next_token.next_similar_token @category
+      next_token.should == nil
+    end
+  end
+  
+  describe 'next_similar' do
+    before(:each) do
+      @bundle = stub :bundle
+    end
+    context 'similar' do
+      context 'with stub' do
+        before(:each) do
+          @bundle.stub! :similar => [:array, :of, :similar]
+
+          @token = Query::Token.processed 'similar~'
+        end
+        it 'generates all similar' do
+          @token.next_similar(@bundle).should == :array
+          @token.next_similar(@bundle).should == :of
+          @token.next_similar(@bundle).should == :similar
+          @token.next_similar(@bundle).should == nil
+        end
+        it 'should have a certain text' do
+          @token.next_similar @bundle
+          @token.next_similar @bundle
+          @token.next_similar @bundle
+          @token.next_similar @bundle
+          
+          @token.text.should == :similar
+        end
+      end
+    end
+    context 'non-similar' do
+      context 'with stub' do
+        before(:each) do
+          @bundle.stub! :similar => [:array, :of, :similar]
+
+          @token = Query::Token.processed 'nonsimilar'
+        end
+        it 'generates all similar' do
+          @token.next_similar(@bundle).should == nil
+        end
+        # TODO
+        #
+        # it 'should have a certain text' do
+        #   @token.next_similar @bundle
+        #   
+        #   @token.text.should == :nonsimilar
+        # end
+      end
+    end
+  end
+  
   describe "generate_similarity_for" do
     before(:each) do
       @bundle = stub :bundle
@@ -18,16 +85,16 @@ describe Query::Token do
       before(:each) do
         @bundle.stub! :similar => [:array, :of, :similar]
       end
-      it "returns an enumerator" do
-        @token.generate_similarity_for(@bundle).to_a.size.should == 3
+      it "returns an array of the right size" do
+        @token.generate_similarity_for(@bundle).size.should == 3
       end
     end
     context "without similar" do
       before(:each) do
-        @bundle.stub! :similar => nil
+        @bundle.stub! :similar => []
       end
-      it "returns an enumerator with 0 entries" do
-        @token.generate_similarity_for(@bundle).to_a.size.should == 0
+      it "returns an array of the right size" do
+        @token.generate_similarity_for(@bundle).size.should == 0
       end
     end
   end

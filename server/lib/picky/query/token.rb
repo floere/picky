@@ -118,37 +118,19 @@ module Query
     def possible_combinations_in type
       type.possible_combinations self
     end
-
+    
+    # Returns a token with the next similar text.
     #
+    # TODO Rewrite this. It is hard to understand. Also spec performance.
     #
-    def from token
-      new_token = token.dup
-      new_token.instance_variable_set :@text, @text
-      new_token.instance_variable_set :@partial, @partial
-      new_token.instance_variable_set :@original, @original
-      new_token.instance_variable_set :@qualifier, @qualifier
-      # TODO
-      #
-      # token.instance_variable_set :@similarity, @similarity
-      new_token
-    end
-
-    # TODO Rewrite, also next_similar.
-    #
-    def next category
-      token = from self
+    def next_similar_token category
+      token = self.dup
       token if token.next_similar category.bundle_for(token)
     end
-
     # Sets and returns the next similar word.
     #
-    # TODO Use array, shift.
-    #
     def next_similar bundle
-      @text = similarity(bundle).next if similar?
-    rescue StopIteration => stop_iteration
-      # reset_similar # TODO
-      nil # TODO
+      @text = (similarity(bundle).shift || return) if similar?
     end
     # Lazy similar reader.
     #
@@ -157,8 +139,11 @@ module Query
     end
     # Returns an enumerator that traverses over the similar.
     #
+    # Note: The dup isn't too nice – since it is needed on account of the shift, above.
+    #       (We avoid a StopIteration exception. Which of both is less evil?)
+    #
     def generate_similarity_for bundle
-      (bundle.similar(@text) || []).each
+      bundle.similar(@text).dup || []
     end
 
     # Generates a solr term from this token.

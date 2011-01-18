@@ -43,9 +43,10 @@ module Indexed
       text = token.text
       categories.inject([]) do |result, category|
         next_token = token
-        # TODO adjust either this or the amount of similar in index
+        # TODO Adjust either this or the amount of similar in index.
+        #      Also, rename next -> next_similar.
         #
-        while next_token = next_token.next(category)
+        while next_token = next_token.next_similar_token(category)
           result << next_token if next_token && next_token.text != text
         end
         result
