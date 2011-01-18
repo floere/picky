@@ -76,9 +76,9 @@ module Indexed
       return if ignore_unassigned_tokens && possible.empty?
       possible # wrap in combinations
     end
+    # TODO Doc.
     #
-    #
-    # TODO too many calls?
+    # Note: Once I thought this was called too often. But it is not (18.01.2011).
     #
     def possible_categories token
       user_defined_categories(token) || categories
