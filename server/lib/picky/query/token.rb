@@ -142,6 +142,8 @@ module Query
 
     # Sets and returns the next similar word.
     #
+    # TODO Use array, shift.
+    #
     def next_similar bundle
       @text = similarity(bundle).next if similar?
     rescue StopIteration => stop_iteration
