@@ -49,7 +49,7 @@ module Query
     # * text: The search text.
     # * offset = 0: _optional_ The offset from which position to return the ids. Useful for pagination.
     #
-    # Note: The Routing uses this method after unravelling the HTTP request.
+    # Note: The Rack adapter calls this method after unravelling the HTTP request.
     #
     def search_with_text text, offset = 0
       search tokenized(text), offset
