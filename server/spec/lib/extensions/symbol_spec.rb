@@ -8,9 +8,7 @@ describe Symbol do
       @token = (((0..9).to_a)*10).to_s.to_sym
     end
     it "should be fast" do
-      timed do
-        @token.each_subtoken do |subtoken| end
-      end.should < 0.0006
+      performance_of { @token.each_subtoken { |subtoken| } }.should < 0.00065
     end
   end
   
