@@ -78,7 +78,10 @@ module Indexed
       return if ignore_unassigned_tokens && possible.empty?
       possible # wrap in combinations
     end
-    # TODO Doc.
+    # This returns the possible categories for this token.
+    # If the user has already preselected a category for this token,
+    # like "artist:moby", if not just return all for the given token,
+    # since all are possible.
     #
     # Note: Once I thought this was called too often. But it is not (18.01.2011).
     #
