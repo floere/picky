@@ -183,6 +183,14 @@ describe FrontendAdapters::Rack do
       end
     end
     
+    describe 'finalize' do
+      before(:each) do
+        @rack_adapter.routes.should_receive(:freeze).once.with
+        
+        @rack_adapter.finalize
+      end
+    end
+    
     describe 'route_one' do
       before(:each) do
         @some_query_app = stub :some_query_app

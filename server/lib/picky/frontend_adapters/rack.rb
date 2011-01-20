@@ -24,7 +24,7 @@ module FrontendAdapters
     def routes
       @routes || reset_routes
     end
-    def freeze
+    def finalize
       routes.freeze
     end
   
