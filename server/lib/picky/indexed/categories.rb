@@ -88,7 +88,11 @@ module Indexed
     def possible_categories token
       user_defined_categories(token) || categories
     end
-    # Returns nil if there is no user defined category, the category else.
+    # This returns the array of categories if the user has defined
+    # an existing category.
+    #
+    # Note: Returns nil if the user did not define one
+    #       or if he/she has defined a non-existing one. 
     #
     def user_defined_categories token
       category_hash[token.user_defined_category_name]
