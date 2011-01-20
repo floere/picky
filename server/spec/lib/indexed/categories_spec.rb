@@ -39,6 +39,30 @@ describe Indexed::Categories do
     end
   end
   
+  describe 'clear' do
+    before(:each) do
+      @categories = Indexed::Categories.new
+    end
+    it 'is clear right at the beginning' do
+      @categories.categories.should be_empty
+      @categories.category_hash.should be_empty
+    end
+    it "isn't clear anymore after adding" do
+      @categories << stub(:category, :name => :some_name)
+      
+      @categories.categories.should_not be_empty
+      @categories.category_hash.should_not be_empty
+    end
+    it "is clear again after clearing" do
+      @categories << stub(:category, :name => :some_name)
+      
+      @categories.clear
+      
+      @categories.categories.should be_empty
+      @categories.category_hash.should be_empty      
+    end
+  end
+  
   context 'without options' do
     before(:each) do
       @index1 = stub :index1, :name => :some_index
