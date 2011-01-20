@@ -223,7 +223,7 @@ class Application
     #
     def finalize # :nodoc:
       check
-      rack_adapter.freeze
+      rack_adapter.finalize
     end
     # Checks app for missing things.
     #
@@ -247,4 +247,5 @@ class Application
     end
     
   end
+  
 end

@@ -65,6 +65,22 @@ describe Application do
     end
   end
   
+  describe 'finalize' do
+    before(:each) do
+      Application.stub! :check
+    end
+    it 'checks if all is ok' do
+      Application.should_receive(:check).once.with
+      
+      Application.finalize
+    end
+    it 'tells the rack adapter to finalize' do
+      Application.rack_adapter.should_receive(:finalize).once.with
+      
+      Application.finalize
+    end
+  end
+  
   describe 'delegation' do
     it "should delegate route" do
       Application.rack_adapter.should_receive(:route).once.with :path => :query
