@@ -43,7 +43,8 @@ module Query
       @weights     = Hash === weights ? Weights.new(weights) : weights
     end
     
-    # Search through this method.
+    # This is the main entry point for a query.
+    # Use this in specs and also for running queries.
     #
     # Parameters:
     # * text: The search text.

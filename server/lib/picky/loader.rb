@@ -68,7 +68,7 @@ module Loader # :nodoc:all
     
     # Finalize the applications.
     #
-    # TODO Problem: Reload Routes.
+    # TODO Problem: Reload Routes. Throw them all away and do them again?
     #
     Application.finalize_apps
     
