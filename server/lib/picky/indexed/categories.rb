@@ -20,7 +20,11 @@ module Indexed
     
     def << category
       categories << category
-      category_hash[category.name] = [category] # TODO Why an Array?
+      # Note: This is an optimization, since I need an array of categories.
+      #       It's faster to just package it in an array on loading Picky
+      #       than doing it over and over with each query.
+      #
+      category_hash[category.name] = [category]
     end
     
     #
@@ -43,8 +47,8 @@ module Indexed
       text = token.text
       categories.inject([]) do |result, category|
         next_token = token
-        # TODO Adjust either this or the amount of similar in index.
-        #      Also, rename next -> next_similar.
+        # TODO We could also break off here if not all the available
+        #      similars are needed.
         #
         while next_token = next_token.next_similar_token(category)
           result << next_token if next_token && next_token.text != text
