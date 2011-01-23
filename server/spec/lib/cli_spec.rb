@@ -27,6 +27,9 @@ describe Picky::CLI do
       it 'returns Statistics for stats' do
         @cli.executor_class_for(:stats).should == [Picky::CLI::Statistics, "logfile, e.g. log/search.log", "port (optional)"]
       end
+      it 'returns Live for live' do
+        @cli.executor_class_for(:live).should == [Picky::CLI::Live, "host:port/path (optional, default is localhost:8080/admin)"]
+      end
     end
   end
   

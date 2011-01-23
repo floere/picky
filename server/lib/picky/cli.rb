@@ -46,6 +46,25 @@ module Picky
         require 'picky-statistics/application/app'
       end
     end
+    class Live < Base
+      def execute name, args, params
+        url = args.shift
+        
+        usage(name, params) || exit(1) unless url
+        
+        ENV['PICKY_LIVE_URL']        = url
+        
+        begin
+          require 'picky-live'
+        rescue LoadError => e
+          require 'picky/extensions/object'
+          puts_gem_missing 'picky-live', 'the Picky Live Interface'
+          exit 1
+        end
+        
+        require 'picky-live/application/app'
+      end
+    end
     class Generate < Base
       def execute name, args, params
         system "picky-generate #{args.join(' ')}"
@@ -69,7 +88,8 @@ module Picky
     @@mapping = {
       :generate => [Generate, 'sinatra_client | unicorn_server | empty_unicorn_server', 'app_directory_name (optional)'],
       :help     => [Help],
-      :stats    => [Statistics, 'logfile, e.g. log/search.log', 'port (optional)']
+      :stats    => [Statistics, 'logfile, e.g. log/search.log', 'port (optional)'],
+      :live     => [Live, 'host:port/path (optional, default is localhost:8080/admin)']
     }
     def self.mapping
       @@mapping
