@@ -39,4 +39,5 @@ class PickyStatistics < Sinatra::Base
   
 end
 
+puts "Clam, Picky's friend, is looking at Picky's logfile\n#{log_file}\nand showing results on port #{port}."
 PickyStatistics.run! :port => port
