@@ -8,3 +8,4 @@ system "cd server; gem build picky.gemspec; gem install picky-*.gem; rm picky-*.
 system "cd client; gem build picky-client.gemspec; gem install picky-client-*.gem; rm picky-client-*.gem"
 system "cd statistics; gem build picky-statistics.gemspec; gem install picky-statistics-*.gem; rm picky-statistics-*.gem"
 system "cd generators; gem build picky-generators.gemspec; gem install picky-generators-*.gem; rm picky-generators-*.gem"
+system "cd live; gem build picky-live.gemspec; gem install picky-live-*.gem; rm picky-live-*.gem"
