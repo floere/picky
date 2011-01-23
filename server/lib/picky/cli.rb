@@ -50,9 +50,9 @@ module Picky
       def execute name, args, params
         url = args.shift
         
-        usage(name, params) || exit(1) unless url
+        usage(name, params) || exit(1) unless args.empty?
         
-        ENV['PICKY_LIVE_URL']        = url
+        ENV['PICKY_LIVE_URL']        = url || 'localhost:8080/admin'
         
         begin
           require 'picky-live'
