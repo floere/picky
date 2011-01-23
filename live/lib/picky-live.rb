@@ -1,0 +1,1 @@
+require File.expand_path '../picky-live/backend', __FILE__
