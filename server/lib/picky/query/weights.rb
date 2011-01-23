@@ -7,7 +7,7 @@ module Query
     #
     #
     def initialize weights = {}
-      @weights_cache = {}
+      # @weights_cache = {} # TODO
       @weights = prepare weights
     end
     
@@ -45,6 +45,18 @@ module Query
       # TODO combinations could cluster uniq as combinations are added (since combinations don't change).
       #
       weight_for combinations.map(&:category_name).clustered_uniq_fast
+    end
+    
+    # Are there any weights defined?
+    #
+    def empty?
+      @weights.empty?
+    end
+    
+    # Prints out a nice representation of the configured weights.
+    #
+    def to_s
+      @weights.to_s
     end
     
   end
