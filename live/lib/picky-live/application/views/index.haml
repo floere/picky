@@ -1,0 +1,17 @@
+!!!
+%html{ :lang => 'en' }
+  %head
+    %link{ :href => 'stylesheets/statistics.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css' }/
+    %script{ :src => 'javascripts/jquery-1.4.4.min.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/live.js', :type => 'text/javascript' }
+    
+  %body
+    %h1 Suckerfish: Picky Live Interface.
+    #actions
+      %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update now
+    #parameters
+      .
+      
+  :javascript
+    getParameters();
+    

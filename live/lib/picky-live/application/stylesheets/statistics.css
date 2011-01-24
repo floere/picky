@@ -1,0 +1,21 @@
+body {
+  font-family: Futura, 'Century Gothic', 'URW Gothic L', Helvetica, sans-serif;
+  background-image: url('../images/background.png');
+}
+
+h1, h2, h3, h4 {
+  font-weight: normal;
+  margin: 0.5em 0em 0.5em; 
+}
+h1 { font-size: 1.3em; }
+h2 { font-size: 1.2em; }
+h3 { font-size: 1.1em; }
+h4 { font-size: 1.1em; }
+
+#actions {
+  padding: 5px;
+}
+
+#parameters {
+  padding: 10px;
+}

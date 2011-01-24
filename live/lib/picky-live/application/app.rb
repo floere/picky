@@ -1,13 +1,14 @@
 # This is a sinatra app packaged in a gem, running directly from the gem.
 #
-raise "ENV['PICKY_LIVE_URL'] needs to be set for the live app to be run. Use either it, or run 'picky live <url>'. Default for <url> is localhost:8080/admin." unless ENV['PICKY_LIVE_URL']
 
-live_url = ENV['PICKY_LIVE_URL']
+live_url = ENV['PICKY_LIVE_URL']  || 'localhost:8080/admin'
+port     = ENV['PICKY_LIVE_PORT'] || 4568
 
 Dir.chdir File.expand_path('..', __FILE__)
 
 require 'sinatra'
 require 'haml'
+require 'net/http'
 
 begin
   require File.expand_path '../../../picky-live', __FILE__
@@ -15,7 +16,8 @@ rescue LoadError => e
   require 'picky-live'
 end
 
-Stats = Statistics::LogfileReader.new log_file
+uri = URI.parse live_url
+Server = Backend.new :host => uri.host, :port => uri.port, :path => uri.path
 
 class PickyLive < Sinatra::Base
   
@@ -33,7 +35,7 @@ class PickyLive < Sinatra::Base
   # Returns statistics data in JSON for the index page.
   #
   get '/index.json' do
-    Backend.get
+    Server.get
   end
   
 end
