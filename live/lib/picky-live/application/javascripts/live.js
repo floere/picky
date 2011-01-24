@@ -1,5 +1,5 @@
 function updateParameters(data) {
-  $('#parameters').html(data['querying_removes_characters']);
+  $('#parameters .querying_removes_characters').val(data['querying_removes_characters']);
 };
 
 function getParameters() {

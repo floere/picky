@@ -8,9 +8,10 @@
   %body
     %h1 Suckerfish: Picky Live Interface.
     #actions
-      %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update now
+      %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update server now
     #parameters
-      .
+      Querying removes characters:
+      %input.querying_removes_characters
       
   :javascript
     getParameters();
