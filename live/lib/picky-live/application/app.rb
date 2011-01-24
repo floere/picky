@@ -35,7 +35,7 @@ class PickyLive < Sinatra::Base
   # Returns statistics data in JSON for the index page.
   #
   get '/index.json' do
-    Server.get
+    Server.get params
   end
   
 end

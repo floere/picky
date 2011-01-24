@@ -16,8 +16,16 @@ h4 { font-size: 1.1em; }
   padding: 5px;
 }
 
+#actions .status {
+  display: inline;
+}
+
 #parameters {
   padding: 10px;
+}
+
+#parameters .error {
+  color: red;
 }
 
 input {
