@@ -21,17 +21,15 @@ module Interfaces
       Thread.new do
         loop do
           sleep 1
-          @parent.close unless @parent.closed?
-          result = @child.gets ']'
+          # @parent.close unless @parent.closed?
+          result = @child.gets ';;;'
           pid, configuration_hash = eval result
           next unless Hash === configuration_hash
           next if configuration_hash.empty?
+          puts "Trying to update MASTER configuration."
           try_updating_configuration_with configuration_hash
-          # Kill all children – except the one answering.
-          #
-          p :KILLING
           kill_each_worker_except pid
-          # TODO rescue
+          # TODO rescue on error.
         end
       end
     end
@@ -64,29 +62,39 @@ module Interfaces
     #
     def parameters configuration_hash
       @child.close unless @child.closed?
+      puts "Trying to update worker child configuration." unless configuration_hash.empty?
       try_updating_configuration_with configuration_hash
-      @parent.write [Process.pid, configuration_hash].to_s
+      @parent.write "#{[Process.pid, configuration_hash]};;;"
       extract_configuration
     rescue CouldNotUpdateConfigurationError => e
-      # TODO Schedules a harakiri and then returns the data with the ERROR.
-      #      I need to die such that my broken config is never used.
+      # I need to die such that my broken config is never used.
       #
+      puts "Child process #{Process.pid} performs harakiri because of broken config."
       Process.kill :QUIT, Process.pid
-      
+      { e.config_key => :ERROR }
     end
     
     class CouldNotUpdateConfigurationError < StandardError
-      
+      attr_reader :config_key
+      def initialize config_key, message
+        super message
+        @config_key = config_key
+      end
     end
     
     # Tries updating the configuration in the child process or parent process.
     # 
     def try_updating_configuration_with configuration_hash
-      configuration_hash.each_pair do |key, new_value|
-        puts "Trying to set #{key} with #{new_value}."
-        send :"#{key}=", new_value
+      current_key = nil
+      begin
+        configuration_hash.each_pair do |key, new_value|
+          puts "  Setting #{key} with #{new_value}."
+          current_key = key
+          send :"#{key}=", new_value
+        end
+      rescue StandardError => e
+        raise CouldNotUpdateConfigurationError.new current_key, e.message
       end
-      # raise CouldNotUpdateConfigurationError.new if rand > 0.9
     end
     
     def extract_configuration
@@ -97,6 +105,8 @@ module Interfaces
       }
     end
     
+    # TODO Move to Interface object.
+    #
     def querying_removes_characters
       Tokenizers::Query.default.instance_variable_get(:@removes_characters_regexp).source
     end
