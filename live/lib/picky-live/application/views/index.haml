@@ -7,9 +7,6 @@
     
   %body
     %h1 Suckerfish: Picky Live Interface.
-    #actions
-      %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update server now
-      .status
     #parameters
       %h2 Querying
       .querying_removes_characters
@@ -24,6 +21,9 @@
         Splits text on:
         %input
         %span.error
+    #actions
+      %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update server now
+      .status
       
   :javascript
     getParameters();

@@ -1,3 +1,9 @@
+var parameters = [
+  'querying_removes_characters',
+  'querying_stopwords',
+  'querying_splits_text_on'
+];
+
 // If this returns true there were errors.
 //
 function handleErrors(data) {
@@ -15,22 +21,21 @@ function handleErrors(data) {
 
 function updateParameter(name, data) {
   var input = $('#parameters .' + name + ' input');
-  if (input.val() != data[name]) {
-    input.val(data[name]);
-    $('#parameters').find('.' + name + ' .error').html('Updated.');
-  }
+  input.val(data[name]);
+  $('#parameters .' + name + ' input').css('background-color', 'white');
 };
 
 function updateParameters(data) {
   if (handleErrors(data)) { return; };
-  updateParameter('querying_removes_characters', data);
-  updateParameter('querying_stopwords', data);
-  updateParameter('querying_splits_text_on', data);
+  $.each(parameters, function(index, parameter) {
+    updateParameter(parameter, data);
+  });
 };
 
 function getParameters() {
   var data = {};
   
+  // TODO Smallify.
   var querying_removes_characters = $('#parameters .querying_removes_characters input').val();
   if (querying_removes_characters != '') { data['querying_removes_characters'] = querying_removes_characters; };
   
@@ -50,3 +55,15 @@ function getParameters() {
     }
   });
 };
+
+function installHandler(name) {
+  $('#parameters .' + name + ' input').keydown(function() {
+    $('#parameters .' + name + ' input').css('background-color', 'lightgreen');
+  });
+};
+
+$(document).ready(function() {
+  $.each(parameters, function(index, parameter) {
+    installHandler(parameter);
+  });
+});
