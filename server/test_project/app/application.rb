@@ -71,6 +71,9 @@ class BookSearch < Application
     full_geo  = Query::Full.new geo_index
     live_geo  = Query::Live.new geo_index
     
+    require File.expand_path '../../../lib/picky/interfaces/live', __FILE__
+    route %r{\A/admin\Z}      => Interfaces::Live.new
+    
     route %r{\A/books/full\Z} => full_main,
           %r{\A/books/live\Z} => live_main,
           

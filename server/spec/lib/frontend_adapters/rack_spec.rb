@@ -6,6 +6,7 @@ describe FrontendAdapters::Rack do
   
   before(:each) do
     @rack_adapter = FrontendAdapters::Rack.new
+    @rack_adapter.stub! :exclaim
   end
   
   def rack_defaults_for url
@@ -46,7 +47,7 @@ describe FrontendAdapters::Rack do
     end
     context 'with routes' do
       before(:each) do
-        @rack_adapter.route %r{something} => :some_query
+        @rack_adapter.route %r{something} => Query::Full.new
       end
       it 'returns the right answer' do
         @rack_adapter.empty?.should == false
@@ -107,7 +108,7 @@ describe FrontendAdapters::Rack do
       @rack_adapter.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index)
       
       @rack_adapter.routes.freeze
-      @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
+      @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/json", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
     end
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_route?query=some_query&type=some_type'
@@ -119,7 +120,7 @@ describe FrontendAdapters::Rack do
       @rack_adapter.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index), :query => { :type => :some_type }
       
       @rack_adapter.routes.freeze
-      @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/octet-stream", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
+      @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/json", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
     end
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_wrong_route?query=some_query'
@@ -139,11 +140,6 @@ describe FrontendAdapters::Rack do
     before(:each) do
       @routes = stub :routes
       @rack_adapter.stub! :routes => @routes
-    end
-    describe 'call' do
-      it 'should description' do
-        
-      end
     end
     
     describe 'generate_query_string' do
@@ -179,7 +175,7 @@ describe FrontendAdapters::Rack do
         @rack_adapter.route %r{regexp1} => :query1, %r{regexp2} => :query2, :some => :option
       end
       it 'does not accept nil queries' do
-        lambda { @rack_adapter.route %r{some/regexp} => nil }.should raise_error(FrontendAdapters::Rack::TargetQueryNilError, /Routing for \/some\\\/regexp\/ was defined with a nil query object/)
+        lambda { @rack_adapter.route %r{some/regexp} => nil }.should raise_error(FrontendAdapters::Rack::RouteTargetNilError, /Routing for \/some\\\/regexp\/ was defined with a nil target object, i.e. \/some\\\/regexp\/ => nil./)
       end
     end
     
@@ -193,21 +189,20 @@ describe FrontendAdapters::Rack do
     
     describe 'route_one' do
       before(:each) do
-        @some_query_app = stub :some_query_app
-        @rack_adapter.stub! :generate_app => @some_query_app
+        Adapters::Rack.stub! :app_for => :some_query_app
       end
       it 'should add the right route' do
-        @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :path_info => /some_url/ }
+        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }
         
         @rack_adapter.route_one %r{some_url}, :some_query, {}
       end
       it 'should add the right route' do
-        @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :path_info => /some_url/ }
+        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }
         
         @rack_adapter.route_one 'some_url', :some_query, {}
       end
       it 'should add the right route' do
-        @routes.should_receive(:add_route).once.with @some_query_app, { :request_method => "GET", :glarf => :blarf, :path_info => /some_url/ }
+        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :glarf => :blarf, :path_info => /some_url/ }
         
         @rack_adapter.route_one 'some_url', :some_query, { :glarf => :blarf }
       end

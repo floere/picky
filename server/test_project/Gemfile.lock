@@ -4,6 +4,7 @@ GEM
     activerecord (2.3.10)
       activesupport (= 2.3.10)
     activesupport (2.3.10)
+    haml (3.0.25)
     mysql (2.8.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -11,7 +12,11 @@ GEM
     rack_fast_escape (2009.06.24)
       url_escape
     rspec (1.3.1)
+    sinatra (1.1.2)
+      rack (~> 1.1)
+      tilt (~> 1.2)
     text (0.2.0)
+    tilt (1.2.1)
     unicorn (1.1.4)
       rack
     url_escape (2009.06.24)
@@ -23,11 +28,13 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 2.3.8)
   bundler (>= 0.9.26)
+  haml
   mysql
   rack (~> 1.2.1)
   rack-mount (~> 0.6.9)
   rack_fast_escape (= 2009.06.24)
   rspec (~> 1.3.0)
+  sinatra
   text (~> 0.2.0)
   unicorn
   yajl-ruby (~> 0.7.8)

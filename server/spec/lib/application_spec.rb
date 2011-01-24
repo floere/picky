@@ -10,10 +10,11 @@ describe Application do
         class MinimalTestApplication < Application
           books = index :books, Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
           books.define_category :title
-                              
           
           full = Query::Full.new books
           live = Query::Live.new books
+          
+          rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
           route %r{^/books/full} => full
           route %r{^/books/live} => live
@@ -57,6 +58,8 @@ describe Application do
           
           full = Query::Full.new books_index
           live = Query::Live.new books_index
+          
+          rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
           route %r{^/books/full} => full
           route %r{^/books/live} => live

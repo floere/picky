@@ -249,6 +249,13 @@ module Loader # :nodoc:all
     #
     load_relative 'configuration/index'
     
+    # Adapters.
+    #
+    load_relative 'adapters/rack/base'
+    load_relative 'adapters/rack/query'
+    load_relative 'adapters/rack/live_interface'
+    load_relative 'adapters/rack'
+    
     # Application and routing.
     #
     load_relative 'frontend_adapters/rack'

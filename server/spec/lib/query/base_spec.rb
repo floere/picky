@@ -123,5 +123,24 @@ describe 'Query::Base' do
       end
     end
   end
+  
+  describe 'to_s' do
+    context 'with weights' do
+      before(:each) do
+        @query = Query::Full.new @index, weights: :some_weights
+      end
+      it 'works correctly' do
+        @query.to_s.should == 'Query::Full, weights: some_weights'
+      end
+    end
+    context 'without weights' do
+      before(:each) do
+        @query = Query::Full.new @index
+      end
+      it 'works correctly' do
+        @query.to_s.should == 'Query::Full'
+      end
+    end
+  end
 
 end

@@ -21,6 +21,8 @@ gem 'rack_fast_escape', '2009.06.24'
 #
 gem 'unicorn'
 gem 'mysql'
+gem 'sinatra'
+gem 'haml'
 
 group :test do
   gem 'rspec', '~> 1.3.0'

@@ -152,6 +152,14 @@ module Query
     def identifiers_to_remove # :nodoc:
       @identifiers_to_remove ||= []
     end
+    
+    # Display some nice information for the user.
+    #
+    def to_s
+      s = "#{self.class}"
+      s << ", weights: #{@weights}" unless @weights.empty?
+      s
+    end
 
   end
 end

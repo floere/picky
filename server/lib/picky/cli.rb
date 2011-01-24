@@ -27,8 +27,8 @@ module Picky
     end
     class Statistics < Base
       def execute name, args, params
-        relative_log_file            = args.shift
-        port                         = args.shift
+        relative_log_file = args.shift
+        port              = args.shift
         
         usage(name, params) || exit(1) unless relative_log_file
         
@@ -48,11 +48,13 @@ module Picky
     end
     class Live < Base
       def execute name, args, params
-        url = args.shift
+        url  = args.shift
+        port = args.shift
         
         usage(name, params) || exit(1) unless args.empty?
         
-        ENV['PICKY_LIVE_URL']        = url || 'localhost:8080/admin'
+        ENV['PICKY_LIVE_URL']  = url
+        ENV['PICKY_LIVE_PORT'] = port
         
         begin
           require 'picky-live'
@@ -89,7 +91,7 @@ module Picky
       :generate => [Generate, 'sinatra_client | unicorn_server | empty_unicorn_server', 'app_directory_name (optional)'],
       :help     => [Help],
       :stats    => [Statistics, 'logfile, e.g. log/search.log', 'port (optional)'],
-      :live     => [Live, 'host:port/path (optional, default is localhost:8080/admin)']
+      :live     => [Live, 'host:port/path (optional, default: localhost:8080/admin)', 'port (optional)']
     }
     def self.mapping
       @@mapping
