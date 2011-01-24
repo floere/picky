@@ -19,6 +19,13 @@ function handleErrors(data) {
   return error;
 };
 
+function rememberOriginal(name, data) {
+  var input = $('#parameters .' + name + ' input');
+  if (input.val() == '') {
+    $('#parameters .' + name + ' .original').html('was:&nbsp;&nbsp;' + data[name] + '&nbsp;&nbsp;on reload.');
+  };
+};
+
 function updateParameter(name, data) {
   var input = $('#parameters .' + name + ' input');
   input.val(data[name]);
@@ -28,6 +35,7 @@ function updateParameter(name, data) {
 function updateParameters(data) {
   if (handleErrors(data)) { return; };
   $.each(parameters, function(index, parameter) {
+    rememberOriginal(parameter, data);
     updateParameter(parameter, data);
   });
 };
