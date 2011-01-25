@@ -21,32 +21,43 @@ module Interfaces
       Thread.new do
         loop do
           sleep 1
-          # @parent.close unless @parent.closed?
           result = @child.gets ';;;'
           pid, configuration_hash = eval result
           next unless Hash === configuration_hash
           next if configuration_hash.empty?
-          puts "Trying to update MASTER configuration."
+          exclaim "Trying to update MASTER configuration."
           try_updating_configuration_with configuration_hash
           kill_each_worker_except pid
-          # TODO rescue on error.
+        # TODO rescue on error.
+          
         end
       end
+    end
+    
+    # TODO This needs to be webserver agnostic.
+    #
+    def worker_pids
+      Unicorn::HttpServer::WORKERS.keys
     end
     
     # Taken from Unicorn.
     #
     def kill_each_worker_except pid
-      Unicorn::HttpServer::WORKERS.keys.each do |wpid|
+      worker_pids.each do |wpid|
         next if wpid == pid
         kill_worker :KILL, wpid
       end
     end
     def kill_worker signal, wpid
       Process.kill signal, wpid
-      puts "Killing worker ##{wpid} with signal #{signal}."
-      rescue Errno::ESRCH
-        worker = Unicorn::HttpServer::WORKERS.delete(wpid) and worker.tmp.close rescue nil
+      exclaim "Killing worker ##{wpid} with signal #{signal}."
+    rescue Errno::ESRCH
+      remove_worker wpid
+    end
+    # TODO This needs to be Webserver agnostic.
+    #
+    def remove_worker wpid
+      worker = Unicorn::HttpServer::WORKERS.delete(wpid) and worker.tmp.close rescue nil
     end
     
     # Updates any parameters with the ones given and
@@ -61,17 +72,34 @@ module Interfaces
     # and if successful, in the parent process
     #
     def parameters configuration_hash
-      @child.close unless @child.closed?
-      puts "Trying to update worker child configuration." unless configuration_hash.empty?
+      close_child
+      exclaim "Trying to update worker child configuration." unless configuration_hash.empty?
       try_updating_configuration_with configuration_hash
-      @parent.write "#{[Process.pid, configuration_hash]};;;"
+      write_parent
       extract_configuration
     rescue CouldNotUpdateConfigurationError => e
       # I need to die such that my broken config is never used.
       #
-      puts "Child process #{Process.pid} performs harakiri because of broken config."
-      Process.kill :QUIT, Process.pid
+      exclaim "Child process #{Process.pid} performs harakiri because of broken config."
+      harakiri
       { e.config_key => :ERROR }
+    end
+    # Kills itseld, but still answering the request honorably.
+    #
+    def harakiri
+      Process.kill :QUIT, Process.pid
+    end
+    # Write the parent.
+    #
+    # Note: The ;;; is the end marker for the message.
+    #
+    def write_parent configuration_hash
+      @parent.write "#{[Process.pid, configuration_hash]};;;"
+    end
+    # Close the child if it isn't yet closed.
+    #
+    def close_child
+      @child.close unless @child.closed?
     end
     
     class CouldNotUpdateConfigurationError < StandardError
@@ -88,7 +116,7 @@ module Interfaces
       current_key = nil
       begin
         configuration_hash.each_pair do |key, new_value|
-          puts "  Setting #{key} with #{new_value}."
+          exclaim "  Setting #{key} with #{new_value}."
           current_key = key
           send :"#{key}=", new_value
         end
