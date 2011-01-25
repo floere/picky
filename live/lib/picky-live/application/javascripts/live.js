@@ -65,7 +65,6 @@ function getParameters() {
   var data = {};
   
   $('#actions button').attr('disabled', 'disabled');
-  $('#actions button').text('Updating server…');
   
   $.each(parameters, function(index, parameter) {
     var value = $('#parameters .' + parameter + ' input').val();
@@ -78,7 +77,6 @@ function getParameters() {
     success: function(data) {
       data = $.parseJSON(data);
       updateParameters(data);
-      $('#actions button').text('Update server now');
       $('#actions button').removeAttr('disabled');
     }
   });
