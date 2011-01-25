@@ -47,12 +47,16 @@ var firstTime = true;
 var pickyPositiveAnswers = ['Yes', 'Ok', 'Fine', 'Done', 'Good', 'Alright', 'Sure', 'As you wish', 'Made adjustments'];
 var pickyNegativeAnswers = ['Nu-uh', 'Nope', 'Sorry', 'No', 'Whoops', 'Oy vey', 'Oh dear', "That didn't work"];
 
+function answerWith(answers) {
+  $('#actions .status').html('Picky answered: ' + answers[Math.round(Math.random()*(answers.length-1))] + '.').fadeIn(200).fadeOut(800);
+};
+
 function updateParameters(data) {
   if (handleErrors(data)) {
-    $('#actions .status').html('Picky answered: ' + pickyNegativeAnswers[Math.round(Math.random()*(pickyNegativeAnswers.length-1))] + '.').fadeIn(200).fadeOut(800);
+    answerWith(pickyNegativeAnswers);
     return;
   } else {
-    $('#actions .status').html('Picky answered: ' + pickyPositiveAnswers[Math.round(Math.random()*(pickyPositiveAnswers.length-1))] + '.').fadeIn(200).fadeOut(800);
+    answerWith(pickyPositiveAnswers);
   };
   $.each(parameters, function(index, parameter) {
     if (firstTime) { rememberOriginal(parameter, data); }
