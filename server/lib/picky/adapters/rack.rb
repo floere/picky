@@ -16,7 +16,7 @@ module Adapters
     #
     @@mapping = {
       :search_with_text => Query,
-      :parameters       => LiveInterface
+      :parameters       => LiveParameters
     }
     def self.app_for thing, options = {}
       @@mapping.each_pair do |method, adapter|

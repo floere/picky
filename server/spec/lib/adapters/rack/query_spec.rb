@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::Base do
+describe Adapters::Rack::Query do
   
   before(:each) do
     @query   = stub :query
@@ -12,6 +12,9 @@ describe Adapters::Rack::Base do
   describe 'to_app' do
     it 'works' do
       lambda { @adapter.to_app }.should_not raise_error
+    end
+    it 'returns the right thing' do
+      @adapter.to_app.should respond_to(:call)
     end
   end
   

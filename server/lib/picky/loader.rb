@@ -257,7 +257,7 @@ module Loader # :nodoc:all
     #
     load_relative 'adapters/rack/base'
     load_relative 'adapters/rack/query'
-    load_relative 'adapters/rack/live_interface'
+    load_relative 'adapters/rack/live_parameters'
     load_relative 'adapters/rack'
     
     # Application and routing.
