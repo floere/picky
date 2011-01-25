@@ -6,24 +6,34 @@
     %script{ :src => 'javascripts/live.js', :type => 'text/javascript' }
     
   %body
-    %h1 Suckerfish: Picky Live Interface.
+    %h1 Suckerfish: Picky Live Parameters (Experimental).
+    Change Picky's parameters on the fly.
     #parameters
       %h2 Querying
       .querying_removes_characters
         Removes characters:
+        \%r{
         %input
+        }
         %span.error
         %span.original
+        %button.original{ :href => '#' } Revert
       .querying_stopwords
         Stopwords:
+        \%r{
         %input
+        }
         %span.error
         %span.original
+        %button.original{ :href => '#' } Revert
       .querying_splits_text_on
         Splits text on:
+        \%r{
         %input
+        }
         %span.error
         %span.original
+        %button.original{ :href => '#' } Revert
     #actions
       %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update server now
       .status

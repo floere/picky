@@ -4,6 +4,10 @@ var parameters = [
   'querying_splits_text_on'
 ];
 
+function hasBeenUpdated(name) {
+  $('#parameters .' + name + ' input').css('background-color', 'lightgreen');
+};
+
 // If this returns true there were errors.
 //
 function handleErrors(data) {
@@ -19,10 +23,17 @@ function handleErrors(data) {
   return error;
 };
 
+// TODO Find a way to handle this correctly.
+//
 function rememberOriginal(name, data) {
   var input = $('#parameters .' + name + ' input');
   if (input.val() == '') {
-    $('#parameters .' + name + ' .original').html('was:&nbsp;&nbsp;' + data[name] + '&nbsp;&nbsp;on reload.');
+    var originalValue = data[name];
+    $('#parameters .' + name + ' span.original').html(', was&nbsp;&nbsp;' + originalValue + '&nbsp;&nbsp;on last reload.');
+    $('#parameters .' + name + ' button.original').click(function() {
+      input.val(originalValue);
+      hasBeenUpdated(name);
+    });
   };
 };
 
@@ -32,26 +43,34 @@ function updateParameter(name, data) {
   $('#parameters .' + name + ' input').css('background-color', 'white');
 };
 
+var firstTime = true;
+var pickyPositiveAnswers = ['Yes', 'Ok', 'Fine', 'Done', 'Good', 'Alright', 'Sure', 'As you wish', 'Made adjustments'];
+var pickyNegativeAnswers = ['Nu-uh', 'Nope', 'Sorry', 'No', 'Whoops', 'Oy vey', 'Oh dear', "That didn't work"];
+
 function updateParameters(data) {
-  if (handleErrors(data)) { return; };
+  if (handleErrors(data)) {
+    $('#actions .status').html('Picky answered: ' + pickyNegativeAnswers[Math.round(Math.random()*(pickyNegativeAnswers.length-1))] + '.').fadeIn(200).fadeOut(800);
+    return;
+  } else {
+    $('#actions .status').html('Picky answered: ' + pickyPositiveAnswers[Math.round(Math.random()*(pickyPositiveAnswers.length-1))] + '.').fadeIn(200).fadeOut(800);
+  };
   $.each(parameters, function(index, parameter) {
-    rememberOriginal(parameter, data);
+    if (firstTime) { rememberOriginal(parameter, data); }
     updateParameter(parameter, data);
   });
+  if (firstTime) { firstTime = false; };
 };
 
 function getParameters() {
   var data = {};
   
-  // TODO Smallify.
-  var querying_removes_characters = $('#parameters .querying_removes_characters input').val();
-  if (querying_removes_characters != '') { data['querying_removes_characters'] = querying_removes_characters; };
+  $('#actions button').attr('disabled', 'disabled');
+  $('#actions button').text('Updating server…');
   
-  var querying_stopwords = $('#parameters .querying_stopwords input').val();
-  if (querying_stopwords != '') { data['querying_stopwords'] = querying_stopwords; };
-  
-  var querying_splits_text_on = $('#parameters .querying_splits_text_on input').val();
-  if (querying_splits_text_on != '') { data['querying_splits_text_on'] = querying_splits_text_on; };
+  $.each(parameters, function(index, parameter) {
+    var value = $('#parameters .' + parameter + ' input').val();
+    if (value != '') { data[parameter] = value; };
+  });
   
   $.ajax({
     url: 'index.json',
@@ -59,19 +78,27 @@ function getParameters() {
     success: function(data) {
       data = $.parseJSON(data);
       updateParameters(data);
-      $('#actions .status').html('Server set with the following data (if it\'s still the same, check your config changes).').fadeOut(2500);
+      $('#actions button').text('Update server now');
+      $('#actions button').removeAttr('disabled');
     }
   });
 };
 
+function clear(name) {
+  $('#parameters .' + name + ' input').val('');
+}
+
 function installHandler(name) {
-  $('#parameters .' + name + ' input').keydown(function() {
-    $('#parameters .' + name + ' input').css('background-color', 'lightgreen');
+  $('#parameters .' + name + ' input').keydown(function(event) {
+    if (event.keyCode != '9' || event.keyCode != '16') { // Not tab or shift.
+      hasBeenUpdated(name);
+    }
   });
 };
 
 $(document).ready(function() {
   $.each(parameters, function(index, parameter) {
+    clear(parameter);
     installHandler(parameter);
   });
 });
