@@ -8,7 +8,7 @@ module Interfaces
   #
   # Important Note: This will only work in Master/Child configurations.
   #
-  class Live
+  class LiveParameters
     
     def initialize
       @child, @parent = IO.pipe
@@ -127,4 +127,9 @@ module Interfaces
     end
     
   end
+  
+  # Aka.
+  #
+  ::LiveParameters = LiveParameters
+  
 end

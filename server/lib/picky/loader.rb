@@ -249,6 +249,10 @@ module Loader # :nodoc:all
     #
     load_relative 'configuration/index'
     
+    # Interfaces
+    #
+    load_relative 'interfaces/live_parameters'
+    
     # Adapters.
     #
     load_relative 'adapters/rack/base'

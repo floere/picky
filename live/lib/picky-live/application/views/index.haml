@@ -6,7 +6,7 @@
     %script{ :src => 'javascripts/live.js', :type => 'text/javascript' }
     
   %body
-    %h1 Suckerfish: Picky Live Parameters (Experimental).
+    %h1 Suckerfish: Picky Live Parameters.
     Change Picky's parameters on the fly.
     #parameters
       %h2 Querying
@@ -34,10 +34,42 @@
         %span.error
         %span.original
         %button.original{ :href => '#' } Revert
-    #actions
-      %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update server now
-      .status
+      #actions
+        %button{ :href => '#', :onclick => 'javascript:getParameters();' } Update server now
+        .status
+    #notes
+      %h4 Notes
+      %p
+        Start Suckerfish on the right URL, by default it's
+        %code localhost:8080/admin
+        but you can choose your own by running it with
+        %code picky live &lt;url&gt; &lt;port&gt;
+        \. The port is used for this server (default 4568).
+      %p
+        Picky won't accept a
+        %code /regexp/
+        parameter if it is malformed.
+      %p
+        Suckerfish can only use a route mapped to
+        %code LiveParameters.new
+        such as
+        %code route %r{/admin} => LiveParameters.new
+        (in app/application.rb).
+      %p
+        %code LiveParameters
+        instances can talk to the master process to update the master config parameters.
+      %p
+        Please do not expose the URL, e.g.
+        %code /admin
+        to the outside world – we don't want people to be able to update your Picky server!
+      %p
+        Picky will kill all child processes to update their config
+        (except the one currently listening to Suckerfish, which gets its config directly updated and can live on).
+      %p Picky first tries to update the child process' config. If it fails, the child will commit suicide, since its config is probably broken.
+      %p &nbsp;
+      %p A suckerfish is also called a "remora".
+      %p Remoras attach themselves mostly to fish, but Picky likes its cheerful disposition and keeps it around.
+      %p Picky fails to see that the remora can also be a bit manipulative sometimes ;)
       
   :javascript
-    getParameters();
-    
+    getParameters();    

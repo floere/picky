@@ -14,7 +14,7 @@ h3 { font-size: 1.1em; }
 h4 { font-size: 1.1em; }
 
 #actions {
-  padding: 5px;
+  padding: 10px 0px 0px;
 }
 
 #actions .status {
@@ -26,7 +26,9 @@ h4 { font-size: 1.1em; }
 }
 
 #parameters {
-  padding: 10px;
+  background-color: #eee;
+  padding: 20px;
+  margin: 10px 0px 0px 0px;
 }
 
 #parameters .error {
@@ -35,6 +37,17 @@ h4 { font-size: 1.1em; }
 #parameters .original {
   color: gray;
   font-size: 0.9em;
+}
+
+#notes {
+  margin: 10px 0px;
+  font-size: 0.7em;
+}
+
+#notes code {
+  background-color: #eee;
+  padding: 2px 10px;
+  font-size: 1.2em;
 }
 
 input {
