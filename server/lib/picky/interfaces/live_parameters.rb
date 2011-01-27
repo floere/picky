@@ -18,9 +18,11 @@ module Interfaces
     # This runs a thread that listens to child processes.
     #
     def start_master_process_thread
+      # This thread is stopped in the children.
+      #
       Thread.new do
         loop do
-          sleep 1
+          sleep 1 # TODO select
           result = @child.gets ';;;'
           pid, configuration_hash = eval result
           next unless Hash === configuration_hash
@@ -84,7 +86,7 @@ module Interfaces
       harakiri
       { e.config_key => :ERROR }
     end
-    # Kills itseld, but still answering the request honorably.
+    # Kills itself, but still answering the request honorably.
     #
     def harakiri
       Process.kill :QUIT, Process.pid
