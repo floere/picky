@@ -1,8 +1,8 @@
-h2. Version 1.3.0 (unreleased)
+h2. Version 1.3.0
 
- * hanke: (server) Offers a new routing API, an interface that permits changing parameters in the running server. Use like @route %r{/admin} => Live::Interface.new@.
- * hanke: (statistics) The statistics server is now called "Clam".
- * hanke: (live-interface) A new Gem "picky-live-interface" that offers a live interface into the Picky server, provided you have a route for it. It is called "Suckerfish", and is one of Picky's friends.
+ * hanke: (server) Offers a new routing API, an interface that permits changing parameters in the running server. Use @route %r{/admin} => Live::Interface.new@.
+ * hanke: (statistics) The statistics server is now called "Clam", a chain smoking friend of Picky's.
+ * hanke: (live) A new Gem "picky-live" that offers a live interface into the Picky server, provided you have a route for it. It is called "Suckerfish", and is one of Picky's friends, too.
 
 h2. Version 1.2.4
 
