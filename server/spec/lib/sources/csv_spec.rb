@@ -35,7 +35,7 @@ describe Sources::CSV do
   end
   context "with file" do
     before(:each) do
-      ::CSV.should_receive(:foreach).any_number_of_times.and_yield ['7', 'a data', 'b data', 'c data']
+      ::CSV.should_receive(:foreach).any_number_of_times.and_yield [' 7', 'a data', 'b data', 'c data']
     end
     context 'without separator' do
       before(:each) do
@@ -45,14 +45,14 @@ describe Sources::CSV do
         it "should yield the right data" do
           field = stub :b, :from => :b
           @source.harvest :anything, field do |id, token|
-            [id, token].should == [7, 'b data']
+            [id, token].should == [' 7', 'b data']
           end
         end
       end
       describe "get_data" do
         it "should yield each line" do
           @source.get_data do |data|
-            data.should == ['7', 'a data', 'b data', 'c data']
+            data.should == [' 7', 'a data', 'b data', 'c data']
           end
         end
       end
@@ -65,14 +65,14 @@ describe Sources::CSV do
         it "should yield the right data" do
           field = stub :b, :from => :b
           @source.harvest :anything, field do |id, token|
-            [id, token].should == ['7', 'b data']
+            [id, token].should == [' 7', 'b data']
           end
         end
       end
       describe "get_data" do
         it "should yield each line" do
           @source.get_data do |data|
-            data.should == ['7', 'a data', 'b data', 'c data']
+            data.should == [' 7', 'a data', 'b data', 'c data']
           end
         end
       end

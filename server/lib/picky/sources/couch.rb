@@ -52,7 +52,7 @@ module Sources
     def harvest type, category
       category_name = category.from.to_s
       get_data do |doc|
-        yield doc[@@id_key].strip, doc[category_name] || next
+        yield doc[@@id_key], doc[category_name] || next
       end
     end
     

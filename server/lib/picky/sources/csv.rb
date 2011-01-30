@@ -58,7 +58,7 @@ module Sources
         text       = ary[index]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
-        yield indexed_id.send(@key_format), text
+        yield indexed_id, text #indexed_id.send(@key_format), text
       end
     end
     
