@@ -36,8 +36,10 @@ module Sources
       require 'csv'
       @category_names = category_names
       
-      @csv_options    = Hash === options && options || {}
-      @file_name      = @csv_options.delete(:file) || raise_no_file_given(category_names)
+      @csv_options = Hash === options && options || {}
+      @file_name   = @csv_options.delete(:file) || raise_no_file_given(category_names)
+      
+      @key_format  = options[:key_format] || :to_i
     end
     
     # Raises a NoCSVFileGiven exception.
@@ -51,11 +53,11 @@ module Sources
     def harvest _, category
       index = category_names.index category.from
       get_data do |ary|
-        indexed_id = ary.shift.to_i # TODO is to_i necessary?
+        indexed_id = ary.shift
         text       = ary[index]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
-        yield indexed_id, text
+        yield indexed_id.send(@key_wrangling), text
       end
     end
     
