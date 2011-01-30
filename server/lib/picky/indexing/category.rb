@@ -80,7 +80,16 @@ module Indexing
     #
     def cache
       prepare_index_directory
+      configure
       generate_caches
+    end
+    # We need to set what formatting method should be used.
+    # Uses the one defined in the indexer.
+    #
+    def configure
+      key_format = indexer.key_format
+      exact[:key_format] = key_format
+      partial[:key_format] = key_format
     end
     def generate_caches
       generate_caches_from_source

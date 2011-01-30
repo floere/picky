@@ -29,6 +29,12 @@ module Sources
       @db = RestClient::Resource.new options.delete(:url), options
     end
     
+    # Default key format method for couch DB is to_sym. 
+    #
+    def key_format
+      :to_sym
+    end
+    
     # Tries to require the rest_client gem.
     #
     def check_gem # :nodoc:

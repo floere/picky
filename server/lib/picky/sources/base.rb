@@ -25,6 +25,8 @@ module Sources
   #
   class Base
     
+    attr_reader :key_format
+    
     # Connect to the backend.
     #
     # Called once per index/category combination before harvesting.

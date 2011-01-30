@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Indexing::Bundle do
 
   before(:each) do
-    @index         = stub :index, :name => :some_index
-    @category      = stub :category, :name => :some_category
-    @configuration = Configuration::Index.new @index, @category
+    @internal_index = stub :index, :name => :some_index
+    @category       = stub :category, :name => :some_category
+    @configuration  = Configuration::Index.new @internal_index, @category
     
     @partial     = stub :partial
     @weights     = stub :weights
@@ -42,17 +42,47 @@ describe Indexing::Bundle do
     end
   end
   
-  # TODO
-  #
-  # describe 'retrieve' do
-  #   it 'should call the other methods correctly' do
-  #     results = stub :results
-  #     @index.stub! :execute_query => results
-  #     @index.should_receive(:extract).once.with results
-  #     
-  #     @index.retrieve
-  #   end
-  # end
+  describe 'retrieve' do
+    before(:each) do
+      files = stub :files
+      files.should_receive(:retrieve).once.and_yield '  1234', :some_token
+      @index.stub! :files => files
+      
+      @ary = stub :ary
+      @internal_index.should_receive(:[]).any_number_of_times.and_return @ary
+      @index.stub! :index => @internal_index
+    end
+    context 'id key format' do
+      before(:each) do
+        @index.should_receive(:[]).once.with(:key_format).and_return :to_i
+      end
+      it 'should call the other methods correctly' do
+        @ary.should_receive(:<<).once.with 1234
+        
+        @index.retrieve
+      end
+    end
+    context 'other key format' do
+      before(:each) do
+        @index.should_receive(:[]).once.with(:key_format).and_return :strip
+      end
+      it 'should call the other methods correctly' do
+        @ary.should_receive(:<<).once.with '1234'
+        
+        @index.retrieve
+      end
+    end
+    context 'no key format - default' do
+      before(:each) do
+        @index.should_receive(:[]).once.with(:key_format).and_return nil
+      end
+      it 'should call the other methods correctly' do
+        @ary.should_receive(:<<).once.with 1234
+        
+        @index.retrieve
+      end
+    end
+  end
 
   describe 'load_from_index_file' do
     it 'should call two methods in order' do

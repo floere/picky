@@ -3,8 +3,9 @@ require 'spec_helper'
 describe Indexing::Category do
   
   before(:each) do
-    @index = stub :index, :name => :some_index
-    @category = Indexing::Category.new :some_category, @index, :source => :some_given_source
+    @index  = stub :index, :name => :some_index
+    @source = stub :some_given_source, :key_format => nil
+    @category = Indexing::Category.new :some_category, @index, :source => @source
   end
   context "unit specs" do
     before(:each) do

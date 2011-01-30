@@ -26,7 +26,7 @@ module Sources
     
     # The options that were passed into #new.
     #
-    attr_reader :csv_options
+    attr_reader :csv_options, :key_format
     
     # The data category names.
     #
@@ -39,7 +39,8 @@ module Sources
       @csv_options = Hash === options && options || {}
       @file_name   = @csv_options.delete(:file) || raise_no_file_given(category_names)
       
-      @key_format  = options[:key_format] || :to_i
+      key_format   = options.delete :key_format
+      @key_format  = key_format && key_format.to_sym || :to_i
     end
     
     # Raises a NoCSVFileGiven exception.
@@ -57,7 +58,7 @@ module Sources
         text       = ary[index]
         next unless text
         text.force_encoding 'utf-8' # TODO Still needed?
-        yield indexed_id.send(@key_wrangling), text
+        yield indexed_id.send(@key_format), text
       end
     end
     

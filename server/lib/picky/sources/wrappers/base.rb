@@ -17,7 +17,7 @@ module Sources
       
       # Default is delegation for all methods
       #
-      delegate :harvest, :connect_backend, :take_snapshot, :to => :backend
+      delegate :harvest, :connect_backend, :take_snapshot, :key_format, :to => :backend
       
     end
       

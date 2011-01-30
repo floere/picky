@@ -68,9 +68,10 @@ module Indexing # :nodoc:all
     # and later dumping the optimized index.
     #
     def retrieve
+      key_format = self[:key_format] || :to_i
       files.retrieve do |id, token|
         initialize_index_for token
-        index[token] << id
+        index[token] << id.send(key_format)
       end
     end
     # Sets up a piece of the index for the given token.

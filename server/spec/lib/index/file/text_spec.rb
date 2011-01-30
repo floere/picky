@@ -28,7 +28,7 @@ describe Index::File::Text do
     end
     it "yields split lines and returns the id and token text" do
       @file.retrieve do |id, token|
-        id.should    == 123456
+        id.should    == '123456'
         token.should == :some_nice_token
       end
     end
