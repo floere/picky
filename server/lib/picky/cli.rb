@@ -21,8 +21,10 @@ module Picky
       def usage name, params
         puts "Usage\n  picky #{name} #{params_to_s(params)}"
       end
+      # String params are optional, Symbol params aren't.
+      #
       def params_to_s params
-        params.map { |param| "<#{param}>" }.join(' ') if params
+        params.map { |param| param.respond_to?(:to_str) ? "[#{param}]" : param }.join(' ') if params
       end
     end
     class Statistics < Base
@@ -88,10 +90,10 @@ module Picky
     # Maps commands to the other gem's command.
     #
     @@mapping = {
-      :generate => [Generate, 'sinatra_client | unicorn_server | empty_unicorn_server', 'app_directory_name (optional)'],
+      :generate => [Generate, :'(sinatra_client | unicorn_server | empty_unicorn_server)', :'app_directory_name'],
       :help     => [Help],
-      :stats    => [Statistics, 'logfile, e.g. log/search.log', 'port (optional)'],
-      :live     => [Live, 'host:port/path (optional, default: localhost:8080/admin)', 'port (optional)']
+      :stats    => [Statistics, :'logfile (e.g. log/search.log)', 'port (default: 4567)'],
+      :live     => [Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)']
     }
     def self.mapping
       @@mapping
