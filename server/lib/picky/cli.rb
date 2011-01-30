@@ -90,7 +90,7 @@ module Picky
     # Maps commands to the other gem's command.
     #
     @@mapping = {
-      :generate => [Generate, :'(sinatra_client | unicorn_server | empty_unicorn_server)', :'app_directory_name'],
+      :generate => [Generate, :'{sinatra_client,unicorn_server,empty_unicorn_server}', :'app_directory_name'],
       :help     => [Help],
       :stats    => [Statistics, :'logfile (e.g. log/search.log)', 'port (default: 4567)'],
       :live     => [Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)']

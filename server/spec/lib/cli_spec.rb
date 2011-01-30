@@ -19,7 +19,7 @@ describe Picky::CLI do
         @cli.executor_class_for.should == [Picky::CLI::Help]
       end
       it 'returns Generator for generate' do
-        @cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :"(sinatra_client | unicorn_server | empty_unicorn_server)", :"app_directory_name"]
+        @cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{sinatra_client,unicorn_server,empty_unicorn_server}', :"app_directory_name"]
       end
       it 'returns Help for help' do
         @cli.executor_class_for(:help).should == [Picky::CLI::Help]
