@@ -22,7 +22,7 @@ module Interfaces
       #
       Thread.new do
         loop do
-          sleep 1 # TODO select
+          IO.select([@child], nil, nil, 2) or next
           result = @child.gets ';;;'
           pid, configuration_hash = eval result
           next unless Hash === configuration_hash
@@ -123,6 +123,8 @@ module Interfaces
           send :"#{key}=", new_value
         end
       rescue StandardError => e
+        # Catch any error and reraise as config error.
+        #
         raise CouldNotUpdateConfigurationError.new current_key, e.message
       end
     end
