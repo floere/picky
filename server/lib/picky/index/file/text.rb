@@ -29,14 +29,15 @@ module Index
       # * id,data\n
       # * id,data\n
       #
-      # Yields an id and a symbol token.
+      # Yields an id string and a symbol token.
       #
       def retrieve
-        id, token =
+        id    = nil
+        token = nil
         ::File.open(cache_path, 'r:binary') do |file|
           file.each_line do |line|
             id, token = line.split ?,, 2
-            yield id.to_i, (token.chomp! || token).to_sym
+            yield id, (token.chomp! || token).to_sym
           end
         end
       end
