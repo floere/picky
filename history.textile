@@ -1,3 +1,7 @@
+h2. Version 1.3.2
+
+* hanke: (all) Fixed description in the "picky" command. Also now shows optional parameters more clearly.
+
 h2. Version 1.3.1
 
 * hanke: (server) Ability to handle string/symbol keys (for future key/value store data sources).
