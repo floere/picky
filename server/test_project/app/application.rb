@@ -51,6 +51,9 @@ class BookSearch < Application
                        .define_category(:publisher, qualifiers: [:p, :publisher])
                        .define_category(:subjects, qualifiers: [:s, :subject])
     
+    sym_keys_index  = index :symbol_keys, Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip')
+    sym_keys_index.define_category :text, partial: Partial::Substring.new(from: 1)
+    
     options = {
       :weights => {
         [:author]         => 6,

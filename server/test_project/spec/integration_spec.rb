@@ -11,10 +11,16 @@ describe "Integration Tests" do
   before(:all) do
     Indexes.index_for_tests
     Indexes.load_from_cache
+    @sym = Query::Full.new Indexes[:symbol_keys]
     @csv = Query::Full.new Indexes[:csv_test]
     @geo = Query::Full.new Indexes[:geo]
   end
   
+  def self.it_should_find_ids_in_sym text, expected_ids
+    it 'should return the right ids' do
+      @sym.search_with_text(text).ids.should == expected_ids
+    end
+  end
   def self.it_should_find_ids_in_csv text, expected_ids
     it 'should return the right ids' do
       @csv.search_with_text(text).ids.should == expected_ids
@@ -34,6 +40,14 @@ describe "Integration Tests" do
     #
     it_should_find_ids_in_csv 'Soledad Human', [72]
     it_should_find_ids_in_csv 'First Three Minutes Weinberg', [1]
+    
+    # Symbol keys
+    #
+    # TODO ATM they are strings – and the resulting JSON is the same – but switch to Symbols ASAP.
+    #
+    it_should_find_ids_in_sym 'key', ['a', 'b', 'c', 'd', 'e', 'f']
+    it_should_find_ids_in_sym 'keyDkey', ['d']
+    it_should_find_ids_in_sym '"keyDkey"', ['d']
     
     # Complex cases
     #
