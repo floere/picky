@@ -69,20 +69,39 @@ describe Query::Allocations do
   end
 
   describe 'ids' do
-    before(:each) do
-      @allocation1 = stub :allocation1, :ids => [1, 2, 3, 4]
-      @allocation2 = stub :allocation2, :ids => [5, 6, 7]
-      @allocation3 = stub :allocation3, :ids => [8, 9]
-      @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+    context 'integers' do
+      before(:each) do
+        @allocation1 = stub :allocation1, :ids => [1, 2, 3, 4]
+        @allocation2 = stub :allocation2, :ids => [5, 6, 7]
+        @allocation3 = stub :allocation3, :ids => [8, 9]
+        @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+      end
+      it 'should return the right amount of ids' do
+        @allocations.ids(0).should == []
+      end
+      it 'should return the right amount of ids' do
+        @allocations.ids(6).should == [1,2,3,4,5,6]
+      end
+      it 'should return the right amount of ids' do
+        @allocations.ids.should == [1,2,3,4,5,6,7,8,9]
+      end
     end
-    it 'should return the right amount of ids' do
-      @allocations.ids(0).should == []
-    end
-    it 'should return the right amount of ids' do
-      @allocations.ids(6).should == [1,2,3,4,5,6]
-    end
-    it 'should return the right amount of ids' do
-      @allocations.ids.should == [1,2,3,4,5,6,7,8,9]
+    context 'symbols' do
+      before(:each) do
+        @allocation1 = stub :allocation1, :ids => [:a, :b, :c, :d]
+        @allocation2 = stub :allocation2, :ids => [:e, :f, :g]
+        @allocation3 = stub :allocation3, :ids => [:h, :i]
+        @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+      end
+      it 'should return the right amount of ids' do
+        @allocations.ids(0).should == []
+      end
+      it 'should return the right amount of ids' do
+        @allocations.ids(6).should == [:a,:b,:c,:d,:e,:f]
+      end
+      it 'should return the right amount of ids' do
+        @allocations.ids.should == [:a,:b,:c,:d,:e,:f,:g,:h,:i]
+      end
     end
   end
 

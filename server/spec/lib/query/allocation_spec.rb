@@ -99,6 +99,32 @@ describe Query::Allocation do
         @allocation.process!(20, 10).should == []
       end
     end
+    context 'with symbol ids' do
+      before(:each) do
+        @allocation.stub! :calculate_ids => [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j]
+      end
+      it 'should process right' do
+        @allocation.process!(0, 0).should == []
+      end
+      it 'should process right' do
+        @allocation.process!(0, 10).should == []
+      end
+      it 'should process right' do
+        @allocation.process!(5, 0).should == [:a,:b,:c,:d,:e]
+      end
+      it 'should process right' do
+        @allocation.process!(5, 5).should == [:f,:g,:h,:i,:j]
+      end
+      it 'should process right' do
+        @allocation.process!(20, 0).should == [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j]
+      end
+      it 'should process right' do
+        @allocation.process!(20, 5).should == [:f,:g,:h,:i,:j]
+      end
+      it 'should process right' do
+        @allocation.process!(20, 10).should == []
+      end
+    end
   end
 
   describe 'to_result' do

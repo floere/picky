@@ -127,6 +127,13 @@ describe 'Query::Combinations' do
 
       @combinations.ids.should == (1..10).to_a
     end
+    it "should intersect symbol_keys correctly" do
+      @combination1.should_receive(:ids).once.with.and_return (:'00001'..:'10000').to_a
+      @combination2.should_receive(:ids).once.with.and_return (:'00001'..:'00100').to_a
+      @combination3.should_receive(:ids).once.with.and_return (:'00001'..:'00010').to_a
+
+      @combinations.ids.should == (:'00001'..:'0010').to_a
+    end
     it "should intersect correctly when intermediate intersect result is empty" do
       @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a
       @combination2.should_receive(:ids).once.with.and_return (11..100).to_a
