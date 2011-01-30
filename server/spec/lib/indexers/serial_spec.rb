@@ -13,6 +13,25 @@ describe Indexers::Serial do
     @indexer.stub! :timed_exclaim
   end
   
+  describe 'key_format' do
+    context 'source has key_format' do
+      before(:each) do
+        @source.stub! :key_format => :some_key_format
+      end
+      it 'returns what the source returns' do
+        @indexer.key_format.should == :some_key_format
+      end
+    end
+    context 'source does not have key_format' do
+      before(:each) do
+        @source.stub! :key_format => nil
+      end
+      it 'returns :to_i' do
+        @indexer.key_format.should == :to_i
+      end
+    end
+  end
+  
   describe "tokenizer" do
     it "returns the right one" do
       @indexer.tokenizer.should == @tokenizer
