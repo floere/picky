@@ -160,16 +160,20 @@ module Loader # :nodoc:all
     load_relative 'cacher/weights_generator'
     load_relative 'cacher/similarity_generator'
     
-    # Index file handling.
+    # Index store handling.
     #
+    load_relative 'index/backend'
+    
+    load_relative 'index/redis'
+    load_relative 'index/redis/basic'
+    load_relative 'index/redis/list_hash'
+    load_relative 'index/redis/string_hash'
+    
     load_relative 'index/file/basic'
     load_relative 'index/file/text'
     load_relative 'index/file/marshal'
     load_relative 'index/file/json'
     
-    load_relative 'index/redis/basic'
-    
-    load_relative 'index/backend'
     load_relative 'index/files'
     
     # Indexing and Indexed things.
@@ -185,6 +189,7 @@ module Loader # :nodoc:all
     load_relative 'indexing/indexes'
     
     load_relative 'indexed/bundle/memory'
+    load_relative 'indexed/bundle/redis'
     load_relative 'indexed/category'
     load_relative 'indexed/categories'
     load_relative 'indexed/index'

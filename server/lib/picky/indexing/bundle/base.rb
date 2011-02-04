@@ -58,31 +58,6 @@ module Indexing # :nodoc:all
         generate_similarity
       end
       
-      # Dumps the core index.
-      #
-      def dump_index
-        timed_exclaim "DUMP INDEX #{identifier}."
-        backend.dump_index index
-      end
-      # Dumps the weights index.
-      #
-      def dump_weights
-        timed_exclaim "DUMP WEIGHTS #{identifier}."
-        backend.dump_weights weights
-      end
-      # Dumps the similarity index.
-      #
-      def dump_similarity
-        timed_exclaim "DUMP SIMILARITY #{identifier}."
-        backend.dump_similarity similarity
-      end
-      # Dumps the similarity index.
-      #
-      def dump_configuration
-        timed_exclaim "DUMP CONFIGURATION #{identifier}."
-        backend.dump_configuration configuration
-      end
-      
       # Load the data from the db.
       #
       def load_from_index_file
@@ -144,6 +119,30 @@ module Indexing # :nodoc:all
         dump_similarity
         dump_weights
         dump_configuration
+      end
+      # Dumps the core index.
+      #
+      def dump_index
+        timed_exclaim "DUMP INDEX #{identifier}."
+        backend.dump_index index
+      end
+      # Dumps the weights index.
+      #
+      def dump_weights
+        timed_exclaim "DUMP WEIGHTS #{identifier}."
+        backend.dump_weights weights
+      end
+      # Dumps the similarity index.
+      #
+      def dump_similarity
+        timed_exclaim "DUMP SIMILARITY #{identifier}."
+        backend.dump_similarity similarity
+      end
+      # Dumps the similarity index.
+      #
+      def dump_configuration
+        timed_exclaim "DUMP CONFIGURATION #{identifier}."
+        backend.dump_configuration configuration
       end
     
       # Alerts the user if an index is missing.

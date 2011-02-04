@@ -12,11 +12,10 @@ module Indexed # :nodoc:all
     #
     class Redis < Index::Bundle
       
-      def initialize *args
-        super *args
-        # TODO Does a keyspace exist?
-        #
-        @backend = Redis.new # TODO Pass this in.
+      def initialize name, configuration, *args
+        super name, configuration, *args
+        
+        @backend = ::Index::Redis.new name, configuration
       end
       
       # Get the ids for the given symbol.
@@ -24,14 +23,14 @@ module Indexed # :nodoc:all
       # Ids are an array of string values in Redis.
       #
       def ids sym
-        @backend.lrange "#{identifier} index #{sym}", 0, 100_000_000_000
+        @backend.ids sym
       end
       # Get a weight for the given symbol.
       #
       # A weight is a string value in Redis. TODO Convert?
       #
       def weight sym
-        @backend.get("#{identifier} weight #{sym}").to_f
+        @backend.weight sym
       end
       
       # Loads all indexes.
