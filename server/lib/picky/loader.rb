@@ -178,7 +178,7 @@ module Loader # :nodoc:all
     load_relative 'indexing/index'
     load_relative 'indexing/indexes'
     
-    load_relative 'indexed/bundle'
+    load_relative 'indexed/bundle/memory'
     load_relative 'indexed/category'
     load_relative 'indexed/categories'
     load_relative 'indexed/index'

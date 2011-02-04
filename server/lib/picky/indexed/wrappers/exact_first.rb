@@ -11,7 +11,7 @@ module Indexed
     #
     # TODO Need to use the right subtokens. Bake in?
     #
-    class ExactFirst < Bundle
+    class ExactFirst < Indexed::Bundle::Memory
       
       delegate :similar,
                :identifier,

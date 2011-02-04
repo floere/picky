@@ -30,6 +30,9 @@ describe Picky::CLI do
       it 'returns Live for live' do
         @cli.executor_class_for(:live).should == [Picky::CLI::Live, "host:port/path (default: localhost:8080/admin)", "port (default: 4568)"]
       end
+      it 'returns Help for silly input' do
+        @cli.executor_class_for(:gagagagagagaga).should == [Picky::CLI::Help]
+      end
     end
   end
   

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexed::Bundle do
+describe Indexed::Bundle::Memory do
 
   before(:each) do
     @category     = stub :category, :name => :some_category
@@ -8,7 +8,7 @@ describe Indexed::Bundle do
     @configuration = Configuration::Index.new @index, @category
     
     @similarity   = stub :similarity
-    @bundle_class = Indexed::Bundle
+    @bundle_class = Indexed::Bundle::Memory
     @bundle       = @bundle_class.new :some_name, @configuration, @similarity
   end
 
