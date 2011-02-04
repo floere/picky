@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexing::Bundle do
+describe Indexing::Bundle::Memory do
 
   before(:each) do
     @category         = stub :category, :name => :some_category
@@ -8,7 +8,7 @@ describe Indexing::Bundle do
     @configuration    = Configuration::Index.new @index, @category
     
     @partial_strategy = Cacher::Partial::Substring.new :from => 1
-    @exact            = Indexing::Bundle.new :some_name, @configuration, nil, @partial_strategy, nil
+    @exact            = Indexing::Bundle::Memory.new :some_name, @configuration, nil, @partial_strategy, nil
   end
 
   def generate_random_keys amount

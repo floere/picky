@@ -166,13 +166,19 @@ module Loader # :nodoc:all
     load_relative 'index/file/text'
     load_relative 'index/file/marshal'
     load_relative 'index/file/json'
+    
+    load_relative 'index/redis/basic'
+    
+    load_relative 'index/backend'
     load_relative 'index/files'
     
     # Indexing and Indexed things.
     #
     load_relative 'index/bundle'
     
-    load_relative 'indexing/bundle'
+    load_relative 'indexing/bundle/base'
+    load_relative 'indexing/bundle/memory'
+    load_relative 'indexing/bundle/redis'
     load_relative 'indexing/category'
     load_relative 'indexing/categories'
     load_relative 'indexing/index'

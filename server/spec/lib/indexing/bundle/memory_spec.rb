@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexing::Bundle do
+describe Indexing::Bundle::Memory do
 
   before(:each) do
     @internal_index = stub :index, :name => :some_index
@@ -10,7 +10,7 @@ describe Indexing::Bundle do
     @partial     = stub :partial
     @weights     = stub :weights
     @similarity  = stub :similarity
-    @index       = Indexing::Bundle.new :some_name, @configuration, @similarity, @partial, @weights
+    @index       = Indexing::Bundle::Memory.new :some_name, @configuration, @similarity, @partial, @weights
   end
 
   describe 'identifier' do

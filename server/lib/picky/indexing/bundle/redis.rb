@@ -7,12 +7,11 @@ module Indexing # :nodoc:all
     # The memory version dumps its generated indexes to disk
     # (mostly JSON) to load them into memory on startup.
     #
-    class Memory < Base
+    class Redis < Base
       
-      # We're using files for the memory backend.
-      # E.g. dump writes files.
-      #
-      alias backend files
+      def initialize *args
+        @backend = Index::Redis.new
+      end
     
     end
     
