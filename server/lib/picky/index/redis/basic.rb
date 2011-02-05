@@ -11,29 +11,21 @@ module Index
     #
     class Basic
       
-      attr_reader :redis_namespace
+      attr_reader :namespace
       
       # An index cache takes a path, without file extension,
       # which will be provided by the subclasses.
       #
-      def initialize namespace, typespace
-        @redis_namespace = "#{namespace} #{typespace}"
-        @backend = ::Redis.new
+      def initialize namespace
+        @namespace = namespace
+        
+        @backend   = ::Redis.new
       end
       
       # Does nothing.
       #
       def load
         # Nothing.
-      end
-      # Writes the hash into Redis.
-      #
-      def dump hash
-        hash.each_pair do |key, value|
-          redis_key = "#{redis_namespace} #{key}"
-          @backend.del redis_key
-          @backend.rpush redis_key, value
-        end
       end
       # We do not use Redis to retrieve data.
       #

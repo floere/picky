@@ -9,6 +9,7 @@ gem 'rack-mount',       '~> 0.6.9'
 gem 'yajl-ruby',                 :require => 'yajl'
 gem 'text',             '~> 0.2.0'
 gem 'rack_fast_escape', '2009.06.24'
+gem 'redis' # TODO Remove from here.
 
 group :test do
   # Needed for testing itself.

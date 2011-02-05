@@ -10,7 +10,9 @@ module Indexed # :nodoc:all
     #
     # Handles exact/partial index, weights index, and similarity index.
     #
-    class Redis < Index::Bundle
+    class Redis < Base
+      
+      delegate :[], :to => :configuration
       
       def initialize name, configuration, *args
         super name, configuration, *args
@@ -32,15 +34,12 @@ module Indexed # :nodoc:all
       def weight sym
         @backend.weight sym
       end
-      
-      # Loads all indexes.
+      # TODO Spec. Doc.
       #
-      def load
-        load_index
-        load_weights
-        load_similarity
-        load_configuration
+      def [] sym
+        @backend.configuration sym
       end
+      
       # Loads the core index.
       #
       def load_index

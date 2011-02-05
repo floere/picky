@@ -4,6 +4,14 @@ module Index
     
     class StringHash < Basic
       
+      # Writes the hash into Redis.
+      #
+      def dump hash
+        hash.each_pair do |key, value|
+          @backend.hset namespace, key, value
+        end
+      end
+      
       # Get a collection.
       #
       def collection sym
@@ -13,7 +21,7 @@ module Index
       # Get a single value.
       #
       def member sym
-        @backend.get "#{identifier} weight #{sym}"
+        @backend.hget namespace, sym
       end
       
     end

@@ -2,17 +2,19 @@ module Index
   
   class Redis < Backend
     
-    def initialize bundle_name, configuration
-      super bundle_name, configuration
+    def initialize bundle_name, config
+      super bundle_name, config
       
       # Note: We marshal the similarity, as the
       #       Yajl json lib cannot load symbolized
       #       values, just keys.
       #
-      @index         = Redis::ListHash.new bundle_name, :index
-      @weights       = Redis::StringHash.new bundle_name, :weights
-      @similarity    = Redis::ListHash.new bundle_name, :similarity
-      @configuration = Redis::StringHash.new bundle_name, :configuration
+      # TODO
+      #
+      @index         = Redis::ListHash.new "#{config.identifier}:#{bundle_name}:index"
+      @weights       = Redis::StringHash.new "#{config.identifier}:#{bundle_name}:weights"
+      @similarity    = Redis::ListHash.new "#{config.identifier}:#{bundle_name}:similarity"
+      @configuration = Redis::StringHash.new "#{config.identifier}:#{bundle_name}:configuration"
     end
     
     # Delegate to the right collection.
@@ -21,12 +23,18 @@ module Index
       @index.collection sym
     end
     
-    # Delegate to the right single value.
+    # Delegate to the right member value.
     #
     # Note: Converts to float.
     #
     def weight sym
-      @weights.single(sym).to_f
+      @weights.member(sym).to_f
+    end
+    
+    # Delegate to a member value.
+    #
+    def configuration sym
+      @configuration.member sym
     end
     
   end

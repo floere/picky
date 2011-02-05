@@ -12,7 +12,19 @@ module Indexed # :nodoc:all
     #
     # Delegates file handling and checking to an *Indexed*::*Files* object.
     #
-    class Memory < Index::Bundle
+    class Memory < Base
+      
+      attr_reader :index, :weights, :similarity, :configuration
+      
+      delegate :[], :to => :configuration
+      
+      def initialize name, configuration, *args
+        super name, configuration, *args
+        
+        @configuration = {} # A hash with config options.
+        
+        @backend = ::Index::Files.new name, configuration
+      end
       
       # Get the ids for the given symbol.
       #
@@ -25,33 +37,25 @@ module Indexed # :nodoc:all
         @weights[sym]
       end
       
-      # Loads all indexes.
-      #
-      def load
-        load_index
-        load_weights
-        load_similarity
-        load_configuration
-      end
       # Loads the core index.
       #
       def load_index
-        self.index = files.load_index
+        self.index = @backend.load_index
       end
       # Loads the weights index.
       #
       def load_weights
-        self.weights = files.load_weights
+        self.weights = @backend.load_weights
       end
       # Loads the similarity index.
       #
       def load_similarity
-        self.similarity = files.load_similarity
+        self.similarity = @backend.load_similarity
       end
       # Loads the configuration.
       #
       def load_configuration
-        self.configuration = files.load_configuration
+        self.configuration = @backend.load_configuration
       end
       
     end
