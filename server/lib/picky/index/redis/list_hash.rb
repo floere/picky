@@ -6,12 +6,19 @@ module Index
       
       # Writes the hash into Redis.
       #
+      # TODO Performance: rpush as you get the values instead of putting it together in an array first.
+      #
       def dump hash
-        hash.each_pair do |key, value|
+        @backend.multi
+        hash.each_pair do |key, values|
           redis_key = "#{namespace}:#{key}"
-          @backend.del redis_key # TODO This is wrong, but how to do it? Probably need a prepare_dump.
-          @backend.rpush redis_key, value
+          @backend.del redis_key
+          
+          values.each do |value|
+            @backend.rpush redis_key, value
+          end
         end
+        @backend.exec
       end
       
       # Get a collection.

@@ -1,5 +1,7 @@
 module Index
   
+  # TODO Needs a reconnect to be run after forking.
+  #
   class Redis < Backend
     
     def initialize bundle_name, config
@@ -33,7 +35,7 @@ module Index
     
     # Delegate to a member value.
     #
-    def configuration sym
+    def setting sym
       @configuration.member sym
     end
     

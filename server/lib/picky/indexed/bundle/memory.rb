@@ -14,7 +14,7 @@ module Indexed # :nodoc:all
     #
     class Memory < Base
       
-      attr_reader :index, :weights, :similarity, :configuration
+      attr_accessor :index, :weights, :similarity, :configuration
       
       delegate :[], :to => :configuration
       

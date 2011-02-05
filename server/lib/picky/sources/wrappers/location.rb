@@ -65,7 +65,7 @@ module Sources
         
         # TODO Move to the right place.
         #
-        category.exact[:location_minimum].to_f = minimum
+        category.exact[:location_minimum] = minimum
       end
       
       # Put location onto multiple places on a grid.

@@ -12,8 +12,6 @@ module Indexed # :nodoc:all
     #
     class Redis < Base
       
-      delegate :[], :to => :configuration
-      
       def initialize name, configuration, *args
         super name, configuration, *args
         
@@ -37,7 +35,7 @@ module Indexed # :nodoc:all
       # TODO Spec. Doc.
       #
       def [] sym
-        @backend.configuration sym
+        @backend.setting sym
       end
       
       # Loads the core index.
