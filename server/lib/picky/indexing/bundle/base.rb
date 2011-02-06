@@ -8,7 +8,7 @@ module Indexing # :nodoc:all
     # It does all menial tasks that have nothing to do
     # with the actual index running etc.
     #
-    class Base < Index::Bundle
+    class Base < SuperBase
       
       attr_accessor :partial_strategy, :weights_strategy
       

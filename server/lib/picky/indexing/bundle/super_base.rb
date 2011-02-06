@@ -1,3 +1,5 @@
+# FIXME Merge into Base, extract common with Indexed::Base.
+#
 module Indexing # :nodoc:all
   # A Bundle is a number of indexes
   # per [index, category] combination.
@@ -19,35 +21,39 @@ module Indexing # :nodoc:all
   # * *Index*::*Bundle* is concerned with loading these index files into
   #   memory and looking up search data as fast as possible.
   #
-  class Bundle
+  module Bundle
     
-    attr_reader   :identifier, :files
-    attr_accessor :index, :weights, :similarity, :configuration, :similarity_strategy
+    class SuperBase
     
-    delegate :clear,    :to => :index
-    delegate :[], :[]=, :to => :configuration
+      attr_reader   :identifier, :files
+      attr_accessor :index, :weights, :similarity, :configuration, :similarity_strategy
     
-    def initialize name, configuration, similarity_strategy
-      @identifier = "#{configuration.identifier} (#{name})"
-      @files      = Files.new name, configuration
+      delegate :clear,    :to => :index
+      delegate :[], :[]=, :to => :configuration
+    
+      def initialize name, configuration, similarity_strategy
+        @identifier = "#{configuration.identifier} (#{name})"
+        @files      = ::Index::Files.new name, configuration
       
-      @index         = {}
-      @weights       = {}
-      @similarity    = {}
-      @configuration = {} # A hash with config options.
+        @index         = {}
+        @weights       = {}
+        @similarity    = {}
+        @configuration = {} # A hash with config options.
       
-      @similarity_strategy = similarity_strategy
-    end
+        @similarity_strategy = similarity_strategy
+      end
     
-    # Get a list of similar texts.
-    #
-    # Note: Does not return itself.
-    #
-    def similar text
-      code = similarity_strategy.encoded text
-      similar_codes = code && @similarity[code]
-      similar_codes.delete text if similar_codes
-      similar_codes || []
+      # Get a list of similar texts.
+      #
+      # Note: Does not return itself.
+      #
+      def similar text
+        code = similarity_strategy.encoded text
+        similar_codes = code && @similarity[code]
+        similar_codes.delete text if similar_codes
+        similar_codes || []
+      end
+    
     end
     
   end
