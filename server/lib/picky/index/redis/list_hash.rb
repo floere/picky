@@ -9,16 +9,16 @@ module Index
       # TODO Performance: rpush as you get the values instead of putting it together in an array first.
       #
       def dump hash
-        @backend.multi
         hash.each_pair do |key, values|
           redis_key = "#{namespace}:#{key}"
-          @backend.del redis_key
-          
-          values.each do |value|
-            @backend.rpush redis_key, value
+          @backend.multi do
+            @backend.del redis_key
+            
+            values.each do |value|
+              @backend.rpush redis_key, value
+            end
           end
         end
-        @backend.exec
       end
       
       # Get a collection.
