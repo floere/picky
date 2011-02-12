@@ -1,6 +1,7 @@
 h2. Version 1.3.4
 
 * hanke: (generators/client) In the generated Sinatra client, queries can be passed in through the query param q. Example: http://www.mysearch.com/?q=example
+* hanke: (generators/client) In the generated sinatra client, the back/forward buttons work via jquery.address plugin. Closes github issue 6.
 
 h2. Version 1.3.3
 
