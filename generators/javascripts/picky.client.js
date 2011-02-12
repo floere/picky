@@ -58,5 +58,27 @@ var PickyClient = function(config) {
   this.insert = function(query, full) {
     controller.insert(query, full || true);
   };
+  var insert = this.insert;
   
+  // Takes a #/?q=example parameter
+  //
+  // And runs a query with it (if $.address exists).
+  // Can be overridden with a non-empty parameter. 
+  //
+  this.insertFromURL = function(override) {
+    if (override && override != '') {
+      insert(override);
+    } else {
+      $.address && insert($.address.parameter('q'));
+    }
+  };
+  
+  // Adapter to let the back/forward button start queries.
+  //
+  if ($.address) {
+    $.address.externalChange(function(event) {
+      var query = event.parameters['q'];
+      query && insert(query);
+    });
+  };
 };

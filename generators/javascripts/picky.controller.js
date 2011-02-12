@@ -26,6 +26,8 @@ var PickyController = function(config) {
     var offset = possibleOffset || 0;
     liveSearchTimer.stop();
     
+    $.address && $.address.parameter('q', query);
+      
     params = beforeCallback(params, query, offset) || params;
     
     search('full', query, fullSearchCallback, offset, params);
