@@ -129,8 +129,10 @@ module Query
     end
     # Sets and returns the next similar word.
     #
+    # Note: Also overrides the original.
+    #
     def next_similar bundle
-      @text = (similarity(bundle).shift || return) if similar?
+      @text = @original = (similarity(bundle).shift || return) if similar?
     end
     # Lazy similar reader.
     #

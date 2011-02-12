@@ -31,6 +31,20 @@ describe Query::Token do
     before(:each) do
       @bundle = stub :bundle
     end
+    describe 'original' do
+      context 'with stub' do
+        before(:each) do
+          @bundle.stub! :similar => [:array, :of, :similar]
+
+          @token = Query::Token.processed 'similar~'
+        end
+        it 'should have a certain original text' do
+          @token.next_similar @bundle
+          
+          @token.original.should == :array
+        end
+      end
+    end
     context 'similar' do
       context 'with stub' do
         before(:each) do
