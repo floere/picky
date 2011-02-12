@@ -20,6 +20,8 @@ set :views,  File.expand_path('views', File.dirname(__FILE__))
 # Root, the search interface.
 #
 get '/' do
+  @query = params[:q] || 'example'
+  
   haml :'/search'
 end
 

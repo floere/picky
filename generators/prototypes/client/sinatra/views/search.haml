@@ -91,6 +91,9 @@
         }
       });
       
-      // An initial search text, prefilled.
+      // An initial search text, prefilled
+      // this one is passed through the query param q.
       //
-      pickyClient.insert('italy');
+      // Example: www.mysearch.com/?q=example
+      //
+      pickyClient.insert('#{@query}');
