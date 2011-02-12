@@ -37,8 +37,8 @@ module Indexing
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_indexing_bundle]   || Bundle::Redis.new(:exact,   configuration, similarity, Cacher::Partial::None.new, weights)
-      @partial = options[:partial_indexing_bundle] || Bundle::Redis.new(:partial, configuration, Cacher::Similarity::None.new, partial, weights)
+      @exact   = options[:exact_indexing_bundle]   || Bundle::Memory.new(:exact,   configuration, similarity, Cacher::Partial::None.new, weights)
+      @partial = options[:partial_indexing_bundle] || Bundle::Memory.new(:partial, configuration, Cacher::Similarity::None.new, partial, weights)
     end
     
     delegate :identifier, :prepare_index_directory, :to => :configuration

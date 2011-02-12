@@ -49,6 +49,8 @@ module Query
 
       # Get the ids for each combination.
       #
+      # TODO For combinations with Redis
+      #
       id_arrays = @combinations.inject([]) do |total, combination|
         total << combination.ids
       end

@@ -28,7 +28,7 @@ module Query
     
     # Returns the weight of this combination.
     #
-    # Note: Caching is most oft the time useful.
+    # Note: Caching is most of the time useful.
     #
     def weight
       @weight ||= @bundle.weight(@text)
@@ -36,7 +36,7 @@ module Query
     
     # Returns an array of ids for the given text.
     #
-    # Note: Caching is most oft the time useful.
+    # Note: Caching is most of the time useful.
     #
     def ids
       @ids ||= @bundle.ids(@text)
