@@ -44,8 +44,12 @@ describe CharacterSubstituters do
   end
 
   describe "acute" do
+    it_should_substitute 'á', 'a'
+    it_should_substitute 'Á', 'A'
     it_should_substitute 'é', 'e'
     it_should_substitute 'É', 'E'
+    it_should_substitute 'í', 'i'
+    it_should_substitute 'ó', 'o'
   end
 
   describe "grave" do
