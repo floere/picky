@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = 'http://rubyforge.org/projects/picky'
   
   s.description = 'Fast Ruby small-text search engine with comfortable single field interface.'
-  s.summary = 'Picky: Helps you find your data.'
+  s.summary = 'Picky: Combinatorial Search Engine. Clever Interface. Good Tools.'
   
   s.executables = ['picky']
   s.default_executable = "picky"
