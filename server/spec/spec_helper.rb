@@ -22,9 +22,13 @@ puts "Redefined PICKY_ROOT to '#{PICKY_ROOT}' for the tests."
 PickyLog = Loggers::Search.new ::Logger.new(STDOUT)
 puts "Using STDOUT as test log."
 
-def performance_of &block
-  GC.disable
-  result = Benchmark.realtime &block
-  GC.enable
-  result
+def performance_of
+  if block_given?
+    GC.disable
+    result = Benchmark.realtime &Proc.new
+    GC.enable
+    result
+  else
+    raise "#performance_of needs a block"
+  end
 end
