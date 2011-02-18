@@ -1,0 +1,64 @@
+!!!
+%html{ :lang => 'en' }
+  %head
+    %link{:href => "stylesheets/stylesheet.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    
+    %script{ :src => 'http://code.jquery.com/jquery-1.5.min.js', :type => 'text/javascript' }
+    
+    = js 'jquery.scrollTo-1.4.2'
+    = js 'jquery.address-1.3.2.min'
+    
+    = js 'picky.min'
+  %body
+    .content
+      = Picky::Helper.cached_interface
+      :javascript
+        $(window).load(function() {
+          pickyClient = new PickyClient({
+            // A full query displays the rendered results.
+            //
+            full: '/search/full',
+        
+            // A live query just updates the count.
+            //
+            live: '/search/live',
+        
+            // showResultsLimit: 10, // Optional. Default is 10.
+        
+            // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
+            // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+            // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+        
+            // This is used to generate the correct query strings, localized. E.g. "subject:war".
+            // Optional. If you don't give these, the field identifier given in the Picky server is used.
+            //
+            qualifiers: {
+              en:{
+                subjects:  'subject'
+              }
+            },
+        
+            // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
+            // Optional. Default are the field identifiers from the Picky server.
+            //
+            explanations: {
+              en:{
+                title:     'titled',
+                author:    'written by',
+                year:      'published in'
+                // publisher: 'published by',
+                // subjects:  'topics'
+              }
+            }
+          });
+      
+          // An initial search text, prefilled
+          // this one is passed through the query param q.
+          //
+          // Example: www.mysearch.com/?q=example
+          //
+          // If there isn't a q parameter (because it is empty), we try to
+          // take it from the deep linking /#/?q parameter. 
+          //
+          pickyClient.insertFromURL('#{@query}');
+        });
