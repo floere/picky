@@ -43,8 +43,8 @@ system gzip_command
 #
 
 stylesheets_command = <<-STYLESHEETS
-sass client_test/stylesheets/picky.sass client_test/stylesheets/picky.css;
-sass client_test/stylesheets/application.sass client_test/stylesheets/application.css;
+sass -C client_test/stylesheets/picky.sass client_test/stylesheets/picky.css;
+sass -C client_test/stylesheets/application.sass client_test/stylesheets/application.css;
 cp client_test/stylesheets/picky.css prototypes/client/sinatra/stylesheets/picky.css;
 cp client_test/stylesheets/application.css prototypes/client/sinatra/stylesheets/application.css;
 STYLESHEETS
