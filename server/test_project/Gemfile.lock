@@ -1,10 +1,11 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activerecord (2.3.10)
-      activesupport (= 2.3.10)
-    activesupport (2.3.10)
+    activerecord (2.3.11)
+      activesupport (= 2.3.11)
+    activesupport (2.3.11)
     haml (3.0.25)
+    kgio (2.3.2)
     mysql (2.8.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -16,11 +17,12 @@ GEM
       rack (~> 1.1)
       tilt (~> 1.2)
     text (0.2.0)
-    tilt (1.2.1)
-    unicorn (1.1.4)
+    tilt (1.2.2)
+    unicorn (3.4.0)
+      kgio (~> 2.2)
       rack
     url_escape (2009.06.24)
-    yajl-ruby (0.7.8)
+    yajl-ruby (0.7.9)
 
 PLATFORMS
   ruby
