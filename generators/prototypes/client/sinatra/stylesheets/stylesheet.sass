@@ -1,7 +1,11 @@
 body
   :text-align center
   :font-family Lucida Grande
-
+  
+  .content
+    :width 560px
+    :margin 0 auto
+    
 img
   :margin -2px 0px 0px
 
@@ -13,15 +17,22 @@ pre
   :padding 10px
   :background-color #EFEDE5
 
-div.content
-  :width 800px
-  :margin 0 auto
-  :text-align left
-  
+#picky
+  ol.results
+    li.book
+      :background-color #ffeeee
+      :padding 5px 25px
+      :margin 3px 0px
+
+// Picky specific styling
 #picky
   :text-align left
   :margin 0px auto
-  :width 560px
+  :overflow hidden
+  
+  // hide all .header
+  & > .header
+    :display none
   
   .dashboard
     :position relative
@@ -30,124 +41,114 @@ div.content
     :padding 5px 5px 7px 5px
     :height 26px
     :margin-bottom 3px
-
-  .status
-    :float left
-    :width  45px
-    :height 26px
-    :line-height 26px
-    :text-align center
-    :padding 0 0 0 2px
-    :font-weight bold
-    :color white
-    :margin-right 5px
-  .status.alert
-    :background-color lightgreen
     
-  .results
+    // empty, neutral - blue
+    &.empty
+      .status
+        :background-color #8cacda
+      .feedback
+        :background-color #D0E2FF
+    // no results - red
+    &.none
+      .status
+        :background-color #ff0000
+      .feedback
+        :background-color #ffdddd
+    // needs feedback - orange
+    &.support
+      .status
+        :background-color #ff6600
+      .feedback
+        :background-color #faf3d0
+    // all ok - green
+    &.ok
+      .status
+        :background-color #09be01
+      .feedback
+        :background-color #bcf0b3
+    
+    // width only set because of IE
+    .feedback
+      :width 85%
+      :float left
+      :border 1px solid #ccc
+      :padding 0
+      :margin 0
+
+      .status
+        :float left
+        :width  45px
+        :height 26px
+        :line-height 26px
+        :text-align center
+        :padding 0 0 0 2px
+        :font-weight bold
+        :color white
+        :margin-right 5px
+      .status.alert
+        :background-color lightgreen
+      
+      input.query
+        :float left
+        :width 80%
+        :height 100%
+        :font-size 1em
+        :font-weight bold
+        :border-style solid
+        :border-width 0px 0px 3px 0px
+        :border-color transparent
+        :margin 0
+        :padding 4px 0 0 0
+        :outline none
+        :background none
+      
+      .reset
+        :float right
+        :width  18px
+        :height 18px
+        :margin 3px 3px 0px 0px
+        :cursor pointer
+        :opacity 0
+    
+    input.search_button
+      :margin 5px 0px 5px 2%
+    
+  div.results
     :margin-top 0px
     :padding 0px
     
-    div.book
-      :background-color #ffeeee
-      :padding 5px 25px
-      :margin 3px 0px
-    
-    em
-      :font-style normal
-      :background-color #FFF196
-    
-    .item
-      :display block
-      :padding 10px
-        
-    .addination
-      :position relative
-      :text-align center
-      :padding 7px 5px 5px 5px
+    // Explanation headers
+    div.header, div.addination
+      :color #555
       :background-color #eee
-      :color #276ABB
-      :cursor pointer
+      :padding 6px 5px 5px 8px
       
       .tothetop
-        :position absolute
-        :top 4px
-        :right 0px
-      
+        :float right
+
         a
           :display block
           :width 20px
           :height 20px
-        
-    .info
-      :color #555
-      :background-color #eee
-      :padding 6px 5px 5px 8px
-        
-      .tothetop
-        :float right
-        :margin-top -4px
-        
-  :overflow hidden
-
-  // width only set because of IE
-  .feedback
-    :width 460px
-    :float left
-    :border 1px solid #ccc
-    :padding 0
-    :margin 0
-
-    .reset
-      :float right
-      :width  18px
-      :height 18px
-      :margin 3px 3px 0px 0px
+    
+    // The ordered lists around the result li
+    ol.results
+      :list-style-type none
+      :padding 0px
+      :margin 0px
+    
+    // More Results...
+    div.addination
+      :position relative
+      :text-align center
+      :color #276ABB
       :cursor pointer
-      :opacity 0
-
-  // Blue
-  .empty
-    .status
-      :background-color #8cacda
-    .feedback
-      :background-color #D0E2FF
-  // Red
-  .none
-    .status
-      :background-color #ff0000
-    .feedback
-      :background-color #ffdddd
-  // Orange
-  .support
-    .status
-      :background-color #ff6600
-    .feedback
-      :background-color #faf3d0
-  // Green
-  .ok
-    .status
-      :background-color #09be01
-    .feedback
-      :background-color #bcf0b3
   
-  input.search_button
-    :margin 5px 15px
+  // Styling of the no results text
+  .no_results
+    :display none
   
-  input.query
-    :float left
-    :width 380px
-    :height 100%
-    :font-size 1em
-    :font-weight bold
-    :border-style solid
-    :border-width 0px 0px 3px 0px
-    :border-color transparent
-    :margin 0
-    :padding 4px 0 0 0
-    :outline none
-    :background none
-
+  // The menu of possible combinations
   .allocations
     :clear both
     :overflow hidden
@@ -200,26 +201,3 @@ div.content
           
       li:hover
         :background-color #D0E2FF
-        
-    .company, .person
-      :width 49%
-    .person
-      :float left
-      :margin-right 10px
-    .company
-      :float right
-
-  .no_results
-    :display none
-    :clear both
-    :overflow hidden
-
-    ul
-      :list-style-type disc
-      :padding-left 13px
-
-    a
-      :display block
-
-  & > .info
-    :display none
