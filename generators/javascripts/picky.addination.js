@@ -25,7 +25,7 @@ var PickyAddination = function(view, results) {
     var total = data.total;
     var range = calculateRange(data);
     if (range.offset < total) {
-      var result = $("<div class='addination current'>" + t('results.addination.more') + "<div class='tothetop'><a href='javascript:$.scrollTo(0,{ duration: 500});'>&uarr;</a></div></div>");
+      var result = $("<div class='addination current'>" + t('results.addination.more') + "</div>");
       result.bind('click', { offset: range.offset }, view.addinationClicked);
       return result;
     } else {

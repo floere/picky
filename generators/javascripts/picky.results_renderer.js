@@ -45,7 +45,7 @@ var PickyResultsRenderer = function(addination) {
     });
     replaced = replaced.join(' ' + explanation_delimiter + ' ');
     
-    return '<div class="explanation">' + type + ' ' + replaced + '</div>';
+    return '<span class="explanation">' + type + ' ' + replaced + '</span>';
   };
   
   // TODO Make customizable.
@@ -53,7 +53,7 @@ var PickyResultsRenderer = function(addination) {
   var renderHeader = function(data, allocation) {
     // TODO Make type definable. (Mapping, i18n)
     //
-    var header_html = '<div class="info">';
+    var header_html = '<div class="header">';
     header_html += explain(allocation.type, allocation.combination);
     if (data.offset > 0) {
       header_html += '<div class="tothetop"><a href="javascript:$.scrollTo(0,{ duration: 500 });">&uarr;</a></div>'; // searchEngine.focus();
@@ -83,9 +83,9 @@ var PickyResultsRenderer = function(addination) {
     //   // header_html += range; // TODO
     // }
     
-    // For smooth addination scrolling. Don't ask.
+    // // For smooth addination scrolling. Don't ask.
     //
-    header_html += '<div class="clear"></div></div>';
+    // header_html += '<div class="clear"></div></div>';
     
     return header_html;
   };
@@ -93,10 +93,10 @@ var PickyResultsRenderer = function(addination) {
   // Render results with the data.
   //
   this.render = function(data) {
-    var results = $('#picky .results'); // TODO Extract, also from view.
+    var results = $('#picky div.results'); // TODO Extract, also from view.
     data.allocations.each(function(i, allocation) {
       results.append(renderHeader(data, allocation)) // TODO header.render(data);
-             .append(allocation.entries.join(''))
+             .append('<ol class="results">' + allocation.entries.join('') + '</ol>')
              .append(addination.render(data));
     });
   };

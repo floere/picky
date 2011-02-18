@@ -116,7 +116,7 @@ var PickyView = function(picky_controller, config) {
   var appendResults = function(data) {
     addination.remove(); // TODO Where should this be?
     resultsRenderer.render(data);
-    $.scrollTo('#picky .results div.info:last', { duration: 500, offset: -12 });
+    $.scrollTo('#picky .results div.header:last', { duration: 500, offset: -12 });
   };
   
   var updateResultCounter = function(total) {

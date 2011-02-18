@@ -17,18 +17,21 @@ pre
   :padding 10px
   :background-color #EFEDE5
 
-li.book
-  :background-color #ffeeee
-  :padding 5px 25px
-  :margin 3px 0px
+#picky
+  ol.results
+    li.book
+      :background-color #ffeeee
+      :padding 5px 25px
+      :margin 3px 0px
 
+// Picky specific styling
 #picky
   :text-align left
   :margin 0px auto
   :overflow hidden
   
-  // hide all .info
-  & > .info
+  // hide all .header
+  & > .header
     :display none
   
   .dashboard
@@ -114,32 +117,38 @@ li.book
     :margin-top 0px
     :padding 0px
     
-    // TODO Rename result_info
-    div.addination, div.info
+    // Explanation headers
+    div.header, div.addination
+      :color #555
+      :background-color #eee
+      :padding 6px 5px 5px 8px
       
       .tothetop
         :float right
-        :margin-top -4px
-        
+
         a
           :display block
           :width 20px
           :height 20px
     
-    .addination
+    // The ordered lists around the result li
+    ol.results
+      :list-style-type none
+      :padding 0px
+      :margin 0px
+    
+    // More Results...
+    div.addination
       :position relative
       :text-align center
-      :padding 7px 5px 5px 5px
-      :background-color #eee
       :color #276ABB
       :cursor pointer
-       
-    // TODO Rename result_info 
-    div.info
-      :color #555
-      :background-color #eee
-      :padding 6px 5px 5px 8px
-
+  
+  // Styling of the no results text
+  .no_results
+    :display none
+  
+  // The menu of possible combinations
   .allocations
     :clear both
     :overflow hidden
@@ -192,15 +201,3 @@ li.book
           
       li:hover
         :background-color #D0E2FF
-
-  .no_results
-    :display none
-    :clear both
-    :overflow hidden
-
-    ul
-      :list-style-type disc
-      :padding-left 13px
-
-    a
-      :display block

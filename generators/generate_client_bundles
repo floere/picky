@@ -28,6 +28,10 @@ min_js_copy_command = "cp javascripts/picky.min.js prototypes/client/sinatra/jav
 p min_js_copy_command
 system min_js_copy_command
 
+min_js_copy_command = "cp javascripts/picky.min.js client_test/javascripts/"
+p min_js_copy_command
+system min_js_copy_command
+
 gzip_command = "tar -cf javascripts/picky.source.js.tar #{picky_files.join(' ')}"
 p gzip_command
 system gzip_command
