@@ -2,8 +2,8 @@ var PickyAddination = function(view, results) {
   
   // Calculate the addination range.
   // 
-  var calculateRange = function(data, correction) {
-    var correction      = correction || 0;
+  var calculateRange = function(data, correctionParam) {
+    var correction      = correctionParam || 0;
     var numberOfResults = 20; // Make parametrizable.
     var offset  = data.offset + numberOfResults + correction;
     var end     = offset + numberOfResults;
@@ -25,7 +25,7 @@ var PickyAddination = function(view, results) {
     var total = data.total;
     var range = calculateRange(data);
     if (range.offset < total) {
-      var result = $("<div class='addination current'>" + t('results.addination.more') + "</div>");
+      var result = $("<div class='addination'>" + t('results.addination.more') + "</div>");
       result.bind('click', { offset: range.offset }, view.addinationClicked);
       return result;
     } else {
