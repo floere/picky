@@ -24,6 +24,8 @@ li.book {
   text-align: left;
   margin: 0px auto;
   overflow: hidden; }
+  #picky > .info {
+    display: none; }
   #picky .dashboard {
     position: relative;
     overflow: hidden;
@@ -47,8 +49,6 @@ li.book {
       background-color: #09be01; }
     #picky .dashboard.ok .feedback {
       background-color: #bcf0b3; }
-    #picky .dashboard input.search_button {
-      margin: 5px 0px 5px 2%; }
     #picky .dashboard .feedback {
       width: 85%;
       float: left;
@@ -87,37 +87,29 @@ li.book {
         margin: 3px 3px 0px 0px;
         cursor: pointer;
         opacity: 0; }
-  #picky .results {
+    #picky .dashboard input.search_button {
+      margin: 5px 0px 5px 2%; }
+  #picky div.results {
     margin-top: 0px;
     padding: 0px; }
-    #picky .results em {
-      font-style: normal;
-      background-color: #fff196; }
-    #picky .results .item {
-      display: block;
-      padding: 10px; }
-    #picky .results .addination {
+    #picky div.results div.addination .tothetop, #picky div.results div.info .tothetop {
+      float: right;
+      margin-top: -4px; }
+      #picky div.results div.addination .tothetop a, #picky div.results div.info .tothetop a {
+        display: block;
+        width: 20px;
+        height: 20px; }
+    #picky div.results .addination {
       position: relative;
       text-align: center;
       padding: 7px 5px 5px 5px;
       background-color: #eeeeee;
       color: #276abb;
       cursor: pointer; }
-      #picky .results .addination .tothetop {
-        position: absolute;
-        top: 4px;
-        right: 0px; }
-        #picky .results .addination .tothetop a {
-          display: block;
-          width: 20px;
-          height: 20px; }
-    #picky .results .info {
+    #picky div.results div.info {
       color: #555555;
       background-color: #eeeeee;
       padding: 6px 5px 5px 8px; }
-      #picky .results .info .tothetop {
-        float: right;
-        margin-top: -4px; }
   #picky .allocations {
     clear: both;
     overflow: hidden;
@@ -162,13 +154,6 @@ li.book {
           color: #cccccc; }
       #picky .allocations ol li:hover {
         background-color: #d0e2ff; }
-    #picky .allocations .company, #picky .allocations .person {
-      width: 49%; }
-    #picky .allocations .person {
-      float: left;
-      margin-right: 10px; }
-    #picky .allocations .company {
-      float: right; }
   #picky .no_results {
     display: none;
     clear: both;
@@ -178,5 +163,3 @@ li.book {
       padding-left: 13px; }
     #picky .no_results a {
       display: block; }
-  #picky > .info {
-    display: none; }

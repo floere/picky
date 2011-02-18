@@ -25,6 +25,11 @@ li.book
 #picky
   :text-align left
   :margin 0px auto
+  :overflow hidden
+  
+  // hide all .info
+  & > .info
+    :display none
   
   .dashboard
     :position relative
@@ -34,33 +39,30 @@ li.book
     :height 26px
     :margin-bottom 3px
     
-    // Blue
+    // empty, neutral - blue
     &.empty
       .status
         :background-color #8cacda
       .feedback
         :background-color #D0E2FF
-    // Red
+    // no results - red
     &.none
       .status
         :background-color #ff0000
       .feedback
         :background-color #ffdddd
-    // Orange
+    // needs feedback - orange
     &.support
       .status
         :background-color #ff6600
       .feedback
         :background-color #faf3d0
-    // Green
+    // all ok - green
     &.ok
       .status
         :background-color #09be01
       .feedback
         :background-color #bcf0b3
-    
-    input.search_button
-      :margin 5px 0px 5px 2%
     
     // width only set because of IE
     .feedback
@@ -105,18 +107,25 @@ li.book
         :cursor pointer
         :opacity 0
     
-  .results
+    input.search_button
+      :margin 5px 0px 5px 2%
+    
+  div.results
     :margin-top 0px
     :padding 0px
     
-    em
-      :font-style normal
-      :background-color #FFF196
-    
-    .item
-      :display block
-      :padding 10px
+    // TODO Rename result_info
+    div.addination, div.info
+      
+      .tothetop
+        :float right
+        :margin-top -4px
         
+        a
+          :display block
+          :width 20px
+          :height 20px
+    
     .addination
       :position relative
       :text-align center
@@ -124,27 +133,12 @@ li.book
       :background-color #eee
       :color #276ABB
       :cursor pointer
-      
-      .tothetop
-        :position absolute
-        :top 4px
-        :right 0px
-      
-        a
-          :display block
-          :width 20px
-          :height 20px
-        
-    .info
+       
+    // TODO Rename result_info 
+    div.info
       :color #555
       :background-color #eee
       :padding 6px 5px 5px 8px
-        
-      .tothetop
-        :float right
-        :margin-top -4px
-        
-  :overflow hidden
 
   .allocations
     :clear both
@@ -198,14 +192,6 @@ li.book
           
       li:hover
         :background-color #D0E2FF
-        
-    .company, .person
-      :width 49%
-    .person
-      :float left
-      :margin-right 10px
-    .company
-      :float right
 
   .no_results
     :display none
@@ -218,6 +204,3 @@ li.book
 
     a
       :display block
-
-  & > .info
-    :display none

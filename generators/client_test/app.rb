@@ -10,8 +10,8 @@ set :haml, { :format => :html5 }
 
 # Sets up two query instances.
 #
-FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/csv/full'
+LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/csv/live'
 
 set :static, true
 set :public, File.dirname(__FILE__)
