@@ -14,24 +14,6 @@ var PickyController = function(config) {
     if (currentBackend) { currentBackend.search(query, callback, offset, specificParams); };
   };
   
-  var fullSearchCallback = function(data, query) {
-    data = successCallback(data, query) || data;
-    
-    view.fullResultsCallback(data);
-    
-    afterCallback(data, query);
-  };
-  var fullSearch = function(query, possibleOffset, possibleParams) {
-    var params = possibleParams || {};
-    var offset = possibleOffset || 0;
-    liveSearchTimer.stop();
-    
-    $.address && $.address.parameter('q', query);
-      
-    params = beforeCallback(params, query, offset) || params;
-    
-    search('full', query, fullSearchCallback, offset, params);
-  };
   var liveSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
     
@@ -49,11 +31,33 @@ var PickyController = function(config) {
   
   // The timer is initially instantly stopped.
   //
-  var liveSearchTimer = $.timer(180, function(timer) {
+  var liveSearchTimerInterval = 180;
+  var liveSearchTimerId;
+  var liveSearchTimerCallback = function() {
     liveSearch(view.text());
-    timer.stop();
-  });
-  liveSearchTimer.stop();
+    clearInterval(liveSearchTimerId);
+  };
+  liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);
+  clearInterval(liveSearchTimerId);
+  
+  var fullSearchCallback = function(data, query) {
+    data = successCallback(data, query) || data;
+    
+    view.fullResultsCallback(data);
+    
+    afterCallback(data, query);
+  };
+  var fullSearch = function(query, possibleOffset, possibleParams) {
+    var params = possibleParams || {};
+    var offset = possibleOffset || 0;
+    clearInterval(liveSearchTimerId);
+    
+    $.address && $.address.parameter('q', query);
+      
+    params = beforeCallback(params, query, offset) || params;
+    
+    search('full', query, fullSearchCallback, offset, params);
+  };
   
   this.insert = function(query, full) {
     view.insert(query);
@@ -62,12 +66,14 @@ var PickyController = function(config) {
   };
   
   var clearButtonClicked = function() {
-    liveSearchTimer.stop();
+    clearInterval(liveSearchTimerId);
+    // liveSearchTimer.stop();
   };
   this.clearButtonClicked = clearButtonClicked;
   
   var searchTextCleared  = function() {
-    liveSearchTimer.stop();
+    clearInterval(liveSearchTimerId);
+    // liveSearchTimer.stop();
   };
   this.searchTextCleared = searchTextCleared;
   
@@ -86,7 +92,7 @@ var PickyController = function(config) {
   };
   var searchTextEntered = function(text, event) {
     if (shouldTriggerSearch(event)) {
-      if (event.keyCode == 13) { fullSearch(text); } else { liveSearchTimer.reset(); }
+      if (event.keyCode == 13) { fullSearch(text); } else { clearInterval(liveSearchTimerId); liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);  /* liveSearchTimer.reset(); */ }
     }
   };
   this.searchTextEntered = searchTextEntered;
