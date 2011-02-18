@@ -32,17 +32,43 @@ var PickyResultsRenderer = function(addination) {
     return parts;
   };
   
+  // Puts together an explanation.
   //
+  // Note: Accumulates same categories using a whitespace.
   //
+  var strongify = function(category, joinedTokens) {
+    return [category.replace(/([\w\sÄäÖöÜüéèà]+)/, "<strong>$1</strong>"), joinedTokens].join(' ');
+  };
   var explain = function(type, combination) {
     var explanation_delimiter = Localization.explanation_delimiters[PickyI18n.locale];
     
     var parts = explainCategory(asteriskifyLastToken(combination));
+    var lastCategory     = '';
+    var tokenAccumulator = [];
+    var joinedTokens     = '';
     var replaced = $.map(parts, function(part) {
-      var category = part[0].replace(/([\w\sÄäÖöÜüéèà]+)/, "<strong>$1</strong>");
+      var category = part[0];
       var token    = part[1];
-      return [category, token].join(' ');
+      
+      if (lastCategory == '' || category == lastCategory) {
+        tokenAccumulator.push(token);
+        lastCategory = category;
+        
+        return undefined;
+      }
+      
+      var result = strongify(lastCategory, tokenAccumulator.join(' '));
+      
+      tokenAccumulator = [];
+      tokenAccumulator.push(token);
+      lastCategory = category;
+      
+      return result;
     });
+    // there might be something in the accumulator
+    //
+    replaced.push(strongify(lastCategory, tokenAccumulator.join(' ')));
+    
     replaced = replaced.join(' ' + explanation_delimiter + ' ');
     
     return '<span class="explanation">' + type + ' ' + replaced + '</span>';
@@ -56,7 +82,7 @@ var PickyResultsRenderer = function(addination) {
     var header_html = '<div class="header">';
     header_html += explain(allocation.type, allocation.combination);
     if (data.offset > 0) {
-      header_html += '<div class="tothetop"><a href="javascript:$(\'body\').animate({scrollTop : 0}, 500);">&uarr;</a></div>'; // searchEngine.focus();
+      header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>'; // searchEngine.focus();
     }
     
     // TODO Parametrize!
