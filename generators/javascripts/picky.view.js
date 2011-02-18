@@ -72,6 +72,12 @@ var PickyView = function(picky_controller, config) {
       }
     });
     
+    resultCounter.click(function(event) {
+      if (!isTextEmpty()) {
+        controller.searchButtonClicked(text());
+      }
+    });
+    
     searchButton.click(function(event) {
       if (!isTextEmpty()) {
         controller.searchButtonClicked(text());
