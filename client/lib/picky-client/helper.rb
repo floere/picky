@@ -21,7 +21,7 @@ HTML
       no_results        = options[:no_results] || 'Sorry, no results found!'
       more_allocations  = options[:more]       || 'more'
 <<-HTML
-<ol class="results"></ol>
+<div class="results"></div>
 <div class="no_results">#{no_results}</div>
 <div class="allocations">
   <ol class="shown"></ol>
