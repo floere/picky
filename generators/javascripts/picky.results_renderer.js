@@ -56,7 +56,7 @@ var PickyResultsRenderer = function(addination) {
     var header_html = '<div class="header">';
     header_html += explain(allocation.type, allocation.combination);
     if (data.offset > 0) {
-      header_html += '<div class="tothetop"><a href="javascript:$.scrollTo(0,{ duration: 500 });">&uarr;</a></div>'; // searchEngine.focus();
+      header_html += '<div class="tothetop"><a href="javascript:$(\'body\').animate({scrollTop : 0}, 500);">&uarr;</a></div>'; // searchEngine.focus();
     }
     
     // TODO Parametrize!

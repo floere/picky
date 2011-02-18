@@ -113,10 +113,14 @@ var PickyView = function(picky_controller, config) {
     showClearButton();
   };
   
+  var scrollToLastHeader = function() {
+    $("body").animate({scrollTop: $("#picky div.results div.header:last").position().top - 12}, 500);
+  };
+  
   var appendResults = function(data) {
     addination.remove(); // TODO Where should this be?
     resultsRenderer.render(data);
-    $.scrollTo('#picky .results div.header:last', { duration: 500, offset: -12 });
+    scrollToLastHeader();
   };
   
   var updateResultCounter = function(total) {
@@ -170,12 +174,11 @@ var PickyView = function(picky_controller, config) {
     } else {
       if (data.offset == 0) {
         showResults(data);
+        focus();
       } else {
         appendResults(data);
       }
     };
-    
-    focus();
   };
   this.fullResultsCallback = fullResultsCallback;
   

@@ -1,61 +1,37 @@
-body {
-  text-align: center;
-  font-family: Lucida Grande; }
-  body .content {
-    width: 560px;
-    margin: 0 auto; }
-
-img {
-  margin: -2px 0px 0px; }
-
-p span.explanation {
-  color: #999999; }
-
-pre {
-  padding: 10px;
-  background-color: #efede5; }
-
-#picky ol.results li.book {
-  background-color: #ffeeee;
-  padding: 5px 25px;
-  margin: 3px 0px; }
-
 #picky {
-  text-align: left;
-  margin: 0px auto;
   overflow: hidden; }
-  #picky > .header {
+  #picky > div.header {
     display: none; }
-  #picky .dashboard {
+  #picky div.dashboard {
     position: relative;
     overflow: hidden;
     background-color: lightGrey;
     padding: 5px 5px 7px 5px;
     height: 26px;
     margin-bottom: 3px; }
-    #picky .dashboard.empty .status {
+    #picky div.dashboard.empty .status {
       background-color: #8cacda; }
-    #picky .dashboard.empty .feedback {
+    #picky div.dashboard.empty .feedback {
       background-color: #d0e2ff; }
-    #picky .dashboard.none .status {
+    #picky div.dashboard.none .status {
       background-color: red; }
-    #picky .dashboard.none .feedback {
+    #picky div.dashboard.none .feedback {
       background-color: #ffdddd; }
-    #picky .dashboard.support .status {
+    #picky div.dashboard.support .status {
       background-color: #ff6600; }
-    #picky .dashboard.support .feedback {
+    #picky div.dashboard.support .feedback {
       background-color: #faf3d0; }
-    #picky .dashboard.ok .status {
+    #picky div.dashboard.ok .status {
       background-color: #09be01; }
-    #picky .dashboard.ok .feedback {
+    #picky div.dashboard.ok .feedback {
       background-color: #bcf0b3; }
-    #picky .dashboard .feedback {
+    #picky div.dashboard .feedback {
       width: 85%;
       float: left;
       border: 1px solid #cccccc;
       padding: 0;
       margin: 0; }
-      #picky .dashboard .feedback .status {
+      #picky div.dashboard .feedback .status {
         float: left;
         width: 45px;
         height: 26px;
@@ -65,9 +41,9 @@ pre {
         font-weight: bold;
         color: white;
         margin-right: 5px; }
-      #picky .dashboard .feedback .status.alert {
+      #picky div.dashboard .feedback .status.alert {
         background-color: lightgreen; }
-      #picky .dashboard .feedback input.query {
+      #picky div.dashboard .feedback input.query {
         float: left;
         width: 80%;
         height: 100%;
@@ -80,14 +56,14 @@ pre {
         padding: 4px 0 0 0;
         outline: none;
         background: none; }
-      #picky .dashboard .feedback .reset {
+      #picky div.dashboard .feedback .reset {
         float: right;
         width: 18px;
         height: 18px;
         margin: 3px 3px 0px 0px;
         cursor: pointer;
         opacity: 0; }
-    #picky .dashboard input.search_button {
+    #picky div.dashboard input.search_button {
       margin: 5px 0px 5px 2%; }
   #picky div.results {
     margin-top: 0px;

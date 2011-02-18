@@ -5,6 +5,9 @@
 # Note: This is a coder file. It generates the min js and tarred packages for download by end users.
 #
 
+# Javascripts
+#
+
 picky_files = %w{
   extensions
   translations
@@ -35,5 +38,17 @@ system min_js_copy_command
 gzip_command = "tar -cf javascripts/picky.source.js.tar #{picky_files.join(' ')}"
 p gzip_command
 system gzip_command
+
+# Stylesheets
+#
+
+stylesheets_command = <<-STYLESHEETS
+sass client_test/stylesheets/picky.sass client_test/stylesheets/picky.css;
+sass client_test/stylesheets/application.sass client_test/stylesheets/application.css;
+cp client_test/stylesheets/picky.css prototypes/client/sinatra/stylesheets/picky.css;
+cp client_test/stylesheets/application.css prototypes/client/sinatra/stylesheets/application.css;
+STYLESHEETS
+p stylesheets_command
+system stylesheets_command
 
 puts "\nSUCCESS!"
