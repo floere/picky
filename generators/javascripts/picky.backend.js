@@ -14,7 +14,7 @@ var PickyBackend = function(url) {
       if (controllerCallback) { controllerCallback(new PickyData(data_hash)); }
     };
     
-    $.ajax({ type: 'GET', url: url, data: params, success: callback, dataType: 'json'});
+    $.getJSON(url, params, callback);
   };
   
   var search = function(query, controllerCallback, offset, specificParams, specificTimestamps) {
