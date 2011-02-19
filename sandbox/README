@@ -1,0 +1,3 @@
+This is the sandbox to run REAL integration tests for the scaffolding.
+
+It installs all gems locally, creates a client and a server and runs multiple queries through both.

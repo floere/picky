@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+#
+
+def server query, match
+  if `curl -S 'localhost:8080/books/full?query=#{query}'`.chomp.include?(match)
+    puts "Yay, server returned #{match} for #{query}!"
+  else
+    fail "#{query} result does not include #{match}"
+  end
+end
+def client query, match
+  if `curl -S 'localhost:3210/search/full?query=#{query}'`.chomp.include?(match)
+    puts "Yay, client returned #{match} for #{query}!"
+  else
+    fail "#{query} result does not include #{match}"
+  end
+end
+
+# Runs a whole integration.
+#
+
+begin
+  # system "./install"
+
+  puts "Installing the server."
+  system "picky generate unicorn_server sandbox/server"
+  # system "cd sandbox/server; bundle install"
+  system "cd sandbox/server; rake index"
+  system "cd sandbox/server; rake start &"
+
+  sleep 5 # loading
+
+  puts
+  puts "Running search requests on the server"
+  server "alan", "author"
+  server "ALAN", "title"
+  server "pinchn~", "pynchon"
+  server "sp", "title"
+  server "sp", "author"
+  server "title:lyterature~+2002", "literature"
+  puts
+  puts
+
+  puts "Installing the client."
+  system "picky generate sinatra_client sandbox/client"
+  # system "cd sandbox/client; bundle install"
+  system "cd sandbox/client; unicorn -p 3210 &"
+  
+  sleep 5 # loading
+  
+  puts
+  puts "Running search requests on the client directly"
+  client "alan", "author"
+  client "ALAN", "title"
+  client "pinchn~", "pynchon"
+  client "sp", "title"
+  client "sp", "author"
+  client "title:lyterature~+2002", "literature"
+  puts
+  client "alan", "Alan Turing"
+  puts
+  puts
+ensure
+  # TODO KILL UNICORNS!
+  #
+  
+  system "rm -r sandbox/client"
+  system "rm -r sandbox/server"
+end
