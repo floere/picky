@@ -1,4 +1,4 @@
-var PickyAllocationsCloud = function(view) {
+var PickyAllocationsCloud = function(view, config) {
   
   var allocations         = $('#picky .allocations');
   var shownAllocations    = allocations.find('.shown');
@@ -30,7 +30,7 @@ var PickyAllocationsCloud = function(view) {
     view.allocationChosen(event);
   };
   
-  var allocationRenderer = new AllocationRenderer(allocationChosen);
+  var allocationRenderer = new AllocationRenderer(allocationChosen, config);
   
   var createAllocationList = function(allocations) {
     var shown = [];

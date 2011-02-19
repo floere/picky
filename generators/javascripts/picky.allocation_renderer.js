@@ -1,4 +1,4 @@
-function AllocationRenderer(allocationChosenCallback) {
+function AllocationRenderer(allocationChosenCallback, config) {
   var self = this;
 
   var locale                = PickyI18n.locale;
@@ -7,6 +7,9 @@ function AllocationRenderer(allocationChosenCallback) {
   var explanations          = Localization.explanations && Localization.explanations[locale] || {};
   var location_delimiter    = Localization.location_delimiters[locale];
   var explanation_delimiter = Localization.explanation_delimiters[locale];
+  
+  var choiceGroups          = config['groups'] || [];
+  var choices               = config['choices'] || {};
   
   // Those are of interest to the public.
   //
@@ -46,195 +49,146 @@ function AllocationRenderer(allocationChosenCallback) {
     return zipped;
   };
   this.contract = contract;
-  
-  // TODO Parametrize!
-  var specialWhoCases = {
-    // Use the actual methods, not strings.
-    "maiden_name" : { format:"(-%1$s)", method:'capitalize', ignoreSingle:true },
-    "name"        : { format:"<strong>%1$s</strong>", method:'toUpperCase', ignoreSingle:true },
-    "first_name"  : { format:"%1$s", method:"capitalize" }
+
+  // Renders the given combinations according to the
+  // choice formatting defined in the config.
+  //
+  function makeUpMissingFormat(key) {
+    return $.map(key, function(element, i) {
+      return '%' + (i+1) + '$s';
+    }).join(' ');
   };
-  function handleWho(both, singleParam) {
-    var single = singleParam || false;
-    var allocation = both[0];
-    var word       = both[1];
-
-    var formatting = specialWhoCases[allocation];
-    if (formatting) {
-      if (formatting.method) { word = word[formatting.method](); }
-      if (formatting.format) { word = formatting.format.replace(/%1\$s/, word); }
-    }
-    var explanation = explanations[allocation] || allocation;
-    if (single && !(formatting && formatting.ignoreSingle)) { return word + '&nbsp;(' + explanation + ')'; }
-
-    return word;
-  }
-  // Handles the first (who) part.
-  //
-  // Rules:
-  //  * If there is no thing, do return an empty string.
-  //  * If there is only one thing, add an explanation.
-  //  * If there are multiple things, handle special cases.
-  //    Without special cases, the name is always in front.
-  //    The things are separated by commas, and explained.
-  //    If there are multiple instances of the same category, they are contracted.
-  //
-  //  Note: &nbsp; to not disconnect the explanation from the query text.
-  //
-  function who(zipped) {
-    if (zipped.length == 0) {
-      return '';
-    } else if (zipped.length == 1) {
-      return handleWho(zipped[0], true);
-    } else {
-      // else, sort, special cases etc.
-      var result = [];
-      var append = [];
-      zipped = contract(zipped);
-      for (var i = 0, l = zipped.length; i < l; i++) {
-        if (zipped[i][0] == 'first_name') {
-          result.unshift(handleWho(zipped[i])); // prepend the first name
-        } else {
-          if (zipped[i][0] == 'maiden_name') {
-            append.push(handleWho(zipped[i]));
-          } else {
-            result.push(handleWho(zipped[i]));
-          }
-        }
-      };
-      if (append.length > 0) { result.push(append); };
-      return result.join(' ');
-    }
-  }
-  this.who = who;
-
-  function replacerFor(zipped) {
-    return function(_, category) {
-      for (var i = 0, l = zipped.length; i < l; i++) {
-        if (zipped[i][0] == category) { return zipped[i][1]; };
-      };
-      return '';
-    };
-  };
-
-  // Handles the second (where) part.
-  //
-  // Rules:
-  //  * If there is no location, do return an empty string.
-  //  * If there is only a zipcode, add a [<city explanation>].
-  //  * If there is only a city, add nothing.
-  //  * If there are both, zipcode needs to be first.
-  //  TODO Contraction of multiple "cities" and/or zipcode.
-  //
-  var locations = {
-    'zipcode':(':zipcode [' + explanations.city + ']'),
-    'city':':city',
-    'city,zipcode':':zipcode :city'
-  };
-  function where(zipped) {
+  function rendered(zipped) {
+    // Return an empty string if there are no combinations.
+    //
     if (zipped.length == 0) { return ''; };
+    
     zipped = contract(zipped);
+    
     var key_ary = zipped;
     key_ary.sort(function(zipped1, zipped2) {
       return zipped1[0] < zipped2[0] ? -1 : 1;
     });
+    
     // Now that it's sorted, get the right string.
+    //
     var key = [];
     for (var i = 0, l = key_ary.length; i < l; i++) {
       key.push(key_ary[i][0]);
     };
-    var loc = locations[key];
-    // Replace inside string.
-    var result = loc.replace(/:(zipcode|city)/g, replacerFor(zipped));
+    
+    // Get the right formatting or make up a simple one.
+    //
+    // var result = choices[key] || (choices[key] = makeUpMissingFormat(key));
+    
+    var single = key.length == 1;
+    
+    // Get the formatting to be replaced.
+    //
+    var formatting = choices[key] || (choices[key] = makeUpMissingFormat(key));
+    // If someone uses the simple format, change into complex format.
+    //
+    if ($.type(formatting) === "string") {
+      choices[key] = { format: formatting };
+      formatting = choices[key];
+    };
+    
+    var j = 1;
+    var result = formatting.format;
+    
+    // Replace each word into the formatting string.
+    //
+    $.each(zipped, function(i, author_original_token) {
+      var category = author_original_token[0];
+      var word     = author_original_token[1];
+      
+      if (formatting.filter) { word = formatting.filter(word); }
+      
+      var explanation = explanations[category] || category;
+      if (single && !(formatting && formatting.ignoreSingle)) {
+        result = word + '&nbsp;(' + explanation + ')';
+        return result;
+      }
+      
+      var regexp = new RegExp("%" + j + "\\$s", "g");
+      result = result.replace(regexp, word);
+      
+      j += 1;
+      
+      return j;
+    });
+    
+
     return result;
   };
-  this.where = where;
-
-  function handleSingleWhat(both) {
-    var allocation = both[0];
-    var word       = both[1];
-    
-    var explanation = explanations[allocation] || allocation;
-    
-    return word + '&nbsp;(' + explanation + ')';
-  }
-  function what(zipped) {
-    if (zipped.length == 0) { return ''; };
-
-    result = [];
-    zipped = contract(zipped);
-    for (var i = 0, l = zipped.length; i < l; i++) {
-      result.push(handleSingleWhat(zipped[i]));
-    }
-
-    return result.join(', ');
-  };
-  this.what = what;
+  this.rendered = rendered;
 
   // Orders the allocation identifiers according to
-  // [<who>, <what>, <where>]
-  // Returns a reordered array.
+  // a group definition array passed with the config.
   //
-  // TODO Rename "group".
+  // Returns rendered groups.
   //
-  var who_qualifiers = ['first_name', 'name', 'maiden_name'];
-  var where_qualifiers = ['zipcode', 'city'];
-  function trisect(zipped) {
-    var who_parts = [];
-    var what_parts = [];
-    var where_parts = [];
-
-    for (var i = 0, l = zipped.length; i < l; i++) {
+  function groupify(zipped) {
+    
+    // Create a parts array the same size as the groups array.
+    //
+    var groups = new Array(0);
+    for (var k = 0, l = choiceGroups.length; k < l; k++) {
+      groups.push([]);
+    };
+    
+    // Add a last group of undefined categories.
+    //
+    groups.push([]);
+    
+    // Split the zipped into the defined groups.
+    //
+    for (var i = 0, m = zipped.length; i < m; i++) {
       var combination = zipped[i];
-      if (where_qualifiers.include(combination[0])) {
-        where_parts.push(combination);
-      } else if (who_qualifiers.include(combination[0])) {
-        who_parts.push(combination);
-      } else {
-        what_parts.push(combination);
+      var category    = combination[0];
+      
+      var wasInGroups = false;
+      
+      for (var j = 0, n = choiceGroups.length; j < n; j++) {
+        if (choiceGroups[j].include(category)) {
+          groups[j].push(combination);
+          wasInGroups = true;
+          break;
+        }
+      };
+      
+      // The category hadn't been defined in a group.
+      // Push it onto the last one.
+      //
+      if (!wasInGroups) {
+        groups[groups.length-1].push(combination);
       }
-    }
-
-    // Ellipsisize the last part
-    var alloc_part;
-    if (where_parts.length > 0) {
-      alloc_part = where_parts[where_parts.length-1];
-    } else if (what_parts.length > 0) {
-      alloc_part = what_parts[what_parts.length-1];
-    } else if (who_parts.length > 0) {
-      alloc_part = who_parts[who_parts.length-1];
-    } // always results in a part
-    if (!no_ellipses.include(alloc_part[0])) { alloc_part[1] += '...'; } // TODO *
-
-    var rendered_who   = who(who_parts);
-    var rendered_what  = what(what_parts);
-    var rendered_where = where(where_parts);
-    return [rendered_who, rendered_what, rendered_where];
+      
+    };
+    
+    // Append ellipses at the last group with something.
+    //
+    var last_part;
+    for (var g = groups.length-1; g >= 0; g--) {
+      last_part = groups[g];
+      if (last_part.length > 0) { break; }
+    };
+    
+    // Take the last part of each group
+    //
+    last_part = last_part[last_part.length-1];
+    
+    // And append ellipses.
+    //
+    if (!no_ellipses.include(last_part[0])) { last_part[1] += '...'; } // TODO *
+    
+    // Render each group and return the resulting rendered array.
+    //
+    return $.map(groups, function(group) {
+      return rendered(group);
+    });
   };
-  this.trisect = trisect;
-
-  // Fuses a possible who part to a possible what part to a possible where part.
-  //
-  // e.g. <who>, <what> in <where>
-  //
-  // Note: &nbsp; to not disconnect the location delimiter (e.g. "in") from the location.
-  //
-  // TODO Parametrize!
-  //
-  var who_what_join      = ', ';
-  var whowhat_where_join = ' ' + location_delimiter + '&nbsp;';
-  function fuse(parts) {
-    var who = parts[0], what = parts[1], where = parts[2];
-    var who_what = '';
-    if (who != '') {
-      if (what != '') { who_what = [who, what].join(who_what_join); } else { who_what = who; }
-    } else {
-      who_what = what;
-    }
-    if (where == '') { return who_what; };
-    return [who_what, where].join(whowhat_where_join);
-  };
-  this.fuse = fuse;
+  this.groupify = groupify;
 
   // Creates a query string from combination and originals.
   //
@@ -253,7 +207,7 @@ function AllocationRenderer(allocationChosenCallback) {
   //
   //
   function suggestify(zipped) {
-    return fuse(trisect(zipped));
+    return groupify(zipped).join(' ');
   };
 
 
@@ -273,6 +227,7 @@ function AllocationRenderer(allocationChosenCallback) {
   };
   
   var render = function(allocation) {
+    
     var combination = allocation.combination;
     var type        = allocation.type;
     var count       = allocation.count;

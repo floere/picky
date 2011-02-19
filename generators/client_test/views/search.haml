@@ -51,7 +51,7 @@
       More complex,
       = succeed "." do
         %a{:href => "#", :onclick => "pickyClient.insert('soc* p');"} soc* p
-      %span.explanation (this is where Picky really shines, "the title started with soc, and the author starts with p")
+      %span.explanation (This is where Picky really shines, "the title started with soc, and the author starts with p")
     .content
       = Picky::Helper.cached_interface
       :javascript
@@ -78,6 +78,26 @@
               en:{
                 subjects:  'subject'
               }
+            },
+            
+            // Use this to group the choices (those are used when Picky needs more feedback).
+            // If a category is missing, it is appended in a virtual group at the end.
+            //
+            groups: [['author', 'title', 'subjects']],
+            // This is used for formatting inside the choice groups.
+            //
+            // Use %n$s, where n is the position of the category in the key.
+            //
+            choices: {
+              'title': {
+                format: "<strong>%1$s</strong>",
+                filter: function(text) { return text.toUpperCase(); },
+                ignoreSingle: false 
+              },
+              'author,title':    '%1$s, who wrote %2$s',
+              'title,author':    '%2$s, written by %2$s',
+              'title,subjects': '%1$s, about %2$s',
+              'author,subjects': '%1$s, who wrote about %2$s'
             },
         
             // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
