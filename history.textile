@@ -3,9 +3,9 @@ h2. Version 1.4.0 (unreleased)
 * hanke: (client/generators) Latest Javascript PickyClient object includes the option to format the choices better, option group: [['author', 'title', 'subjects'], ['publisher']] lets you group certain categories together while option choices: { 'title': format: "<strong>%1$s</strong>", filter: function(text) { return text.toUpperCase(); }, ignoreSingle: false } lets you define how each combination is handled in detail. Again, hard to explain, easy to see. (see issue for details, closes "issue 9":https://github.com/floere/picky/issues/closed#issue/9)
 * hanke: (client/generators) Headers are now contracted, this means no more "written by florian and written by hanke", but "written by florian hanke". (closes "issue 10":https://github.com/floere/picky/issues/closed#issue/10)
 * hanke: (client) Split #interface method into => #input, #results, so that users can wrap each with custom elements. Don't forget to wrap into a div#picky.
-* hanke: (generators) Example now constricts the Picky interface width using a div.content.
-* hanke: (generators) Cleanup of Javascript code, inclusion of formerly external javascripts.
-* hanke: (generators) Interface HTML structure refactor. Results should now be li-s. Result groups (combinations/allocations, around the result li-s) are each inside an ol.results.
+* hanke: (generators, breaking change!) Example now constricts the Picky interface width using a div.content. Please use a wrapper div to constrict div#picky.
+* hanke: (generators) Cleanup of Javascript code, inclusion of formerly external javascripts (scrollTo, timer, jQuery 1.5).
+* hanke: (generators, possible breaking change!) Interface HTML structure refactor. Results should now be li-s. Result groups (combinations/allocations, around the result li-s) are each inside an ol.results. Please check your CSS files if they need to be adapted to the new structure.
 * hanke: (generators) Cleanup of CSS, much more flexible and specific.
 
 h2. Version 1.3.4
