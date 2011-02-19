@@ -36,7 +36,7 @@ class Book
   # Note: This is just an example. Please do not render in the model.
   #
   def to_s
-    "<div class='book'><p>\"#{@title}\", by #{@author}</p><p>#{@year}, #{@publisher}</p><p>#{@subjects}</p></div>"
+    "<li class='book'><p>\"#{@title}\", by #{@author}</p><p>#{@year}, #{@publisher}</p><p>#{@subjects}</p></li>"
   end
   
 end
