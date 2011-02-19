@@ -1,4 +1,6 @@
-var PickyResultsRenderer = function(addination) {
+var PickyResultsRenderer = function(addination, config) {
+  
+  var allocationWrapper = config['wrapResults'] || '<ol class="results"></ol>';
   
   // Adds asterisks to the last token.
   //
@@ -122,8 +124,9 @@ var PickyResultsRenderer = function(addination) {
     var results = $('#picky div.results'); // TODO Extract, also from view.
     data.allocations.each(function(i, allocation) {
       results.append(renderHeader(data, allocation)) // TODO header.render(data);
-             .append('<ol class="results">' + allocation.entries.join('') + '</ol>')
+             .append(allocation.entries.join(''))
              .append(addination.render(data));
+      results.children('li').wrapAll(allocationWrapper);
     });
   };
 };

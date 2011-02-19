@@ -17,7 +17,7 @@ var PickyView = function(picky_controller, config) {
   var addination    = new PickyAddination(this, results); // Push into results.
   
   var allocationsCloud = new PickyAllocationsCloud(this, config);
-  var resultsRenderer  = new PickyResultsRenderer(addination); // TODO Rename results.
+  var resultsRenderer  = new PickyResultsRenderer(addination, config); // TODO Rename results.
   
   // Toggle the clear button visibility.
   //

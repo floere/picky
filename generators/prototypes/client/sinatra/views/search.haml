@@ -54,74 +54,82 @@
       %span.explanation (This is where Picky really shines, "the title started with soc, and the author starts with p")
     .content
       = Picky::Helper.cached_interface
-    :javascript
-    :javascript
-      $(window).load(function() {
-        pickyClient = new PickyClient({
-          // A full query displays the rendered results.
-          //
-          full: '/search/full',
-      
-          // A live query just updates the count.
-          //
-          live: '/search/live',
-      
-          // showResultsLimit: 10, // Optional. Default is 10.
-      
-          // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
-          // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
-          // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
-      
-          // This is used to generate the correct query strings, localized. E.g. "subject:war".
-          // Optional. If you don't give these, the field identifier given in the Picky server is used.
-          //
-          qualifiers: {
-            en:{
-              subjects:  'subject'
-            }
-          },
-          
-          // Use this to group the choices (those are used when Picky needs more feedback).
-          // If a category is missing, it is appended in a virtual group at the end.
-          //
-          groups: [['author', 'title', 'subjects']],
-          // This is used for formatting inside the choice groups.
-          //
-          // Use %n$s, where n is the position of the category in the key.
-          //
-          choices: {
-            'title': {
-              format: "<strong>%1$s</strong>",
-              filter: function(text) { return text.toUpperCase(); },
-              ignoreSingle: false 
+      :javascript
+        $(window).load(function() {
+          pickyClient = new PickyClient({
+            // A full query displays the rendered results.
+            //
+            full: '/search/full',
+        
+            // A live query just updates the count.
+            //
+            live: '/search/live',
+        
+            // showResultsLimit: 10, // Optional. Default is 10.
+            
+            // Wrap each li group (like author-title, or title-isbn etc.) of results
+            // in this element.
+            // Optional. Default is '<ol class="results"></ol>'.
+            //
+            // wrapResults: '<div class="hello"><ol class="world"></ol></div>',
+        
+            // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
+            // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+            // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+        
+            // This is used to generate the correct query strings, localized. E.g. "subject:war".
+            // Optional. If you don't give these, the field identifier given in the Picky server is used.
+            //
+            qualifiers: {
+              en:{
+                subjects:  'subject'
+              }
             },
-            'author,title':    '%1$s, who wrote %2$s',
-            'title,author':    '%2$s, written by %2$s',
-            'title,subjects': '%1$s, about %2$s',
-            'author,subjects': '%1$s, who wrote about %2$s'
-          },
-      
-          // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
-          // Optional. Default are the field identifiers from the Picky server.
-          //
-          explanations: {
-            en:{
-              title:     'titled',
-              author:    'written by',
-              year:      'published in'
-              // publisher: 'published by',
-              // subjects:  'topics'
+            
+            // Use this to group the choices (those are used when Picky needs more feedback).
+            // If a category is missing, it is appended in a virtual group at the end.
+            // Optional. Default is [].
+            //
+            groups: [['author', 'title', 'subjects']],
+            // This is used for formatting inside the choice groups.
+            //
+            // Use %n$s, where n is the position of the category in the key.
+            // Optional. Default is {}.
+            //
+            choices: {
+              'title': {
+                format: "<strong>%1$s</strong>",
+                filter: function(text) { return text.toUpperCase(); },
+                ignoreSingle: false 
+              },
+              'author,title':    '%1$s, who wrote %2$s',
+              'title,author':    '%2$s, written by %2$s',
+              'title,subjects': '%1$s, about %2$s',
+              'author,subjects': '%1$s, who wrote about %2$s'
+            },
+        
+            // This is used to explain the preceding word in the suggestion text (if it
+            // has not yet been defined by the choices above), localized. E.g. "Peter (author)".
+            // Optional. Default are the field identifiers from the Picky server.
+            //
+            explanations: {
+              en:{
+                title:     'titled',
+                author:    'written by',
+                year:      'published in'
+                // publisher: 'published by',
+                // subjects:  'topics'
+              }
             }
-          }
+          });
+      
+          // An initial search text, prefilled
+          // this one is passed through the query param q.
+          //
+          // Example: www.mysearch.com/?q=example
+          //
+          // If there isn't a q parameter (because it is empty), we try to
+          // take it from the deep linking /#/?q parameter. 
+          //
+          pickyClient.insertFromURL('#{@query}');
         });
-    
-        // An initial search text, prefilled
-        // this one is passed through the query param q.
-        //
-        // Example: www.mysearch.com/?q=example
-        //
-        // If there isn't a q parameter (because it is empty), we try to
-        // take it from the deep linking /#/?q parameter. 
-        //
-        pickyClient.insertFromURL('#{@query}');
-      });

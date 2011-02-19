@@ -1,6 +1,7 @@
 h2. Version 1.4.0 (unreleased)
 
 * hanke: (client/generators) Latest Javascript PickyClient object includes the option to format the choices better, option @group: [['author', 'title', 'subjects'], ['publisher']]@ lets you group certain categories together while option @choices: { 'title': format: "<strong>%1$s</strong>", filter: function(text) { return text.toUpperCase(); }, ignoreSingle: false }@ lets you define how each combination is handled in detail. Again, hard to explain, easy to see. (see issue for details, closes "issue 9":https://github.com/floere/picky/issues/closed#issue/9)
+* hanke: (client/generators) Added a @wrapResults@ options where you can define wrapper HTML bits that are wrapped around each allocation group of @<li>@ results. The default is: @wrapResults: '<ol class="results"></ol>'@.
 * hanke: (client/generators) Headers are now contracted, this means no more "written by florian and written by hanke", but "written by florian hanke". (closes "issue 10":https://github.com/floere/picky/issues/closed#issue/10)
 * hanke: (client) Split #interface method into => #input, #results, so that users can wrap each with custom elements. Don't forget to wrap into a div#picky.
 * hanke: (generators, breaking change!) Example now constricts the Picky interface width using a div.content. Please use a wrapper div to constrict div#picky.
