@@ -20,11 +20,13 @@ end
 #
 
 begin
-  # system "./install"
+  puts "Please run using Ruby 1.9" if RUBY_VERSION < '1.9.0'
+  
+  system "./install"
 
   puts "Installing the server."
   system "picky generate unicorn_server sandbox/server"
-  # system "cd sandbox/server; bundle install"
+  system "cd sandbox/server; bundle install"
   system "cd sandbox/server; rake index"
   system "cd sandbox/server; rake start &"
 
@@ -43,7 +45,7 @@ begin
 
   puts "Installing the client."
   system "picky generate sinatra_client sandbox/client"
-  # system "cd sandbox/client; bundle install"
+  system "cd sandbox/client; bundle install"
   system "cd sandbox/client; unicorn -p 3210 &"
   
   sleep 5 # loading
@@ -60,9 +62,16 @@ begin
   client "alan", "Alan Turing"
   puts
   puts
+  
+  system "open -a 'Google Chrome' http://localhost:3210/#/?q=alan"
+  sleep 5
+  
+  puts "SUCCESS!"
 ensure
   # TODO KILL UNICORNS!
   #
+  system "killall 'unicorn master -c unicorn.ru'"
+  system "killall 'unicorn master -p 3210'"
   
   system "rm -r sandbox/client"
   system "rm -r sandbox/server"
