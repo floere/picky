@@ -4,9 +4,7 @@ require 'spec_helper'
 
 describe Tokenizers::Index do
   
-  before(:each) do
-    @tokenizer = Tokenizers::Index.new
-  end
+  let(:tokenizer) { Tokenizers::Index.new }
   
   describe "default*" do
     before(:all) do
@@ -33,13 +31,13 @@ describe Tokenizers::Index do
   
   describe "remove_removes_characters" do
     it "should not remove ' from a query by default" do
-      @tokenizer.remove_illegals("Lugi's").should == "Lugi's"
+      tokenizer.remove_illegals("Lugi's").should == "Lugi's"
     end
   end
 
   describe "reject!" do
     it "should reject tokens if blank" do
-      @tokenizer.reject(['', 'not blank', '']).should == ['not blank']
+      tokenizer.reject(['', 'not blank', '']).should == ['not blank']
     end
   end
   
@@ -47,7 +45,7 @@ describe Tokenizers::Index do
     describe "normalizing" do
       def self.it_should_normalize_token(text, expected)
         it "should handle the #{text} case" do
-          @tokenizer.tokenize(text).to_a.should == [expected].compact
+          tokenizer.tokenize(text).to_a.should == [expected].compact
         end
       end
       # defaults
@@ -57,7 +55,7 @@ describe Tokenizers::Index do
     describe "tokenizing" do
       def self.it_should_tokenize_token(text, expected)
         it "should handle the #{text} case" do
-          @tokenizer.tokenize(text).to_a.should == expected
+          tokenizer.tokenize(text).to_a.should == expected
         end
       end
       # defaults
