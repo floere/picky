@@ -1,4 +1,8 @@
-h2. Version 1.4.0 (unreleased)
+h2. Version 1.4.1
+
+* hanke: (client/generators) The @choices@ option is now localized. If you have generated a new Picky project with 1.4.0, please do localize your @choices@ like so: @choices:{ (formats here) }@ => @choices:{en:{ (formats here) }}@ and whatever locales you'd like to use.
+
+h2. Version 1.4.0
 
 * hanke: (client/generators) Latest Javascript PickyClient object includes the option to format the choices better, option @group: [['author', 'title', 'subjects'], ['publisher']]@ lets you group certain categories together while option @choices: { 'title': format: "<strong>%1$s</strong>", filter: function(text) { return text.toUpperCase(); }, ignoreSingle: false }@ lets you define how each combination is handled in detail. Again, hard to explain, easy to see. (see issue for details, closes "issue 9":https://github.com/floere/picky/issues/closed#issue/9)
 * hanke: (client/generators) Added a @wrapResults@ options where you can define wrapper HTML bits that are wrapped around each allocation group of @<li>@ results. The default is: @wrapResults: '<ol class="results"></ol>'@.
