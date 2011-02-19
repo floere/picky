@@ -34,8 +34,17 @@ describe "Integration Tests" do
   def ids_of results
     results.serialize[:allocations].inject([]) { |ids, allocation| ids + allocation[4] }
   end
-  
+    
   describe 'test cases' do
+    # Reloading.
+    #
+    it 'finds the same after reloading' do
+      @csv.search_with_text('Soledad Human').ids.should == [72]
+      puts "Reloading the Indexes."
+      Indexes.reload
+      @csv.search_with_text('Soledad Human').ids.should == [72]
+    end
+    
     # Standard
     #
     it_should_find_ids_in_csv 'Soledad Human', [72]
