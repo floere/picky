@@ -8,8 +8,8 @@ function AllocationRenderer(allocationChosenCallback, config) {
   var location_delimiter    = Localization.location_delimiters[locale];
   var explanation_delimiter = Localization.explanation_delimiters[locale];
   
-  var choiceGroups          = config['groups'] || [];
-  var choices               = config['choices'] || {};
+  var choiceGroups          = config.groups || [];
+  var choices               = Localization.choices && Localization.choices[locale] || {};
   
   // Those are of interest to the public.
   //

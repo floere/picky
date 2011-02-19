@@ -97,15 +97,17 @@
             // Optional. Default is {}.
             //
             choices: {
-              'title': {
-                format: "<strong>%1$s</strong>",
-                filter: function(text) { return text.toUpperCase(); },
-                ignoreSingle: false 
-              },
-              'author,title':    '%1$s, who wrote %2$s',
-              'title,author':    '%2$s, written by %2$s',
-              'title,subjects': '%1$s, about %2$s',
-              'author,subjects': '%1$s, who wrote about %2$s'
+              en:{
+                'title': {
+                  format: "<strong>%1$s</strong>",
+                  filter: function(text) { return text.toUpperCase(); },
+                  ignoreSingle: false 
+                },
+                'author,title':    '%1$s, who wrote %2$s',
+                'title,author':    '%2$s, written by %2$s',
+                'title,subjects': '%1$s, about %2$s',
+                'author,subjects': '%1$s, who wrote about %2$s'
+              }
             },
         
             // This is used to explain the preceding word in the suggestion text (if it

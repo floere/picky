@@ -29,6 +29,13 @@ var PickyClient = function(config) {
   //
   Localization.explanations = config.explanations || {};
   
+  // This is used to expain more complex combinations of categories
+  // in the choices.
+  //
+  // e.g. with locale en:{'author,title': '%1$s, who wrote %2$s'}
+  //
+  Localization.choices = config.choices || {};
+  
   // TODO Explain.
   //
   Localization.explanation_delimiters = { de:'und', fr:'et', it:'e', en:'and', ch:'und' };
