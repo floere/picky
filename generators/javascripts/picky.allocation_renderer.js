@@ -5,7 +5,6 @@ function AllocationRenderer(allocationChosenCallback, config) {
   
   var qualifiers            = Localization.qualifiers && Localization.qualifiers[locale] || {};
   var explanations          = Localization.explanations && Localization.explanations[locale] || {};
-  var location_delimiter    = Localization.location_delimiters[locale];
   var explanation_delimiter = Localization.explanation_delimiters[locale];
   
   var choiceGroups          = config.groups || [];

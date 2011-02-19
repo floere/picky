@@ -1,9 +1,4 @@
-var Localization = {
-  // TODO Remove.
-  location_delimiters: { de:'in', fr:'à', it:'a', en:'in', ch:'in' },
-  
-  explanation_delimiters: { de:'und', fr:'et', it:'e', en:'and', ch:'und' }
-};
+var Localization = {};
 
 // The client handles parameters and
 // offers an insert method.
@@ -36,7 +31,7 @@ var PickyClient = function(config) {
   //
   Localization.choices = config.choices || {};
   
-  // TODO Explain.
+  // Delimiters for connecting explanations.
   //
   Localization.explanation_delimiters = { de:'und', fr:'et', it:'e', en:'and', ch:'und' };
   
