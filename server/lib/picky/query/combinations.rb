@@ -3,6 +3,7 @@ module Query
   # Combinations are a number of Combination-s.
   #
   # They are the core of an allocation.
+  # An allocation consists of a number of combinations.
   #
   class Combinations # :nodoc:all
 

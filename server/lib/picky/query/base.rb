@@ -29,15 +29,13 @@ module Query
     # Takes:
     # * A number of indexes
     # * Options hash (optional) with:
-    #   * weigher:   A weigher. Query::Weigher by default.
     #   * tokenizer: Tokenizers::Query.default by default.
     #   * weights:   A hash of weights, or a Query::Weights object.
     #
-    def initialize *index_type_definitions
-      options      = Hash === index_type_definitions.last ? index_type_definitions.pop : {}
-      indexes      = index_type_definitions.map &:indexed
+    def initialize *index_definitions
+      options      = Hash === index_definitions.last ? index_definitions.pop : {}
       
-      @weigher     = options[:weigher]   || Weigher.new(indexes)
+      @indexes     = Indexes.new *index_definitions
       @tokenizer   = options[:tokenizer] || Tokenizers::Query.default
       weights      = options[:weights] || Weights.new
       @weights     = Hash === weights ? Weights.new(weights) : weights
@@ -112,7 +110,7 @@ module Query
       #
       # TODO uniq, score, sort in there
       #
-      allocations = @weigher.allocations_for tokens
+      allocations = @indexes.allocations_for tokens
       
       # Callbacks.
       #

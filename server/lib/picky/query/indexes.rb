@@ -1,18 +1,23 @@
 module Query
-
-  # Weighs the given tokens, generates Allocations -> Allocation -> Combinations.
+  
+  # The query indexes class bundles indexes given to a query.
   #
-  class Weigher # :nodoc:all
-
+  # Example:
+  #   # If you call
+  #   Query::Full.new dvd_index, mp3_index, video_index
+  #   
+  #   # What it does is take the three given (API-) indexes and
+  #   # bundle them in an index bundle.
+  #
+  class Indexes
+    
     attr_reader :indexes
-
-    # A weigher has a number of typed indexes, for which it generates allocations.
-    #
-    def initialize types
-      @indexes = types
+    
+    def initialize *index_definitions
+      @indexes = index_definitions.map &:indexed
     end
 
-    #
+    # Returns a number of possible allocations for the given tokens.
     #
     def allocations_for tokens
       Allocations.new(indexes.inject([]) do |previous_allocations, index|
@@ -23,42 +28,17 @@ module Query
         # Optimization for ignoring tokens that allocate to nothing and
         # can be ignored.
         # For example in a special search, where "florian" is not
-        # mapped to city, zip, or category.
+        # mapped to any category.
         #
         possible_combinations.compact!
+        
+        # Generate all possible combinations.
+        #
         expanded_combinations = expand_combinations_from possible_combinations
         
+        # If there are none, try the next allocation.
         #
-        #
-        next previous_allocations if expanded_combinations.empty?
-        
-        # The recombination part, where
-        # [
-        #  [a,a,b,b,c,c]
-        #  [d,e,d,e,d,e]
-        # ]
-        # becomes
-        # [
-        #  [a,d],
-        #  [a,e],
-        #  [b,d],
-        #  [b,e],
-        #  [c,d],
-        #  [c,e]
-        # ]
-        #
-        # TODO Use transpose?
-        #
-        expanded_combinations = expanded_combinations.shift.zip *expanded_combinations
-        
-        # Wrap into a real combination.
-        #
-        # expanded_combinations.map! { |expanded_combination| Combinations.new(expanded_combination).pack_into_allocation(index.result_identifier) }
-        
-        # Add the possible allocations to the ones we already have.
-        #
-        # previous_allocations + expanded_combinations.map(&:pack_into_allocation)
-        
+        next previous_allocations unless expanded_combinations
         
         # Add the wrapped possible allocations to the ones we already have.
         #
@@ -101,12 +81,32 @@ module Query
     #  group mult: 9
     #  <> s/m
     # [k,l,m,k,l,m,k,l,m,k,l,m,k,l,m,k,l,m,k,l,m,k,l,m,k,l,m] = 27 elements
-    # The array elements are then combined by index (i.e. vertically) to get all combinations.
+    #
+    # It is then recombined, where
+    # [
+    #  [a,a,b,b,c,c]
+    #  [d,e,d,e,d,e]
+    # ]
+    # becomes
+    # [
+    #  [a,d],
+    #  [a,e],
+    #  [b,d],
+    #  [b,e],
+    #  [c,d],
+    #  [c,e]
+    # ]
+    #
+    # Note: Not using transpose as it is slower.
+    #
+    # Returns nil if there are no combinations.
     #
     # Note: Of course I could split this method up into smaller
     #       ones, but I guess I am a bit sentimental.
     #
     def expand_combinations_from possible_combinations
+      return if possible_combinations.any?(&:empty?)
+      
       # Generate the first multiplicator "with which" (well, not quite) to multiply the smallest amount of combinations.
       #
       # TODO How does this work if an element has size 0? Since below we account for size 0.
@@ -119,13 +119,11 @@ module Query
       #
       group_mult = 1
 
-      possible_combinations.reject!(&:empty?)
-
       # The expanding part to line up the combinations
       # for later combination in allocations.
       #
       possible_combinations.collect! do |combinations|
-
+        
         # Get the size of the combinations of the first token.
         #
         combinations_size = combinations.size
@@ -145,7 +143,8 @@ module Query
         # [a,a,a,b,b,b,c,c,c,  a,a,a,b,b,b,c,c,c,  a,a,a,b,b,b,c,c,c]
         #
         combinations = combinations.inject([]) do |total, combination|
-          total + [combination]*single_mult
+          
+          total + Array.new(single_mult, combination)
         end * group_mult
         
         # Multiply the group mult by the combinations size,
@@ -158,6 +157,10 @@ module Query
         #
         combinations
       end
+      
+      return if possible_combinations.empty?
+      
+      possible_combinations.shift.zip *possible_combinations
     end
     
   end

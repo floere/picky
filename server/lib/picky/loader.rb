@@ -216,7 +216,8 @@ module Loader # :nodoc:all
     load_relative 'query/allocations'
     
     load_relative 'query/qualifiers'
-    load_relative 'query/weigher'
+    
+    load_relative 'query/indexes'
     
     load_relative 'query/weights'
     
