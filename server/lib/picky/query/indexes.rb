@@ -43,6 +43,8 @@ module Query
         # Add the wrapped possible allocations to the ones we already have.
         #
         previous_allocations + expanded_combinations.map! do |expanded_combination|
+          # TODO Insert Redis here?
+          #
           Combinations.new(expanded_combination).pack_into_allocation(index.result_identifier) # TODO Do not extract result_identifier. Remove pack_into_allocation.
         end
       end)
