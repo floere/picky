@@ -93,3 +93,6 @@ class BookSearch < Application
     root 200
     
 end
+
+previous_handler = Signal.trap('USR1') { }
+Signal.trap('USR1') { Indexes.reload; previous_handler.call }
