@@ -24,10 +24,13 @@ puts "Using STDOUT as test log."
 
 def performance_of
   if block_given?
+    code = Proc.new
     GC.disable
-    result = Benchmark.realtime &Proc.new
+    t0 = Time.now
+    code.call
+    t1 = Time.now
     GC.enable
-    result
+    t1 - t0
   else
     raise "#performance_of needs a block"
   end
