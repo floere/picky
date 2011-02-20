@@ -222,7 +222,7 @@ describe Query::Allocation do
       @allocation.stub! :calculate_ids => @ids
     end
     it 'should calculate_ids' do
-      @allocation.should_receive(:calculate_ids).once.with.and_return @ids
+      @allocation.should_receive(:calculate_ids).once.with(@amount, @offset).and_return @ids
 
       @allocation.process! @amount, @offset
     end

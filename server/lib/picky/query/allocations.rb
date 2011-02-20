@@ -42,7 +42,7 @@ module Query
     #
     # Only those passed in are removed.
     #
-    # TODO Rewrite
+    # TODO Rewrite.
     #
     def remove identifiers = []
       @allocations.each { |allocation| allocation.remove identifiers } unless identifiers.empty?
@@ -61,6 +61,8 @@ module Query
     # Note: This is an ok algorithm for small id sets.
     #
     # But still TODO try for a faster one.
+    #
+    # TODO For the 1 amount random case this needs to be improved.
     #
     def random_ids amount = 1
       return [] if @allocations.empty?

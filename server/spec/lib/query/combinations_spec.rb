@@ -125,42 +125,42 @@ describe 'Query::Combinations' do
       @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      @combinations.ids.should == (1..10).to_a
+      @combinations.ids(20).should == (1..10).to_a
     end
     it "should intersect symbol_keys correctly" do
       @combination1.should_receive(:ids).once.with.and_return (:'00001'..:'10000').to_a
       @combination2.should_receive(:ids).once.with.and_return (:'00001'..:'00100').to_a
       @combination3.should_receive(:ids).once.with.and_return (:'00001'..:'00010').to_a
 
-      @combinations.ids.should == (:'00001'..:'0010').to_a
+      @combinations.ids(20).should == (:'00001'..:'0010').to_a
     end
     it "should intersect correctly when intermediate intersect result is empty" do
       @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a
       @combination2.should_receive(:ids).once.with.and_return (11..100).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      @combinations.ids.should == []
+      @combinations.ids(20).should == []
     end
     it "should be fast" do
       @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a
       @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      performance_of { @combinations.ids }.should < 0.004
+      performance_of { @combinations.ids(20) }.should < 0.004
     end
     it "should be fast" do
       @combination1.should_receive(:ids).once.with.and_return (1..1000).to_a
       @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      performance_of { @combinations.ids }.should < 0.00015
+      performance_of { @combinations.ids(20) }.should < 0.00015
     end
     it "should be fast" do
       @combination1.should_receive(:ids).once.with.and_return (1..1000).to_a
       @combination2.should_receive(:ids).once.with.and_return (901..1000).to_a
       @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
 
-      performance_of { @combinations.ids }.should < 0.0001
+      performance_of { @combinations.ids(20) }.should < 0.0001
     end
   end
 

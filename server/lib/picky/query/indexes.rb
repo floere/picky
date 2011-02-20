@@ -143,7 +143,6 @@ module Query
         # [a,a,a,b,b,b,c,c,c,  a,a,a,b,b,b,c,c,c,  a,a,a,b,b,b,c,c,c]
         #
         combinations = combinations.inject([]) do |total, combination|
-          
           total + Array.new(single_mult, combination)
         end * group_mult
         

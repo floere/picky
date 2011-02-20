@@ -42,7 +42,9 @@ module Query
     #
     # Note: Uses a C-optimized intersection routine for speed and memory efficiency.
     #
-    def ids
+    # Note: In the memory based version we ignore the (amount) needed hint.
+    #
+    def ids needed_hint
       return [] if @combinations.empty?
 
       # Get the ids for each combination.

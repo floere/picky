@@ -29,14 +29,14 @@ module Query
 
     # Asks the combinations for the (intersected) ids.
     #
-    def calculate_ids
-      @combinations.ids
+    def calculate_ids amount, offset
+      @combinations.ids(amount + offset) # Calculate as many ids as are necessary.
     end
 
     # This starts the searching process.
     #
     def process! amount, offset
-      ids    = calculate_ids
+      ids    = calculate_ids amount, offset
       @count = ids.size                         # cache the count before throwing away the ids
       @ids   = ids.slice!(offset, amount) || [] # slice out the relevant part
     end
