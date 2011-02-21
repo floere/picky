@@ -6,7 +6,7 @@ module API
       # a memory index backend.
       #
       def initialize name, source, options = {}
-        options[:bundle_class] ||= Indexed::Bundle::Memory
+        options[:indexing_bundle_class] ||= Indexing::Bundle::Memory
         
         super name, source, options
       end

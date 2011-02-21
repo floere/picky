@@ -32,10 +32,15 @@ class BookSearch < Application
     isbn_index = index :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
     isbn_index.define_category :isbn, :qualifiers => [:i, :isbn]
     
-    geo_index  = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
-    geo_index.define_category :location
-    geo_index.define_map_location(:north1, 1, precision: 3, from: :north)
-             .define_map_location(:east1,  1, precision: 3, from: :east)
+    mgeo_index  = index :memory_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    mgeo_index.define_category :location
+    mgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
+              .define_map_location(:east1,  1, precision: 3, from: :east)
+    
+    rgeo_index  = API::Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    rgeo_index.define_category :location
+    rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
+              .define_map_location(:east1,  1, precision: 3, from: :east)
     
     csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,
@@ -71,8 +76,11 @@ class BookSearch < Application
     full_isbn = Query::Full.new isbn_index
     live_isbn = Query::Live.new isbn_index
     
-    full_geo  = Query::Full.new geo_index
-    live_geo  = Query::Live.new geo_index
+    full_mgeo  = Query::Full.new mgeo_index
+    live_mgeo  = Query::Live.new mgeo_index
+    
+    full_rgeo  = Query::Full.new rgeo_index
+    live_rgeo  = Query::Live.new rgeo_index
     
     route %r{\A/admin\Z}      => LiveParameters.new
     
@@ -84,11 +92,14 @@ class BookSearch < Application
           
           %r{\A/isbn/full\Z}  => full_isbn,
           
-          %r{\A/geo/full\Z}   => full_geo,
-          %r{\A/geo/live\Z}   => live_geo,
+          %r{\A/geo/full\Z}   => full_mgeo,
+          %r{\A/geo/live\Z}   => live_mgeo,
           
-          %r{\A/all/full\Z}   => Query::Full.new(main_index, csv_test_index, isbn_index, geo_index, options),
-          %r{\A/all/live\Z}   => Query::Live.new(main_index, csv_test_index, isbn_index, geo_index, options)
+          %r{\A/rgeo/full\Z}  => full_rgeo,
+          %r{\A/rgeo/live\Z}  => live_rgeo,
+          
+          %r{\A/all/full\Z}   => Query::Full.new(main_index, csv_test_index, isbn_index, mgeo_index, options),
+          %r{\A/all/live\Z}   => Query::Live.new(main_index, csv_test_index, isbn_index, mgeo_index, options)
     
     root 200
     

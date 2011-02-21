@@ -13,7 +13,7 @@ describe "Integration Tests" do
     Indexes.load_from_cache
     @sym = Query::Full.new Indexes[:symbol_keys]
     @csv = Query::Full.new Indexes[:csv_test]
-    @geo = Query::Full.new Indexes[:geo]
+    @geo = Query::Full.new Indexes[:memory_geo]
   end
   
   def self.it_should_find_ids_in_sym text, expected_ids

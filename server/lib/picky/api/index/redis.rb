@@ -6,7 +6,7 @@ module API
       # a Redis index backend.
       #
       def initialize name, source, options = {}
-        options[:bundle_class] ||= Indexed::Bundle::Redis
+        options[:indexing_bundle_class] ||= Indexing::Bundle::Redis
         
         super name, source, options
       end

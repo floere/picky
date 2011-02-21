@@ -24,6 +24,7 @@ module Indexing
       @source = source
       
       @after_indexing = options[:after_indexing]
+      @bundle_class   = options[:indexing_bundle_class] # TODO This should actually be a fixed parameter.
       
       @categories = Categories.new
     end
@@ -38,10 +39,15 @@ module Indexing
       new_category
     end
     
-    # By default, the category uses the index's source.
+    # By default, the category uses
+    # * the index's source.
+    # * the index's bundle type.
     #
     def default_category_options
-      { :source => @source }
+      {
+        :source => @source,
+        :indexing_bundle_class => @bundle_class
+      }
     end
     
     # Indexing.
