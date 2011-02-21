@@ -41,8 +41,8 @@ module Query
       # TODO How expensive is Process.pid? If it changes once, remember forever?
       #
       def generate_intermediate_result_id
-        
-        :"#{@host}:#{Process.pid}:picky:result"
+        # TODO host -> extract host.
+        :"host:#{Process.pid}:picky:result"
       end
       
     end
