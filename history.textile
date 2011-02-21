@@ -1,3 +1,7 @@
+h2. Version 1.4.2
+
+* hanke: (server) Redis backend prototype.
+
 h2. Version 1.4.1
 
 * hanke: (client/generators) The @choices@ option is now localized. If you have generated a new Picky project with 1.4.0, please do localize your @choices@ like so: @choices:{ (formats here) }@ => @choices:{en:{ (formats here) }}@ and whatever locales you'd like to use.
