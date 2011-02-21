@@ -20,7 +20,7 @@ module Query
     # Note: We cannot mix memory and redis indexes just yet.
     #
     def initialize *index_definitions
-      @combinations_type = combinations_type_for index_definitions
+      @combinations_type = index_definitions.empty? || combinations_type_for(index_definitions)
       @indexes           = index_definitions.map &:indexed
     end
     
@@ -33,7 +33,7 @@ module Query
     # Picky will raise a Query::Indexes::DifferentTypesError.
     #
     @@mapping = {
-      IndexAPI => Combinations
+      API::Index::Memory => Combinations
     }
     def combinations_type_for index_definitions_ary
       index_types = index_definitions_ary.map(&:class)

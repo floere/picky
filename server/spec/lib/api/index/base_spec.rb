@@ -2,16 +2,16 @@
 #
 require 'spec_helper'
 
-describe IndexAPI do
+describe API::Index::Base do
   
   context 'initializer' do
     it 'works' do
-      lambda { IndexAPI.new :some_index_name, :some_source }.should_not raise_error
+      lambda { described_class.new :some_index_name, :some_source }.should_not raise_error
     end
     it 'registers with the indexes' do
-      @api = IndexAPI.allocate
+      @api = described_class.allocate
       
-      Indexes.should_receive(:register).once.with @api
+      ::Indexes.should_receive(:register).once.with @api
       
       @api.send :initialize, :some_index_name, :some_source
     end
@@ -19,7 +19,7 @@ describe IndexAPI do
   
   context 'unit' do
     before(:each) do
-      @api = IndexAPI.new :some_index_name, :some_source
+      @api = described_class.new :some_index_name, :some_source
     end
 
     describe 'define_category' do

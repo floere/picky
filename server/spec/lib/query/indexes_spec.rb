@@ -13,7 +13,7 @@ describe Query::Indexes do
   
   describe 'combinations_type_for' do
     it 'returns a specific Combination for a specific input' do
-      indexes.combinations_type_for([IndexAPI.new(:gu, :ga)]).should == Query::Combinations
+      indexes.combinations_type_for([API::Index::Memory.new(:gu, :ga)]).should == Query::Combinations
     end
     it 'just works on the same types' do
       indexes.combinations_type_for([:blorf, :blarf]).should == Query::Combinations

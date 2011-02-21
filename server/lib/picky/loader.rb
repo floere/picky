@@ -195,9 +195,12 @@ module Loader # :nodoc:all
     load_relative 'indexed/index'
     load_relative 'indexed/indexes'
     
-    load_relative 'indexes_api'
-    load_relative 'alias_instances'
-    load_relative 'index_api'
+    load_relative 'api/indexes'
+    load_relative 'api/aliases'
+    load_relative 'api/index/base'
+    load_relative 'api/index/memory'
+    load_relative 'api/index/redis'
+    
     
     load_relative 'indexed/wrappers/exact_first'
     
