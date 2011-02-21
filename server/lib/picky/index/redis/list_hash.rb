@@ -11,11 +11,13 @@ module Index
       def dump hash
         hash.each_pair do |key, values|
           redis_key = "#{namespace}:#{key}"
+          i = 0
           @backend.multi do
             @backend.del redis_key
             
             values.each do |value|
-              @backend.rpush redis_key, value
+              i += 1
+              @backend.zadd redis_key, i, value
             end
           end
         end

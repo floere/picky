@@ -11,9 +11,10 @@ describe "Integration Tests" do
   before(:all) do
     Indexes.index_for_tests
     Indexes.load_from_cache
-    @sym = Query::Full.new Indexes[:symbol_keys]
-    @csv = Query::Full.new Indexes[:csv_test]
-    @geo = Query::Full.new Indexes[:memory_geo]
+    @sym        = Query::Full.new Indexes[:symbol_keys]
+    @csv        = Query::Full.new Indexes[:csv_test]
+    @memory_geo = Query::Full.new Indexes[:memory_geo]
+    @redis      = Query::Full.new Indexes[:redis]
   end
   
   def self.it_should_find_ids_in_sym text, expected_ids
@@ -26,9 +27,14 @@ describe "Integration Tests" do
       @csv.search_with_text(text).ids.should == expected_ids
     end
   end
-  def self.it_should_find_ids_in_geo text, expected_ids
+  def self.it_should_find_ids_in_memory_geo text, expected_ids
     it 'should return the right ids' do
-      @geo.search_with_text(text).ids.should == expected_ids
+      @memory_geo.search_with_text(text).ids.should == expected_ids
+    end
+  end
+  def self.it_should_find_ids_in_redis text, expected_ids
+    it 'should return the right ids' do
+      @redis.search_with_text(text).ids.should == expected_ids
     end
   end
   def ids_of results
@@ -123,9 +129,13 @@ describe "Integration Tests" do
     it_should_find_ids_in_csv "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", []
     it_should_find_ids_in_csv "glorfgnorfblorf", []
     
-    # Location based search.
+    # Location based search. Memory.
     #
-    it_should_find_ids_in_geo "north1:47.41,east1:8.55", [1413, 10346, 10661, 10746, 10861]
+    it_should_find_ids_in_memory_geo "north1:47.41,east1:8.55", [1413, 10346, 10661, 10746, 10861]
+    
+    # Redis.
+    #
+    it_should_find_ids_in_redis 'Soledad Human', ['72']
     
     # Categorization.
     #

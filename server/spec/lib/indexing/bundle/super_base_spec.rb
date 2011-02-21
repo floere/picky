@@ -9,6 +9,12 @@ describe Indexing::Bundle::SuperBase do
     @bundle = Indexing::Bundle::SuperBase.new :some_name, @configuration, @similarity
   end
   
+  describe 'identifier' do
+    it 'is correct' do
+      @bundle.identifier.should == 'some_identifier:some_name'
+    end
+  end
+  
   describe 'similar' do
     before(:each) do
       @bundle.similarity = @similarity.generate_from( :dragon => [1,2,3], :dargon => [4,5,6] )

@@ -14,7 +14,7 @@ describe Indexed::Bundle::Memory do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @bundle.identifier.should == 'some_index some_category (some_name)'
+      @bundle.identifier.should == 'some_index:some_category:some_name'
     end
   end
 

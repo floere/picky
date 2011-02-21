@@ -17,7 +17,7 @@ module Indexers
     # Raise a no source exception.
     #
     def raise_no_source
-      raise NoSourceSpecifiedException.new("No source given for #{@configuration.identifier}.")
+      raise NoSourceSpecifiedException.new("No source given for #{@configuration}.")
     end
     
     # Delegates the key format to the source.
@@ -65,7 +65,7 @@ module Indexers
       end
     end
     def indexing_message
-      timed_exclaim "INDEX #{@configuration.identifier}" # TODO from ...
+      timed_exclaim "INDEX #{@configuration}" # TODO from ...
     end
     
   end

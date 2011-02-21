@@ -1,3 +1,5 @@
+# TODO Move to the API.
+#
 module Indexed
   
   #
@@ -13,6 +15,7 @@ module Indexed
       @name                     = name
       
       @result_identifier        = options[:result_identifier] || name
+      @bundle_class             = options[:indexed_bundle_class] # TODO This should actually be a fixed parameter.
       ignore_unassigned_tokens  = options[:ignore_unassigned_tokens] || false # TODO Move to query, somehow.
       
       @categories = Categories.new ignore_unassigned_tokens: ignore_unassigned_tokens
@@ -21,9 +24,20 @@ module Indexed
     # TODO Doc.
     #
     def define_category category_name, options = {}
+      options = default_category_options.merge options
+      
       new_category = Category.new category_name, self, options
       categories << new_category
       new_category
+    end
+    
+    # By default, the category uses
+    # * the index's bundle type.
+    #
+    def default_category_options
+      {
+        :indexed_bundle_class => @bundle_class
+      }
     end
     
     # Return the possible combinations for this token.

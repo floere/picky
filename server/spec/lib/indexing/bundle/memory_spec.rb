@@ -15,7 +15,7 @@ describe Indexing::Bundle::Memory do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @index.identifier.should == 'some_index some_category (some_name)'
+      @index.identifier.should == 'some_index:some_category:some_name'
     end
   end
   

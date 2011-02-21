@@ -35,8 +35,6 @@ module Indexing
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      # TODO The bundle needs to be an option.
-      #
       bundle_class = options[:indexing_bundle_class] || Bundle::Memory
       @exact   = bundle_class.new(:exact,   configuration, similarity, Cacher::Partial::None.new, weights)
       @partial = bundle_class.new(:partial, configuration, Cacher::Similarity::None.new, partial, weights)

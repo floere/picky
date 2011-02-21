@@ -4,6 +4,6 @@ preload_app       true
 timeout           10
 worker_processes  3
 
-after_fork do |_, _|
-  GC.disable
-end
+# after_fork do |_, _|
+#   GC.disable
+# end

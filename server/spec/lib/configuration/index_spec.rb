@@ -42,7 +42,7 @@ describe 'Configuration::Index' do
       @config.identifier.should equal(@config.identifier)
     end
     it "returns the right thing" do
-      @config.identifier.should == 'some_index some_category'
+      @config.identifier.should == 'some_index:some_category'
     end
   end
   describe "index_root" do

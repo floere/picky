@@ -13,18 +13,18 @@ describe Query::Indexes do
   
   describe 'combinations_type_for' do
     it 'returns a specific Combination for a specific input' do
-      indexes.combinations_type_for([API::Index::Memory.new(:gu, :ga)]).should == Query::Combinations
+      indexes.combinations_type_for([API::Index::Memory.new(:gu, :ga)]).should == Query::Combinations::Memory
     end
     it 'just works on the same types' do
-      indexes.combinations_type_for([:blorf, :blarf]).should == Query::Combinations
+      indexes.combinations_type_for([:blorf, :blarf]).should == Query::Combinations::Memory
     end
     it 'just uses standard combinations' do
-      indexes.combinations_type_for([:blorf]).should == Query::Combinations
+      indexes.combinations_type_for([:blorf]).should == Query::Combinations::Memory
     end
     it 'raises on multiple types' do
       expect do
         indexes.combinations_type_for [:blorf, "blarf"]
-      end.to raise_error(Query::Indexes::DifferentTypesError)
+      end.to raise_error(described_class::DifferentTypesError)
     end
     it 'raises with the right message on multiple types' do
       expect do

@@ -7,6 +7,7 @@ module API
       #
       def initialize name, source, options = {}
         options[:indexing_bundle_class] ||= Indexing::Bundle::Memory
+        options[:indexed_bundle_class]  ||= Indexed::Bundle::Memory
         
         super name, source, options
       end

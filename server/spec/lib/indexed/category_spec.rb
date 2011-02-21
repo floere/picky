@@ -14,25 +14,46 @@ describe Indexed::Category do
     @category = Indexed::Category.new :some_name, @index, :partial    => @partial_strategy,
                                                           :weights    => @weights_strategy,
                                                           :similarity => @similarity_strategy,
-                                                          :qualifiers => [:q, :qualifier],
-                                                          :exact_index_bundle => @exact,
-                                                          :partial_index_bundle => @partial
+                                                          :qualifiers => [:q, :qualifier]
     
     @category.stub! :exclaim
   end
   
   describe 'partial' do
-    context 'with a partial strategy that uses the exact index' do
+    context 'default' do
       before(:each) do
-        @partial_strategy.stub! :use_exact_for_partial? => true
+        @category = Indexed::Category.new :some_name, @index
       end
-      it 'returns the partial index' do
-        @category.partial.should == @exact
+      context 'with a partial strategy that uses the exact index' do
+        before(:each) do
+          @partial_strategy.stub! :use_exact_for_partial? => true
+        end
+        it 'returns the partial index' do
+          @category.partial.should be_kind_of(Indexed::Bundle::Memory)
+        end
+      end
+      context 'with a partial strategy that uses the partial index (default)' do
+        it 'returns the partial index' do
+          @category.partial.should be_kind_of(Indexed::Bundle::Memory)
+        end
       end
     end
-    context 'with a partial strategy that uses the partial index (default)' do
-      it 'returns the partial index' do
-        @category.partial.should == @partial
+    context 'indexed_bundle_class defined' do
+      before(:each) do
+        @category = Indexed::Category.new :some_name, @index, :indexed_bundle_class => Indexed::Bundle::Redis
+      end
+      context 'with a partial strategy that uses the exact index' do
+        before(:each) do
+          @partial_strategy.stub! :use_exact_for_partial? => true
+        end
+        it 'returns the partial index' do
+          @category.partial.should be_kind_of(Indexed::Bundle::Redis)
+        end
+      end
+      context 'with a partial strategy that uses the partial index (default)' do
+        it 'returns the partial index' do
+          @category.partial.should be_kind_of(Indexed::Bundle::Redis)
+        end
       end
     end
   end
@@ -131,26 +152,32 @@ describe Indexed::Category do
       end
     end
   end
-
-  describe 'bundle_for' do
-    it 'should return the right bundle' do
-      token = stub :token, :partial? => false
-
-      @category.bundle_for(token).should == @exact
-    end
-    it 'should return the right bundle' do
-      token = stub :token, :partial? => true
-
-      @category.bundle_for(token).should == @partial
-    end
-  end
   
-  describe 'load_from_cache' do
-    it 'should call two methods' do
-      @exact.should_receive(:load).once
-      @partial.should_receive(:load).once
-      
-      @category.load_from_cache
+  context 'stubbed exact/partial' do
+    before(:each) do
+      @category.stub! :exact => (@exact = stub :exact)
+      @category.stub! :partial => (@partial = stub :partial)
+    end
+    describe 'bundle_for' do
+      it 'should return the right bundle' do
+        token = stub :token, :partial? => false
+
+        @category.bundle_for(token).should == @exact
+      end
+      it 'should return the right bundle' do
+        token = stub :token, :partial? => true
+
+        @category.bundle_for(token).should == @partial
+      end
+    end
+
+    describe 'load_from_cache' do
+      it 'should call two methods' do
+        @exact.should_receive(:load).once
+        @partial.should_receive(:load).once
+
+        @category.load_from_cache
+      end
     end
   end
 

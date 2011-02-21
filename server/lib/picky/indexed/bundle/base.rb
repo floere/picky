@@ -31,7 +31,7 @@ module Indexed # :nodoc:all
       delegate :[], :to => :configuration
     
       def initialize name, configuration, similarity_strategy
-        @identifier = "#{configuration.identifier} (#{name})"
+        @identifier = "#{configuration.identifier}:#{name}"
       
         @index         = {}
         @weights       = {}

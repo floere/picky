@@ -6,7 +6,7 @@ describe 'Query::Combination' do
 
   before(:each) do
     @bundle      = stub :bundle, :identifier => :bundle_name
-    @token       = stub :token, :text => :some_text, :partial => false, :similar? => true
+    @token       = Query::Token.processed('some_text~')
     @category    = stub :category, :bundle_for => @bundle, :name => :some_category_name
 
     @combination = Query::Combination.new @token, @category
@@ -51,21 +51,20 @@ describe 'Query::Combination' do
     end
     it 'should return a correct result' do
       @token.stub! :to_result => [:some_original_text, :some_text]
-      @combination.stub! :identifier => :some_identifier
 
-      @combination.to_result.should == [:some_identifier, :some_original_text, :some_text]
+      @combination.to_result.should == [:some_category_name, :some_original_text, :some_text]
     end
   end
 
   describe 'identifier' do
     it 'should get the category name from the bundle' do
-      @combination.identifier.should == :some_category_name
+      @combination.identifier.should == "bundle_name:similarity:some_text"
     end
   end
 
   describe 'ids' do
     it 'should call ids with the text on bundle' do
-      @bundle.should_receive(:ids).once.with :some_text
+      @bundle.should_receive(:ids).once.with 'some_text'
 
       @combination.ids
     end
@@ -81,7 +80,7 @@ describe 'Query::Combination' do
 
   describe 'weight' do
     it 'should call weight with the text on bundle' do
-      @bundle.should_receive(:weight).once.with :some_text
+      @bundle.should_receive(:weight).once.with 'some_text'
 
       @combination.weight
     end

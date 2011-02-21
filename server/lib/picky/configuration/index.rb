@@ -41,8 +41,14 @@ module Configuration # :nodoc:all
     #   @file_name ||= "#{@index_name}_#{@category_name}"
     # end
     
+    # Identifier for internal use.
+    #
     def identifier
-      @identifier ||= "#{index_name} #{category_name}"
+      @identifier ||= "#{index_name}:#{category_name}"
+    end
+    
+    def to_s
+      "#{index_name} #{category_name}"
     end
     
     def self.index_root

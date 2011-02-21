@@ -25,11 +25,12 @@ module Indexed
       @partial_strategy = options[:partial] || Cacher::Partial::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_index_bundle]   || Bundle::Memory.new(:exact,   configuration, similarity)
-      @partial = options[:partial_index_bundle] || Bundle::Memory.new(:partial, configuration, similarity)
+      bundle_class = options[:indexed_bundle_class] || Bundle::Memory
+      @exact   = bundle_class.new :exact,   configuration, similarity
+      @partial = bundle_class.new :partial, configuration, similarity
       
-      @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
-      @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
+      # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
+      # @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
       
       # TODO Extract?
       #

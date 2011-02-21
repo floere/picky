@@ -15,7 +15,7 @@ module Indexed
           @bundle = bundle
         end
         
-        delegate :load, :ids, :weight, :to => :@bundle
+        delegate :load, :ids, :weight, :identifier, :to => :@bundle
         
       end
       

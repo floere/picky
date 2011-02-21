@@ -45,7 +45,7 @@ module Query
     # The identifier for this combination.
     #
     def identifier
-      @category_name
+      "#{bundle.identifier}:#{@token.identifier}"
     end
     
     # Is the identifier in the given identifiers?
@@ -61,7 +61,7 @@ module Query
     # ]
     #
     def to_result
-      [identifier, *@token.to_result]
+      [@category_name, *@token.to_result]
     end
     
     # Example:

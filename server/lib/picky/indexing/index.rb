@@ -1,3 +1,5 @@
+# TODO Move to the API.
+#
 module Indexing
   
   class Index

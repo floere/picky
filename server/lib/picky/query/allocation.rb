@@ -30,7 +30,7 @@ module Query
     # Asks the combinations for the (intersected) ids.
     #
     def calculate_ids amount, offset
-      @combinations.ids(amount + offset) # Calculate as many ids as are necessary.
+      @combinations.ids amount, offset # Calculate as many ids as are necessary.
     end
 
     # This starts the searching process.

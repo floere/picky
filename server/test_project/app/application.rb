@@ -37,10 +37,10 @@ class BookSearch < Application
     mgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
               .define_map_location(:east1,  1, precision: 3, from: :east)
     
-    rgeo_index  = API::Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
-    rgeo_index.define_category :location
-    rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
-              .define_map_location(:east1,  1, precision: 3, from: :east)
+    # rgeo_index  = API::Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    # rgeo_index.define_category :location
+    # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
+    #           .define_map_location(:east1,  1, precision: 3, from: :east)
     
     csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,
@@ -55,6 +55,20 @@ class BookSearch < Application
                                  partial:    Partial::None.new)
                        .define_category(:publisher, qualifiers: [:p, :publisher])
                        .define_category(:subjects, qualifiers: [:s, :subject])
+    
+   redis_index = API::Index::Redis.new(:redis, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
+                   .define_category(:title,
+                                    qualifiers: [:t, :title, :titre],
+                                    partial:    Partial::Substring.new(from: 1),
+                                    similarity: Similarity::Phonetic.new(2))
+                   .define_category(:author,
+                                    qualifiers: [:a, :author, :auteur],
+                                    partial:    Partial::Substring.new(from: -2))
+                   .define_category(:year,
+                                    qualifiers: [:y, :year, :annee],
+                                    partial:    Partial::None.new)
+                   .define_category(:publisher, qualifiers: [:p, :publisher])
+                   .define_category(:subjects, qualifiers: [:s, :subject])
     
     sym_keys_index  = index :symbol_keys, Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip')
     sym_keys_index.define_category :text, partial: Partial::Substring.new(from: 1)
@@ -79,13 +93,13 @@ class BookSearch < Application
     full_mgeo  = Query::Full.new mgeo_index
     live_mgeo  = Query::Live.new mgeo_index
     
-    full_rgeo  = Query::Full.new rgeo_index
-    live_rgeo  = Query::Live.new rgeo_index
-    
     route %r{\A/admin\Z}      => LiveParameters.new
     
     route %r{\A/books/full\Z} => full_main,
           %r{\A/books/live\Z} => live_main,
+
+          %r{\A/redis/full\Z} => Query::Full.new(redis_index, options),
+          %r{\A/redis/live\Z} => Query::Live.new(redis_index, options),
           
           %r{\A/csv/full\Z}   => full_csv,
           %r{\A/csv/live\Z}   => live_csv,
@@ -94,9 +108,6 @@ class BookSearch < Application
           
           %r{\A/geo/full\Z}   => full_mgeo,
           %r{\A/geo/live\Z}   => live_mgeo,
-          
-          %r{\A/rgeo/full\Z}  => full_rgeo,
-          %r{\A/rgeo/live\Z}  => live_rgeo,
           
           %r{\A/all/full\Z}   => Query::Full.new(main_index, csv_test_index, isbn_index, mgeo_index, options),
           %r{\A/all/live\Z}   => Query::Live.new(main_index, csv_test_index, isbn_index, mgeo_index, options)

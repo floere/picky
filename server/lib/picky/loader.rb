@@ -224,7 +224,9 @@ module Loader # :nodoc:all
     # Query combinations, qualifiers, weigher.
     #
     load_relative 'query/combination'
-    load_relative 'query/combinations'
+    load_relative 'query/combinations/base'
+    load_relative 'query/combinations/memory'
+    load_relative 'query/combinations/redis'
     
     load_relative 'query/allocation'
     load_relative 'query/allocations'

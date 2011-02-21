@@ -175,6 +175,14 @@ module Query
       [@original, @text]
     end
     
+    # Internal identifier.
+    #
+    # TODO Uh.
+    #
+    def identifier
+      "#{similar?? :similarity : :index}:#{@text}"
+    end
+    
     # Displays the qualifier text and the text, joined.
     #
     # e.g. name:meier

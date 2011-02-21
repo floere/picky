@@ -33,13 +33,14 @@ module Query
     # Picky will raise a Query::Indexes::DifferentTypesError.
     #
     @@mapping = {
-      API::Index::Memory => Combinations
+      API::Index::Memory => Combinations::Memory,
+      API::Index::Redis => Combinations::Redis
     }
     def combinations_type_for index_definitions_ary
       index_types = index_definitions_ary.map(&:class)
       index_types.uniq!
       raise_different(index_types) unless index_types.size == 1
-      @@mapping[*index_types] || Combinations
+      @@mapping[*index_types] || Combinations::Memory
     end
     
     # Currently it isn't possible using Memory and Redis etc.
