@@ -182,6 +182,8 @@ class Application
     # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
     #
     def index name, source, options = {}
+      # TODO Rename API::Index::Memory.new or API::Index::Redis.new 
+      #
       IndexAPI.new name, source, options
     end
     

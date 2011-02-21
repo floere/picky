@@ -13,8 +13,48 @@ module Query
     
     attr_reader :indexes
     
+    # Creates a new Query::Indexes.
+    #
+    # Its job is to generate all possible combinations, but also
+    # checking whether the query indexes are all of the same type.
+    # Note: We cannot mix memory and redis indexes just yet.
+    #
     def initialize *index_definitions
-      @indexes = index_definitions.map &:indexed
+      @combinations_type = combinations_type_for index_definitions
+      @indexes           = index_definitions.map &:indexed
+    end
+    
+    # Returns the right combinations strategy for
+    # a number of query indexes.
+    #
+    # Currently it isn't possible using Memory and Redis etc.
+    # indexes in the same query index group.
+    #
+    # Picky will raise a Query::Indexes::DifferentTypesError.
+    #
+    @@mapping = {
+      IndexAPI => Combinations
+    }
+    def combinations_type_for index_definitions_ary
+      index_types = index_definitions_ary.map(&:class)
+      index_types.uniq!
+      raise_different(index_types) unless index_types.size == 1
+      @@mapping[*index_types] || Combinations
+    end
+    
+    # Currently it isn't possible using Memory and Redis etc.
+    # indexes in the same query index group.
+    #
+    class DifferentTypesError < StandardError
+      def initialize types
+        @types = types
+      end
+      def to_s
+        "Currently it isn't possible to mix #{@types.join(" and ")} Indexes in the same Query."
+      end
+    end
+    def raise_different index_types
+      raise DifferentTypesError.new(index_types)
     end
 
     # Returns a number of possible allocations for the given tokens.
@@ -45,7 +85,7 @@ module Query
         previous_allocations + expanded_combinations.map! do |expanded_combination|
           # TODO Insert Redis here?
           #
-          Combinations.new(expanded_combination).pack_into_allocation(index.result_identifier) # TODO Do not extract result_identifier. Remove pack_into_allocation.
+          @combinations_type.new(expanded_combination).pack_into_allocation(index.result_identifier) # TODO Do not extract result_identifier. Remove pack_into_allocation.
         end
       end)
     end

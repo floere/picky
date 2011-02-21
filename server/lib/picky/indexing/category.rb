@@ -17,8 +17,6 @@ module Indexing
     #
     #  * weights: 
     #  * tokenizer: 
-    #  * exact_indexing_bundle: 
-    #  * partial_indexing_bundle: 
     #
     def initialize name, index, options = {}
       @name = name
@@ -31,14 +29,17 @@ module Indexing
       @tokenizer = options[:tokenizer] || Tokenizers::Index.default
       @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer
       
-      # TODO Push into Bundle.
+      # TODO Push into Bundle. At least the weights.
       #
       partial    = options[:partial]    || Cacher::Partial::Default
       weights    = options[:weights]    || Cacher::Weights::Default
       similarity = options[:similarity] || Cacher::Similarity::Default
       
-      @exact   = options[:exact_indexing_bundle]   || Bundle::Memory.new(:exact,   configuration, similarity, Cacher::Partial::None.new, weights)
-      @partial = options[:partial_indexing_bundle] || Bundle::Memory.new(:partial, configuration, Cacher::Similarity::None.new, partial, weights)
+      # TODO The bundle needs to be an option.
+      #
+      bundle_class = options[:bundle_class] || Bundle::Memory
+      @exact   = bundle_class.new(:exact,   configuration, similarity, Cacher::Partial::None.new, weights)
+      @partial = bundle_class.new(:partial, configuration, Cacher::Similarity::None.new, partial, weights)
     end
     
     delegate :identifier, :prepare_index_directory, :to => :configuration
