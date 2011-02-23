@@ -83,8 +83,15 @@ module Sources
       
       on_database.execute "DROP TABLE IF EXISTS #{origin}"
       on_database.execute "CREATE TABLE #{origin} AS #{select_statement}"
-      on_database.execute "ALTER TABLE #{origin} CHANGE COLUMN id indexed_id INTEGER"
-      on_database.execute "ALTER TABLE #{origin} ADD COLUMN id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
+      # TODO Use rename_column ASAP.
+      #
+      if on_database.adapter_name == "PostgreSQL"
+        on_database.execute "ALTER TABLE #{origin} RENAME COLUMN id TO indexed_id"
+        on_database.execute "ALTER TABLE #{origin} ADD COLUMN id SERIAL PRIMARY KEY"
+      else
+        on_database.execute "ALTER TABLE #{origin} CHANGE COLUMN id indexed_id INTEGER"
+        on_database.execute "ALTER TABLE #{origin} ADD COLUMN id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
+      end
       
       # Execute any special queries this type needs executed.
       #
