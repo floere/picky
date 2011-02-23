@@ -31,6 +31,9 @@ module Query
         
         result_id = generate_intermediate_result_id
         
+        # TODO multi?
+        #
+        
         @@redis.zinterstore result_id, identifiers
         
         @@redis.zrange result_id, offset, (offset + amount)
