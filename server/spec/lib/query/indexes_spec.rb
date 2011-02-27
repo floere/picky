@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Query::Indexes do
+describe Internals::Query::Indexes do
 
   3.times do |i|
     n       = i + 1
@@ -13,13 +13,13 @@ describe Query::Indexes do
   
   describe 'combinations_type_for' do
     it 'returns a specific Combination for a specific input' do
-      indexes.combinations_type_for([API::Index::Memory.new(:gu, :ga)]).should == Query::Combinations::Memory
+      indexes.combinations_type_for([Index::Memory.new(:gu, :ga)]).should == Internals::Query::Combinations::Memory
     end
     it 'just works on the same types' do
-      indexes.combinations_type_for([:blorf, :blarf]).should == Query::Combinations::Memory
+      indexes.combinations_type_for([:blorf, :blarf]).should == Internals::Query::Combinations::Memory
     end
     it 'just uses standard combinations' do
-      indexes.combinations_type_for([:blorf]).should == Query::Combinations::Memory
+      indexes.combinations_type_for([:blorf]).should == Internals::Query::Combinations::Memory
     end
     it 'raises on multiple types' do
       expect do

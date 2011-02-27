@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Query::Combinations::Base do
+describe Internals::Query::Combinations::Base do
 
   before(:each) do
     @combinations_ary = stub :combinations_ary
@@ -12,7 +12,7 @@ describe Query::Combinations::Base do
   
   describe "pack_into_allocation" do
     it "return an Allocation" do
-      @combinations.pack_into_allocation(:some_result_identifier).should be_kind_of(Query::Allocation)
+      @combinations.pack_into_allocation(:some_result_identifier).should be_kind_of(Internals::Query::Allocation)
     end
     it "returns an Allocation with specific result_identifier" do
       @combinations.pack_into_allocation(:some_result_identifier).result_identifier.should == :some_result_identifier

@@ -28,6 +28,9 @@ module Loader # :nodoc:all
   def self.load_relative filename_without_rb
     load File.join(File.dirname(__FILE__), "#{filename_without_rb}.rb")
   end
+  def self.load_internals filename_without_rb
+    load File.join(File.dirname(__FILE__), "internals/#{filename_without_rb}.rb")
+  end
   
   def self.load_user filename
     load File.join(PICKY_ROOT, "#{filename}.rb")
@@ -79,177 +82,202 @@ module Loader # :nodoc:all
     exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
   end
   
-  # Loads the framework.
+  # Loads the internal parts of the framework.
+  # (Not for the user)
   #
-  def self.load_framework
+  def self.load_framework_internals
     # Load compiled C code.
     #
-    require_relative 'ext/maybe_compile'
+    load_internals 'ext/maybe_compile'
     
     # Load extensions.
     #
-    load_relative 'extensions/object'
-    load_relative 'extensions/array'
-    load_relative 'extensions/symbol'
-    load_relative 'extensions/module'
-    load_relative 'extensions/hash'
-    
-    # Load harakiri.
-    #
-    load_relative 'rack/harakiri'
+    load_internals 'extensions/object'
+    load_internals 'extensions/array'
+    load_internals 'extensions/symbol'
+    load_internals 'extensions/module'
+    load_internals 'extensions/hash'
     
     # Requiring Helpers
     #
-    load_relative 'helpers/measuring'
+    load_internals 'helpers/measuring'
+    
+    # Calculations.
+    #
+    load_internals 'calculations/location'
+    
+    # Index generation strategies.
+    #
+    load_internals 'indexers/no_source_specified_error'
+    load_internals 'indexers/serial'
+    
+    # Cacher.
+    #
+    load_internals 'cacher/strategy'
+    
+    # Partial index generation strategies.
+    #
+    load_internals 'cacher/partial/strategy'
+    load_internals 'cacher/partial/none'
+    load_internals 'cacher/partial/substring'
+    load_internals 'cacher/partial/default'
+
+    # Weight index generation strategies.
+    #
+    load_internals 'cacher/weights/strategy'
+    load_internals 'cacher/weights/logarithmic'
+    load_internals 'cacher/weights/default'
+    
+    # Similarity index generation strategies.
+    #
+    load_internals 'cacher/similarity/strategy'
+    load_internals 'cacher/similarity/none'
+    load_internals 'cacher/similarity/double_levenshtone'
+    load_internals 'cacher/similarity/default'
+    
+    # Convenience accessors for generators.
+    #
+    load_internals 'cacher/convenience'
+    
+    # Index generators.
+    #
+    load_internals 'cacher/generator'
+    load_internals 'cacher/partial_generator'
+    load_internals 'cacher/weights_generator'
+    load_internals 'cacher/similarity_generator'
+    
+    # Index store handling.
+    #
+    load_internals 'index/backend'
+    
+    load_internals 'index/redis'
+    load_internals 'index/redis/basic'
+    load_internals 'index/redis/list_hash'
+    load_internals 'index/redis/string_hash'
+    
+    load_internals 'index/file/basic'
+    load_internals 'index/file/text'
+    load_internals 'index/file/marshal'
+    load_internals 'index/file/json'
+    
+    load_internals 'index/files'
+    
+    # Indexing and Indexed things.
+    #
+    load_internals 'indexing/bundle/super_base' # TODO Remove.
+    load_internals 'indexing/bundle/base'
+    load_internals 'indexing/bundle/memory'
+    load_internals 'indexing/bundle/redis'
+    load_internals 'indexing/category'
+    load_internals 'indexing/categories'
+    load_internals 'indexing/index'
+    
+    load_internals 'indexed/bundle/base'
+    load_internals 'indexed/bundle/memory'
+    load_internals 'indexed/bundle/redis'
+    load_internals 'indexed/category'
+    load_internals 'indexed/categories'
+    load_internals 'indexed/index'
+        
+    # TODO Ok here?
+    #
+    load_internals 'indexed/wrappers/exact_first'
+    
+    # Bundle Wrapper
+    #
+    load_internals 'indexed/wrappers/bundle/wrapper'
+    load_internals 'indexed/wrappers/bundle/calculation'
+    load_internals 'indexed/wrappers/bundle/location'
+    
+    # Tokens.
+    #
+    load_internals 'query/token'
+    load_internals 'query/tokens'
+    
+    # Tokenizers types.
+    #
+    load_internals 'tokenizers/base'
+    load_internals 'tokenizers/index'
+    load_internals 'tokenizers/query'
+    
+    # Query combinations, qualifiers, weigher.
+    #
+    load_internals 'query/combination'
+    load_internals 'query/combinations/base'
+    load_internals 'query/combinations/memory'
+    load_internals 'query/combinations/redis'
+    
+    load_internals 'query/allocation'
+    load_internals 'query/allocations'
+    
+    load_internals 'query/qualifiers'
+    
+    load_internals 'query/weights'
+    
+    # Results.
+    #
+    load_internals 'results/base'
+    load_internals 'results/full'
+    load_internals 'results/live'
+    
+    # Configuration.
+    #
+    load_internals 'configuration/index'
+    
+    # Adapters.
+    #
+    load_internals 'adapters/rack/base'
+    load_internals 'adapters/rack/query'
+    load_internals 'adapters/rack/live_parameters'
+    load_internals 'adapters/rack'
+    
+    # Routing.
+    #
+    load_internals 'frontend_adapters/rack'
+  end
+  # Loads the user interface parts.
+  #
+  def self.load_user_interface
+    # Load harakiri.
+    #
+    load_relative 'rack/harakiri'
     
     # Character Substituters
     #
     load_relative 'character_substituters/west_european'
     
-    # Calculations.
-    #
-    load_relative 'calculations/location'
-    
     # Signal handling
     #
     load_relative 'signals'
-
-    # Various.
+    
+    # Logging.
     #
     load_relative 'loggers/search'
-
-    # Index generation strategies.
-    #
-    load_relative 'indexers/no_source_specified_error'
-    load_relative 'indexers/serial'
-    #
-    # load_relative 'indexers/solr'
     
-    # Cacher.
     #
-    load_relative 'cacher/strategy'
+    # TODO Externalize cachers.
+    #
     
-    # Partial index generation strategies.
+    # API.
     #
-    load_relative 'cacher/partial/strategy'
-    load_relative 'cacher/partial/none'
-    load_relative 'cacher/partial/substring'
-    load_relative 'cacher/partial/default'
-
-    # Weight index generation strategies.
-    #
-    load_relative 'cacher/weights/strategy'
-    load_relative 'cacher/weights/logarithmic'
-    load_relative 'cacher/weights/default'
-    
-    # Similarity index generation strategies.
-    #
-    load_relative 'cacher/similarity/strategy'
-    load_relative 'cacher/similarity/none'
-    load_relative 'cacher/similarity/double_levenshtone'
-    load_relative 'cacher/similarity/default'
-    
-    # Convenience accessors for generators.
-    #
-    load_relative 'cacher/convenience'
-    
-    # Index generators.
-    #
-    load_relative 'cacher/generator'
-    load_relative 'cacher/partial_generator'
-    load_relative 'cacher/weights_generator'
-    load_relative 'cacher/similarity_generator'
-    
-    # Index store handling.
-    #
-    load_relative 'index/backend'
-    
+    load_relative 'index/base'
+    load_relative 'index/memory'
     load_relative 'index/redis'
-    load_relative 'index/redis/basic'
-    load_relative 'index/redis/list_hash'
-    load_relative 'index/redis/string_hash'
     
-    load_relative 'index/file/basic'
-    load_relative 'index/file/text'
-    load_relative 'index/file/marshal'
-    load_relative 'index/file/json'
-    
-    load_relative 'index/files'
-    
-    # Indexing and Indexed things.
-    #
-    load_relative 'indexing/bundle/super_base' # TODO Remove.
-    load_relative 'indexing/bundle/base'
-    load_relative 'indexing/bundle/memory'
-    load_relative 'indexing/bundle/redis'
-    load_relative 'indexing/category'
-    load_relative 'indexing/categories'
-    load_relative 'indexing/index'
     load_relative 'indexing/indexes'
-    
-    load_relative 'indexed/bundle/base'
-    load_relative 'indexed/bundle/memory'
-    load_relative 'indexed/bundle/redis'
-    load_relative 'indexed/category'
-    load_relative 'indexed/categories'
-    load_relative 'indexed/index'
     load_relative 'indexed/indexes'
     
-    load_relative 'api/indexes'
-    load_relative 'api/aliases'
-    load_relative 'api/index/base'
-    load_relative 'api/index/memory'
-    load_relative 'api/index/redis'
-    
-    
-    load_relative 'indexed/wrappers/exact_first'
-    
-    # Bundle Wrapper
-    #
-    load_relative 'indexed/wrappers/bundle/wrapper'
-    load_relative 'indexed/wrappers/bundle/calculation'
-    load_relative 'indexed/wrappers/bundle/location'
-    
-    # Tokens.
-    #
-    load_relative 'query/token'
-    load_relative 'query/tokens'
-    
-    # Tokenizers types.
-    #
-    load_relative 'tokenizers/base'
-    load_relative 'tokenizers/index'
-    load_relative 'tokenizers/query'
-    
-    # Query combinations, qualifiers, weigher.
-    #
-    load_relative 'query/combination'
-    load_relative 'query/combinations/base'
-    load_relative 'query/combinations/memory'
-    load_relative 'query/combinations/redis'
-    
-    load_relative 'query/allocation'
-    load_relative 'query/allocations'
-    
-    load_relative 'query/qualifiers'
-    
-    load_relative 'query/indexes'
-    
-    load_relative 'query/weights'
+    load_relative 'index_bundle'
+    load_relative 'aliases'
     
     # Query.
     #
+    load_relative 'query/indexes'
     load_relative 'query/base'
     load_relative 'query/live'
     load_relative 'query/full'
     #
     # load_relative 'query/solr'
-    
-    # Results.
-    #
-    load_relative 'results/base'
-    load_relative 'results/full'
-    load_relative 'results/live'
     
     # Sources.
     #
@@ -262,30 +290,24 @@ module Loader # :nodoc:all
     load_relative 'sources/wrappers/base'
     load_relative 'sources/wrappers/location'
     
-    # Configuration.
-    #
-    load_relative 'configuration/index'
-    
     # Interfaces
     #
     load_relative 'interfaces/live_parameters'
     
-    # Adapters.
+    # Application.
     #
-    load_relative 'adapters/rack/base'
-    load_relative 'adapters/rack/query'
-    load_relative 'adapters/rack/live_parameters'
-    load_relative 'adapters/rack'
-    
-    # Application and routing.
-    #
-    load_relative 'frontend_adapters/rack'
     load_relative 'application'
     
-    # Load tools.
+    # Load tools. Load in specific case?
     #
-    # load_relative 'solr/schema_generator'
     load_relative 'cores'
+  end
+  
+  # Loads the framework.
+  #
+  def self.load_framework
+    load_framework_internals
+    load_user_interface
   end
 
 end

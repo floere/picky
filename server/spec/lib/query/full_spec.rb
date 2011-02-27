@@ -9,10 +9,10 @@ describe Query::Full do
 
   describe 'result_type' do
     before(:each) do
-      @query = Query::Full.new @index
+      @query = described_class.new @index
     end
     it "should return a specific type" do
-      @query.result_type.should == Results::Full
+      @query.result_type.should == Internals::Results::Full
     end
   end
 

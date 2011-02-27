@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Query::Combinations::Memory do
+describe Internals::Query::Combinations::Memory do
 
   before(:each) do
     @combinations_ary = stub :combinations_ary

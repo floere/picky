@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Query::Combinations::Redis do
+describe Internals::Query::Combinations::Redis do
 
   before(:each) do
     @combinations_ary = stub :combinations_ary

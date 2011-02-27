@@ -9,16 +9,16 @@ describe Query::Live do
 
   describe 'result_type' do
     before(:each) do
-      @query = Query::Live.new @index
+      @query = described_class.new @index
     end
     it "should return a specific type" do
-      @query.result_type.should == Results::Live
+      @query.result_type.should == Internals::Results::Live
     end
   end
 
   describe "execute" do
     before(:each) do
-      @query = Query::Live.new @index
+      @query = described_class.new @index
     end
     it "should get allocations" do
       @query.result_type.should_receive :from
