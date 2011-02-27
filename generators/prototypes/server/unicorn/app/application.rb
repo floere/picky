@@ -26,7 +26,7 @@ class PickySearch < Application
   # Define an index. Use a database etc. source?
   # See http://github.com/floere/picky/wiki/Sources-Configuration#sources
   #
-  books_index = index :books, Sources::CSV.new(:title, :author, :year, file: 'app/library.csv')
+  books_index = Index::Memory.new :books, Sources::CSV.new(:title, :author, :year, file: 'app/library.csv')
   books_index.define_category :title,
                               similarity: Similarity::Phonetic.new(3), # Up to three similar title word indexed (default: No similarity).
                               partial: Partial::Substring.new(from: 1) # Indexes substrings upwards from character 1 (default: -3),
