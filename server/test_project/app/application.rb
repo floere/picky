@@ -19,7 +19,7 @@ class BookSearch < Application
                      maximum_tokens:                     5,
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
-    main_index = index :main, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
+    main_index = Index::Memory.new :main, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
     main_index.define_category :title,
                                qualifiers: [:t, :title, :titre],
                                partial:    Partial::Substring.new(:from => 1),
@@ -29,10 +29,10 @@ class BookSearch < Application
     main_index.define_category :year,
                                qualifiers: [:y, :year, :annee]
     
-    isbn_index = index :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
+    isbn_index = Index::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
     isbn_index.define_category :isbn, :qualifiers => [:i, :isbn]
     
-    mgeo_index  = index :memory_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    mgeo_index  = Index::Memory.new :memory_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     mgeo_index.define_category :location
     mgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
               .define_map_location(:east1,  1, precision: 3, from: :east)
@@ -42,7 +42,7 @@ class BookSearch < Application
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
     
-    csv_test_index = index(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
+    csv_test_index = Index::Memory.new(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,
                                  qualifiers: [:t, :title, :titre],
                                  partial:    Partial::Substring.new(from: 1),
@@ -56,7 +56,7 @@ class BookSearch < Application
                        .define_category(:publisher, qualifiers: [:p, :publisher])
                        .define_category(:subjects, qualifiers: [:s, :subject])
     
-   redis_index = API::Index::Redis.new(:redis, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
+   redis_index = Index::Redis.new(:redis, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                    .define_category(:title,
                                     qualifiers: [:t, :title, :titre],
                                     partial:    Partial::Substring.new(from: 1),
@@ -70,7 +70,7 @@ class BookSearch < Application
                    .define_category(:publisher, qualifiers: [:p, :publisher])
                    .define_category(:subjects, qualifiers: [:s, :subject])
     
-    sym_keys_index  = index :symbol_keys, Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip')
+    sym_keys_index  = Index::Memory.new :symbol_keys, Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip')
     sym_keys_index.define_category :text, partial: Partial::Substring.new(from: 1)
     
     options = {

@@ -16,7 +16,7 @@ module Internals
         def initialize name, configuration, *args
           super name, configuration, *args
         
-          @backend = ::Index::Redis.new name, configuration # TODO Needed?
+          @backend = Internals::Index::Redis.new name, configuration # TODO Needed?
         end
     
       end

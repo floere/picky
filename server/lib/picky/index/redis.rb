@@ -8,8 +8,8 @@ module Index
     # a Redis index backend.
     #
     def initialize name, source, options = {}
-      options[:indexing_bundle_class] ||= Indexing::Bundle::Redis
-      options[:indexed_bundle_class]  ||= Indexed::Bundle::Redis
+      options[:indexing_bundle_class] ||= Internals::Indexing::Bundle::Redis
+      options[:indexed_bundle_class]  ||= Internals::Indexed::Bundle::Redis
       
       super name, source, options
     end

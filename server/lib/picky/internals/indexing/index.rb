@@ -26,7 +26,7 @@ module Internals
       def initialize name, source, options = {}
         @name   = name
         @source = source
-      
+              
         @after_indexing = options[:after_indexing]
         @bundle_class   = options[:indexing_bundle_class] # TODO This should actually be a fixed parameter.
       
