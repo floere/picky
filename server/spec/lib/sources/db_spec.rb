@@ -10,7 +10,7 @@ describe Sources::DB do
     
     @select_statement = stub :statement
     
-    @source = Sources::DB.new @select_statement, :option => :some_options
+    @source = described_class.new @select_statement, :option => :some_options
     
     @source.stub! :database => @adapter
     @source.stub! :connect_backend

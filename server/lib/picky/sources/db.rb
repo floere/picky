@@ -126,10 +126,24 @@ module Sources
     #
     def get_data type, category, offset, &block # :nodoc:
       select_statement = harvest_statement_with_offset(type, category, offset)
-      database.connection.execute(select_statement).each do |indexed_id, text|
-        next unless text
-        text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
-        yield indexed_id, text
+      
+      # TODO Rewrite ASAP.
+      #
+      if database.connection.adapter_name == "PostgreSQL"
+        id_key   = 'indexed_id'
+        text_key = category.from.to_s
+        database.connection.execute(select_statement).each do |hash|
+          indexed_id, text = hash.values_at id_key, text_key
+          next unless text
+          text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
+          yield indexed_id, text
+        end
+      else
+        database.connection.execute(select_statement).each do |indexed_id, text|
+          next unless text
+          text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
+          yield indexed_id, text
+        end
       end
     end
     
