@@ -23,7 +23,7 @@ describe Internals::Indexed::Wrappers::ExactFirst do
       #   type.categories.should be_kind_of(Index::Wrappers::ExactFirst)
       # end
       it "returns the type" do
-        type = Indexed::Index.new :type_name
+        type = Internals::Indexed::Index.new :type_name
         type.define_category :some_category
         
         described_class.wrap(type).should == type
@@ -33,7 +33,7 @@ describe Internals::Indexed::Wrappers::ExactFirst do
       it "wraps each category" do
         category = stub :category, :exact => :exact, :partial => :partial
         
-        described_class.wrap(category).should be_kind_of(Indexed::Wrappers::ExactFirst)
+        described_class.wrap(category).should be_kind_of(described_class)
       end
     end
   end

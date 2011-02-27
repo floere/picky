@@ -4,6 +4,6 @@ require 'spec_helper'
 
 describe 'aliases' do
   it 'exists an Indexes class that is an instance of API::Indexes' do
-    Indexes.class.should == API::Indexes
+    Indexes.class.should == IndexBundle
   end
 end

@@ -24,8 +24,8 @@ module Internals
       
         # TODO Push the defaults out into the index.
         #
-        @partial_strategy = options[:partial] || Cacher::Partial::Default
-        similarity = options[:similarity] || Cacher::Similarity::Default
+        @partial_strategy = options[:partial] || Internals::Generators::Partial::Default
+        similarity = options[:similarity] || Internals::Generators::Similarity::Default
       
         bundle_class = options[:indexed_bundle_class] || Bundle::Memory
         @exact   = bundle_class.new :exact,   configuration, similarity
@@ -80,7 +80,7 @@ module Internals
       #
       #
       def combination_for token
-        weight(token) && ::Query::Combination.new(token, self)
+        weight(token) && Internals::Query::Combination.new(token, self)
       end
     
     end

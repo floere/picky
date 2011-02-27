@@ -2,11 +2,11 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::LiveParameters do
+describe Internals::Adapters::Rack::LiveParameters do
   
   before(:each) do
     @live_parameters = stub :live_parameters
-    @adapter         = Adapters::Rack::LiveParameters.new @live_parameters
+    @adapter         = described_class.new @live_parameters
   end
   
   describe 'to_app' do

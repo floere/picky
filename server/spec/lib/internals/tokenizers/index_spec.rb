@@ -2,30 +2,30 @@
 #
 require 'spec_helper'
 
-describe Tokenizers::Index do
+describe Internals::Tokenizers::Index do
   
-  let(:tokenizer) { Tokenizers::Index.new }
+  let(:tokenizer) { described_class.new }
   
   describe "default*" do
     before(:all) do
-      @old = Tokenizers::Index.default
+      @old = described_class.default
     end
     after(:all) do
-      Tokenizers::Index.default = @old
+      described_class.default = @old
     end
     it "has a reader" do
-      lambda { Tokenizers::Index.default }.should_not raise_error
+      lambda { described_class.default }.should_not raise_error
     end
     it "returns by default a new Index" do
-      Tokenizers::Index.default.should be_kind_of(Tokenizers::Index)
+      described_class.default.should be_kind_of(described_class)
     end
     it "has a writer" do
-      lambda { Tokenizers::Index.default = :bla }.should_not raise_error
+      lambda { described_class.default = :bla }.should_not raise_error
     end
     it "returns what has been written, if something has been written" do
-      Tokenizers::Index.default = :some_default
+      described_class.default = :some_default
       
-      Tokenizers::Index.default.should == :some_default
+      described_class.default.should == :some_default
     end
   end
   

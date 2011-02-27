@@ -1,21 +1,45 @@
 # coding: utf-8
+#
 require 'spec_helper'
 
-describe 'Query::Base' do
+describe Query::Base do
+  
+  describe 'combinations_type_for' do
+    let(:query) { described_class.new }
+    it 'returns a specific Combination for a specific input' do
+      query.combinations_type_for([Index::Memory.new(:gu, :ga)]).should == Internals::Query::Combinations::Memory
+    end
+    it 'just works on the same types' do
+      query.combinations_type_for([:blorf, :blarf]).should == Internals::Query::Combinations::Memory
+    end
+    it 'just uses standard combinations' do
+      query.combinations_type_for([:blorf]).should == Internals::Query::Combinations::Memory
+    end
+    it 'raises on multiple types' do
+      expect do
+        query.combinations_type_for [:blorf, "blarf"]
+      end.to raise_error(Query::Base::DifferentTypesError)
+    end
+    it 'raises with the right message on multiple types' do
+      expect do
+        query.combinations_type_for [:blorf, "blarf"]
+      end.to raise_error("Currently it isn't possible to mix Symbol and String Indexes in the same Query.")
+    end
+  end
   
   describe "weights handling" do
     it "creates a default weight when no weights are given" do
-      query = Query::Base.new
+      query = described_class.new
       
       query.weights.should be_kind_of(Query::Weights)
     end
     it "handles :weights options when not yet wrapped" do
-      query = Query::Base.new :weights => { [:a, :b] => +3 }
+      query = described_class.new :weights => { [:a, :b] => +3 }
       
       query.weights.should be_kind_of(Query::Weights)
     end
     it "handles :weights options when already wrapped" do
-      query = Query::Base.new :weights => Query::Weights.new([:a, :b] => +3)
+      query = described_class.new :weights => Query::Weights.new([:a, :b] => +3)
       
       query.weights.should be_kind_of(Query::Weights)
     end

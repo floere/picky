@@ -14,7 +14,7 @@ describe Internals::Indexed::Index do
         @index.categories.categories.size.should == 1 
       end
       it 'returns the new category' do
-        @index.define_category(:some_category_name).should be_kind_of(Indexed::Category)
+        @index.define_category(:some_category_name).should be_kind_of(Internals::Indexed::Category)
       end
     end
   end

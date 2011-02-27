@@ -21,27 +21,32 @@ describe Sources::DB do
       @type     = stub :type,     :name => :some_type
       @category = stub :category, :from => :some_category
     end
-    context 'no data' do
-      it "delegates to the connection" do
-
-        @connection.should_receive(:execute).
-                    once.
-                    with('SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000').
-                    and_return []
-
-        @source.get_data @type, @category, :some_offset
+    context 'mysql' do
+      before(:each) do
+        @connection.stub! :adapter_name => 'mysql'
       end
-    end
-    context 'with data' do
-      it 'yields to the caller' do
-        @connection.should_receive(:execute).
-                    any_number_of_times.
-                    with('SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000').
-                    and_return [[1, 'text']]
+      context 'no data' do
+        it "delegates to the connection" do
 
-        @source.get_data @type, @category, :some_offset do |id, text|
-          id.should == 1
-          text.should == 'text'
+          @connection.should_receive(:execute).
+                      once.
+                      with('SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000').
+                      and_return []
+
+          @source.get_data @type, @category, :some_offset
+        end
+      end
+      context 'with data' do
+        it 'yields to the caller' do
+          @connection.should_receive(:execute).
+                      any_number_of_times.
+                      with('SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000').
+                      and_return [[1, 'text']]
+
+          @source.get_data @type, @category, :some_offset do |id, text|
+            id.should == 1
+            text.should == 'text'
+          end
         end
       end
     end

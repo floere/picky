@@ -35,10 +35,8 @@ module Query
     def initialize *index_definitions
       options      = Hash === index_definitions.last ? index_definitions.pop : {}
 
-      combinations_type = combinations_type_for(index_definitions)
-
-      @indexes     = Indexes.new *index_definitions, combinations_type
-      @tokenizer   = options[:tokenizer] || Tokenizers::Query.default
+      @indexes     = Internals::Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
+      @tokenizer   = options[:tokenizer] || Internals::Tokenizers::Query.default
       weights      = options[:weights] || Weights.new
       @weights     = Hash === weights ? Weights.new(weights) : weights
     end
@@ -58,8 +56,22 @@ module Query
     def combinations_type_for index_definitions_ary
       index_types = index_definitions_ary.map(&:class)
       index_types.uniq!
-      raise_different(index_types) unless index_types.size == 1
-      @@mapping[*index_types] || Combinations::Memory
+      raise_different(index_types) if index_types.size > 1
+      !index_types.empty? && @@mapping[*index_types] || Internals::Query::Combinations::Memory
+    end
+    # Currently it isn't possible using Memory and Redis etc.
+    # indexes in the same query index group.
+    #
+    class DifferentTypesError < StandardError
+      def initialize types
+        @types = types
+      end
+      def to_s
+        "Currently it isn't possible to mix #{@types.join(" and ")} Indexes in the same Query."
+      end
+    end
+    def raise_different index_types
+      raise DifferentTypesError.new(index_types)
     end
   
     # This is the main entry point for a query.

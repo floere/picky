@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Query::Allocation do
+describe Internals::Query::Allocation do
   
   before(:each) do
     @combinations = stub :combinations
-    @allocation = Query::Allocation.new @combinations, :some_result_identifier
+    @allocation = described_class.new @combinations, :some_result_identifier
   end
   
   describe "eql?" do
@@ -130,7 +130,7 @@ describe Query::Allocation do
   describe 'to_result' do
     context 'with few combinations' do
       before(:each) do
-        @allocation = Query::Allocation.new stub(:combinations, :ids => [1,2,3], :to_result => [:some_result]), :some_result_identifier
+        @allocation = described_class.new stub(:combinations, :ids => [1,2,3], :to_result => [:some_result]), :some_result_identifier
         @allocation.instance_variable_set :@score, :some_score
       end
       context 'with ids' do
@@ -144,7 +144,7 @@ describe Query::Allocation do
     context 'with results' do
       before(:each) do
         combinations = stub :combinations, :ids => [1,2,3], :to_result => [:some_result1, :some_result2]
-        @allocation = Query::Allocation.new combinations, :some_result_identifier
+        @allocation = described_class.new combinations, :some_result_identifier
         @allocation.instance_variable_set :@score, :some_score
       end
       context 'with ids' do
@@ -157,7 +157,7 @@ describe Query::Allocation do
     end
     context 'without results' do
       before(:each) do
-        @allocation = Query::Allocation.new stub(:combinations, :ids => [], :to_result => []), :some_result_identifier
+        @allocation = described_class.new stub(:combinations, :ids => [], :to_result => []), :some_result_identifier
         @allocation.instance_variable_set :@score, :some_score
       end
       it 'should return nil' do
@@ -170,7 +170,7 @@ describe Query::Allocation do
 
   describe 'to_json' do
     before(:each) do
-      @allocation = Query::Allocation.new stub(:combination, :ids => [1,2,3,4,5,6,7], :to_result => [:some_result1, :some_result2]), :some_result_identifier
+      @allocation = described_class.new stub(:combination, :ids => [1,2,3,4,5,6,7], :to_result => [:some_result1, :some_result2]), :some_result_identifier
       @allocation.instance_variable_set :@score, :some_score
     end
     it 'should output the correct json string' do
@@ -190,9 +190,9 @@ describe Query::Allocation do
 
   describe "<=>" do
     it "should sort higher first" do
-      first = Query::Allocation.new [], :some_result_identifier
+      first = described_class.new [], :some_result_identifier
       first.instance_variable_set :@score, 20
-      second = Query::Allocation.new [], :some_result_identifier
+      second = described_class.new [], :some_result_identifier
       second.instance_variable_set :@score, 10
 
       first.<=>(second).should == -1
@@ -201,11 +201,11 @@ describe Query::Allocation do
 
   describe "sort!" do
     it "should sort correctly" do
-      first = Query::Allocation.new :whatever, :some_result_identifier
+      first = described_class.new :whatever, :some_result_identifier
       first.instance_variable_set :@score, 20
-      second = Query::Allocation.new :whatever, :some_result_identifier
+      second = described_class.new :whatever, :some_result_identifier
       second.instance_variable_set :@score, 10
-      third = Query::Allocation.new :whatever, :some_result_identifier
+      third = described_class.new :whatever, :some_result_identifier
       third.instance_variable_set :@score, 5
 
       allocations = [second, third, first]

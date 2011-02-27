@@ -2,11 +2,11 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::Query do
+describe Internals::Adapters::Rack::Query do
   
   before(:each) do
     @query   = stub :query
-    @adapter = Adapters::Rack::Query.new @query
+    @adapter = described_class.new @query
   end
   
   describe 'to_app' do

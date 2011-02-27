@@ -16,7 +16,7 @@ module Query
     # Returns Results::Live as its result type.
     #
     def result_type
-      Results::Live
+      Internals::Results::Live
     end
 
   end

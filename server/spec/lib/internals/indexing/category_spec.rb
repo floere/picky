@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Indexing::Category do
+describe Internals::Indexing::Category do
   
   before(:each) do
     @index  = stub :index, :name => :some_index
     @source = stub :some_given_source, :key_format => nil
-    @category = Indexing::Category.new :some_category, @index, :source => @source
+    @category = described_class.new :some_category, @index, :source => @source
   end
   context "unit specs" do
     before(:each) do
@@ -107,7 +107,7 @@ describe Indexing::Category do
     describe "source" do
       context "without source" do
         it "raises" do
-          lambda { Indexing::Category.new :some_name, @index }.should raise_error(Indexers::NoSourceSpecifiedException)
+          lambda { described_class.new :some_name, @index }.should raise_error(Indexers::NoSourceSpecifiedException)
         end
       end
     end

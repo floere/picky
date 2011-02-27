@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe Query::Qualifiers do
+describe Internals::Query::Qualifiers do
   
   before(:each) do
-    Query::Qualifiers.instance << Query::Qualifier.new(:test1, ['t1', 'tt1', 'ttt1'])
-    Query::Qualifiers.instance << Query::Qualifier.new(:test2, [:t2, :tt2, :ttt2])
-    Query::Qualifiers.instance << Query::Qualifier.new(:test3, [:t3, :tt3, :ttt3])
-    Query::Qualifiers.instance.prepare
+    described_class.instance << Internals::Query::Qualifier.new(:test1, ['t1', 'tt1', 'ttt1'])
+    described_class.instance << Internals::Query::Qualifier.new(:test2, [:t2, :tt2, :ttt2])
+    described_class.instance << Internals::Query::Qualifier.new(:test3, [:t3, :tt3, :ttt3])
+    described_class.instance.prepare
   end
   
   def self.it_should_normalize(qualifier, expected)
     it "should map #{qualifier} to #{expected}" do
-      Query::Qualifiers.instance.normalize(qualifier).should == expected
+      described_class.instance.normalize(qualifier).should == expected
     end
   end
 

@@ -2,10 +2,10 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::Base do
+describe Internals::Adapters::Rack::Base do
   
   before(:each) do
-    @adapter = Adapters::Rack::Base.new
+    @adapter = described_class.new
   end
   
   describe 'respond_with' do

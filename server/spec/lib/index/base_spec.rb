@@ -32,8 +32,8 @@ describe Index::Base do
         end
         it 'yields both the indexing category and the indexed category' do
           @api.define_category(:some_name) do |indexing, indexed|
-            indexing.should be_kind_of(Indexing::Category)
-            indexed.should be_kind_of(Indexed::Category)
+            indexing.should be_kind_of(Internals::Indexing::Category)
+            indexed.should be_kind_of(Internals::Indexed::Category)
           end
         end
         it 'yields the indexing category which has the given name' do

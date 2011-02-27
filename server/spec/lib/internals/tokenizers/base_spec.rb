@@ -2,10 +2,10 @@
 #
 require 'spec_helper'
 
-describe Tokenizers::Base do
+describe Internals::Tokenizers::Base do
   
   context 'with special instance' do
-    let (:tokenizer) { Tokenizers::Base.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello } }
+    let (:tokenizer) { described_class.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello } }
     it 'rejects tokens with length < 2' do
       tokenizer.reject([:'', :a, :ab, :abc]).should == [:ab, :abc]
     end
@@ -15,7 +15,7 @@ describe Tokenizers::Base do
   end
   
   context 'with normal instance' do
-    let(:tokenizer) { Tokenizers::Base.new }
+    let(:tokenizer) { described_class.new }
 
     describe 'reject_token_if' do
       it 'rejects empty tokens by default' do

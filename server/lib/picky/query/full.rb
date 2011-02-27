@@ -12,7 +12,7 @@ module Query
     # Returns Results::Full as its result type.
     #
     def result_type
-      Results::Full
+      Internals::Results::Full
     end
 
   end

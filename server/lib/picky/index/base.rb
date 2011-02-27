@@ -23,12 +23,12 @@ module Index
     #
     def initialize name, source, options = {}
       @name     = name
-      @indexing = Indexing::Index.new name, source, options
-      @indexed  = Indexed::Index.new  name, options
+      @indexing = Internals::Indexing::Index.new name, source, options
+      @indexed  = Internals::Indexed::Index.new  name, options
   
       # Centralized registry.
       #
-      ::Indexes.register self
+      Indexes.register self
     end
 
     # Defines a searchable category on the index.
@@ -122,7 +122,7 @@ module Index
   
       define_category category_name, options do |indexing, indexed|
         indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
-        indexing.tokenizer = Tokenizers::Index.new
+        indexing.tokenizer = Internals::Tokenizers::Index.new
     
         exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: range, precision: precision
         indexed.exact   = exact_bundle

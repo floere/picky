@@ -1,20 +1,25 @@
 # encoding: utf-8
 #
-module Indexing # :nodoc:all
+module Internals
+
+  module Indexing # :nodoc:all
   
-  module Bundle
+    module Bundle
     
-    # The memory version dumps its generated indexes to disk
-    # (mostly JSON) to load them into memory on startup.
-    #
-    class Memory < Base
-      
-      # We're using files for the memory backend.
-      # E.g. dump writes files.
+      # The memory version dumps its generated indexes to disk
+      # (mostly JSON) to load them into memory on startup.
       #
-      alias backend files
+      class Memory < Base
+      
+        # We're using files for the memory backend.
+        # E.g. dump writes files.
+        #
+        alias backend files
+    
+      end
     
     end
-    
+  
   end
+  
 end

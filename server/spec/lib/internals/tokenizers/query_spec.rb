@@ -1,30 +1,30 @@
 # coding: utf-8
 require 'spec_helper'
 
-describe Tokenizers::Query do
+describe Internals::Tokenizers::Query do
 
-  let(:tokenizer) { Tokenizers::Query.new }
+  let(:tokenizer) { described_class.new }
   
   describe "default*" do
     before(:all) do
-      @old = Tokenizers::Query.default
+      @old = described_class.default
     end
     after(:all) do
-      Tokenizers::Query.default = @old
+      described_class.default = @old
     end
     it "has a reader" do
-      lambda { Tokenizers::Query.default }.should_not raise_error
+      lambda { described_class.default }.should_not raise_error
     end
     it "returns by default a new Index" do
-      Tokenizers::Query.default.should be_kind_of(Tokenizers::Query)
+      described_class.default.should be_kind_of(described_class)
     end
     it "has a writer" do
-      lambda { Tokenizers::Query.default = :bla }.should_not raise_error
+      lambda { described_class.default = :bla }.should_not raise_error
     end
     it "returns what has been written, if something has been written" do
-      Tokenizers::Query.default = :some_default
+      described_class.default = :some_default
       
-      Tokenizers::Query.default.should == :some_default
+      described_class.default.should == :some_default
     end
   end
   
@@ -33,7 +33,7 @@ describe Tokenizers::Query do
       tokenizer.maximum_tokens.should == 5
     end
     it "should be settable" do
-      Tokenizers::Query.new(maximum_tokens: 3).maximum_tokens.should == 3
+      described_class.new(maximum_tokens: 3).maximum_tokens.should == 3
     end
   end
   
@@ -125,7 +125,7 @@ describe Tokenizers::Query do
   describe "token_for" do
     it "should get a preprocessed token" do
       text = stub(:text)
-      Query::Token.should_receive(:processed).with text
+      Internals::Query::Token.should_receive(:processed).with text
       
       tokenizer.token_for text
     end

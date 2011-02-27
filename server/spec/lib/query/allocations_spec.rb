@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Query::Allocations do
+describe Internals::Query::Allocations do
 
   describe 'reduce_to' do
     before(:each) do
       @allocation1 = stub :allocation1
       @allocation2 = stub :allocation2
       @allocation3 = stub :allocation3
-      @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+      @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     it 'should do nothing' do
       @allocations.reduce_to 2
@@ -21,7 +21,7 @@ describe Query::Allocations do
       @allocation1 = stub :allocation1
       @allocation2 = stub :allocation2
       @allocation3 = stub :allocation3
-      @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+      @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     context 'identifiers empty' do
       it 'should do nothing' do
@@ -47,7 +47,7 @@ describe Query::Allocations do
       @allocation1 = stub :allocation1
       @allocation2 = stub :allocation2
       @allocation3 = stub :allocation3
-      @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+      @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     context 'identifiers empty' do
       it 'should do nothing' do
@@ -74,7 +74,7 @@ describe Query::Allocations do
         @allocation1 = stub :allocation1, :ids => [1, 2, 3, 4]
         @allocation2 = stub :allocation2, :ids => [5, 6, 7]
         @allocation3 = stub :allocation3, :ids => [8, 9]
-        @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+        @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
         @allocations.ids(0).should == []
@@ -91,7 +91,7 @@ describe Query::Allocations do
         @allocation1 = stub :allocation1, :ids => [:a, :b, :c, :d]
         @allocation2 = stub :allocation2, :ids => [:e, :f, :g]
         @allocation3 = stub :allocation3, :ids => [:h, :i]
-        @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+        @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
         @allocations.ids(0).should == []
@@ -110,7 +110,7 @@ describe Query::Allocations do
       @allocation1 = stub :allocation1, :process! => [], :count => 4 #, ids: [1, 2, 3, 4]
       @allocation2 = stub :allocation2, :process! => [], :count => 3 #, ids: [5, 6, 7]
       @allocation3 = stub :allocation3, :process! => [], :count => 2 #, ids: [8, 9]
-      @allocations = Query::Allocations.new [@allocation1, @allocation2, @allocation3]
+      @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     describe 'amount spanning 3 allocations' do
       before(:each) do
@@ -184,7 +184,7 @@ describe Query::Allocations do
       before(:each) do
         @allocation1 = stub :allocation1, :ids => [1, 2, 3]
         @allocation2 = stub :allocation2, :ids => [4, 5, 6, 7]
-        @allocations = Query::Allocations.new [@allocation1, @allocation2]
+        @allocations = described_class.new [@allocation1, @allocation2]
       end
       it 'should return one random id from the first allocations by default' do
         @allocations.random_ids.size.should == 1
@@ -205,7 +205,7 @@ describe Query::Allocations do
       before(:each) do
         @allocation1 = stub :allocation1, :ids => [1]
         @allocation2 = stub :allocation2, :ids => []
-        @allocations = Query::Allocations.new [@allocation1, @allocation2]
+        @allocations = described_class.new [@allocation1, @allocation2]
       end
       it 'should return one random id from its allocations by default' do
         @allocations.random_ids.size.should == 1
@@ -221,7 +221,7 @@ describe Query::Allocations do
       before(:each) do
         @allocation1 = stub :allocation1, :ids => []
         @allocation2 = stub :allocation2, :ids => []
-        @allocations = Query::Allocations.new [@allocation1, @allocation2]
+        @allocations = described_class.new [@allocation1, @allocation2]
       end
       it 'should return one random id from its allocations by default' do
         @allocations.random_ids.size.should == 0
@@ -239,7 +239,7 @@ describe Query::Allocations do
     context 'all allocations have results' do
       before(:each) do
         @allocation = stub :allocation
-        @allocations = Query::Allocations.new [@allocation, @allocation, @allocation]
+        @allocations = described_class.new [@allocation, @allocation, @allocation]
       end
       it 'should delegate to each allocation with no params' do
         @allocation.should_receive(:to_result).exactly(3).times.with
@@ -251,7 +251,7 @@ describe Query::Allocations do
       before(:each) do
         @allocation           = stub :allocation, :to_result => :some_result
         @no_result_allocation = stub :no_results, :to_result => nil
-        @allocations = Query::Allocations.new [@allocation, @no_result_allocation, @allocation]
+        @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
       end
       it 'should delegate to each allocation with the same params' do
         @allocations.to_result.should == [:some_result, :some_result]
@@ -262,7 +262,7 @@ describe Query::Allocations do
   describe 'total' do
     context 'with allocations' do
       before(:each) do
-        @allocations = Query::Allocations.new [
+        @allocations = described_class.new [
           stub(:allocation, :process! => (1..10).to_a, :count => 10),
           stub(:allocation, :process! => (1..80).to_a, :count => 80),
           stub(:allocation, :process! => (1..20).to_a, :count => 20)
@@ -276,7 +276,7 @@ describe Query::Allocations do
     end
     context 'without allocations' do
       before(:each) do
-        @allocations = Query::Allocations.new []
+        @allocations = described_class.new []
       end
       it 'should be 0' do
         @allocations.process! 20, 0
@@ -289,7 +289,7 @@ describe Query::Allocations do
   describe "each" do
     before(:each) do
       @internal_allocations = mock :internal_allocations
-      @allocations = Query::Allocations.new @internal_allocations
+      @allocations = described_class.new @internal_allocations
     end
     it "should delegate to the internal allocations" do
       stub_proc = lambda {}
@@ -301,7 +301,7 @@ describe Query::Allocations do
   describe "inject" do
     before(:each) do
       @internal_allocations = mock :internal_allocations
-      @allocations = Query::Allocations.new @internal_allocations
+      @allocations = described_class.new @internal_allocations
     end
     it "should delegate to the internal allocations" do
       stub_proc = lambda {}
@@ -313,7 +313,7 @@ describe Query::Allocations do
   describe "empty?" do
     before(:each) do
       @internal_allocations = mock :internal_allocations
-      @allocations = Query::Allocations.new @internal_allocations
+      @allocations = described_class.new @internal_allocations
     end
     it "should delegate to the internal allocations array" do
       @internal_allocations.should_receive(:empty?).once
@@ -324,7 +324,7 @@ describe Query::Allocations do
   describe "to_s" do
     before(:each) do
       @internal_allocations = mock :internal_allocations
-      @allocations = Query::Allocations.new @internal_allocations
+      @allocations = described_class.new @internal_allocations
     end
     it "should delegate to the internal allocations array" do
       @internal_allocations.should_receive(:inspect).once
@@ -335,7 +335,7 @@ describe Query::Allocations do
   describe "process!" do
     context 'some allocations' do
       before(:each) do
-        @allocations = Query::Allocations.new [
+        @allocations = described_class.new [
           stub(:allocation, :process! => (1..10).to_a, :count => 10),
           stub(:allocation, :process! => (1..80).to_a, :count => 80),
           stub(:allocation, :process! => (1..20).to_a, :count => 20)

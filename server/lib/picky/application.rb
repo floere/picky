@@ -159,14 +159,14 @@ class Application
     # is used for indexing by default.
     # 
     def default_indexing options = {}
-      Tokenizers::Index.default = Tokenizers::Index.new(options)
+      Internals::Tokenizers::Index.default = Internals::Tokenizers::Index.new(options)
     end
     
     # Returns a configured tokenizer that
     # is used for querying by default.
     # 
     def default_querying options = {}
-      Tokenizers::Query.default = Tokenizers::Query.new(options)
+      Internals::Tokenizers::Query.default = Internals::Tokenizers::Query.new(options)
     end
     
     # Create a new index for indexing and for querying.
@@ -182,7 +182,7 @@ class Application
     # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
     #
     def index name, source, options = {}
-      API::Index::Memory.new name, source, options
+      Index::Memory.new name, source, options
     end
     
     # Routes.
@@ -201,7 +201,7 @@ class Application
       rack_adapter.call env
     end
     def rack_adapter # :nodoc:
-      @rack_adapter ||= FrontendAdapters::Rack.new
+      @rack_adapter ||= Internals::FrontendAdapters::Rack.new
     end
     
     # Finalize the subclass as soon as it

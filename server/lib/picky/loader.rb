@@ -77,7 +77,7 @@ module Loader # :nodoc:all
     
     # TODO Rewrite
     #
-    Query::Qualifiers.instance.prepare
+    Internals::Query::Qualifiers.instance.prepare
     
     exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
   end
@@ -111,40 +111,36 @@ module Loader # :nodoc:all
     load_internals 'indexers/no_source_specified_error'
     load_internals 'indexers/serial'
     
-    # Cacher.
+    # Generators.
     #
-    load_internals 'cacher/strategy'
+    load_internals 'generators/strategy'
     
     # Partial index generation strategies.
     #
-    load_internals 'cacher/partial/strategy'
-    load_internals 'cacher/partial/none'
-    load_internals 'cacher/partial/substring'
-    load_internals 'cacher/partial/default'
+    load_internals 'generators/partial/strategy'
+    load_internals 'generators/partial/none'
+    load_internals 'generators/partial/substring'
+    load_internals 'generators/partial/default'
 
     # Weight index generation strategies.
     #
-    load_internals 'cacher/weights/strategy'
-    load_internals 'cacher/weights/logarithmic'
-    load_internals 'cacher/weights/default'
+    load_internals 'generators/weights/strategy'
+    load_internals 'generators/weights/logarithmic'
+    load_internals 'generators/weights/default'
     
     # Similarity index generation strategies.
     #
-    load_internals 'cacher/similarity/strategy'
-    load_internals 'cacher/similarity/none'
-    load_internals 'cacher/similarity/double_levenshtone'
-    load_internals 'cacher/similarity/default'
-    
-    # Convenience accessors for generators.
-    #
-    load_internals 'cacher/convenience'
+    load_internals 'generators/similarity/strategy'
+    load_internals 'generators/similarity/none'
+    load_internals 'generators/similarity/double_levenshtone'
+    load_internals 'generators/similarity/default'
     
     # Index generators.
     #
-    load_internals 'cacher/generator'
-    load_internals 'cacher/partial_generator'
-    load_internals 'cacher/weights_generator'
-    load_internals 'cacher/similarity_generator'
+    load_internals 'generators/base'
+    load_internals 'generators/partial_generator'
+    load_internals 'generators/weights_generator'
+    load_internals 'generators/similarity_generator'
     
     # Index store handling.
     #
@@ -214,6 +210,8 @@ module Loader # :nodoc:all
     
     load_internals 'query/weights'
     
+    load_internals 'query/indexes'
+    
     # Results.
     #
     load_internals 'results/base'
@@ -254,9 +252,9 @@ module Loader # :nodoc:all
     #
     load_relative 'loggers/search'
     
+    # Convenience accessors for generators.
     #
-    # TODO Externalize cachers.
-    #
+    load_relative 'generators/aliases'
     
     # API.
     #
@@ -272,7 +270,6 @@ module Loader # :nodoc:all
     
     # Query.
     #
-    load_relative 'query/indexes'
     load_relative 'query/base'
     load_relative 'query/live'
     load_relative 'query/full'
