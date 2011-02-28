@@ -1,3 +1,7 @@
+h2. Version 1.4.3
+
+* hanke: (server) Fix for non-working picky command line interface. (Thanks Jason Botwick!)
+
 h2. Version 1.4.2 (Redis backend prerelease)
 
 * hanke: (server) Redis backend prototype.
