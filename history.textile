@@ -1,6 +1,8 @@
 h2. Version 1.4.2 (unreleased)
 
 * hanke: (server) Redis backend prototype.
+* hanke: (server) @rake index:specific[index]@ or @rake index:specific[index,category]@ to index just a specific index or category.
+* hanke: (server) Postgres source better handled.
 
 h2. Version 1.4.1
 
