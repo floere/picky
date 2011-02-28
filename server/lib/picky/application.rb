@@ -13,21 +13,23 @@
 # will generate an example <tt>project_name/app/application.rb</tt> file for you
 # with some example code inside.
 #
-# == index(name, source)
+# == Index::Memory.new(name, source)
 #
-# Next, define where your data comes from. You use the <tt>index</tt> method for that:
-#   my_index = index :some_index_name, some_source
+# Next, define where your data comes from. You use the <tt>Index::Memory.new</tt> method for that:
+#   my_index = Index::Memory.new :some_index_name, some_source
 # You give the index a name (or identifier), and a source (see Sources), where its data comes from. Let's do that:
 #   class MyGreatSearch < Application
 #     
-#     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     
 #   end
 # Now we have an index <tt>books</tt>.
 # 
 # That on itself won't do much good.
 #
-# == index.define_category(identifier, options = {})
+# Note that a Redis index is also available: Index::Redis.new.
+#
+# == index_instance.define_category(identifier, options = {})
 #
 # Picky needs us to define categories on the data.
 #
@@ -37,7 +39,7 @@
 # Let's go ahead and define a category:
 #   class MyGreatSearch < Application
 #     
-#     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title
 #
 #   end
@@ -67,9 +69,7 @@
 #     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title
 #
-#     full_books_query = Query::Full.new books
-#
-#     route %r{^/books/full$} => full_books_query
+#     route %r{^/books/full$} => Query::Full.new(books)
 #
 #   end
 # That's it!
@@ -128,7 +128,7 @@
 #                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
 #                      maximum_tokens: 4
 #     
-#     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title,
 #                           qualifiers: [:t, :title, :titre],
 #                           partial:    Partial::Substring.new(:from => 1),
@@ -139,11 +139,8 @@
 #     
 #     query_options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
 #     
-#     full_books_query = Query::Full.new books, query_options
-#     live_books_query = Query::Full.new books, query_options
-#     
-#     route %r{^/books/full$} => full_books_query
-#     route %r{^/books/live$} => live_books_query
+#     route %r{^/books/full$} => Query::Full.new(books, query_options)
+#     route %r{^/books/live$} => Query::Live.new(books, query_options)
 #     
 #   end
 # That's actually already a full-blown Picky App!
@@ -180,6 +177,8 @@ class Application
     #
     # Options:
     # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
+    #
+    # TODO Obsolete. Phase out.
     #
     def index name, source, options = {}
       Index::Memory.new name, source, options
