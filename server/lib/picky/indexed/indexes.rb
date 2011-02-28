@@ -1,5 +1,7 @@
 module Indexed
   
+  # Registers the indexes held at runtime, for queries.
+  #
   class Indexes
     
     attr_reader :indexes, :index_mapping
