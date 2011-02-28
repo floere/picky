@@ -1,4 +1,4 @@
-h2. Version 1.4.2 (unreleased)
+h2. Version 1.4.2 (Redis backend prerelease)
 
 * hanke: (server) Redis backend prototype.
 * hanke: (server) @rake index:specific[index]@ or @rake index:specific[index,category]@ to index just a specific index or category.
