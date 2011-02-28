@@ -1,7 +1,7 @@
-# TODO Move to API?
-#
 module Indexing
   
+  # Registers the indexes held at index time, for indexing.
+  #
   class Indexes
     
     attr_reader :indexes
@@ -19,13 +19,13 @@ module Indexing
       clear
     end
     
-    # TODO Doc.
+    # Clears the array of indexes.
     #
     def clear
       @indexes = []
     end
     
-    # TODO Spec. Superclass?
+    # Registers an index with the indexes.
     #
     def register index
       self.indexes << index
@@ -54,7 +54,7 @@ module Indexing
       timed_exclaim "INDEXING FINISHED."
     end
     
-    # For testing.
+    # For integration testing – indexes for the tests without forking and shouting ;)
     #
     def index_for_tests
       take_snapshot
@@ -65,21 +65,23 @@ module Indexing
       end
     end
     
-    # TODO Spec
+    # Generate only the index for the given index:category pair.
     #
     def generate_index_only index_name, category_name
       found = find index_name, category_name
       found.index if found
     end
+    # Generate only the cache for the given index:category pair.
+    #
     def generate_cache_only index_name, category_name
       found = find index_name, category_name
       found.generate_caches if found
     end
     
-    # TODO Spec
+    # Find a given index:category pair.
     #
     def find index_name, category_name
-      index_name     = index_name.to_sym
+      index_name = index_name.to_sym
       
       indexes.each do |index|
         next unless index.name == index_name
