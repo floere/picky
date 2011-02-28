@@ -17,6 +17,50 @@ describe Indexing::Indexes do
       indexes.register @index1
       indexes.register @index2
     end
+    describe 'generate_index_only' do
+      context 'with index:category found' do
+        before(:each) do
+          indexes.should_receive(:find).once.with(:index, :category).and_return @index1
+        end
+        it 'indexes' do
+          @index1.should_receive(:index).once.with
+          
+          indexes.generate_index_only :index, :category
+        end
+      end
+      context 'with index not found' do
+        before(:each) do
+          indexes.should_receive(:find).once.with(:index, :category).and_return nil
+        end
+        it 'indexes' do
+          @index1.should_receive(:index).never
+          
+          indexes.generate_index_only :index, :category
+        end
+      end
+    end
+    describe 'generate_cache_only' do
+      context 'with index:category found' do
+        before(:each) do
+          indexes.should_receive(:find).once.with(:index, :category).and_return @index1
+        end
+        it 'indexes' do
+          @index1.should_receive(:index).once.with
+          
+          indexes.generate_index_only :index, :category
+        end
+      end
+      context 'with index not found' do
+        before(:each) do
+          indexes.should_receive(:find).once.with(:index, :category).and_return nil
+        end
+        it 'indexes' do
+          @index1.should_receive(:index).never
+          
+          indexes.generate_index_only :index, :category
+        end
+      end
+    end
     describe 'index_for_tests' do
       it 'takes a snapshot, then indexes and caches each' do
         indexes.should_receive(:take_snapshot).once.with.ordered
