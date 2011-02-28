@@ -83,7 +83,7 @@ class Cores # :nodoc:all
   #   os_name => lambda_which_returns_a_number_of_cores
   #
   @@number_of_cores = {
-    'darwin' => lambda { `system_profiler SPHardwareDataType | grep 'Total Number of Cores'`.gsub(/[^\d]/, '') },
+    'darwin' => lambda { `system_profiler SPHardwareDataType | grep -i 'Total Number Of Cores'`.gsub(/[^\d]/, '') },
     'linux'  => lambda { `grep -ci ^processor /proc/cpuinfo` }
   }
   def self.os_to_core_mapping
