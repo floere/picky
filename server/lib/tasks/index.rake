@@ -16,11 +16,11 @@ namespace :index do
     Indexes.take_snapshot
   end
   
-  desc "Generates a specific index from index snapshots."
+  desc "Generates a specific index from index snapshots (category optional)."
   task :specific, [:index, :category] => :application do |_, options|
     index, category = options.index, options.category
-    Indexes.generate_index_only index.to_sym, category.to_sym
-    Indexes.generate_cache_only index.to_sym, category.to_sym
+    Indexes.generate_index_only index.to_sym, category && category.to_sym
+    Indexes.generate_cache_only index.to_sym, category && category.to_sym
   end
   
   desc 'Checks the index files for files that are suspiciously small or missing.'

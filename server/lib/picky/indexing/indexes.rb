@@ -67,13 +67,13 @@ module Indexing
     
     # Generate only the index for the given index:category pair.
     #
-    def generate_index_only index_name, category_name
+    def generate_index_only index_name, category_name = nil
       found = find index_name, category_name
       found.index if found
     end
     # Generate only the cache for the given index:category pair.
     #
-    def generate_cache_only index_name, category_name
+    def generate_cache_only index_name, category_name = nil
       found = find index_name, category_name
       found.generate_caches if found
     end
@@ -85,6 +85,8 @@ module Indexing
       
       indexes.each do |index|
         next unless index.name == index_name
+        
+        return index unless category_name
         
         found = index.categories.find category_name
         return found if found
