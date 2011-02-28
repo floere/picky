@@ -4,7 +4,7 @@ require 'spec_helper'
 
 # We need to load the CLI file explicitly as the CLI is not loaded with the Loader (not needed in the server, only for script runs).
 #
-require File.expand_path '../../../../lib/picky/internals/cli', __FILE__
+require File.expand_path '../../../lib/picky/cli', __FILE__
 
 # TODO Finish this prototype Spec, redesign.
 #
