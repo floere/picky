@@ -44,29 +44,29 @@ class BookSearch < Application
     
     csv_test_index = Index::Memory.new(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                        .define_category(:title,
-                                 qualifiers: [:t, :title, :titre],
-                                 partial:    Partial::Substring.new(from: 1),
-                                 similarity: Similarity::Phonetic.new(2))
+                                         qualifiers: [:t, :title, :titre],
+                                         partial:    Partial::Substring.new(from: 1),
+                                         similarity: Similarity::Phonetic.new(2))
                        .define_category(:author,
-                                 qualifiers: [:a, :author, :auteur],
-                                 partial:    Partial::Substring.new(from: -2))
+                                         qualifiers: [:a, :author, :auteur],
+                                         partial:    Partial::Substring.new(from: -2))
                        .define_category(:year,
-                                 qualifiers: [:y, :year, :annee],
-                                 partial:    Partial::None.new)
+                                         qualifiers: [:y, :year, :annee],
+                                         partial:    Partial::None.new)
                        .define_category(:publisher, qualifiers: [:p, :publisher])
                        .define_category(:subjects, qualifiers: [:s, :subject])
     
    redis_index = Index::Redis.new(:redis, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
                    .define_category(:title,
-                                    qualifiers: [:t, :title, :titre],
-                                    partial:    Partial::Substring.new(from: 1),
-                                    similarity: Similarity::Phonetic.new(2))
+                                     qualifiers: [:t, :title, :titre],
+                                     partial:    Partial::Substring.new(from: 1),
+                                     similarity: Similarity::Phonetic.new(2))
                    .define_category(:author,
-                                    qualifiers: [:a, :author, :auteur],
-                                    partial:    Partial::Substring.new(from: -2))
+                                     qualifiers: [:a, :author, :auteur],
+                                     partial:    Partial::Substring.new(from: -2))
                    .define_category(:year,
-                                    qualifiers: [:y, :year, :annee],
-                                    partial:    Partial::None.new)
+                                     qualifiers: [:y, :year, :annee],
+                                     partial:    Partial::None.new)
                    .define_category(:publisher, qualifiers: [:p, :publisher])
                    .define_category(:subjects, qualifiers: [:s, :subject])
     
