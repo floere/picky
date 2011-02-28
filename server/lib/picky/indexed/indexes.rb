@@ -1,5 +1,3 @@
-# TODO Move to API?
-#
 module Indexed
   
   class Indexes
@@ -13,29 +11,31 @@ module Indexed
       clear
     end
     
-    # TODO Spec.
+    # Clears the indexes and the mapping.
     #
     def clear
       @indexes       = []
       @index_mapping = {}
     end
     
-    # TODO Spec.
+    # Reloads all indexes, one after another,
+    # in the order they were added.
     #
     def reload
       load_from_cache
     end
     
-    # TODO Spec
+    # Registers an index with the indexes.
     #
     def register index
       self.indexes << index
       self.index_mapping[index.name] = index
     end
-    def [] name
-      name = name.to_sym
-      
-      index_mapping[name]
+    
+    # Extracts an index, given its identifier.
+    #
+    def [] identifier
+      index_mapping[identifier.to_sym]
     end
     
   end
