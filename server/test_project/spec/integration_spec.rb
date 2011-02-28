@@ -51,20 +51,18 @@ describe "Integration Tests" do
       @csv.search_with_text('Soledad Human').ids.should == [72]
     end
     
-    # Standard
+    # Standard.
     #
     it_should_find_ids_in_csv 'Soledad Human', [72]
     it_should_find_ids_in_csv 'First Three Minutes Weinberg', [1]
     
-    # Symbol keys
-    #
-    # TODO ATM they are strings – and the resulting JSON is the same – but switch to Symbols ASAP.
+    # "Symbol" keys.
     #
     it_should_find_ids_in_sym 'key', ['a', 'b', 'c', 'd', 'e', 'f']
     it_should_find_ids_in_sym 'keyDkey', ['d']
     it_should_find_ids_in_sym '"keyDkey"', ['d']
     
-    # Complex cases
+    # Complex cases.
     #
     it_should_find_ids_in_csv 'title:le* title:hystoree~', [4, 250, 428]
     it_should_find_ids_in_csv 'Hystori~ author:ferg', []
@@ -72,41 +70,41 @@ describe "Integration Tests" do
     it_should_find_ids_in_csv 'Hystori~ author:fergus', [4, 4]
     it_should_find_ids_in_csv 'author:fergus', [4]
     
-    # Partial
+    # Partial.
     #
     it_should_find_ids_in_csv 'Gover* Systems', [7]
     it_should_find_ids_in_csv 'A*', [2, 3, 4, 5, 6, 7, 8, 15, 24, 27, 29, 35, 39, 52, 55, 63, 67, 76, 80, 101]
     it_should_find_ids_in_csv 'a* b* c* d* f', [110, 416]
     it_should_find_ids_in_csv '1977', [86, 394]
     
-    # Similarity
+    # Similarity.
     #
     it_should_find_ids_in_csv 'Hystori~ Leeward', [4, 4]
     it_should_find_ids_in_csv 'Strutigic~ Guvurnance~', [7]
     it_should_find_ids_in_csv 'strategic~ governance~', [] # Does not find itself.
     
-    # Qualifiers
+    # Qualifiers.
     #
     it_should_find_ids_in_csv "title:history author:fergus", [4]
     
-    # Splitting
+    # Splitting.
     #
     it_should_find_ids_in_csv "history/fergus-history/fergus,history&fergus", [4, 4, 4, 4, 4, 4, 4, 4]
     
-    # Character Removal
+    # Character Removal.
     #
     it_should_find_ids_in_csv "'(history)' '(fergus)'", [4, 4]
     
-    # Contraction
+    # Contraction.
     #
     # it_should_find_ids_in_csv ""
     
-    # Stopwords
+    # Stopwords.
     #
     it_should_find_ids_in_csv "and the history or fergus", [4, 4]
     it_should_find_ids_in_csv "und and the or on of in is to from as at an history fergus", [4, 4]
     
-    # Normalization
+    # Normalization.
     #
     # it_should_find_ids_in_csv "Deoxyribonucleic Acid", []
     # it_should_find_ids_in_csv '800 dollars', []
@@ -119,11 +117,11 @@ describe "Integration Tests" do
     #
     it_should_find_ids_in_csv "hïstôry Educåtioñ fërgus", [4, 4, 4, 4]
     
-    # Token Rejection
+    # Token Rejection.
     #
     it_should_find_ids_in_csv 'Amistad', []
     
-    # Breakage
+    # Breakage.
     #
     it_should_find_ids_in_csv "%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}", []
     it_should_find_ids_in_csv "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", []
