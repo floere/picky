@@ -23,7 +23,7 @@ class PickySearch < Application
                    maximum_tokens: 5, # Amount of tokens passing into a query (5 = default).
                    substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
 
-  # Define an index. Use a database etc. source?
+  # Define an index. Use a database etc. source? Use an in-memory index or Redis?
   # See http://github.com/floere/picky/wiki/Sources-Configuration#sources
   #
   books_index = Index::Memory.new :books, Sources::CSV.new(:title, :author, :year, file: 'app/library.csv')
@@ -39,11 +39,11 @@ class PickySearch < Application
 
   query_options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for ordered combinations.
 
-  full_books = Query::Full.new books_index, query_options    # A Full query returns ids, combinations, and counts.
-  live_books = Query::Live.new books_index, query_options    # A Live query does return all that Full returns, except ids.
-
-  route %r{\A/books/full\Z} => full_books                    # Routing is simple: url_path_regexp => query
-  route %r{\A/books/live\Z} => live_books                    # 
+  # A Full query returns ids, combinations, and counts.
+  # A Live query does return all that Full returns, except ids.
+  #
+  route %r{\A/books/full\Z} => Query::Full.new(books_index, query_options) # Routing is simple:
+  route %r{\A/books/live\Z} => Query::Live.new(books_index, query_options) # url_path_regexp => query
 
   # Note: You can pass a query multiple indexes and it will query in all of them.
 
