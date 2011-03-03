@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = 'http://floere.github.com/picky'
   s.rubyforge_project = 'http://rubyforge.org/projects/picky'
   
-  s.description = 'Fast Ruby small-text search engine with comfortable single field interface.'
+  s.description = 'Fast Ruby semantic text search engine with comfortable single field interface.'
   s.summary = 'Picky: Semantic Search Engine. Clever Interface. Good Tools.'
   
   s.executables = ['picky']

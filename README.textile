@@ -1,6 +1,6 @@
 h1. Picky
 
-h2. The Ruby small-text search engine.
+h2. The Ruby semantic text search engine.
 
 Take a dive with Picky in "the Getting Started section":http://floere.github.com/picky.
 Ask questions in the "Picky Mailing List":http://groups.google.com/group/picky-ruby.
