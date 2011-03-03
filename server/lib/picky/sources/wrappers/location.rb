@@ -32,10 +32,6 @@ module Sources
         options[:precision] || 1
       end
       
-      def reset
-        @min = 1.0/0
-      end
-      
       # Yield the data (id, text for id) for the given type and category.
       #
       def harvest type, category

@@ -132,6 +132,27 @@ describe Internals::Query::Tokens do
     end
   end
 
+  describe 'possible_combinations_in' do
+    before(:each) do
+      @token1 = stub :token1
+      @token2 = stub :token2
+      @token3 = stub :token3
+      
+      @tokens = described_class.new [@token1, @token2, @token3]
+    end
+    it 'should work correctly' do
+      @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
+      @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination21]
+      @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+
+      @tokens.possible_combinations_in(:some_index).should == [
+        [:combination11, :combination12],
+        [:combination21],
+        [:combination31, :combination32, :combination33]
+      ]
+    end
+  end
+
   describe 'to_s' do
     before(:each) do
       @tokens = described_class.new [

@@ -9,12 +9,12 @@ describe Sources::Wrappers::Location do
     end
     context "without grid option" do
       it "fails" do
-        lambda { Sources::Wrappers::Location.new(:something) }.should raise_error
+        lambda { described_class.new(:something) }.should raise_error
       end
     end
     context "with grid option" do
       before(:each) do
-        @wrapper = Sources::Wrappers::Location.new @category, grid:10
+        @wrapper = described_class.new @category, grid:10
       end
       it "uses a default of 1 on the precision" do
         @wrapper.precision.should == 1
@@ -39,7 +39,7 @@ describe Sources::Wrappers::Location do
     end
     context "with grid and precision option" do
       before(:each) do
-        @wrapper = Sources::Wrappers::Location.new @category, grid:4, precision:2
+        @wrapper = described_class.new @category, grid:4, precision:2
       end
       it "uses the given precision" do
         @wrapper.precision.should == 2
@@ -60,7 +60,7 @@ describe Sources::Wrappers::Location do
   end
   context "without backend" do
     it "fails" do
-      lambda { Sources::Wrappers::Location.new }.should raise_error(ArgumentError)
+      lambda { described_class.new }.should raise_error(ArgumentError)
     end
   end
   
