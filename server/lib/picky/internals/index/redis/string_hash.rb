@@ -9,8 +9,9 @@ module Internals
         # Writes the hash into Redis.
         #
         def dump hash
+          redis = backend
           hash.each_pair do |key, value|
-            @backend.hset namespace, key, value
+            redis.hset namespace, key, value
           end
         end
       
@@ -23,7 +24,7 @@ module Internals
         # Get a single value.
         #
         def member sym
-          @backend.hget namespace, sym
+          backend.hget namespace, sym
         end
       
       end

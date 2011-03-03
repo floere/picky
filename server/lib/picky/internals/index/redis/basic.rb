@@ -13,7 +13,7 @@ module Internals
       #
       class Basic
       
-        attr_reader :namespace
+        attr_reader :namespace, :backend
       
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
