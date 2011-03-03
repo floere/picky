@@ -45,9 +45,9 @@ describe Indexing::Indexes do
           indexes.should_receive(:find).once.with(:index, :category).and_return @index1
         end
         it 'indexes' do
-          @index1.should_receive(:index).once.with
+          @index1.should_receive(:generate_caches).once.with
           
-          indexes.generate_index_only :index, :category
+          indexes.generate_cache_only :index, :category
         end
       end
       context 'with index not found' do
@@ -55,9 +55,9 @@ describe Indexing::Indexes do
           indexes.should_receive(:find).once.with(:index, :category).and_return nil
         end
         it 'indexes' do
-          @index1.should_receive(:index).never
+          @index1.should_receive(:generate_caches).never
           
-          indexes.generate_index_only :index, :category
+          indexes.generate_cache_only :index, :category
         end
       end
     end
