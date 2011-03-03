@@ -1,3 +1,9 @@
+h2. Version 1.5.0
+
+* hanke: (server) Redis backend.
+* hanke: (server) The Redis backend uses db 15.
+* hanke: (server) The mysql gem is used by default.
+
 h2. Version 1.4.3
 
 * hanke: (server) Fix for non-working picky command line interface. (Thanks Jason Botwick!)
