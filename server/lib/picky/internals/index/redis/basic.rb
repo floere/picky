@@ -20,8 +20,13 @@ module Internals
         #
         def initialize namespace
           @namespace = namespace
-        
-          @backend   = ::Redis.new
+          
+          # TODO Turn this inside out such that people can pass in
+          # their own Redis instance.
+          # 
+          # TODO Make the :db a real option.
+          #
+          @backend = ::Redis.new :db => 15
         end
       
         # Does nothing.
