@@ -20,7 +20,7 @@ module Internals
       # Delegate to the right collection.
       #
       def ids sym
-        @index.collection sym
+        index.collection sym
       end
     
       # Delegate to the right member value.
@@ -28,13 +28,13 @@ module Internals
       # Note: Converts to float.
       #
       def weight sym
-        @weights.member(sym).to_f
+        weights.member(sym).to_f
       end
     
       # Delegate to a member value.
       #
       def setting sym
-        @configuration.member sym
+        configuration.member sym
       end
     
     end

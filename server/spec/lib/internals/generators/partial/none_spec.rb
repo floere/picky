@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Internals::Generators::Partial::None do
   
+  it 'is not saved' do
+    described_class.new.saved?.should == false
+  end
   it "has the right superclass" do
     described_class.should < Internals::Generators::Partial::Strategy
   end
