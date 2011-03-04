@@ -11,6 +11,7 @@ describe "Integration Tests" do
   before(:all) do
     Indexes.index_for_tests
     Indexes.load_from_cache
+    @main       = Query::Full.new Indexes[:main]
     @sym        = Query::Full.new Indexes[:symbol_keys]
     @csv        = Query::Full.new Indexes[:csv_test]
     @memory_geo = Query::Full.new Indexes[:memory_geo]
@@ -49,6 +50,12 @@ describe "Integration Tests" do
       puts "Reloading the Indexes."
       Indexes.reload
       @csv.search_with_text('Soledad Human').ids.should == [72]
+    end
+    
+    # Breakage.
+    #
+    it 'finds with id' do
+      @main.search_with_text('2').ids.should == [2]
     end
     
     # Standard.

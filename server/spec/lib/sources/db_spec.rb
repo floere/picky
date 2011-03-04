@@ -30,7 +30,7 @@ describe Sources::DB do
 
           @connection.should_receive(:execute).
                       once.
-                      with('SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000').
+                      with('SELECT id, some_category FROM some_type_type_index st WHERE st.__picky_id > some_offset LIMIT 25000').
                       and_return []
 
           @source.get_data @type, @category, :some_offset
@@ -40,7 +40,7 @@ describe Sources::DB do
         it 'yields to the caller' do
           @connection.should_receive(:execute).
                       any_number_of_times.
-                      with('SELECT indexed_id, some_category FROM some_type_type_index st WHERE st.id > some_offset LIMIT 25000').
+                      with('SELECT id, some_category FROM some_type_type_index st WHERE st.__picky_id > some_offset LIMIT 25000').
                       and_return [[1, 'text']]
 
           @source.get_data @type, @category, :some_offset do |id, text|
@@ -86,7 +86,7 @@ describe Sources::DB do
     end
     it "should get the id count" do
       result = stub(:result, :to_i => 12_345)
-      @connection.should_receive(:select_value).once.with("SELECT COUNT(id) FROM some_type_name_type_index")
+      @connection.should_receive(:select_value).once.with("SELECT COUNT(__picky_id) FROM some_type_name_type_index")
       
       @source.count @type
     end
@@ -120,11 +120,11 @@ describe Sources::DB do
     end
     it "should add an AND if it already contains a WHERE statement" do
       @source.should_receive(:harvest_statement).and_return 'WHERE'
-      @source.harvest_statement_with_offset(@type, @category, :some_offset).should == "WHERE AND st.id > some_offset LIMIT 25000"
+      @source.harvest_statement_with_offset(@type, @category, :some_offset).should == "WHERE AND st.__picky_id > some_offset LIMIT 25000"
     end
     it "should add a WHERE if it doesn't already contain one" do
       @source.should_receive(:harvest_statement).and_return 'some_statement'
-      @source.harvest_statement_with_offset(@type, @category, :some_offset).should == "some_statement WHERE st.id > some_offset LIMIT 25000"
+      @source.harvest_statement_with_offset(@type, @category, :some_offset).should == "some_statement WHERE st.__picky_id > some_offset LIMIT 25000"
     end
   end
   
