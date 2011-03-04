@@ -28,6 +28,8 @@ module Sources
     #
     attr_reader :connection_options
     
+    @@traversal_id = :__picky_id
+    
     def initialize select_statement, options = { file: 'app/db.yml' }
       @select_statement = select_statement
       @database         = create_database_adapter
@@ -86,11 +88,9 @@ module Sources
       # TODO Use rename_column ASAP.
       #
       if on_database.adapter_name == "PostgreSQL"
-        on_database.execute "ALTER TABLE #{origin} RENAME COLUMN id TO indexed_id"
-        on_database.execute "ALTER TABLE #{origin} ADD COLUMN id SERIAL PRIMARY KEY"
+        on_database.execute "ALTER TABLE #{origin} ADD COLUMN #{@@traversal_id} SERIAL PRIMARY KEY"
       else
-        on_database.execute "ALTER TABLE #{origin} CHANGE COLUMN id indexed_id INTEGER"
-        on_database.execute "ALTER TABLE #{origin} ADD COLUMN id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
+        on_database.execute "ALTER TABLE #{origin} ADD COLUMN #{@@traversal_id} INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
       end
       
       # Execute any special queries this type needs executed.
@@ -103,7 +103,7 @@ module Sources
     def count type # :nodoc:
       connect_backend
       
-      database.connection.select_value("SELECT COUNT(id) FROM #{snapshot_table_name(type)}").to_i
+      database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(type)}").to_i
     end
     
     #
@@ -130,19 +130,19 @@ module Sources
       # TODO Rewrite ASAP.
       #
       if database.connection.adapter_name == "PostgreSQL"
-        id_key   = 'indexed_id'
+        id_key   = 'id'
         text_key = category.from.to_s
         database.connection.execute(select_statement).each do |hash|
-          indexed_id, text = hash.values_at id_key, text_key
+          id, text = hash.values_at id_key, text_key
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
-          yield indexed_id, text
+          yield id, text
         end
       else
-        database.connection.execute(select_statement).each do |indexed_id, text|
+        database.connection.execute(select_statement).each do |id, text|
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
-          yield indexed_id, text
+          yield id, text
         end
       end
     end
@@ -156,13 +156,13 @@ module Sources
       
       statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
       
-      "#{statement} st.id > #{offset} LIMIT #{chunksize}"
+      "#{statement} st.#{@@traversal_id} > #{offset} LIMIT #{chunksize}"
     end
     
     # The harvest statement used to pull data from the snapshot table.
     #
     def harvest_statement type, category # :nodoc:
-      "SELECT indexed_id, #{category.from} FROM #{snapshot_table_name(type)} st"
+      "SELECT id, #{category.from} FROM #{snapshot_table_name(type)} st"
     end
     
     # The amount of records that are loaded each chunk.
