@@ -40,6 +40,8 @@ module Sources
     def create_database_adapter # :nodoc:
       # TODO Do not use ActiveRecord directly.
       #
+      # TODO Use set_table_name etc.
+      #
       adapter_class = Class.new ActiveRecord::Base
       adapter_class.abstract_class = true
       adapter_class
@@ -85,8 +87,7 @@ module Sources
       
       on_database.execute "DROP TABLE IF EXISTS #{origin}"
       on_database.execute "CREATE TABLE #{origin} AS #{select_statement}"
-      # TODO Use rename_column ASAP.
-      #
+      
       if on_database.adapter_name == "PostgreSQL"
         on_database.execute "ALTER TABLE #{origin} ADD COLUMN #{@@traversal_id} SERIAL PRIMARY KEY"
       else
@@ -125,7 +126,8 @@ module Sources
     # Gets the data from the backend.
     #
     def get_data index, category, offset, &block # :nodoc:
-      select_statement = harvest_statement_with_offset(index, category, offset)
+      
+      select_statement = harvest_statement_with_offset index, category, offset
       
       # TODO Rewrite ASAP.
       #
@@ -134,22 +136,16 @@ module Sources
         text_key = category.from.to_s
         database.connection.execute(select_statement).each do |hash|
           id, text = hash.values_at id_key, text_key
-          next unless text
-          text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
-          yield id, text
+          yield id, text if text
         end
       else
         database.connection.execute(select_statement).each do |id, text|
-          next unless text
-          text.force_encoding 'utf-8' # TODO Still needed? Or move to backend?
-          yield id, text
+          yield id, text if text
         end
       end
     end
     
     # Builds a harvest statement for getting data to index.
-    #
-    # TODO Use the adapter for this.
     #
     def harvest_statement_with_offset index, category, offset # :nodoc:
       statement = harvest_statement index, category
@@ -168,8 +164,6 @@ module Sources
     # The amount of records that are loaded each chunk.
     #
     def chunksize # :nodoc:
-      # TODO Make parametrizable.
-      #
       25_000
     end
     
