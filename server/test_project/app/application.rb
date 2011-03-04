@@ -20,6 +20,7 @@ class BookSearch < Application
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
     
     main_index = Index::Memory.new :main, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
+    main_index.define_category :id
     main_index.define_category :title,
                                qualifiers: [:t, :title, :titre],
                                partial:    Partial::Substring.new(:from => 1),
