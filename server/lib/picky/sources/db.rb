@@ -82,17 +82,19 @@ module Sources
       connect_backend
       
       origin = snapshot_table_name index
-      
       on_database = database.connection
       
-      on_database.execute "DROP TABLE IF EXISTS #{origin}"
+      # Drop the table if it exists.
+      #
+      on_database.drop_table origin if on_database.table_exists?(origin)
+      
+      # The adapters currently do not support this.
+      #
       on_database.execute "CREATE TABLE #{origin} AS #{select_statement}"
       
-      if on_database.adapter_name == "PostgreSQL"
-        on_database.execute "ALTER TABLE #{origin} ADD COLUMN #{@@traversal_id} SERIAL PRIMARY KEY"
-      else
-        on_database.execute "ALTER TABLE #{origin} ADD COLUMN #{@@traversal_id} INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
-      end
+      # Add a column that Picky uses to traverse the table's entries.
+      #
+      on_database.add_column origin, @@traversal_id, :primary_key, :null => :false
       
       # Execute any special queries this index needs executed.
       #
@@ -101,15 +103,15 @@ module Sources
     
     # Counts all the entries that are used for the index.
     #
-    def count index # :nodoc:
+    def count index
       connect_backend
       
       database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(index)}").to_i
     end
     
+    # The name of the snapshot table created by Picky.
     #
-    #
-    def snapshot_table_name index # :nodoc:
+    def snapshot_table_name index
       "picky_#{index.name}_index"
     end
     
@@ -147,7 +149,7 @@ module Sources
     
     # Builds a harvest statement for getting data to index.
     #
-    def harvest_statement_with_offset index, category, offset # :nodoc:
+    def harvest_statement_with_offset index, category, offset
       statement = harvest_statement index, category
       
       statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
@@ -157,13 +159,13 @@ module Sources
     
     # The harvest statement used to pull data from the snapshot table.
     #
-    def harvest_statement index, category # :nodoc:
+    def harvest_statement index, category
       "SELECT id, #{category.from} FROM #{snapshot_table_name(index)} st"
     end
     
     # The amount of records that are loaded each chunk.
     #
-    def chunksize # :nodoc:
+    def chunksize
       25_000
     end
     
