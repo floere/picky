@@ -1,3 +1,7 @@
+h2. Version 1.5.2 (unreleased)
+
+* hanke: (server) When indexing from the database, the intermediary snapshot table is now called @"picky_#{index.identifier}_index"@ instead of @"#{index.identifier}_type_index"@ to be clearer that it is Picky creating these tables, and what it is. You can remove the ..._type_index tables.
+
 h2. Version 1.5.1
 
 * hanke: (server) Picky now traverses more cleanly over your database data. (Thanks Jason Botwick!)
