@@ -52,10 +52,10 @@ describe "Integration Tests" do
       @csv.search_with_text('Soledad Human').ids.should == [72]
     end
     
-    # Breakage.
+    # Breakage. As reported by Jason.
     #
     it 'finds with id' do
-      @main.search_with_text('2').ids.should == [2]
+      @main.search_with_text('id:"2"').ids.should == [2]
     end
     
     # Standard.
