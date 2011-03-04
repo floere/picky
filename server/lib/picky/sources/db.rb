@@ -76,10 +76,10 @@ module Sources
     #
     # Uses CREATE TABLE AS with the given SELECT statement to create a snapshot of the data.
     #
-    def take_snapshot type
+    def take_snapshot index
       connect_backend
       
-      origin = snapshot_table_name type
+      origin = snapshot_table_name index
       
       on_database = database.connection
       
@@ -93,39 +93,39 @@ module Sources
         on_database.execute "ALTER TABLE #{origin} ADD COLUMN #{@@traversal_id} INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT"
       end
       
-      # Execute any special queries this type needs executed.
+      # Execute any special queries this index needs executed.
       #
-      on_database.execute type.after_indexing if type.after_indexing
+      on_database.execute index.after_indexing if index.after_indexing
     end
     
     # Counts all the entries that are used for the index.
     #
-    def count type # :nodoc:
+    def count index # :nodoc:
       connect_backend
       
-      database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(type)}").to_i
+      database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(index)}").to_i
     end
     
     #
     #
-    def snapshot_table_name type # :nodoc:
-      "#{type.name}_type_index"
+    def snapshot_table_name index # :nodoc:
+      "picky_#{index.name}_index"
     end
     
     # Harvests the data to index in chunks.
     #
-    def harvest type, category, &block
+    def harvest index, category, &block
       connect_backend
       
-      (0..count(type)).step(chunksize) do |offset|
-        get_data type, category, offset, &block
+      (0..count(index)).step(chunksize) do |offset|
+        get_data index, category, offset, &block
       end
     end
     
     # Gets the data from the backend.
     #
-    def get_data type, category, offset, &block # :nodoc:
-      select_statement = harvest_statement_with_offset(type, category, offset)
+    def get_data index, category, offset, &block # :nodoc:
+      select_statement = harvest_statement_with_offset(index, category, offset)
       
       # TODO Rewrite ASAP.
       #
@@ -151,8 +151,8 @@ module Sources
     #
     # TODO Use the adapter for this.
     #
-    def harvest_statement_with_offset type, category, offset # :nodoc:
-      statement = harvest_statement type, category
+    def harvest_statement_with_offset index, category, offset # :nodoc:
+      statement = harvest_statement index, category
       
       statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
       
@@ -161,8 +161,8 @@ module Sources
     
     # The harvest statement used to pull data from the snapshot table.
     #
-    def harvest_statement type, category # :nodoc:
-      "SELECT id, #{category.from} FROM #{snapshot_table_name(type)} st"
+    def harvest_statement index, category # :nodoc:
+      "SELECT id, #{category.from} FROM #{snapshot_table_name(index)} st"
     end
     
     # The amount of records that are loaded each chunk.

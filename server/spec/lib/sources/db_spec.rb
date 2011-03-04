@@ -30,7 +30,7 @@ describe Sources::DB do
 
           @connection.should_receive(:execute).
                       once.
-                      with('SELECT id, some_category FROM some_type_type_index st WHERE st.__picky_id > some_offset LIMIT 25000').
+                      with('SELECT id, some_category FROM picky_some_type_index st WHERE st.__picky_id > some_offset LIMIT 25000').
                       and_return []
 
           @source.get_data @type, @category, :some_offset
@@ -40,7 +40,7 @@ describe Sources::DB do
         it 'yields to the caller' do
           @connection.should_receive(:execute).
                       any_number_of_times.
-                      with('SELECT id, some_category FROM some_type_type_index st WHERE st.__picky_id > some_offset LIMIT 25000').
+                      with('SELECT id, some_category FROM picky_some_type_index st WHERE st.__picky_id > some_offset LIMIT 25000').
                       and_return [[1, 'text']]
 
           @source.get_data @type, @category, :some_offset do |id, text|
@@ -86,7 +86,7 @@ describe Sources::DB do
     end
     it "should get the id count" do
       result = stub(:result, :to_i => 12_345)
-      @connection.should_receive(:select_value).once.with("SELECT COUNT(__picky_id) FROM some_type_name_type_index")
+      @connection.should_receive(:select_value).once.with("SELECT COUNT(__picky_id) FROM picky_some_type_name_index")
       
       @source.count @type
     end
