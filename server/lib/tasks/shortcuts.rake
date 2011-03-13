@@ -6,7 +6,7 @@ task :index => :application do
   Rake::Task[:'index:randomly'].invoke
 end
 
-desc "Try the given text in the indexer/query (index:category optional)."
+desc "Try the given text in the indexer/query (index and category optional)."
 task :try, [:text, :index, :category] => :application do |_, options|
   text, index, category = options.text, options.index, options.category
 
