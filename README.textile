@@ -2,7 +2,7 @@ h1. Picky
 
 h2. The Ruby semantic text search engine.
 
-Take a dive with Picky in "the Getting Started section":http://floere.github.com/picky.
+Take a dive with Picky in "the Getting Started section":http://florianhanke.com/picky/getting_started.html on "http://florianhanke.com/picky":http://florianhanke.com/picky.
 Ask questions in the "Picky Mailing List":http://groups.google.com/group/picky-ruby.
 See the "changelog":http://github.com/floere/picky/blob/master/history.textile.
 Find everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
