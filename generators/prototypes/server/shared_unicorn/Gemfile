@@ -14,9 +14,6 @@ gem 'yajl-ruby',        '~> 0.7.8', :require => 'yajl'
 #
 gem 'activerecord',     '~> 2.3.8', :require => 'active_record'
 
-
-
-
 # Optional. Makes rack faster.
 #
 gem 'rack_fast_escape', '2009.06.24'

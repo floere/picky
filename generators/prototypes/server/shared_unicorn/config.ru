@@ -3,7 +3,7 @@
 require 'picky'
 
 # Load your application. This requires the following files in
-# 
+#
 #  * lib/initializers/*.rb
 #  * lib/tokenizers/*.rb
 #  * lib/indexers/*.rb

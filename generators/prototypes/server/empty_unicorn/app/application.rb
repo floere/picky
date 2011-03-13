@@ -4,7 +4,7 @@
 # Ask me or the google group if you have questions or specific requests.
 #
 class PickySearch < Application
-  
+
   # TODO Your search configuration here.
-  
+
 end

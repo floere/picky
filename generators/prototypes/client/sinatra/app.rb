@@ -21,7 +21,7 @@ set :views,  File.expand_path('views', File.dirname(__FILE__))
 #
 get '/' do
   @query = params[:q]
-  
+
   haml :'/search'
 end
 
@@ -40,15 +40,15 @@ get '/search/full' do
   results.populate_with Book do |book|
     book.to_s
   end
-  
+
   #
   # Or use:
   #   results.populate_with Book
-  #   
+  #
   # Then:
   #   rendered_entries = results.entries.map do |book| (render each book here) end
   #
-  
+
   ActiveSupport::JSON.encode results
 end
 
@@ -59,9 +59,9 @@ get '/search/live' do
 end
 
 helpers do
-  
+
   def js path
     "<script src='javascripts/#{path}.js' type='text/javascript'></script>"
   end
-  
+
 end
