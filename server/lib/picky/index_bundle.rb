@@ -4,7 +4,12 @@ class IndexBundle # :nodoc:all
 
   attr_reader :indexes, :index_mapping, :indexing, :indexed
 
-  delegate :reload,
+  delegate :size,
+           :each,
+           :to => :indexes
+
+  delegate :analyze,
+           :reload,
            :load_from_cache,
            :to => :indexed
 
@@ -19,22 +24,26 @@ class IndexBundle # :nodoc:all
   def initialize
     @indexes = []
     @index_mapping = {}
-  
+
     @indexed  = Indexed::Indexes.new
     @indexing = Indexing::Indexes.new
+  end
+
+  def to_s
+    indexes.map &:to_stats
   end
 
   def register index
     self.indexes << index
     self.index_mapping[index.name] = index
-  
+
     indexing.register index.indexing
     indexed.register  index.indexed
   end
 
   def [] name
     name = name.to_sym
-  
+
     self.index_mapping[name]
   end
 

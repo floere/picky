@@ -51,8 +51,6 @@ module Internals
         #       ids that have an associated identifier that is nil.
         #
         def keep identifiers = []
-          # TODO Rewrite to use the category!!!
-          #
           @combinations.reject! { |combination| !combination.in?(identifiers) }
         end
 
@@ -64,8 +62,6 @@ module Internals
         #       ids that have an associated identifier that is nil.
         #
         def remove identifiers = []
-          # TODO Rewrite to use the category!!!
-          #
           @combinations.reject! { |combination| combination.in?(identifiers) }
         end
 

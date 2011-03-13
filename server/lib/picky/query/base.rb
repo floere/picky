@@ -20,12 +20,13 @@ module Query
   # Not directly instantiated. However, its methods are used by its subclasses, Full and Live.
   #
   class Base
-  
+
     include Helpers::Measuring
-  
+
+    attr_reader   :indexes
     attr_writer   :tokenizer, :identifiers_to_remove
     attr_accessor :reduce_to_amount, :weights
-  
+
     # Takes:
     # * A number of indexes
     # * Options hash (optional) with:
@@ -40,7 +41,7 @@ module Query
       weights      = options[:weights] || Weights.new
       @weights     = Hash === weights ? Weights.new(weights) : weights
     end
-    
+
     # Returns the right combinations strategy for
     # a number of query indexes.
     #
@@ -73,7 +74,7 @@ module Query
     def raise_different index_types
       raise DifferentTypesError.new(index_types)
     end
-  
+
     # This is the main entry point for a query.
     # Use this in specs and also for running queries.
     #
@@ -86,22 +87,22 @@ module Query
     def search_with_text text, offset = 0
       search tokenized(text), offset
     end
-  
+
     # Runs the actual search using Query::Tokens.
     #
     # Note: Internal method, use #search_with_text.
     #
     def search tokens, offset = 0
       results = nil
-    
+
       duration = timed do
-        results = execute(tokens, offset) || empty_results(offset) # TODO Does not work yet
+        results = execute tokens, offset
       end
       results.duration = duration.round 6
-    
+
       results
     end
-  
+
     # Execute a search using Query::Tokens.
     #
     # Note: Internal method, use #search_with_text.
@@ -109,16 +110,7 @@ module Query
     def execute tokens, offset
       result_type.from offset, sorted_allocations(tokens)
     end
-  
-    # Returns an empty result with default values.
-    #
-    # Parameters:
-    # * offset = 0: _optional_ The offset to use for the empty results.
-    #
-    def empty_results offset = 0
-      result_type.new offset
-    end
-  
+
     # Delegates the tokenizing to the query tokenizer.
     #
     # Parameters:
@@ -127,7 +119,7 @@ module Query
     def tokenized text
       @tokenizer.tokenize text
     end
-  
+
     # Gets sorted allocations for the tokens.
     #
     # This generates the possible allocations, sorted.
@@ -144,27 +136,27 @@ module Query
       # TODO uniq, score, sort in there
       #
       allocations = @indexes.allocations_for tokens
-    
+
       # Callbacks.
       #
       # TODO Reduce before sort?
       #
       reduce allocations
       remove_from allocations
-    
+
       # Remove double allocations.
       #
       allocations.uniq
-    
+
       # Score the allocations using weights as bias.
       #
       allocations.calculate_score weights
-    
+
       # Sort the allocations.
       # (allocations are sorted according to score, highest to lowest)
       #
       allocations.sort
-    
+
       # Return the allocations.
       #
       allocations
@@ -172,7 +164,7 @@ module Query
     def reduce allocations # :nodoc:
       allocations.reduce_to reduce_to_amount if reduce_to_amount
     end
-  
+
     #
     #
     def remove_from allocations # :nodoc:
@@ -183,12 +175,14 @@ module Query
     def identifiers_to_remove # :nodoc:
       @identifiers_to_remove ||= []
     end
-  
+
     # Display some nice information for the user.
     #
     def to_s
-      s = "#{self.class}"
+      s = "#{self.class}("
+      s << @indexes.indexes.map(&:name).join(', ')
       s << ", weights: #{@weights}" unless @weights.empty?
+      s << ")"
       s
     end
 

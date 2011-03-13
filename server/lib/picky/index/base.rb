@@ -1,12 +1,12 @@
 module Index
-  
+
   # This class defines the indexing and index API that is exposed to the user
   # as the #index method inside the Application class.
   #
   # It provides a single front for both indexing and index options. We suggest to always use the index API.
   #
   # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
-  #  
+  #
   class Base
 
     attr_reader :name, :indexing, :indexed
@@ -22,13 +22,44 @@ module Index
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
     #
     def initialize name, source, options = {}
-      @name     = name
+      check name, source
+
+      @name     = name.to_sym
       @indexing = Internals::Indexing::Index.new name, source, options
       @indexed  = Internals::Indexed::Index.new  name, options
-  
+
       # Centralized registry.
       #
       Indexes.register self
+    end
+    #
+    # Since this is an API, we fail hard quickly.
+    #
+    def check name, source
+      raise ArgumentError.new(<<-NAME
+The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a String/Symbol,
+Examples:
+  Index::Memory.new(:my_cool_index, ...) # Recommended
+  Index::Redis.new("a-redis-index", ...)
+NAME
+) unless name.respond_to?(:to_sym)
+      raise ArgumentError.new(<<-SOURCE
+The index "#{name}" should use a data source that responds to the method #harvest, which yields(id, text).
+Or it could use one of the built-in sources:
+  Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
+  Sources::')}
+SOURCE
+) unless source.respond_to?(:harvest)
+    end
+
+    def to_stats
+      stats = <<-INDEX
+#{name} (#{self.class}):
+  #{"source:            #{indexing.source}".indented_to_s}
+  #{"categories:        #{indexing.categories.categories.map(&:name).join(', ')}".indented_to_s}
+INDEX
+      stats << "  result identifier: \"#{indexed.result_identifier}\"".indented_to_s unless indexed.result_identifier.to_s == indexed.name.to_s
+      stats
     end
 
     # Defines a searchable category on the index.
@@ -46,12 +77,12 @@ module Index
     #
     def define_category category_name, options = {}
       category_name = category_name.to_sym
-  
+
       indexing_category = indexing.define_category category_name, options
       indexed_category  = indexed.define_category  category_name, options
-  
+
       yield indexing_category, indexed_category if block_given?
-  
+
       self
     end
     alias category define_category
@@ -87,7 +118,7 @@ module Index
     #   x:133, y:120
     #
     # This will search this square area (* = 133, 120: The "search" point entered):
-    # 
+    #
     #    132       134
     #     |         |
     #   --|---------|-- 121
@@ -95,7 +126,7 @@ module Index
     #     |    *    |
     #     |         |
     #   --|---------|-- 119
-    #     |         | 
+    #     |         |
     #
     # Note: The area does not need to be square, but can be rectangular.
     #
@@ -117,13 +148,13 @@ module Index
     #
     def define_ranged_category category_name, range, options = {}
       precision = options[:precision]
-  
+
       options = { partial: Partial::None.new }.merge options
-  
+
       define_category category_name, options do |indexing, indexed|
         indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
         indexing.tokenizer = Internals::Tokenizers::Index.new
-    
+
         exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: range, precision: precision
         indexed.exact   = exact_bundle
         indexed.partial = exact_bundle # A partial token also uses the exact index.
@@ -175,5 +206,5 @@ module Index
     end
     alias map_location define_map_location
   end
-  
+
 end

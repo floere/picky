@@ -1,7 +1,8 @@
 # coding: utf-8
+#
 require 'spec_helper'
 
-describe "BookSearch" do
+describe BookSearch do
   
   def rack_defaults_for url
     url, query_string = url.split ??
@@ -32,7 +33,7 @@ describe "BookSearch" do
   
   def self.it_should_route path, status
     it "should route #{path} and answer with #{status}" do
-      BookSearch.call(rack_defaults_for(path))[0].should == status
+      described_class.call(rack_defaults_for(path))[0].should == status
     end
   end
   

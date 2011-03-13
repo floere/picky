@@ -3,35 +3,35 @@
 module Internals
 
   module Indexing # :nodoc:all
-  
+
     module Bundle
-    
+
       # This is the indexing bundle.
       # It does all menial tasks that have nothing to do
       # with the actual index running etc.
       #
       class Base < SuperBase
-      
+
         attr_accessor :partial_strategy, :weights_strategy
-      
+
         # Path is in which directory the cache is located.
         #
         def initialize name, configuration, similarity_strategy, partial_strategy, weights_strategy
           super name, configuration, similarity_strategy
-        
+
           @partial_strategy    = partial_strategy
           @weights_strategy    = weights_strategy
         end
-      
+
         # Sets up a piece of the index for the given token.
         #
         def initialize_index_for token
           index[token] ||= []
         end
-      
+
         # Generation
         #
-      
+
         # This method
         # * loads the base index from the db
         # * generates derived indexes
@@ -50,16 +50,16 @@ module Internals
           generate_derived
         end
         def cache_from_memory_generation_message
-          timed_exclaim "CACHE FROM MEMORY #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Caching from intermediate in-memory index.}
         end
-      
+
         # Generates the weights and similarity from the main index.
         #
         def generate_derived
           generate_weights
           generate_similarity
         end
-      
+
         # Load the data from the db.
         #
         def load_from_index_file
@@ -68,7 +68,7 @@ module Internals
           retrieve
         end
         def load_from_index_generation_message
-          timed_exclaim "LOAD INDEX #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Loading index.}
         end
         # Retrieves the prepared index data into the index.
         #
@@ -83,7 +83,7 @@ module Internals
             index[token] << id.send(key_format) # TODO Rewrite. Move this into the specific indexing.
           end
         end
-      
+
         # Generates a new index (writes its index) using the
         # partial caching strategy of this bundle.
         #
@@ -94,7 +94,7 @@ module Internals
         # Generate a partial index from the given exact index.
         #
         def generate_partial_from exact_index
-          timed_exclaim "PARTIAL GENERATE #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Generating partial index for index.}
           self.index = exact_index
           self.generate_partial
           self
@@ -125,28 +125,28 @@ module Internals
         # Dumps the core index.
         #
         def dump_index
-          timed_exclaim "DUMP INDEX #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Dumping index.}
           backend.dump_index index
         end
         # Dumps the weights index.
         #
         def dump_weights
-          timed_exclaim "DUMP WEIGHTS #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Dumping weights of index.}
           backend.dump_weights weights
         end
         # Dumps the similarity index.
         #
         def dump_similarity
-          timed_exclaim "DUMP SIMILARITY #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Dumping similarity of index.}
           backend.dump_similarity similarity
         end
         # Dumps the similarity index.
         #
         def dump_configuration
-          timed_exclaim "DUMP CONFIGURATION #{identifier}."
+          timed_exclaim %Q{"#{identifier}": Dumping configuration for index.}
           backend.dump_configuration configuration
         end
-    
+
         # Alerts the user if an index is missing.
         #
         def raise_unless_cache_exists
@@ -171,18 +171,18 @@ module Internals
             raise_unless_similarity_ok
           end
         end
-      
+
         # Outputs a warning for the given cache.
         #
         def warn_cache_small what
-          puts "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
+          warn "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
         end
         # Raises an appropriate error message for the given cache.
         #
         def raise_cache_missing what
           raise "#{what} cache for #{identifier} missing."
         end
-      
+
         # Warns the user if the similarity index is small.
         #
         def warn_if_similarity_small
@@ -193,10 +193,10 @@ module Internals
         def raise_unless_similarity_ok
           raise_cache_missing :similarity unless backend.similarity_cache_ok?
         end
-    
+
         # TODO Spec on down.
         #
-    
+
         # Warns the user if the core or weights indexes are small.
         #
         def warn_if_index_small
@@ -209,11 +209,11 @@ module Internals
           raise_cache_missing :index   unless backend.index_cache_ok?
           raise_cache_missing :weights unless backend.weights_cache_ok?
         end
-    
+
       end
-    
+
     end
-    
+
   end
-  
+
 end

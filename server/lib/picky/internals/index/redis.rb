@@ -8,8 +8,8 @@ module Internals
     
       def initialize bundle_name, config
         super bundle_name, config
-      
-        # TODO
+
+        # Refine a few Redis "types".
         #
         @index         = Redis::ListHash.new "#{config.identifier}:#{bundle_name}:index"
         @weights       = Redis::StringHash.new "#{config.identifier}:#{bundle_name}:weights"

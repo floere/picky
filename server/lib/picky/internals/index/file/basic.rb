@@ -1,11 +1,11 @@
 module Internals
 
   module Index
-  
+
     # Handles all aspects of index files, such as dumping/loading.
     #
     module File
-    
+
       # Base class for all index files.
       #
       # Provides necessary helper methods for its
@@ -14,22 +14,26 @@ module Internals
       # dump/load methods.
       #
       class Basic
-      
+
         attr_reader :cache_path
-      
+
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
         def initialize cache_path
           @cache_path = "#{cache_path}.#{extension}"
         end
-      
+
+        def to_s
+          cache_path
+        end
+
         # The default extension for index files is "index".
         #
         def extension
           :index
         end
-      
+
         # Will copy the index file to a location that
         # is in a directory named "backup" right under
         # the directory the index file is in.
@@ -49,7 +53,7 @@ module Internals
         def prepare_backup target
           FileUtils.mkdir target unless Dir.exists?(target)
         end
-      
+
         # Copies the file from its backup location back
         # to the original location.
         #
@@ -62,16 +66,16 @@ module Internals
           dir, name = ::File.split path
           ::File.join dir, 'backup', name
         end
-      
+
         # Deletes the file.
         #
         def delete
           `rm -Rf #{cache_path}`
         end
-      
+
         # Checks.
         #
-      
+
         # Is this cache file suspiciously small?
         # (less than 8 Bytes of size)
         #
@@ -91,11 +95,11 @@ module Internals
         def size_of path
           `ls -l #{path} | awk '{print $5}'`.to_i
         end
-      
+
       end
-    
+
     end
-  
+
   end
-  
+
 end

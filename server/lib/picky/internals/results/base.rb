@@ -15,8 +15,8 @@ module Internals
       # Takes instances of Query::Allocations as param.
       #
       def initialize offset = 0, allocations = Query::Allocations.new
-        @offset = offset
-        @allocations = allocations # || Query::Allocations.new
+        @offset      = offset
+        @allocations = allocations
       end
       # Create new results and calculate the ids.
       #
@@ -26,7 +26,7 @@ module Internals
         results
       end
 
-      #
+      # Returns a hash with the allocations, offset, duration and total.
       #
       def serialize
         { allocations: allocations.to_result,
@@ -84,13 +84,6 @@ module Internals
       #
       def ids amount = 20
         allocations.ids amount
-      end
-      # Gets an amout of random ids from the allocations.
-      #
-      # Note: Basically delegates to the allocations.
-      #
-      def random_ids amount = 1
-        allocations.random_ids amount
       end
 
       # Human readable log.

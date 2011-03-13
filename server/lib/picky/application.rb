@@ -19,12 +19,12 @@
 #   my_index = Index::Memory.new :some_index_name, some_source
 # You give the index a name (or identifier), and a source (see Sources), where its data comes from. Let's do that:
 #   class MyGreatSearch < Application
-#     
+#
 #     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
-#     
+#
 #   end
 # Now we have an index <tt>books</tt>.
-# 
+#
 # That on itself won't do much good.
 #
 # Note that a Redis index is also available: Index::Redis.new.
@@ -38,7 +38,7 @@
 #
 # Let's go ahead and define a category:
 #   class MyGreatSearch < Application
-#     
+#
 #     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title
 #
@@ -56,16 +56,16 @@
 #    full_books_query = Query::Full.new books
 # Full just means that the ids are returned with the results.
 # Picky also offers a Query that returns live results, Query::Live. But that's not important right now.
-# 
+#
 # Now we have somebody we can ask about the index. But no external interface.
-# 
+#
 # == route(/regexp1/ => query1, /regexp2/ => query2, ...)
 #
 # Let's add a URL path (a Route, see http://github.com/floere/picky/wiki/Routing-configuration) to which we can send our queries. We do that with the route method:
 #   route %r{^/books/full$} => full_books_query
 # In full glory:
 #   class MyGreatSearch < Application
-#     
+#
 #     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title
 #
@@ -110,7 +110,7 @@
 #
 # Our example, fully fleshed out with indexing, querying, and weights:
 #   class MyGreatSearch < Application
-#     
+#
 #     default_indexing removes_characters: /[^a-zA-Z0-9\.]/,
 #                      stopwords: /\b(and|or|in|on|is|has)\b/,
 #                      splits_text_on: /\s/,
@@ -127,7 +127,7 @@
 #                      removes_characters_after_splitting: /\./,
 #                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
 #                      maximum_tokens: 4
-#     
+#
 #     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title,
 #                           qualifiers: [:t, :title, :titre],
@@ -136,36 +136,36 @@
 #     books.define_category :author,
 #                           partial: Partial::Substring.new(:from => -2)
 #     books.define_category :isbn
-#     
+#
 #     query_options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
-#     
+#
 #     route %r{^/books/full$} => Query::Full.new(books, query_options)
 #     route %r{^/books/live$} => Query::Live.new(books, query_options)
-#     
+#
 #   end
 # That's actually already a full-blown Picky App!
 #
 class Application
-  
+
   class << self
-    
+
     # API
     #
-    
+
     # Returns a configured tokenizer that
     # is used for indexing by default.
-    # 
+    #
     def default_indexing options = {}
       Internals::Tokenizers::Index.default = Internals::Tokenizers::Index.new(options)
     end
-    
+
     # Returns a configured tokenizer that
     # is used for querying by default.
-    # 
+    #
     def default_querying options = {}
       Internals::Tokenizers::Query.default = Internals::Tokenizers::Query.new(options)
     end
-    
+
     # Create a new index for indexing and for querying.
     #
     # Parameters:
@@ -176,22 +176,23 @@ class Application
     # * source: The source the data comes from. See Sources::Base.
     #
     # Options:
-    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
+    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index.
     #
-    # TODO Obsolete. Phase out.
+    # TODO Remove in 1.6.
     #
     def index name, source, options = {}
+      raise "the Picky application method #index is deprecated, please use Index::Memory.new instead."
       Index::Memory.new name, source, options
     end
-    
+
     # Routes.
     #
     delegate :route, :root, :to => :rack_adapter
-    
+
     #
     # API
-    
-    
+
+
     # A Picky application implements the Rack interface.
     #
     # Delegates to its routing to handle a request.
@@ -202,7 +203,7 @@ class Application
     def rack_adapter # :nodoc:
       @rack_adapter ||= Internals::FrontendAdapters::Rack.new
     end
-    
+
     # Finalize the subclass as soon as it
     # has finished loading.
     #
@@ -233,18 +234,37 @@ class Application
     def check # :nodoc:
       warnings = []
       warnings << check_external_interface
-      puts "\n#{warnings.join(?\n)}\n\n" unless warnings.all? &:nil?
+      warn "\n#{warnings.join(?\n)}\n\n" unless warnings.all? &:nil?
     end
     def check_external_interface
       "WARNING: No routes defined for application configuration in #{self.class}." if rack_adapter.empty?
     end
-    
-    # TODO Add more info if possible.
-    #
+
     def to_s # :nodoc:
-      "#{self.name}:\n#{rack_adapter}"
+      <<-APPLICATION
+\033[1m#{name}\033[m
+#{to_stats.indented_to_s}
+APPLICATION
     end
-    
+    def to_stats
+      <<-APP
+\033[1mIndexing (default)\033[m:
+#{Internals::Tokenizers::Index.default.indented_to_s}
+
+\033[1mQuerying (default)\033[m:
+#{Internals::Tokenizers::Query.default.indented_to_s}
+
+\033[1mIndexes\033[m:
+#{Indexes.to_s.indented_to_s}
+
+\033[1mRoutes\033[m:
+#{to_routes.indented_to_s}
+APP
+    end
+    def to_routes
+      rack_adapter.to_s
+    end
+
   end
-  
+
 end

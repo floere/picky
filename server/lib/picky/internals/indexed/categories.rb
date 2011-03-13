@@ -1,14 +1,15 @@
 module Internals
 
   module Indexed
-  
+
     class Categories
-    
+
       attr_reader :categories, :category_hash, :ignore_unassigned_tokens
-    
+
       each_delegate :load_from_cache,
+                    :analyze,
                     :to => :categories
-    
+
       # A list of indexed categories.
       #
       # Options:
@@ -26,17 +27,21 @@ module Internals
       #
       def initialize options = {}
         clear
-      
+
         @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false
       end
-    
+
+      def to_s
+        categories.indented_to_s
+      end
+
       # Clears both the array of categories and the hash of categories.
       #
       def clear
         @categories    = []
         @category_hash = {}
       end
-    
+
       # Add the given category to the list of categories.
       #
       def << category
@@ -48,7 +53,7 @@ module Internals
         #
         category_hash[category.name] = [category]
       end
-    
+
       # Return all possible combinations for the given token.
       #
       # This checks if it needs to also search through similar
@@ -60,7 +65,7 @@ module Internals
       end
       # Gets all similar tokens and puts together the possible combinations
       # for each found similar token.
-      # 
+      #
       def similar_possible_for token
         # Get as many similar tokens as necessary
         #
@@ -90,7 +95,7 @@ module Internals
           result + possible_for(token, possible)
         end
       end
-    
+
       # Returns possible Combinations for the token.
       #
       # Note: The preselected_categories param is an optimization.
@@ -122,14 +127,14 @@ module Internals
       # an existing category.
       #
       # Note: Returns nil if the user did not define one
-      #       or if he/she has defined a non-existing one. 
+      #       or if he/she has defined a non-existing one.
       #
       def user_defined_categories token
         category_hash[token.user_defined_category_name]
       end
-    
+
     end
-  
+
   end
-  
+
 end

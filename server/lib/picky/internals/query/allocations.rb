@@ -58,21 +58,6 @@ module Internals
         end
       end
 
-      # Returns a random id from the allocations.
-      #
-      # Note: This is an ok algorithm for small id sets.
-      #
-      # But still TODO try for a faster one.
-      #
-      # TODO For the 1 amount random case this needs to be improved.
-      #
-      def random_ids amount = 1
-        return [] if @allocations.empty?
-        ids = @allocations.first.ids
-        indexes = Array.new(ids.size) { |id| id }.sort_by { rand }
-        indexes.first(amount).map { |id| ids[id] }
-      end
-
       # This is the main method of this class that will replace ids and count.
       #
       # What it does is calculate the ids and counts of its allocations

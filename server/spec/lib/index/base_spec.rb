@@ -4,22 +4,44 @@ require 'spec_helper'
 
 describe Index::Base do
   
+  let(:some_source) { stub :source, :harvest => nil }
+  
   context 'initializer' do
     it 'works' do
-      lambda { described_class.new :some_index_name, :some_source }.should_not raise_error
+      expect { described_class.new :some_index_name, some_source }.to_not raise_error
+    end
+    it 'fails correctly' do
+      expect { described_class.new 0, some_source }.to raise_error(<<-ERROR
+The index identifier (you gave "0") for Index::Memory/Index::Redis should be a String/Symbol,
+Examples:
+  Index::Memory.new(:my_cool_index, ...) # Recommended
+  Index::Redis.new("a-redis-index", ...)
+ERROR
+)
+    end
+    it 'fails correctly' do
+      expect { described_class.new :some_index_name, :some_source }.to raise_error(<<-ERROR
+The index "some_index_name" should use a data source that responds to the method #harvest, which yields(id, text).
+Or it could use one of the built-in sources:
+  Sources::DB,
+  Sources::CSV,
+  Sources::Delicious,
+  Sources::Couch
+ERROR
+)
     end
     it 'registers with the indexes' do
       @api = described_class.allocate
       
       ::Indexes.should_receive(:register).once.with @api
       
-      @api.send :initialize, :some_index_name, :some_source
+      @api.send :initialize, :some_index_name, some_source
     end
   end
   
   context 'unit' do
     before(:each) do
-      @api = described_class.new :some_index_name, :some_source
+      @api = described_class.new :some_index_name, some_source
     end
 
     describe 'define_category' do

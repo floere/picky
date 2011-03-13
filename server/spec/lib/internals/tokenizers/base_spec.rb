@@ -12,11 +12,38 @@ describe Internals::Tokenizers::Base do
     it 'rejects tokens that are called :hello' do
       tokenizer.reject([:hel, :hell, :hello]).should == [:hel, :hell]
     end
+    describe 'to_s' do
+      it 'does something' do
+        tokenizer.to_s.should == <<-EXPECTED
+Removes characters:        -
+Stopwords:                 -
+Splits text on:            /\\s/
+Removes chars after split: -
+Normalizes words:          -
+Rejects tokens?            Yes, see line 8 in app/application.rb
+Substitutes chars?         -
+EXPECTED
+      end
+    end
   end
   
   context 'with normal instance' do
     let(:tokenizer) { described_class.new }
-
+    
+        describe 'to_s' do
+          it 'does something' do
+            tokenizer.to_s.should == <<-EXPECTED
+Removes characters:        -
+Stopwords:                 -
+Splits text on:            /\\s/
+Removes chars after split: -
+Normalizes words:          -
+Rejects tokens?            -
+Substitutes chars?         -
+EXPECTED
+          end
+        end
+    
     describe 'reject_token_if' do
       it 'rejects empty tokens by default' do
         tokenizer.reject(['a', nil, '', 'b']).should == ['a', 'b']
@@ -32,6 +59,9 @@ describe Internals::Tokenizers::Base do
       it "doesn't substitute if there is no substituter" do
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzäöü'
       end
+      it 'raises if nothing with #substitute is given' do
+        expect { tokenizer.substitutes_characters_with Object.new }.to raise_error("The substitutes_characters_with option needs a character substituter, which responds to #substitute.")
+      end
       it "uses the substituter to replace characters" do
         tokenizer.substitutes_characters_with CharacterSubstituters::WestEuropean.new
 
@@ -45,6 +75,9 @@ describe Internals::Tokenizers::Base do
     end
 
     describe "removes_characters_after_splitting" do
+      it 'handles broken arguments' do
+        expect { tokenizer.removes_characters_after_splitting("gnorf") }.to raise_error(ArgumentError)
+      end
       context "without removes_characters_after_splitting called" do
         it "has remove_after_normalizing_illegals" do
           expect { tokenizer.remove_after_normalizing_illegals('any') }.to_not raise_error
@@ -69,6 +102,9 @@ describe Internals::Tokenizers::Base do
     end
 
     describe "normalizes_words" do
+      it 'handles broken arguments' do
+        expect { tokenizer.normalizes_words(:not_an_array) }.to raise_error(ArgumentError)
+      end
       context "without normalizes_words called" do
         it "has normalize_with_patterns" do
           expect { tokenizer.normalize_with_patterns('any') }.to_not raise_error
@@ -96,6 +132,12 @@ describe Internals::Tokenizers::Base do
     end
 
     describe "splits_text_on" do
+      it 'handles nonbroken arguments' do
+        expect { tokenizer.splits_text_on("hello") }.to_not raise_error(ArgumentError)
+      end
+      it 'handles broken arguments' do
+        expect { tokenizer.splits_text_on(:gnorf) }.to raise_error(ArgumentError)
+      end
       context "without splits_text_on called" do
         it "has split" do
           lambda { tokenizer.split('any') }.should_not raise_error
@@ -121,6 +163,9 @@ describe Internals::Tokenizers::Base do
     end
 
     describe "removes_characters" do
+      it 'handles broken arguments' do
+        expect { tokenizer.removes_characters("hello") }.to raise_error(ArgumentError)
+      end
       context "without removes_characters called" do
         it "has remove_illegals" do
           expect { tokenizer.remove_illegals('any') }.to_not raise_error
@@ -145,6 +190,9 @@ describe Internals::Tokenizers::Base do
     end
 
     describe 'stopwords' do
+      it 'handles broken arguments' do
+        expect { tokenizer.stopwords("hello") }.to raise_error(ArgumentError)
+      end
       context 'without stopwords given' do
         it 'should define a method remove_stopwords' do
           lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error

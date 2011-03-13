@@ -52,8 +52,6 @@ module Internals
           # Add the wrapped possible allocations to the ones we already have.
           #
           previous_allocations + expanded_combinations.map! do |expanded_combination|
-            # TODO Insert Redis here?
-            #
             @combinations_type.new(expanded_combination).pack_into_allocation(index.result_identifier) # TODO Do not extract result_identifier. Remove pack_into_allocation.
           end
         end)
@@ -116,13 +114,12 @@ module Internals
       #       ones, but I guess I am a bit sentimental.
       #
       def expand_combinations_from possible_combinations
+        # If an element has size 0, this means one of the
+        # tokens could not be allocated.
+        #
         return if possible_combinations.any?(&:empty?)
       
         # Generate the first multiplicator "with which" (well, not quite) to multiply the smallest amount of combinations.
-        #
-        # TODO How does this work if an element has size 0? Since below we account for size 0.
-        #      Should we even continue if an element has size 0?
-        #      This means one of the tokens cannot be allocated.
         #
         single_mult = possible_combinations.inject(1) { |total, combinations| total * combinations.size }
 

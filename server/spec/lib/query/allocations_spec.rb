@@ -179,62 +179,6 @@ describe Internals::Query::Allocations do
     end
   end
 
-  describe 'random_ids' do
-    context 'enough ids' do
-      before(:each) do
-        @allocation1 = stub :allocation1, :ids => [1, 2, 3]
-        @allocation2 = stub :allocation2, :ids => [4, 5, 6, 7]
-        @allocations = described_class.new [@allocation1, @allocation2]
-      end
-      it 'should return one random id from the first allocations by default' do
-        @allocations.random_ids.size.should == 1
-      end
-      it 'should return multiple random ids from the first allocation' do
-        @allocations.random_ids(5).size.should == 3
-      end
-      it "should return one random id from the first allocation's ids" do
-        (1..7).to_a.should include(@allocations.random_ids.first)
-      end
-      it 'should not contain the same id twice' do
-        20.times do
-          @allocations.random_ids(2).uniq.size.should_not == 1
-        end
-      end
-    end
-    context 'just one id' do
-      before(:each) do
-        @allocation1 = stub :allocation1, :ids => [1]
-        @allocation2 = stub :allocation2, :ids => []
-        @allocations = described_class.new [@allocation1, @allocation2]
-      end
-      it 'should return one random id from its allocations by default' do
-        @allocations.random_ids.size.should == 1
-      end
-      it 'should return multiple random ids from its allocations' do
-        @allocations.random_ids(5).size.should == 1
-      end
-      it 'should return one random id from the allocations ids' do
-        @allocations.random_ids.should == [1]
-      end
-    end
-    context 'no id' do
-      before(:each) do
-        @allocation1 = stub :allocation1, :ids => []
-        @allocation2 = stub :allocation2, :ids => []
-        @allocations = described_class.new [@allocation1, @allocation2]
-      end
-      it 'should return one random id from its allocations by default' do
-        @allocations.random_ids.size.should == 0
-      end
-      it 'should return no random id from its allocations' do
-        @allocations.random_ids(5).size.should == 0
-      end
-      it 'should return no random id from the allocations ids' do
-        @allocations.random_ids.should == []
-      end
-    end
-  end
-
   describe 'to_result' do
     context 'all allocations have results' do
       before(:each) do

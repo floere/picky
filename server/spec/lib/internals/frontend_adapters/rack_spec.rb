@@ -192,17 +192,17 @@ describe Internals::FrontendAdapters::Rack do
         Internals::Adapters::Rack.stub! :app_for => :some_query_app
       end
       it 'should add the right route' do
-        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }
+        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }, {}, "some_query"
         
         @rack_adapter.route_one %r{some_url}, :some_query, {}
       end
       it 'should add the right route' do
-        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }
+        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }, {}, "some_query"
         
         @rack_adapter.route_one 'some_url', :some_query, {}
       end
       it 'should add the right route' do
-        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :glarf => :blarf, :path_info => /some_url/ }
+        @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :glarf => :blarf, :path_info => /some_url/ }, {}, "some_query"
         
         @rack_adapter.route_one 'some_url', :some_query, { :glarf => :blarf }
       end

@@ -11,7 +11,8 @@ describe "Integration Tests" do
   before(:all) do
     Indexes.index_for_tests
     Indexes.load_from_cache
-    @main       = Query::Full.new Indexes[:main]
+    
+    @books      = Query::Full.new Indexes[:books]
     @sym        = Query::Full.new Indexes[:symbol_keys]
     @csv        = Query::Full.new Indexes[:csv_test]
     @memory_geo = Query::Full.new Indexes[:memory_geo]
@@ -55,7 +56,7 @@ describe "Integration Tests" do
     # Breakage. As reported by Jason.
     #
     it 'finds with id' do
-      @main.search_with_text('id:"2"').ids.should == [2]
+      @books.search_with_text('id:"2"').ids.should == [2]
     end
     
     # Standard.
@@ -141,6 +142,11 @@ describe "Integration Tests" do
     # Redis.
     #
     it_should_find_ids_in_redis 'Soledad Human', ['72']
+    it_should_find_ids_in_redis 'First Three Minutes Weinberg', ['1']
+    it_should_find_ids_in_redis 'Gover* Systems', ['7']
+    it_should_find_ids_in_redis 'A*', ['2', '3', '4', '5', '6', '7', '8', '15', '24', '27', '29', '35', '39', '52', '55', '63', '67', '76', '80', '101']
+    it_should_find_ids_in_redis 'a* b* c* d* f', ['110', '416']
+    it_should_find_ids_in_redis '1977', ['86', '394']
     
     # Categorization.
     #

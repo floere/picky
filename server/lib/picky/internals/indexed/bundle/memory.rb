@@ -3,11 +3,11 @@ module Internals
   # encoding: utf-8
   #
   module Indexed # :nodoc:all
-  
+
     #
     #
     module Bundle
-    
+
       # This is the _actual_ index (based on memory).
       #
       # Handles exact/partial index, weights index, and similarity index.
@@ -15,19 +15,24 @@ module Internals
       # Delegates file handling and checking to an *Indexed*::*Files* object.
       #
       class Memory < Base
-      
-        attr_accessor :index, :weights, :similarity, :configuration
-      
+
         delegate :[], :to => :configuration
-      
+
         def initialize name, configuration, *args
           super name, configuration, *args
-        
+
           @configuration = {} # A hash with config options.
-        
+
           @backend = Internals::Index::Files.new name, configuration
         end
-      
+
+        def to_s
+          <<-MEMORY
+Memory
+#{@backend.indented_to_s}
+MEMORY
+        end
+
         # Get the ids for the given symbol.
         #
         def ids sym
@@ -38,7 +43,7 @@ module Internals
         def weight sym
           @weights[sym]
         end
-      
+
         # Loads the core index.
         #
         def load_index
@@ -59,11 +64,32 @@ module Internals
         def load_configuration
           self.configuration = @backend.load_configuration
         end
-      
+
+        # Loads the core index.
+        #
+        def clear_index
+          self.index = {}
+        end
+        # Loads the weights index.
+        #
+        def clear_weights
+          self.weights = {}
+        end
+        # Loads the similarity index.
+        #
+        def clear_similarity
+          self.similarity = {}
+        end
+        # Loads the configuration.
+        #
+        def clear_configuration
+          self.configuration = {}
+        end
+
       end
-    
+
     end
-  
+
   end
-  
+
 end

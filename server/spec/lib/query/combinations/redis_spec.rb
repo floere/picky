@@ -114,7 +114,12 @@ describe Internals::Query::Combinations::Redis do
   end
   
   describe 'generate_intermediate_result_id' do
-    # TODO
+    it 'returns the correct result id' do
+      @combinations.stub! :host => 'some_hostname'
+      Process.stub! :pid => 12345
+      
+      @combinations.generate_intermediate_result_id.should == :'some_hostname:12345:picky:result'
+    end
   end
 
   describe "ids" do

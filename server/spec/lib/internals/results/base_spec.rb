@@ -26,18 +26,6 @@ describe Internals::Results::Base do
     end
   end
   
-  describe "random_ids" do
-    before(:each) do
-      @allocations = stub :allocations
-      @results = described_class.new :unimportant, @allocations
-    end
-    it "delegates" do
-      @allocations.should_receive(:random_ids).once.with :anything
-      
-      @results.random_ids :anything
-    end
-  end
-  
   describe 'to_log' do
     before(:each) do
       time = stub :time, :to_s => '0-08-16 10:07:33'

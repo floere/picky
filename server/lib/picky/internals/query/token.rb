@@ -8,8 +8,6 @@ module Internals
     #
     # It also knows whether it needs to look for similarity (bla~), or whether it is a partial (bla*).
     #
-    # TODO Make partial / similarity char configurable.
-    #
     class Token # :nodoc:all
 
       attr_reader :text, :original
@@ -178,8 +176,6 @@ module Internals
       end
     
       # Internal identifier.
-      #
-      # TODO Uh.
       #
       def identifier
         "#{similar?? :similarity : :index}:#{@text}"

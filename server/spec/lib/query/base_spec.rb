@@ -7,7 +7,8 @@ describe Query::Base do
   describe 'combinations_type_for' do
     let(:query) { described_class.new }
     it 'returns a specific Combination for a specific input' do
-      query.combinations_type_for([Index::Memory.new(:gu, :ga)]).should == Internals::Query::Combinations::Memory
+      some_source = stub(:source, :harvest => nil)
+      query.combinations_type_for([Index::Memory.new(:gu, some_source)]).should == Internals::Query::Combinations::Memory
     end
     it 'just works on the same types' do
       query.combinations_type_for([:blorf, :blarf]).should == Internals::Query::Combinations::Memory
@@ -45,24 +46,24 @@ describe Query::Base do
     end
   end
   
-  describe "empty_results" do
-    before(:each) do
-      @query = Query::Full.new
-      
-      @result_type = stub :result_type
-      @query.stub! :result_type => @result_type
-    end
-    it "returns a new result type" do
-      @result_type.should_receive(:new).once.with :some_offset
-      
-      @query.empty_results :some_offset
-    end
-    it "returns a new result type with default offset" do
-      @result_type.should_receive(:new).once.with 0
-      
-      @query.empty_results
-    end
-  end
+  # describe "empty_results" do
+  #   before(:each) do
+  #     @query = Query::Full.new
+  #     
+  #     @result_type = stub :result_type
+  #     @query.stub! :result_type => @result_type
+  #   end
+  #   it "returns a new result type" do
+  #     @result_type.should_receive(:new).once.with :some_offset
+  #     
+  #     @query.empty_results :some_offset
+  #   end
+  #   it "returns a new result type with default offset" do
+  #     @result_type.should_receive(:new).once.with 0
+  #     
+  #     @query.empty_results
+  #   end
+  # end
   
   describe "search_with_text" do
     before(:each) do
@@ -149,12 +150,15 @@ describe Query::Base do
   end
   
   describe 'to_s' do
+    before(:each) do
+      @type.stub! :name => :some_index
+    end
     context 'with weights' do
       before(:each) do
         @query = Query::Full.new @index, weights: :some_weights
       end
       it 'works correctly' do
-        @query.to_s.should == 'Query::Full, weights: some_weights'
+        @query.to_s.should == 'Query::Full(some_index, weights: some_weights)'
       end
     end
     context 'without weights' do
@@ -162,7 +166,7 @@ describe Query::Base do
         @query = Query::Full.new @index
       end
       it 'works correctly' do
-        @query.to_s.should == 'Query::Full'
+        @query.to_s.should == 'Query::Full(some_index)'
       end
     end
   end

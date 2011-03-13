@@ -49,7 +49,10 @@ module Internals
         # Deletes the Redis index namespace.
         #
         def delete
-          # TODO @backend.
+          # Not implemented here.
+          # Note: backend.flushdb might be the way to go,
+          #       but since we cannot delete by key pattern,
+          #       we don't do anything.
         end
       
         # Checks.
@@ -58,19 +61,23 @@ module Internals
         # Is this cache suspiciously small?
         #
         def cache_small?
-          false # TODO
+          size < 1
         end
         # Is the cache ok?
         #
         # A small cache is still ok.
         #
         def cache_ok?
-          false # TODO
+          size > 0
         end
         # Extracts the size of the file in Bytes.
         #
-        def size_of path
-          # TODO
+        # Note: This is a very forgiving implementation.
+        #       But as long as Redis does not implement
+        #       DBSIZE KEYPATTERN, we are stuck with this.
+        #
+        def size
+          backend.dbsize
         end
       
       end

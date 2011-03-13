@@ -1,11 +1,14 @@
 module Internals
 
   module Indexing
-  
+
     class Category
-    
+
       attr_reader :exact, :partial, :name, :configuration, :indexer
-    
+
+      delegate :identifier, :prepare_index_directory, :to => :configuration
+      delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
+
       # Mandatory params:
       #  * name: Category name to use as identifier and file names.
       #  * index: Index to which this category is attached to.
@@ -17,38 +20,45 @@ module Internals
       #
       # Advanced Options (TODO):
       #
-      #  * weights: 
-      #  * tokenizer: 
+      #  * weights:
+      #  * tokenizer:
       #
       def initialize name, index, options = {}
         @name = name
         @from = options[:from]
-      
+
         # Now we have enough info to combine the index and the category.
         #
         @configuration = Configuration::Index.new index, self
-      
+
         @tokenizer = options[:tokenizer] || Tokenizers::Index.default
         @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer
-      
+
         # TODO Push into Bundle. At least the weights.
         #
         partial    = options[:partial]    || Generators::Partial::Default
         weights    = options[:weights]    || Generators::Weights::Default
         similarity = options[:similarity] || Generators::Similarity::Default
-      
+
         bundle_class = options[:indexing_bundle_class] || Bundle::Memory
         @exact   = bundle_class.new(:exact,   configuration, similarity, Generators::Partial::None.new, weights)
         @partial = bundle_class.new(:partial, configuration, Generators::Similarity::None.new, partial, weights)
       end
-    
-      delegate :identifier, :prepare_index_directory, :to => :configuration
-      delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
-    
+
+      def to_s
+        <<-CATEGORY
+Category(#{name} from #{from}):
+  Exact:
+#{exact.indented_to_s(4)}
+  Partial:
+#{partial.indented_to_s(4)}
+        CATEGORY
+      end
+
       def from
         @from || name
       end
-    
+
       # TODO Spec.
       #
       def backup_caches
@@ -71,12 +81,12 @@ module Internals
         exact.delete
         partial.delete
       end
-    
+
       def index
         prepare_index_directory
         indexer.index
       end
-    
+
       # Generates all caches for this category.
       #
       def cache
@@ -97,7 +107,7 @@ module Internals
         generate_partial
         generate_caches_from_memory
         dump_caches
-        timed_exclaim "CACHE FINISHED #{identifier}."
+        timed_exclaim %Q{"#{identifier}": Caching finished.}
       end
       def generate_caches_from_source
         exact.generate_caches_from_source
@@ -112,9 +122,9 @@ module Internals
         exact.dump
         partial.dump
       end
-    
+
     end
-  
+
   end
-  
+
 end

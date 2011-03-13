@@ -14,7 +14,7 @@ PickyLog = Loggers::Search.new ::Logger.new(File.expand_path('log/search.log', P
 #   PickyLog        = Loggers::Search.new logger
 #   puts "Logging on syslog #{log_program_name}."
 # rescue StandardError
-#   puts "Could not connect to the syslog, using the normal log."
+#   warn "Could not connect to the syslog, using the normal log."
 #   require 'logger'
 #   PickyLog        = Loggers::Search.new ::Logger.new(File.join(PICKY_ROOT, 'log/search.log'))
 # end

@@ -40,7 +40,7 @@ describe Indexers::Serial do
   
   describe "indexing_message" do
     it "informs the user about what it is going to index" do
-      @indexer.should_receive(:timed_exclaim).once.with 'INDEX some_index some_category'
+      @indexer.should_receive(:timed_exclaim).once.with '"some_index:some_category": Starting indexing.'
       
       @indexer.indexing_message
     end

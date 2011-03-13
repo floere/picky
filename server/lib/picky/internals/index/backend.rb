@@ -95,8 +95,7 @@ module Internals
         similarity.restore
         configuration.restore
       end
-    
-    
+      
       # Delete all index files.
       #
       def delete

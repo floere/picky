@@ -19,7 +19,7 @@ module Internals
         def initialize combinations
           super combinations
         
-          @@redis ||= ::Redis.new
+          @@redis ||= ::Redis.new :db => 15
         end
       
         # Returns the result ids for the allocation.
@@ -32,22 +32,33 @@ module Internals
           end
         
           result_id = generate_intermediate_result_id
-        
-          # TODO multi?
+          
+          # Intersect and store.
           #
-        
           @@redis.zinterstore result_id, identifiers
         
-          @@redis.zrange result_id, offset, (offset + amount)
+          # Get the stored result.
+          #
+          results = @@redis.zrange result_id, offset, (offset + amount)
+          
+          # Delete the stored result as it was only for temporary purposes.
+          #
+          @@redis.del result_id
+          
+          results
         end
       
         # Generate a multiple host/process safe result id.
         #
-        # TODO How expensive is Process.pid? If it changes once, remember forever?
+        require 'socket'
+        @@host = Socket.gethostname
+        define_method :host do
+          @@host
+        end
+        # Use the host and pid (generated lazily in child processes) for the result.
         #
         def generate_intermediate_result_id
-          # TODO host -> extract host.
-          :"host:#{Process.pid}:picky:result"
+          :"#{host}:#{@pid ||= Process.pid}:picky:result"
         end
       
       end

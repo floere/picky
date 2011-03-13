@@ -1,20 +1,20 @@
 module Internals
 
   module Tokenizers
-  
+
     # The base indexing tokenizer.
     #
     # Override in indexing subclasses and define in configuration.
     #
     class Index < Base
-    
+
       def self.default= new_default
         @default = new_default
       end
       def self.default
         @default ||= new
       end
-    
+
       # Default indexing preprocessing hook.
       #
       # Does:
@@ -34,7 +34,7 @@ module Internals
         remove_non_single_stopwords text
         text
       end
-    
+
       # Default indexing pretokenizing hook.
       #
       # Does:
@@ -48,16 +48,16 @@ module Internals
           word
         end
       end
-    
+
       # Does not actually return a token, but a
       # symbol "token".
       #
       def token_for text
         symbolize text
       end
-    
+
     end
-    
+
   end
-  
+
 end

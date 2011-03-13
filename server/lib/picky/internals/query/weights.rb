@@ -7,14 +7,7 @@ module Query
     #
     #
     def initialize weights = {}
-      # @weights_cache = {} # TODO
-      @weights = prepare weights
-    end
-    
-    # Get the category indexes for the given bonuses.
-    #
-    def prepare weights
-      weights
+      @weights = weights
     end
     
     # Get the weight of an allocation.
@@ -38,10 +31,8 @@ module Query
     # Note: Cache this if more complicated weighings become necessary.
     #
     def score combinations
-      # TODO Beautify? Use categories for weights?
+      # TODO Or hide: combinations#to_weights_key
       #
-      # weight_for combinations.map(&:category).clustered_uniq_fast.map!(&:name)
-      
       # TODO combinations could cluster uniq as combinations are added (since combinations don't change).
       #
       weight_for combinations.map(&:category_name).clustered_uniq_fast

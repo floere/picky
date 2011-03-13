@@ -8,7 +8,7 @@ describe Application do
     it "should run ok" do
       lambda {
         class MinimalTestApplication < Application
-          books = index :books, Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
+          books = Index::Memory.new :books, Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
           books.define_category :title
           
           full = Query::Full.new books
@@ -43,7 +43,7 @@ describe Application do
                            substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
                            maximum_tokens: 5
           
-          books_index = index :books,
+          books_index = Index::Memory.new :books,
                               Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
           books_index.define_category :title,
                                       similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.
@@ -51,7 +51,7 @@ describe Application do
           books_index.define_category :isbn,
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
-          geo_index = index :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+          geo_index = Index::Memory.new :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
           geo_index.define_category :location
           geo_index.define_ranged_category(:north1, 1, precision: 3, from: :north)
                    .define_ranged_category(:east1,  1, precision: 3, from: :east)

@@ -1,5 +1,5 @@
 module Sources
-  
+
   # Describes a Delicious (http://deli.cio.us) source.
   #
   # This source has a fixed set of categories:
@@ -11,7 +11,7 @@ module Sources
   #  Sources::CSV.new('usrnam', 'paswrd')
   #
   class Delicious < Base
-    
+
     def initialize username, password
       check_gem
       @username = username
@@ -20,21 +20,24 @@ module Sources
     def check_gem # :nodoc:
       require 'www/delicious'
     rescue LoadError
-      puts_gem_missing 'www-delicious', 'the delicious source'
+      warn_gem_missing 'www-delicious', 'the delicious source'
       exit 1
     end
-    
+
+    def to_s
+      self.class.name
+    end
+
     # Harvests the data to index.
     #
     def harvest _, category
       get_data do |indexed_id, data|
         text = data[category.from]
         next unless text
-        text.force_encoding 'utf-8' # TODO Still needed?
         yield indexed_id, text
       end
     end
-    
+
     #
     #
     def get_data # :nodoc:
@@ -50,7 +53,7 @@ module Sources
         yield @generated_id, data
       end
     end
-    
+
   end
-  
+
 end
