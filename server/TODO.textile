@@ -1,31 +1,5 @@
-h1. TODOs
+h1. Internal TODOs
 
- * FIXMEs already in the code.
- * TODOs already in the code.
- * -Covering a very simple case.-
- * -Controller Mini-FW.-
- * -Documentation.-
- * -Website.-
- * Covering a more complex case based on possible feedback.
- * 15 minute blog search video. (tongue in cheek)
- 
- * -Write a tokenizer introspector with which you can see how the tokenizing configs influence a query or indexing measure.-
- * Live interface and config changes.
- 
- * Use strategies (in Indexers) to allow SQL only indexing.
- * -Use strategies to allow Non-SQL sources.-
- * -Put app specific code in /app-
- * Put shared app specific code in /shared?
- * -create gemifying stuff-
- * -directory structure-
- 
- * -Doc: Recommended for use up to 100 Mio. Datapoints.-
- * Use Ruby 1.9.3
- * Option: trap_signals # default true
- * -Rake can generate directories and files-
- * Not for Windows
- * picky bin
- * -picky project <name> # => Generates project.-
- * deploy server start needs :sequential => true option
- 
- * Should partial bundle weights always be 0? (They might be too high, as they have many more ids)
+h2.  Optimizations
+
+* Option to stop calculating combinations if we have enough results for a full result.
