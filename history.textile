@@ -1,3 +1,7 @@
+h2. Version 1.5.4 (unreleased)
+
+* hanke: (server) Not breaking the web anymore ;) Using history.js instead of address.js to do away with the hash query.
+
 h2. Version 1.5.3
 
 * hanke: (server) @rake stats@ and @rake analyze@. Get information about your app.
