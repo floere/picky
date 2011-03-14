@@ -1,4 +1,4 @@
-h2. Version 1.5.4 (unreleased)
+h2. Version 1.5.4
 
 * hanke: (server) Not breaking the web anymore ;) Using history.js instead of address.js to do away with the hash query.
 
