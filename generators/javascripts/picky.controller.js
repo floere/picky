@@ -11,7 +11,7 @@ var PickyController = function(config) {
   //
   var extractQuery = function(url) {
     var match = url && url.match(/q=([^&]+)/);
-    return match && match[1];
+    return match && unescape(match[1] || "");
   };
   this.extractQuery = extractQuery;
   
