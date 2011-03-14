@@ -3,11 +3,11 @@
   %head
     %link{:href => "stylesheets/picky.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-
     = js 'jquery-1.5.0.min'
-    = js 'jquery.address-1.3.2.min'
-
+    = js 'history.min'
+    = js 'history.adapter.jquery.min'
     = js 'picky.min'
+
   %body
     %img{:src => "images/picky.png"}/
     %p
@@ -129,9 +129,6 @@
           // this one is passed through the query param q.
           //
           // Example: www.mysearch.com/?q=example
-          //
-          // If there isn't a q parameter (because it is empty), we try to
-          // take it from the deep linking /#/?q parameter.
           //
           pickyClient.insertFromURL('#{@query}');
         });

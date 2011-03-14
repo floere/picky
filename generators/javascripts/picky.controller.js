@@ -52,7 +52,9 @@ var PickyController = function(config) {
     var offset = possibleOffset || 0;
     clearInterval(liveSearchTimerId);
     
-    $.address && $.address.parameter('q', query);
+    // Be extra cautious since not all browsers/histories offer pushState.
+    //
+    window.History && window.History.pushState && window.History.pushState(null, null, "?q=" + query);
       
     params = beforeCallback(params, query, offset) || params;
     
