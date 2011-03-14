@@ -1,6 +1,6 @@
 h2. Version 1.5.4
 
-* hanke: (client) Not breaking the web anymore ;) Using history.js instead of address.js to do away with the hash query.
+* hanke: (client) Not breaking the web anymore ;) Using history.js instead of address.js to do away with the hash bang.
 
 h2. Version 1.5.3
 
