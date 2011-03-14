@@ -62,7 +62,7 @@ var PickyClient = function(config) {
   };
   var insert = this.insert;
   
-  // Takes a #/?q=example parameter
+  // Takes a query or nothing as parameter.
   //
   // And runs a query with it (if $.address exists).
   // Can be overridden with a non-empty parameter. 
@@ -71,15 +71,17 @@ var PickyClient = function(config) {
     if (override && override != '') {
       insert(override);
     } else {
-      $.address && insert($.address.parameter('q'));
+      var lastQuery = controller.lastQuery();
+      lastQuery && insert(lastQuery);
     }
   };
   
-  // Adapter to let the back/forward button start queries.
+  // Bind adapter to let the back/forward button start queries.
   //
-  if ($.address) {
-    $.address.externalChange(function(event) {
-      var query = event.parameters['q'];
+  if (window.History) {
+    window.History.Adapter.bind(window, 'statechange', function() {
+      var state = window.History.getState();
+      var query = controller.extractQuery(state.url);
       query && insert(query);
     });
   };

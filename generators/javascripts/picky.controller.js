@@ -7,6 +7,23 @@ var PickyController = function(config) {
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
+  // Extracts the query part from an URL.
+  //
+  var extractQuery = function(url) {
+    var match = url && url.match(/q=([^&]+)/);
+    return match && match[1];
+  };
+  this.extractQuery = extractQuery;
+  
+  // Very failsafe extraction of the last made query.
+  //
+  var lastQuery = function() {
+    var state = window.History && window.History.getState();
+    var url = state && state.url;
+    return extractQuery(url);
+  };
+  this.lastQuery = lastQuery;
+  
   // If the given backend cannot be found, ignore the search request.
   //
   var search = function(type, query, callback, offset, specificParams) {
@@ -54,7 +71,12 @@ var PickyController = function(config) {
     
     // Be extra cautious since not all browsers/histories offer pushState.
     //
-    window.History && window.History.pushState && window.History.pushState(null, null, "?q=" + query);
+    // Note: If this query is the same as the last, we do not save it in the history.
+    //
+    if (query != lastQuery()) {
+      var url = "?q=" + query;
+      window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
+    }
       
     params = beforeCallback(params, query, offset) || params;
     
