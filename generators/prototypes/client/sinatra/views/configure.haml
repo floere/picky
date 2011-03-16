@@ -27,22 +27,15 @@
         %strong app.rb
         and take a peek inside.
       %p
-        First you need both a client instance for a
-        %strong full
-        or a
-        %strong live search
-        depending on what you need (Full gets results with IDs, Live without and is used for updating the counter).
+        First you need a client instance.
       %p
         In the example, I called it
-        %strong FullBooks
-        and
-        %strong LiveBooks
+        %strong BookSearch
         respectively.
         %code
           %pre
             :preserve
-              FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-              LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+              BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
       %p
         Both clients offer the options:
         %dl
@@ -121,8 +114,7 @@
         %code
           %pre
             :preserve
-              FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-              LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+              BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
 
               get '/search/full' do
                 results = FullBooks.search params[:query], :offset => params[:offset]

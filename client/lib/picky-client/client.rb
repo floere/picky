@@ -9,8 +9,7 @@
 #   # Use the right host, port where your Picky server runs. Then, choose a URL path as defined
 #   # in your <tt>app/application.rb</tt> in the server.
 #   #
-#   FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-#   LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+#   BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
 #
 # ==== 2. Get results.
 #
@@ -18,7 +17,7 @@
 #   #
 #   # You will get back a Hash with categorized results.
 #   #
-#   results = FullBooks.search 'my query', :offset => 10
+#   results = BookSearch.search 'my query', :offset => 10
 #
 # ==== 3. Work with the results.
 #

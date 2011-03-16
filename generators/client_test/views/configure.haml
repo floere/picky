@@ -34,15 +34,12 @@
         depending on what you need (Full gets results with IDs, Live without and is used for updating the counter).
       %p
         In the example, I called it
-        %strong FullBooks
-        and
-        %strong LiveBooks
-        respectively.
+        %strong BookSearch
+        \.
         %code
           %pre
             :preserve
-              FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-              LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+              BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
       %p
         Both clients offer the options:
         %dl
@@ -121,17 +118,16 @@
         %code
           %pre
             :preserve
-              FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-              LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
-              
+              BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
+
               get '/search/full' do
-                results = FullBooks.search params[:query], :offset => params[:offset]
-                
+                results = BookSearch.search params[:query], :offset => params[:offset]
+
                 results.extend Picky::Convenience
                 results.populate_with Book do |book|
                   book.to_s
                 end
-                
+
                 ActiveSupport::JSON.encode results
               end
       %h2#view View
@@ -163,7 +159,7 @@
                   // A full query displays the rendered results.
                   //
                   full: '/search/full',
-                  
+
                   // etc.
         Just take a look at the possible javascript client options in that file.
       %p

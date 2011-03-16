@@ -10,7 +10,7 @@ set :haml, { :format => :html5 }
 
 # Sets up a search instance to the server.
 #
-BooksSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
+BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
 
 set :static, true
 set :public, File.dirname(__FILE__)
@@ -34,7 +34,7 @@ end
 # and then populate the result with models (rendered, even).
 #
 get '/search/full' do
-  results = BooksSearch.search params[:query], :ids => 20, :offset => params[:offset]
+  results = BookSearch.search params[:query], :ids => 20, :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
     book.to_s
@@ -56,7 +56,7 @@ end
 # We don't parse/reencode the returned json string.
 #
 get '/search/live' do
-  BooksSearch.search_unparsed params[:query], :ids => 0, :offset => params[:offset]
+  BookSearch.search_unparsed params[:query], :ids => 0, :offset => params[:offset]
 end
 
 helpers do
