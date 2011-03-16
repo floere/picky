@@ -40,7 +40,7 @@ The example that is generated is extremely simple. There's lots of configuration
   illegal_characters(/[^äöüa-zA-Z0-9\s\/\-\"\&\.]/)
   stopwords(/\b(und|der|die|das|mit|im|ein|des|dem|the|of)\b/)
   split_text_on(/[\s\/\-\"\&\.]/)
-    
+
   add_index :books,
             Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml'),
             field(:title),
@@ -58,7 +58,7 @@ The index identifier
 
 is used later, in querying:
 
-<pre><code>Query::Full.new(Indexes[:books], Indexes[:dvds])</code></pre>
+<pre><code>Search.new(Indexes[:books], Indexes[:dvds])</code></pre>
 
 Queries use such an index, or a combination thereof.
 
@@ -113,10 +113,9 @@ If you queried for "The red fox jumps over the nice dog", only the first 5 token
   illegal_characters(/[^a-zA-Z0-9\s\/\-\,\&äöü\"\~\*\:]/)
   stopwords(/\b(und|der|die|das|mit|ein|des|dem|the|of)\b/)
   split_text_on(/[\s\/\-\,\&]+/)
-  
-  route %r{^/books/full}, Query::Full.new(Indexes[:books])
-  route %r{^/books/live}, Query::Live.new(Indexes[:books])
-  
+
+  route %r{^/books}, Search.new(Indexes[:books])
+
   root 200
 end</code></pre>
 
@@ -124,13 +123,11 @@ Routing is quite easy. Use
 
 <pre><code>route(regexp_or_string, query)</code></pre>
 
-to define a route and a query that is called.
-
-There are two query types to be called, @Full@ or @Live@. The difference is that Full returns a marshalled result (for the picky-client) with ids, the live result is in json (for either the search engine directly or the picky-client), without ids.
+to define a route and a searchs that is called.
 
 Indexes are identified by their index_identifier (see above). Multiple indexes can be used per query, no problem. Just pass them to a @Query@ like this:
 
-<pre><code>Query::Full.new(Indexes[:books], Indexes[:dvds], Indexes[:music]) # a comprehensive media search</code></pre>
+<pre><code>Search.new(Indexes[:books], Indexes[:dvds], Indexes[:music]) # a comprehensive media search</code></pre>
 
 h2. The Frontend (Controller etc.)
 
@@ -168,7 +165,7 @@ get '/search/full' do
   results.populate_with Book do |book|
     book.to_s
   end
-  
+
   ActiveSupport::JSON.encode results
 end
 
@@ -214,11 +211,11 @@ But it can be customized quite a bit:
   live: '/books/live',
   full: '/books/full',
   showResultsLimit: 10,                         // Optional. Default is 10.
-  
+
   before: function(params, query, offset) {  }, // Optional. Before Picky sends any data. Return modified params.
   success: function(data, query) {  },          // Optional. Just after Picky receives data. (Gets a PickyData object)
   after: function(data, query) {  },            // Optional. After Picky has handled the data and updated the view.
-  
+
   // This is used to generate the correct query strings, localized. E.g. "subject:war".
   // Optional. If you don't give these, the field identifier given in the Picky server is used.
   //

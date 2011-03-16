@@ -50,26 +50,24 @@
 #
 # So now we have indexed data (the title), but nobody to ask the index anything.
 #
-# == Query::Full.new(*indexes, options = {})
+# == Search.new(*indexes, options = {})
 #
 # We need somebody who asks the index (a Query object, also see http://github.com/floere/picky/wiki/Queries-Configuration). That works like this:
-#    full_books_query = Query::Full.new books
-# Full just means that the ids are returned with the results.
-# Picky also offers a Query that returns live results, Query::Live. But that's not important right now.
+#    books_search = Search.new books
 #
 # Now we have somebody we can ask about the index. But no external interface.
 #
-# == route(/regexp1/ => query1, /regexp2/ => query2, ...)
+# == route(/regexp1/ => search1, /regexp2/ => search2, ...)
 #
 # Let's add a URL path (a Route, see http://github.com/floere/picky/wiki/Routing-configuration) to which we can send our queries. We do that with the route method:
-#   route %r{^/books/full$} => full_books_query
+#   route %r{^/books$} => books_query
 # In full glory:
 #   class MyGreatSearch < Application
 #
 #     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     books.define_category :title
 #
-#     route %r{^/books/full$} => Query::Full.new(books)
+#     route %r{^/books$} => Search.new(books)
 #
 #   end
 # That's it!
@@ -137,10 +135,9 @@
 #                           partial: Partial::Substring.new(:from => -2)
 #     books.define_category :isbn
 #
-#     query_options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
+#     options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
 #
-#     route %r{^/books/full$} => Query::Full.new(books, query_options)
-#     route %r{^/books/live$} => Query::Live.new(books, query_options)
+#     route %r{^/books$} => Search.new(books, options)
 #
 #   end
 # That's actually already a full-blown Picky App!

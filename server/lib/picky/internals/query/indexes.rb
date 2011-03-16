@@ -1,20 +1,20 @@
 module Internals
 
   module Query
-  
+
     # The query indexes class bundles indexes given to a query.
     #
     # Example:
     #   # If you call
-    #   Query::Full.new dvd_index, mp3_index, video_index
-    #   
+    #   Search.new dvd_index, mp3_index, video_index
+    #
     #   # What it does is take the three given (API-) indexes and
     #   # bundle them in an index bundle.
     #
     class Indexes
-    
+
       attr_reader :indexes
-    
+
       # Creates a new Query::Indexes.
       #
       # Its job is to generate all possible combinations, but also
@@ -33,22 +33,22 @@ module Internals
           # Expand the combinations.
           #
           possible_combinations = tokens.possible_combinations_in index
-        
+
           # Optimization for ignoring tokens that allocate to nothing and
           # can be ignored.
           # For example in a special search, where "florian" is not
           # mapped to any category.
           #
           possible_combinations.compact!
-        
+
           # Generate all possible combinations.
           #
           expanded_combinations = expand_combinations_from possible_combinations
-        
+
           # If there are none, try the next allocation.
           #
           next previous_allocations unless expanded_combinations
-        
+
           # Add the wrapped possible allocations to the ones we already have.
           #
           previous_allocations + expanded_combinations.map! do |expanded_combination|
@@ -56,7 +56,7 @@ module Internals
           end
         end)
       end
-    
+
       # This is the core of the search engine.
       #
       # Gets an array of
@@ -118,7 +118,7 @@ module Internals
         # tokens could not be allocated.
         #
         return if possible_combinations.any?(&:empty?)
-      
+
         # Generate the first multiplicator "with which" (well, not quite) to multiply the smallest amount of combinations.
         #
         single_mult = possible_combinations.inject(1) { |total, combinations| total * combinations.size }
@@ -131,7 +131,7 @@ module Internals
         # for later combination in allocations.
         #
         possible_combinations.collect! do |combinations|
-        
+
           # Get the size of the combinations of the first token.
           #
           combinations_size = combinations.size
@@ -143,7 +143,7 @@ module Internals
           #               by the number of combinations.
           #
           single_mult /= combinations_size unless combinations_size.zero?
-        
+
           # Expand each combination by the single mult:
           # [a,b,c]
           # [a,a,a,  b,b,b,  c,c,c]
@@ -153,25 +153,25 @@ module Internals
           combinations = combinations.inject([]) do |total, combination|
             total + Array.new(single_mult, combination)
           end * group_mult
-        
+
           # Multiply the group mult by the combinations size,
           # since the next combinations' single mult is smaller
           # and we need to adjust for that.
           #
           group_mult = group_mult * combinations_size
-        
+
           # Return the combinations.
           #
           combinations
         end
-      
+
         return if possible_combinations.empty?
-      
+
         possible_combinations.shift.zip *possible_combinations
       end
-    
+
     end
-  
+
   end
-  
+
 end

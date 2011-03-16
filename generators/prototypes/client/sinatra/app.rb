@@ -10,7 +10,7 @@ set :haml, { :format => :html5 }
 
 # Sets up a search instance to the server.
 #
-BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
+BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
 
 set :static, true
 set :public, File.dirname(__FILE__)
