@@ -12,11 +12,11 @@ describe "Integration Tests" do
     Indexes.index_for_tests
     Indexes.load_from_cache
     
-    @books      = Query::Full.new Indexes[:books]
-    @sym        = Query::Full.new Indexes[:symbol_keys]
-    @csv        = Query::Full.new Indexes[:csv_test]
-    @memory_geo = Query::Full.new Indexes[:memory_geo]
-    @redis      = Query::Full.new Indexes[:redis]
+    @books      = Search.new Indexes[:books]
+    @sym        = Search.new Indexes[:symbol_keys]
+    @csv        = Search.new Indexes[:csv_test]
+    @memory_geo = Search.new Indexes[:memory_geo]
+    @redis      = Search.new Indexes[:redis]
   end
   
   def self.it_should_find_ids_in_sym text, expected_ids

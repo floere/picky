@@ -82,24 +82,14 @@ class BookSearch < Application
       }
     }
 
-    route %r{\A/admin\Z}      => LiveParameters.new
+    route %r{\A/admin\Z} => LiveParameters.new
 
-    route %r{\A/books/full\Z} => Query::Full.new(books_index, isbn_index, options),
-          %r{\A/books/live\Z} => Query::Live.new(books_index, isbn_index, options),
-
-          %r{\A/redis/full\Z} => Query::Full.new(redis_index, options),
-          %r{\A/redis/live\Z} => Query::Live.new(redis_index, options),
-
-          %r{\A/csv/full\Z}   => Query::Full.new(csv_test_index, options),
-          %r{\A/csv/live\Z}   => Query::Live.new(csv_test_index, options),
-
-          %r{\A/isbn/full\Z}  => Query::Full.new(isbn_index),
-
-          %r{\A/geo/full\Z}   => Query::Full.new(mgeo_index),
-          %r{\A/geo/live\Z}   => Query::Live.new(mgeo_index),
-
-          %r{\A/all/full\Z}   => Query::Full.new(books_index, csv_test_index, isbn_index, mgeo_index, options),
-          %r{\A/all/live\Z}   => Query::Live.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
+    route %r{\A/books\Z} => Search.new(books_index, isbn_index, options),
+          %r{\A/redis\Z} => Search.new(redis_index, options),
+          %r{\A/csv\Z}   => Search.new(csv_test_index, options),
+          %r{\A/isbn\Z}  => Search.new(isbn_index),
+          %r{\A/geo\Z}   => Search.new(mgeo_index),
+          %r{\A/all\Z}   => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
     root 200
 

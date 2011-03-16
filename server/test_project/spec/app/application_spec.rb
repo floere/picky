@@ -39,12 +39,11 @@ describe BookSearch do
   
   it_should_route '/blorg/gnorg', 404
   
-  it_should_route '/books/full?query=', 200
-  it_should_route '/books/live?query=', 200
+  it_should_route '/books?query=', 200
   
-  it_should_route '/isbn/full?query=', 200
+  it_should_route '/isbn?query=', 200
   
-  it_should_route '/isbn/ful?query=blarf', 404
+  it_should_route '/ibbbbsn?query=blarf', 404
   
   it_should_route '/', 200
   

@@ -216,9 +216,7 @@ module Loader # :nodoc:all
 
     # Results.
     #
-    load_internals 'results/base'
-    load_internals 'results/full'
-    load_internals 'results/live'
+    load_internals 'results'
 
     # Configuration.
     #
@@ -274,11 +272,9 @@ module Loader # :nodoc:all
     load_relative 'index_bundle'
     load_relative 'aliases'
 
-    # Query.
+    # Search.
     #
-    load_relative 'query/base'
-    load_relative 'query/live'
-    load_relative 'query/full'
+    load_relative 'search'
     #
     # load_relative 'query/solr'
 

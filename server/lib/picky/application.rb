@@ -166,25 +166,6 @@ class Application
       Internals::Tokenizers::Query.default = Internals::Tokenizers::Query.new(options)
     end
 
-    # Create a new index for indexing and for querying.
-    #
-    # Parameters:
-    # * name: The identifier of the index. Used:
-    #   - to identify an index (e.g. by you in Rake tasks).
-    #   - in the frontend to describe which index a result came from.
-    #   - index directory naming (index/development/the_identifier/<lots of indexes>)
-    # * source: The source the data comes from. See Sources::Base.
-    #
-    # Options:
-    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index.
-    #
-    # TODO Remove in 1.6.
-    #
-    def index name, source, options = {}
-      raise "the Picky application method #index is deprecated, please use Index::Memory.new instead."
-      Index::Memory.new name, source, options
-    end
-
     # Routes.
     #
     delegate :route, :root, :to => :rack_adapter
