@@ -30,11 +30,11 @@ get '/configure' do
   haml :'/configure'
 end
 
-# For full results, you get the ids from the picky server
-# and then populate the result with models (rendered, even).
+# You get the ids from the picky server and then
+# populate the result with rendered models.
 #
 get '/search/full' do
-  results = BookSearch.search params[:query], :ids => 20, :offset => params[:offset]
+  results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
     book.to_s
@@ -51,9 +51,9 @@ get '/search/full' do
   ActiveSupport::JSON.encode results
 end
 
-# For live results, you'd actually go directly to the search server without taking the detour.
+# Normally, you'd actually go directly to the search server without taking the detour.
 #
-# We don't parse/reencode the returned json string.
+# We don't parse/reencode the returned json string using search_unparsed.
 #
 get '/search/live' do
   BookSearch.search_unparsed params[:query], :ids => 0, :offset => params[:offset]
