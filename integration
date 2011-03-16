@@ -2,7 +2,7 @@
 #
 
 def server query, match
-  if `curl -S 'localhost:8080/books/full?query=#{query}'`.chomp.include?(match)
+  if `curl -S 'localhost:8080/books?query=#{query}'`.chomp.include?(match)
     puts "Yay, server returned #{match} for #{query}!"
   else
     fail "#{query} result does not include #{match}"

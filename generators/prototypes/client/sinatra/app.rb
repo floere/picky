@@ -8,10 +8,9 @@ require File.expand_path 'book', File.dirname(__FILE__)
 
 set :haml, { :format => :html5 }
 
-# Sets up two query instances.
+# Sets up a search instance to the server.
 #
-FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
-LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
+BooksSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
 
 set :static, true
 set :public, File.dirname(__FILE__)
@@ -35,7 +34,7 @@ end
 # and then populate the result with models (rendered, even).
 #
 get '/search/full' do
-  results = FullBooks.search params[:query], :offset => params[:offset]
+  results = BooksSearch.search params[:query], :ids => 20, :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
     book.to_s
@@ -55,7 +54,7 @@ end
 # For live results, you'd actually go directly to the search server without taking the detour.
 #
 get '/search/live' do
-  LiveBooks.search params[:query], :offset => params[:offset]
+  BooksSearch.search params[:query], :ids => 0, :offset => params[:offset]
 end
 
 helpers do
