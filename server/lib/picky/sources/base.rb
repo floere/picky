@@ -48,9 +48,11 @@ module Sources
     # be sure to <tt>yield(id, text_for_id)</tt> (or <tt>block.call(id, text_for_id)</tt>)
     # for the given type symbol and category symbol.
     #
-    def harvest index, category # :yields: id, text_for_id
-      # This concrete implementation yields "nothing", override in subclasses.
-    end
+    # Note: Since harvest needs to be implemented, it has no default impementation.
+    #
+    # def harvest index, category # :yields: id, text_for_id
+    #
+    # end
 
     # Used to take a snapshot of your data if it is fast changing.
     #
