@@ -50,6 +50,10 @@ var LiveBackend = function(url, callback) {
       };
     };
     
+    // Default number of ids in a live search is 0.
+    //
+    specificParams = $.extend({ ids: 0 }, specificParams);
+    
     // Pass in the timestamp for later comparison.
     //
     backend.search(query, callback, offset, specificParams, specificTimestamps);
@@ -77,6 +81,10 @@ var FullBackend = function(url) {
         if (controllerCallback) { controllerCallback(data); }
       };
     };
+    
+    // Default number of ids in a full search is 20.
+    //
+    specificParams = $.extend({ ids: 20 }, specificParams);
     
     // Pass in the timestamp for later comparison.
     //
