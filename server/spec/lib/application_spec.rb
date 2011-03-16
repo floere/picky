@@ -11,13 +11,9 @@ describe Application do
           books = Index::Memory.new :books, Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
           books.define_category :title
           
-          full = Query::Full.new books
-          live = Query::Live.new books
-          
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
-          route %r{^/books/full} => full
-          route %r{^/books/live} => live
+          route %r{^/books} => Search.new(books)
         end
         Internals::Tokenizers::Index.default.tokenize 'some text'
         Internals::Tokenizers::Query.default.tokenize 'some text'
@@ -56,13 +52,9 @@ describe Application do
           geo_index.define_ranged_category(:north1, 1, precision: 3, from: :north)
                    .define_ranged_category(:east1,  1, precision: 3, from: :east)
           
-          full = Query::Full.new books_index
-          live = Query::Live.new books_index
-          
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
-          route %r{^/books/full} => full
-          route %r{^/books/live} => live
+          route %r{^/books} => Search.new(books_index)
         end
       }.should_not raise_error
     end

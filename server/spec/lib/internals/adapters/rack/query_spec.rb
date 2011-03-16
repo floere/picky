@@ -22,11 +22,17 @@ describe Internals::Adapters::Rack::Query do
     it 'extracts the query' do
       @adapter.extracted('query' => 'some_query')[0].should == 'some_query'
     end
+    it 'extracts the default ids amount' do
+      @adapter.extracted('query' => 'some_query')[1].should == 20
+    end
     it 'extracts the default offset' do
-      @adapter.extracted('query' => 'some_query')[1].should == 0
+      @adapter.extracted('query' => 'some_query')[2].should == 0
+    end
+    it 'extracts a given ids amount' do
+      @adapter.extracted('query' => 'some_query', 'ids' => '123')[1].should == 123
     end
     it 'extracts a given offset' do
-      @adapter.extracted('query' => 'some_query', 'offset' => '123')[1].should == 123
+      @adapter.extracted('query' => 'some_query', 'offset' => '123')[2].should == 123
     end
   end
   

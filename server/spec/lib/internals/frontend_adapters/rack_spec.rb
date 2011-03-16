@@ -47,7 +47,7 @@ describe Internals::FrontendAdapters::Rack do
     end
     context 'with routes' do
       before(:each) do
-        @rack_adapter.route %r{something} => Query::Full.new
+        @rack_adapter.route %r{something} => Search.new
       end
       it 'returns the right answer' do
         @rack_adapter.empty?.should == false
@@ -101,11 +101,11 @@ describe Internals::FrontendAdapters::Rack do
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_route?query=some_query'
       
-      full = stub :full
-      full.should_receive(:search_with_text).once.with(anything, 0).and_return(Internals::Results::Full.new)
-      Query::Full.stub! :new => full
+      search = stub :search
+      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Internals::Results.new)
+      Search.stub! :new => search
       
-      @rack_adapter.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index)
+      @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index)
       
       @rack_adapter.routes.freeze
       @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/json", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
@@ -113,11 +113,11 @@ describe Internals::FrontendAdapters::Rack do
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_route?query=some_query&type=some_type'
       
-      full = stub :full
-      full.should_receive(:search_with_text).once.with(anything, 0).and_return(Internals::Results::Full.new)
-      Query::Full.stub! :new => full
+      search = stub :search
+      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Internals::Results.new)
+      Search.stub! :new => search
       
-      @rack_adapter.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index), :query => { :type => :some_type }
+      @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index), :query => { :type => :some_type }
       
       @rack_adapter.routes.freeze
       @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/json", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
@@ -125,11 +125,11 @@ describe Internals::FrontendAdapters::Rack do
     it 'should route correctly' do
       env = rack_defaults_for '/searches/some_wrong_route?query=some_query'
       
-      full = stub :full
-      full.should_receive(:search_with_text).never
-      Query::Full.stub! :new => full
+      search = stub :search
+      search.should_receive(:search_with_text).never
+      Search.stub! :new => search
       
-      @rack_adapter.route '/searches/some_route' => Query::Full.new(:some_index, :some_other_index)
+      @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index)
       
       @rack_adapter.routes.freeze
       @rack_adapter.call(env).should == [404, {"Content-Type"=>"text/html", "X-Cascade"=>"pass"}, ["Not Found"]]

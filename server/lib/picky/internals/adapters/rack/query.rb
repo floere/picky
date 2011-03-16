@@ -10,11 +10,12 @@ module Internals
     # and call search_with_text on it if it is called by Rack.
     #
     module Rack
-    
+
       class Query < Base
-      
+
         @@defaults = {
           query_key:    'query'.freeze,
+          ids_key:      'ids'.freeze,
           offset_key:   'offset'.freeze,
           content_type: 'application/json'.freeze
         }
@@ -23,7 +24,7 @@ module Internals
           @query    = query
           @defaults = @@defaults.dup
         end
-      
+
         def to_app options = {}
           # For capturing in the lambda.
           #
@@ -41,8 +42,10 @@ module Internals
             respond_with results.to_response, content_type
           end
         end
-      
+
         # Helper method to extract the params
+        #
+        # Defaults are 20 ids, offset 0.
         #
         UTF8_STRING = 'UTF-8'.freeze
         def extracted params
@@ -50,14 +53,15 @@ module Internals
             # query is encoded in ASCII
             #
             params[@defaults[:query_key]]  && params[@defaults[:query_key]].force_encoding(UTF8_STRING),
+            params[@defaults[:ids_key]]    && params[@defaults[:ids_key]].to_i || 20,
             params[@defaults[:offset_key]] && params[@defaults[:offset_key]].to_i || 0
           ]
         end
-      
+
       end
-    
+
     end
-  
+
   end
-  
+
 end
