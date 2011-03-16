@@ -37,13 +37,9 @@ class PickySearch < Application
                               partial: Partial::None.new # Partial substring searching on the year does not make
                                                          # much sense, neither does similarity.
 
-  query_options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for ordered combinations.
+  options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for combinations.
 
-  # A Full query returns ids, combinations, and counts.
-  # A Live query does return all that Full returns, except ids.
-  #
-  route %r{\A/books/full\Z} => Query::Full.new(books_index, query_options) # Routing is simple:
-  route %r{\A/books/live\Z} => Query::Live.new(books_index, query_options) # url_path_regexp => query
+  route %r{\A/books\Z} => Search.new(books_index, options)
 
   # Note: You can pass a query multiple indexes and it will query in all of them.
 
