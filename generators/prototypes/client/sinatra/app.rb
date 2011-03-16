@@ -56,7 +56,7 @@ end
 # We don't parse/reencode the returned json string using search_unparsed.
 #
 get '/search/live' do
-  BookSearch.search_unparsed params[:query], :ids => 0, :offset => params[:offset]
+  BookSearch.search_unparsed params[:query], :ids => params[:ids], :offset => params[:offset]
 end
 
 helpers do

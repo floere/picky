@@ -2,14 +2,14 @@
 #
 
 def server query, match
-  if `curl -S 'localhost:8080/books?query=#{query}'`.chomp.include?(match)
+  if `curl -S 'localhost:8080/books?query=#{query}&ids=20'`.chomp.include?(match)
     puts "Yay, server returned #{match} for #{query}!"
   else
     fail "#{query} result does not include #{match}"
   end
 end
 def client query, match
-  if `curl -S 'localhost:3210/search/full?query=#{query}'`.chomp.include?(match)
+  if `curl -S 'localhost:3210/search/full?query=#{query}&ids=20'`.chomp.include?(match)
     puts "Yay, client returned #{match} for #{query}!"
   else
     fail "#{query} result does not include #{match}"
@@ -58,7 +58,6 @@ begin
   client "sp", "title"
   client "sp", "author"
   client "title:lyterature~+2002", "literature"
-  puts
   client "alan", "Alan Turing"
   puts
   puts
