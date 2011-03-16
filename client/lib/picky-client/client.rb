@@ -3,7 +3,7 @@
 # === Usage
 #
 # ==== 1. Set up search clients.
-# 
+#
 #   # Create search client instances e.g. in your development.rb, production.rb etc.
 #   #
 #   # Use the right host, port where your Picky server runs. Then, choose a URL path as defined
@@ -17,9 +17,9 @@
 #   # Then, in your search methods, call #search.
 #   #
 #   # You will get back a Hash with categorized results.
-#   # 
+#   #
 #   results = FullBooks.search 'my query', :offset => 10
-#   
+#
 # ==== 3. Work with the results.
 #
 #   # To make the Hash more useful, extend it with a few convenience methods.
@@ -34,10 +34,10 @@
 #   results.populate_with Book do |book|
 #     book.to_s
 #   end
-#   
+#
 # ==== 4. Last step is encoding it back into JSON.
 #
-#   # Encode the results in JSON and return it to the Javascript Client (or your frontend). 
+#   # Encode the results in JSON and return it to the Javascript Client (or your frontend).
 #   #
 #   ActiveSupport::JSON.encode results
 #
@@ -46,77 +46,75 @@
 require 'net/http'
 
 module Picky
-  
-  module Client
 
-    class Base
+  class Client
+    attr_accessor :host, :port, :path
 
-      attr_accessor :host, :port, :path
+    def initialize options = {}
+      options = default_configuration.merge options
 
-      def initialize options = {}
-        options = default_configuration.merge options
-
-        @host = options[:host]
-        @port = options[:port]
-        @path = options[:path]
-      end
-      def default_configuration
-        {}
-      end
-      def self.default_configuration options = {}
-        define_method :default_configuration do
-          options
-        end
-      end
-      def default_params
-        {}
-      end
-      def self.default_params options = {}
-        options.stringify_keys! if options.respond_to?(:stringify_keys!)
-        define_method :default_params do
-          options
-        end
-      end
-      
-      # Merges the given params, overriding the defaults.
-      #
-      def defaultize params = {}
-        default_params.merge params
-      end
-      
-      # Searches the index. Use this method.
-      #
-      # Returns a hash. Extend with Convenience.
-      #
-      def search query, params = {}
-        return {} unless query && !query.empty?
-        
-        send_search params.merge :query => query
-      end
-      
-      # Sends a search to the configured address.
-      #
-      def send_search params = {}
-        params = defaultize params
-        Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port
-      end
-
+      @host = options[:host]
+      @port = options[:port]
+      @path = options[:path]
     end
-
-    class Full < Base
-      default_configuration :host => 'localhost', :port => 8080, :path => '/searches/full'
-      
-      @@parser_options = { :symbolize_keys => true }
-      def send_search params = {}                                                                                                                                 
-        Yajl::Parser.parse super(params), @@parser_options
+    def default_configuration
+      {}
+    end
+    def self.default_configuration options = {}
+      define_method :default_configuration do
+        options
       end
     end
 
-    class Live < Base
-      default_configuration :host => 'localhost', :port => 8080, :path => '/searches/live'
+    default_configuration :host => 'localhost', :port => 8080, :path => '/searches'
+
+    def default_params
+      {}
+    end
+    def self.default_params options = {}
+      options.stringify_keys! if options.respond_to?(:stringify_keys!)
+      define_method :default_params do
+        options
+      end
+    end
+
+    # Merges the given params, overriding the defaults.
+    #
+    def defaultize params = {}
+      default_params.merge params
+    end
+
+    # Searches the index. Use this method.
+    #
+    # Returns a hash. Extend with Convenience.
+    #
+    @@parser_options = { :symbolize_keys => true }
+    def search query, params = {}
+      return {} unless query && !query.empty?
+
+      Yajl::Parser.parse search_unparsed(query, params), @@parser_options
+    end
+    # Use this method for live queries – they can pass the
+    # JSON string with the results through without parsing.
+    #
+    def search_unparsed query, params = {}
+      return '' unless query && !query.empty?
+
+      send_search params.merge :query => query
+    end
+
+    # Sends a search to the configured address.
+    #
+    # Note: For live queries, parsing is actually not really necessary.
+    #
+
+    def send_search params = {}
+      params = defaultize params
+      Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port
     end
 
   end
+
 end
 
 # Extend hash with to_query method.
@@ -124,7 +122,7 @@ end
 begin
   require 'active_support/core_ext/object/to_query'
 rescue LoadError
-  
+
 end
 class Hash
   def to_query namespace = nil

@@ -5,7 +5,7 @@ describe Picky::Client do
   describe 'defaultize' do
     context 'no default params' do
       before(:each) do
-        @base = Picky::Client::Base.new
+        @base = described_class.new
       end
       it 'should return unchanged' do
         @base.defaultize( :a => :b ).should == { :a => :b }
@@ -13,11 +13,11 @@ describe Picky::Client do
     end
     context 'default params' do
       before(:each) do
-        Picky::Client::Base.default_params 'c' => 'd'
-        @base = Picky::Client::Base.new
+        described_class.default_params 'c' => 'd'
+        @base = described_class.new
       end
       after(:each) do
-        Picky::Client::Base.default_params
+        described_class.default_params
       end
       it 'should return changed' do
         @base.defaultize( 'a' => 'b' ).should == { 'a' => 'b', 'c' => 'd' }
@@ -30,13 +30,13 @@ describe Picky::Client do
   
   describe 'Base' do
     before(:each) do
-      @base = Picky::Client::Base.new
+      @base = described_class.new
     end
     it 'should have a default_configuration method' do
       lambda { @base.default_configuration }.should_not raise_error
     end
-    it 'should return an empty configuration hash' do
-      @base.default_configuration.should == {}
+    it 'should return a default configuration hash' do
+      @base.default_configuration.should == { :host => 'localhost', :port => 8080, :path => '/searches'}
     end
     it 'should have a default_params method' do
       lambda { @base.default_params }.should_not raise_error
@@ -46,74 +46,62 @@ describe Picky::Client do
     end
   end
 
-  describe "Full" do
-    before(:each) do
-      @full = Picky::Client::Full.new
-    end
-    describe "send_search" do
-      before(:each) do
-        Net::HTTP.stub! :get => "{\"allocations\":[[\"c\",17.53,275179,[[\"name\",\"s*\",\"s\"]],[]],[\"c\",15.01,164576,[[\"category\",\"s*\",\"s\"]],[]],[\"p\",12.94,415634,[[\"street\",\"s*\",\"s\"]],[]],[\"p\",12.89,398247,[[\"name\",\"s*\",\"s\"]],[]],[\"p\",12.67,318912,[[\"city\",\"s*\",\"s\"]],[]],[\"p\",12.37,235933,[[\"first_name\",\"s*\",\"s\"]],[]],[\"p\",11.76,128259,[[\"maiden_name\",\"s*\",\"s\"]],[]],[\"p\",11.73,124479,[[\"occupation\",\"s*\",\"s\"]],[]],[\"c\",11.35,84807,[[\"street\",\"s*\",\"s\"]],[]],[\"c\",11.15,69301,[[\"city\",\"s*\",\"s\"]],[]],[\"p\",4.34,77,[[\"street_number\",\"s*\",\"s\"]],[]],[\"c\",2.08,8,[[\"street_number\",\"s*\",\"s\"]],[]],[\"c\",1.61,5,[[\"adword\",\"s*\",\"s\"]],[]]],\"offset\":0,\"duration\":0.04,\"total\":2215417}"
-      end
-      it "should return a parsed hash" do
-        @full.send_search(:query => 'something').should == {:allocations=>[["c", 17.53, 275179, [["name", "s*", "s"]], []], ["c", 15.01, 164576, [["category", "s*", "s"]], []], ["p", 12.94, 415634, [["street", "s*", "s"]], []], ["p", 12.89, 398247, [["name", "s*", "s"]], []], ["p", 12.67, 318912, [["city", "s*", "s"]], []], ["p", 12.37, 235933, [["first_name", "s*", "s"]], []], ["p", 11.76, 128259, [["maiden_name", "s*", "s"]], []], ["p", 11.73, 124479, [["occupation", "s*", "s"]], []], ["c", 11.35, 84807, [["street", "s*", "s"]], []], ["c", 11.15, 69301, [["city", "s*", "s"]], []], ["p", 4.34, 77, [["street_number", "s*", "s"]], []], ["c", 2.08, 8, [["street_number", "s*", "s"]], []], ["c", 1.61, 5, [["adword", "s*", "s"]], []]], :offset=>0, :duration=>0.04, :total=>2215417}
-      end
-      it "should be fast" do
-        GC.disable
-        Benchmark.realtime { @full.send_search(:query => 'something') }.should < 0.00015
-        GC.enable
-      end
-    end
+  describe "Client" do
+    let(:client)  { described_class.new }
     
     describe "defaults" do
       it "should set host to 'localhost'" do
-        @full.host.should == 'localhost'
+        client.host.should == 'localhost'
       end
       it "should set port to the right value" do
-        @full.port.should == 8080
+        client.port.should == 8080
       end
-      it "should set path to '/searches/full'" do
-        @full.path.should == '/searches/full'
+      it "should set path correctly" do
+        client.path.should == '/searches'
       end
     end
 
     describe "cattr_accessors" do
+      let(:client) { described_class.new :host => :some_host, :port => :some_port, :path => :some_path }
+      it "should have a writer for the host" do
+        client.host = :some_host
+        client.host.should == :some_host
+      end
+      it "should have a writer for the port" do
+        client.port = :some_port
+        client.port.should == :some_port
+      end
+      it "should have a writer for the path" do
+        client.path = :some_path
+        client.path.should == :some_path
+      end
+      it "should have a reader for the host" do
+        lambda { client.host }.should_not raise_error
+      end
+      it "should have a reader for the port" do
+        lambda { client.port }.should_not raise_error
+      end
+      it "should have a reader for the path" do
+        lambda { client.path }.should_not raise_error
+      end
+    end
+    
+    describe 'ok search term given' do
+      it 'calls send_search correctly' do
+        client.should_receive(:search_unparsed).once.with('hello', {}).and_return ''
+
+        client.search 'hello'
+      end
+    end
+    
+    describe "search" do
       before(:each) do
-        @full = Picky::Client::Full.new :host => :some_host, :port => :some_port, :path => :some_path
+        client.should_receive(:search_unparsed).any_number_of_times.and_return ''
       end
-      it "should have a writer for the host" do
-        @full.host = :some_host
-        @full.host.should == :some_host
-      end
-      it "should have a writer for the port" do
-        @full.port = :some_port
-        @full.port.should == :some_port
-      end
-      it "should have a writer for the path" do
-        @full.path = :some_path
-        @full.path.should == :some_path
-      end
-      it "should have a reader for the host" do
-        lambda { @full.host }.should_not raise_error
-      end
-      it "should have a reader for the port" do
-        lambda { @full.port }.should_not raise_error
-      end
-      it "should have a reader for the path" do
-        lambda { @full.path }.should_not raise_error
-      end
-    end
-
-    describe "search" do
-      describe 'ok search term given' do
-        it 'calls send_search correctly' do
-          @full.should_receive(:send_search).once.with :query => 'hello'
-          
-          @full.search 'hello'
-        end
-      end
+      
       describe 'no search term given' do
         it "should raise an ArgumentError" do
-          lambda { @full.search }.should raise_error(ArgumentError)
+          lambda { client.search }.should raise_error(ArgumentError)
         end
       end
       describe "with nil as search term" do
@@ -121,15 +109,15 @@ describe Picky::Client do
           @query = nil
         end
         it "should return a Search::Results" do
-          @full.search(@query).should be_kind_of(Hash)
+          client.search(@query).should be_kind_of(Hash)
         end
         it "should return an empty Search::Results" do
-          @full.search(@query).should be_empty
+          client.search(@query).should be_empty
         end
         it 'calls send_search correctly' do
-          @full.should_receive(:send_search).never
-          
-          @full.search @query
+          client.should_receive(:send_search).never
+
+          client.search @query
         end
       end
       describe "with '' as search term" do
@@ -137,87 +125,46 @@ describe Picky::Client do
           @query = ''
         end
         it "should return a Search::Results" do
-          @full.search(@query).should be_kind_of(Hash)
+          client.search(@query).should be_kind_of(Hash)
         end
         it "should return an empty Search::Results" do
-          @full.search(@query).should be_empty
+          client.search(@query).should be_empty
         end
         it 'calls send_search correctly' do
-          @full.should_receive(:send_search).never
-          
-          @full.search @query
+          client.should_receive(:send_search).never
+
+          client.search @query
         end
       end
     end
-  end
-
-  describe "Live" do
-    before(:each) do
-      @live = Picky::Client::Live.new
-    end
-    describe "defaults" do
-      it "should set host to 'localhost'" do
-        @live.host.should == 'localhost'
-      end
-      it "should set port to the right value" do
-        @live.port.should == 8080
-      end
-      it "should set path to '/searches/live'" do
-        @live.path.should == '/searches/live'
-      end
-    end
-
-    describe "cattr_accessors" do
-      it "should have a writer for the host" do
-        @live.host = :some_host
-        @live.host.should == :some_host
-      end
-      it "should have a writer for the port" do
-        @live.port = :some_port
-        @live.port.should == :some_port
-      end
-      it "should have a writer for the path" do
-        @live.path = :some_path
-        @live.path.should == :some_path
-      end
-      it "should have a reader for the host" do
-        lambda { @live.host }.should_not raise_error
-      end
-      it "should have a reader for the port" do
-        lambda { @live.port }.should_not raise_error
-      end
-      it "should have a reader for the path" do
-        lambda { @live.path }.should_not raise_error
-      end
-    end
-
-    describe "search" do
+    
+    describe "search_unparsed" do
       describe 'ok search term given' do
         it 'calls send_search correctly' do
-          @live.should_receive(:send_search).once.with :query => 'hello'
+          client.should_receive(:send_search).once.with :query => 'hello'
           
-          @live.search 'hello'
+          client.search_unparsed 'hello'
         end
       end
       describe 'no search term given' do
         it "should raise an ArgumentError" do
-          lambda { @live.search }.should raise_error(ArgumentError)
+          lambda { client.search_unparsed }.should raise_error(ArgumentError)
         end
       end
       describe "with nil as search term" do
         before(:each) do
           @query = nil
         end
-        it "should return a Search::Results" do
-          @live.search(@query).should be_kind_of(Hash)
+        it "should return the right thing" do
+          client.search_unparsed(@query).should == ""
         end
-        it "should return an empty Search::Results" do
-          @live.search(@query).should be_empty
+        it "should return an empty thing" do
+          client.search_unparsed(@query).should be_empty
         end
         it 'calls send_search correctly' do
-          @live.should_receive(:send_search).never
+          client.should_receive(:send_search).never
           
-          @live.search @query
+          client.search_unparsed @query
         end
       end
       describe "with '' as search term" do
@@ -225,15 +172,15 @@ describe Picky::Client do
           @query = ''
         end
         it "should return a Search::Results" do
-          @live.search(@query).should be_kind_of(Hash)
+          client.search_unparsed(@query).should == ""
         end
         it "should return an empty Search::Results" do
-          @live.search(@query).should be_empty
+          client.search_unparsed(@query).should be_empty
         end
         it 'calls send_search correctly' do
-          @live.should_receive(:send_search).never
+          client.should_receive(:send_search).never
           
-          @live.search @query
+          client.search_unparsed @query
         end
       end
     end
