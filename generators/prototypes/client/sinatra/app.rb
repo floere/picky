@@ -53,8 +53,10 @@ end
 
 # For live results, you'd actually go directly to the search server without taking the detour.
 #
+# We don't parse/reencode the returned json string.
+#
 get '/search/live' do
-  BooksSearch.search params[:query], :ids => 0, :offset => params[:offset]
+  BooksSearch.search_unparsed params[:query], :ids => 0, :offset => params[:offset]
 end
 
 helpers do
