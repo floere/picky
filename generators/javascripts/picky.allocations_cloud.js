@@ -37,7 +37,7 @@ var PickyAllocationsCloud = function(view, config) {
     allocations.each(function(i, allocation) {
       shown.push(allocationRenderer.render(allocation));
       
-      // // TODO Combine.
+      // TODO Combine.
       // allocationRenderer.generate();
       // var listItem = renderListItem(allocationRenderer);
       
