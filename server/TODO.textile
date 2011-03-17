@@ -2,4 +2,4 @@ h1. Internal TODOs
 
 h2.  Optimizations
 
-* Option to stop calculating combinations if we have enough results for a full result.
+* Option to cleanly stop calculating ids (inside the algorithm) if we have enough results for a full result.
