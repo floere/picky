@@ -1,0 +1,13 @@
+h1. Test Client
+
+Project to test the client and its Javascript.
+
+h2. Requirements
+
+A running test server: Find it in @/server/test_project@.
+
+h2. Starting it
+
+This starts a Sinatra instance:
+
+@ruby app.rb@
