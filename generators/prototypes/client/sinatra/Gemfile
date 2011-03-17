@@ -2,7 +2,7 @@ source :gemcutter
 
 # Gems required by the Picky client.
 #
-gem 'picky-client'
+gem 'picky-client', '2.0.0.pre1'
 gem 'i18n'
 gem 'activesupport', :require => 'active_support/core_ext'
 gem 'sinatra'
