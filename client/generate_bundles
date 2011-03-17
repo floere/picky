@@ -19,7 +19,7 @@ picky_files = %w{
   results_renderer
   allocation_renderer
   allocations_cloud
-}.map { |name| "javascripts/picky.#{name}.js" }
+}.map { |name| "javascripts/source/picky.#{name}.js" }
 
 js = picky_files.map { |filename| "--js=#{filename}" }.join(' ')
 compiler_command = "java -jar javascripts/compiler.jar --compilation_level=SIMPLE_OPTIMIZATIONS #{js} --js_output_file=javascripts/picky.min.js"
