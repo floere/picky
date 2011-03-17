@@ -43,7 +43,7 @@ class BookSearch < Application
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
-    csv_test_index = Index::Memory.new(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'))
+    csv_test_index = Index::Memory.new(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv', result_identifier: 'Books'))
                        .define_category(:title,
                                          qualifiers: [:t, :title, :titre],
                                          partial:    Partial::Substring.new(from: 1),

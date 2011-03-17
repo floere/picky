@@ -54,7 +54,7 @@
           %pre
             :preserve
               get '/search/full' do
-                results = FullBooks.search params[:query], :offset => params[:offset]
+                results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
                 results.extend Picky::Convenience
                 results.populate_with Book do |book|
                   book.to_s
@@ -66,7 +66,7 @@
         %strong hash
         with the results:
         %code
-          %pre results = FullBooks.search params[:query], :offset => params[:offset]
+          %pre results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
       %p
         This part takes the
         %strong hash
@@ -117,7 +117,7 @@
               BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books/full'
 
               get '/search/full' do
-                results = FullBooks.search params[:query], :offset => params[:offset]
+                results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
 
                 results.extend Picky::Convenience
                 results.populate_with Book do |book|
