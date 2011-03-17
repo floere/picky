@@ -2,17 +2,17 @@ source :gemcutter
 
 # Gems required by Picky.
 #
-gem 'picky',            '2.0.0.pre1'
+gem 'picky',      '2.0.0.pre1'
 gem 'rake'
 gem 'bundler'
-gem 'rack',             '~> 1.2.2'
-gem 'rack-mount',       '~> 0.6.13'
-gem 'text',             '~> 0.2.0'
-gem 'yajl-ruby',        '~> 0.8.1', :require => 'yajl'
+gem 'rack',       '~> 1.2.2'
+gem 'rack-mount', '~> 0.6.13'
+gem 'text',       '~> 0.2.0'
+gem 'yajl-ruby',  '~> 0.8.1', :require => 'yajl'
 
 # Should be optional, but isn't yet. Sorry.
 #
-gem 'activerecord',     '~> 2.3.8', :require => 'active_record'
+gem 'activerecord', '~> 2.3.8', :require => 'active_record'
 
 # Optional. Makes rack faster.
 #
