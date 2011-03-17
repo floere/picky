@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = false
 
-  s.files = Dir["lib/**/*.rb", "javascripts/*.js"]
+  s.files = Dir["lib/**/*.{rb,rake}", "javascripts/*.js"]
 
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.extra_rdoc_files = ['README.rdoc']
