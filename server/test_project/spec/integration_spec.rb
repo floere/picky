@@ -24,9 +24,9 @@ describe "Integration Tests" do
       @sym.search_with_text(text).ids.should == expected_ids
     end
   end
-  def self.it_should_find_ids_in_csv text, expected_ids
+  def self.it_should_find_ids_in_csv text, ids = 20, offset = 0, expected_ids
     it 'should return the right ids' do
-      @csv.search_with_text(text).ids.should == expected_ids
+      @csv.search_with_text(text, ids, offset).ids.should == expected_ids
     end
   end
   def self.it_should_find_ids_in_memory_geo text, expected_ids
@@ -55,9 +55,14 @@ describe "Integration Tests" do
     
     # Breakage. As reported by Jason.
     #
-    it 'finds with id' do
+    it 'finds with specific id' do
       @books.search_with_text('id:"2"').ids.should == [2]
     end
+    
+    # Respects ids param and offset.
+    #
+    it_should_find_ids_in_csv 'title:le* title:hystoree~', 2, 0, [4, 250]
+    it_should_find_ids_in_csv 'title:le* title:hystoree~', 1, 1, [250]
     
     # Standard.
     #
