@@ -1,7 +1,7 @@
 module Picky
 
   module Generators
-  
+
     module Server
 
       # Generates a new Picky Unicorn Server Example.
@@ -10,11 +10,11 @@ module Picky
       #   > picky-generate unicorn_server my_lovely_unicorn
       #
       class Unicorn < Picky::Generators::Base
-  
+
         def initialize identifier, name, *args
           super identifier, name, 'server/unicorn', *args
         end
-  
+
         #
         #
         def generate
@@ -29,14 +29,14 @@ module Picky
           exclaim "2. bundle install"
           exclaim "3. rake index"
           exclaim "4. rake start"
-          exclaim "5. rake           # (optional) shows you where Picky needs input from you"
+          exclaim "5. rake todo      # (optional) shows you where Picky needs input from you"
           exclaim "                  #            if you want to define your own search."
         end
-  
+
       end
-    
+
     end
-  
+
   end
-  
+
 end
