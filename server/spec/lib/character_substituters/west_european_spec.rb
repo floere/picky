@@ -19,6 +19,20 @@ describe CharacterSubstituters do
       @substituter.substitute(special_character).should == special_character
     end
   end
+  
+  # Speed spec at the top since the order of the describes made the
+  # speed spec trip. And not on mushrooms either.
+  #
+  describe "speed" do
+    it "is fast" do
+      result = performance_of { @substituter.substitute('ä') }
+      result.should < 0.00009
+    end
+    it "is fast" do
+      result = performance_of { @substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
+      result.should < 0.00015
+    end
+  end
 
   describe "normal characters" do
     it_should_not_substitute('abcdefghijklmnopqrstuvwxyz1234567890')
@@ -90,17 +104,6 @@ describe CharacterSubstituters do
   
   describe "diacritic" do
     it_should_substitute 'ñ', 'n'
-  end
-  
-  describe "speed" do
-    it "is fast" do
-      result = performance_of { @substituter.substitute('ä') }
-      result.should < 0.00009
-    end
-    it "is fast" do
-      result = performance_of { @substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
-      result.should < 0.00015
-    end
   end
 
 end
