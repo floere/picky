@@ -214,10 +214,6 @@ module Loader # :nodoc:all
 
     load_internals 'query/indexes'
 
-    # Results.
-    #
-    load_internals 'results'
-
     # Configuration.
     #
     load_internals 'configuration/index'
@@ -271,6 +267,10 @@ module Loader # :nodoc:all
 
     load_relative 'index_bundle'
     load_relative 'aliases'
+
+    # Results.
+    #
+    load_relative 'results'
 
     # Search.
     #
