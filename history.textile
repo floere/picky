@@ -1,5 +1,6 @@
 h2. Version 2.0.0.pre1
 
+* hanke: New major version number – see reasons for API change: "http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html":http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html.
 * hanke: (server) (Breaking change) @Query::Full@ and @Query::Live@ have been replaced by just @Search@. So what you now do is @route /something/ => Search.new(index1, index2, ..., options)@.
 * hanke: (server) Pass in the @ids@ param to define the amount of result ids you'd like. This is how you'd do it with curl: @curl 'localhost:8080/books?query=test&ids=20'@. 20 ids is the default.
 * hanke: (client) (Breaking change) @Picky::Client::Full@ and @Picky::Client::Live@ have been replaced by @Picky::Client@. New option: @ids@. Pass in to define the amount of @ids@ you'd like. For a live query you need none, so pass in 0. (20 is the default in the server)
