@@ -7,9 +7,10 @@ GEM
     i18n (0.5.0)
     monkey-lib (0.5.4)
       backports
-    picky-client (2.0.0)
+    picky-client (2.0.0.pre1)
       yajl-ruby (>= 0.7.8)
     rack (1.2.2)
+    rake (0.8.7)
     sinatra (1.2.0)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
@@ -33,6 +34,7 @@ DEPENDENCIES
   activesupport
   haml
   i18n
-  picky-client
+  picky-client (= 2.0.0.pre1)
+  rake
   sinatra
   sinatra-reloader

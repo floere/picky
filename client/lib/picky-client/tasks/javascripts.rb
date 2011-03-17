@@ -8,7 +8,7 @@ module Picky
           target_dir = File.expand_path target, Dir.pwd
           source_dir = File.expand_path '../../../../javascripts/*.min.js', __FILE__
 
-          puts "Copying javascript files from current picky-client gem to target dir #{target_dir}"
+          puts "Copying javascript files from picky-client gem to target dir #{target_dir}"
           `cp -i #{source_dir} #{target_dir}`
         end
       end
