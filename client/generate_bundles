@@ -26,25 +26,34 @@ compiler_command = "java -jar javascripts/compiler.jar --compilation_level=SIMPL
 p compiler_command
 system compiler_command
 
-min_js_copy_command = "cp javascripts/picky.min.js prototypes/client/sinatra/javascripts/"
+# Copy the latest javascripts into the generators' js directory.
+#
+min_js_copy_command = "cp javascripts/picky.min.js ../generators/prototypes/client/sinatra/javascripts/"
 p min_js_copy_command
 system min_js_copy_command
 
-min_js_copy_command = "cp javascripts/picky.min.js client_test/javascripts/"
+# Copy the latest javascripts into the test project.
+#
+min_js_copy_command = "cp javascripts/picky.min.js test_project/javascripts/"
 p min_js_copy_command
 system min_js_copy_command
 
+# Tar the js files for downloads.
+#
 gzip_command = "tar -cf javascripts/picky.source.js.tar #{picky_files.join(' ')}"
 p gzip_command
 system gzip_command
 
 # Stylesheets
 #
+# Copied into the test project.
+# Copied also into the generator prototypes.
+#
 stylesheets_command = <<-STYLESHEETS
-sass -C client_test/stylesheets/picky.sass client_test/stylesheets/picky.css;
-sass -C client_test/stylesheets/application.sass client_test/stylesheets/application.css;
-cp client_test/stylesheets/picky.css prototypes/client/sinatra/stylesheets/picky.css;
-cp client_test/stylesheets/application.css prototypes/client/sinatra/stylesheets/application.css;
+sass -C test_project/stylesheets/picky.sass test_project/stylesheets/picky.css;
+sass -C test_project/stylesheets/application.sass test_project/stylesheets/application.css;
+cp test_project/stylesheets/picky.css ../generators/prototypes/client/sinatra/stylesheets/picky.css;
+cp test_project/stylesheets/application.css ../generators/prototypes/client/sinatra/stylesheets/application.css;
 STYLESHEETS
 p stylesheets_command
 system stylesheets_command
