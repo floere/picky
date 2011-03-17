@@ -7,6 +7,7 @@ h2. Version 2.0.0.pre1
 * hanke: (generated clients) See client changes above. Replace @Picky::Client::Full@ and @Picky::Client::Live@ with just a single @Picky::Client@ instance with the same options as before (but just a single URL on the server as desribed above).
 * hanke: (generated servers) See server changes above. Replace @Query::Full@ and @Query::Live@ instance pairs by just a single @Search@ instance.
 * hanke: (client javascript files) Replace your javascript file with the new ones in @picky/generators/prototypes/client/sinatra/javascripts/*.js@.
+* hanke: (client) Added @rake javascripts@ to the client and client project generator which copies the latest javascripts into your directory (if they don't exist yet)
 * you: Give feedback, thanks! :)
 
 h2. Version 1.5.4
