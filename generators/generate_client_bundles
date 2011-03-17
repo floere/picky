@@ -7,7 +7,6 @@
 
 # Javascripts
 #
-
 picky_files = %w{
   extensions
   translations
@@ -41,7 +40,6 @@ system gzip_command
 
 # Stylesheets
 #
-
 stylesheets_command = <<-STYLESHEETS
 sass -C client_test/stylesheets/picky.sass client_test/stylesheets/picky.css;
 sass -C client_test/stylesheets/application.sass client_test/stylesheets/application.css;
