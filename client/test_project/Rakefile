@@ -1,4 +1,4 @@
-# require 'picky-client/tasks/javascripts'
-# Picky::Tasks::Javascripts.new # Location of your javascript files.
+require 'picky-client/tasks/javascripts'
+Picky::Tasks::Javascripts.new # Param: Location of your javascript files, default "javascripts".
 
 # Note: Javascripts are automatically copied into this project.
