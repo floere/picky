@@ -2,18 +2,20 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-# Load the "model".
+# Sinatra settings.
+#
+set :static, true
+set :public, File.dirname(__FILE__)
+set :views,  File.expand_path('views', File.dirname(__FILE__))
+set :haml,   :format => :html5
+
+# Load the simplified "model".
 #
 require File.expand_path 'book', File.dirname(__FILE__)
 
 # Sets up a search instance to the server.
 #
 BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
-
-set :static, true
-set :public, File.dirname(__FILE__)
-set :views,  File.expand_path('views', File.dirname(__FILE__))
-set :haml,   :format => :html5
 
 # Root, the search page.
 #
@@ -23,12 +25,8 @@ get '/' do
   haml :'/search'
 end
 
-# Configure. The configuration info page.
+# Renders the results into the json.
 #
-get '/configure' do
-  haml :'/configure'
-end
-
 # You get the ids from the picky server and then
 # populate the result with rendered models.
 #
@@ -36,26 +34,32 @@ get '/search/full' do
   results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
-    book.to_s
+    book.render
   end
 
   #
-  # Or use:
+  # Or, to populate with the model instances, use:
   #   results.populate_with Book
   #
-  # Then:
+  # Then to render:
   #   rendered_entries = results.entries.map do |book| (render each book here) end
   #
 
   ActiveSupport::JSON.encode results
 end
 
-# Normally, you'd actually go directly to the search server without taking the detour.
+# Updates the search count while the user is typing.
 #
 # We don't parse/reencode the returned json string using search_unparsed.
 #
 get '/search/live' do
   BookSearch.search_unparsed params[:query], :ids => params[:ids], :offset => params[:offset]
+end
+
+# Configure. The configuration info page.
+#
+get '/configure' do
+  haml :'/configure'
 end
 
 helpers do
