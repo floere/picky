@@ -1,12 +1,9 @@
 # encoding: utf-8
 #
 
-# Gathers different statistics
-# when methods are called.
+# Gathers various statistics.
 #
-# Can be output using to_s.
-#
-class Statistics
+class Statistics # :nodoc:all
 
   def self.instance
     @statistics ||= new

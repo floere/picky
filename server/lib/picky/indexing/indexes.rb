@@ -1,4 +1,4 @@
-module Indexing
+module Indexing # :nodoc:all
 
   # Registers the indexes held at index time, for indexing.
   #

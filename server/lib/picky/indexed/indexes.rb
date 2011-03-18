@@ -1,4 +1,4 @@
-module Indexed
+module Indexed # :nodoc:all
 
   # Registers the indexes held at runtime, for queries.
   #

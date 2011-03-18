@@ -88,6 +88,8 @@ module Loader # :nodoc:all
   # (Not for the user)
   #
   def self.load_framework_internals
+    load_relative 'internals'
+
     # Load compiled C code.
     #
     load_internals 'ext/maybe_compile'
@@ -275,6 +277,7 @@ module Loader # :nodoc:all
     # Search.
     #
     load_relative 'search'
+    load_relative 'query'
     #
     # load_relative 'query/solr'
 

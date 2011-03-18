@@ -3,9 +3,7 @@
 
 # Analyzes indexes (index bundles, actually).
 #
-# Can be output using to_s.
-#
-class Analyzer
+class Analyzer # :nodoc:all
 
   attr_reader :analysis, :comments
 
