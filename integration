@@ -7,9 +7,12 @@ def each_type
   yield :live, 0
 end
 
+def ask_server query
+  `curl -S 'localhost:8080/books?query=#{query}&ids=20'`
+end
 def server query, match
   @tests += 1
-  if `curl -S 'localhost:8080/books?query=#{query}&ids=20'`.chomp.include?(match)
+  if ask_server(query).chomp.include?(match)
     puts "Yay, server returned #{match} for #{query}!"
   else
     fail "#{query} result does not include #{match}"
@@ -74,6 +77,12 @@ begin
   sleep 1
   system "open -a 'Google Chrome' http://localhost:3210/?q=a%2A%20b"
   sleep 5
+
+  puts "Now for a speed test"
+  queries = ['alan', 'pinchn~', 'sp', 'title:lyterature~+2002'].cycle
+  100.times do
+    ask_server queries.next
+  end
 
   puts
   puts "SUCCESS! #{@tests} tests run without a hitch :)"
