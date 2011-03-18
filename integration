@@ -1,7 +1,14 @@
 #!/usr/bin/env ruby
 #
+@tests = 0
+
+def each_type
+  yield :full, 20
+  yield :live, 0
+end
 
 def server query, match
+  @tests += 1
   if `curl -S 'localhost:8080/books?query=#{query}&ids=20'`.chomp.include?(match)
     puts "Yay, server returned #{match} for #{query}!"
   else
@@ -9,6 +16,7 @@ def server query, match
   end
 end
 def client query, match
+  @tests += 1
   if `curl -S 'localhost:3210/search/full?query=#{query}&ids=20'`.chomp.include?(match)
     puts "Yay, client returned #{match} for #{query}!"
   else
@@ -26,7 +34,7 @@ begin
 
   puts "Installing the server."
   system "picky generate unicorn_server sandbox/server"
-  system "cd sandbox/server; bundle install"
+  system "cd sandbox/server; bundle install --local"
   system "cd sandbox/server; rake index"
   system "cd sandbox/server; rake start &"
 
@@ -45,7 +53,7 @@ begin
 
   puts "Installing the client."
   system "picky generate sinatra_client sandbox/client"
-  system "cd sandbox/client; bundle install"
+  system "cd sandbox/client; bundle install --local"
   system "cd sandbox/client; unicorn -p 3210 &"
 
   sleep 5 # loading
@@ -67,7 +75,9 @@ begin
   system "open -a 'Google Chrome' http://localhost:3210/?q=a%2A%20b"
   sleep 5
 
-  puts "SUCCESS!"
+  puts
+  puts "SUCCESS! #{@tests} tests run without a hitch :)"
+  puts
 ensure
   puts "Press enter to kill (Break and have mercy with Ctrl-C)"
   gets
