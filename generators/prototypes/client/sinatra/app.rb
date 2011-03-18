@@ -6,8 +6,6 @@ Bundler.require
 #
 require File.expand_path 'book', File.dirname(__FILE__)
 
-set :haml, { :format => :html5 }
-
 # Sets up a search instance to the server.
 #
 BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
@@ -15,8 +13,9 @@ BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/b
 set :static, true
 set :public, File.dirname(__FILE__)
 set :views,  File.expand_path('views', File.dirname(__FILE__))
+set :haml,   :format => :html5
 
-# Root, the search interface.
+# Root, the search page.
 #
 get '/' do
   @query = params[:q]

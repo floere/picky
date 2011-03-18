@@ -20,10 +20,10 @@ class PickySearch < Application
                    stopwords:          /\b(and|the|of|it|in|for)\b/,
                    splits_text_on:     /[\s\/\-\,\&]+/,
 
-                   maximum_tokens: 5, # Amount of tokens passing into a query (5 = default).
+                   maximum_tokens: 5, # Amount of tokens used in a search (5 = default).
                    substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
 
-  # Define an index. Use a database etc. source? Use an in-memory index or Redis?
+  # Define an index, Index::Memory or Index::Redis.
   # See http://github.com/floere/picky/wiki/Sources-Configuration#sources
   #
   books_index = Index::Memory.new :books, Sources::CSV.new(:title, :author, :year, file: 'app/library.csv')
@@ -34,10 +34,9 @@ class PickySearch < Application
   books_index.define_category :author,
                               partial: Partial::Substring.new(from: 1)
   books_index.define_category :year,
-                              partial: Partial::None.new # Partial substring searching on the year does not make
-                                                         # much sense, neither does similarity.
+                              partial: Partial::None.new
 
-  options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # +/- points for combinations.
+  options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # Combination boosting.
 
   route %r{\A/books\Z} => Search.new(books_index, options)
 
