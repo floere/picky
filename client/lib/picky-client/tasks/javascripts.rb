@@ -1,5 +1,17 @@
 module Picky
+
+  # Rake tasks for Picky clients.
+  #
   module Tasks
+
+    # Copies the latest javascripts into the default javascript folder.
+    #
+    # Example:
+    #   # Use as follows in your Rakefile.
+    #   #
+    #   Picky::Tasks::Javascripts.new                       # Copies the files into the javascripts folder (by default).
+    #   Picky::Tasks::Javascripts.new('public/javascripts') # Copies the files into the public/javascripts folder.
+    #
     class Javascripts
 
       define_method :initialize do |target = 'javascripts'|
