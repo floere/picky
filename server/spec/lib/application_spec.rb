@@ -47,10 +47,11 @@ describe Application do
           books_index.define_category :isbn,
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
-          geo_index = Index::Memory.new :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
-          geo_index.define_category :location
-          geo_index.define_ranged_category(:north1, 1, precision: 3, from: :north)
-                   .define_ranged_category(:east1,  1, precision: 3, from: :east)
+          geo_index = Index::Memory.new :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',') do
+            category        :location
+            ranged_category :north1, 1, precision: 3, from: :north
+            ranged_category :east1,  1, precision: 3, from: :east
+          end
           
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           

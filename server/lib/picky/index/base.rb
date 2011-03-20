@@ -21,6 +21,12 @@ module Index
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
     #
+    # Example:
+    #   my_index = Index::Memory.new(:my_index, some_source) do
+    #     define_category :bla
+    #   end
+    #
+    #
     def initialize name, source, options = {}
       check name, source
 
@@ -31,6 +37,10 @@ module Index
       # Centralized registry.
       #
       Indexes.register self
+
+      #
+      #
+      instance_eval(&Proc.new) if block_given?
     end
     #
     # Since this is an API, we fail hard quickly.

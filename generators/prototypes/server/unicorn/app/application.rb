@@ -19,26 +19,23 @@ class PickySearch < Application
   default_querying removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/, # Picky needs control chars *"~: to pass through.
                    stopwords:          /\b(and|the|of|it|in|for)\b/,
                    splits_text_on:     /[\s\/\-\,\&]+/,
-
                    maximum_tokens: 5, # Amount of tokens used in a search (5 = default).
                    substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
 
   # Define an index, Index::Memory or Index::Redis.
   # See http://github.com/floere/picky/wiki/Sources-Configuration#sources
   #
-  books_index = Index::Memory.new :books, Sources::CSV.new(:title, :author, :year, file: 'app/library.csv')
-  books_index.define_category :title,
-                              similarity: Similarity::Phonetic.new(3), # Up to three similar title word indexed (default: No similarity).
-                              partial: Partial::Substring.new(from: 1) # Indexes substrings upwards from character 1 (default: -3),
-                                                                       # You'll find "picky" even when entering just a "p".
-  books_index.define_category :author,
-                              partial: Partial::Substring.new(from: 1)
-  books_index.define_category :year,
-                              partial: Partial::None.new
+  library_src = Sources::CSV.new :title, :author, :year, file: 'app/library.csv'
+  books_index = Index::Memory.new :books, library_src do
+    category :title,
+             similarity: Similarity::Phonetic.new(3), # Up to three similar title word indexed (default: No similarity).
+             partial: Partial::Substring.new(from: 1) # Indexes substrings upwards from character 1 (default: -3),
+                                                      # You'll find "picky" even when entering just a "p".
+    category :author, partial: Partial::Substring.new(from: 1)
+    category :year, partial: Partial::None.new
+  end
 
-  options = { :weights => { [:title, :author] => +3, [:title] => +1 } } # Combination boosting.
-
-  route %r{\A/books\Z} => Search.new(books_index, options)
+  route %r{\A/books\Z} => Search.new(books_index, :weights => { [:title, :author] => +3, [:title] => +1 })
 
   # Note: You can pass a query multiple indexes and it will query in all of them.
 
