@@ -102,7 +102,7 @@ describe Internals::FrontendAdapters::Rack do
       env = rack_defaults_for '/searches/some_route?query=some_query'
       
       search = stub :search
-      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Internals::Results.new)
+      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Results.new)
       Search.stub! :new => search
       
       @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index)
@@ -114,7 +114,7 @@ describe Internals::FrontendAdapters::Rack do
       env = rack_defaults_for '/searches/some_route?query=some_query&type=some_type'
       
       search = stub :search
-      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Internals::Results.new)
+      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Results.new)
       Search.stub! :new => search
       
       @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index), :query => { :type => :some_type }

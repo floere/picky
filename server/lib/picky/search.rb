@@ -99,7 +99,7 @@ class Search
   # Note: Internal method, use #search_with_text.
   #
   def execute tokens, ids, offset
-    Internals::Results.from ids, offset, sorted_allocations(tokens)
+    Results.from ids, offset, sorted_allocations(tokens)
   end
 
   # Delegates the tokenizing to the query tokenizer.

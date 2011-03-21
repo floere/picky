@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Results do
+describe Results do
   
   describe "from" do
     before(:each) do
