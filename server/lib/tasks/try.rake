@@ -23,7 +23,7 @@ namespace :try do
     text, index, category = options.text, options.index, options.category
 
     puts
-    fail "\x1b[31mrake try needs a text to try indexing and query preparation\x1b[m, e.g. rake 'try[yourtext]'."
+    fail "\x1b[31mrake try needs a text to try indexing and query preparation\x1b[m, e.g. rake 'try[yourtext]'." unless text
 
     Rake::Task[:"try:index"].invoke text, index, category
     Rake::Task[:"try:query"].invoke text
