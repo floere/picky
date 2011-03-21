@@ -15,7 +15,7 @@ var PickyController = function(config) {
   };
   this.extractQuery = extractQuery;
   
-  // Very failsafe extraction of the last made query.
+  // Failsafe extraction of the last made query.
   //
   var lastQuery = function() {
     var state = window.History && window.History.getState();
@@ -74,7 +74,7 @@ var PickyController = function(config) {
     // Note: If this query is the same as the last, we do not save it in the history.
     //
     if (query != lastQuery()) {
-      var url = "?q=" + query;
+      var url = "?q=" + escape(query).replace(/\*/g,'%2A');
       window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
     }
       
