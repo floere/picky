@@ -1,3 +1,8 @@
+h2. Version 2.0.0.pre2
+
+* hanke: (client) Asterisks are correctly escaped before saved in the browser history.
+* you: Give feedback, thanks! :)
+
 h2. Version 2.0.0.pre1
 
 * hanke: New major version number – see reasons for API change: "http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html":http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html.
@@ -6,9 +11,7 @@ h2. Version 2.0.0.pre1
 * hanke: (client) (Breaking change) @Picky::Client::Full@ and @Picky::Client::Live@ have been replaced by @Picky::Client@. New option: @ids@. Pass in to define the amount of @ids@ you'd like. For a live query you need none, so pass in 0. (20 is the default in the server)
 * hanke: (generated clients) See client changes above. Replace @Picky::Client::Full@ and @Picky::Client::Live@ with just a single @Picky::Client@ instance with the same options as before (but just a single URL on the server as desribed above).
 * hanke: (generated servers) See server changes above. Replace @Query::Full@ and @Query::Live@ instance pairs by just a single @Search@ instance.
-* hanke: (client javascript files) Replace your javascript file with the new ones in @picky/generators/prototypes/client/sinatra/javascripts/*.js@.
 * hanke: (client) Added @rake javascripts@, @rake update@ to the client and client project generator which copies the javascripts from the client gem into your directory. (If you have an old generated project, add @require 'picky-client/tasks'; Picky::Tasks::Javascripts.new@ in your @Rakefile@)
-* you: Give feedback, thanks! :)
 
 h2. Version 1.5.4
 
