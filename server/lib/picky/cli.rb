@@ -71,7 +71,7 @@ module Picky
     end
     class Generate < Base
       def execute name, args, params
-        system "picky-generate #{args.join(' ')}"
+        Kernel.system "picky-generate #{args.join(' ')}"
       end
     end
     class Help < Base
@@ -83,7 +83,7 @@ module Picky
           "  picky #{command} #{params_to_s(params)}"
         end.join(?\n)
 
-        puts "Possible commands:\n" + commands
+        Kernel.puts "Possible commands:\n#{commands}\n"
       end
     end
 

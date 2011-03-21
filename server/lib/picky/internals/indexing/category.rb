@@ -23,6 +23,8 @@ module Internals
       #  * weights:
       #  * tokenizer:
       #
+      # TODO Should source be not optional, or taken from the index?
+      #
       def initialize name, index, options = {}
         @name = name
         @from = options[:from]

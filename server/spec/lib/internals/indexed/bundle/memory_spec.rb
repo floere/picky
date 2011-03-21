@@ -10,6 +10,72 @@ describe Internals::Indexed::Bundle::Memory do
     @similarity   = stub :similarity
     @bundle       = described_class.new :some_name, @configuration, @similarity
   end
+  
+  describe 'to_s' do
+    it 'does something' do
+      @bundle.to_s.should == <<-TO_S
+Memory
+  Files:
+    Index:      spec/test_directory/index/test/some_index/some_category_some_name_index.json
+    Weights:    spec/test_directory/index/test/some_index/some_category_some_name_weights.json
+    Similarity: spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump
+    Config:     spec/test_directory/index/test/some_index/some_category_some_name_configuration.json
+      TO_S
+    end
+  end
+  
+  describe 'clear_index' do
+    before(:each) do
+      @bundle.instance_variable_set(:@index, :not_empty)
+    end
+    it 'has not cleared the index' do
+      @bundle.index.should == :not_empty
+    end
+    it 'clears the index' do
+      @bundle.clear_index
+      
+      @bundle.index.should be_empty
+    end
+  end
+  describe 'clear_weights' do
+    before(:each) do
+      @bundle.instance_variable_set(:@weights, :not_empty)
+    end
+    it 'has not cleared the weights' do
+      @bundle.weights.should == :not_empty
+    end
+    it 'clears the weights' do
+      @bundle.clear_weights
+      
+      @bundle.weights.should be_empty
+    end
+  end
+  describe 'clear_similarity' do
+    before(:each) do
+      @bundle.instance_variable_set(:@similarity, :not_empty)
+    end
+    it 'has not cleared the similarity index' do
+      @bundle.similarity.should == :not_empty
+    end
+    it 'clears the similarity index' do
+      @bundle.clear_similarity
+      
+      @bundle.similarity.should be_empty
+    end
+  end
+  describe 'clear_configuration' do
+    before(:each) do
+      @bundle.instance_variable_set(:@configuration, :not_empty)
+    end
+    it 'has not cleared the similarity index' do
+      @bundle.configuration.should == :not_empty
+    end
+    it 'clears the similarity index' do
+      @bundle.clear_configuration
+      
+      @bundle.configuration.should be_empty
+    end
+  end
 
   describe 'identifier' do
     it 'should return a specific identifier' do

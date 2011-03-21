@@ -10,6 +10,50 @@ describe Internals::Query::Combinations::Redis do
     @combinations = described_class.new @combinations_ary
   end
   
+  describe 'ids' do
+    context 'empty combinations' do
+      let(:combinations) { described_class.new [] }
+      it 'does something' do
+        combinations.ids(20,0).should == []
+      end
+    end
+    context 'non-empty' do
+      let(:combination) { stub :combination, :identifier => :some_combination }
+      let(:combinations) { described_class.new [combination] }
+      let(:redis) { stub :redis }
+      before(:each) do
+        combinations.stub! :redis => redis
+        
+        combinations.stub! :host => 'some.host'
+        combinations.stub! :pid  => 12345
+      end
+      it 'calls the redis backend correctly' do
+        redis.should_receive(:zinterstore).once.ordered.with :"some.host:12345:picky:result", ["some_combination"]
+        redis.should_receive(:zrange).once.ordered.with :"some.host:12345:picky:result", 0, 20
+        redis.should_receive(:del).once.ordered.with :"some.host:12345:picky:result"
+        
+        combinations.ids 20,0
+      end
+    end
+  end
+  
+  describe 'pid' do
+    it "returns the Process' pid" do
+      Process.stub! :pid => 12345
+
+      @combinations.pid.should == 12345
+    end
+  end
+  
+  describe 'host' do
+    before(:each) do
+      @combinations.class.stub! :extract_host => 'some.host'
+    end
+    it 'returns the host' do
+      @combinations.host.should == 'some.host'
+    end
+  end
+  
   describe "pack_into_allocation" do
     it "return an Allocation" do
       @combinations.pack_into_allocation(:some_result_identifier).should be_kind_of(Internals::Query::Allocation)
