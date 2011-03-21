@@ -34,7 +34,10 @@ system min_js_copy_command
 
 # Copy the latest javascripts into the test project.
 #
-min_js_copy_command = "cp javascripts/*.min.js test_project/javascripts/"
+min_js_copy_command = "cp javascripts/source/picky.*.js test_project/javascripts/"
+p min_js_copy_command
+system min_js_copy_command
+min_js_copy_command = "cp javascripts/{history,jquery}*.min.js test_project/javascripts/"
 p min_js_copy_command
 system min_js_copy_command
 
