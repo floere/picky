@@ -39,7 +39,7 @@ class BookSearch < Application
       map_location :east1,  1, precision: 3, from: :east
     end
 
-    # rgeo_index  = Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    # rgeo_index = Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     # rgeo_index.define_category :location
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
@@ -87,7 +87,7 @@ class BookSearch < Application
     }
 
     route %r{\A/admin\Z} => LiveParameters.new
-
+    
     route %r{\A/books\Z} => Search.new(books_index, isbn_index, options),
           %r{\A/redis\Z} => Search.new(redis_index, options),
           %r{\A/csv\Z}   => Search.new(csv_test_index, options),
