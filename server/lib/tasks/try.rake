@@ -6,7 +6,7 @@ namespace :try do
   task :index, [:text, :index, :category] => :application do |_, options|
     text, index, category = options.text, options.index, options.category
 
-    tokenizer = index && category ? Indexes.find(index, category).tokenizer : Internals::Tokenizers::Index.default
+    tokenizer = category ? Indexes.find(index, category).tokenizer : Internals::Tokenizers::Index.default
 
     puts "\"#{text}\" is saved in the index as             #{tokenizer.tokenize(text.dup).to_a}"
   end
@@ -21,6 +21,9 @@ namespace :try do
   # desc "Try the given text with both the index and the query (type:category optional)."
   task :both, [:text, :index, :category] => :application do |_, options|
     text, index, category = options.text, options.index, options.category
+
+    puts
+    fail "\x1b[31mrake try needs a text to try indexing and query preparation\x1b[m, e.g. rake 'try[yourtext]'."
 
     Rake::Task[:"try:index"].invoke text, index, category
     Rake::Task[:"try:query"].invoke text
