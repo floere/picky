@@ -1,9 +1,9 @@
 module Internals
 
   module Index
-  
+
     class Redis
-    
+
       # Redis Backend Accessor.
       #
       # Provides necessary helper methods for its
@@ -12,23 +12,23 @@ module Internals
       # dump/load methods.
       #
       class Basic
-      
+
         attr_reader :namespace, :backend
-      
+
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
         def initialize namespace
           @namespace = namespace
-          
+
           # TODO Turn this inside out such that people can pass in
           # their own Redis instance.
-          # 
+          #
           # TODO Make the :db a real option.
           #
           @backend = ::Redis.new :db => 15
         end
-      
+
         # Does nothing.
         #
         def load
@@ -39,13 +39,13 @@ module Internals
         def retrieve
           # Nothing.
         end
-      
+
         # Redis does not backup.
         #
         def backup
           # Nothing.
         end
-      
+
         # Deletes the Redis index namespace.
         #
         def delete
@@ -54,10 +54,10 @@ module Internals
           #       but since we cannot delete by key pattern,
           #       we don't do anything.
         end
-      
+
         # Checks.
         #
-      
+
         # Is this cache suspiciously small?
         #
         def cache_small?
@@ -79,11 +79,11 @@ module Internals
         def size
           backend.dbsize
         end
-      
+
       end
-    
+
     end
-  
+
   end
-  
+
 end
