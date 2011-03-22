@@ -61,8 +61,6 @@ Category(#{name} from #{from}):
         @from || name
       end
 
-      # TODO Spec.
-      #
       def backup_caches
         timed_exclaim "Backing up #{identifier}."
         exact.backup
