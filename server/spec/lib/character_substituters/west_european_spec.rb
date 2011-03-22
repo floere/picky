@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe CharacterSubstituters do
-  before(:each) do
-    @substituter = CharacterSubstituters::WestEuropean.new
+  before(:all) do
+    @substituter = CharacterSubstituters::WestEuropean.new.tap { |s| s.substitute '' }
   end
 
   # A bit of metaprogramming to help with the myriads of its.
@@ -31,6 +31,12 @@ describe CharacterSubstituters do
     it "is fast" do
       result = performance_of { @substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
       result.should < 0.00015
+    end
+  end
+  
+  describe 'to_s' do
+    it 'outputs correctly' do
+      @substituter.to_s.should == 'CharacterSubstituters::WestEuropean'
     end
   end
 

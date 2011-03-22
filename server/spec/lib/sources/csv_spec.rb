@@ -3,6 +3,13 @@ require 'csv'
 
 describe Sources::CSV do
   
+  describe 'to_s' do
+    let(:source) { described_class.new :a, :b, :c, file:'some/file.csv' }
+    it 'outputs the correct string' do
+      source.to_s.should == 'Sources::CSV(a, b, c, {:file=>"some/file.csv"})'
+    end
+  end
+  
   describe 'without separator' do
     before(:each) do
       @source = Sources::CSV.new :a, :b, :c, :file => :some_file

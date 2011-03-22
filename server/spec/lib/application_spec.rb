@@ -77,6 +77,14 @@ describe Application do
     end
   end
   
+  describe 'check' do
+    it 'does something' do
+      Application.should_receive(:warn).once.with "\nWARNING: No routes defined for application configuration in Class.\n\n"
+      
+      Application.check
+    end
+  end
+  
   describe 'delegation' do
     it "should delegate route" do
       Application.rack_adapter.should_receive(:route).once.with :path => :query

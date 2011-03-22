@@ -52,6 +52,11 @@ describe Internals::FrontendAdapters::Rack do
       it 'returns the right answer' do
         @rack_adapter.empty?.should == false
       end
+      describe 'to_s' do
+        it 'outputs correctly' do
+          @rack_adapter.to_s.should == "Note: Anchored (✓) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n   something => Search()"
+        end
+      end
     end
   end
   
@@ -136,6 +141,14 @@ describe Internals::FrontendAdapters::Rack do
     end
   end
   
+  describe 'to_s' do
+    context 'no routes' do
+      it 'outputs correctly' do
+        @rack_adapter.to_s.should == "Note: Anchored (✓) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n"
+      end
+    end
+  end
+  
   context 'stubbed routes' do
     before(:each) do
       @routes = stub :routes
@@ -213,6 +226,15 @@ describe Internals::FrontendAdapters::Rack do
         @rack_adapter.should_receive(:answer).once.with nil, Internals::FrontendAdapters::Rack::STATUSES[200]
         
         @rack_adapter.default 200
+      end
+    end
+    
+    describe 'STATUSES' do
+      it 'is a lambda' do
+        Internals::FrontendAdapters::Rack::STATUSES[200].respond_to?(:call).should == true
+      end
+      it 'is a lambda' do
+        Internals::FrontendAdapters::Rack::STATUSES[404].respond_to?(:call).should == true
       end
     end
     
