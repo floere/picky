@@ -17,10 +17,7 @@ module Internals
         alias backend files
 
         def to_s
-          <<-MEMORY
-Memory
-#{@backend.indented_to_s}
-MEMORY
+          "Memory\n#{@backend.indented_to_s}"
         end
 
       end

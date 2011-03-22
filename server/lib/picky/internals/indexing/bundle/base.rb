@@ -180,7 +180,7 @@ module Internals
         # Raises an appropriate error message for the given cache.
         #
         def raise_cache_missing what
-          raise "#{what} cache for #{identifier} missing."
+          raise "Error: The #{what} cache for #{identifier} is missing."
         end
 
         # Warns the user if the similarity index is small.

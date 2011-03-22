@@ -12,7 +12,23 @@ describe Internals::Indexing::Bundle::Memory do
     @similarity  = stub :similarity
   end
   let(:index) { described_class.new :some_name, @configuration, @similarity, @partial, @weights }
-
+  
+  describe 'raise_cache_missing' do
+    it 'does something' do
+      expect {
+        index.raise_cache_missing :similarity
+      }.to raise_error("Error: The similarity cache for some_index:some_category:some_name is missing.")
+    end
+  end
+  
+  describe 'warn_cache_small' do
+    it 'warns the user' do
+      index.should_receive(:warn).once.with "Warning: similarity cache for some_index:some_category:some_name smaller than 16 bytes."
+      
+      index.warn_cache_small :similarity
+    end
+  end
+  
   describe 'identifier' do
     it 'should return a specific identifier' do
       index.identifier.should == 'some_index:some_category:some_name'
