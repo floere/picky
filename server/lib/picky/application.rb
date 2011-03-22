@@ -130,7 +130,7 @@
 #     books.define_category :title,
 #                           qualifiers: [:t, :title, :titre],
 #                           partial:    Partial::Substring.new(:from => 1),
-#                           similarity: Similarity::Phonetic.new(2)
+#                           similarity: Similarity::DoubleMetaphone.new(2)
 #     books.define_category :author,
 #                           partial: Partial::Substring.new(:from => -2)
 #     books.define_category :isbn

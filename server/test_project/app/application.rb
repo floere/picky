@@ -24,7 +24,7 @@ class BookSearch < Application
       category :title,
                qualifiers: [:t, :title, :titre],
                partial:    Partial::Substring.new(:from => 1),
-               similarity: Similarity::Phonetic.new(2)
+               similarity: Similarity::DoubleMetaphone.new(2)
       category :author, partial: Partial::Substring.new(:from => -2)
       category :year, qualifiers: [:y, :year, :annee]
     end
@@ -48,7 +48,7 @@ class BookSearch < Application
       category :title,
                qualifiers: [:t, :title, :titre],
                partial:    Partial::Substring.new(from: 1),
-               similarity: Similarity::Phonetic.new(2)
+               similarity: Similarity::DoubleMetaphone.new(2)
       category :author,
                qualifiers: [:a, :author, :auteur],
                partial:    Partial::Substring.new(from: -2)
@@ -63,7 +63,7 @@ class BookSearch < Application
      category :title,
                qualifiers: [:t, :title, :titre],
                partial:    Partial::Substring.new(from: 1),
-               similarity: Similarity::Phonetic.new(2)
+               similarity: Similarity::DoubleMetaphone.new(2)
      category :author,
                qualifiers: [:a, :author, :auteur],
                partial:    Partial::Substring.new(from: -2)
@@ -87,7 +87,7 @@ class BookSearch < Application
     }
 
     route %r{\A/admin\Z} => LiveParameters.new
-    
+
     route %r{\A/books\Z} => Search.new(books_index, isbn_index, options),
           %r{\A/redis\Z} => Search.new(redis_index, options),
           %r{\A/csv\Z}   => Search.new(csv_test_index, options),

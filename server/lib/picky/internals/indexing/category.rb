@@ -14,7 +14,7 @@ module Internals
       #  * index: Index to which this category is attached to.
       # Options:
       #  * partial: Partial::None.new, Partial::Substring.new(from:start_char, to:up_to_char) (defaults from:-3, to:-1)
-      #  * similarity: Similarity::None.new (default), Similarity::Phonetic.new(amount_of_similarly_linked_words)
+      #  * similarity: Similarity::None.new (default), Similarity::DoubleMetaphone.new(amount_of_similarly_linked_words)
       #  * source: Use if the category should use a different source.
       #  * from: The source category identifier to take the data from.
       #

@@ -5,7 +5,7 @@ describe Internals::Indexing::Bundle::SuperBase do
   before(:each) do
     @configuration = stub :configuration, :identifier => 'some_identifier'
     Internals::Index::Files.stub! :new
-    @similarity = Similarity::Phonetic.new 3
+    @similarity = Similarity::DoubleMetaphone.new 3
     @bundle = described_class.new :some_name, @configuration, @similarity
   end
   

@@ -79,7 +79,7 @@ INDEX
     #
     # === Options
     # * partial: Partial::None.new or Partial::Substring.new(from: starting_char, to: ending_char). Default is Partial::Substring.new(from: -3, to: -1).
-    # * similarity: Similarity::None.new or Similarity::Phonetic.new(similar_words_searched). Default is Similarity::None.new.
+    # * similarity: Similarity::None.new or Similarity::DoubleMetaphone.new(similar_words_searched). Default is Similarity::None.new.
     # * qualifiers: An array of qualifiers with which you can define which category you’d like to search, for example “title:hobbit” will search for hobbit in just title categories. Example: qualifiers: [:t, :titre, :title] (use it for example with multiple languages). Default is the name of the category.
     # * qualifier: Convenience options if you just need a single qualifier, see above. Example: qualifiers => :title. Default is the name of the category.
     # * source: Use a different source than the index uses. If you think you need that, there might be a better solution to your problem. Please post to the mailing list first with your application.rb :)
