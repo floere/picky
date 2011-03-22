@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe Sources::Couch do
   
+  describe 'to_s' do
+    let(:source) { Sources::Couch.new(:a, :b, :url => 'bla') }
+    it 'is correct' do
+      source.to_s.should == 'Sources::Couch'
+    end
+  end
+  
   describe 'special keys' do
     context 'uuid keys' do
       context "with database" do

@@ -26,6 +26,7 @@ module Sources
       check_gem
 
       Hash === options && options[:url] || raise_no_db_given(category_names)
+
       @db = RestClient::Resource.new options.delete(:url), options
     end
 
