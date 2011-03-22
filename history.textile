@@ -1,6 +1,6 @@
-h2. Version 2.0.0.pre3 (unreleased)
+h2. Version 2.0.0.pre3
 
-* hanke: (server) Renamed @Similarity::DoubleLevenshtone@ (aka @Similarity::Phonetic@) to @Similarity::DoubleMetaphone@ (BREAKING: Do not use @Similarity::Phonetic@ anymore).
+* hanke: (server) Renamed @Similarity::DoubleLevenshtone@ (aka @Similarity::Phonetic@) to @Similarity::DoubleMetaphone@ (BREAKING: Cannot use @Similarity::Phonetic@ anymore).
 * hanke: (server) Added @Similarity::Soundex@.
 * hanke: (server) Added @Similarity::Metaphone@.
 
