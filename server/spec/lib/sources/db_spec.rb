@@ -8,12 +8,18 @@ describe Sources::DB do
     @connection = stub :connection
     @adapter    = stub :adapter, :connection => @connection
     
-    @select_statement = stub :statement
+    @select_statement = stub :statement, :inspect => '"some statement"'
     
     @source = described_class.new @select_statement, :option => :some_options
     
     @source.stub! :database => @adapter
     @source.stub! :connect_backend
+  end
+  
+  describe 'to_s' do
+    it 'does something' do
+      @source.to_s.should == 'Sources::DB("some statement", {:option=>:some_options})'
+    end
   end
   
   describe "get_data" do

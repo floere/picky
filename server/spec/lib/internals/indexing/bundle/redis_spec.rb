@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Indexing::Bundle::Memory do
+describe Internals::Indexing::Bundle::Redis do
 
   before(:each) do
     @internal_index = stub :index, :name => :some_index
@@ -193,12 +193,10 @@ describe Internals::Indexing::Bundle::Memory do
     end
   end
   describe 'warn_if_similarity_small' do
-    before(:each) do
-      @files = index.files
-    end
+    let(:backend) { index.backend }
     context "files similarity cache small" do
       before(:each) do
-        @files.stub! :similarity_cache_small? => true
+        backend.stub! :similarity_cache_small? => true
       end
       it "warns" do
         index.should_receive(:warn_cache_small).once.with :similarity
@@ -208,7 +206,7 @@ describe Internals::Indexing::Bundle::Memory do
     end
     context "files similarity cache not small" do
       before(:each) do
-        @files.stub! :similarity_cache_small? => false
+        backend.stub! :similarity_cache_small? => false
       end
       it "does not warn" do
         index.should_receive(:warn_cache_small).never
@@ -218,12 +216,10 @@ describe Internals::Indexing::Bundle::Memory do
     end
   end
   describe 'raise_unless_similarity_ok' do
-    before(:each) do
-      @files = index.files
-    end
+    let(:backend) { index.backend }
     context "files similarity cache ok" do
       before(:each) do
-        @files.stub! :similarity_cache_ok? => true
+        backend.stub! :similarity_cache_ok? => true
       end
       it "warns" do
         index.should_receive(:raise_cache_missing).never
@@ -233,7 +229,7 @@ describe Internals::Indexing::Bundle::Memory do
     end
     context "files similarity cache not ok" do
       before(:each) do
-        @files.stub! :similarity_cache_ok? => false
+        backend.stub! :similarity_cache_ok? => false
       end
       it "does not warn" do
         index.should_receive(:raise_cache_missing).once.with :similarity
