@@ -20,7 +20,7 @@ Removes chars after split: #{@removes_characters_after_splitting_regexp ? "/#{@r
 Normalizes words:          #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
 Rejects tokens?            #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
 Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' }
-TOKENIZER
+        TOKENIZER
       end
 
       # Stopwords.

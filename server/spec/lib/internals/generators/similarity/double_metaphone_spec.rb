@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::Generators::Similarity::DoubleLevenshtone do
+describe Internals::Generators::Similarity::DoubleMetaphone do
 
   before(:each) do
     @similarity = described_class.new

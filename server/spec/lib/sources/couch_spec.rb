@@ -2,6 +2,21 @@ require 'spec_helper'
 
 describe Sources::Couch do
   
+  describe 'key_format' do
+    context 'default' do
+      let(:source) { Sources::Couch.new(:a, :b, url: 'bla') }
+      it 'is correct' do
+        source.key_format.should == :to_sym
+      end
+    end
+    context 'non-default' do
+      let(:source) { Sources::Couch.new(:a, :b, url: 'bla', key_format: 'some_key_method') }
+      it 'is correct' do
+        source.key_format.should == :some_key_method
+      end
+    end
+  end
+  
   describe 'to_s' do
     let(:source) { Sources::Couch.new(:a, :b, :url => 'bla') }
     it 'is correct' do

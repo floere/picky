@@ -24,7 +24,7 @@ class PickySearch < Application
   library_src = Sources::CSV.new :title, :author, :year, file: 'app/library.csv'
   books_index = Index::Memory.new :books, library_src do
     category :title,
-             similarity: Similarity::Phonetic.new(3), # Default is no similarity.
+             similarity: Similarity::DoubleMetaphone.new(3), # Default is no similarity.
              partial: Partial::Substring.new(from: 1) # Default is from: -3.
     category :author, partial: Partial::Substring.new(from: 1)
     category :year, partial: Partial::None.new

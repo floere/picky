@@ -18,10 +18,9 @@ module Internals
         #
         # TODO Use specific Picky Redis wrapper.
         #
-        def self.connect_redis
+        def self.redis
           @redis ||= ::Redis.new :db => 15
         end
-        connect_redis
 
         attr_reader :redis
 
@@ -30,7 +29,7 @@ module Internals
         def initialize combinations
           super combinations
 
-          @redis = self.class.connect_redis
+          @redis = self.class.redis
         end
 
         # Returns the result ids for the allocation.

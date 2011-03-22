@@ -25,7 +25,7 @@ module Sources
     end
 
     def to_s
-      self.class.name
+      "#{self.class.name}(#{@username})"
     end
 
     # Harvests the data to index.

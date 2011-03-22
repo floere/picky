@@ -22,9 +22,6 @@ module Loader # :nodoc:all
     load __FILE__
   end
 
-  def self.require_relative filename
-    require File.join(File.dirname(__FILE__), filename)
-  end
   def self.load_relative filename_without_rb
     load File.join(File.dirname(__FILE__), "#{filename_without_rb}.rb")
   end
@@ -136,7 +133,7 @@ module Loader # :nodoc:all
     #
     load_internals 'generators/similarity/strategy'
     load_internals 'generators/similarity/none'
-    load_internals 'generators/similarity/double_levenshtone'
+    load_internals 'generators/similarity/double_metaphone'
     load_internals 'generators/similarity/default'
 
     # Index generators.

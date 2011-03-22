@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-# TODO Slow spec.
-#
 describe Sources::Delicious do
   
   context "with file" do
+    
+    describe 'to_s' do
+      it 'outputs correctly' do
+        described_class.new(:username, :password).to_s.should == 'Sources::Delicious(username)'
+      end
+    end
     
     describe "check_gem" do
       before(:each) do

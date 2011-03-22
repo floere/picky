@@ -6,13 +6,13 @@ module Internals
 
     module Similarity
 
-      # DoubleLevensthone means that it's a combination of
-      # * DoubleMetaphone
-      # and
-      # * Levenshtein
-      # :)
+      # It's actually a combination of double metaphone
+      # and Levenshtein.
       #
-      class DoubleLevenshtone < Strategy
+      # It uses the double metaphone to get similar words
+      # and ranks them using the levenshtein.
+      #
+      class DoubleMetaphone < Strategy
 
         attr_reader :amount
 
@@ -69,13 +69,13 @@ module Internals
           end
 
       end
-    
+
       # ... aka Phonetic.
       #
-      Phonetic = DoubleLevenshtone
+      Phonetic = DoubleMetaphone
 
     end
 
   end
-  
+
 end

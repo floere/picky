@@ -42,7 +42,7 @@ describe Application do
           books_index = Index::Memory.new :books,
                               Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
           books_index.define_category :title,
-                                      similarity: Similarity::DoubleLevenshtone.new(3) # Up to three similar title word indexed.
+                                      similarity: Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
           books_index.define_category :author
           books_index.define_category :isbn,
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.

@@ -28,16 +28,13 @@ module Sources
       Hash === options && options[:url] || raise_no_db_given(category_names)
 
       @db = RestClient::Resource.new options.delete(:url), options
+
+      key_format   = options.delete :key_format
+      @key_format  = key_format && key_format.to_sym || :to_sym
     end
 
     def to_s
       self.class.name
-    end
-
-    # Default key format method for couch DB is to_sym.
-    #
-    def key_format
-      :to_sym
     end
 
     # Tries to require the rest_client gem.

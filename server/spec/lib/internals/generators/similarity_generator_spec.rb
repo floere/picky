@@ -15,7 +15,7 @@ describe Internals::Generators::SimilarityGenerator do
                                                   :meyer => nil,
                                                   :peter => nil
 
-      generator.generate(Internals::Generators::Similarity::DoubleLevenshtone.new).should == { :MR => [:meier, :maier, :mayer, :meyer], :PTR => [:peter] }
+      generator.generate(Internals::Generators::Similarity::DoubleMetaphone.new).should == { :MR => [:meier, :maier, :mayer, :meyer], :PTR => [:peter] }
     end
   end
 

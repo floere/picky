@@ -1,25 +1,25 @@
 # encoding: utf-8
 #
 module Indexers
-  
+
   # The indexer defines the control flow.
   #
   class Serial
-    
+
     attr_accessor :tokenizer, :source
-    
+
     def initialize configuration, source, tokenizer
       @configuration = configuration
       @source        = source || raise_no_source
       @tokenizer     = tokenizer
     end
-    
+
     # Raise a no source exception.
     #
     def raise_no_source
       raise NoSourceSpecifiedException.new("No source given for #{@configuration}.")
     end
-    
+
     # Delegates the key format to the source.
     #
     # Default is to_i.
@@ -27,7 +27,7 @@ module Indexers
     def key_format
       @source.key_format || :to_i
     end
-    
+
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
     #
     # Note: Puts together the parts first in an array, then releasing the array from time to time by joining.
@@ -39,7 +39,7 @@ module Indexers
     def process
       comma   = ?,
       newline = ?\n
-      
+
       # TODO Move open to config?
       #
       # @category.prepared_index do |file|
@@ -67,6 +67,6 @@ module Indexers
     def indexing_message
       timed_exclaim %Q{"#{@configuration.identifier}": Starting indexing.}
     end
-    
+
   end
 end
