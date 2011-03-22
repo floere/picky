@@ -133,7 +133,10 @@ module Loader # :nodoc:all
     #
     load_internals 'generators/similarity/strategy'
     load_internals 'generators/similarity/none'
+    load_internals 'generators/similarity/phonetic'
+    load_internals 'generators/similarity/metaphone'
     load_internals 'generators/similarity/double_metaphone'
+    load_internals 'generators/similarity/soundex'
     load_internals 'generators/similarity/default'
 
     # Index generators.

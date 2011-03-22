@@ -43,12 +43,14 @@ describe Application do
                               Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
           books_index.define_category :title,
                                       similarity: Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
-          books_index.define_category :author
+          books_index.define_category :author,
+                                      similarity: Similarity::Soundex.new(2)
           books_index.define_category :isbn,
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
           geo_index = Index::Memory.new :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',') do
-            category        :location
+            category        :location,
+                            similarity: Similarity::Metaphone.new(4)
             ranged_category :north1, 1, precision: 3, from: :north
             ranged_category :east1,  1, precision: 3, from: :east
           end

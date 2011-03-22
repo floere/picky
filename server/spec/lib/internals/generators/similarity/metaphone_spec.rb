@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::Generators::Similarity::DoubleMetaphone do
+describe Internals::Generators::Similarity::Metaphone do
 
   before(:each) do
     @similarity = described_class.new
@@ -20,20 +20,20 @@ describe Internals::Generators::Similarity::DoubleMetaphone do
   end
 
   it_should_encode :meier,       :MR
-  it_should_encode :grossberger, :KRSP
-  it_should_encode :hadelbla,    :HTLP
+  it_should_encode :grossberger, :KRSBRJR
+  it_should_encode :hadelbla,    :HTLBL
 
   it_should_generate_from({}, {})
   it_should_generate_from({ :maier => nil, :meier => nil }, :MR => [:maier, :meier]) # should be correctly ordered
-  it_should_generate_from({ :maier => nil, :meier => nil, :hallaballa => nil }, :MR => [:maier, :meier], :HLPL => [:hallaballa])
-  it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :SSN => [:susan, :susanne], :PRTR => [:bruderer])
+  it_should_generate_from({ :maier => nil, :meier => nil, :hallaballa => nil }, :MR => [:maier, :meier], :HLBL => [:hallaballa])
+  it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :SSN => [:susan, :susanne], :BRTRR => [:bruderer])
 
   describe 'with reduced amount' do
     before(:each) do
       @similarity = described_class.new(1)
     end
     it_should_generate_from({ :maier => nil, :meier => nil }, :MR => [:maier])
-    it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :SSN => [:susan], :PRTR => [:bruderer])
+    it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :SSN => [:susan], :BRTRR => [:bruderer])
   end
 
   describe 'hashify' do

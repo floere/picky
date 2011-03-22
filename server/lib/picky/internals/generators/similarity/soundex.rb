@@ -6,21 +6,21 @@ module Internals
 
     module Similarity
 
-      # It's actually a combination of double metaphone
+      # It's actually a combination of soundex
       # and Levenshtein.
       #
-      # It uses the double metaphone to get similar words
+      # It uses the soundex to get similar words
       # and ranks them using the levenshtein.
       #
-      class DoubleMetaphone < Phonetic
+      class Soundex < Phonetic
 
         # Encodes the given symbol.
         #
         # Returns a symbol.
         #
         def encoded sym
-          codes = Text::Metaphone.double_metaphone sym.to_s
-          codes.first.to_sym unless codes.empty?
+          code = Text::Soundex.soundex sym.to_s
+          code.to_sym if code
         end
 
       end

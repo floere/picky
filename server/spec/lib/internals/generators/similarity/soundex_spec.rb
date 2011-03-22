@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::Generators::Similarity::DoubleMetaphone do
+describe Internals::Generators::Similarity::Soundex do
 
   before(:each) do
     @similarity = described_class.new
@@ -19,21 +19,21 @@ describe Internals::Generators::Similarity::DoubleMetaphone do
     end
   end
 
-  it_should_encode :meier,       :MR
-  it_should_encode :grossberger, :KRSP
-  it_should_encode :hadelbla,    :HTLP
+  it_should_encode :meier,       :M600
+  it_should_encode :grossberger, :G621
+  it_should_encode :hadelbla,    :H341
 
   it_should_generate_from({}, {})
-  it_should_generate_from({ :maier => nil, :meier => nil }, :MR => [:maier, :meier]) # should be correctly ordered
-  it_should_generate_from({ :maier => nil, :meier => nil, :hallaballa => nil }, :MR => [:maier, :meier], :HLPL => [:hallaballa])
-  it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :SSN => [:susan, :susanne], :PRTR => [:bruderer])
+  it_should_generate_from({ :maier => nil, :meier => nil }, :M600 => [:maier, :meier]) # should be correctly ordered
+  it_should_generate_from({ :maier => nil, :meier => nil, :hallaballa => nil }, :M600 => [:maier, :meier], :H414 => [:hallaballa])
+  it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :S250 => [:susan, :susanne], :B636 => [:bruderer])
 
   describe 'with reduced amount' do
     before(:each) do
       @similarity = described_class.new(1)
     end
-    it_should_generate_from({ :maier => nil, :meier => nil }, :MR => [:maier])
-    it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :SSN => [:susan], :PRTR => [:bruderer])
+    it_should_generate_from({ :maier => nil, :meier => nil }, :M600 => [:maier])
+    it_should_generate_from({ :susan => nil, :susanne => nil, :bruderer => nil }, :S250 => [:susan], :B636 => [:bruderer])
   end
 
   describe 'hashify' do
@@ -41,10 +41,10 @@ describe Internals::Generators::Similarity::DoubleMetaphone do
       @similarity.send(:hashify, []).should == {}
     end
     it 'should turn the list into an unordered similarity' do
-      @similarity.send(:hashify, [:meier, :maier]).should == { :MR => [:meier, :maier] }
+      @similarity.send(:hashify, [:meier, :maier]).should == { :M600 => [:meier, :maier] }
     end
     it 'should turn the list into a encoded hash' do
-      @similarity.send(:hashify, [:meier, :maier, :peter]).should == { :MR => [:meier, :maier], :PTR => [:peter] }
+      @similarity.send(:hashify, [:meier, :maier, :peter]).should == { :M600 => [:meier, :maier], :P360 => [:peter] }
     end
   end
 
