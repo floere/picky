@@ -4,11 +4,23 @@ describe Internals::Index::Redis::StringHash do
   
   let(:index) { described_class.new :some_namespace }
     
+  describe 'dump' do
+    let(:backend) { index.backend }
+    it 'dumps correctly' do
+      backend.should_receive(:hset).once.ordered.with :some_namespace, :a, 1
+      backend.should_receive(:hset).once.ordered.with :some_namespace, :b, 2
+      backend.should_receive(:hset).once.ordered.with :some_namespace, :c, 3
+      
+      index.dump a: 1, b: 2, c: 3
+    end
+  end
+  
   describe 'collection' do
     it 'raises' do
       expect { index.collection :anything }.to raise_error("Can't retrieve a collection from a StringHash. Use Index::Redis::ListHash.")
     end
   end
+  
   describe 'member' do
     before(:each) do
       @backend = stub :backend
