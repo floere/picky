@@ -54,15 +54,6 @@ describe Internals::Query::Combinations::Redis do
     end
   end
   
-  describe "pack_into_allocation" do
-    it "return an Allocation" do
-      @combinations.pack_into_allocation(:some_result_identifier).should be_kind_of(Internals::Query::Allocation)
-    end
-    it "returns an Allocation with specific result_identifier" do
-      @combinations.pack_into_allocation(:some_result_identifier).result_identifier.should == :some_result_identifier
-    end
-  end
-  
   describe "to_result" do
     before(:each) do
       @combination1 = stub :combination1, :to_result => :result1

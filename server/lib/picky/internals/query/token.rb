@@ -1,7 +1,7 @@
 module Internals
 
   module Query
-  
+
     # This is a query token. Together with other tokens it makes up a query.
     #
     # It remembers the original form, and and a normalized form.
@@ -95,7 +95,7 @@ module Internals
       def remove_illegals
         @text.gsub! @@illegals, '' unless @text.blank?
       end
-    
+
       # Visitor for tokenizer.
       #
       # TODO Rewrite!!!
@@ -115,10 +115,10 @@ module Internals
 
       # Returns an array of possible combinations.
       #
-      def possible_combinations_in type
-        type.possible_combinations self
+      def possible_combinations_in index
+        index.possible_combinations self
       end
-    
+
       # Returns a token with the next similar text.
       #
       # TODO Rewrite this. It is hard to understand. Also spec performance.
@@ -168,19 +168,19 @@ module Internals
       def to_solr
         blank? ? '' : (to_s + @@solr_fuzzy_mapping[@text.size].to_s)
       end
-    
+
       #
       #
       def to_result
         [@original, @text]
       end
-    
+
       # Internal identifier.
       #
       def identifier
         "#{similar?? :similarity : :index}:#{@text}"
       end
-    
+
       # Displays the qualifier text and the text, joined.
       #
       # e.g. name:meier
@@ -188,9 +188,9 @@ module Internals
       def to_s
         [@qualifier, @text].compact.join ':'
       end
-    
+
       private
-      
+
         # Splits text into a qualifier and text.
         #
         # Returns [qualifier, text].
@@ -205,7 +205,7 @@ module Internals
         end
 
     end
-    
+
   end
-  
+
 end

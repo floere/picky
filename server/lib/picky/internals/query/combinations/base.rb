@@ -8,11 +8,11 @@ module Internals
     # An allocation consists of a number of combinations.
     #
     module Combinations # :nodoc:all
-    
+
       # Base Combinations contain methods for calculating score and ids.
       #
       class Base
-      
+
         attr_reader :combinations
 
         delegate :empty?, :to => :@combinations
@@ -36,13 +36,7 @@ module Internals
         def weighted_score weights
           weights.score @combinations
         end
-    
-        # Wrap the combinations into an allocation with the result_identifier.
-        #
-        def pack_into_allocation result_identifier
-          Allocation.new self, result_identifier
-        end
-    
+
         # Filters the tokens and identifiers such that only identifiers
         # that are passed in, remain, including their tokens.
         #
@@ -70,11 +64,11 @@ module Internals
         def to_result
           @combinations.map &:to_result
         end
-    
+
       end
 
     end
 
   end
-  
+
 end

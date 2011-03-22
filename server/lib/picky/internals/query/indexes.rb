@@ -17,8 +17,7 @@ module Internals
 
       # Creates a new Query::Indexes.
       #
-      # Its job is to generate all possible combinations, but also
-      # checking whether the query indexes are all of the same type.
+      # Its job is to generate all possible combinations.
       # Note: We cannot mix memory and redis indexes just yet.
       #
       def initialize *index_definitions, combinations_type
@@ -29,32 +28,38 @@ module Internals
       # Returns a number of possible allocations for the given tokens.
       #
       def allocations_for tokens
-        Allocations.new(indexes.inject([]) do |previous_allocations, index|
-          # Expand the combinations.
-          #
-          possible_combinations = tokens.possible_combinations_in index
+        Allocations.new allocations_ary_for(tokens)
+      end
+      def allocations_ary_for tokens
+        indexes.inject([]) do |allocations, index|
+          allocations + allocation_for(tokens, index)
+        end
+      end
+      def allocation_for tokens, index
+        # Expand the combinations.
+        #
+        possible_combinations = tokens.possible_combinations_in index
 
-          # Optimization for ignoring tokens that allocate to nothing and
-          # can be ignored.
-          # For example in a special search, where "florian" is not
-          # mapped to any category.
-          #
-          possible_combinations.compact!
+        # Optimization for ignoring tokens that allocate to nothing and
+        # can be ignored.
+        # For example in a special search, where "florian" is not
+        # mapped to any category.
+        #
+        possible_combinations.compact!
 
-          # Generate all possible combinations.
-          #
-          expanded_combinations = expand_combinations_from possible_combinations
+        # Generate all possible combinations.
+        #
+        expanded_combinations = expand_combinations_from possible_combinations
 
-          # If there are none, try the next allocation.
-          #
-          next previous_allocations unless expanded_combinations
+        # If there are none, try the next allocation.
+        #
+        return [] unless expanded_combinations
 
-          # Add the wrapped possible allocations to the ones we already have.
-          #
-          previous_allocations + expanded_combinations.map! do |expanded_combination|
-            @combinations_type.new(expanded_combination).pack_into_allocation(index.result_identifier) # TODO Do not extract result_identifier. Remove pack_into_allocation.
-          end
-        end)
+        # Add the wrapped possible allocations to the ones we already have.
+        #
+        expanded_combinations.map! do |expanded_combination|
+          Allocation.new @combinations_type.new(expanded_combination), index.result_identifier # TODO Do not extract result_identifier.
+        end
       end
 
       # This is the core of the search engine.
