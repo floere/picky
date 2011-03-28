@@ -2,7 +2,7 @@ source :gemcutter
 
 # Gems required by Picky.
 #
-gem 'picky',      '2.0.0.pre3'
+gem 'picky',      '~> 2.0'
 gem 'rake'
 gem 'bundler'
 gem 'rack',       '~> 1.2.2'

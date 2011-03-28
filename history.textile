@@ -1,3 +1,7 @@
+h2. Version 2.0.0
+
+* hanke: Let's go live, wohoo! :) See the prerelease history notes for all changes.
+
 h2. Version 2.0.0.pre3
 
 * hanke: (server) Renamed @Similarity::DoubleLevenshtone@ (aka @Similarity::Phonetic@) to @Similarity::DoubleMetaphone@ (BREAKING: Cannot use @Similarity::Phonetic@ anymore).
