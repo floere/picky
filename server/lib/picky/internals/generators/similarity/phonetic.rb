@@ -19,7 +19,7 @@ module Internals
         #
         #
         def initialize amount = 10
-          raise "From Picky 2.0 on you need to use the DoubleMetaphone similarity instead of the Phonetic similarity." if self.class == Phonetic
+          raise "In Picky 2.0+, the Similarity::Phonetic has been renamed to Similarity::DoubleMetaphone." if self.class == Phonetic
           @amount = amount
         end
 
