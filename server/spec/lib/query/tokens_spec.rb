@@ -151,6 +151,16 @@ describe Internals::Query::Tokens do
         [:combination31, :combination32, :combination33]
       ]
     end
+    it 'should work correctly' do
+      @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
+      @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return nil
+      @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+
+      @tokens.possible_combinations_in(:some_index).should == [
+        [:combination11, :combination12],
+        [:combination31, :combination32, :combination33]
+      ]
+    end
   end
 
   describe 'to_s' do

@@ -40,13 +40,6 @@ module Internals
         #
         possible_combinations = tokens.possible_combinations_in index
 
-        # Optimization for ignoring tokens that allocate to nothing and
-        # can be ignored.
-        # For example in a special search, where "florian" is not
-        # mapped to any category.
-        #
-        possible_combinations.compact!
-
         # Generate all possible combinations.
         #
         expanded_combinations = expand_combinations_from possible_combinations
@@ -62,7 +55,7 @@ module Internals
         end
       end
 
-      # This is the core of the search engine.
+      # This is the core of the search engine. No kidding.
       #
       # Gets an array of
       # [
