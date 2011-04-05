@@ -207,8 +207,6 @@ class Application
     #
     # Warns if something is missing.
     #
-    # TODO Good specs.
-    #
     def check # :nodoc:
       warnings = []
       warnings << check_external_interface
