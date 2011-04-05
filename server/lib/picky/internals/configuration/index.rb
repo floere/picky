@@ -1,32 +1,30 @@
 module Configuration # :nodoc:all
-  
+
   # Holds the configuration for a
   # index/category combination.
   #
-  # TODO Rename paths?
-  #
   class Index
-    
+
     attr_reader :index, :category
-    
+
     def initialize index, category
       @index       = index
       @category    = category
     end
-    
+
     def index_name
       @index_name ||= index.name
     end
     def category_name
       @category_name ||= category.name
     end
-    
+
     #
     #
     def index_path bundle_name, name
       "#{index_directory}/#{category_name}_#{bundle_name}_#{name}"
     end
-    
+
     # Was: search_index_file_name
     #
     def prepared_index_path
@@ -36,21 +34,17 @@ module Configuration # :nodoc:all
       @prepared_index_file ||= Internals::Index::File::Text.new prepared_index_path
       @prepared_index_file.open_for_indexing &block
     end
-    
-    # def file_name
-    #   @file_name ||= "#{@index_name}_#{@category_name}"
-    # end
-    
+
     # Identifier for internal use.
     #
     def identifier
       @identifier ||= "#{index_name}:#{category_name}"
     end
-    
+
     def to_s
       "#{index_name} #{category_name}"
     end
-    
+
     def self.index_root
       @index_root ||= "#{PICKY_ROOT}/index"
     end
@@ -67,7 +61,7 @@ module Configuration # :nodoc:all
     def prepare_index_directory
       FileUtils.mkdir_p index_directory
     end
-    
+
   end
-  
+
 end
