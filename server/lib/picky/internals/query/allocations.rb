@@ -5,8 +5,6 @@ module Internals
     #
     class Allocations # :nodoc:all
 
-      # TODO Remove size
-      #
       delegate :each, :inject, :empty?, :size, :to => :@allocations
       attr_reader :total
 
@@ -116,7 +114,7 @@ module Internals
       end
 
     end
-    
+
   end
-  
+
 end
