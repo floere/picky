@@ -27,6 +27,9 @@ module Internals
 
       # Returns a number of possible allocations for the given tokens.
       #
+      def sorted_allocations_for tokens
+
+      end
       def allocations_for tokens
         Allocations.new allocations_ary_for(tokens)
       end
