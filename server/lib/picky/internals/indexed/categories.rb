@@ -67,7 +67,7 @@ module Internals
       # for each found similar token.
       #
       def similar_possible_for token
-        # Get as many similar tokens as necessary
+        # Get as many tokens as necessary
         #
         tokens = similar_tokens_for token
         # possible combinations
@@ -105,9 +105,13 @@ module Internals
       #       (Also none of the categories matched, but the ignore unassigned
       #       tokens option is true)
       #
+      # TODO Could use Combinations class here and remove the inject.
+      #
       def possible_for token, preselected_categories = nil
-        possible = (preselected_categories || possible_categories(token)).map { |category| category.combination_for(token) }
-        possible.compact!
+        possible = (preselected_categories || possible_categories(token)).inject([]) do |combinations, category|
+          combination = category.combination_for token
+          combination ? combinations << combination : combinations
+        end
         # This is an optimization to mark tokens that are ignored.
         #
         return if ignore_unassigned_tokens && possible.empty?
