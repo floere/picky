@@ -8,7 +8,7 @@ module Internals
 
         # Writes the hash into Redis.
         #
-        # TODO Could we use multi?
+        # Note: We could use multi, but it did not help.
         #
         def dump hash
           redis = backend
