@@ -44,17 +44,17 @@ describe Internals::Query::Indexes do
     it 'can handle empty combinations' do
       combinations = [[1,2,3], [:a, :b, :c], []]
       
-      indexes.expand_combinations_from(combinations).should == nil
+      indexes.expand_combinations_from(combinations).should == []
     end
     it 'can handle empty combinations' do
       combinations = [[], [:a, :b, :c], []]
       
-      indexes.expand_combinations_from(combinations).should == nil
+      indexes.expand_combinations_from(combinations).should == []
     end
     it 'can handle totally empty combinations' do
       combinations = [[], [], []]
       
-      indexes.expand_combinations_from(combinations).should == nil
+      indexes.expand_combinations_from(combinations).should == []
     end
     it 'is fast in a complicated case' do
       combinations = [[1,2,3], [:a, :b, :c], [:k, :l]]
@@ -64,12 +64,12 @@ describe Internals::Query::Indexes do
     it 'is fast in a simple case' do
       combinations = [[1], [2], [3]]
 
-      performance_of { indexes.expand_combinations_from(combinations) }.should < 0.00055
+      performance_of { indexes.expand_combinations_from(combinations) }.should < 0.0006
     end
     it 'is very fast in a 1-empty case' do
       combinations = [[], [2], [3]]
 
-      performance_of { indexes.expand_combinations_from(combinations) }.should < 0.00045
+      performance_of { indexes.expand_combinations_from(combinations) }.should < 0.0005
     end
     it 'is very fast in a all-empty case' do
       combinations = [[], [], []]

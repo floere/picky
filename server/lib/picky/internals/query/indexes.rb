@@ -44,10 +44,6 @@ module Internals
         #
         expanded_combinations = expand_combinations_from possible_combinations
 
-        # If there are none, try the next allocation.
-        #
-        return [] unless expanded_combinations
-
         # Add the wrapped possible allocations to the ones we already have.
         #
         expanded_combinations.map! do |expanded_combination|
@@ -115,7 +111,7 @@ module Internals
         # If an element has size 0, this means one of the
         # tokens could not be allocated.
         #
-        return if possible_combinations.any?(&:empty?)
+        return [] if possible_combinations.any?(&:empty?)
 
         # Generate the first multiplicator "with which" (well, not quite) to multiply the smallest amount of combinations.
         #
@@ -163,7 +159,7 @@ module Internals
           combinations
         end
 
-        return if possible_combinations.empty?
+        return [] if possible_combinations.empty?
 
         possible_combinations.shift.zip *possible_combinations
       end
