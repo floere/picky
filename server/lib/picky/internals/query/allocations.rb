@@ -21,7 +21,7 @@ module Internals
       end
       # Sort the allocations.
       #
-      def sort
+      def sort!
         @allocations.sort!
       end
 

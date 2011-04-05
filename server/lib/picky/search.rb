@@ -146,7 +146,7 @@ class Search
     # Sort the allocations.
     # (allocations are sorted according to score, highest to lowest)
     #
-    allocations.sort
+    allocations.sort!
 
     # Return the allocations.
     #
