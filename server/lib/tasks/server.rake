@@ -1,17 +1,9 @@
-# TODO This file needs some love.
+# Server tasks, like starting/stopping/restarting.
 #
 namespace :server do
-  
-  def chdir_to_root
-    Dir.chdir PICKY_ROOT
-  end
-  
-  def current_pid
-    pid = `cat #{File.join(PICKY_ROOT, 'tmp/pids/unicorn.pid')}`
-    pid.blank? ? nil : pid.chomp
-  end
-  
+
   # desc "Start the unicorns. (Wehee!)"
+  #
   task :start => :framework do
     chdir_to_root
     daemonize = PICKY_ENVIRONMENT == 'production' ? '-D' : ''
@@ -19,17 +11,27 @@ namespace :server do
     puts "Running \`#{command}\`."
     exec command
   end
-  
+
   # desc "Stop the unicorns. (Blam!)"
+  #
   task :stop => :framework do
     `kill -QUIT #{current_pid}` if current_pid
   end
-  
+
   # desc "Restart the unicorns."
   task :restart do
     Rake::Task[:"server:stop"].invoke
     sleep 5
     Rake::Task[:"server:start"].invoke
   end
-  
+
+  def chdir_to_root
+    Dir.chdir PICKY_ROOT
+  end
+
+  def current_pid
+    pid = `cat #{File.join(PICKY_ROOT, 'tmp/pids/unicorn.pid')}`
+    pid.blank? ? nil : pid.chomp
+  end
+
 end
