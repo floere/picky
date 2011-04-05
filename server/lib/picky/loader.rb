@@ -179,8 +179,6 @@ module Loader # :nodoc:all
     load_internals 'indexed/categories'
     load_internals 'indexed/index'
 
-    # TODO Ok here?
-    #
     load_internals 'indexed/wrappers/exact_first'
 
     # Bundle Wrapper
