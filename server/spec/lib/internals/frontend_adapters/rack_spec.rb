@@ -273,14 +273,14 @@ describe Internals::FrontendAdapters::Rack do
       end
       context 'without app' do
         context 'with url' do
-          it 'should use the 404 with default_options from the url' do
+          it 'should use the 200 with default_options from the url' do
             @routes.should_receive(:add_route).once.with Internals::FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET", :path_info => /some_url/ }
             
             @rack_adapter.answer 'some_url'
           end
         end
         context 'without url' do
-          it 'should use the 404 with default_options' do
+          it 'should use the 200 with default_options' do
             @routes.should_receive(:add_route).once.with Internals::FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET" }
             
             @rack_adapter.answer
