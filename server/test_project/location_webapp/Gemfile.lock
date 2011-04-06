@@ -1,18 +1,19 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.0.3)
-    backports (1.18.2)
-    haml (3.0.24)
-    i18n (0.4.2)
+    activesupport (3.0.6)
+    backports (2.0.3)
+    haml (3.0.25)
+    i18n (0.5.0)
+    kgio (2.3.3)
     monkey-lib (0.5.4)
       backports
-    picky-client (0.12.3)
+    picky-client (2.0.0)
       yajl-ruby (>= 0.7.8)
-    rack (1.2.1)
-    sinatra (1.1.0)
+    rack (1.2.2)
+    sinatra (1.2.1)
       rack (~> 1.1)
-      tilt (~> 1.1)
+      tilt (>= 1.2.2, < 2.0)
     sinatra-advanced-routes (0.5.1)
       monkey-lib (~> 0.5.0)
       sinatra (~> 1.0)
@@ -23,8 +24,11 @@ GEM
     sinatra-sugar (0.5.0)
       monkey-lib (~> 0.5.0)
       sinatra (~> 1.0)
-    tilt (1.1)
-    yajl-ruby (0.7.8)
+    tilt (1.2.2)
+    unicorn (3.5.0)
+      kgio (~> 2.3)
+      rack
+    yajl-ruby (0.8.2)
 
 PLATFORMS
   ruby
@@ -36,3 +40,4 @@ DEPENDENCIES
   picky-client
   sinatra
   sinatra-reloader
+  unicorn
