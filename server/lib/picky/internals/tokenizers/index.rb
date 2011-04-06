@@ -15,45 +15,26 @@ module Internals
         @default ||= new
       end
 
-      # Default indexing preprocessing hook.
+      # Postprocessing.
       #
-      # Does:
-      # 1. Character substitution.
-      # 2. Downcasing.
-      # 3. Remove illegal expressions.
-      # 4. Remove non-single stopwords. (Stopwords that occur with other words)
+      # In indexing, we work with symbol tokens.
       #
-      def preprocess text
-        text = substitute_characters text
-        text.downcase!
-        remove_illegals text
-        # we do not remove single stopwords for an entirely different
-        # reason than in the query tokenizer.
-        # An indexed thing with just name "UND" (a possible stopword) should not lose its name.
-        #
-        remove_non_single_stopwords text
-        text
-      end
-
-      # Default indexing pretokenizing hook.
-      #
-      # Does:
-      # 1. Split the text into words.
-      # 2. Normalize each word.
-      #
-      def pretokenize text
-        words = split text
-        words.collect! do |word|
-          normalize_with_patterns word
-          word
-        end
+      def process tokens
+        reject tokens # Reject any tokens that don't meet criteria
+        downcase tokens
+        tokens
       end
 
       # Does not actually return a token, but a
       # symbol "token".
       #
-      def token_for text
-        symbolize text
+      def tokens_for words
+        words.collect! { |word| word.to_sym }
+      end
+      # Returns empty tokens.
+      #
+      def empty_tokens
+        []
       end
 
     end

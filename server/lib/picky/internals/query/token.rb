@@ -29,13 +29,16 @@ module Internals
       #       and normalized token. I.e. one prepared for a search.
       #
       def self.processed text
-        token = new text
-        token.qualify
-        token.extract_original
-        token.partialize
-        token.similarize
-        token.remove_illegals
-        token
+        new(text).process
+      end
+      def process
+        qualify
+        extract_original
+        partialize
+        similarize
+        remove_illegals
+        symbolize # NEW
+        self
       end
 
       # This returns a predefined category name if the user has given one.
@@ -61,7 +64,7 @@ module Internals
       # It is only settable if it hasn't been set yet.
       #
       def partial= partial
-        @partial = partial if @partial.nil?
+        @partial ||= partial
       end
       def partial?
         !@similar && @partial
@@ -69,14 +72,18 @@ module Internals
 
       # If the text ends with *, partialize it. If with ", don't.
       #
+      # The latter wins. So "hello*" will not be partially searched.
+      #
       @@no_partial = /\"\Z/
       @@partial    = /\*\Z/
       def partialize
-        self.partial = false and return if @text =~ @@no_partial
-        self.partial = true if @text =~ @@partial
+        self.partial = false and return unless @text !~ @@no_partial
+        self.partial = true unless @text !~ @@partial
       end
 
       # If the text ends with ~ similarize it. If with ", don't.
+      #
+      # The latter wins.
       #
       @@no_similar = /\"\Z/
       @@similar    = /\~\Z/
@@ -95,14 +102,13 @@ module Internals
       def remove_illegals
         @text.gsub! @@illegals, '' unless @text.blank?
       end
-
-      # Visitor for tokenizer.
+      
       #
-      # TODO Rewrite!!!
       #
-      def tokenize_with tokenizer
-        @text = tokenizer.normalize @text
+      def symbolize
+        @text = @text.to_sym
       end
+
       # TODO spec!
       #
       # TODO Rewrite!!

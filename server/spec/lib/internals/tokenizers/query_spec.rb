@@ -41,6 +41,8 @@ describe Internals::Tokenizers::Query do
     it 'should call methods in order' do
       text = stub :text
       
+      tokenizer.should_receive(:substitute_characters).once.with(text).and_return text
+      text.should_receive(:downcase!).once.ordered.with()
       tokenizer.should_receive(:remove_illegals).once.ordered.with text
       tokenizer.should_receive(:remove_non_single_stopwords).once.ordered.with text
       
@@ -57,13 +59,7 @@ describe Internals::Tokenizers::Query do
     before(:each) do
       @tokens = mock :tokens, :null_object => true
     end
-    it 'should tokenize the tokens' do
-      @tokens.should_receive(:tokenize_with).once.with tokenizer
-
-      tokenizer.process @tokens
-    end
     it 'should call methods on the tokens in order' do
-      @tokens.should_receive(:tokenize_with).once.ordered
       @tokens.should_receive(:reject).once.ordered
       @tokens.should_receive(:cap).once.ordered
       @tokens.should_receive(:partialize_last).once.ordered
@@ -120,14 +116,6 @@ describe Internals::Tokenizers::Query do
     end
     it "should return an empty tokenized query if the query string is blank or empty" do
       tokenizer.tokenize('').map(&:to_s).should == []
-    end
-  end
-  describe "token_for" do
-    it "should get a preprocessed token" do
-      text = stub(:text)
-      Internals::Query::Token.should_receive(:processed).with text
-      
-      tokenizer.token_for text
     end
   end
   

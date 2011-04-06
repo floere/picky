@@ -19,8 +19,13 @@ module Internals
       def initialize tokens = []
         @tokens = tokens
       end
+      def self.processed words
+        new words.collect! { |word| Token.processed word }
+      end
 
+      # Tokenizes each token.
       #
+      # Note: Passed tokenizer needs to offer #normalize(text).
       #
       def tokenize_with tokenizer
         @tokens.each { |token| token.tokenize_with(tokenizer) }

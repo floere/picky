@@ -8,6 +8,10 @@ describe Internals::Query::Token do
     Internals::Query::Qualifiers.instance.prepare
   end
   
+  describe 'tokenize_with' do
+    
+  end
+  
   describe 'next_similar_token' do
     before(:each) do
       @bundle   = stub :bundle, :similar => [:array, :of, :similar]
@@ -157,20 +161,27 @@ describe Internals::Query::Token do
   end
 
   describe 'processed' do
+    it 'should return a new token' do
+      described_class.processed('some text').should be_kind_of(described_class)
+    end
+    it 'generates a token' do
+      described_class.processed('some text').class.should == described_class
+    end
+  end
+  
+  describe 'process' do
+    let(:token) { described_class.new 'any_text' }
+    it 'returns itself' do
+      token.process.should == token
+    end
     it 'should have an order' do
-      token = stub :token
-      described_class.should_receive(:new).once.and_return token
-
       token.should_receive(:qualify).once.ordered
       token.should_receive(:extract_original).once.ordered
       token.should_receive(:partialize).once.ordered
       token.should_receive(:similarize).once.ordered
       token.should_receive(:remove_illegals).once.ordered
 
-      described_class.processed :any_text
-    end
-    it 'should return a new token' do
-      described_class.processed('some text').should be_kind_of(described_class)
+      token.process
     end
   end
 
@@ -352,6 +363,11 @@ describe Internals::Query::Token do
       before(:each) do
         @token = described_class.processed 'text*'
       end
+      it 'should "not set" partial' do
+        @token.partial = true
+
+        @token.instance_variable_get(:@partial).should be_true
+      end
       it 'should not set partial' do
         @token.partial = false
 
@@ -382,20 +398,20 @@ describe Internals::Query::Token do
     it 'should remove *' do
       token = described_class.processed 'text*'
 
-      token.text.should == 'text'
+      token.text.should == :text
     end
     it 'should remove ~' do
       token = described_class.processed 'text~'
 
-      token.text.should == 'text'
+      token.text.should == :text
     end
     it 'should remove "' do
       token = described_class.processed 'text"'
 
-      token.text.should == 'text'
+      token.text.should == :text
     end
     it "should pass on a processed text" do
-      described_class.processed('text').text.should == 'text'
+      described_class.processed('text').text.should == :text
     end
   end
 

@@ -163,15 +163,37 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         reject_token_if &(options[:reject_token_if] || :blank?)
       end
 
-      # Hooks.
+      # Default preprocessing hook.
       #
-
-      # Preprocessing.
+      # Does:
+      # 1. Character substitution.
+      # 2. Remove illegal expressions.
+      # 3. Remove non-single stopwords. (Stopwords that occur with other words)
       #
-      def preprocess text; end
+      def preprocess text
+        text = substitute_characters text
+        remove_illegals text
+        # We do not remove single stopwords e.g. in the indexer for
+        # an entirely different reason than in the query tokenizer.
+        # An indexed thing with just name "UND" (a possible stopword)
+        # should not lose its name.
+        #
+        remove_non_single_stopwords text
+        text
+      end
       # Pretokenizing.
       #
-      def pretokenize text; end
+      # Does:
+      # 1. Split the text into words.
+      # 2. Normalize each word.
+      #
+      def pretokenize text
+        words = split text
+        words.collect! do |word|
+          normalize_with_patterns word
+          word
+        end
+      end
       # Postprocessing.
       #
       def process tokens
@@ -179,20 +201,15 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         tokens
       end
 
-      # Converts words into real tokens.
-      #
-      def tokens_for words
-        Internals::Query::Tokens.new words.collect! { |word| token_for word }
-      end
+      # # Converts words into real tokens.
+      # #
+      # def tokens_for words
+      #   Internals::Query::Tokens.new words.collect! { |word| token_for word }
+      # end
       # Turns non-blank text into symbols.
       #
       def symbolize text
         text.blank? ? nil : text.to_sym
-      end
-      # Returns a tokens object.
-      #
-      def empty_tokens
-        Internals::Query::Tokens.new
       end
 
     end
