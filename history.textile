@@ -1,3 +1,7 @@
+h2. Version 2.1.0
+
+* hanke: (server) Tokenizing completely rewritten. Indexing and querying now only differ in where they downcase (indexing very early, querying rather late). Note that in querying you should use
+
 h2. Version 2.0.0
 
 * hanke: Let's go live, wohoo! :) See the prerelease history notes for all changes.
