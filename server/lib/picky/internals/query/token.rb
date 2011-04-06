@@ -38,7 +38,7 @@ module Internals
         partialize
         similarize
         remove_illegals
-        symbolize # NEW
+        symbolize
         self
       end
 
@@ -71,7 +71,7 @@ module Internals
       # It is only settable if it hasn't been set yet.
       #
       def partial= partial
-        @partial ||= partial
+        @partial = partial if @partial.nil?
       end
       def partial?
         !@similar && @partial

@@ -182,9 +182,11 @@ describe Internals::Query::Token do
     it 'should have an order' do
       token.should_receive(:qualify).once.ordered
       token.should_receive(:extract_original).once.ordered
+      token.should_receive(:downcase).once.ordered
       token.should_receive(:partialize).once.ordered
       token.should_receive(:similarize).once.ordered
       token.should_receive(:remove_illegals).once.ordered
+      token.should_receive(:symbolize).once.ordered
 
       token.process
     end
@@ -368,10 +370,12 @@ describe Internals::Query::Token do
       before(:each) do
         @token = described_class.processed 'text*'
       end
-      it 'should "not set" partial' do
+      it 'should not set partial' do
+        @token.instance_variable_set :@partial, false
+        
         @token.partial = true
 
-        @token.instance_variable_get(:@partial).should be_true
+        @token.instance_variable_get(:@partial).should be_false
       end
       it 'should not set partial' do
         @token.partial = false
