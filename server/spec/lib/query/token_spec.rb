@@ -8,8 +8,13 @@ describe Internals::Query::Token do
     Internals::Query::Qualifiers.instance.prepare
   end
   
-  describe 'tokenize_with' do
-    
+  describe '==' do
+    it 'is equal if the originals are equal' do
+      described_class.processed('similar~').should == described_class.processed('similar~')
+    end
+    it 'is not equal if the originals are not equal' do
+      described_class.processed('similar~').should_not == described_class.processed('similar')
+    end
   end
   
   describe 'next_similar_token' do

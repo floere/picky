@@ -42,7 +42,6 @@ describe Internals::Tokenizers::Query do
       text = stub :text
       
       tokenizer.should_receive(:substitute_characters).once.with(text).and_return text
-      text.should_receive(:downcase!).once.ordered.with()
       tokenizer.should_receive(:remove_illegals).once.ordered.with text
       tokenizer.should_receive(:remove_non_single_stopwords).once.ordered.with text
       

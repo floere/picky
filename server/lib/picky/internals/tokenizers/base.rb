@@ -167,11 +167,13 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
       #
       # Does:
       # 1. Character substitution.
-      # 2. Remove illegal expressions.
-      # 3. Remove non-single stopwords. (Stopwords that occur with other words)
+      # 2. Downcasing.
+      # 3. Remove illegal expressions.
+      # 4. Remove non-single stopwords. (Stopwords that occur with other words)
       #
       def preprocess text
         text = substitute_characters text
+        downcase text
         remove_illegals text
         # We do not remove single stopwords e.g. in the indexer for
         # an entirely different reason than in the query tokenizer.
@@ -199,6 +201,12 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
       def process tokens
         reject tokens # Reject any tokens that don't meet criteria
         tokens
+      end
+
+      # Default downcasing does nothing.
+      #
+      def downcase text
+
       end
 
       # # Converts words into real tokens.

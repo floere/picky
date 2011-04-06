@@ -64,7 +64,7 @@ describe 'Query::Combination' do
 
   describe 'ids' do
     it 'should call ids with the text on bundle' do
-      @bundle.should_receive(:ids).once.with 'some_text'
+      @bundle.should_receive(:ids).once.with :some_text
 
       @combination.ids
     end
@@ -80,7 +80,7 @@ describe 'Query::Combination' do
 
   describe 'weight' do
     it 'should call weight with the text on bundle' do
-      @bundle.should_receive(:weight).once.with 'some_text'
+      @bundle.should_receive(:weight).once.with :some_text
 
       @combination.weight
     end

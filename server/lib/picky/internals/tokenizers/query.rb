@@ -36,7 +36,6 @@ module Internals
       #
       def process tokens
         tokens.reject              # Reject any tokens that don't meet criteria.
-        tokens.downcase            # Downcase all.
         tokens.cap maximum_tokens  # Cut off superfluous tokens.
         tokens.partialize_last     # Set certain tokens as partial.
         tokens

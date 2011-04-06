@@ -84,6 +84,10 @@ module Internals
         @tokens.map(&:original)
       end
 
+      def == other
+        self.tokens == other.tokens
+      end
+
       # Just join the token original texts.
       #
       def to_s

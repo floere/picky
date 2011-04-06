@@ -21,7 +21,6 @@ module Internals
       #
       def process tokens
         reject tokens # Reject any tokens that don't meet criteria
-        downcase tokens
         tokens
       end
 
@@ -35,6 +34,12 @@ module Internals
       #
       def empty_tokens
         []
+      end
+
+      # Text is downcased right away.
+      #
+      def downcase text
+        text.downcase!
       end
 
     end

@@ -34,6 +34,7 @@ module Internals
       def process
         qualify
         extract_original
+        downcase
         partialize
         similarize
         remove_illegals
@@ -57,6 +58,12 @@ module Internals
       end
       def extract_original
         @original = @text.dup
+      end
+
+      # Downcases the text.
+      #
+      def downcase
+        @text.downcase!
       end
 
       # Partial is a conditional setter.
@@ -102,7 +109,7 @@ module Internals
       def remove_illegals
         @text.gsub! @@illegals, '' unless @text.blank?
       end
-      
+
       #
       #
       def symbolize
@@ -185,6 +192,12 @@ module Internals
       #
       def identifier
         "#{similar?? :similarity : :index}:#{@text}"
+      end
+
+      # If the originals & the text are the same, they are the same.
+      #
+      def == other
+        self.original == other.original && self.text == other.text
       end
 
       # Displays the qualifier text and the text, joined.

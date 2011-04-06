@@ -7,6 +7,22 @@ describe Internals::Query::Tokens do
     Internals::Query::Qualifiers.instance.prepare
   end
   
+  describe '.processed' do
+    it 'generates processed tokens from all words' do
+      expected = [
+        Internals::Query::Token.processed('this~'),
+        Internals::Query::Token.processed('is'),
+        Internals::Query::Token.processed('a'),
+        Internals::Query::Token.processed('sp:solr'),
+        Internals::Query::Token.processed('query"')
+      ]
+      
+      described_class.should_receive(:new).once.with expected
+      
+      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"']
+    end
+  end
+  
   describe 'to_solr_query' do
     context 'many tokens' do
       before(:each) do
