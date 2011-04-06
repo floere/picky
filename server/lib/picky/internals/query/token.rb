@@ -116,16 +116,6 @@ module Internals
         @text = @text.to_sym
       end
 
-      # TODO spec!
-      #
-      # TODO Rewrite!!
-      #
-      def tokenized tokenizer
-        tokenizer.tokenize(@text.to_s).each do |text|
-          yield text
-        end
-      end
-
       # Returns an array of possible combinations.
       #
       def possible_combinations_in index

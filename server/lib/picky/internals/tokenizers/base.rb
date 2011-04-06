@@ -196,7 +196,7 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
           word
         end
       end
-      # Postprocessing.
+      # Basic postprocessing (overridden in both query/index tokenizers).
       #
       def process tokens
         reject tokens # Reject any tokens that don't meet criteria
@@ -205,9 +205,7 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
 
       # Default downcasing does nothing.
       #
-      def downcase text
-
-      end
+      def downcase text; end
 
       # # Converts words into real tokens.
       # #
