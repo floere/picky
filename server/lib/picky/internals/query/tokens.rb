@@ -19,8 +19,8 @@ module Internals
       def initialize tokens = []
         @tokens = tokens
       end
-      def self.processed words
-        new words.collect! { |word| Token.processed word }
+      def self.processed words, downcase
+        new words.collect! { |word| Token.processed word, downcase }
       end
 
       # Tokenizes each token.

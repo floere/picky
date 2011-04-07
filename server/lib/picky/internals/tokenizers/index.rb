@@ -15,31 +15,16 @@ module Internals
         @default ||= new
       end
 
-      # Postprocessing.
-      #
-      # In indexing, we work with symbol tokens.
-      #
-      def process tokens
-        reject tokens # Reject any tokens that don't meet criteria
-        tokens
-      end
-
       # Does not actually return a token, but a
       # symbol "token".
       #
       def tokens_for words
-        words.collect! { |word| word.to_sym }
+        words.collect! { |word| word.downcase! if downcase?; word.to_sym }
       end
       # Returns empty tokens.
       #
       def empty_tokens
         []
-      end
-
-      # Text is downcased right away.
-      #
-      def downcase text
-        text.downcase!
       end
 
     end

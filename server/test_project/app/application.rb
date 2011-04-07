@@ -2,19 +2,21 @@
 #
 class BookSearch < Application
 
-    default_indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/,
-                     stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
+    default_indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/i,
+                     stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
                      splits_text_on:                     /[\s\/\-\"\&]/,
                      removes_characters_after_splitting: /[\.]/,
                      normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
                      reject_token_if:                    lambda { |token| token.blank? || token == :amistad },
+                     downcases:                          true,
 
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
-    default_querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/,
-                     stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/,
+    default_querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/i,
+                     stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
                      removes_characters_after_splitting: //,
+                     downcases:                          false,
 
                      maximum_tokens:                     5,
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new

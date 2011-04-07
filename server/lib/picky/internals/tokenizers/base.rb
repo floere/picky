@@ -125,6 +125,14 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         tokens.reject! &@reject_condition
       end
 
+      def downcases true_or_false
+        @downcases = true_or_false
+      end
+      def downcase?
+        return true if @downcases.nil?
+        @downcases
+      end
+
       # Checks if the right argument type has been given.
       #
       def check_argument_in method, type, argument, &condition
@@ -156,6 +164,7 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         normalizes_words options[:normalizes_words]                                     if options[:normalizes_words]
         removes_characters_after_splitting options[:removes_characters_after_splitting] if options[:removes_characters_after_splitting]
         substitutes_characters_with options[:substitutes_characters_with]               if options[:substitutes_characters_with]
+        downcases options[:downcases]                                                   unless options[:downcases].nil?
 
         # Defaults.
         #
@@ -167,13 +176,11 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
       #
       # Does:
       # 1. Character substitution.
-      # 2. Downcasing.
-      # 3. Remove illegal expressions.
-      # 4. Remove non-single stopwords. (Stopwords that occur with other words)
+      # 2. Remove illegal expressions.
+      # 3. Remove non-single stopwords. (Stopwords that occur with other words)
       #
       def preprocess text
         text = substitute_characters text
-        downcase text
         remove_illegals text
         # We do not remove single stopwords e.g. in the indexer for
         # an entirely different reason than in the query tokenizer.
@@ -202,10 +209,6 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         reject tokens # Reject any tokens that don't meet criteria
         tokens
       end
-
-      # Default downcasing does nothing.
-      #
-      def downcase text; end
 
       # # Converts words into real tokens.
       # #

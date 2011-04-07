@@ -47,10 +47,10 @@ describe "Integration Tests" do
     # Reloading.
     #
     it 'finds the same after reloading' do
-      @csv.search_with_text('Soledad Human').ids.should == [72]
+      @csv.search_with_text('soledad human').ids.should == [72]
       puts "Reloading the Indexes."
       Indexes.reload
-      @csv.search_with_text('Soledad Human').ids.should == [72]
+      @csv.search_with_text('soledad human').ids.should == [72]
     end
     
     # Breakage. As reported by Jason.
@@ -66,34 +66,34 @@ describe "Integration Tests" do
     
     # Standard.
     #
-    it_should_find_ids_in_csv 'Soledad Human', [72]
-    it_should_find_ids_in_csv 'First Three Minutes Weinberg', [1]
+    it_should_find_ids_in_csv 'soledad human', [72]
+    it_should_find_ids_in_csv 'first three minutes weinberg', [1]
     
     # "Symbol" keys.
     #
     it_should_find_ids_in_sym 'key', ['a', 'b', 'c', 'd', 'e', 'f']
-    it_should_find_ids_in_sym 'keyDkey', ['d']
-    it_should_find_ids_in_sym '"keyDkey"', ['d']
+    it_should_find_ids_in_sym 'keydkey', ['d']
+    it_should_find_ids_in_sym '"keydkey"', ['d']
     
     # Complex cases.
     #
     it_should_find_ids_in_csv 'title:le* title:hystoree~', [4, 250, 428]
-    it_should_find_ids_in_csv 'Hystori~ author:ferg', []
-    it_should_find_ids_in_csv 'Hystori~ author:fergu', [4, 4]
-    it_should_find_ids_in_csv 'Hystori~ author:fergus', [4, 4]
+    it_should_find_ids_in_csv 'hystori~ author:ferg', []
+    it_should_find_ids_in_csv 'hystori~ author:fergu', [4, 4]
+    it_should_find_ids_in_csv 'hystori~ author:fergus', [4, 4]
     it_should_find_ids_in_csv 'author:fergus', [4]
     
     # Partial.
     #
-    it_should_find_ids_in_csv 'Gover* Systems', [7]
-    it_should_find_ids_in_csv 'A*', [2, 3, 4, 5, 6, 7, 8, 15, 24, 27, 29, 35, 39, 52, 55, 63, 67, 76, 80, 101]
+    it_should_find_ids_in_csv 'gover* systems', [7]
+    it_should_find_ids_in_csv 'a*', [2, 3, 4, 5, 6, 7, 8, 15, 24, 27, 29, 35, 39, 52, 55, 63, 67, 76, 80, 101]
     it_should_find_ids_in_csv 'a* b* c* d* f', [110, 416]
     it_should_find_ids_in_csv '1977', [86, 394]
     
     # Similarity.
     #
-    it_should_find_ids_in_csv 'Hystori~ Leeward', [4, 4]
-    it_should_find_ids_in_csv 'Strutigic~ Guvurnance~', [7]
+    it_should_find_ids_in_csv 'hystori~ leeward', [4, 4]
+    it_should_find_ids_in_csv 'strutigic~ guvurnance~', [7]
     it_should_find_ids_in_csv 'strategic~ governance~', [] # Does not find itself.
     
     # Qualifiers.
@@ -128,11 +128,11 @@ describe "Integration Tests" do
     
     # Character Substitution.
     #
-    it_should_find_ids_in_csv "hïstôry Educåtioñ fërgus", [4, 4, 4, 4]
+    it_should_find_ids_in_csv "hïstôry educåtioñ fërgus", [4, 4, 4, 4]
     
     # Token Rejection.
     #
-    it_should_find_ids_in_csv 'Amistad', []
+    it_should_find_ids_in_csv 'amistad', []
     
     # Breakage.
     #
@@ -146,10 +146,10 @@ describe "Integration Tests" do
     
     # Redis.
     #
-    it_should_find_ids_in_redis 'Soledad Human', ['72']
-    it_should_find_ids_in_redis 'First Three Minutes Weinberg', ['1']
-    it_should_find_ids_in_redis 'Gover* Systems', ['7']
-    it_should_find_ids_in_redis 'A*', ['2', '3', '4', '5', '6', '7', '8', '15', '24', '27', '29', '35', '39', '52', '55', '63', '67', '76', '80', '101']
+    it_should_find_ids_in_redis 'soledad human', ['72']
+    it_should_find_ids_in_redis 'first three minutes weinberg', ['1']
+    it_should_find_ids_in_redis 'gover* systems', ['7']
+    it_should_find_ids_in_redis 'a*', ['2', '3', '4', '5', '6', '7', '8', '15', '24', '27', '29', '35', '39', '52', '55', '63', '67', '76', '80', '101']
     it_should_find_ids_in_redis 'a* b* c* d* f', ['110', '416']
     it_should_find_ids_in_redis '1977', ['86', '394']
     
@@ -161,6 +161,13 @@ describe "Integration Tests" do
     it 'uses categorization' do
       @csv.search_with_text('title:religion').ids.should_not == @csv.search_with_text('subject:religion').ids
     end
+    
+    # Downcasing.
+    #
+    it_should_find_ids_in_csv "history fergus", [4, 4]
+    it_should_find_ids_in_csv "HISTORY FERGUS", []
+    it_should_find_ids_in_csv "history AND OR fergus", [4, 4]
+    
   end
   
 end

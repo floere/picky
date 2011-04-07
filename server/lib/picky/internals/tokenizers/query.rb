@@ -35,16 +35,16 @@ module Internals
       # In querying we work with real tokens (in indexing it's just symbols).
       #
       def process tokens
-        tokens.reject              # Reject any tokens that don't meet criteria.
-        tokens.cap maximum_tokens  # Cut off superfluous tokens.
-        tokens.partialize_last     # Set certain tokens as partial.
+        tokens.reject                # Reject any tokens that don't meet criteria.
+        tokens.cap maximum_tokens    # Cut off superfluous tokens.
+        tokens.partialize_last       # Set certain tokens as partial.
         tokens
       end
 
       # Converts words into real tokens.
       #
       def tokens_for words
-        Internals::Query::Tokens.processed words
+        Internals::Query::Tokens.processed words, downcase?
       end
       # Returns a tokens object.
       #

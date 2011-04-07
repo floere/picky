@@ -28,13 +28,13 @@ module Internals
       # Note: Use this in the search engine if you need a qualified
       #       and normalized token. I.e. one prepared for a search.
       #
-      def self.processed text
-        new(text).process
+      def self.processed text, downcase = true
+        new(text).process downcase
       end
-      def process
+      def process downcases = true
         qualify
         extract_original
-        downcase
+        downcase if downcases
         partialize
         similarize
         remove_illegals
