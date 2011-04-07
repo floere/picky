@@ -1,6 +1,7 @@
 h2. Version 2.1.0
 
-* hanke: (server) Tokenizing completely rewritten. Indexing and querying now only differ in where they downcase (indexing very early, querying rather late). Note that in querying you should use
+* hanke: (server) Tokenizing completely rewritten. Indexing and querying now don't downcase anymore right at the beginning of processing, but rather after text preprocessing. For you this means that you need to use case insensitive regexps @/…/i@ in the config if you need a case sensitive search (get it?).
+* hanke: (server) @default_indexing@ and @default_querying@ offer a new option, @case_sensitive@, which is by default @false@. Set it in indexing and querying to @true@ to have your search be case sensitive.
 
 h2. Version 2.0.0
 

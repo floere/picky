@@ -8,7 +8,7 @@ class BookSearch < Application
                      removes_characters_after_splitting: /[\.]/,
                      normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
                      reject_token_if:                    lambda { |token| token.blank? || token == :amistad },
-                     downcases:                          true,
+                     case_sensitive:                     false,
 
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
@@ -16,7 +16,7 @@ class BookSearch < Application
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
                      removes_characters_after_splitting: //,
-                     downcases:                          false,
+                     case_sensitive:                     true,
 
                      maximum_tokens:                     5,
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new

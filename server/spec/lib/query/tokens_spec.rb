@@ -21,6 +21,19 @@ describe Internals::Query::Tokens do
       
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"']
     end
+    it 'generates processed tokens from all words' do
+      expected = [
+        Internals::Query::Token.processed('this~', false),
+        Internals::Query::Token.processed('is', false),
+        Internals::Query::Token.processed('a', false),
+        Internals::Query::Token.processed('sp:solr', false),
+        Internals::Query::Token.processed('query"', false)
+      ]
+      
+      described_class.should_receive(:new).once.with expected
+      
+      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"']
+    end
   end
   
   describe 'to_solr_query' do

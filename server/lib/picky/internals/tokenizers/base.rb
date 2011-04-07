@@ -20,6 +20,7 @@ Removes chars after split: #{@removes_characters_after_splitting_regexp ? "/#{@r
 Normalizes words:          #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
 Rejects tokens?            #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
 Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' }
+Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
         TOKENIZER
       end
 
@@ -125,12 +126,11 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         tokens.reject! &@reject_condition
       end
 
-      def downcases true_or_false
-        @downcases = true_or_false
+      def case_sensitive case_sensitive
+        @case_sensitive = case_sensitive
       end
       def downcase?
-        return true if @downcases.nil?
-        @downcases
+        !@case_sensitive
       end
 
       # Checks if the right argument type has been given.
@@ -164,7 +164,7 @@ Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' 
         normalizes_words options[:normalizes_words]                                     if options[:normalizes_words]
         removes_characters_after_splitting options[:removes_characters_after_splitting] if options[:removes_characters_after_splitting]
         substitutes_characters_with options[:substitutes_characters_with]               if options[:substitutes_characters_with]
-        downcases options[:downcases]                                                   unless options[:downcases].nil?
+        case_sensitive options[:case_sensitive]                                         unless options[:case_sensitive].nil?
 
         # Defaults.
         #

@@ -19,7 +19,7 @@ module Internals
       def initialize tokens = []
         @tokens = tokens
       end
-      def self.processed words, downcase
+      def self.processed words, downcase = true
         new words.collect! { |word| Token.processed word, downcase }
       end
 

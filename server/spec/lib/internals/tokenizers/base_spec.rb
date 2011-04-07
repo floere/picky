@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Internals::Tokenizers::Base do
   
   context 'with special instance' do
-    let (:tokenizer) { described_class.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello } }
+    let (:tokenizer) { described_class.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
     it 'rejects tokens with length < 2' do
       tokenizer.reject([:'', :a, :ab, :abc]).should == [:ab, :abc]
     end
@@ -13,7 +13,7 @@ describe Internals::Tokenizers::Base do
       tokenizer.reject([:hel, :hell, :hello]).should == [:hel, :hell]
     end
     describe 'to_s' do
-      it 'does something' do
+      it 'spits out the right text' do
         tokenizer.to_s.should == <<-EXPECTED
 Removes characters:        -
 Stopwords:                 -
@@ -22,6 +22,7 @@ Removes chars after split: -
 Normalizes words:          -
 Rejects tokens?            Yes, see line 8 in app/application.rb
 Substitutes chars?         -
+Case sensitive?            Yes.
 EXPECTED
       end
     end
@@ -31,7 +32,7 @@ EXPECTED
     let(:tokenizer) { described_class.new }
     
         describe 'to_s' do
-          it 'does something' do
+          it 'spits out the right text' do
             tokenizer.to_s.should == <<-EXPECTED
 Removes characters:        -
 Stopwords:                 -
@@ -40,6 +41,7 @@ Removes chars after split: -
 Normalizes words:          -
 Rejects tokens?            -
 Substitutes chars?         -
+Case sensitive?            -
 EXPECTED
           end
         end
