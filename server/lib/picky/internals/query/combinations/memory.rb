@@ -21,30 +21,24 @@ module Internals
         # 1. [2, 30, 400, 100_000]
         # 2. (100_000 & (400 & (30 & 2))) # => result
         #
-        # Note: Uses a C-optimized intersection routine for speed and memory efficiency.
+        # Note: Uses a C-optimized intersection routine (in performant.c)
+        #       for speed and memory efficiency.
         #
         # Note: In the memory based version we ignore the (amount) needed hint.
-        #       We might use the fact to optimize the algorithm.
+        #       We cannot use the information to speed up the algorithm, unfortunately.
         #
         def ids _, _
           return [] if @combinations.empty?
 
           # Get the ids for each combination.
           #
-          # TODO For combinations with Redis
-          #
           id_arrays = @combinations.inject([]) do |total, combination|
             total << combination.ids
           end
 
-          # Order by smallest size first such that the intersect can be performed faster.
-          #
-          # TODO Move into the memory_efficient_intersect such that
-          #      this precondition for a fast algorithm is always given.
-          #
-          id_arrays.sort! { |this_array, that_array| this_array.size <=> that_array.size }
-
           # Call the optimized C algorithm.
+          #
+          # Note: It orders the passed arrays by size.
           #
           Performant::Array.memory_efficient_intersect id_arrays
         end
