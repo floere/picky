@@ -42,8 +42,6 @@ module Internals
       #
       # Only those passed in are removed.
       #
-      # TODO Rewrite.
-      #
       def remove identifiers = []
         @allocations.each { |allocation| allocation.remove identifiers } unless identifiers.empty?
       end

@@ -1,6 +1,6 @@
 module Internals
 
-  # FIXME Merge into Base, extract common with Indexed::Base.
+  # TODO Merge into Base, extract common with Indexed::Base.
   #
   module Indexing # :nodoc:all
     # A Bundle is a number of indexes
@@ -10,7 +10,7 @@ module Internals
     # * *core* index (always used)
     # * *weights* index (always used)
     # * *similarity* index (used with similarity)
-    # 
+    #
     # In Picky, indexing is separated from the index
     # handling itself through a parallel structure.
     #
@@ -24,27 +24,27 @@ module Internals
     #   memory and looking up search data as fast as possible.
     #
     module Bundle
-    
+
       class SuperBase
-    
+
         attr_reader   :identifier, :files
         attr_accessor :index, :weights, :similarity, :configuration, :similarity_strategy
-    
+
         delegate :clear,    :to => :index
         delegate :[], :[]=, :to => :configuration
-    
+
         def initialize name, configuration, similarity_strategy
           @identifier = "#{configuration.identifier}:#{name}"
           @files      = Internals::Index::Files.new name, configuration
-      
+
           @index         = {}
           @weights       = {}
           @similarity    = {}
           @configuration = {} # A hash with config options.
-      
+
           @similarity_strategy = similarity_strategy
         end
-    
+
         # Get a list of similar texts.
         #
         # Note: Does not return itself.
@@ -55,11 +55,11 @@ module Internals
           similar_codes.delete text if similar_codes
           similar_codes || []
         end
-    
+
       end
-    
+
     end
-  
+
   end
-  
+
 end

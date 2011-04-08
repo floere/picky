@@ -34,7 +34,7 @@ module Internals
         def weight sym
           @backend.weight sym
         end
-        # TODO Spec. Doc.
+        # Settings of this bundle can be accessed via [].
         #
         def [] sym
           @backend.setting sym

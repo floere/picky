@@ -1,8 +1,10 @@
 # encoding: utf-8
 #
 require 'rsolr'
+
 module Indexers
-  # TODO Deprecated. This should be handled in a special bundle which goes through Solr.
+
+  # Deprecated. Only here as an example.
   #
   class Solr
 
@@ -19,19 +21,19 @@ module Indexers
     def index
       timed_exclaim "Indexing solr for #{type.name}:#{fields.join(', ')}"
       statement = "SELECT indexed_id, #{fields.join(',')} FROM #{type.snapshot_table_name}"
-      
+
       DB.connect
       results   = DB.connection.execute statement
-      
-      return unless results # TODO check
-      
+
+      return unless results
+
       type_name = @type.name.to_s
-      
+
       solr.delete_by_query "type:#{type_name}"
       solr.commit
-      
+
       documents = []
-      
+
       results.each do |indexed_id, *values|
         values.each &:downcase!
         documents << hashed(values).merge(id: indexed_id, type: type_name)

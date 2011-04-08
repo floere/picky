@@ -67,8 +67,6 @@ CATEGORY
       #
       # Note: The idea is not to run this while the search engine is running.
       #
-      # TODO Spec. Identifier is ok?
-      #
       def analyze collector
         collector[identifier] = {
           :exact   => Analyzer.new.analyze(exact),
