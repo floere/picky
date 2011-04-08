@@ -37,8 +37,6 @@ module Indexing # :nodoc:all
 
     # Runs the indexers in parallel (index + cache).
     #
-    # TODO Spec.
-    #
     def index randomly = true
       take_snapshot
 
