@@ -20,7 +20,10 @@ module Internals
         @tokens = tokens
       end
 
+      # Creates a new Tokens object from a number of Strings.
       #
+      # Options:
+      #  * downcase: Whether to downcase the passed strings (default is true)
       #
       def self.processed words, downcase = true
         new words.collect! { |word| Token.processed word, downcase }
