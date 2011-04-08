@@ -116,7 +116,7 @@ class Search
   # Gets sorted allocations for the tokens.
   #
   def sorted_allocations tokens # :nodoc:
-    @indexes.allocations_for tokens, weights
+    @indexes.prepared_allocations_for tokens, weights
   end
 
   # Display some nice information for the user.

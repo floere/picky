@@ -14,11 +14,14 @@ module Internals
       #
       self.delegate *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, { :to => :@tokens }].flatten
 
-      #
+      # Create a new Tokens object with the array of tokens passed in.
       #
       def initialize tokens = []
         @tokens = tokens
       end
+
+      #
+      #
       def self.processed words, downcase = true
         new words.collect! { |word| Token.processed word, downcase }
       end

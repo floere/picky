@@ -194,9 +194,6 @@ module Internals
           raise_cache_missing :similarity unless backend.similarity_cache_ok?
         end
 
-        # TODO Spec on down.
-        #
-
         # Warns the user if the core or weights indexes are small.
         #
         def warn_if_index_small

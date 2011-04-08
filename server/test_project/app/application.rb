@@ -16,6 +16,7 @@ class BookSearch < Application
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
                      removes_characters_after_splitting: //,
+                     # reject_token_if:                    lambda { |token| token.blank? || token == :hell }, # Not yet.
                      case_sensitive:                     true,
 
                      maximum_tokens:                     5,
