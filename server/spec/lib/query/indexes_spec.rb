@@ -77,5 +77,26 @@ describe Internals::Query::Indexes do
       performance_of { indexes.expand_combinations_from(combinations) }.should < 0.00045
     end
   end
+  
+  describe 'prepared_allocations_for' do
+    before(:each) do
+      @allocations = stub :allocations
+      indexes.stub! :allocations_for => @allocations
+    end
+    it 'calls the right method in order' do
+      @allocations.should_receive(:uniq).once.ordered.with()
+      @allocations.should_receive(:calculate_score).once.ordered.with(:some_weights)
+      @allocations.should_receive(:sort!).once.ordered.with()
+      
+      indexes.prepared_allocations_for :some_tokens, :some_weights
+    end
+    it 'calls the right method in order' do
+      @allocations.should_receive(:uniq).once.ordered.with()
+      @allocations.should_receive(:calculate_score).once.ordered.with({})
+      @allocations.should_receive(:sort!).once.ordered.with()
+      
+      indexes.prepared_allocations_for :some_tokens
+    end
+  end
 
 end

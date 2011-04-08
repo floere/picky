@@ -14,14 +14,16 @@ class Search
   include Helpers::Measuring
 
   attr_reader   :indexes
-  attr_writer   :tokenizer, :identifiers_to_remove
-  attr_accessor :reduce_to_amount, :weights
+  attr_writer   :tokenizer
+  attr_accessor :weights
 
   # Takes:
   # * A number of indexes
   # * Options hash (optional) with:
   #   * tokenizer: Tokenizers::Query.default by default.
   #   * weights:   A hash of weights, or a Query::Weights object.
+  #
+  # TODO Add identifiers_to_remove (rename) and reduce_allocations_to_amount (rename).
   #
   def initialize *index_definitions
     options      = Hash === index_definitions.last ? index_definitions.pop : {}
@@ -113,58 +115,8 @@ class Search
 
   # Gets sorted allocations for the tokens.
   #
-  # This generates the possible allocations, sorted.
-  #
-  # TODO Smallify.
-  #
-  # TODO Rename: allocations
-  #
   def sorted_allocations tokens # :nodoc:
-    # Get the allocations.
-    #
-    # TODO Pass in reduce_to_amount (aka max_allocations)
-    #
-    # TODO uniq, score, sort in there
-    #
-    allocations = @indexes.allocations_for tokens
-
-    # Callbacks.
-    #
-    # TODO Reduce before sort?
-    #
-    reduce allocations
-    remove_from allocations
-
-    # Remove double allocations.
-    #
-    allocations.uniq
-
-    # Score the allocations using weights as bias.
-    #
-    allocations.calculate_score weights
-
-    # Sort the allocations.
-    # (allocations are sorted according to score, highest to lowest)
-    #
-    allocations.sort!
-
-    # Return the allocations.
-    #
-    allocations
-  end
-  def reduce allocations # :nodoc:
-    allocations.reduce_to reduce_to_amount if reduce_to_amount
-  end
-
-  #
-  #
-  def remove_from allocations # :nodoc:
-    allocations.remove identifiers_to_remove
-  end
-  #
-  #
-  def identifiers_to_remove # :nodoc:
-    @identifiers_to_remove ||= []
+    @indexes.allocations_for tokens, weights
   end
 
   # Display some nice information for the user.

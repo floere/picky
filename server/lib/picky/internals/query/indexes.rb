@@ -25,11 +25,36 @@ module Internals
         @indexes           = index_definitions.map &:indexed
       end
 
+      # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
+      #
+      def prepared_allocations_for tokens, weights = {}
+        allocations = allocations_for tokens
+
+        # Remove double allocations.
+        #
+        allocations.uniq
+
+        # Score the allocations using weights as bias.
+        #
+        allocations.calculate_score weights
+
+        # Sort the allocations.
+        # (allocations are sorted according to score, highest to lowest)
+        #
+        allocations.sort!
+
+        # Reduce the amount of allocations.
+        #
+        # allocations.reduce_to some_amount
+
+        # Remove identifiers from allocations.
+        #
+        # allocations.remove some_array_of_identifiers_to_remove
+
+        allocations
+      end
       # Returns a number of possible allocations for the given tokens.
       #
-      def sorted_allocations_for tokens
-
-      end
       def allocations_for tokens
         Allocations.new allocations_ary_for(tokens)
       end

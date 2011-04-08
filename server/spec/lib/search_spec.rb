@@ -4,6 +4,11 @@ require 'spec_helper'
 
 describe Search do
   
+  before(:each) do
+    @type      = stub :type
+    @index     = stub :some_index, :indexed => @type
+  end
+  
   describe 'combinations_type_for' do
     let(:search) { described_class.new }
     it 'returns a specific Combination for a specific input' do
@@ -46,25 +51,6 @@ describe Search do
     end
   end
   
-  # describe "empty_results" do
-  #   before(:each) do
-  #     @search = search::Full.new
-  #     
-  #     @result_type = stub :result_type
-  #     @search.stub! :result_type => @result_type
-  #   end
-  #   it "returns a new result type" do
-  #     @result_type.should_receive(:new).once.with :some_offset
-  #     
-  #     @search.empty_results :some_offset
-  #   end
-  #   it "returns a new result type with default offset" do
-  #     @result_type.should_receive(:new).once.with 0
-  #     
-  #     @search.empty_results
-  #   end
-  # end
-  
   describe "search_with_text" do
     before(:each) do
       @search = Search.new
@@ -81,60 +67,6 @@ describe Search do
       
       @search.search_with_text :text, :anything
     end
-  end
-  
-  describe 'reduce' do
-    context 'real' do
-      before(:each) do
-        @allocations = stub :allocations
-        @search      = Search.new
-      end
-      context 'reduce_to_amount not set' do
-        it 'should not call anything on the allocations' do
-          @allocations.should_receive(:reduce_to).never
-          
-          @search.reduce @allocations
-        end
-      end
-      context 'reduce_to_amount set' do
-        before(:each) do
-          @search.reduce_to_amount = :some_amount
-        end
-        it 'should call reduce_to on the allocations' do
-          @allocations.should_receive(:reduce_to).once.with :some_amount
-          
-          @search.reduce @allocations
-        end
-      end
-    end
-    context 'stubbed' do
-      before(:each) do
-        @allocations = stub :allocations
-        @search      = Search.new
-      end
-      context 'reduce_to_amount not set' do
-        it 'should not call anything on the allocations' do
-          @allocations.should_receive(:reduce_to).never
-          
-          @search.reduce @allocations
-        end
-      end
-      context 'reduce_to_amount set' do
-        before(:each) do
-          @search.stub! :reduce_to_amount => :some_amount
-        end
-        it 'should call reduce_to on the allocations' do
-          @allocations.should_receive(:reduce_to).once.with :some_amount
-          
-          @search.reduce @allocations
-        end
-      end
-    end
-  end
-  
-  before(:each) do
-    @type      = stub :type
-    @index     = stub :some_index, :indexed => @type
   end
   
   describe 'initializer' do
