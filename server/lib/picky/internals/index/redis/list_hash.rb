@@ -8,8 +8,6 @@ module Internals
 
         # Writes the hash into Redis.
         #
-        # TODO Performance: rpush as you get the values instead of putting it together in an array first.
-        #
         def dump hash
           hash.each_pair do |key, values|
             redis_key = "#{namespace}:#{key}"
