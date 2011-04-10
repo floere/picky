@@ -40,7 +40,7 @@ class Terminal
       print "\e[100D"
       flush
       puts "\n"
-      puts "Cheers. You performed #{@searches} searches, totalling #{"%.3f" % @durations} seconds."
+      puts "You performed #{@searches} searches, totalling #{"%.3f" % @durations} seconds."
       print "\e[100D"
       flush
       exit
@@ -119,6 +119,7 @@ class Terminal
   end
 
   def run
+    puts "Type and see the result count update. Press enter for the first 20 result ids."
     puts "Break with Ctrl-C."
 
     @current_text  = ''
