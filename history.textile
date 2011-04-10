@@ -1,3 +1,7 @@
+h2. Version 2.1.1
+
+* hanke: (server) @rake search <url>@, a simple experimental terminal search interface.
+
 h2. Version 2.1.0
 
 * hanke: (server) Tokenizing completely rewritten. It works now almost the same in indexing and in querying, with the exception of downcasing (or not, for case sensitive searches).
