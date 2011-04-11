@@ -1,5 +1,5 @@
 module Picky
-  
+
   # Use this class to extend the hash that the client returns.
   #
   module Convenience
@@ -9,7 +9,7 @@ module Picky
     def empty?
       allocations.empty?
     end
-    
+
     # Returns the topmost n results.
     # (Note that not all ids are returned with the results. By default only maximally 20.)
     #
@@ -21,7 +21,7 @@ module Picky
       allocations.each { |allocation| allocation[4].each { |id| break if ids.size > limit; ids << id } }
       ids
     end
-    
+
     # Removes all ids of each allocation.
     #
     def clear_ids
@@ -43,7 +43,7 @@ module Picky
     def total
       @total || @total = self[:total]
     end
-    
+
     # Populates the ids with (rendered) model instances.
     #
     # Give it an AR class and options for the find and it
@@ -60,28 +60,28 @@ module Picky
     #
     def populate_with model_class, amount = 20, options = {}, &block
       the_ids = ids amount
-      
+
       objects = model_class.find the_ids, options
-      
+
       # Put together a mapping.
       #
       mapped_entries = objects.inject({}) do |mapped, entry|
         mapped[entry.id] = entry if entry
         mapped
       end
-      
+
       # Preserves the order
       #
       objects = the_ids.map { |id| mapped_entries[id] }
-      
+
       objects.collect! &block if block_given?
-      
+
       amend_ids_with objects
       clear_ids
-      
+
       objects
     end
-    
+
     # Returns either
     # * the rendered entries, if you have used #populate_with _with_ a block
     # OR
@@ -99,7 +99,7 @@ module Picky
         entries
       end
     end
-    
+
     # The ids need to come in the order which the ids were returned by the ids method.
     #
     def amend_ids_with entries # :nodoc:
@@ -112,6 +112,6 @@ module Picky
         end
       end
     end
-    
+
   end
 end

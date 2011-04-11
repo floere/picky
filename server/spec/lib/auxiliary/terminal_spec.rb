@@ -50,6 +50,14 @@ describe Terminal do
       
       terminal.search true
     end
+    it 'searches full correctly' do
+      terminal = described_class.new('/some/url', 33)
+      terminal.stub! :client => @client
+      
+      @client.should_receive(:search).once.with '', :ids => 33
+      
+      terminal.search true
+    end
     it 'searches live correctly' do
       @client.should_receive(:search).once.with 'hello', :ids => 0
       

@@ -2,7 +2,7 @@ class Terminal
 
   attr_reader :client
 
-  def initialize given_uri
+  def initialize given_uri, id_amount = nil
     check_highline_gem
     check_picky_client_gem
 
@@ -26,6 +26,7 @@ class Terminal
     @current_text  = ''
     @cursor_offset = 0
     @last_ids      = ''
+    @id_amount     = id_amount && Integer(id_amount) || 20
     @client = Picky::Client.new :host => (uri.host || 'localhost'), :port => (uri.port || 8080), :path => uri.path
 
     install_trap
@@ -102,8 +103,8 @@ class Terminal
   # Write the text to the input area.
   #
   def write text
-    print text
     @cursor_offset += text.size
+    print text
     flush
   end
 
@@ -144,14 +145,17 @@ class Terminal
   #
   def write_ids results
     move_to_ids
-    write "=> #{results.total ? results.ids : []}"
+    write "=> #{results.total ? results.ids(@id_amount) : []}"
+  rescue StandardError => e
+    p e.message
+    p e.backtrace
   end
 
   # Clear the result ids.
   #
   def clear_ids
     move_to_ids
-    write " "*200
+    write @ids_clearing_string ||= " "*200
   end
 
   # Log a search.
@@ -164,7 +168,7 @@ class Terminal
   # Perform a search.
   #
   def search full = false
-    client.search @current_text, :ids => (full ? 20 : 0)
+    client.search @current_text, :ids => (full ? @id_amount : 0)
   end
 
   # Perform a search and write the results.
@@ -191,7 +195,7 @@ class Terminal
   # Note: Uses a simple loop to handle input.
   #
   def run
-    puts "Type and see the result count update. Press enter for the first 20 result ids."
+    puts "Type and see the result count update. Press enter for the first #{@id_amount} result ids."
     puts "Break with Ctrl-C."
 
     search_and_write
@@ -205,7 +209,7 @@ class Terminal
         search_and_write
       when 13
         search_and_write true
-      else
+      else # All other.
         type_search input.chr
         search_and_write
       end
