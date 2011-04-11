@@ -1,3 +1,7 @@
+h2. Version 2.1.2
+
+* hanke: (server) Improved @rake search <url> [<result id amount>]@ with better description and error handling.
+
 h2. Version 2.1.1
 
 * hanke: (server) @rake search <url>@, a simple experimental terminal search interface.
