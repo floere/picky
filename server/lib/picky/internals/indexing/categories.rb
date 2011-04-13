@@ -6,6 +6,8 @@ module Internals
 
       attr_reader :categories
 
+      delegate :<<, :to => :categories
+
       each_delegate :index,
                     :cache,
                     :generate_caches,
@@ -20,14 +22,6 @@ module Internals
         @categories = []
       end
 
-      def to_s
-        categories.indented_to_s
-      end
-
-      def << category
-        categories << category
-      end
-
       def find category_name
         category_name = category_name.to_sym
 
@@ -37,6 +31,10 @@ module Internals
         end
 
         raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
+      end
+
+      def to_s
+        categories.indented_to_s
       end
 
     end

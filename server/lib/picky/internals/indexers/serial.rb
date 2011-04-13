@@ -2,7 +2,9 @@
 #
 module Indexers
 
-  # The indexer defines the control flow.
+  # Uses a configuration (an index-category tuple), a source, and a tokenizer to index data.
+  #
+  # Note: It is called serial since it indexes each
   #
   class Serial
 

@@ -139,8 +139,8 @@ describe Internals::Indexing::Category do
     end
     describe "source" do
       context "without source" do
-        it "raises" do
-          lambda { described_class.new :some_name, @index }.should raise_error(Indexers::NoSourceSpecifiedException)
+        it "has no problem with that" do
+          lambda { described_class.new :some_name, @index }.should_not raise_error
         end
       end
     end
