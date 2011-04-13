@@ -51,7 +51,7 @@ module Sources
     # See important note, above.
     #
     @@id_key = '_id'
-    def harvest type, category
+    def harvest _, category
       category_name = category.from.to_s
       get_data do |doc|
         yield doc[@@id_key], doc[category_name] || next
