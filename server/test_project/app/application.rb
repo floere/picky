@@ -63,9 +63,9 @@ class BookSearch < Application
     end
 
     mgeo_index = Index::Memory.new :memory_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',') do
-      category     :location
-      map_location :north1, 1, precision: 3, from: :north
-      map_location :east1,  1, precision: 3, from: :east
+      category        :location
+      ranged_category :north1, 0.008, precision: 3, from: :north
+      ranged_category :east1,  0.008, precision: 3, from: :east
     end
 
     # rgeo_index = Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')

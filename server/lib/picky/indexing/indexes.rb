@@ -47,8 +47,8 @@ module Indexing # :nodoc:all
       # Run indexing/caching forked.
       #
       Cores.forked self.indexes, { randomly: randomly } do |an_index|
-        an_index.index
-        an_index.cache
+        an_index.index!
+        an_index.cache!
       end
 
       timed_exclaim "Indexing finished."
@@ -60,8 +60,8 @@ module Indexing # :nodoc:all
       take_snapshot
 
       self.indexes.each do |an_index|
-        an_index.index
-        an_index.cache
+        an_index.index!
+        an_index.cache!
       end
     end
 
@@ -69,7 +69,7 @@ module Indexing # :nodoc:all
     #
     def generate_index_only index_name, category_name = nil
       found = find index_name, category_name
-      found.index if found
+      found.index! if found
     end
     # Generate only the cache for the given index:category pair.
     #

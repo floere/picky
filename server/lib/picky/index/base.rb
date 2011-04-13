@@ -90,10 +90,10 @@ INDEX
     def define_category category_name, options = {}
       category_name = category_name.to_sym
 
-      indexing.define_category category_name, options
-      indexed.define_category  category_name, options
+      indexing_category = indexing.define_category category_name, options
+      indexed_category  = indexed.define_category  category_name, options
 
-      yield indexing, indexed if block_given?
+      yield indexing_category, indexed_category if block_given?
 
       self
     end
@@ -163,9 +163,9 @@ INDEX
 
       options = { partial: Partial::None.new }.merge options
 
-      define_category category_name, options do |indexing, indexed|
-        new_indexing_category = indexing.find category_name
-        indexing.replace category_name, Internals::Indexing::Wrappers::Category::Location.new(new_indexing_category, range, precision)
+      define_category category_name, options do |indexing_category, indexed_category|
+        Internals::Indexing::Wrappers::Category::Location.install_on indexing_category, range, precision
+        Internals::Indexed::Wrappers::Category::Location.install_on indexed_category, range, precision
       end
 
       # # TODO Change this such that the location replaces the whole indexing.

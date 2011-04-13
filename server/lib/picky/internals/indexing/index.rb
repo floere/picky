@@ -14,7 +14,7 @@ module Internals
                :to => :source
 
       each_delegate :backup_caches,
-                    :cache,
+                    :cache!,
                     :check_caches,
                     :clear_caches,
                     :create_directory_structure,
@@ -54,21 +54,16 @@ module Internals
 
         raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
       end
-      #
-      #
-      def replace category_name, new_category
-        categories.collect! { |category| category.name == category_name ? new_category : category }
-      end
 
       # Decides whether to use a parallel indexer or whether to
       # delegate to each category to index themselves.
       #
-      def index
+      def index!
         if source.respond_to?(:each)
           warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
           index_parallel
         else
-          categories.index
+          categories.each &:index!
         end
       end
       # Indexes the categories in parallel.

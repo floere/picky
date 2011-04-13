@@ -190,6 +190,8 @@ module Loader # :nodoc:all
     load_internals 'indexed/wrappers/bundle/calculation'
     load_internals 'indexed/wrappers/bundle/location'
 
+    load_internals 'indexed/wrappers/category/location'
+
     # Tokens.
     #
     load_internals 'query/token'

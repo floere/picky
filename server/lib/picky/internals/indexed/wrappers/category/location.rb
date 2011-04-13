@@ -1,19 +1,19 @@
 module Internals
-  module Indexing
+  module Indexed
     module Wrappers
       module Category
 
         module Location
 
           def self.install_on category, grid, precision = 1
-            new_source = Sources::Wrappers::Location.new category.source, grid, precision
+            wrapped_exact = Internals::Indexed::Wrappers::Bundle::Location.new category.exact, grid: grid, precision: precision
 
             category.class_eval do
-              def tokenizer
-                @tokenizer ||= Internals::Tokenizers::Index.new
+              define_method :exact do
+                wrapped_exact
               end
-              define_method :source do
-                new_source
+              define_method :partial do
+                wrapped_exact
               end
             end
 

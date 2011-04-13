@@ -10,7 +10,7 @@ module Sources
       #
       def initialize source, grid, precision
         super source
-        @calculation = Calculations::Location.new grid, precision
+        @calculation = Internals::Calculations::Location.new grid, precision
       end
 
       # Yield the data (id, text for id) for the given category.
@@ -24,7 +24,7 @@ module Sources
 
         # Gather min/max.
         #
-        backend.harvest category do |indexed_id, location|
+        source.harvest category do |indexed_id, location|
           location = location.to_f
           minimum = location if location < minimum
           locations << [indexed_id, location]
@@ -35,9 +35,7 @@ module Sources
         # Recalculate locations.
         #
         locations.each do |indexed_id, location|
-          # TODO Rewrite.
-          #
-          locations_for(@calculation.recalculate(location)).each do |new_location|
+          calculation.recalculated_range(location).each do |new_location|
             yield indexed_id, new_location.to_s
           end
         end
@@ -45,14 +43,6 @@ module Sources
         # TODO Move to the right place.
         #
         category.exact[:location_minimum] = minimum
-      end
-
-      # Put location onto multiple places on a grid.
-      #
-      # Note: Always returns an integer.
-      #
-      def locations_for repositioned_location
-        calculation.range(repositioned_location).to_a
       end
 
     end

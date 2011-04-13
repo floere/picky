@@ -4,7 +4,7 @@ module Internals
 
     class Category
 
-      attr_reader :exact, :partial, :name, :configuration
+      attr_reader :exact, :partial, :name, :index, :configuration
 
       # TODO Delegate to the index.
       #
@@ -103,14 +103,14 @@ Category(#{name} from #{from}):
         partial.delete
       end
 
-      def index
+      def index!
         prepare_index_directory
         indexer.index
       end
 
       # Generates all caches for this category.
       #
-      def cache
+      def cache!
         prepare_index_directory
         configure
         generate_caches
