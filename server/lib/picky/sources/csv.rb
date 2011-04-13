@@ -58,7 +58,7 @@ module Sources
 
     # Harvests the data to index.
     #
-    def harvest _, category
+    def harvest category
       index = category_names.index category.from
       get_data do |ary|
         indexed_id = ary.shift

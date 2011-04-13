@@ -6,22 +6,21 @@ module Internals
 
     class Index
 
-      attr_reader :name, :source, :categories, :after_indexing, :tokenizer
+      attr_reader :name, :source, :categories, :after_indexing, :bundle_class, :tokenizer
 
       # Delegators for indexing.
       #
       delegate :connect_backend,
                :to => :source
 
-      delegate :backup_caches,
-               :cache,
-               :check_caches,
-               :clear_caches,
-               :create_directory_structure,
-               :generate_caches,
-               :index,
-               :restore_caches,
-               :to => :categories
+      each_delegate :backup_caches,
+                    :cache,
+                    :check_caches,
+                    :clear_caches,
+                    :create_directory_structure,
+                    :generate_caches,
+                    :restore_caches,
+                    :to => :categories
 
       def initialize name, source, options = {}
         @name   = name
@@ -29,28 +28,36 @@ module Internals
 
         @after_indexing = options[:after_indexing]
         @bundle_class   = options[:indexing_bundle_class] # TODO This should actually be a fixed parameter.
+        @tokenizer      = options[:tokenizer]
 
-        @categories = Categories.new options[:tokenizer]
+        @categories = []
       end
 
       # TODO Spec. Doc.
       #
       def define_category category_name, options = {}
-        options = default_category_options.merge options
-
         new_category = Category.new category_name, self, options
+        new_category = yield new_category if block_given?
         categories << new_category
         new_category
       end
-      # By default, the category uses
-      # * the index's source.
-      # * the index's bundle type.
+
       #
-      def default_category_options
-        {
-          :source => @source,
-          :indexing_bundle_class => @bundle_class
-        }
+      #
+      def find category_name
+        category_name = category_name.to_sym
+
+        categories.each do |category|
+          next unless category.name == category_name
+          return category
+        end
+
+        raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
+      end
+      #
+      #
+      def replace category_name, new_category
+        categories.collect! { |category| category.name == category_name ? new_category : category }
       end
 
       # Decides whether to use a parallel indexer or whether to
@@ -58,19 +65,32 @@ module Internals
       #
       def index
         if source.respond_to?(:each)
-          warn "Warning: Source #{source} is empty." if source.respond_to?(:empty?) && source.empty?
-          categories.index_parallel self, source
+          warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
+          index_parallel
         else
           categories.index
         end
       end
+      # Indexes the categories in parallel.
+      #
+      # Only use where the category does not have a non-#each source defined.
+      #
+      def index_parallel
+        indexer = Indexers::Parallel.new self
+        categories.first.prepare_index_directory # TODO Unnice.
+        indexer.index
+      end
 
       # Indexing.
+      #
+      # Note: If it is an each source we do not take a snapshot.
       #
       def take_snapshot
         source.take_snapshot self unless source.respond_to? :each
       end
 
+      #
+      #
       def to_s
         <<-INDEX
 Indexing(#{name}):

@@ -88,7 +88,7 @@ module Indexing # :nodoc:all
 
         return index unless category_name
 
-        found = index.categories.find category_name
+        found = index.find category_name
         return found if found
       end
 

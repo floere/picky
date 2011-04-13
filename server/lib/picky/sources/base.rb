@@ -42,7 +42,7 @@ module Sources
 
     # Called by the indexer when gathering data.
     #
-    # Yields the data (id, text for id) for the given type and category.
+    # Yields the data (id, text for id) for the given category.
     #
     # When implementing or overriding your own,
     # be sure to <tt>yield(id, text_for_id)</tt> (or <tt>block.call(id, text_for_id)</tt>)
@@ -50,7 +50,7 @@ module Sources
     #
     # Note: Since harvest needs to be implemented, it has no default impementation.
     #
-    # def harvest index, category # :yields: id, text_for_id
+    # def harvest category # :yields: id, text_for_id
     #
     # end
 

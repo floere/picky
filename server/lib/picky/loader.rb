@@ -109,7 +109,6 @@ module Loader # :nodoc:all
 
     # Index generation strategies.
     #
-    load_internals 'indexers/no_source_specified_exception'
     load_internals 'indexers/base'
     load_internals 'indexers/serial'
     load_internals 'indexers/parallel'
@@ -171,8 +170,10 @@ module Loader # :nodoc:all
     load_internals 'indexing/bundle/memory'
     load_internals 'indexing/bundle/redis'
     load_internals 'indexing/category'
-    load_internals 'indexing/categories'
+    # load_internals 'indexing/categories'
     load_internals 'indexing/index'
+
+    load_internals 'indexing/wrappers/category/location'
 
     load_internals 'indexed/bundle/base'
     load_internals 'indexed/bundle/memory'
@@ -237,6 +238,10 @@ module Loader # :nodoc:all
     # Load harakiri.
     #
     load_relative 'rack/harakiri'
+
+    # Errors.
+    #
+    load_relative 'no_source_specified_exception'
 
     # Load analyzer.
     #

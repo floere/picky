@@ -30,7 +30,7 @@ module Sources
 
     # Harvests the data to index.
     #
-    def harvest _, category
+    def harvest category
       get_data do |indexed_id, data|
         text = data[category.from]
         next unless text

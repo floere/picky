@@ -6,17 +6,13 @@ module Indexers
   #
   class Base
 
-    attr_accessor :source, :tokenizer
-
-    def initialize source, tokenizer
-      @source     = source || raise_no_source
-      @tokenizer  = tokenizer
-    end
-
-    # Raise a no source exception.
+    # Selects the original id (indexed id) and a column to process. The column data is called "token".
     #
-    def raise_no_source
-      raise NoSourceSpecifiedException.new("No source given for #{@configuration}.")
+    # Note: Puts together the parts first in an array, then releasing the array from time to time by joining.
+    #
+    def index
+      indexing_message
+      process
     end
 
     # Delegates the key format to the source.

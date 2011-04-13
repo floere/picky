@@ -4,38 +4,23 @@ module Indexers
 
   # Uses a number of categories, a source, and a tokenizer to index data.
   #
-  # The tokenizer is taken from each category.
+  # The tokenizer is taken from each category if specified, from the index, if not.
   #
   class Parallel < Base
 
-    attr_accessor :index, :categories
+    delegate :categories, :source, :to => :@index
 
-    def initialize index, categories, source, tokenizer
-      @index      = index
-      @categories = categories
-      super source, tokenizer
+    def initialize index
+      @index = index
     end
 
-    # Selects the original id (indexed id) and a column to process. The column data is called "token".
-    #
-    # Note: Puts together the parts first in an array, then releasing the array from time to time by joining.
-    #
-    def index
-      indexing_message
-      process
-    end
     def process
       comma   = ?,
       newline = ?\n
 
-      # Open some files.
+      # Prepare a combined object - array.
       #
-      files = categories.map &:prepared_index_file
-
-      # Prepare the methods.
-      #
-      caches            = [[]]*categories.size
-      categories_caches = categories.zip caches
+      combined = categories.map { |category| [category, [], category.prepared_index_file, (category.tokenizer || tokenizer)] }
 
       # Index.
       #
@@ -45,24 +30,24 @@ module Indexers
 
         # This needs to be rewritten.
         #
-        categories_caches.each do |category, cache|
-          (tokenizer || category.tokenizer).tokenize(object.send(category.from)).each do |token_text|
+        combined.each do |category, cache, _, tokenizer|
+          tokenizer.tokenize(object.send(category.from).to_s).each do |token_text|
             next unless token_text
             cache << id << comma << token_text << newline
           end
         end
 
-        if i > 10_000
-          flush files, caches
+        if i >= 100_000
+          flush combined
           i = 0
         end
         i += 1
       end
-      flush files, caches
-      files.each &:close
+      flush combined
+      combined.each { |_, _, file, _| file.close }
     end
-    def flush files, caches
-      files.zip(caches).each do |file, cache|
+    def flush combined
+      combined.each do |_, cache, file, _|
         file.write(cache.join) && cache.clear
       end
     end

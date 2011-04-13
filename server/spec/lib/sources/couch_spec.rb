@@ -34,8 +34,8 @@ describe Sources::Couch do
 
         describe "harvest" do
           it "yields the right data" do
-            field = stub :b, :from => :b
-            @source.harvest :anything, field do |id, token|
+            category = stub :b, :from => :b
+            @source.harvest category do |id, token|
               id.should    eql('550e8400-e29b-41d4-a716-446655440000') 
               token.should eql('b data')
             end.should have(1).item
@@ -60,8 +60,8 @@ describe Sources::Couch do
 
         describe "harvest" do
           it "yields the right data" do
-            field = stub :b, :from => :b
-            @source.harvest :anything, field do |id, token|
+            category = stub :b, :from => :b
+            @source.harvest category do |id, token|
               id.should    eql('123') 
               token.should eql('b data')
             end.should have(1).item
@@ -94,8 +94,8 @@ describe Sources::Couch do
 
       describe "harvest" do
         it "yields the right data" do
-          field = stub :b, :from => :b
-          @source.harvest :anything, field do |id, token|
+          category = stub :b, :from => :b
+          @source.harvest category do |id, token|
             id.should    eql('7f') 
             token.should eql('b data')
           end.should have(1).item

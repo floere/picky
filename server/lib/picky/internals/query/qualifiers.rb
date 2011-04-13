@@ -35,8 +35,6 @@ module Internals
     #
     class Qualifiers # :nodoc:all
 
-      include Singleton
-
       attr_reader :qualifiers, :normalization_mapping
 
       delegate :<<, :to => :qualifiers
@@ -47,13 +45,16 @@ module Internals
         @qualifiers = []
         @normalization_mapping = {}
       end
-    
+      def self.instance
+        @instanec ||= new
+      end
+
       # TODO Spec.
       #
       def self.add name, qualifiers
         instance << Qualifier.new(name, qualifiers)
       end
-    
+
       # Uses the qualifiers to prepare (optimize) the qualifier handling.
       #
       def prepare
@@ -75,7 +76,7 @@ module Internals
       end
 
     end
-    
+
   end
-  
+
 end

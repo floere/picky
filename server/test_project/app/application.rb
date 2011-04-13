@@ -32,6 +32,18 @@ class BookSearch < Application
       category :year, qualifiers: [:y, :year, :annee]
     end
 
+    class Book < ActiveRecord::Base; end
+    Book.establish_connection YAML.load(File.open('app/db.yml'))
+    book_each_index = Index::Memory.new :book_each, Book.order('id ASC') do
+      category :id
+      category :title,
+               qualifiers: [:t, :title, :titre],
+               partial:    Partial::Substring.new(:from => 1),
+               similarity: Similarity::DoubleMetaphone.new(2)
+      category :author, partial: Partial::Substring.new(:from => -2)
+      category :year, qualifiers: [:y, :year, :annee]
+    end
+
     isbn_index = Index::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml') do
       category :isbn, :qualifiers => [:i, :isbn]
     end
@@ -41,12 +53,12 @@ class BookSearch < Application
     class ISBN
       @@id = 1
       attr_reader :id, :isbn
-      def initialize
+      def initialize isbn
         @id   = @@id += 1
-        @isbn = rand(1000000).to_s # Fake ISBN.
+        @isbn = isbn
       end
     end
-    isbn_each_index = Index::Memory.new :isbn_each, [ISBN.new, ISBN.new] do
+    isbn_each_index = Index::Memory.new :isbn_each, [ISBN.new('ABC'), ISBN.new('DEF')] do
       category :isbn, :qualifiers => [:i, :isbn]
     end
 

@@ -51,19 +51,19 @@ describe Sources::Delicious do
       end
       it "should yield the right data" do
         category = stub :b, :from => :tags
-        @source.harvest :anything, category do |id, token|
+        @source.harvest category do |id, token|
           [id, token].should == [1, "barefoot running shoe"]
         end
       end
       it "should yield the right data" do
         category = stub :b, :from => :title
-        @source.harvest :anything, category do |id, token|
+        @source.harvest category do |id, token|
           [id, token].should == [1, "VIBRAM - FiveFingers"]
         end
       end
       it "should yield the right data" do
         category = stub :b, :from => :url
-        @source.harvest :anything, category do |id, token|
+        @source.harvest category do |id, token|
           [id, token].should == [1, "http://www.vibramfivefingers.it/"]
         end
       end

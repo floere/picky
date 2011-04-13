@@ -1,5 +1,5 @@
 module Calculations # :nodoc:all
-  
+
   # A location calculation recalculates a 1-d location
   # to the Picky internal 1-d "grid".
   #
@@ -8,40 +8,43 @@ module Calculations # :nodoc:all
   # and the gridlength is 1.
   #
   class Location
-    
+
     attr_reader :minimum
-    
+
     def initialize user_grid, precision = nil
       @user_grid = user_grid
       @precision = precision || 1
       @grid      = @user_grid / (@precision + 0.5)
     end
-    
+
     def minimum= minimum
       # Add a margin of 1 user grid.
       #
       minimum -= @user_grid
-      
+
       # Add plus 1 grid so that the index key never falls on 0.
       # Why? to_i maps by default to 0.
       #
       minimum -= @grid
-      
+
       @minimum = minimum
     end
-    
+
     #
     #
     def add_margin length
       @minimum -= length
     end
-    
+    def range around_location
+      (around_location - @precision)..(around_location + @precision)
+    end
+
     #
     #
     def recalculate location
       ((location - @minimum) / @grid).floor
     end
-    
+
   end
-  
+
 end

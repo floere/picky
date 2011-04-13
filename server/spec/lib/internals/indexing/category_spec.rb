@@ -106,6 +106,35 @@ describe Internals::Indexing::Category do
       end
     end
     
+    describe 'source' do
+      context 'with explicit source' do
+        let(:category) { described_class.new(:some_category, @index, :source => :category_source) }
+        it 'returns the right source' do
+          category.source.should == :category_source
+        end
+      end
+      context 'without explicit source' do
+        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub! :source => :index_source }) }
+        it 'returns the right source' do
+          category.source.should == :index_source
+        end
+      end
+      context 'without any source' do
+        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub! :source => nil }) }
+        it 'raises' do
+          expect do
+            category.source
+          end.to raise_error(NoSourceSpecifiedException)
+        end
+      end
+    end
+    
+    describe "raise_no_source" do
+      it "should raise" do
+        lambda { category.raise_no_source }.should raise_error(NoSourceSpecifiedException)
+      end
+    end
+    
     describe "cache" do
       before(:each) do
         category.stub! :generate_caches

@@ -6,24 +6,24 @@ module Indexers
   #
   # Note: It is called serial since it indexes each
   #
-  # FIXME Giving the serial a category would be enough, since it already contains a configuration!
+  # FIXME Giving the serial a category would be enough, since it already contains an index!
   #
   class Serial < Base
 
-    def initialize configuration, source, tokenizer
-      @configuration = configuration
-      @source        = source || raise_no_source
-      @tokenizer     = tokenizer
+    attr_reader :category
+
+    delegate :source, :to => :category
+
+    def initialize category
+      @category = category
     end
 
-    # Selects the original id (indexed id) and a column to process. The column data is called "token".
+    # The tokenizer used is a cached tokenizer from the category.
     #
-    # Note: Puts together the parts first in an array, then releasing the array from time to time by joining.
-    #
-    def index
-      indexing_message
-      process
+    def tokenizer
+      @tokenizer ||= category.tokenizer
     end
+
     def process
       comma   = ?,
       newline = ?\n
@@ -40,9 +40,10 @@ module Indexers
       #   end
       # end
       #
-      @configuration.prepared_index_file do |file|
+      tokenizer = category.tokenizer
+      category.prepared_index_file do |file|
         result = []
-        source.harvest(@configuration.index, @configuration.category) do |indexed_id, text|
+        source.harvest(category) do |indexed_id, text|
           tokenizer.tokenize(text).each do |token_text|
             next unless token_text
             result << indexed_id << comma << token_text << newline
@@ -55,7 +56,7 @@ module Indexers
     #
     #
     def indexing_message
-      timed_exclaim %Q{"#{@configuration.identifier}": Starting serial indexing.}
+      timed_exclaim %Q{"#{@category.identifier}": Starting serial indexing.}
     end
 
   end

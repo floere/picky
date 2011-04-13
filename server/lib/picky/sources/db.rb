@@ -123,19 +123,19 @@ module Sources
 
     # Harvests the data to index in chunks.
     #
-    def harvest index, category, &block
+    def harvest category, &block
       connect_backend
 
-      (0..count(index)).step(chunksize) do |offset|
-        get_data index, category, offset, &block
+      (0..count(category.index)).step(chunksize) do |offset|
+        get_data category, offset, &block
       end
     end
 
     # Gets the data from the backend.
     #
-    def get_data index, category, offset, &block # :nodoc:
+    def get_data category, offset, &block # :nodoc:
 
-      select_statement = harvest_statement_with_offset index, category, offset
+      select_statement = harvest_statement_with_offset category, offset
 
       # TODO Rewrite ASAP.
       #
@@ -155,8 +155,8 @@ module Sources
 
     # Builds a harvest statement for getting data to index.
     #
-    def harvest_statement_with_offset index, category, offset
-      statement = harvest_statement index, category
+    def harvest_statement_with_offset category, offset
+      statement = harvest_statement category
 
       statement += statement.include?('WHERE') ? ' AND' : ' WHERE'
 
@@ -165,8 +165,8 @@ module Sources
 
     # The harvest statement used to pull data from the snapshot table.
     #
-    def harvest_statement index, category
-      "SELECT id, #{category.from} FROM #{snapshot_table_name(index)} st"
+    def harvest_statement category
+      "SELECT id, #{category.from} FROM #{snapshot_table_name(category.index)} st"
     end
 
     # The amount of records that are loaded each chunk.

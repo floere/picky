@@ -50,8 +50,8 @@ describe Sources::CSV do
       end
       describe "harvest" do
         it "should yield the right data" do
-          field = stub :b, :from => :b
-          @source.harvest :anything, field do |id, token|
+          category = stub :b, :from => :b
+          @source.harvest category do |id, token|
             [id, token].should == [' 7', 'b data']
           end
         end
@@ -70,8 +70,8 @@ describe Sources::CSV do
       end
       describe "harvest" do
         it "should yield the right data" do
-          field = stub :b, :from => :b
-          @source.harvest :anything, field do |id, token|
+          category = stub :b, :from => :b
+          @source.harvest category do |id, token|
             [id, token].should == [' 7', 'b data']
           end
         end

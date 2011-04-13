@@ -6,8 +6,9 @@ module Internals
 
       attr_reader :exact, :partial, :name, :configuration
 
+      # TODO Delegate to the index.
+      #
       delegate :identifier, :prepare_index_directory, :prepared_index_file, :to => :configuration
-      delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
 
       # Mandatory params:
       #  * name: Category name to use as identifier and file names.
@@ -29,10 +30,13 @@ module Internals
 
         # Now we have enough info to combine the index and the category.
         #
+        # TODO Remove.
+        #
         @configuration = Configuration::Index.new index, self
+        @index = index
 
-        @tokenizer = options[:tokenizer] || Tokenizers::Index.default
-        @source    = options[:source]    # TODO || raise("...")?
+        @tokenizer = options[:tokenizer]
+        @source    = options[:source]
 
         # TODO Push into Bundle. At least the weights.
         #
@@ -55,10 +59,21 @@ Category(#{name} from #{from}):
         CATEGORY
       end
 
+      def source
+        @source || @index.source || raise_no_source
+      end
+      def raise_no_source
+        raise NoSourceSpecifiedException.new("No source given for #{identifier}.")
+      end
       # The indexer is lazily generated and cached.
       #
       def indexer
-        @indexer ||= Indexers::Serial.new configuration, @source, @tokenizer
+        @indexer ||= Indexers::Serial.new self
+      end
+      # The tokenizer is chosen by hierarchy, bottom-up.
+      #
+      def tokenizer
+        @tokenizer || @index.tokenizer || Tokenizers::Index.default
       end
 
       # Where the data is taken from.

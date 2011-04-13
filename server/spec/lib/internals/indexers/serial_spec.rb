@@ -3,13 +3,11 @@ require 'spec_helper'
 describe Indexers::Serial do
 
   before(:each) do
-    @index         = stub :index, :name => :some_index
-    @category      = stub :category, :name => :some_category
-    @configuration = Configuration::Index.new @index, @category
-    
-    @source    = stub :source
     @tokenizer = stub :tokenizer
-    @indexer = Indexers::Serial.new @configuration, @source, @tokenizer
+    @source  = stub :source
+    @category  = stub :category, :identifier => :some_identifier, :tokenizer => @tokenizer, :source => @source
+    
+    @indexer = described_class.new @category
     @indexer.stub! :timed_exclaim
   end
   
@@ -40,7 +38,7 @@ describe Indexers::Serial do
   
   describe "indexing_message" do
     it "informs the user about what it is going to index" do
-      @indexer.should_receive(:timed_exclaim).once.with '"some_index:some_category": Starting indexing.'
+      @indexer.should_receive(:timed_exclaim).once.with '"some_identifier": Starting serial indexing.'
       
       @indexer.indexing_message
     end
@@ -55,7 +53,7 @@ describe Indexers::Serial do
   end
   
   describe "index" do
-    it "should execute! the indexer" do
+    it "should process" do
       @indexer.should_receive(:process).once.with
       
       @indexer.index
@@ -65,12 +63,6 @@ describe Indexers::Serial do
   describe "source" do
     it "returns the one given to is" do
       @indexer.source.should == @source
-    end
-  end
-  
-  describe "raise_no_source" do
-    it "should raise" do
-      lambda { @indexer.raise_no_source }.should raise_error(Indexers::NoSourceSpecifiedException)
     end
   end
   

@@ -9,7 +9,8 @@ module Index
   #
   class Base
 
-    attr_reader :name, :indexing, :indexed
+    attr_reader   :name
+    attr_accessor :indexing, :indexed
 
     # Create a new index with a given source.
     #
@@ -67,7 +68,7 @@ SOURCE
       stats = <<-INDEX
 #{name} (#{self.class}):
   #{"source:            #{indexing.source}".indented_to_s}
-  #{"categories:        #{indexing.categories.categories.map(&:name).join(', ')}".indented_to_s}
+  #{"categories:        #{indexing.categories.map(&:name).join(', ')}".indented_to_s}
 INDEX
       stats << "  result identifier: \"#{indexed.result_identifier}\"".indented_to_s unless indexed.result_identifier.to_s == indexed.name.to_s
       stats
@@ -89,10 +90,10 @@ INDEX
     def define_category category_name, options = {}
       category_name = category_name.to_sym
 
-      indexing_category = indexing.define_category category_name, options
-      indexed_category  = indexed.define_category  category_name, options
+      indexing.define_category category_name, options
+      indexed.define_category  category_name, options
 
-      yield indexing_category, indexed_category if block_given?
+      yield indexing, indexed if block_given?
 
       self
     end
@@ -158,18 +159,25 @@ INDEX
     # * ... all options of #define_category.
     #
     def define_ranged_category category_name, range, options = {}
-      precision = options[:precision]
+      precision = options[:precision] || 1
 
       options = { partial: Partial::None.new }.merge options
 
       define_category category_name, options do |indexing, indexed|
-        indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
-        indexing.tokenizer = Internals::Tokenizers::Index.new
-
-        exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: range, precision: precision
-        indexed.exact   = exact_bundle
-        indexed.partial = exact_bundle # A partial token also uses the exact index.
+        new_indexing_category = indexing.find category_name
+        indexing.replace category_name, Internals::Indexing::Wrappers::Category::Location.new(new_indexing_category, range, precision)
       end
+
+      # # TODO Change this such that the location replaces the whole indexing.
+      # #
+      # indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
+      # indexing.tokenizer = Internals::Tokenizers::Index.new
+      #
+      # # TODO Change this such that the location replaces the whole indexing.
+      # #
+      # exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: range, precision: precision
+      # indexed.exact   = exact_bundle
+      # indexed.partial = exact_bundle # A partial token also uses the exact index.
     end
     alias ranged_category define_ranged_category
 
