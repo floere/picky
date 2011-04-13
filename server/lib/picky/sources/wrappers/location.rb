@@ -6,9 +6,7 @@ module Sources
 
       attr_reader :calculation
 
-      # TODO Save min and grid!
-      #
-      def initialize source, grid, precision
+      def initialize source, grid, precision = 1
         super source
         @calculation = Internals::Calculations::Location.new grid, precision
       end

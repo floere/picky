@@ -142,12 +142,12 @@ describe Internals::Indexing::Category do
       it "prepares the cache directory" do
         category.should_receive(:prepare_index_directory).once.with
         
-        category.cache
+        category.cache!
       end
       it "tells the indexer to index" do
         category.should_receive(:generate_caches).once.with
         
-        category.cache
+        category.cache!
       end
     end
     describe "index" do
@@ -158,12 +158,12 @@ describe Internals::Indexing::Category do
       it "prepares the cache directory" do
         category.should_receive(:prepare_index_directory).once.with
         
-        category.index
+        category.index!
       end
       it "tells the indexer to index" do
         @indexer.should_receive(:index).once.with
         
-        category.index
+        category.index!
       end
     end
     describe "source" do

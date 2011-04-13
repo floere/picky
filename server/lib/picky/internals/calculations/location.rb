@@ -10,7 +10,7 @@ module Internals
     #
     class Location
 
-      attr_reader :minimum
+      attr_reader :minimum, :precision, :grid
 
       def initialize user_grid, precision = nil
         @user_grid = user_grid

@@ -1,11 +1,22 @@
 require 'spec_helper'
 
-describe Calculations::Location do
+describe Internals::Calculations::Location do
   
   context 'with precision 1' do
     before(:each) do
-      @calculation = Calculations::Location.new 1.5, 1
+      @calculation = described_class.new 1.5, 1
       @calculation.minimum = 42.7
+    end
+    describe 'recalculated_range' do
+      it 'returns the right range' do
+        @calculation.recalculated_range(40.0).should == (-2..0)
+      end
+      it 'returns the right range' do
+        @calculation.recalculated_range(41.0).should == (-1..1)
+      end
+      it 'returns the right range' do
+        @calculation.recalculated_range(0).should == (-42..-40)
+      end
     end
     describe 'recalculate' do
       it 'sets the minimum close value to the minimum minus user grid' do
@@ -25,7 +36,7 @@ describe Calculations::Location do
   
   context 'with precision 3' do
     before(:each) do
-      @calculation = Calculations::Location.new 1.5, 3
+      @calculation = described_class.new 1.5, 3
       @calculation.minimum = 42.7
     end
     describe 'recalculate' do

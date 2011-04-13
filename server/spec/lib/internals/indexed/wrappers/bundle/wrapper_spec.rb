@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Indexed::Wrappers::Bundle::Wrapper do
+describe Internals::Indexed::Wrappers::Bundle::Wrapper do
   
   before(:each) do
-    @bundle       = stub :bundle
+    @bundle      = stub :bundle
     
-    @calculation = Indexed::Wrappers::Bundle::Wrapper.new @bundle
+    @calculation = described_class.new @bundle
   end
   
   describe 'ids' do

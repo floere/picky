@@ -23,7 +23,7 @@ describe Indexing::Indexes do
           indexes.should_receive(:find).once.with(:index, :category).and_return @index1
         end
         it 'indexes' do
-          @index1.should_receive(:index).once.with
+          @index1.should_receive(:index!).once.with
           
           indexes.generate_index_only :index, :category
         end
@@ -64,10 +64,10 @@ describe Indexing::Indexes do
     describe 'index_for_tests' do
       it 'takes a snapshot, then indexes and caches each' do
         indexes.should_receive(:take_snapshot).once.with.ordered
-        @index1.should_receive(:index).once.with.ordered
-        @index1.should_receive(:cache).once.with.ordered
-        @index2.should_receive(:index).once.with.ordered
-        @index2.should_receive(:cache).once.with.ordered
+        @index1.should_receive(:index!).once.with.ordered
+        @index1.should_receive(:cache!).once.with.ordered
+        @index2.should_receive(:index!).once.with.ordered
+        @index2.should_receive(:cache!).once.with.ordered
         
         indexes.index_for_tests
       end
