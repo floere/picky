@@ -36,6 +36,8 @@ class BookSearch < Application
       category :isbn, :qualifiers => [:i, :isbn]
     end
 
+    # Fake ISBN class to demonstrate that #each indexing is working.
+    #
     class ISBN
       @@id = 1
       attr_reader :id, :isbn
