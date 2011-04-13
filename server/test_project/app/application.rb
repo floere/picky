@@ -6,7 +6,7 @@ class BookSearch < Application
     #
     default_indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/i,
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-                     splits_text_on:                     /[\s\/\-\"\&]/,
+                     splits_text_on:                     /[\s\/\-\"\&\/]/,
                      removes_characters_after_splitting: /[\.]/,
                      normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
                      reject_token_if:                    lambda { |token| token.blank? || token == :amistad },
@@ -18,7 +18,7 @@ class BookSearch < Application
     #
     default_querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/i,
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-                     splits_text_on:                     /[\s\/\-\,\&]+/,
+                     splits_text_on:                     /[\s\/\-\,\&\/]/,
                      removes_characters_after_splitting: //,
                      # reject_token_if:                    lambda { |token| token.blank? || token == :hell }, # Not yet.
                      case_sensitive:                     true,
@@ -27,8 +27,6 @@ class BookSearch < Application
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
     books_index = Index::Memory.new :books, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml'), result_identifier: 'boooookies' do
-      # tokenizer removes_characters: /[abc]/
-      # indexing removes_characters: /[abc]/
       category :id
       category :title,
                qualifiers: [:t, :title, :titre],
@@ -92,6 +90,15 @@ class BookSearch < Application
                partial:    Partial::None.new
       category :publisher, qualifiers: [:p, :publisher]
       category :subjects, qualifiers: [:s, :subject]
+    end
+
+    Index::Memory.new(:special_indexing, Sources::CSV.new(:title, file: 'data/books.csv')) do
+      indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
+               splits_text_on:     /[\s\/\-\"\&\/]/
+      category :title,
+               qualifiers: [:t, :title, :titre],
+               partial:    Partial::Substring.new(from: 1),
+               similarity: Similarity::DoubleMetaphone.new(2)
     end
 
    redis_index = Index::Redis.new(:redis, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')) do

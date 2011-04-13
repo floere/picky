@@ -15,6 +15,7 @@ describe "Integration Tests" do
     @books      = Search.new Indexes[:books]
     @sym        = Search.new Indexes[:symbol_keys]
     @csv        = Search.new Indexes[:csv_test]
+    @indexing   = Search.new Indexes[:special_indexing]
     @memory_geo = Search.new Indexes[:memory_geo]
     @redis      = Search.new Indexes[:redis]
   end
@@ -160,6 +161,15 @@ describe "Integration Tests" do
     end
     it 'uses categorization' do
       @csv.search_with_text('title:religion').ids.should_not == @csv.search_with_text('subject:religion').ids
+    end
+    
+    # Index-specific tokenizer.
+    #
+    it 'does not find abc' do
+      @indexing.search_with_text('human perception').ids.should == []
+    end
+    it 'does find without a or b or c' do
+      @indexing.search_with_text('humn pereption').ids.should == [72]
     end
     
     # Downcasing.
