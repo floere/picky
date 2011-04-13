@@ -4,7 +4,7 @@ module Internals
 
     class Category
 
-      attr_reader :exact, :partial, :name, :configuration, :indexer
+      attr_reader :exact, :partial, :name, :configuration
 
       delegate :identifier, :prepare_index_directory, :to => :configuration
       delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
@@ -16,15 +16,12 @@ module Internals
       # Options:
       #  * partial: Partial::None.new, Partial::Substring.new(from:start_char, to:up_to_char) (defaults from:-3, to:-1)
       #  * similarity: Similarity::None.new (default), Similarity::DoubleMetaphone.new(amount_of_similarly_linked_words)
-      #  * source: Use if the category should use a different source.
       #  * from: The source category identifier to take the data from.
       #
       # Advanced Options:
-      #
+      #  * source: Use if the category should use a different source.
       #  * weights: Query::Weights.new( [:category1, :category2] => +2, ... )
       #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
-      #
-      # TODO Should source be not optional, or taken from the index?
       #
       def initialize name, index, options = {}
         @name = name
@@ -35,7 +32,7 @@ module Internals
         @configuration = Configuration::Index.new index, self
 
         @tokenizer = options[:tokenizer] || Tokenizers::Index.default
-        @indexer = Indexers::Serial.new configuration, options[:source], @tokenizer
+        @source    = options[:source]    # TODO || raise("...")?
 
         # TODO Push into Bundle. At least the weights.
         #
@@ -58,6 +55,14 @@ Category(#{name} from #{from}):
         CATEGORY
       end
 
+      # The indexer is lazily generated and cached.
+      #
+      def indexer
+        @indexer ||= Indexers::Serial.new configuration, @source, @tokenizer
+      end
+
+      # Where the data is taken from.
+      #
       def from
         @from || name
       end
