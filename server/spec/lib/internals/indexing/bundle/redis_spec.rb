@@ -3,15 +3,14 @@ require 'spec_helper'
 describe Internals::Indexing::Bundle::Redis do
 
   before(:each) do
-    @internal_index = stub :index, :name => :some_index
-    @category       = stub :category, :name => :some_category
-    @configuration  = Configuration::Index.new @internal_index, @category
+    @index       = stub :index, :name => :some_index
+    @category    = Internals::Indexing::Category.new :some_category, @index
     
     @partial     = stub :partial
     @weights     = stub :weights
     @similarity  = stub :similarity
   end
-  let(:index) { described_class.new :some_name, @configuration, @similarity, @partial, @weights }
+  let(:index) { described_class.new :some_name, @category, @similarity, @partial, @weights }
 
   describe 'raise_cache_missing' do
     it 'does something' do
@@ -65,8 +64,8 @@ describe Internals::Indexing::Bundle::Redis do
       index.stub! :files => files
       
       @ary = stub :ary
-      @internal_index.should_receive(:[]).any_number_of_times.and_return @ary
-      index.stub! :index => @internal_index
+      @index.should_receive(:[]).any_number_of_times.and_return @ary
+      index.stub! :index => @index
     end
     context 'id key format' do
       before(:each) do

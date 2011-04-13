@@ -4,10 +4,9 @@ describe Internals::Index::Files do
 
   before(:each) do
     index         = stub :index, :name => :some_index
-    category      = stub :category, :name => :some_category
-    configuration = Configuration::Index.new index, category
+    category      = Internals::Indexing::Category.new :some_category, index
     
-    @files         = described_class.new :some_name, configuration
+    @files         = described_class.new :some_name, category
     
     @prepared      = @files.prepared
     

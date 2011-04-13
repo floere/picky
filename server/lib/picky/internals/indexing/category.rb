@@ -4,11 +4,9 @@ module Internals
 
     class Category
 
-      attr_reader :exact, :partial, :name, :index, :configuration
+      include Internals::Shared::Category
 
-      # TODO Delegate to the index.
-      #
-      delegate :identifier, :prepare_index_directory, :prepared_index_file, :to => :configuration
+      attr_reader :name, :index, :exact, :partial
 
       # Mandatory params:
       #  * name: Category name to use as identifier and file names.
@@ -25,18 +23,12 @@ module Internals
       #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
       #
       def initialize name, index, options = {}
-        @name = name
-        @from = options[:from]
-
-        # Now we have enough info to combine the index and the category.
-        #
-        # TODO Remove.
-        #
-        @configuration = Configuration::Index.new index, self
+        @name  = name
         @index = index
 
-        @tokenizer = options[:tokenizer]
         @source    = options[:source]
+        @from      = options[:from]
+        @tokenizer = options[:tokenizer]
 
         # TODO Push into Bundle. At least the weights.
         #
@@ -45,18 +37,8 @@ module Internals
         similarity = options[:similarity] || Generators::Similarity::Default
 
         bundle_class = options[:indexing_bundle_class] || Bundle::Memory
-        @exact   = bundle_class.new(:exact,   configuration, similarity, Generators::Partial::None.new, weights)
-        @partial = bundle_class.new(:partial, configuration, Generators::Similarity::None.new, partial, weights)
-      end
-
-      def to_s
-        <<-CATEGORY
-Category(#{name} from #{from}):
-  Exact:
-#{exact.indented_to_s(4)}
-  Partial:
-#{partial.indented_to_s(4)}
-        CATEGORY
+        @exact   = bundle_class.new(:exact,   self, similarity, Generators::Partial::None.new, weights)
+        @partial = bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
       end
 
       def source

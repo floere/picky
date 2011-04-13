@@ -16,8 +16,8 @@ module Internals
 
         # Path is in which directory the cache is located.
         #
-        def initialize name, configuration, similarity_strategy, partial_strategy, weights_strategy
-          super name, configuration, similarity_strategy
+        def initialize name, category, similarity_strategy, partial_strategy, weights_strategy
+          super name, category, similarity_strategy
 
           @partial_strategy    = partial_strategy
           @weights_strategy    = weights_strategy

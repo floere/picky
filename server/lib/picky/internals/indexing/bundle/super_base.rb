@@ -33,9 +33,9 @@ module Internals
         delegate :clear,    :to => :index
         delegate :[], :[]=, :to => :configuration
 
-        def initialize name, configuration, similarity_strategy
-          @identifier = "#{configuration.identifier}:#{name}"
-          @files      = Internals::Index::Files.new name, configuration
+        def initialize name, category, similarity_strategy
+          @identifier    = "#{category.identifier}:#{name}"
+          @files         = Internals::Index::Files.new name, category
 
           @index         = {}
           @weights       = {}

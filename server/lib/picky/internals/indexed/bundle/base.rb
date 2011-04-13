@@ -35,8 +35,8 @@ module Internals
         delegate :[], :to => :configuration
         delegate :size, :to => :index
 
-        def initialize name, configuration, similarity_strategy
-          @identifier = "#{configuration.identifier}:#{name}"
+        def initialize name, category, similarity_strategy
+          @identifier = "#{category.identifier}:#{name}"
 
           @index         = {}
           @weights       = {}

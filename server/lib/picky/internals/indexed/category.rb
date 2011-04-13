@@ -9,18 +9,17 @@ module Internals
     #
     class Category
 
+      include Internals::Shared::Category
+
       attr_accessor :exact
-      attr_reader   :identifier, :name
+      attr_reader   :name, :index
       attr_writer   :partial
 
       #
       #
       def initialize name, index, options = {}
-        @name = name
-
-        configuration = Configuration::Index.new index, self
-
-        @identifier    = configuration.identifier
+        @name  = name
+        @index = index
 
         # TODO Push the defaults out into the index.
         #
@@ -28,15 +27,15 @@ module Internals
         similarity = options[:similarity] || Internals::Generators::Similarity::Default
 
         bundle_class = options[:indexed_bundle_class] || Bundle::Memory
-        @exact   = bundle_class.new :exact,   configuration, similarity
-        @partial = bundle_class.new :partial, configuration, similarity
+        @exact   = bundle_class.new :exact,   self, similarity
+        @partial = bundle_class.new :partial, self, similarity
 
         # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
         # @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
 
         # TODO Extract?
         #
-        Query::Qualifiers.add(configuration.category_name, generate_qualifiers_from(options) || [name])
+        Query::Qualifiers.add(name, generate_qualifiers_from(options) || [name])
       end
 
       def to_s

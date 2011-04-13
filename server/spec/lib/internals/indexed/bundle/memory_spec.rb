@@ -3,12 +3,11 @@ require 'spec_helper'
 describe Internals::Indexed::Bundle::Memory do
 
   before(:each) do
-    @category     = stub :category, :name => :some_category
     @index        = stub :index, :name => :some_index
-    @configuration = Configuration::Index.new @index, @category
+    @category     = Internals::Indexed::Category.new :some_category, @index
     
     @similarity   = stub :similarity
-    @bundle       = described_class.new :some_name, @configuration, @similarity
+    @bundle       = described_class.new :some_name, @category, @similarity
   end
   
   describe 'to_s' do
@@ -161,11 +160,10 @@ Memory
   
   describe 'initialization' do
     before(:each) do
-      @category = stub :category, :name => :some_category
       @index    = stub :index, :name => :some_index
-      @configuration = Configuration::Index.new @index, @category
+      @category = Internals::Indexed::Category.new :some_category, @index
       
-      @bundle = described_class.new :some_name, @configuration, :similarity
+      @bundle = described_class.new :some_name, @category, :similarity
     end
     it 'should initialize the index correctly' do
       @bundle.index.should == {}

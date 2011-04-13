@@ -5,7 +5,7 @@
 #
 require File.expand_path '../../lib/picky', __FILE__
 
-# Load your application. This requires the files in lib TODO
+# Load your application.
 #
 Loader.load_application
 

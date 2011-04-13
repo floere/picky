@@ -7,12 +7,11 @@ describe Internals::Indexed::Bundle::Redis do
     
     Internals::Index::Redis.stub! :new => @backend
     
-    @category     = stub :category, :name => :some_category
     @index        = stub :index, :name => :some_index
-    @configuration = Configuration::Index.new @index, @category
+    @category     = Internals::Indexed::Category.new :some_category, @index
     
     @similarity   = stub :similarity
-    @bundle       = described_class.new :some_name, @configuration, @similarity
+    @bundle       = described_class.new :some_name, @category, @similarity
   end
   
   describe 'ids' do

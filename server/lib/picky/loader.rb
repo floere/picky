@@ -147,6 +147,10 @@ module Loader # :nodoc:all
     load_internals 'generators/weights_generator'
     load_internals 'generators/similarity_generator'
 
+    # Shared index elements.
+    #
+    load_internals 'shared/category'
+
     # Index store handling.
     #
     load_internals 'index/backend'
@@ -221,7 +225,7 @@ module Loader # :nodoc:all
 
     # Configuration.
     #
-    load_internals 'configuration/index'
+    # load_internals 'configuration/index'
 
     # Adapters.
     #

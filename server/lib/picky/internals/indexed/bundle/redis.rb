@@ -14,10 +14,10 @@ module Internals
       #
       class Redis < Base
 
-        def initialize name, configuration, *args
-          super name, configuration, *args
+        def initialize name, category, *args
+          super name, category, *args
 
-          @backend = Internals::Index::Redis.new name, configuration
+          @backend = Internals::Index::Redis.new name, category
         end
 
         # Get the ids for the given symbol.
