@@ -1,3 +1,9 @@
+h2. Version 2.2.0
+
+* hanke: (server) #each
+* hanke: (server) API
+* hanke: (server) sources
+
 h2. Version 2.1.2
 
 * hanke: (server) Improved @rake search <url> [<result id amount>]@ with better description and error handling.

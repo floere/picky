@@ -24,20 +24,20 @@ describe Application do
         # Here we just test if the API can be called ok.
         #
         class TestApplication < Application
-          default_indexing removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
-                           stopwords:                          /\b(and|the|of|it|in|for)\b/,
-                           splits_text_on:                     /[\s\/\-\"\&\.]/,
-                           removes_characters_after_splitting: /[\.]/,
-                           normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
-                           reject_token_if:                    lambda { |token| token.blank? || token == :amistad }
+          indexing  removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
+                    stopwords:                          /\b(and|the|of|it|in|for)\b/,
+                    splits_text_on:                     /[\s\/\-\"\&\.]/,
+                    removes_characters_after_splitting: /[\.]/,
+                    normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
+                    reject_token_if:                    lambda { |token| token.blank? || token == :amistad }
                            
-          default_querying removes_characters: /[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/,
-                           stopwords:          /\b(and|the|of|it|in|for)\b/,
-                           splits_text_on:     /[\s\/\-\,\&]+/,
-                           normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
-                           
-                           substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
-                           maximum_tokens: 5
+          searching removes_characters: /[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/,
+                    stopwords:          /\b(and|the|of|it|in|for)\b/,
+                    splits_text_on:     /[\s\/\-\,\&]+/,
+                    normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
+                    
+                    substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+                    maximum_tokens: 5 # TODO maximum_words?
           
           books_index = Index::Memory.new :books,
                               Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
@@ -49,6 +49,7 @@ describe Application do
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
           geo_index = Index::Memory.new :geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',') do
+            indexing        removes_characters: /[^a-z]/
             category        :location,
                             similarity: Similarity::Metaphone.new(4)
             ranged_category :north1, 1, precision: 3, from: :north

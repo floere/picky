@@ -152,16 +152,19 @@ class Application
     # Returns a configured tokenizer that
     # is used for indexing by default.
     #
-    def default_indexing options = {}
+    def indexing options = {}
       Internals::Tokenizers::Index.default = Internals::Tokenizers::Index.new(options)
     end
+    alias default_indexing indexing
 
     # Returns a configured tokenizer that
     # is used for querying by default.
     #
-    def default_querying options = {}
+    def searching options = {}
       Internals::Tokenizers::Query.default = Internals::Tokenizers::Query.new(options)
     end
+    alias default_querying searching
+    alias querying searching
 
     # Routes.
     #
