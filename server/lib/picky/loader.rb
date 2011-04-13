@@ -109,7 +109,7 @@ module Loader # :nodoc:all
 
     # Index generation strategies.
     #
-    load_internals 'indexers/no_source_specified_error'
+    load_internals 'indexers/no_source_specified_exception'
     load_internals 'indexers/serial'
 
     # Generators.
