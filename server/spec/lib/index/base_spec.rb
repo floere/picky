@@ -21,7 +21,7 @@ ERROR
     end
     it 'fails correctly' do
       expect { described_class.new :some_index_name, :some_source }.to raise_error(<<-ERROR
-The index "some_index_name" should use a data source that responds to the method #harvest, which yields(id, text).
+The index "some_index_name" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
 Or it could use one of the built-in sources:
   Sources::DB,
   Sources::CSV,
@@ -29,6 +29,9 @@ Or it could use one of the built-in sources:
   Sources::Couch
 ERROR
 )
+    end
+    it 'does not fail' do
+      expect { described_class.new :some_index_name, [] }.to_not raise_error
     end
     it 'registers with the indexes' do
       @api = described_class.allocate

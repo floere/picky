@@ -36,6 +36,18 @@ class BookSearch < Application
       category :isbn, :qualifiers => [:i, :isbn]
     end
 
+    class ISBN
+      @@id = 1
+      attr_reader :id, :isbn
+      def initialize
+        @id   = @@id += 1
+        @isbn = rand(1000000).to_s # Fake ISBN.
+      end
+    end
+    isbn_each_index = Index::Memory.new :isbn_each, [ISBN.new, ISBN.new] do
+      category :isbn, :qualifiers => [:i, :isbn]
+    end
+
     mgeo_index = Index::Memory.new :memory_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',') do
       category     :location
       map_location :north1, 1, precision: 3, from: :north

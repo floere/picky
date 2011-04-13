@@ -20,6 +20,7 @@ module Index
     # === Options
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
+    # * tokenizer: The tokenizer to use for this index.
     #
     # Example:
     #   my_index = Index::Memory.new(:my_index, some_source) do
@@ -54,12 +55,12 @@ Examples:
 NAME
 ) unless name.respond_to?(:to_sym)
       raise ArgumentError.new(<<-SOURCE
-The index "#{name}" should use a data source that responds to the method #harvest, which yields(id, text).
+The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
 Or it could use one of the built-in sources:
   Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
   Sources::')}
 SOURCE
-) unless source.respond_to?(:harvest)
+) unless source.respond_to?(:each) || source.respond_to?(:harvest)
     end
 
     def to_stats

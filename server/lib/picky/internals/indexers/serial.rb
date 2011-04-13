@@ -6,28 +6,14 @@ module Indexers
   #
   # Note: It is called serial since it indexes each
   #
-  class Serial
-
-    attr_accessor :tokenizer, :source
+  # FIXME Giving the serial a category would be enough, since it already contains a configuration!
+  #
+  class Serial < Base
 
     def initialize configuration, source, tokenizer
       @configuration = configuration
       @source        = source || raise_no_source
       @tokenizer     = tokenizer
-    end
-
-    # Raise a no source exception.
-    #
-    def raise_no_source
-      raise NoSourceSpecifiedException.new("No source given for #{@configuration}.")
-    end
-
-    # Delegates the key format to the source.
-    #
-    # Default is to_i.
-    #
-    def key_format
-      @source.key_format || :to_i
     end
 
     # Selects the original id (indexed id) and a column to process. The column data is called "token".
@@ -66,8 +52,10 @@ module Indexers
         file.write result.join
       end
     end
+    #
+    #
     def indexing_message
-      timed_exclaim %Q{"#{@configuration.identifier}": Starting indexing.}
+      timed_exclaim %Q{"#{@configuration.identifier}": Starting serial indexing.}
     end
 
   end

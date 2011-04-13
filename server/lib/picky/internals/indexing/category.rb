@@ -6,7 +6,7 @@ module Internals
 
       attr_reader :exact, :partial, :name, :configuration
 
-      delegate :identifier, :prepare_index_directory, :to => :configuration
+      delegate :identifier, :prepare_index_directory, :prepared_index_file, :to => :configuration
       delegate :source, :source=, :tokenizer, :tokenizer=, :to => :indexer
 
       # Mandatory params:

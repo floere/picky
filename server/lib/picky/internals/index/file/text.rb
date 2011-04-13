@@ -1,13 +1,13 @@
 module Internals
 
   module Index
-  
+
     module File
-    
+
       # Index data dumped in the text format.
       #
       class Text < Basic
-      
+
         # Uses the extension "txt".
         #
         def extension
@@ -20,12 +20,12 @@ module Internals
           raise "Can't load from text file. Use JSON or Marshal."
         end
         # Text files are used exclusively for
-        # prepared data files. 
+        # prepared data files.
         #
         def dump hash
           raise "Can't dump to text file. Use JSON or Marshal."
         end
-      
+
         # Retrieves prepared index data in the form
         # * id,data\n
         # * id,data\n
@@ -43,18 +43,18 @@ module Internals
             end
           end
         end
-      
+
         #
         #
         def open_for_indexing &block
           ::File.open cache_path, 'w:binary', &block
         end
-      
-      
+
+
       end
-    
+
     end
-  
+
   end
-  
+
 end

@@ -4,13 +4,13 @@ module Internals
 
     class Categories
 
-      attr_reader :categories
+      attr_reader :categories, :tokenizer
 
-      delegate :<<, :to => :categories
+      delegate :<<, :map, :size, :zip, :to => :categories
 
-      each_delegate :index,
-                    :cache,
+      each_delegate :cache,
                     :generate_caches,
+                    :index,
                     :backup_caches,
                     :restore_caches,
                     :check_caches,
@@ -18,10 +18,14 @@ module Internals
                     :create_directory_structure,
                     :to => :categories
 
-      def initialize
+      def initialize tokenizer
+        @tokenizer = tokenizer
+
         @categories = []
       end
 
+      #
+      #
       def find category_name
         category_name = category_name.to_sym
 
@@ -31,6 +35,14 @@ module Internals
         end
 
         raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
+      end
+
+      # Indexes the categories in parallel.
+      #
+      def index_parallel index, source
+        indexer = Indexers::Parallel.new index, self, source, tokenizer
+        categories.first.prepare_index_directory
+        indexer.index
       end
 
       def to_s
