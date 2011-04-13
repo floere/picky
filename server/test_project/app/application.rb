@@ -2,6 +2,8 @@
 #
 class BookSearch < Application
 
+    # TODO Rename index_tokenizer...
+    #
     default_indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/i,
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
                      splits_text_on:                     /[\s\/\-\"\&]/,
@@ -12,6 +14,8 @@ class BookSearch < Application
 
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
+    # TODO Rename query_tokenizer...
+    #
     default_querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/i,
                      stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
                      splits_text_on:                     /[\s\/\-\,\&]+/,
@@ -23,6 +27,8 @@ class BookSearch < Application
                      substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
     books_index = Index::Memory.new :books, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml'), result_identifier: 'boooookies' do
+      # tokenizer removes_characters: /[abc]/
+      # indexing removes_characters: /[abc]/
       category :id
       category :title,
                qualifiers: [:t, :title, :titre],

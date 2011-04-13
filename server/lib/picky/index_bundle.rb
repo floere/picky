@@ -37,8 +37,8 @@ class IndexBundle # :nodoc:all
     self.indexes << index
     self.index_mapping[index.name] = index
 
-    indexing.register index.indexing
-    indexed.register  index.indexed
+    indexing.register index.internal_indexing
+    indexed.register  index.internal_indexed
   end
 
   def [] name

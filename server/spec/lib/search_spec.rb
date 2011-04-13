@@ -6,7 +6,7 @@ describe Search do
   
   before(:each) do
     @type      = stub :type
-    @index     = stub :some_index, :indexed => @type
+    @index     = stub :some_index, :internal_indexed => @type
   end
   
   describe 'combinations_type_for' do

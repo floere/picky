@@ -42,6 +42,12 @@ module Internals
         new_category
       end
 
+      # TODO Spec. Doc.
+      #
+      def define_indexing options = {}
+        @tokenizer = Internals::Tokenizers::Index.new options
+      end
+
       #
       #
       def find category_name

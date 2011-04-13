@@ -6,7 +6,7 @@ describe Internals::Query::Indexes do
     n       = i + 1
     name    = :"index#{n}"
     indexed = :"indexed#{n}"
-    let(name) { stub name, :indexed => stub(indexed) }
+    let(name) { stub name, :internal_indexed => stub(indexed) }
   end
 
   let(:indexes) { described_class.new index1, index2, index3 }

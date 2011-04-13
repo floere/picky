@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe IndexBundle do
   
-  let(:some_index) { stub :index, :name => :some_index, :indexed => :indexed_index, :indexing => :indexing_index }
+  let(:some_index) { stub :index, :name => :some_index, :internal_indexed => :indexed_index, :internal_indexing => :indexing_index }
   let(:indexes) { described_class.new }
   let(:indexed) { stub :indexed, :register => nil }
   let(:indexing) { stub :indexing, :register => nil }

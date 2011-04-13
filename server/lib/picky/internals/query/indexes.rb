@@ -22,7 +22,7 @@ module Internals
       #
       def initialize *index_definitions, combinations_type
         @combinations_type = combinations_type
-        @indexes           = index_definitions.map &:indexed
+        @indexes           = index_definitions.map(&:internal_indexed)
       end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.

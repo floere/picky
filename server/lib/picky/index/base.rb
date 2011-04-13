@@ -9,8 +9,7 @@ module Index
   #
   class Base
 
-    attr_reader   :name
-    attr_accessor :indexing, :indexed
+    attr_reader :name
 
     # Create a new index with a given source.
     #
@@ -44,6 +43,12 @@ module Index
       #
       instance_eval(&Proc.new) if block_given?
     end
+    def internal_indexing
+      @indexing
+    end
+    def internal_indexed
+      @indexed
+    end
     #
     # Since this is an API, we fail hard quickly.
     #
@@ -67,12 +72,21 @@ SOURCE
     def to_stats
       stats = <<-INDEX
 #{name} (#{self.class}):
-  #{"source:            #{indexing.source}".indented_to_s}
-  #{"categories:        #{indexing.categories.map(&:name).join(', ')}".indented_to_s}
+  #{"source:            #{internal_indexing.source}".indented_to_s}
+  #{"categories:        #{internal_indexing.categories.map(&:name).join(', ')}".indented_to_s}
 INDEX
-      stats << "  result identifier: \"#{indexed.result_identifier}\"".indented_to_s unless indexed.result_identifier.to_s == indexed.name.to_s
+      stats << "  result identifier: \"#{internal_indexed.result_identifier}\"".indented_to_s unless internal_indexed.result_identifier.to_s == internal_indexed.name.to_s
       stats
     end
+
+    # Define an index tokenizer on the index.
+    #
+    # Parameters are the exact same as for the default_indexing.
+    #
+    def define_indexing options = {}
+      internal_indexing.define_indexing options
+    end
+    alias indexing define_indexing
 
     # Defines a searchable category on the index.
     #
@@ -90,8 +104,8 @@ INDEX
     def define_category category_name, options = {}
       category_name = category_name.to_sym
 
-      indexing_category = indexing.define_category category_name, options
-      indexed_category  = indexed.define_category  category_name, options
+      indexing_category = internal_indexing.define_category category_name, options
+      indexed_category  = internal_indexed.define_category  category_name, options
 
       yield indexing_category, indexed_category if block_given?
 

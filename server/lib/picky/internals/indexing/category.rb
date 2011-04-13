@@ -41,6 +41,10 @@ module Internals
         @partial = bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
       end
 
+      # Return an appropriate source.
+      #
+      # Note: Will raise if neither the category nor its index provides a source.
+      #
       def source
         @source || @index.source || raise_no_source
       end
@@ -52,7 +56,9 @@ module Internals
       def indexer
         @indexer ||= Indexers::Serial.new self
       end
-      # The tokenizer is chosen by hierarchy, bottom-up.
+      # Returns an appropriate tokenizer.
+      # If one isn't set on this category, will try the index,
+      # and finally the default index tokenizer.
       #
       def tokenizer
         @tokenizer || @index.tokenizer || Tokenizers::Index.default
