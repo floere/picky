@@ -167,21 +167,10 @@ INDEX
         Internals::Indexing::Wrappers::Category::Location.install_on indexing_category, range, precision
         Internals::Indexed::Wrappers::Category::Location.install_on indexed_category, range, precision
       end
-
-      # # TODO Change this such that the location replaces the whole indexing.
-      # #
-      # indexing.source    = Sources::Wrappers::Location.new indexing, grid: range, precision: precision
-      # indexing.tokenizer = Internals::Tokenizers::Index.new
-      #
-      # # TODO Change this such that the location replaces the whole indexing.
-      # #
-      # exact_bundle    = Indexed::Wrappers::Bundle::Location.new indexed.exact, grid: range, precision: precision
-      # indexed.exact   = exact_bundle
-      # indexed.partial = exact_bundle # A partial token also uses the exact index.
     end
     alias ranged_category define_ranged_category
 
-    #  HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
+    # HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
     #
     # Also a range search see #define_ranged_category, but on the earth's surface.
     #
