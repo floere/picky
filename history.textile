@@ -5,6 +5,7 @@ h2. Version 2.2.0
 * hanke: (server) The app/application.rb API has gotten a few aliases: @default_indexing@ and @default_querying@ can now be called with @indexing@ or @searching@.
 * hanke: (server) Each index can now have its own indexing. Use e.g. @Index::Memory.new(:some_index) do indexing removes_characters: /[^a-z]/i end@.
 * hanke: (server) Each @Search@ can now have its own "searching", e.g.: @Search.new(some_index) do searching removes_characters: /[^a-z]/i end@
+* hanke: (server) Added option for collaborators (on the Picky server) of setting the performance ratio if the performance specs fail too often. Just add a @spec/performance_ratio.rb@ file with the content @module Picky; PerformanceRatio = x.xx end@. Less than 1.0 is more benign, more than 1.0 is harsher.
 
 h2. Version 2.1.2
 
