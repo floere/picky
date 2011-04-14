@@ -7,13 +7,13 @@
 #
 class PickySearch < Application
 
-  # How text is indexed.
+  # How text is indexed. Move to Index block to make it index specific.
   #
   indexing removes_characters: /[^a-zA-Z0-9\s\/\-\"\&\.]/i,
            stopwords:          /\b(and|the|of|it|in|for)\b/i,
            splits_text_on:     /[\s\/\-\"\&\.]/
 
-  # How query text is preprocessed.
+  # How query text is preprocessed. Move to Search block to make it search specific.
   #
   searching removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/i, # Picky needs control chars *"~: to pass through.
             stopwords:          /\b(and|the|of|it|in|for)\b/i,
