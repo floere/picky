@@ -4,6 +4,8 @@ module Query
   #
   class Weights # :nodoc:all
 
+    attr_reader :weights
+
     #
     #
     def initialize weights = {}
@@ -44,6 +46,10 @@ module Query
     #
     def empty?
       @weights.empty?
+    end
+
+    def == other
+      @weights == other.weights
     end
 
     # Prints out a nice representation of the configured weights.
