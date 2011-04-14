@@ -9,6 +9,18 @@ describe Search do
     @index     = stub :some_index, :internal_indexed => @type
   end
   
+  describe 'boost' do
+    let(:search) do
+      described_class.new do
+        boost [:a, :b] => +3,
+              [:c, :d] => -1
+      end
+    end
+    it 'works' do
+      search.weights.should == Query::Weights.new([:a, :b] => 3, [:c, :d] => -1)
+    end
+  end
+  
   describe 'tokenizer' do
     context 'no tokenizer predefined' do
       let(:search) { described_class.new }
@@ -18,11 +30,20 @@ describe Search do
     end
     context 'tokenizer predefined' do
       let(:predefined) { stub(:tokenizer, :tokenize => nil) }
-      let(:search) { described_class.new(tokenizer: predefined) }
-      it 'returns the predefined tokenizer' do
-        search.tokenizer.should == predefined
+      context 'by way of hash' do
+        let(:search) { described_class.new(tokenizer: predefined) }
+        it 'returns the predefined tokenizer' do
+          search.tokenizer.should == predefined
+        end
+      end
+      context 'by way of DSL' do
+        let(:search) { pre = predefined; described_class.new { searching pre } }
+        it 'returns the predefined tokenizer' do
+          search.tokenizer.should == predefined
+        end
       end
     end
+    
   end
   
   describe 'combinations_type_for' do
