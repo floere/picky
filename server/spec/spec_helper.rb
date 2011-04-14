@@ -29,7 +29,7 @@ rescue LoadError => e
   # collaborators who don't need to check
   # performance so much.
   #
-  Picky::PerformanceRatio = 0.5
+  module Picky; PerformanceRatio = 0.5 end
 end
 def performance_of
   if block_given?
