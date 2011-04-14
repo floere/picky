@@ -2,6 +2,8 @@ module Sources
 
   module Wrappers
 
+    # Should this actually just be a tokenizer?
+    #
     class Location < Base
 
       attr_reader :calculation
