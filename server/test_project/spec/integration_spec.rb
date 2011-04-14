@@ -116,7 +116,7 @@ describe "Integration Tests" do
     # Stopwords.
     #
     it_should_find_ids_in_csv "and the history or fergus", [4, 4]
-    it_should_find_ids_in_csv "und and the or on of in is to from as at an history fergus", [4, 4]
+    it_should_find_ids_in_csv "and the or on of in is to from as at an history fergus", [4, 4]
     
     # Normalization.
     #

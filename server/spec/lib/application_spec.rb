@@ -60,6 +60,9 @@ describe Application do
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
           route %r{^/books} => Search.new(books_index)
+          route %r{^/buks}  => Search.new(books_index) do
+            searching removes_characters: /[buks]/
+          end
         end
       }.should_not raise_error
     end

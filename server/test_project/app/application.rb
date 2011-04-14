@@ -7,7 +7,6 @@ class BookSearch < Application
              splits_text_on:                     /[\s\/\-\"\&\/]/,
              removes_characters_after_splitting: /[\.]/,
              normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
-             # TODO Rename rejects_token_if
              rejects_token_if:                   lambda { |token| token.blank? || token == :amistad },
              case_sensitive:                     false,
 
@@ -36,7 +35,8 @@ class BookSearch < Application
 
     class Book < ActiveRecord::Base; end
     Book.establish_connection YAML.load(File.open('app/db.yml'))
-    book_each_index = Index::Memory.new :book_each, source: Book.order('title ASC') do
+    book_each_index = Index::Memory.new :book_each do
+      source   Book.order('title ASC')
       category :id
       category :title,
                qualifiers: [:t, :title, :titre],
