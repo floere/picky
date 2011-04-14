@@ -4,3 +4,4 @@ username: root
 password:
 database: picky_test_project
 encoding: utf8
+reconnect: true

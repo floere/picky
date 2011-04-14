@@ -37,7 +37,7 @@ class Search
 
     @indexes  = Internals::Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
     searching options[:tokenizer]
-    weights   options[:weights]
+    boost     options[:weights]
 
     instance_eval(Proc.new) if block_given?
   end
@@ -51,17 +51,24 @@ class Search
   #   end
   #
   def searching options
-    @tokenizer = options && Internals::Tokenizers::Query.new(options) || Internals::Tokenizers::Query.default
+    @tokenizer = if options.respond_to?(:tokenize)
+      options
+    else
+      options && Internals::Tokenizers::Query.new(options)
+    end
+  end
+  def tokenizer
+    @tokenizer || Internals::Tokenizers::Query.default
   end
   # TODO Doc. Spec.
   #
   # Example:
   #   Search.new(index1, index2, index3) do
   #     searching removes_characters: /[^a-z]/, etc.
-  #     weights [:author, :title] => +3, [:title, :isbn] => +1
+  #     boost [:author, :title] => +3, [:title, :isbn] => +1
   #   end
   #
-  def weights options
+  def boost options
     weights  = options || Query::Weights.new
     @weights = Hash === weights ? Query::Weights.new(weights) : weights
   end

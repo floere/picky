@@ -9,6 +9,22 @@ describe Search do
     @index     = stub :some_index, :internal_indexed => @type
   end
   
+  describe 'tokenizer' do
+    context 'no tokenizer predefined' do
+      let(:search) { described_class.new }
+      it 'returns the default tokenizer' do
+        search.tokenizer.should == Internals::Tokenizers::Query.default
+      end
+    end
+    context 'tokenizer predefined' do
+      let(:predefined) { stub(:tokenizer, :tokenize => nil) }
+      let(:search) { described_class.new(tokenizer: predefined) }
+      it 'returns the predefined tokenizer' do
+        search.tokenizer.should == predefined
+      end
+    end
+  end
+  
   describe 'combinations_type_for' do
     let(:search) { described_class.new }
     it 'returns a specific Combination for a specific input' do

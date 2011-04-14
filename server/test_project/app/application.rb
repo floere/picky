@@ -8,7 +8,7 @@ class BookSearch < Application
              removes_characters_after_splitting: /[\.]/,
              normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
              # TODO Rename rejects_token_if
-             reject_token_if:                    lambda { |token| token.blank? || token == :amistad },
+             rejects_token_if:                   lambda { |token| token.blank? || token == :amistad },
              case_sensitive:                     false,
 
              substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
@@ -17,7 +17,7 @@ class BookSearch < Application
              stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
              splits_text_on:                     /[\s\/\-\,\&\/]/,
              removes_characters_after_splitting: //,
-             # reject_token_if:                    lambda { |token| token.blank? || token == :hell }, # Not yet.
+             # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.
              case_sensitive:                     true,
 
              maximum_tokens:                     5,
@@ -35,7 +35,7 @@ class BookSearch < Application
 
     class Book < ActiveRecord::Base; end
     Book.establish_connection YAML.load(File.open('app/db.yml'))
-    book_each_index = Index::Memory.new :book_each, Book.order('id ASC') do
+    book_each_index = Index::Memory.new :book_each, Book.order('title ASC') do
       category :id
       category :title,
                qualifiers: [:t, :title, :titre],
