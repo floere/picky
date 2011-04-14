@@ -11,22 +11,22 @@ describe Internals::Indexed::Wrappers::ExactFirst do
   end
   
   describe "self.wrap" do
-    context "type" do
-      # FIXME
-      #
-      # it "wraps each category" do
-      #   type = Index::Type.new :type_name
-      #   type.define_category :some_category
-      #   
-      #   Index::Wrappers::ExactFirst.wrap type
-      #   
-      #   type.categories.should be_kind_of(Index::Wrappers::ExactFirst)
-      # end
-      it "returns the type" do
-        type = Internals::Indexed::Index.new :type_name
-        type.define_category :some_category
+    context "index" do
+      it "wraps each category" do
+        index = Internals::Indexed::Index.new :index_name
+        index.define_category :some_category
         
-        described_class.wrap(type).should == type
+        Internals::Indexed::Wrappers::ExactFirst.wrap index
+        
+        index.categories.categories.each do |category|
+          category.should be_kind_of(Internals::Indexed::Wrappers::ExactFirst)
+        end
+      end
+      it "returns the index" do
+        index = Internals::Indexed::Index.new :index_name
+        index.define_category :some_category
+        
+        described_class.wrap(index).should == index
       end
     end
     context "category" do

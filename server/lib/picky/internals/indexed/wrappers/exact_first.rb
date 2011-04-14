@@ -4,14 +4,10 @@ module Internals
   #
   module Indexed
 
-    # TODO Spec
-    #
     module Wrappers
 
       # This index combines an exact and partial index.
       # It serves to order the results such that exact hits are found first.
-      #
-      # TODO Need to use the right subtokens. Bake in?
       #
       class ExactFirst < Indexed::Bundle::Base
 
@@ -42,8 +38,6 @@ module Internals
             new index_or_category
           end
         end
-        # TODO Do not extract categories!
-        #
         def self.wrap_each_of categories
           categories.categories.collect! { |category| new(category) }
         end

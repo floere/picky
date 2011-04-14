@@ -3,26 +3,26 @@
 module Internals
 
   module Indexing # :nodoc:all
-  
+
     module Bundle
-    
-      # The memory version dumps its generated indexes to disk
-      # (mostly JSON) to load them into memory on startup.
+
+      # The Redis version dumps its generated indexes to
+      # the Redis backend.
       #
       class Redis < Base
-      
+
         attr_reader :backend
-      
-        def initialize name, configuration, *args
-          super name, configuration, *args
-        
-          @backend = Internals::Index::Redis.new name, configuration # TODO Needed?
+
+        def initialize name, category, *args
+          super name, category, *args
+
+          @backend = Internals::Index::Redis.new name, category
         end
-    
+
       end
-    
+
     end
-  
+
   end
-  
+
 end
