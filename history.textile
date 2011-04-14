@@ -1,8 +1,10 @@
 h2. Version 2.2.0
 
-* hanke: (server) #each
-* hanke: (server) API
-* hanke: (server) sources
+* hanke: (server) (BREAKING CHANGE) Since I prefer the block style configuration for indexes, the source is now an optional parameter. Picky will tell you if you still use the old style. New is that you can define the source of an index in the block, e.g.: @Index::Memory.new(:some_index) do source Sources::CSV.new(...) end@
+* hanke: (server) Sources can now be anything that responds to #each and that returns objects that respond to #id. (That means you can just pass in an array, or MongoMapper or ActiveRecord's @Book.order('updated_at DESC')@ or similar)
+* hanke: (server) The app/application.rb API has gotten a few aliases: @default_indexing@ and @default_querying@ can now be called with @indexing@ or @searching@.
+* hanke: (server) Each index can now have its own indexing. Use e.g. @Index::Memory.new(:some_index) do indexing removes_characters: /[^a-z]/i end@.
+* hanke: (server) Each @Search@ can now have its own "searching", e.g.: @Search.new(some_index) do searching removes_characters: /[^a-z]/i end@
 
 h2. Version 2.1.2
 
