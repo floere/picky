@@ -4,29 +4,37 @@ require 'spec_helper'
 
 describe Index::Base do
   
-  let(:some_source) { stub :source, :harvest => nil }
+  let(:some_source) { stub :source, :harvest => nil, :inspect => 'some_source' }
   
   context 'initializer' do
     it 'works' do
       expect { described_class.new :some_index_name, source: some_source }.to_not raise_error
     end
     it 'fails correctly' do
-      expect { described_class.new 0, some_source }.to raise_error(<<-ERROR
-The index identifier (you gave "0") for Index::Memory/Index::Redis should be a String/Symbol,
-Examples:
-  Index::Memory.new(:my_cool_index, ...) # Recommended
-  Index::Redis.new("a-redis-index", ...)
-ERROR
-)
+      expect { described_class.new 0, some_source }.to raise_error
     end
     it 'fails correctly' do
-      expect { described_class.new :some_index_name, source: :some_source }.to raise_error(<<-ERROR
-The index "some_index_name" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
-Or it could use one of the built-in sources:
-  Sources::DB,
-  Sources::CSV,
-  Sources::Delicious,
-  Sources::Couch
+      expect { described_class.new :some_index_name, source: :some_source }.to raise_error
+    end
+    it 'fails with a good message deprecated way of source passing is used' do
+      expect { described_class.new :some_index_name, some_source }.to raise_error(<<-ERROR
+
+
+Sources are not passed in as second parameter for Index::Base anymore, but either
+* as :source option:
+  Index::Base.new(:some_index_name, source: some_source)
+or
+* given to the #source method inside the config block:
+  Index::Base.new(:some_index_name) do
+    source some_source
+  end
+
+Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
+
+All the best
+  -- Picky
+
+
 ERROR
 )
     end

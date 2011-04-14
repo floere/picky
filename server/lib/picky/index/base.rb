@@ -91,6 +91,7 @@ Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
 All the best
   -- Picky
 
+
 OPTIONS
 ) unless options.respond_to?(:[])
     end
