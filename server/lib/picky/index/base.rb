@@ -64,10 +64,10 @@ module Index
       raise ArgumentError.new(<<-NAME
 
 
-The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a String/Symbol,
+The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a Symbol/String,
 Examples:
-  Index::Memory.new(:my_cool_index, ...) # Recommended
-  Index::Redis.new("a-redis-index", ...)
+  Index::Memory.new(:my_cool_index) # Recommended
+  Index::Redis.new("a-redis-index")
 NAME
 
 
