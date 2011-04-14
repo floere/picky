@@ -104,7 +104,7 @@ module Picky
       :generate => [Generate, :'{sinatra_client,unicorn_server,empty_unicorn_server}', :'app_directory_name'],
       :help     => [Help],
       :live     => [Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)'],
-      :search   => [Search, :'url', 'amount of ids (default 20)'],
+      :search   => [Search, :url_or_path, 'amount of ids (default 20)'],
       :stats    => [Statistics, :'logfile (e.g. log/search.log)', 'port (default: 4567)']
     }
     def self.mapping

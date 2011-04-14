@@ -16,7 +16,7 @@ describe Picky::CLI do
         :generate => [Picky::CLI::Generate, :"{sinatra_client,unicorn_server,empty_unicorn_server}", :app_directory_name],
         :help     => [Picky::CLI::Help],
         :live     => [Picky::CLI::Live, "host:port/path (default: localhost:8080/admin)", "port (default: 4568)"],
-        :search   => [Picky::CLI::Search, :url, 'amount of ids (default 20)'],
+        :search   => [Picky::CLI::Search, :url_or_path, 'amount of ids (default 20)'],
         :stats    => [Picky::CLI::Statistics, :"logfile (e.g. log/search.log)", "port (default: 4567)"]
       }
     end
@@ -36,7 +36,7 @@ Possible commands:
   picky generate {sinatra_client,unicorn_server,empty_unicorn_server} app_directory_name
   picky help 
   picky live [host:port/path (default: localhost:8080/admin)] [port (default: 4568)]
-  picky search url [amount of ids (default 20)]
+  picky search url_or_path [amount of ids (default 20)]
   picky stats logfile (e.g. log/search.log) [port (default: 4567)]
 HELP
         cli.execute 'help'
@@ -62,7 +62,7 @@ HELP
         cli.executor_class_for(:live).should == [Picky::CLI::Live, "host:port/path (default: localhost:8080/admin)", "port (default: 4568)"]
       end
       it 'returns Search for stats' do
-        cli.executor_class_for(:search).should == [Picky::CLI::Search, :url, "amount of ids (default 20)"]
+        cli.executor_class_for(:search).should == [Picky::CLI::Search, :url_or_path, "amount of ids (default 20)"]
       end
       it 'returns Statistics for stats' do
         cli.executor_class_for(:stats).should == [Picky::CLI::Statistics, :"logfile (e.g. log/search.log)", "port (default: 4567)"]
