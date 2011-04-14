@@ -12,8 +12,6 @@ module Internals
                :analyze,
                :to => :categories
 
-      # TODO Externalize?
-      #
       def initialize name, options = {}
         @name                     = name
 
@@ -24,8 +22,6 @@ module Internals
         @categories = Categories.new ignore_unassigned_tokens: ignore_unassigned_tokens
       end
 
-      # TODO Doc. Externalize?
-      #
       def define_category category_name, options = {}
         options = default_category_options.merge options
 

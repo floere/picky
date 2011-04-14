@@ -17,6 +17,7 @@ describe "Integration Tests" do
     @csv        = Search.new Indexes[:csv_test]
     @indexing   = Search.new Indexes[:special_indexing]
     @memory_geo = Search.new Indexes[:memory_geo]
+    @real_geo   = Search.new Indexes[:real_geo]
     @redis      = Search.new Indexes[:redis]
   end
   
@@ -33,6 +34,11 @@ describe "Integration Tests" do
   def self.it_should_find_ids_in_memory_geo text, expected_ids
     it 'should return the right ids' do
       @memory_geo.search_with_text(text).ids.should == expected_ids
+    end
+  end
+  def self.it_should_find_ids_in_real_geo text, expected_ids
+    it 'should return the right ids' do
+      @real_geo.search_with_text(text).ids.should == expected_ids
     end
   end
   def self.it_should_find_ids_in_redis text, expected_ids
@@ -141,9 +147,13 @@ describe "Integration Tests" do
     it_should_find_ids_in_csv "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", []
     it_should_find_ids_in_csv "glorfgnorfblorf", []
     
-    # Location based search. Memory.
+    # Range based area search. Memory.
     #
     it_should_find_ids_in_memory_geo "north1:47.41,east1:8.55", [1413, 10346, 10661, 10746, 10861]
+    
+    # Geo based area search.
+    #
+    it_should_find_ids_in_real_geo "north1:47.41,east1:8.55", [1413, 5015, 9168, 10346, 10661, 10746, 10768, 10861]
     
     # Redis.
     #

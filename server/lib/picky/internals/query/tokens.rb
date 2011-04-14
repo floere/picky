@@ -44,10 +44,12 @@ module Internals
       #  [combination, combination]               # of token 3
       # ]
       #
-      def possible_combinations_in type
+      def possible_combinations_in index
         @tokens.inject([]) do |combinations, token|
-          possible_combinations = token.possible_combinations_in type
+          possible_combinations = token.possible_combinations_in index
 
+          # TODO Could move the ignore_unassigned_tokens here!
+          #
           # Note: Optimization for ignoring tokens that allocate to nothing and
           # can be ignored.
           # For example in a special search, where "florian" is not

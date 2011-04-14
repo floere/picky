@@ -78,6 +78,12 @@ class BookSearch < Application
       ranged_category :east1,  0.008, precision: 3, from: :east
     end
 
+    real_geo_index = Index::Memory.new :real_geo do
+      source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+      category       :location
+      geo_categories :north, :east, 1, precision: 3
+    end
+
     # rgeo_index = Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     # rgeo_index.define_category :location
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
@@ -138,14 +144,15 @@ class BookSearch < Application
       }
     }
 
-    route %r{\A/admin\Z} => LiveParameters.new
+    route %r{\A/admin\Z}      => LiveParameters.new
 
-    route %r{\A/books\Z} => Search.new(books_index, isbn_index, options),
-          %r{\A/redis\Z} => Search.new(redis_index, options),
-          %r{\A/csv\Z}   => Search.new(csv_test_index, options),
-          %r{\A/isbn\Z}  => Search.new(isbn_index),
-          %r{\A/geo\Z}   => Search.new(mgeo_index),
-          %r{\A/all\Z}   => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
+    route %r{\A/books\Z}      => Search.new(books_index, isbn_index, options),
+          %r{\A/redis\Z}      => Search.new(redis_index, options),
+          %r{\A/csv\Z}        => Search.new(csv_test_index, options),
+          %r{\A/isbn\Z}       => Search.new(isbn_index),
+          %r{\A/geo\Z}        => Search.new(real_geo_index),
+          %r{\A/simple_geo\Z} => Search.new(mgeo_index),
+          %r{\A/all\Z}        => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
     root 200
 

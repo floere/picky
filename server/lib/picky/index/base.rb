@@ -237,13 +237,14 @@ INDEX
 
     # HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
     #
-    # Also a range search see #define_ranged_category, but on the earth's surface.
+    # Also a range search see #ranged_category, but on the earth's surface.
     #
     # Parameters:
-    # * name: The name as used in #define_category.
+    # * lat_name: The latitude's name as used in #define_category.
+    # * lng_name: The longitude's name as used in #define_category.
     # * radius: The distance (in km) around the query point which we search for results.
     #
-    # Note: Picky uses a square, not a circle. We hope that's ok for most usages.
+    # Note: Picky uses a square, not a circle. That should be ok for most usages.
     #
     #  -----------------------------
     #  |                           |
@@ -261,23 +262,36 @@ INDEX
     #
     # Options
     # * precision: Default 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
-    # * from: The data category to take the data for this category from.
+    # * lat_from: The data category to take the data for the latitude from.
+    # * lng_from: The data category to take the data for the longitude from.
     #
-    # TODO Redo. Will have to write a wrapper that combines two categories that are indexed simultaneously.
+    # TODO Redo. Will have to write a wrapper that combines two categories that are
+    #      indexed simultaneously, since lat/lng are correlated.
     #
-    def map_location name, radius, options = {} # :nodoc:
-      # The radius is given as if all the locations were on the equator.
+    def geo_categories lat_name, lng_name, radius, options = {} # :nodoc:
+      # # The radius is given as if all the locations were on the equator.
+      # #
+      # # This calculates km -> longitude (degrees).
+      # #
+      # # A degree on the equator is equal to ~111,319.9 meters.
+      # # So a km on the equator is equal to 0.00898312 degrees.
+      # #
+      # define_ranged_category name, radius * 0.00898312, options
+
+      # One can be a normal ranged_category.
       #
-      # TODO Need to recalculate since not many locations are on the equator ;) This is just a prototype.
+      ranged_category lat_name, radius*0.00898312, options
+
+      # The other needs to adapt the radius depending on the one.
       #
-      # This calculates km -> longitude (degrees).
+      # Depending on the latitude, the radius of the longitude
+      # needs to enlarge, the closer we get to the pole.
       #
-      # A degree on the equator is equal to ~111,319.9 meters.
-      # So a km on the equator is equal to 0.00898312 degrees.
+      # For now, we use an average that works with latitude ±45°.
       #
-      define_ranged_category name, radius * 0.00898312, options
+      ranged_category lng_name, radius*0.01796624, options
     end
-    alias define_map_location map_location
+    alias define_geo_categories geo_categories
   end
 
 end
