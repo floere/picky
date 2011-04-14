@@ -5,7 +5,7 @@ begin
   require 'picky/cli'
 rescue LoadError => e
   require 'rubygems'
-  picky_path = File.expand_path '../../lib', __FILE__
+  picky_path = File.expand_path '../../aux', __FILE__
   $:.unshift(picky_path) if File.directory?(picky_path) && !$:.include?(picky_path)
   require 'picky/cli'
 end

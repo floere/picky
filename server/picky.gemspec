@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables = ['picky']
   s.default_executable = "picky"
 
-  s.files = Dir["lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/internals/ext/ruby19/performant.c"]
+  s.files = Dir["aux/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/internals/ext/ruby19/performant.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
 
   s.extensions << 'lib/picky/internals/ext/ruby19/extconf.rb'

@@ -1,0 +1,2 @@
+Here we find all source files not critical to the operation of Picky itself.
+(All that aren't loaded by loader.rb)
