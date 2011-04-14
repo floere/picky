@@ -2,8 +2,6 @@ module Internals
 
   module Indexed # :nodoc:all
 
-    # TODO Rewrite.
-    #
     # A Bundle is a number of indexes
     # per [index, category] combination.
     #

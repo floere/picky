@@ -15,15 +15,15 @@ module Index
     #
     # === Parameters
     # * name: A name that will be used for the index directory and in the Picky front end.
-    # * source: Where the data comes from, e.g. Sources::CSV.new(...). Optional, can be defined in the block using #source.
     #
     # === Options
+    # * source: Where the data comes from, e.g. Sources::CSV.new(...). Optional, can be defined in the block using #source.
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
-    # * tokenizer: The tokenizer to use for this index.
+    # * tokenizer: The tokenizer to use for this index. Optional, can be defined in the block using #indexing.
     #
     # Examples:
-    #   my_index = Index::Memory.new(:my_index, some_source) do
+    #   my_index = Index::Memory.new(:my_index, source: some_source) do
     #     category :bla
     #   end
     #
@@ -121,12 +121,12 @@ INDEX
 
     # Define an index tokenizer on the index.
     #
-    # Parameters are the exact same as for the default_indexing.
+    # Parameters are the exact same as for indexing.
     #
-    def define_indexing options = {}
+    def indexing options = {}
       internal_indexing.define_indexing options
     end
-    alias indexing define_indexing
+    alias define_indexing indexing
 
     # Define a source on the index.
     #
@@ -134,10 +134,10 @@ INDEX
     # anything responding to #each and returning objects that
     # respond to id and the category names (or the category from option).
     #
-    def define_source source
+    def source source
       internal_indexing.define_source source
     end
-    alias source define_source
+    alias define_source source
 
     # Defines a searchable category on the index.
     #
@@ -152,7 +152,7 @@ INDEX
     # * source: Use a different source than the index uses. If you think you need that, there might be a better solution to your problem. Please post to the mailing list first with your application.rb :)
     # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: define_category(:similar_title, :from => :title).
     #
-    def define_category category_name, options = {}
+    def category category_name, options = {}
       category_name = category_name.to_sym
 
       indexing_category = internal_indexing.define_category category_name, options
@@ -162,7 +162,7 @@ INDEX
 
       self
     end
-    alias category define_category
+    alias define_category category
 
     #  HIGHLY EXPERIMENTAL Try if you feel "beta" ;)
     #
@@ -223,7 +223,7 @@ INDEX
     # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
     # * ... all options of #define_category.
     #
-    def define_ranged_category category_name, range, options = {}
+    def ranged_category category_name, range, options = {}
       precision = options[:precision] || 1
 
       options = { partial: Partial::None.new }.merge options
@@ -233,7 +233,7 @@ INDEX
         Internals::Indexed::Wrappers::Category::Location.install_on indexed_category, range, precision
       end
     end
-    alias ranged_category define_ranged_category
+    alias define_ranged_category ranged_category
 
     # HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
     #
@@ -265,7 +265,7 @@ INDEX
     #
     # TODO Redo. Will have to write a wrapper that combines two categories that are indexed simultaneously.
     #
-    def define_map_location name, radius, options = {} # :nodoc:
+    def map_location name, radius, options = {} # :nodoc:
       # The radius is given as if all the locations were on the equator.
       #
       # TODO Need to recalculate since not many locations are on the equator ;) This is just a prototype.
@@ -277,7 +277,7 @@ INDEX
       #
       define_ranged_category name, radius * 0.00898312, options
     end
-    alias map_location define_map_location
+    alias define_map_location map_location
   end
 
 end

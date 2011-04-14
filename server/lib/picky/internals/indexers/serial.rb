@@ -6,8 +6,6 @@ module Indexers
   #
   # Note: It is called serial since it indexes each
   #
-  # FIXME Giving the serial a category would be enough, since it already contains an index!
-  #
   class Serial < Base
 
     attr_reader :category
@@ -24,22 +22,13 @@ module Indexers
       @tokenizer ||= category.tokenizer
     end
 
+    # Harvest the data from the source, tokenize,
+    # and write to an intermediate "prepared index" file.
+    #
     def process
       comma   = ?,
       newline = ?\n
 
-      # TODO Move open to config?
-      #
-      # @category.prepared_index do |file|
-      #   source.harvest(@index, @category) do |indexed_id, text|
-      #     tokenizer.tokenize(text).each do |token_text|
-      #       next unless token_text
-      #       file.buffer indexed_id << comma << token_text << newline
-      #     end
-      #     file.write_maybe
-      #   end
-      # end
-      #
       local_tokenizer = tokenizer
       category.prepared_index_file do |file|
         result = []

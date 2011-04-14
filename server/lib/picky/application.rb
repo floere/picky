@@ -13,14 +13,16 @@
 # will generate an example <tt>project_name/app/application.rb</tt> file for you
 # with some example code inside.
 #
-# == Index::Memory.new(name, source)
+# == Index::Memory.new(name)
 #
 # Next, define where your data comes from. You use the <tt>Index::Memory.new</tt> method for that:
-#   my_index = Index::Memory.new :some_index_name, some_source
+#   my_index = Index::Memory.new :some_index_name
 # You give the index a name (or identifier), and a source (see Sources), where its data comes from. Let's do that:
 #   class MyGreatSearch < Application
 #
-#     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#     books = Index::Memory.new :books do
+#       source Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#     end
 #
 #   end
 # Now we have an index <tt>books</tt>.
@@ -29,7 +31,7 @@
 #
 # Note that a Redis index is also available: Index::Redis.new.
 #
-# == index_instance.define_category(identifier, options = {})
+# == category(identifier, options = {})
 #
 # Picky needs us to define categories on the data.
 #
@@ -39,8 +41,10 @@
 # Let's go ahead and define a category:
 #   class MyGreatSearch < Application
 #
-#     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
-#     books.define_category :title
+#     books = Index::Memory.new :books do
+#       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#       category :title
+#     end
 #
 #   end
 # Now we could already run the indexer:
@@ -64,8 +68,10 @@
 # In full glory:
 #   class MyGreatSearch < Application
 #
-#     books = index :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
-#     books.define_category :title
+#     books = index :books do
+#       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#       category :title
+#     end
 #
 #     route %r{^/books$} => Search.new(books)
 #
@@ -82,19 +88,19 @@
 #
 # Maybe you don't find everything. We need to process the data before it goes into the index.
 #
-# == default_indexing(options = {})
+# == indexing(options = {})
 #
-# That's what the <tt>default_indexing</tt> method is for:
-#   default_indexing options
+# That's what the <tt>indexing</tt> method is for:
+#   indexing options
 # Read more about the options here: http://github.com/floere/picky/wiki/Indexing-configuration
 #
 # Same thing with the search text – we need to process that as well.
 #
-# == default_querying(options = {})
+# == searching(options = {})
 #
-# Analog to the default_indexing method, we use the <tt>default_querying</tt> method.
-#   default_querying options
-# Read more about the options here: http://github.com/floere/picky/wiki/Querying-Configuration
+# Analog to the indexing method, we use the <tt>searching</tt> method.
+#   searching options
+# Read more about the options here: http://github.com/floere/picky/wiki/Searching-Configuration
 #
 # And that's all there is. It's incredibly powerful though, as you can combine, weigh, refine to the max.
 #
@@ -109,35 +115,37 @@
 # Our example, fully fleshed out with indexing, querying, and weights:
 #   class MyGreatSearch < Application
 #
-#     default_indexing removes_characters: /[^a-zA-Z0-9\.]/,
-#                      stopwords: /\b(and|or|in|on|is|has)\b/,
-#                      splits_text_on: /\s/,
-#                      removes_characters_after_splitting: /\./,
-#                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
-#                      normalizes_words: [
-#                        [/(.*)hausen/, 'hn'],
-#                        [/\b(\w*)str(eet)?/, 'st']
-#                      ]
+#     indexing removes_characters: /[^a-zA-Z0-9\.]/,
+#              stopwords: /\b(and|or|in|on|is|has)\b/,
+#              splits_text_on: /\s/,
+#              removes_characters_after_splitting: /\./,
+#              substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+#              normalizes_words: [
+#                [/(.*)hausen/, 'hn'],
+#                [/\b(\w*)str(eet)?/, 'st']
+#              ]
 #
-#     default_querying removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/,
-#                      stopwords: /\b(and|the|of|it|in|for)\b/,
-#                      splits_text_on: /[\s\/\-\,\&]+/,
-#                      removes_characters_after_splitting: /\./,
-#                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
-#                      maximum_tokens: 4
+#     searching removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/,
+#               stopwords: /\b(and|the|of|it|in|for)\b/,
+#               splits_text_on: /[\s\/\-\,\&]+/,
+#               removes_characters_after_splitting: /\./,
+#               substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+#               maximum_tokens: 4
 #
-#     books = Index::Memory.new :books, Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
-#     books.define_category :title,
-#                           qualifiers: [:t, :title, :titre],
-#                           partial:    Partial::Substring.new(:from => 1),
-#                           similarity: Similarity::DoubleMetaphone.new(2)
-#     books.define_category :author,
-#                           partial: Partial::Substring.new(:from => -2)
-#     books.define_category :isbn
+#     books = Index::Memory.new :books do
+#       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
+#       category :title,
+#                qualifiers: [:t, :title, :titre],
+#                partial:    Partial::Substring.new(:from => 1),
+#                similarity: Similarity::DoubleMetaphone.new(2)
+#       category :author,
+#                partial: Partial::Substring.new(:from => -2)
+#       category :isbn
+#     end
 #
-#     options = { :weights => { [:title, :author] => +3, [:author, :title] => -1 } }
-#
-#     route %r{^/books$} => Search.new(books, options)
+#     route %r{^/books$} => Search.new(books) do
+#       boost [:title, :author] => +3, [:author, :title] => -1
+#     end
 #
 #   end
 # That's actually already a full-blown Picky App!

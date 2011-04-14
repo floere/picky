@@ -1,4 +1,4 @@
-h1. Internal TODOs
+h1. Internal TO-DOs
 
 h2.  Optimizations
 
