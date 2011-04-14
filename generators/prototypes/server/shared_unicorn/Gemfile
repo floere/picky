@@ -12,7 +12,8 @@ gem 'yajl-ruby',  '~> 0.8.1', :require => 'yajl'
 
 # Should be optional, but isn't yet. Sorry.
 #
-gem 'activerecord', '~> 2.3.8', :require => 'active_record'
+gem 'activesupport', '~> 3.0', :require => 'active_support/core_ext'
+gem 'activerecord',  '~> 3.0', :require => 'active_record'
 
 # Optional. Makes rack faster.
 #
