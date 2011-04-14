@@ -3,7 +3,7 @@
 class BookSearch < Application
 
     indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/i,
-             stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+             stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
              splits_text_on:                     /[\s\/\-\"\&\/]/,
              removes_characters_after_splitting: /[\.]/,
              normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
@@ -14,7 +14,7 @@ class BookSearch < Application
              substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
     querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/i,
-             stopwords:                          /\b(und|and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+             stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
              splits_text_on:                     /[\s\/\-\,\&\/]/,
              removes_characters_after_splitting: //,
              # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.

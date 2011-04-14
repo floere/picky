@@ -29,7 +29,7 @@ describe Application do
                     splits_text_on:                     /[\s\/\-\"\&\.]/,
                     removes_characters_after_splitting: /[\.]/,
                     normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
-                    reject_token_if:                    lambda { |token| token.blank? || token == :amistad }
+                    rejects_token_if:                   lambda { |token| token.blank? || token == :amistad }
                            
           searching removes_characters: /[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/,
                     stopwords:          /\b(and|the|of|it|in|for)\b/,
