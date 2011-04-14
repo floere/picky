@@ -35,8 +35,9 @@ module Index
     #
     def initialize name, options = {}
       check_name name
+      @name = name.to_sym
 
-      @name     = name.to_sym
+      check_options options
       @indexing = Internals::Indexing::Index.new name, options
       @indexed  = Internals::Indexed::Index.new  name, options
 
@@ -61,19 +62,48 @@ module Index
     #
     def check_name name
       raise ArgumentError.new(<<-NAME
+
+
 The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a String/Symbol,
 Examples:
   Index::Memory.new(:my_cool_index, ...) # Recommended
   Index::Redis.new("a-redis-index", ...)
 NAME
+
+
 ) unless name.respond_to?(:to_sym)
+    end
+    def check_options options
+      raise ArgumentError.new(<<-OPTIONS
+
+
+Sources are not passed in as second parameter for #{self.class.name} anymore, but either
+* as :source option:
+  #{self.class.name}.new(#{name.inspect}, source: #{options})
+or
+* given to the #source method inside the config block:
+  #{self.class.name}.new(#{name.inspect}) do
+    source #{options}
+  end
+
+Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
+
+All the best
+  -- Picky
+
+OPTIONS
+) unless options.respond_to?(:[])
     end
     def check_source source
       raise ArgumentError.new(<<-SOURCE
+
+
 The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
 Or it could use one of the built-in sources:
   Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
   Sources::')}
+
+
 SOURCE
 ) unless source.respond_to?(:each) || source.respond_to?(:harvest)
     end

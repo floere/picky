@@ -51,6 +51,12 @@ class BookSearch < Application
       category :isbn, :qualifiers => [:i, :isbn]
     end
 
+    # Breaking example to test the nice error message.
+    #
+    # breaking = Index::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml') do
+    #   category :isbn, :qualifiers => [:i, :isbn]
+    # end
+
     # Fake ISBN class to demonstrate that #each indexing is working.
     #
     class ISBN
