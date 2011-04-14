@@ -149,7 +149,7 @@ class Search
   # * text: The text to tokenize.
   #
   def tokenized text
-    @tokenizer.tokenize text
+    tokenizer.tokenize text
   end
 
   # Gets sorted allocations for the tokens.

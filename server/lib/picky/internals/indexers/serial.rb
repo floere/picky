@@ -2,7 +2,7 @@
 #
 module Indexers
 
-  # Uses a configuration (an index-category tuple), a source, and a tokenizer to index data.
+  # Uses a category to index its data.
   #
   # Note: It is called serial since it indexes each
   #
@@ -40,11 +40,11 @@ module Indexers
       #   end
       # end
       #
-      tokenizer = category.tokenizer
+      local_tokenizer = tokenizer
       category.prepared_index_file do |file|
         result = []
         source.harvest(category) do |indexed_id, text|
-          tokenizer.tokenize(text).each do |token_text|
+          local_tokenizer.tokenize(text).each do |token_text|
             next unless token_text
             result << indexed_id << comma << token_text << newline
           end

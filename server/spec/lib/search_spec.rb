@@ -9,6 +9,18 @@ describe Search do
     @index     = stub :some_index, :internal_indexed => @type
   end
   
+  describe 'tokenized' do
+    let(:search) { described_class.new }
+    it 'delegates to the tokenizer' do
+      tokenizer = stub :tokenizer
+      search.stub! :tokenizer => tokenizer
+      
+      tokenizer.should_receive(:tokenize).once.with :some_text
+      
+      search.tokenized :some_text
+    end
+  end
+  
   describe 'boost' do
     let(:search) do
       described_class.new do
