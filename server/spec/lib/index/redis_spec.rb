@@ -8,7 +8,7 @@ describe Index::Redis do
   
   describe 'initialize' do
     it 'works' do
-      described_class.new :some_name, some_source
+      described_class.new :some_name, source: some_source
     end
   end
   

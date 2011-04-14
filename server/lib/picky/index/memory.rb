@@ -1,9 +1,9 @@
 module Index
-  
+
   # An index that is persisted in files, loaded at startup and kept in memory at runtime.
   #
   class Memory < Base
-    
+
     # Create a new memory index for indexing and for querying.
     #
     # Parameters:
@@ -14,15 +14,15 @@ module Index
     # * source: The source the data comes from. See Sources::Base.
     #
     # Options:
-    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
+    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index.
     #
-    def initialize name, source, options = {}
+    def initialize name, options = {}
       options[:indexing_bundle_class] ||= Internals::Indexing::Bundle::Memory
       options[:indexed_bundle_class]  ||= Internals::Indexed::Bundle::Memory
-      
-      super name, source, options
+
+      super name, options
     end
-    
+
   end
-  
+
 end

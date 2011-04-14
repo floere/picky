@@ -8,7 +8,7 @@ describe Index::Base do
   
   context 'initializer' do
     it 'works' do
-      expect { described_class.new :some_index_name, some_source }.to_not raise_error
+      expect { described_class.new :some_index_name, source: some_source }.to_not raise_error
     end
     it 'fails correctly' do
       expect { described_class.new 0, some_source }.to raise_error(<<-ERROR
@@ -20,7 +20,7 @@ ERROR
 )
     end
     it 'fails correctly' do
-      expect { described_class.new :some_index_name, :some_source }.to raise_error(<<-ERROR
+      expect { described_class.new :some_index_name, source: :some_source }.to raise_error(<<-ERROR
 The index "some_index_name" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
 Or it could use one of the built-in sources:
   Sources::DB,
@@ -31,56 +31,92 @@ ERROR
 )
     end
     it 'does not fail' do
-      expect { described_class.new :some_index_name, [] }.to_not raise_error
+      expect { described_class.new :some_index_name, source: [] }.to_not raise_error
     end
     it 'registers with the indexes' do
       @api = described_class.allocate
       
       ::Indexes.should_receive(:register).once.with @api
       
-      @api.send :initialize, :some_index_name, some_source
+      @api.send :initialize, :some_index_name, source: some_source
     end
   end
   
   context 'unit' do
-    before(:each) do
-      @api = described_class.new :some_index_name, some_source
+    let(:api) { described_class.new :some_index_name, source: some_source }
+    
+    describe 'define_source' do
+      it 'delegates to the internal indexing' do
+        indexing = stub :indexing
+        api.stub! :internal_indexing => indexing
+        
+        indexing.should_receive(:define_source).once.with :some_source
+        
+        api.define_source :some_source
+      end
+      it 'has an alias' do
+        indexing = stub :indexing
+        api.stub! :internal_indexing => indexing
+        
+        indexing.should_receive(:define_source).once.with :some_source
+        
+        api.source :some_source
+      end
+    end
+    
+    describe 'define_indexing' do
+      it 'delegates to the internal indexing' do
+        indexing = stub :indexing
+        api.stub! :internal_indexing => indexing
+        
+        indexing.should_receive(:define_indexing).once.with :some_options
+        
+        api.define_indexing :some_options
+      end
+      it 'has an alias' do
+        indexing = stub :indexing
+        api.stub! :internal_indexing => indexing
+        
+        indexing.should_receive(:define_indexing).once.with :some_options
+        
+        api.indexing :some_options
+      end
     end
 
     describe 'define_category' do
       context 'with block' do
         it 'returns itself' do
-          @api.define_category(:some_name){ |indexing, indexed| }.should == @api
+          api.define_category(:some_name){ |indexing, indexed| }.should == api
         end
         it 'takes a string' do
-          lambda { @api.define_category('some_name'){ |indexing, indexed| } }.should_not raise_error
+          lambda { api.define_category('some_name'){ |indexing, indexed| } }.should_not raise_error
         end
         it 'yields both the indexing category and the indexed category' do
-          @api.define_category(:some_name) do |indexing, indexed|
+          api.define_category(:some_name) do |indexing, indexed|
             indexing.should be_kind_of(Internals::Indexing::Category)
             indexed.should be_kind_of(Internals::Indexed::Category)
           end
         end
         it 'yields the indexing category which has the given name' do
-          @api.define_category(:some_name) do |indexing, indexed|
+          api.define_category(:some_name) do |indexing, indexed|
             indexing.name.should == :some_name
           end
         end
         it 'yields the indexed category which has the given name' do
-          @api.define_category(:some_name) do |indexing, indexed|
+          api.define_category(:some_name) do |indexing, indexed|
             indexed.name.should == :some_name
           end
         end
       end
       context 'without block' do
         it 'works' do
-          lambda { @api.define_category(:some_name) }.should_not raise_error
+          lambda { api.define_category(:some_name) }.should_not raise_error
         end
         it 'takes a string' do
-          lambda { @api.define_category('some_name').should == @api }.should_not raise_error
+          lambda { api.define_category('some_name').should == api }.should_not raise_error
         end
         it 'returns itself' do
-          @api.define_category(:some_name).should == @api
+          api.define_category(:some_name).should == api
         end
       end
     end

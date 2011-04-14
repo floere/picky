@@ -6,7 +6,7 @@ module Internals
 
     class Index
 
-      attr_reader :name, :source, :categories, :after_indexing, :bundle_class, :tokenizer
+      attr_reader :name, :categories, :after_indexing, :bundle_class, :tokenizer
 
       # Delegators for indexing.
       #
@@ -22,10 +22,9 @@ module Internals
                     :restore_caches,
                     :to => :categories
 
-      def initialize name, source, options = {}
-        @name   = name
-        @source = source
-
+      def initialize name, options = {}
+        @name           = name
+        @source         = options[:source]
         @after_indexing = options[:after_indexing]
         @bundle_class   = options[:indexing_bundle_class] # TODO This should actually be a fixed parameter.
         @tokenizer      = options[:tokenizer]
@@ -46,6 +45,30 @@ module Internals
       #
       def define_indexing options = {}
         @tokenizer = Internals::Tokenizers::Index.new options
+      end
+
+      #
+      #
+      def define_source source
+        @source = source
+      end
+      def source
+        @source || raise_no_source
+      end
+      def raise_no_source
+        raise NoSourceSpecifiedException.new(<<-NO_SOURCE
+
+
+No source given for index #{name}. An index needs a source.
+Example:
+  Index::Memory.new(:with_source) do
+    source   Sources::CSV.new(:title, file: 'data/books.csv')
+    category :title
+    category :author
+  end
+
+        NO_SOURCE
+)
       end
 
       #

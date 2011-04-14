@@ -62,7 +62,7 @@ describe Search do
     let(:search) { described_class.new }
     it 'returns a specific Combination for a specific input' do
       some_source = stub(:source, :harvest => nil)
-      search.combinations_type_for([Index::Memory.new(:gu, some_source)]).should == Internals::Query::Combinations::Memory
+      search.combinations_type_for([Index::Memory.new(:gu, source: some_source)]).should == Internals::Query::Combinations::Memory
     end
     it 'just works on the same types' do
       search.combinations_type_for([:blorf, :blarf]).should == Internals::Query::Combinations::Memory

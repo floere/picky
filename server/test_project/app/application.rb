@@ -23,7 +23,8 @@ class BookSearch < Application
              maximum_tokens:                     5,
              substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
-    books_index = Index::Memory.new :books, Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml'), result_identifier: 'boooookies' do
+    books_index = Index::Memory.new :books, result_identifier: 'boooookies' do
+      source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
       category :id
       category :title,
                qualifiers: [:t, :title, :titre],
@@ -35,7 +36,7 @@ class BookSearch < Application
 
     class Book < ActiveRecord::Base; end
     Book.establish_connection YAML.load(File.open('app/db.yml'))
-    book_each_index = Index::Memory.new :book_each, Book.order('title ASC') do
+    book_each_index = Index::Memory.new :book_each, source: Book.order('title ASC') do
       category :id
       category :title,
                qualifiers: [:t, :title, :titre],
@@ -45,7 +46,8 @@ class BookSearch < Application
       category :year, qualifiers: [:y, :year, :annee]
     end
 
-    isbn_index = Index::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml') do
+    isbn_index = Index::Memory.new :isbn do
+      source   Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
       category :isbn, :qualifiers => [:i, :isbn]
     end
 
@@ -59,11 +61,12 @@ class BookSearch < Application
         @isbn = isbn
       end
     end
-    isbn_each_index = Index::Memory.new :isbn_each, [ISBN.new('ABC'), ISBN.new('DEF')] do
+    isbn_each_index = Index::Memory.new :isbn_each, source: [ISBN.new('ABC'), ISBN.new('DEF')] do
       category :isbn, :qualifiers => [:i, :isbn]
     end
 
-    mgeo_index = Index::Memory.new :memory_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',') do
+    mgeo_index = Index::Memory.new :memory_geo do
+      source          Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
       category        :location
       ranged_category :north1, 0.008, precision: 3, from: :north
       ranged_category :east1,  0.008, precision: 3, from: :east
@@ -74,7 +77,8 @@ class BookSearch < Application
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
-    csv_test_index = Index::Memory.new(:csv_test, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv'), result_identifier: 'Books') do
+    csv_test_index = Index::Memory.new(:csv_test, result_identifier: 'Books') do
+      source   Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
       category :title,
                qualifiers: [:t, :title, :titre],
                partial:    Partial::Substring.new(from: 1),
@@ -89,7 +93,8 @@ class BookSearch < Application
       category :subjects, qualifiers: [:s, :subject]
     end
 
-    Index::Memory.new(:special_indexing, Sources::CSV.new(:title, file: 'data/books.csv')) do
+    Index::Memory.new(:special_indexing) do
+      source   Sources::CSV.new(:title, file: 'data/books.csv')
       indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
                splits_text_on:     /[\s\/\-\"\&\/]/
       category :title,
@@ -98,22 +103,24 @@ class BookSearch < Application
                similarity: Similarity::DoubleMetaphone.new(2)
     end
 
-   redis_index = Index::Redis.new(:redis, Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')) do
+   redis_index = Index::Redis.new(:redis) do
+     source   Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
      category :title,
-               qualifiers: [:t, :title, :titre],
-               partial:    Partial::Substring.new(from: 1),
-               similarity: Similarity::DoubleMetaphone.new(2)
+              qualifiers: [:t, :title, :titre],
+              partial:    Partial::Substring.new(from: 1),
+              similarity: Similarity::DoubleMetaphone.new(2)
      category :author,
-               qualifiers: [:a, :author, :auteur],
-               partial:    Partial::Substring.new(from: -2)
+              qualifiers: [:a, :author, :auteur],
+              partial:    Partial::Substring.new(from: -2)
      category :year,
-               qualifiers: [:y, :year, :annee],
-               partial:    Partial::None.new
+              qualifiers: [:y, :year, :annee],
+              partial:    Partial::None.new
      category :publisher, qualifiers: [:p, :publisher]
      category :subjects,  qualifiers: [:s, :subject]
    end
 
-    sym_keys_index = Index::Memory.new :symbol_keys, Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip') do
+    sym_keys_index = Index::Memory.new :symbol_keys do
+      source   Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip')
       category :text, partial: Partial::Substring.new(from: 1)
     end
 

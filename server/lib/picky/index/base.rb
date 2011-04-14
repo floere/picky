@@ -15,24 +15,29 @@ module Index
     #
     # === Parameters
     # * name: A name that will be used for the index directory and in the Picky front end.
-    # * source: Where the data comes from, e.g. Sources::CSV.new(...)
+    # * source: Where the data comes from, e.g. Sources::CSV.new(...). Optional, can be defined in the block using #source.
     #
     # === Options
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
     # * tokenizer: The tokenizer to use for this index.
     #
-    # Example:
+    # Examples:
     #   my_index = Index::Memory.new(:my_index, some_source) do
-    #     define_category :bla
+    #     category :bla
+    #   end
+    #
+    #   my_index = Index::Memory.new(:my_index) do
+    #     source   Sources::CSV.new(file: 'data/index.csv')
+    #     category :bla
     #   end
     #
     #
-    def initialize name, source, options = {}
-      check name, source
+    def initialize name, options = {}
+      check_name name
 
       @name     = name.to_sym
-      @indexing = Internals::Indexing::Index.new name, source, options
+      @indexing = Internals::Indexing::Index.new name, options
       @indexed  = Internals::Indexed::Index.new  name, options
 
       # Centralized registry.
@@ -42,6 +47,8 @@ module Index
       #
       #
       instance_eval(&Proc.new) if block_given?
+
+      check_source internal_indexing.source
     end
     def internal_indexing
       @indexing
@@ -52,7 +59,7 @@ module Index
     #
     # Since this is an API, we fail hard quickly.
     #
-    def check name, source
+    def check_name name
       raise ArgumentError.new(<<-NAME
 The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a String/Symbol,
 Examples:
@@ -60,6 +67,8 @@ Examples:
   Index::Redis.new("a-redis-index", ...)
 NAME
 ) unless name.respond_to?(:to_sym)
+    end
+    def check_source source
       raise ArgumentError.new(<<-SOURCE
 The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
 Or it could use one of the built-in sources:
@@ -87,6 +96,17 @@ INDEX
       internal_indexing.define_indexing options
     end
     alias indexing define_indexing
+
+    # Define a source on the index.
+    #
+    # Parameter is a source, either one of the standard sources or
+    # anything responding to #each and returning objects that
+    # respond to id and the category names (or the category from option).
+    #
+    def define_source source
+      internal_indexing.define_source source
+    end
+    alias source define_source
 
     # Defines a searchable category on the index.
     #

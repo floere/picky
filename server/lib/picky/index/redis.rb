@@ -1,9 +1,9 @@
 module Index
-  
+
   # An index that is persisted in Redis.
   #
   class Redis < Base
-    
+
     # Create a new Redis index for indexing and for querying.
     #
     # Parameters:
@@ -14,15 +14,15 @@ module Index
     # * source: The source the data comes from. See Sources::Base.
     #
     # Options:
-    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index. 
+    # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index.
     #
-    def initialize name, source, options = {}
+    def initialize name, options = {}
       options[:indexing_bundle_class] ||= Internals::Indexing::Bundle::Redis
       options[:indexed_bundle_class]  ||= Internals::Indexed::Bundle::Redis
-      
-      super name, source, options
+
+      super name, options
     end
-    
+
   end
-  
+
 end

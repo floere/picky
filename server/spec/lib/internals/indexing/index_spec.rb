@@ -6,9 +6,21 @@ describe Internals::Indexing::Index do
     before(:each) do
       @source = stub :some_source
       
-      @index = described_class.new :some_name, @source
+      @index = described_class.new :some_name, source: @source
       @index.define_category :some_category_name1
       @index.define_category :some_category_name2
+    end
+    describe "raise_no_source" do
+      it "should raise" do
+        lambda { @index.raise_no_source }.should raise_error(NoSourceSpecifiedException)
+      end
+    end
+    describe 'define_source' do
+      it 'can be set with this method' do
+        @index.define_source :some_other_source
+
+        @index.source.should == :some_other_source
+      end
     end
     describe "generate_caches" do
       it "delegates to each category" do
@@ -49,7 +61,7 @@ describe Internals::Indexing::Index do
   
   context "no categories" do
     it "works" do
-      described_class.new :some_name, @source
+      described_class.new :some_name, source: @source
     end
   end
   

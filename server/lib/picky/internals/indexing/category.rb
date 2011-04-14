@@ -43,13 +43,8 @@ module Internals
 
       # Return an appropriate source.
       #
-      # Note: Will raise if neither the category nor its index provides a source.
-      #
       def source
-        @source || @index.source || raise_no_source
-      end
-      def raise_no_source
-        raise NoSourceSpecifiedException.new("No source given for #{identifier}.")
+        @source || @index.source
       end
       # The indexer is lazily generated and cached.
       #
