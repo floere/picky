@@ -39,7 +39,7 @@ class Search
     searching options[:tokenizer]
     boost     options[:weights]
 
-    instance_eval(Proc.new) if block_given?
+    instance_eval(&Proc.new) if block_given?
   end
 
   # TODO Doc. Spec.
