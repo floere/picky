@@ -6,8 +6,6 @@ require 'spec_helper'
 #
 require File.expand_path '../../../../aux/picky/cli', __FILE__
 
-# TODO Finish this prototype Spec, redesign.
-#
 describe Picky::CLI do
   
   describe '.mapping' do
