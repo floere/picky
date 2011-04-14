@@ -30,6 +30,8 @@ module Indexers
 
         # This needs to be rewritten.
         #
+        # Is it a good idea that not the tokenizer has control over when he gets the next text?
+        #
         combined.each do |category, cache, _, tokenizer|
           tokenizer.tokenize(object.send(category.from).to_s).each do |token_text|
             next unless token_text
