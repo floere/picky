@@ -79,6 +79,7 @@ module Picky
       chop_text
       move_to_input
       addstr "   "
+      move_to_input
     end
     # Chop off one character.
     #
@@ -96,7 +97,6 @@ module Picky
     #
     def type_search character
       add_text character
-      # write character
     end
 
     # Write the result ids.
@@ -152,6 +152,7 @@ module Picky
       full ? write_results(results) : clear_results
 
       write_counts results
+      move_to_input
     rescue Errno::ECONNREFUSED => e
       error "Please start a Picky server listening to #{@client.path}."
     rescue Yajl::ParseError => e
@@ -187,6 +188,7 @@ module Picky
     #
     def run
       intro
+
       move_to_input
       search_and_write
 
@@ -196,12 +198,12 @@ module Picky
         case input
         when 10 # Curses::Key::ENTER
           search_and_write true
-        when Curses::Key::BACKSPACE
+        when 127 # Curses::Key::BACKSPACE
           backspace
           search_and_write
-        when (256..100000)
+        when (256..1000000)
 
-        else # All other.
+        else
           type_search input.chr
           search_and_write
         end
