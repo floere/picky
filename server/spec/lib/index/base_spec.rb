@@ -53,6 +53,15 @@ ERROR
   context 'unit' do
     let(:api) { described_class.new :some_index_name, source: some_source }
     
+    describe 'geo_categories' do
+      it 'delegates correctly' do
+        api.should_receive(:ranged_category).once.with :some_lat, 0.00898312, from: :some_lat_from
+        api.should_receive(:ranged_category).once.with :some_lng, 0.01796624, from: :some_lng_from
+        
+        api.geo_categories :some_lat, :some_lng, 1, :lat_from => :some_lat_from, :lng_from => :some_lng_from
+      end
+    end
+    
     describe 'define_source' do
       it 'delegates to the internal indexing' do
         indexing = stub :indexing

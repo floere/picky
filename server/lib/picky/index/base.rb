@@ -269,27 +269,31 @@ INDEX
     #      indexed simultaneously, since lat/lng are correlated.
     #
     def geo_categories lat_name, lng_name, radius, options = {} # :nodoc:
-      # # The radius is given as if all the locations were on the equator.
-      # #
-      # # This calculates km -> longitude (degrees).
-      # #
-      # # A degree on the equator is equal to ~111,319.9 meters.
-      # # So a km on the equator is equal to 0.00898312 degrees.
-      # #
-      # define_ranged_category name, radius * 0.00898312, options
+
+      # Extract lat/lng specific options.
+      #
+      lat_from = options.delete :lat_from
+      lng_from = options.delete :lng_from
 
       # One can be a normal ranged_category.
       #
-      ranged_category lat_name, radius*0.00898312, options
+      ranged_category lat_name, radius*0.00898312, options.merge(from: lat_from)
 
       # The other needs to adapt the radius depending on the one.
       #
       # Depending on the latitude, the radius of the longitude
       # needs to enlarge, the closer we get to the pole.
       #
-      # For now, we use an average that works with latitude ±45°.
+      # In our simplified case, the radius is given as if all the
+      # locations were on the 45 degree line.
       #
-      ranged_category lng_name, radius*0.01796624, options
+      # This calculates km -> longitude (degrees).
+      #
+      # A degree on the 45 degree line is equal to ~222.6398 km.
+      # So a km on the 45 degree line is equal to 0.01796624 degrees.
+      #
+      ranged_category lng_name, radius*0.01796624, options.merge(from: lng_from)
+
     end
     alias define_geo_categories geo_categories
   end
