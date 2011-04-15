@@ -164,9 +164,8 @@ INDEX
     end
     alias define_category category
 
-    #  HIGHLY EXPERIMENTAL Try if you feel "beta" ;)
-    #
-    # Make this category range searchable with a fixed range. If you need other ranges, define another category with a different range value.
+    # Make this category range searchable with a fixed range. If you need other
+    # ranges, define another category with a different range value.
     #
     # Example:
     # You have data values inside 1..100, and you want to have Picky return
@@ -174,22 +173,27 @@ INDEX
     # 45, 46, or 47.2, 48.9, in a range of 2 around 47, so (45..49).
     #
     # Then you use:
-    #  my_index.define_ranged_category :values_inside_1_100, 2
+    #  ranged_category :values_inside_1_100, 2
     #
     # Optionally, you give it a precision value to reduce the error margin
     # around 47 (Picky is a bit liberal).
-    #  my_index.define_ranged_category :values_inside_1_100, 2, precision: 5
+    #   Index::Memory.new :range do
+    #     ranged_category :values_inside_1_100, 2, precision: 5
+    #   end
     #
     # This will force Picky to maximally be wrong 5% of the given range value
     # (5% of 2 = 0.1) instead of the default 20% (20% of 2 = 0.4).
     #
-    # We suggest not to use much more than 5 as a higher precision is more performance intensive for less and less precision gain.
+    # We suggest not to use much more than 5 as a higher precision is more
+    # performance intensive for less and less precision gain.
     #
     # == Protip 1
     #
     # Create two ranged categories to make an area search:
-    #   index.define_ranged_category :x, 1
-    #   index.define_ranged_category :y, 1
+    #   Index::Memory.new :area do
+    #     ranged_category :x, 1
+    #     ranged_category :y, 1
+    #   end
     #
     # Search for it using for example:
     #   x:133, y:120
@@ -265,7 +269,7 @@ INDEX
     # * lat_from: The data category to take the data for the latitude from.
     # * lng_from: The data category to take the data for the longitude from.
     #
-    # TODO Redo. Will have to write a wrapper that combines two categories that are
+    # TODO Will have to write a wrapper that combines two categories that are
     #      indexed simultaneously, since lat/lng are correlated.
     #
     def geo_categories lat_name, lng_name, radius, options = {} # :nodoc:
