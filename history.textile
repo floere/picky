@@ -1,12 +1,6 @@
 h2. Version 2.2.1
 
-* hanke: (server) Very simple geo search that works best in temperate areas. If you're just looking for results that are close to yours, give it a go. Use
-
-    geo_index = Index::Memory.new :geo do
-      source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv')
-      category       :location
-      geo_categories :north, :east, 1, precision: 3
-    end
+* hanke: (server) Very simple geo search that works best in temperate areas. If you're just looking for results that are close to yours, give it a go. Use @#geo_categories(lat, lng, radius_in_kilometers, options = {})@
 
 h2. Version 2.2.0
 
