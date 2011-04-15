@@ -2,7 +2,7 @@ module Picky
 
   # A simple terminal based search.
   #
-  class Cursed
+  class Cursed # :nodoc:all
 
     require 'curses'
     include Curses
