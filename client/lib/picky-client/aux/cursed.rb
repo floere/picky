@@ -78,8 +78,7 @@ module Picky
     def backspace
       chop_text
       move_to_input
-      addstr "   "
-      move_to_input
+      clrtoeol
     end
     # Chop off one character.
     #
@@ -113,7 +112,7 @@ module Picky
     #
     def clear_results
       move_to_results
-      addstr @ids_clearing_string ||= " "*200
+      clrtoeol
       move_to_input
     end
 
@@ -199,6 +198,7 @@ module Picky
         when 10 # Curses::Key::ENTER
           search_and_write true
         when 127 # Curses::Key::BACKSPACE
+          delch
           backspace
           search_and_write
         when (256..1000000)
