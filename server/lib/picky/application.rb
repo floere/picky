@@ -56,7 +56,7 @@
 #
 # == Search.new(*indexes, options = {})
 #
-# We need somebody who asks the index (a Query object, also see http://github.com/floere/picky/wiki/Queries-Configuration). That works like this:
+# We need somebody who asks the index (a Query object, also see http://github.com/floere/picky/wiki/Queries-Configuration):
 #    books_search = Search.new books
 #
 # Now we have somebody we can ask about the index. But no external interface.
