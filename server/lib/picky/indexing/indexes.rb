@@ -54,7 +54,8 @@ module Indexing # :nodoc:all
       timed_exclaim "Indexing finished."
     end
 
-    # For integration testing – indexes for the tests without forking and shouting ;)
+    # For integration testing – indexes for the tests
+    # without forking and shouting ;)
     #
     def index_for_tests
       take_snapshot
