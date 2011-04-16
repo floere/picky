@@ -19,6 +19,7 @@ describe "Integration Tests" do
     @memory_geo = Search.new Indexes[:memory_geo]
     @real_geo   = Search.new Indexes[:real_geo]
     @redis      = Search.new Indexes[:redis]
+    # @underscore = Search.new Indexes[:underscore_regression]
   end
   
   def self.it_should_find_ids_in_sym text, expected_ids
@@ -65,6 +66,11 @@ describe "Integration Tests" do
     it 'finds with specific id' do
       @books.search_with_text('id:"2"').ids.should == [2]
     end
+    # # As reported by Simon.
+    # #
+    # it 'finds a location' do
+    #   @underscore.search_with_text('some_place:Zuger some_place:See').should == []
+    # end
     
     # Respects ids param and offset.
     #

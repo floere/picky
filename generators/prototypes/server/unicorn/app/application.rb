@@ -9,13 +9,13 @@ class PickySearch < Application
 
   # How text is indexed. Move to Index block to make it index specific.
   #
-  indexing removes_characters: /[^a-zA-Z0-9\s\/\-\"\&\.]/i,
+  indexing removes_characters: /[^a-zA-Z0-9\s\/\-\_\:\"\&\.]/i,
            stopwords:          /\b(and|the|of|it|in|for)\b/i,
-           splits_text_on:     /[\s\/\-\"\&\.]/
+           splits_text_on:     /[\s\/\-\_\:\"\&\/]/
 
   # How query text is preprocessed. Move to Search block to make it search specific.
   #
-  searching removes_characters: /[^a-zA-Z0-9\s\/\-\,\&\"\~\*\:]/i, # Picky needs control chars *"~: to pass through.
+  searching removes_characters: /[^a-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i, # Picky needs control chars *"~: to pass through.
             stopwords:          /\b(and|the|of|it|in|for)\b/i,
             splits_text_on:     /[\s\/\-\,\&]+/,
             maximum_tokens: 5, # Amount of tokens used in a search (5 = default).

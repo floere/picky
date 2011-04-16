@@ -2,9 +2,9 @@
 #
 class BookSearch < Application
 
-    indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\"\&\.]/i,
+    indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-             splits_text_on:                     /[\s\/\-\"\&\/]/,
+             splits_text_on:                     /[\s\/\-\_\:\"\&\/]/,
              removes_characters_after_splitting: /[\.]/,
              normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
              rejects_token_if:                   lambda { |token| token.blank? || token == :amistad },
@@ -12,7 +12,7 @@ class BookSearch < Application
 
              substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
-    querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\,\&\.\"\~\*\:]/i,
+    querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
              stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
              splits_text_on:                     /[\s\/\-\,\&\/]/,
              removes_characters_after_splitting: //,
@@ -82,6 +82,11 @@ class BookSearch < Application
       source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
       category       :location
       geo_categories :north, :east, 1, precision: 3
+    end
+
+    Index::Memory.new :underscore_regression do
+      source         Sources::CSV.new(:location, file: 'data/ch.csv')
+      category       :some_place, :from => :location
     end
 
     # rgeo_index = Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')

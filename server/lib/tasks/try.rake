@@ -8,14 +8,16 @@ namespace :try do
 
     tokenizer = category ? Indexes.find(index, category).tokenizer : Internals::Tokenizers::Index.default
 
-    puts "\"#{text}\" is saved in the index as             #{tokenizer.tokenize(text.dup).to_a}"
+    puts "\"#{text}\" is saved in the index as              #{tokenizer.tokenize(text.dup).to_a}"
   end
 
   # desc "Try how a given word would be tokenized when querying."
   task :query, [:text] => :application do |_, options|
     text = options.text
 
-    puts "\"#{text}\" as a query will be preprocessed into #{Internals::Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
+    puts "\"#{text}\" as a search will be preprocessed into #{Internals::Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
+    puts
+    puts "(category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')"
   end
 
   # desc "Try the given text with both the index and the query (type:category optional)."
