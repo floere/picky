@@ -1,3 +1,7 @@
+h2. Version 2.3.0 (unreleased)
+
+* hanke: (server/client) Major focus on testability.
+
 h2. Version 2.2.1
 
 * hanke: (server) Very simple geo search that works best in temperate areas. If you're just looking for results that are close to yours, give it a go. Use @#geo_categories(lat, lng, radius_in_kilometers, options = {})@
