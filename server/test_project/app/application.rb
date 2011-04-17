@@ -2,7 +2,7 @@
 #
 class BookSearch < Application
 
-    indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\.]/i,
+    indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\.\|]/i,
              stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
              splits_text_on:                     /[\s\/\-\_\:\"\&\/]/,
              removes_characters_after_splitting: /[\.]/,
@@ -15,7 +15,7 @@ class BookSearch < Application
     querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
              stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
              splits_text_on:                     /[\s\/\-\,\&\/]/,
-             removes_characters_after_splitting: //,
+             removes_characters_after_splitting: /\|/,
              # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.
              case_sensitive:                     true,
 
@@ -110,7 +110,7 @@ class BookSearch < Application
       category :subjects, qualifiers: [:s, :subject]
     end
 
-    Index::Memory.new(:special_indexing) do
+    indexing_index = Index::Memory.new(:special_indexing) do
       source   Sources::CSV.new(:title, file: 'data/books.csv')
       indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
                splits_text_on:     /[\s\/\-\"\&\/]/
@@ -155,8 +155,10 @@ class BookSearch < Application
           %r{\A/redis\Z}      => Search.new(redis_index, options),
           %r{\A/csv\Z}        => Search.new(csv_test_index, options),
           %r{\A/isbn\Z}       => Search.new(isbn_index),
+          %r{\A/sym\Z}        => Search.new(sym_keys_index),
           %r{\A/geo\Z}        => Search.new(real_geo_index),
           %r{\A/simple_geo\Z} => Search.new(mgeo_index),
+          %r{\A/indexing\Z}   => Search.new(indexing_index),
           %r{\A/all\Z}        => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
     root 200
