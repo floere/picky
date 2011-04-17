@@ -26,3 +26,10 @@ gem 'unicorn'
 # Optional. Use your preferred database adapter.
 #
 gem 'mysql'
+
+# Integration testing needs the client.
+#
+group :test do
+  gem 'rspec'
+  gem 'picky-client'
+end
