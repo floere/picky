@@ -11,6 +11,8 @@ module Internals
     #
     module Rack
 
+      # TODO Rename to Search.
+      #
       class Query < Base
 
         @@defaults = {
