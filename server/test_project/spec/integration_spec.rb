@@ -5,7 +5,7 @@ require 'picky-client/spec'
 
 describe "Integration Tests" do
   
-  before(:suite) do
+  before(:all) do
     Indexes.index_for_tests
     Indexes.load_from_cache
   end

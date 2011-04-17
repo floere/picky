@@ -1,8 +1,5 @@
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
-#
 ENV['PICKY_ENV'] = 'test'
-require 'rubygems'
+
 require File.expand_path '../../../lib/picky', __FILE__
 
 SearchLog = Loggers::Search.new ::Logger.new(STDOUT)
