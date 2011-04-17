@@ -149,7 +149,7 @@ module Picky
     #
     def write_ids results
       move_to_ids
-      write "=> #{results.total ? results.ids(@id_amount) : []}"
+      write "=> #{(results.total ? results.ids(@id_amount) : []).inspect}"
     rescue StandardError => e
       p e.message
       p e.backtrace
