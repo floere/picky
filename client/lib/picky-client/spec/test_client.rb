@@ -18,9 +18,7 @@ module Picky
     # Wraps the search method to always extend the result with Convenience.
     #
     def search query, params = {}
-      result = super
-      result.extend Convenience
-      result
+      super.extend Convenience
     end
 
     # Backend method that we override to not send a real search.
