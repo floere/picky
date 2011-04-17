@@ -78,6 +78,13 @@ begin
   system "open -a 'Google Chrome' http://localhost:3210/?q=a%2A%20b"
   sleep 5
 
+  puts "Now the server integration specs"
+  if system('cd sandbox/server; rake spec')
+    puts "Yay! Integration specs ran through!"
+  else
+    raise "Integration specs failed!"
+  end
+
   puts "Now for a speed test"
   queries = ['alan', 'pinchn~', 'sp', 'title:lyterature~+2002'].cycle
   100.times do
