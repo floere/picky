@@ -22,4 +22,17 @@ describe Picky::TestClient do
     end
   end
   
+  context 'send_search' do
+    it 'sends correctly' do
+      response = stub :response
+      request = stub :request
+      client.stub! :request => request
+      
+      request.should_receive(:get).once.with('/some/path?query=some_query').and_return response
+      response.should_receive(:body).once.and_return :some_body
+      
+      client.send_search(:query => :some_query).should == :some_body
+    end
+  end
+  
 end
