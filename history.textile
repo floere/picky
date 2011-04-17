@@ -1,6 +1,8 @@
-h2. Version 2.3.0 (unreleased)
+h2. Version 2.3.0
 
-* hanke: (server/client) Major focus on testability.
+* hanke: (server) Integration specs in the server are now easy. In your specs, @require 'picky-client/spec'@. Example: @it { books.search('alan').ids.should == [259, 307, 449] }@.
+* hanke: (generators) Added integration specs that use the above tests & matchers to the generated example app.
+* hanke: (client) Added @Picky::TestClient@ which can be used in the server for integration specs. Use @Picky::TestClient.new(YourPickyApp, :path => '/your_search_url')@, then @test_client.search('bla', :ids => 12, :offset => 0).ids.should ==== [1,3,4]@ or @test_client.search('blu bli').should have_categories(['title', 'author'], ['title', 'title'])@ to test category result combinations and order.
 
 h2. Version 2.2.1
 
