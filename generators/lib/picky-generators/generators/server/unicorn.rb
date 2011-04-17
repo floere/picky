@@ -20,8 +20,8 @@ module Picky
         def generate
           exclaim "Setting up Picky Unicorn Server \"#{name}\"."
           create_target_directory
-          copy_all_files expand_prototype_path('server/shared_unicorn')
           copy_all_files
+          copy_all_files expand_prototype_path('server/shared_unicorn')
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""
           exclaim "Next steps:"
