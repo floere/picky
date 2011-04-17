@@ -137,7 +137,7 @@ class BookSearch < Application
    end
 
     sym_keys_index = Index::Memory.new :symbol_keys do
-      source   Sources::CSV.new(:text, file: 'data/symbol_keys.csv', key_format: 'strip')
+      source   Sources::CSV.new(:text, file: "data/#{PICKY_ENVIRONMENT}/symbol_keys.csv", key_format: 'strip')
       category :text, partial: Partial::Substring.new(from: 1)
     end
 
