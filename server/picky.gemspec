@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.extensions << 'lib/picky/internals/ext/ruby19/extconf.rb'
 
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'picky-client'
 end
