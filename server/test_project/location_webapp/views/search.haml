@@ -91,8 +91,8 @@
         if (GBrowserIsCompatible()) {
           map = new GMap2(document.getElementById('map_div'));
           map.addControl(new GSmallMapControl());
-
-          map.setCenter(new GLatLng(47.3, 8.1), 13);
+          map.setCenter(new GLatLng(46.85, 8.05), 13);
+          map.setZoom(7);
 
           GEvent.addListener(map, "click", function(overlay, latlng) {
             if (latlng) {
