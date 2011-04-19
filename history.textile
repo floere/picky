@@ -1,3 +1,11 @@
+h2. Version 2.4.0
+
+* hanke: (server) Added a configuration option @key_format@ for index, categories. It sets the format that this index'/category's keys are in. Use as you would with @source@, as either method in the index block, as index parameter, or category parameter.
+* hanke: (client) The client is now finally really data driven by the server, see next changes.
+* hanke: (client) Added two options for the @PickyClient@, @fullResults@ and @liveResults@. It designates how many results should be rendered. Defaults are for full: 20, and for live: 0.
+* hanke: (client) The @Convenience#ids@ method now by default returns all ids returned from the server.
+* hanke: (client) The @Convenience#populate_with@'s second param is not the amount of populated ids anymore. Instead it populates all returned ids by default. If you want less, pass in the @up_to@ option. So, e.g. @results.populate_with :up_to => 20@.
+
 h2. Version 2.3.0
 
 * hanke: (server) Integration specs in the server are now easy. In your specs, @require 'picky-client/spec'@. Example: @it { books.search('alan').ids.should == [259, 307, 449] }@.
