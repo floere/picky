@@ -1,3 +1,73 @@
+# = Picky Indexes
+#
+# A Picky Index defines
+# * where its data comes from (a data source).
+# * how this data it is indexed.
+# * a number of categories that may or may not map directly to data categories.
+#
+# This is a step-by-step description on how to create an index.
+#
+# Start by choosing an <tt>Index::Memory</tt> or an <tt>Index::Redis</tt>.
+# In the example, we will be using an in-memory index, <tt>Index::Memory</tt>.
+#
+#   books = Index::Memory.new(:books)
+#
+# That in itself won't do much good, that's why we add a data source:
+#
+#   books = Index::Memory.new(:books) do
+#     source Sources::CSV.new(:title, :author, file: 'data/books.csv')
+#   end
+#
+# In the example, we use an explicit <tt>Sources::CSV</tt> of Picky.
+# However, anything that responds to #each, and returns an object that
+# answers to #id, works.
+#
+# For example, a 3.0 ActiveRecord class:
+#
+#   books = Index::Memory.new(:books) do
+#     source Book.order('isbn ASC')
+#   end
+#
+# Now we know where the data comes from, but not, how to categorize it.
+#
+# Let's add a few categories:
+#
+#   books = Index::Memory.new(:books) do
+#     source   Book.order('isbn ASC')
+#     category :title
+#     category :author
+#     category :isbn
+#   end
+#
+# Categories offer quite a few options, see <tt>Index::Base#category</tt> for details.
+#
+# After adding more options, it might look like this:
+#
+#   books = Index::Memory.new(:books) do
+#     source   Book.order('isbn ASC')
+#     category :title,
+#              partial: Partial::Substring.new(from: 1),
+#              similarity: Similarity::DoubleMetaphone.new(3),
+#              qualifiers: [:t, :title, :titulo]
+#     category :author,
+#              similarity: Similarity::Metaphone.new(2)
+#     category :isbn,
+#              partial: Partial::None.new,
+#              from: :legacy_isbn_name
+#   end
+#
+# For this to work, a Book should support methods #title, #author and #legacy_isbn_name.
+#
+# If it uses <tt>String</tt> ids, use #key_format to define a formatting method:
+#
+#   books = Index::Memory.new(:books) do
+#     key_format :to_s
+#     source     Book.order('isbn ASC')
+#     category   :title
+#     category   :author
+#     category   :isbn
+#   end
+#
 module Index
 
   # This class defines the indexing and index API that is exposed to the user

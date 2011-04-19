@@ -4,7 +4,7 @@ module Indexers
 
   # Uses a category to index its data.
   #
-  # Note: It is called serial since it indexes each
+  # Note: It is called serial since it indexes each category separately.
   #
   class Serial < Base
 
@@ -44,7 +44,7 @@ module Indexers
     end
     #
     #
-    def indexing_message
+    def indexing_message # :nodoc:
       timed_exclaim %Q{"#{@category.identifier}": Starting serial indexing.}
     end
 

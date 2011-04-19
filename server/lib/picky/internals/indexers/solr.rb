@@ -6,7 +6,7 @@ module Indexers
 
   # Deprecated. Only here as an example.
   #
-  class Solr
+  class Solr # :nodoc:
 
     attr_reader :type, :fields, :solr
 

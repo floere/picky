@@ -15,7 +15,7 @@
 #
 # == Index::Memory.new(name)
 #
-# Next, define where your data comes from. You use the <tt>Index::Memory.new</tt> method for that:
+# Next, define where your data comes from, creating an <tt>Index</tt>. You use the <tt>Index::Memory.new</tt> method for that:
 #   my_index = Index::Memory.new :some_index_name
 # You give the index a name (or identifier), and a source (see Sources), where its data comes from. Let's do that:
 #   class MyGreatSearch < Application

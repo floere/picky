@@ -48,14 +48,14 @@ module Indexers
       flush combined
       combined.each { |_, _, file, _| file.close }
     end
-    def flush combined
+    def flush combined # :nodoc:
       combined.each do |_, cache, file, _|
         file.write(cache.join) && cache.clear
       end
     end
     #
     #
-    def indexing_message
+    def indexing_message # :nodoc:
       timed_exclaim %Q{"#{@index.name}": Starting parallel indexing.}
     end
 
