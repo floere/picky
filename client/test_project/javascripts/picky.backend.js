@@ -4,9 +4,9 @@ var PickyBackend = function(url) {
   
   // Get returns the data without handling timestamps and whatnot.
   //
-  var get = function(query, controllerCallback, offset, specificParams) {
+  var get = function(query, controllerCallback, specificParams) {
     var params = specificParams || {};
-    params = $.extend({ query: query, offset: offset }, specificParams);
+    params = $.extend({ query: query }, specificParams);
     
     // Wrap any data returned in a PickyData object.
     //
@@ -17,14 +17,14 @@ var PickyBackend = function(url) {
     $.getJSON(url, params, callback);
   };
   
-  var search = function(query, controllerCallback, offset, specificParams, specificTimestamps) {
+  var search = function(query, controllerCallback, specificParams, specificTimestamps) {
     // Wrap the given callback.
     //
     var callback = function(data) {
       if (controllerCallback) { controllerCallback(specificTimestamps, data); }
     };
     
-    get(query, callback, offset, specificParams);
+    get(query, callback, specificParams);
   };
   this.search = search;
 };
@@ -34,7 +34,7 @@ var PickyBackend = function(url) {
 var LiveBackend = function(url, callback) {
   var backend = new PickyBackend(url);
   
-  var search = function(query, controllerCallback, offset, specificParams, fullTimestamps) {
+  var search = function(query, controllerCallback, specificParams, fullTimestamps) {
     var specificTimestamps = fullTimestamps || {};
     
     latestRequestTimestamp = new Date();
@@ -50,13 +50,13 @@ var LiveBackend = function(url, callback) {
       };
     };
     
-    // Default number of ids in a live search is 0.
+    // Default number of ids in a live search is 0 and the offset is 0.
     //
-    specificParams = $.extend({ ids: 0 }, specificParams);
+    specificParams = $.extend({ ids: 0, offset: 0 }, specificParams);
     
     // Pass in the timestamp for later comparison.
     //
-    backend.search(query, callback, offset, specificParams, specificTimestamps);
+    backend.search(query, callback, specificParams, specificTimestamps);
   };
   this.search = search;
 };
@@ -66,7 +66,7 @@ var LiveBackend = function(url, callback) {
 var FullBackend = function(url) {
   var backend = new PickyBackend(url);
   
-  var search = function(query, controllerCallback, offset, specificParams, givenTimestamps) {
+  var search = function(query, controllerCallback, specificParams, givenTimestamps) {
     var specificTimestamps = givenTimestamps || {};
     
     latestRequestTimestamp = new Date();
@@ -82,13 +82,13 @@ var FullBackend = function(url) {
       };
     };
     
-    // Default number of ids in a full search is 20.
+    // Default number of ids in a full search is 20, and the offset is 0.
     //
-    specificParams = $.extend({ ids: 20 }, specificParams);
+    specificParams = $.extend({ ids: 20, offset: 0 }, specificParams);
     
     // Pass in the timestamp for later comparison.
     //
-    backend.search(query, callback, offset, specificParams, specificTimestamps);
+    backend.search(query, callback, specificParams, specificTimestamps);
   };
   this.search = search;
 };

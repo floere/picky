@@ -3,7 +3,7 @@ var PickyController = function(config) {
   var view = new PickyView(this, config);
   
   var backends         = config.backends;
-  var beforeCallback   = config.before || function(params, query, offset) {  };
+  var beforeCallback   = config.before || function(params, query) {  };
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
@@ -26,9 +26,9 @@ var PickyController = function(config) {
   
   // If the given backend cannot be found, ignore the search request.
   //
-  var search = function(type, query, callback, offset, specificParams) {
+  var search = function(type, query, callback, specificParams) {
     var currentBackend = backends[type];
-    if (currentBackend) { currentBackend.search(query, callback, offset, specificParams); };
+    if (currentBackend) { currentBackend.search(query, callback, specificParams); };
   };
   
   var liveSearchCallback = function(data, query) {
@@ -43,7 +43,7 @@ var PickyController = function(config) {
     
     params = beforeCallback(params) || params;
     
-    search('live', query, liveSearchCallback, 0);
+    search('live', query, liveSearchCallback, params);
   };
   
   // The timer is initially instantly stopped.
@@ -64,9 +64,8 @@ var PickyController = function(config) {
     
     afterCallback(data, query);
   };
-  var fullSearch = function(query, possibleOffset, possibleParams) {
+  var fullSearch = function(query, possibleParams) {
     var params = possibleParams || {};
-    var offset = possibleOffset || 0;
     clearInterval(liveSearchTimerId);
     
     // Be extra cautious since not all browsers/histories offer pushState.
@@ -78,9 +77,9 @@ var PickyController = function(config) {
       window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
     }
       
-    params = beforeCallback(params, query, offset) || params;
+    params = beforeCallback(params, query) || params;
     
-    search('full', query, fullSearchCallback, offset, params);
+    search('full', query, fullSearchCallback, params);
   };
   
   this.insert = function(query, full) {
@@ -133,7 +132,7 @@ var PickyController = function(config) {
   
   // Move to a view object.
   var addinationClicked = function(text, event) {
-    fullSearch(text, event.data.offset);
+    fullSearch(text, { offset: event.data.offset });
   };
   this.addinationClicked = addinationClicked;
 };
