@@ -24,10 +24,7 @@
   %body
     %p
       #map_div{ :style => "width:690px;height:340px;" }
-    %p
-      It also works without qualifiers, as it knows what you mean:
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('47.283, 8.762');"} 47.283, 8.762
+    %p Geosearch
     = Picky::Helper.cached_interface
     :javascript
       // The client
@@ -85,6 +82,7 @@
       pickyClient.insert('46.947, 7.446');
 
       // The map
+      //
       var draggable_marker = null;
 
       $(document).ready(function() {
