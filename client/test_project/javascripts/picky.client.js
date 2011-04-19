@@ -45,8 +45,8 @@ var PickyClient = function(config) {
     backends.full || alert('Both a full and live backend must be provided.');
   } else {
     config.backends = {
-      live: config.live && new LiveBackend(config.live) || alert('A live backend path must be provided.'),
-      full: config.full && new FullBackend(config.full) || alert('A live backend path must be provided.')
+      live: new LiveBackend(config),
+      full: new FullBackend(config)
     };
   }
   
@@ -57,8 +57,8 @@ var PickyClient = function(config) {
   // Insert a query into the client and run it.
   // Default is a full query.
   //
-  this.insert = function(query, full) {
-    controller.insert(query, full || true);
+  this.insert = function(query, params, full) {
+    controller.insert(query, params || {}, full || true);
   };
   var insert = this.insert;
   

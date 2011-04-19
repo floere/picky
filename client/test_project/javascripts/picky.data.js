@@ -69,6 +69,17 @@ function PickyData(data) {
   this.offset        = offset;
   this.allocations   = allocations;
   
+  // How many results are rendered?
+  //
+  var renderedAmount = function() {
+    var sum = 0;
+    allocations.each(function(i, allocation) {
+      sum += allocation.rendered.length;
+    });
+    return sum;
+  };
+  this.renderedAmount = renderedAmount;
+  
   // Are there any results?
   //
   var isEmpty = function() {

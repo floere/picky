@@ -3,7 +3,7 @@ var PickyAddination = function(view, results) {
   // Calculate the addination range.
   // 
   var calculateRange = function(data) {
-    var numberOfResults = 20; // Make parametrizable.
+    var numberOfResults = data.renderedAmount(); // Use as much as is there.
     var offset  = data.offset + numberOfResults;
     var end     = offset + numberOfResults;
     var total   = data.total;

@@ -2,6 +2,10 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
+# For this test project, always use the latest client code.
+#
+require File.expand_path('../../client/lib/picky-client')
+
 # Load the "model".
 #
 require File.expand_path 'book', File.dirname(__FILE__)
@@ -34,7 +38,7 @@ end
 # and then populate the result with models (rendered, even).
 #
 get '/search/full' do
-  results = BooksSearch.search params[:query], :offset => params[:offset]
+  results = BooksSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
     book.to_s
