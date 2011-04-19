@@ -35,6 +35,7 @@
         // A full query displays the rendered results.
         //
         full: '/search/full',
+        fullResults: 100,
 
         // A live query just updates the count.
         //
@@ -48,10 +49,12 @@
         after: function(data, query) {
           map.clearOverlays();
 
-          var geo = data.original.geo;
-          for (var i = 0; i < geo.length; i++) {
-            map.addOverlay(new GMarker(new GLatLng(geo[i][0], geo[i][1])));
-          };
+          var geo = data.original_hash.geo;
+          if (geo) {
+            for (var i = 0; i < geo.length; i++) {
+              map.addOverlay(new GMarker(new GLatLng(geo[i][0], geo[i][1])));
+            };
+          }
         }, // Optional. After Picky has handled the data and updated the view.
 
         // This is used to generate the correct query strings, localized. E.g. "subject:war".
