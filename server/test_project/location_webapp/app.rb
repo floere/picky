@@ -32,9 +32,11 @@ end
 # and then populate the result with models (rendered, even).
 #
 get '/search/full' do
-  results = Geo.search params[:query], :ids => 20, :offset => params[:offset]
+  results = Geo.search params[:query], :ids => 100, :offset => params[:offset]
   results.extend Picky::Convenience
+  results[:geo] ||= []
   results.populate_with Location do |location|
+    results[:geo] << [location.north, location.east]
     location.to_s
   end
 

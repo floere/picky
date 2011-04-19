@@ -5,7 +5,9 @@
     = js 'jquery-1.4.3.min'
     = js 'jquery.scrollTo-1.4.2'
     = js 'jquery.timer'
-    
+
+    %script{ :src => "http://maps.google.com/maps?file=api&amp;v=2&amp;key=xxx;hl=en", :type => 'text/javascript' }
+
     / = js 'picky.extensions'
     / = js 'picky.translations'
     / = js 'picky.data'
@@ -17,39 +19,41 @@
     / = js 'picky.results_renderer'
     / = js 'picky.allocation_renderer'
     / = js 'picky.allocations_cloud'
-    
+
     = js 'picky.min'
   %body
-    %img{:src => "images/picky.png"}/
     %p
-      %a{:href => "http://floere.github.com/picky"} To the Picky Homepage
-      \/
-      %a{:href => '/configure' } Configuring this app server
-    %p
-      Try a location search in Switzerland. For example, the area around Grüningen:
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('north1:47.283 east1:8.762');"} north1:47.283 east1:8.762
+      #map_div{ :style => "width:690px;height:340px;" }
     %p
       It also works without qualifiers, as it knows what you mean:
       = succeed "." do
         %a{:href => "#", :onclick => "pickyClient.insert('47.283, 8.762');"} 47.283, 8.762
     = Picky::Helper.cached_interface
     :javascript
+      // The client
       pickyClient = new PickyClient({
         // A full query displays the rendered results.
         //
         full: '/search/full',
-        
+
         // A live query just updates the count.
         //
         live: '/search/live',
-        
-        // showResultsLimit: 10, // Optional. Default is 10.
-        
+
+        showResultsLimit: 100, // Optional. Default is 10.
+
         // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
         // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
-        // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
-        
+
+        after: function(data, query) {
+          map.clearOverlays();
+
+          var geo = data.original.geo;
+          for (var i = 0; i < geo.length; i++) {
+            map.addOverlay(new GMarker(new GLatLng(geo[i][0], geo[i][1])));
+          };
+        }, // Optional. After Picky has handled the data and updated the view.
+
         // This is used to generate the correct query strings, localized. E.g. "subject:war".
         // Optional. If you don't give these, the field identifier given in the Picky server is used.
         //
@@ -58,7 +62,7 @@
             subjects:  'subject'
           }
         },
-        
+
         // This is used to explain the preceding word in the suggestion text, localized. E.g. "Peter (author)".
         // Optional. Default are the field identifiers from the Picky server.
         //
@@ -72,7 +76,25 @@
           }
         }
       });
-      
+
       // An initial search text, prefilled.
       //
       pickyClient.insert('46.947, 7.446');
+
+      // The map
+      var draggable_marker = null;
+
+      $(document).ready(function() {
+        if (GBrowserIsCompatible()) {
+          map = new GMap2(document.getElementById('map_div'));
+          map.addControl(new GSmallMapControl());
+
+          map.setCenter(new GLatLng(47.3, 8.1), 13);
+
+          GEvent.addListener(map, "click", function(overlay, latlng) {
+            if (latlng) {
+              pickyClient.insert(Math.round(latlng.lat()*1000)/1000 + ' ' + Math.round(latlng.lng()*1000)/1000);
+            }
+          });
+        }
+      });

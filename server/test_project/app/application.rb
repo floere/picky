@@ -80,7 +80,7 @@ class BookSearch < Application
 
     real_geo_index = Index::Memory.new :real_geo do
       source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
-      category       :location
+      category       :location, partial: Partial::Substring.new(from: 1)
       geo_categories :north, :east, 1, precision: 3
     end
 

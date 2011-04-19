@@ -8,7 +8,7 @@ GEM
     kgio (2.3.3)
     monkey-lib (0.5.4)
       backports
-    picky-client (2.0.0)
+    picky-client (2.3.1)
       yajl-ruby (>= 0.7.8)
     rack (1.2.2)
     sinatra (1.2.1)
