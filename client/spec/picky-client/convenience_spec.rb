@@ -139,8 +139,8 @@ describe Picky::Convenience do
   end
 
   describe 'ids' do
-    it 'should return the top default ids' do
-      @convenience.ids.should == (1..21).to_a
+    it 'returns by default all ids' do
+      @convenience.ids.should == (1..23).to_a
     end
     it 'should return the top limit entries' do
       @convenience.ids(7).should == (1..8).to_a
