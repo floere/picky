@@ -82,10 +82,10 @@ var PickyController = function(config) {
     search('full', query, fullSearchCallback, params);
   };
   
-  this.insert = function(query, full) {
+  this.insert = function(query, params, full) {
     view.insert(query);
     
-    if (full) { fullSearch(query); } // TODO
+    if (full) { fullSearch(query, params); }
   };
   
   var clearButtonClicked = function() {
