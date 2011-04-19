@@ -63,6 +63,7 @@ function PickyData(data) {
 
   // Expose some attributes.
   //
+  this.data_hash   = data; // For accessing the original data hash. Syntax pepper.
   this.total       = total;
   this.duration    = duration;
   this.offset      = offset;
