@@ -36,14 +36,15 @@ class BookSearch < Application
     class Book < ActiveRecord::Base; end
     Book.establish_connection YAML.load(File.open('app/db.yml'))
     book_each_index = Index::Memory.new :book_each do
-      source   Book.order('title ASC')
-      category :id
-      category :title,
-               qualifiers: [:t, :title, :titre],
-               partial:    Partial::Substring.new(:from => 1),
-               similarity: Similarity::DoubleMetaphone.new(2)
-      category :author, partial: Partial::Substring.new(:from => -2)
-      category :year, qualifiers: [:y, :year, :annee]
+      key_format :to_s
+      source     Book.order('title ASC')
+      category   :id
+      category   :title,
+                 qualifiers: [:t, :title, :titre],
+                 partial:    Partial::Substring.new(:from => 1),
+                 similarity: Similarity::DoubleMetaphone.new(2)
+      category   :author, partial: Partial::Substring.new(:from => -2)
+      category   :year, qualifiers: [:y, :year, :annee]
     end
 
     isbn_index = Index::Memory.new :isbn do
@@ -68,7 +69,7 @@ class BookSearch < Application
       end
     end
     isbn_each_index = Index::Memory.new :isbn_each, source: [ISBN.new('ABC'), ISBN.new('DEF')] do
-      category :isbn, :qualifiers => [:i, :isbn]
+      category :isbn, :qualifiers => [:i, :isbn], :key_format => :to_s
     end
 
     mgeo_index = Index::Memory.new :memory_geo do
@@ -95,7 +96,8 @@ class BookSearch < Application
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
     csv_test_index = Index::Memory.new(:csv_test, result_identifier: 'Books') do
-      source   Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
+      source     Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
+
       category :title,
                qualifiers: [:t, :title, :titre],
                partial:    Partial::Substring.new(from: 1),

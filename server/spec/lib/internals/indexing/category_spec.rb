@@ -106,6 +106,43 @@ describe Internals::Indexing::Category do
       end
     end
     
+    describe 'key_format' do
+      context 'source has key_format' do
+        before(:each) do
+          category.stub! :source => stub(:source, :key_format => :some_key_format)
+        end
+        it 'returns that key_format' do
+          category.key_format.should == :some_key_format
+        end
+      end
+      context 'source does not have key_format' do
+        before(:each) do
+          category.stub! :source => stub(:source)
+        end
+        context 'category has its own key_format' do
+          before(:each) do
+            category.instance_variable_set :@key_format, :other_key_format
+          end
+          it 'returns that key_format' do
+            category.key_format.should == :other_key_format
+          end
+        end
+        context 'category does not have its own key format' do
+          before(:each) do
+            category.instance_variable_set :@key_format, nil
+          end
+          context 'it has an index' do
+            before(:each) do
+              category.stub! :index => stub(:index, :key_format => :yet_another_key_format)
+            end
+            it 'returns that key_format' do
+              category.key_format.should == :yet_another_key_format
+            end
+          end
+        end
+      end
+    end
+    
     describe 'source' do
       context 'with explicit source' do
         let(:category) { described_class.new(:some_category, @index, :source => :category_source) }
@@ -121,12 +158,18 @@ describe Internals::Indexing::Category do
       end
     end
     
-    describe "cache" do
+    describe "cache!" do
       before(:each) do
         category.stub! :generate_caches
+        category.stub! :configure
       end
       it "prepares the cache directory" do
         category.should_receive(:prepare_index_directory).once.with
+        
+        category.cache!
+      end
+      it "configures" do
+        category.should_receive(:configure).once.with
         
         category.cache!
       end

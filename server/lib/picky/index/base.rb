@@ -21,6 +21,7 @@ module Index
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
     # * tokenizer: The tokenizer to use for this index. Optional, can be defined in the block using #indexing.
+    # * key_format: The format the ids of this index are in. Optional, can be defined in the block using #key_format.
     #
     # Examples:
     #   my_index = Index::Memory.new(:my_index, source: some_source) do
@@ -138,6 +139,17 @@ INDEX
       internal_indexing.define_source source
     end
     alias define_source source
+
+    # Define a key_format on the index.
+    #
+    # Parameter is a source, either one of the standard sources or
+    # anything responding to #each and returning objects that
+    # respond to id and the category names (or the category from option).
+    #
+    def key_format key_format
+      internal_indexing.define_key_format key_format
+    end
+    alias define_key_format key_format
 
     # Defines a searchable category on the index.
     #

@@ -28,6 +28,7 @@ module Internals
         @after_indexing = options[:after_indexing]
         @bundle_class   = options[:indexing_bundle_class] # TODO This should actually be a fixed parameter.
         @tokenizer      = options[:tokenizer]
+        @key_format     = options[:key_format]
 
         @categories = []
       end
@@ -69,6 +70,15 @@ Example:
 
         NO_SOURCE
 )
+      end
+
+      #
+      #
+      def define_key_format key_format
+        @key_format = key_format
+      end
+      def key_format
+        @key_format || :to_i
       end
 
       #

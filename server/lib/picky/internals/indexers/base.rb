@@ -15,14 +15,6 @@ module Indexers
       process
     end
 
-    # Delegates the key format to the source.
-    #
-    # Default is to_i.
-    #
-    def key_format
-      source.respond_to?(:key_format) && source.key_format || :to_i
-    end
-
   end
 
 end

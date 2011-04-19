@@ -80,7 +80,7 @@ module Internals
           key_format = self[:key_format] || :to_i
           files.retrieve do |id, token|
             initialize_index_for token
-            index[token] << id.send(key_format) # TODO Rewrite. Move this into the specific indexing.
+            index[token] << id.send(key_format)
           end
         end
 

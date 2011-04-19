@@ -21,14 +21,16 @@ module Internals
       #  * source: Use if the category should use a different source.
       #  * weights: Query::Weights.new( [:category1, :category2] => +2, ... )
       #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
+      #  * key_format: What this category's keys are formatted with (default is :to_i)
       #
       def initialize name, index, options = {}
         @name  = name
         @index = index
 
-        @source    = options[:source]
-        @from      = options[:from]
-        @tokenizer = options[:tokenizer]
+        @source     = options[:source]
+        @from       = options[:from]
+        @tokenizer  = options[:tokenizer]
+        @key_format = options[:key_format]
 
         # TODO Push into Bundle. At least the weights.
         #
@@ -45,6 +47,16 @@ module Internals
       #
       def source
         @source || @index.source
+      end
+      # Return the key format.
+      #
+      # If the source has no key format, then
+      # check for an explicit key format, and
+      # if none is defined, ask the index for
+      # one.
+      #
+      def key_format
+        source.respond_to?(:key_format) && source.key_format || @key_format || index.key_format
       end
       # The indexer is lazily generated and cached.
       #
@@ -102,9 +114,8 @@ module Internals
       # Uses the one defined in the indexer.
       #
       def configure
-        key_format = indexer.key_format
-        exact[:key_format] = key_format
-        partial[:key_format] = key_format
+        exact[:key_format] = self.key_format
+        partial[:key_format] = self.key_format
       end
       def generate_caches
         generate_caches_from_source
