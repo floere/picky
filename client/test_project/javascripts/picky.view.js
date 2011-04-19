@@ -5,19 +5,19 @@ var PickyView = function(picky_controller, config) {
   
   var showResultsLimit = config.showResultsLimit || 10;
   
-  var searchField   = $('#picky input.query');
-  var clearButton   = $('#picky div.reset');
-  var searchButton  = $('#picky input.search_button');
-  var resultCounter = $('#picky div.status');
-  var dashboard     = $('#picky .dashboard');
-  
-  var results       = $('#picky .results'); // Push into results.
-  var noResults     = $('#picky .no_results');
-  
-  var addination    = new PickyAddination(this, results); // Push into results.
+  var searchField    = $('#picky input.query');
+  var clearButton    = $('#picky div.reset');
+  var searchButton   = $('#picky input.search_button');
+  var resultCounter  = $('#picky div.status');
+  var dashboard      = $('#picky .dashboard');
+                     
+  var results        = $('#picky .results'); // Push into results.
+  var noResults      = $('#picky .no_results');
+                     
+  var addination     = new PickyAddination(this, results); // Push into results.
   
   var allocationsCloud = new PickyAllocationsCloud(this, config);
-  var resultsRenderer  = new PickyResultsRenderer(addination, config); // TODO Rename results.
+  var resultsRenderer  = new PickyResultsRenderer(addination, config);
   
   // Toggle the clear button visibility.
   //

@@ -2,10 +2,9 @@ var PickyAddination = function(view, results) {
   
   // Calculate the addination range.
   // 
-  var calculateRange = function(data, correctionParam) {
-    var correction      = correctionParam || 0;
+  var calculateRange = function(data) {
     var numberOfResults = 20; // Make parametrizable.
-    var offset  = data.offset + numberOfResults + correction;
+    var offset  = data.offset + numberOfResults;
     var end     = offset + numberOfResults;
     var total   = data.total;
     if (total < end) { end = total; }
@@ -33,4 +32,5 @@ var PickyAddination = function(view, results) {
     }
   };
   this.render = render;
+  
 };
