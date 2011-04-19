@@ -5,7 +5,7 @@ module Index
   #
   # It provides a single front for both indexing and index options. We suggest to always use the index API.
   #
-  # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Type*.
+  # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Index*.
   #
   class Base
 
@@ -52,16 +52,16 @@ module Index
 
       check_source internal_indexing.source
     end
-    def internal_indexing
+    def internal_indexing # :nodoc:
       @indexing
     end
-    def internal_indexed
+    def internal_indexed # :nodoc:
       @indexed
     end
     #
     # Since this is an API, we fail hard quickly.
     #
-    def check_name name
+    def check_name name # :nodoc:
       raise ArgumentError.new(<<-NAME
 
 
@@ -74,7 +74,7 @@ NAME
 
 ) unless name.respond_to?(:to_sym)
     end
-    def check_options options
+    def check_options options # :nodoc:
       raise ArgumentError.new(<<-OPTIONS
 
 
@@ -96,7 +96,7 @@ All the best
 OPTIONS
 ) unless options.respond_to?(:[])
     end
-    def check_source source
+    def check_source source # :nodoc:
       raise ArgumentError.new(<<-SOURCE
 
 
@@ -110,7 +110,7 @@ SOURCE
 ) unless source.respond_to?(:each) || source.respond_to?(:harvest)
     end
 
-    def to_stats
+    def to_stats # :nodoc:
       stats = <<-INDEX
 #{name} (#{self.class}):
   #{"source:            #{internal_indexing.source}".indented_to_s}
