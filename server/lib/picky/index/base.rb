@@ -5,6 +5,8 @@
 # * how this data it is indexed.
 # * a number of categories that may or may not map directly to data categories.
 #
+# == Howto
+#
 # This is a step-by-step description on how to create an index.
 #
 # Start by choosing an <tt>Index::Memory</tt> or an <tt>Index::Redis</tt>.
@@ -19,8 +21,8 @@
 #   end
 #
 # In the example, we use an explicit <tt>Sources::CSV</tt> of Picky.
-# However, anything that responds to #each, and returns an object that
-# answers to #id, works.
+# However, anything that responds to <tt>#each</tt>, and returns an object that
+# answers to <tt>#id</tt>, works.
 #
 # For example, a 3.0 ActiveRecord class:
 #
@@ -56,9 +58,9 @@
 #              from: :legacy_isbn_name
 #   end
 #
-# For this to work, a Book should support methods #title, #author and #legacy_isbn_name.
+# For this to work, a <tt>Book</tt> should support methods <tt>#title</tt>, <tt>#author</tt> and <tt>#legacy_isbn_name</tt>.
 #
-# If it uses <tt>String</tt> ids, use #key_format to define a formatting method:
+# If it uses <tt>String</tt> ids, use <tt>#key_format</tt> to define a formatting method:
 #
 #   books = Index::Memory.new(:books) do
 #     key_format :to_s
@@ -67,6 +69,10 @@
 #     category   :author
 #     category   :isbn
 #   end
+#
+# Finally, use the index for a <tt>Search</tt>:
+#
+#   route %r{^/media$} => Search.new(books, dvds, mp3s)
 #
 module Index
 
