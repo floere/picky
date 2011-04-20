@@ -299,6 +299,7 @@ module Loader # :nodoc:all
     load_relative 'sources/csv'
     load_relative 'sources/delicious'
     load_relative 'sources/couch'
+    load_relative 'sources/mongo'
 
     load_relative 'sources/wrappers/base'
     load_relative 'sources/wrappers/location'
