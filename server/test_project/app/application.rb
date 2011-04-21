@@ -85,6 +85,26 @@ class BookSearch < Application
       geo_categories :north, :east, 1, precision: 3
     end
 
+    iphone_locations = Index::Memory.new :iphone do
+      source Sources::CSV.new(
+        :mcc,
+        :mnc,
+        :lac,
+        :ci,
+        :timestamp,
+        :latitude,
+        :longitude,
+        :horizontal_accuracy,
+        :altitude,:vertical_accuracy,
+        :speed,
+        :course,
+        :confidence,
+        file: 'data/iphone_locations.csv'
+      )
+      ranged_category :timestamp, 1800
+      geo_categories  :latitude, :longitude, 10, precision: 3
+    end
+
     Index::Memory.new :underscore_regression do
       source         Sources::CSV.new(:location, file: 'data/ch.csv')
       category       :some_place, :from => :location
@@ -160,6 +180,7 @@ class BookSearch < Application
           %r{\A/sym\Z}        => Search.new(sym_keys_index),
           %r{\A/geo\Z}        => Search.new(real_geo_index),
           %r{\A/simple_geo\Z} => Search.new(mgeo_index),
+          %r{\A/iphone\Z}     => Search.new(iphone_locations),
           %r{\A/indexing\Z}   => Search.new(indexing_index),
           %r{\A/all\Z}        => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
