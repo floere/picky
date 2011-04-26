@@ -4,13 +4,13 @@ Bundler.require
 
 # Load the "model".
 #
-require File.expand_path 'location', File.dirname(__FILE__)
+require File.expand_path 'models/iphone_location', File.dirname(__FILE__)
 
 set :haml, { :format => :html5 }
 
 # Sets up two query instances.
 #
-Geo = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/geo'
+Geo = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/iphone'
 
 set :static, true
 set :public, File.dirname(__FILE__)
@@ -35,7 +35,7 @@ get '/search/full' do
   results = Geo.search params[:query], :ids => params[:ids], :offset => params[:offset]
   results.extend Picky::Convenience
   results[:geo] ||= []
-  results.populate_with Location do |location|
+  results.populate_with IphoneLocation do |location|
     results[:geo] << [location.north, location.east]
     location.to_s
   end

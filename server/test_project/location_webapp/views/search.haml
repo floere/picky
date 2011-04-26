@@ -2,6 +2,8 @@
 %html{ :lang => 'en' }
   %head
     %link{:href => "stylesheets/stylesheet.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "stylesheets/date_slider.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+
     = js 'jquery-1.4.3.min'
     = js 'jquery.scrollTo-1.4.2'
     = js 'jquery.timer'
@@ -24,7 +26,16 @@
   %body
     %p
       #map_div{ :style => "width:690px;height:340px;" }
-    %p Geosearch
+    %p
+      %input#coordinates{ :type => 'checkbox', :checked => 'checked' } Enable coordinates
+      %input#timestamp{ :type => 'checkbox' } Enable timestamp
+    %p
+      %input{ :type => "range", :style => "width:100%", :min => "310661362", :max => "324727837", :value => "310661362", :step => "21600" }
+    %p
+      #date Current Date
+    / %p
+    /   #date_range
+    %p iPhone Location Search
     = Picky::Helper.cached_interface
     :javascript
       // The client
@@ -38,7 +49,9 @@
         //
         live: '/search/live',
 
-        showResultsLimit: 100, // Optional. Default is 10.
+        // Optional. Default is 10.
+        //
+        showResultsLimit: 100,
 
         // before: function(params, query, offset) {  }, // Optional. Before Picky sends any data.
         // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
@@ -79,7 +92,38 @@
 
       // An initial search text, prefilled.
       //
-      pickyClient.insert('46.947, 7.446');
+      pickyClient.insert('latitude:46.947 longitude:7.446');
+
+      var useCoordinates = function() {
+        return $('input#coordinates').attr('checked');
+      };
+      var useTimestamp = function() {
+        return $('input#timestamp').attr('checked');
+      };
+      var last = {
+        latitude: 46.947,
+        longitude: 7.446,
+        timestamp: 308188800000
+      };
+      var updateClient = function(options) {
+        var options = options || {};
+
+        $.extend(last, options);
+
+        var timestampSearchString = useTimestamp()   ? 'ts:'         + last.timestamp : '';
+        var latitudeSearchString  = useCoordinates() ? ' latitude:'  + last.latitude  : '';
+        var longitudeSearchString = useCoordinates() ? ' longitude:' + last.longitude : '';
+
+        pickyClient.insert(
+          timestampSearchString +
+          latitudeSearchString +
+          longitudeSearchString
+        );
+      };
+
+      $('input:checkbox').click(function() {
+        updateClient();
+      });
 
       // The map
       //
@@ -92,8 +136,24 @@
 
           GEvent.addListener(map, "click", function(overlay, latlng) {
             if (latlng) {
-              pickyClient.insert(Math.round(latlng.lat()*1000)/1000 + ' ' + Math.round(latlng.lng()*1000)/1000);
+              updateClient({
+                latitude:  Math.round(latlng.lat()*1000)/1000,
+                longitude: Math.round(latlng.lng()*1000)/1000
+              });
             }
           });
         }
+      });
+
+      // Date
+      //
+      var iPhoneStartDate = new Date(2001, 0, 1);
+      $('input[type=range]:first').change(function() {
+        var value = $(this)[0].value;
+
+        var currentDate = new Date(2001, 0, 1);
+        currentDate.setDate(iPhoneStartDate.getDate() + (value/86400));
+        $('#date').html('' + currentDate);
+
+        updateClient({timestamp:value});
       });

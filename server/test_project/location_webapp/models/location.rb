@@ -1,20 +1,12 @@
 require 'csv'
 
-# A book is simple, it has just:
-#  * a title
-#  * an author
-#  * an isbn
-#  * a publishing year
-#  * a publisher
-#  * a number of subjects
-#
 class Location
 
   @@location_mapping = {}
 
   # Load the books on startup.
   #
-  file_name = File.expand_path '../data/ch.csv', File.dirname(__FILE__)
+  file_name = File.expand_path '../data/iphone_locations.csv', File.dirname(__FILE__)
   CSV.open(file_name, 'r').each do |row|
     @@location_mapping[row.shift.to_i] = row
   end

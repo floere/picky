@@ -12,15 +12,15 @@ class BookSearch < Application
 
              substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
-    querying removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
-             stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-             splits_text_on:                     /[\s\/\-\,\&\/]/,
-             removes_characters_after_splitting: /\|/,
-             # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.
-             case_sensitive:                     true,
+    searching removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
+              stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+              splits_text_on:                     /[\s\/\,\&\/]/,
+              removes_characters_after_splitting: /\|/,
+              # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.
+              case_sensitive:                     true,
 
-             maximum_tokens:                     5,
-             substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
+              maximum_tokens:                     5,
+              substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
     books_index = Index::Memory.new :books, result_identifier: 'boooookies' do
       source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
@@ -95,14 +95,15 @@ class BookSearch < Application
         :latitude,
         :longitude,
         :horizontal_accuracy,
-        :altitude,:vertical_accuracy,
+        :altitude,
+        :vertical_accuracy,
         :speed,
         :course,
         :confidence,
         file: 'data/iphone_locations.csv'
       )
-      ranged_category :timestamp, 1800
-      geo_categories  :latitude, :longitude, 10, precision: 3
+      ranged_category :timestamp, 86_400, precision: 5, qualifiers: [:ts, :timestamp]
+      geo_categories  :latitude, :longitude, 25, precision: 3
     end
 
     Index::Memory.new :underscore_regression do

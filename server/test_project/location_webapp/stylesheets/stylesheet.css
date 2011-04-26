@@ -1,3 +1,6 @@
+html {
+  overflow-y: scroll; }
+
 body {
   text-align: center;
   font-family: Lucida Grande; }
