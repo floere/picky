@@ -3,20 +3,20 @@
 require 'spec_helper'
 require 'picky-client/spec'
 
-describe "Integration Tests" do
+describe BookSearch do
   
   before(:all) do
     Indexes.index_for_tests
     Indexes.load_from_cache
   end
   
-  let(:books)      { Picky::TestClient.new(BookSearch, :path => '/books')      }
-  let(:csv)        { Picky::TestClient.new(BookSearch, :path => '/csv')        }
-  let(:redis)      { Picky::TestClient.new(BookSearch, :path => '/redis')      }
-  let(:sym)        { Picky::TestClient.new(BookSearch, :path => '/sym')        }
-  let(:geo)        { Picky::TestClient.new(BookSearch, :path => '/geo')        }
-  let(:simple_geo) { Picky::TestClient.new(BookSearch, :path => '/simple_geo') }
-  let(:indexing)   { Picky::TestClient.new(BookSearch, :path => '/indexing')   }
+  let(:books)      { Picky::TestClient.new(described_class, :path => '/books')      }
+  let(:csv)        { Picky::TestClient.new(described_class, :path => '/csv')        }
+  let(:redis)      { Picky::TestClient.new(described_class, :path => '/redis')      }
+  let(:sym)        { Picky::TestClient.new(described_class, :path => '/sym')        }
+  let(:geo)        { Picky::TestClient.new(described_class, :path => '/geo')        }
+  let(:simple_geo) { Picky::TestClient.new(described_class, :path => '/simple_geo') }
+  let(:indexing)   { Picky::TestClient.new(described_class, :path => '/indexing')   }
   
   it 'is has the right amount of results' do
     csv.search('alan').total.should == 3
@@ -97,7 +97,7 @@ describe "Integration Tests" do
   
   # Splitting.
   #
-  it { csv.search('history/fergus-history/fergus,history&fergus').ids.should == [4, 4, 4, 4, 4, 4, 4, 4] }
+  it { csv.search('history/fergus&history/fergus,history&fergus').ids.should == [4, 4, 4, 4, 4, 4, 4, 4] }
   
   # Character Removal.
   #

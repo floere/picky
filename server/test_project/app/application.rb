@@ -52,6 +52,32 @@ class BookSearch < Application
       category :isbn, :qualifiers => [:i, :isbn]
     end
 
+    class EachRSSItemProxy
+
+      def each &block
+        require 'rss'
+        require 'open-uri'
+        rss_feed = "http://florianhanke.com/blog/atom.xml"
+        rss_content = ""
+        open rss_feed do |f|
+           rss_content = f.read
+        end
+        rss = RSS::Parser.parse rss_content, true
+        rss.items.each &block
+      rescue
+        # Don't call block, no data.
+      end
+
+    end
+
+    rss_index = Index::Memory.new :rss do
+      source     EachRSSItemProxy.new
+      key_format :to_s
+
+      category   :title
+      # etc...
+    end
+
     # Breaking example to test the nice error message.
     #
     # breaking = Index::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml') do
