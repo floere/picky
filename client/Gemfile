@@ -1,0 +1,8 @@
+source :rubygems
+
+gem 'rake'
+gem 'rack'
+gem 'rspec'
+gem 'yajl-ruby'
+gem 'activesupport'
+gem 'highline'

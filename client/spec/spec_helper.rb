@@ -1,7 +1,7 @@
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
-require File.expand_path('../../lib/picky-client', __FILE__)
-require 'spec'
+require File.expand_path '../../lib/picky-client', __FILE__
+require 'rspec'
 require 'benchmark'
 
 require 'yajl'
