@@ -82,7 +82,7 @@
 #   $ rake index
 #   $ rake start
 # Run your first query:
-#   $ curl 'localhost:8080/books/full?query=hello server'
+#   $ curl 'localhost:8080/books?query=hello server'
 #
 # Nice, right? Your first query!
 #

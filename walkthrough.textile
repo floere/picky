@@ -141,7 +141,7 @@ In your Gemfile:
 
 h3. Get a client instance each for a full search (and maybe a live search)
 
-<pre><code>FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books/full'
+<pre><code>FullBooks = Picky::Client::Full.new :host => 'localhost', :port => 8080, :path => '/books'
 LiveBooks = Picky::Client::Live.new :host => 'localhost', :port => 8080, :path => '/books/live'
 </code></pre>
 

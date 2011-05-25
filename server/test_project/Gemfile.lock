@@ -25,6 +25,7 @@ GEM
       rack (>= 1.0.0)
     rack_fast_escape (2009.06.24)
       url_escape
+    rake (0.8.7)
     redis (2.1.1)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
@@ -59,6 +60,7 @@ DEPENDENCIES
   rack (~> 1.2.1)
   rack-mount (~> 0.6.9)
   rack_fast_escape (= 2009.06.24)
+  rake
   redis
   rspec
   sinatra

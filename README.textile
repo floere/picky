@@ -41,7 +41,7 @@ h3. Start the Picky server
 
 h3. Try a query!
 
-<pre><code>curl localhost:8080/books/full?query=test</code></pre>
+<pre><code>curl localhost:8080/books?query=test</code></pre>
 
 Don't worry about the strange looking results! The next part (client) will take care of them.
 
