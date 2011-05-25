@@ -1,3 +1,7 @@
+h2. Version 2.4.1
+
+* hanke: (client) Requires activesupport (thanks stanley!).
+
 h2. Version 2.4.0
 
 * hanke: (server) Added a configuration option @key_format@ for index, categories. It sets the format that this index'/category's keys are in. Use as you would with @source@, as either method in the index block, as index parameter, or category parameter.
