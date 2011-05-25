@@ -38,8 +38,8 @@ begin
   puts "Installing the server."
   system "picky generate unicorn_server sandbox/server"
   system "cd sandbox/server; bundle install --local"
-  system "cd sandbox/server; rake index"
-  system "cd sandbox/server; rake start &"
+  system "cd sandbox/server; bundle exec rake index"
+  system "cd sandbox/server; bundle exec rake start &"
 
   sleep 5 # loading
 
@@ -79,7 +79,7 @@ begin
   sleep 5
 
   puts "Now the server integration specs"
-  if system('cd sandbox/server; rake spec')
+  if system('cd sandbox/server; bundle exec rake spec')
     puts "Yay! Integration specs ran through!"
   else
     raise "Integration specs failed!"
