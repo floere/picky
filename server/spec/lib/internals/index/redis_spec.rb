@@ -4,7 +4,7 @@ describe Internals::Index::Redis do
 
   context 'indexing' do
     let(:category) do
-      index    = stub :index, :name => :some_index
+      index    = stub :index, :name => :some_index, :bundle_class => nil
       category = Internals::Indexing::Category.new :some_category, index
     end
     let(:redis) { described_class.new :some_name, category }

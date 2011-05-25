@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Internals::Index::Files do
 
   before(:each) do
-    index         = stub :index, :name => :some_index
+    index         = stub :index, :name => :some_index, :bundle_class => nil
     category      = Internals::Indexing::Category.new :some_category, index
     
     @files         = described_class.new :some_name, category

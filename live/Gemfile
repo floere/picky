@@ -1,0 +1,6 @@
+source :rubygems
+
+gem 'rake'
+gem 'rack'
+gem 'rspec'
+gem 'activesupport', :require => 'active_support/core_ext/object/to_query'

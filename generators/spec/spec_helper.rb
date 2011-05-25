@@ -2,5 +2,5 @@
 # from the project root directory.
 #
 require File.expand_path '../../lib/picky-generators', __FILE__
-require 'spec'
+require 'rspec'
 require 'benchmark'
