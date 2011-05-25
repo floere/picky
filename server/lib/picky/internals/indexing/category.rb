@@ -38,7 +38,8 @@ module Internals
         weights    = options[:weights]    || Generators::Weights::Default
         similarity = options[:similarity] || Generators::Similarity::Default
 
-        bundle_class = options[:indexing_bundle_class] || Bundle::Memory
+        bundle_class = index.bundle_class || Bundle::Memory
+
         @exact   = bundle_class.new(:exact,   self, similarity, Generators::Partial::None.new, weights)
         @partial = bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
       end

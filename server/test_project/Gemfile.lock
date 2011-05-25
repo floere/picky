@@ -26,7 +26,7 @@ GEM
     rack_fast_escape (2009.06.24)
       url_escape
     rake (0.8.7)
-    redis (2.1.1)
+    redis (2.2.0)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)

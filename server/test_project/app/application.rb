@@ -170,7 +170,7 @@ class BookSearch < Application
     end
 
    redis_index = Index::Redis.new(:redis) do
-     source   Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
+     source   Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'data/books.csv')
      category :title,
               qualifiers: [:t, :title, :titre],
               partial:    Partial::Substring.new(from: 1),

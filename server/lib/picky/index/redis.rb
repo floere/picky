@@ -17,10 +17,10 @@ module Index
     # * result_identifier: Use if you'd like a different identifier/name in the results JSON than the name of the index.
     #
     def initialize name, options = {}
-      super name, options
-
       options[:indexing_bundle_class] ||= Internals::Indexing::Bundle::Redis
       options[:indexed_bundle_class]  ||= Internals::Indexed::Bundle::Redis
+
+      super name, options
     end
 
   end
