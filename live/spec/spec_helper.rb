@@ -2,4 +2,4 @@
 # from the project root directory.
 #
 require File.expand_path '../../lib/picky-live', __FILE__
-require 'spec'
+require 'rspec'

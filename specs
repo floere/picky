@@ -4,8 +4,8 @@
 require File.expand_path '../version', __FILE__
 
 puts "Running all specs."
-system "cd live;       rake"
-system "cd generators; rake"
-system "cd statistics; rake"
-system "cd client;     rake"
-system "cd server;     rake; cd test_project; rake"
+system "cd live;       bundle exec rake"
+system "cd generators; bundle exec rake"
+system "cd statistics; bundle exec rake"
+system "cd client;     bundle exec rake"
+system "cd server;     bundle exec rake; cd test_project; bundle exec rake"

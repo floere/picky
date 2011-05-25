@@ -2,7 +2,7 @@
 # from the project root directory.
 #
 require File.expand_path '../../lib/picky-statistics', __FILE__
-require 'spec'
+require 'rspec'
 
 def performance_of &block
   GC.disable
