@@ -141,22 +141,25 @@ module Interfaces
     # TODO Move to Interface object.
     #
     def querying_removes_characters
-      Tokenizers::Query.default.instance_variable_get(:@removes_characters_regexp).source
+      regexp = Internals::Tokenizers::Query.default.instance_variable_get :@removes_characters_regexp
+      regexp && regexp.source
     end
     def querying_removes_characters= new_value
-      Tokenizers::Query.default.instance_variable_set(:@removes_characters_regexp, %r{#{new_value}})
+      Internals::Tokenizers::Query.default.instance_variable_set(:@removes_characters_regexp, %r{#{new_value}})
     end
     def querying_stopwords
-      Tokenizers::Query.default.instance_variable_get(:@remove_stopwords_regexp).source
+      regexp = Internals::Tokenizers::Query.default.instance_variable_get :@remove_stopwords_regexp
+      regexp && regexp.source
     end
     def querying_stopwords= new_value
-      Tokenizers::Query.default.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
+      Internals::Tokenizers::Query.default.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
     end
     def querying_splits_text_on
-      Tokenizers::Query.default.instance_variable_get(:@splits_text_on_regexp).source
+      regexp = Internals::Tokenizers::Query.default.instance_variable_get :@splits_text_on_regexp
+      regexp && regexp.source
     end
     def querying_splits_text_on= new_value
-      Tokenizers::Query.default.instance_variable_set(:@splits_text_on_regexp, %r{#{new_value}})
+      Internals::Tokenizers::Query.default.instance_variable_set(:@splits_text_on_regexp, %r{#{new_value}})
     end
 
     #

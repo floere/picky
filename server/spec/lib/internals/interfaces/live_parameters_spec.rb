@@ -18,6 +18,28 @@ describe LiveParameters do
     end
   end
   
+  describe 'querying_removes_characters' do
+    it 'works' do
+      expect do
+        @parameters.querying_removes_characters
+      end.to_not raise_error
+    end
+  end
+  describe 'querying_stopwords' do
+    it 'works' do
+      expect do
+        @parameters.querying_stopwords
+      end.to_not raise_error
+    end
+  end
+  describe 'querying_splits_text_on' do
+    it 'works' do
+      expect do
+        @parameters.querying_splits_text_on
+      end.to_not raise_error
+    end
+  end
+  
   describe 'parameters' do
     context 'all goes well' do
       it 'does a few things in order' do
