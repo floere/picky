@@ -1,3 +1,7 @@
+h2. Version 2.4.2
+
+* hanke: (server) Live interface for picky-live gem fixed.
+
 h2. Version 2.4.1
 
 * hanke: (client) Requires activesupport (thanks stanley!).
