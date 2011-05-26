@@ -155,11 +155,17 @@ module Interfaces
       Internals::Tokenizers::Query.default.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
     end
     def querying_splits_text_on
-      regexp = Internals::Tokenizers::Query.default.instance_variable_get :@splits_text_on_regexp
-      regexp && regexp.source
+      splits = Internals::Tokenizers::Query.default.instance_variable_get :@splits_text_on
+      puts splits
+      splits && splits.respond_to?(:source) ? splits.source : splits
     end
     def querying_splits_text_on= new_value
-      Internals::Tokenizers::Query.default.instance_variable_set(:@splits_text_on_regexp, %r{#{new_value}})
+      splits = Internals::Tokenizers::Query.default.instance_variable_get :@splits_text_on
+      if splits.respond_to?(:source)
+        Internals::Tokenizers::Query.default.instance_variable_set(:@splits_text_on, %r{#{new_value}})
+      else
+        Internals::Tokenizers::Query.default.instance_variable_set(:@splits_text_on, new_value)
+      end
     end
 
     #
