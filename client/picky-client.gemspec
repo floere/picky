@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = 'http://rubyforge.org/projects/picky'
 
   s.description = 'Picky Client'
-  s.summary = 'picky Ruby Search Engine Client'
+  s.summary = 'Picky Ruby Search Engine Client'
 
   s.has_rdoc = false
 
