@@ -1,0 +1,26 @@
+= Picky ActiveModel Integration
+
+== Usage
+
+TODO
+
+1. Define a client instance, and save it (as an example) in a constant:
+
+   <tt>BookSearch = Picky::Client.new :host => 'some_host', :port => 1234, :path => '/path/to/search'</tt>
+
+2. Use it in your controllers to search:
+
+   <tt>result = BookSearch.search :query => 'some query', :offset => 123, :ids => 20 # This gets you a hash</tt>
+
+3. Then, to make access easier (if needed):
+
+   <tt>result.extend Picky::Convenience</tt>
+
+4. This gets you the following methods on result:
+
+   * <tt>empty?</tt>
+   * <tt>ids(limit=20)</tt>
+   * <tt>clear_ids</tt>
+   * <tt>allocations</tt>
+   * <tt>allocations_size</tt>
+   * <tt>total</tt>
