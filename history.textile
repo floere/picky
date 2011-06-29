@@ -4,6 +4,7 @@ h2. Version 2.4.2
 
 h2. Version 2.4.1
 
+* hanke: (server) Fixes Redis indexing.
 * hanke: (client) Requires activesupport (thanks stanley!).
 
 h2. Version 2.4.0
