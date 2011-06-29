@@ -1,6 +1,9 @@
 # Experiment 1: Route using Sinatra.
 #
-
+# ruby sinatra.rb
+#
+# curl 'localhost:4567/hi?query=test'
+#
 module Picky
 
   class Search
