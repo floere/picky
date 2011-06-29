@@ -7,15 +7,15 @@
 module Picky
 
   class Search
-
-    def search_with_text text
-      text
+    def initialize *indexes
+      @indexes = indexes
     end
-
+    def search_with_text text
+      "Searched for #{text} in #{@indexes.join(', ')}."
+    end
   end
 
   module Sinatra
-
     def search routings
       routings.each do |pattern, target_search|
         get pattern do
@@ -23,7 +23,6 @@ module Picky
         end
       end
     end
-
   end
 
 end
@@ -33,5 +32,5 @@ require 'sinatra'
 
 include Picky::Sinatra
 
-search '/hi' => Picky::Search.new,
-       '/hello' => Picky::Search.new
+search '/hi'    => Picky::Search.new(:some_index, :other_index),
+       '/hello' => Picky::Search.new(:that_index)
