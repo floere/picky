@@ -98,6 +98,8 @@ Example:
       # delegate to each category to index themselves.
       #
       def index!
+        # TODO Duplicated in category.rb def indexer.
+        #
         if source.respond_to?(:each)
           warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
           index_parallel

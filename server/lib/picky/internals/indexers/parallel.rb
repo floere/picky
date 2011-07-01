@@ -6,6 +6,8 @@ module Indexers
   #
   # The tokenizer is taken from each category if specified, from the index, if not.
   #
+  # TODO Think about this one more. It should work on an index, but also a single category.
+  #
   class Parallel < Base
 
     delegate :categories, :source, :to => :@index

@@ -62,7 +62,12 @@ module Internals
       # The indexer is lazily generated and cached.
       #
       def indexer
-        @indexer ||= Indexers::Serial.new self
+        @indexer ||= source.respond_to?(:each) ? Indexers::Parallel.new(self) : Indexers::Serial.new(self)
+      end
+      # TODO This is a hack to get the parallel indexer working. 
+      #
+      def categories
+        [self]
       end
       # Returns an appropriate tokenizer.
       # If one isn't set on this category, will try the index,

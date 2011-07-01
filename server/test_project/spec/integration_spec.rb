@@ -17,7 +17,11 @@ describe BookSearch do
   let(:geo)        { Picky::TestClient.new(described_class, :path => '/geo')        }
   let(:simple_geo) { Picky::TestClient.new(described_class, :path => '/simple_geo') }
   let(:indexing)   { Picky::TestClient.new(described_class, :path => '/indexing')   }
-
+  
+  it 'can generate a single index category without failing' do
+    Indexes.generate_index_only :book_each, :title
+  end
+  
   it 'is has the right amount of results' do
     csv.search('alan').total.should == 3
   end
@@ -177,5 +181,9 @@ describe BookSearch do
   it { csv.search("history fergus").ids.should == [4, 4] }
   it { csv.search("HISTORY FERGUS").ids.should == [] }
   it { csv.search("history AND OR fergus").ids.should == [4, 4] }
+  
+  # Specific indexing.
+  #
+  
 
 end
