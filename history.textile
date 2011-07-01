@@ -1,3 +1,7 @@
+h2. Version 2.4.3
+
+* hanke: (server) Fixed: Indexing a single category where a @#each@ source was used using @rake index:specific[index,category]@ raised an error.
+
 h2. Version 2.4.2
 
 * hanke: (server) Live interface for picky-live gem fixed.
