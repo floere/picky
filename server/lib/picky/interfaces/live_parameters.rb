@@ -156,7 +156,6 @@ module Interfaces
     end
     def querying_splits_text_on
       splits = Internals::Tokenizers::Query.default.instance_variable_get :@splits_text_on
-      puts splits
       splits && splits.respond_to?(:source) ? splits.source : splits
     end
     def querying_splits_text_on= new_value
