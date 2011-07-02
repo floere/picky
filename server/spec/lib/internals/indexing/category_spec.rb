@@ -96,6 +96,7 @@ describe Internals::Indexing::Category do
 
     describe 'generate_caches' do
       it 'should call multiple methods in order' do
+        category.should_receive(:configure).once.with().ordered
         category.should_receive(:generate_caches_from_source).once.with().ordered
         category.should_receive(:generate_partial).once.with().ordered
         category.should_receive(:generate_caches_from_memory).once.with().ordered
@@ -165,11 +166,6 @@ describe Internals::Indexing::Category do
       end
       it "prepares the cache directory" do
         category.should_receive(:prepare_index_directory).once.with
-        
-        category.cache!
-      end
-      it "configures" do
-        category.should_receive(:configure).once.with
         
         category.cache!
       end
