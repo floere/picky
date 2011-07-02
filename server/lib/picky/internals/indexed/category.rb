@@ -57,7 +57,7 @@ CATEGORY
       # Loads the index from cache.
       #
       def load_from_cache
-        timed_exclaim %Q{"#{identifier}": Loading index.}
+        timed_exclaim %Q{"#{identifier}": Loading index from cache.}
         exact.load
         partial.load
       end
