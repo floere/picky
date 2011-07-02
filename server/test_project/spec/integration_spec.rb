@@ -6,7 +6,7 @@ require 'picky-client/spec'
 describe BookSearch do
 
   before(:all) do
-    # Indexes.index_for_tests
+    Indexes.index_for_tests
     Indexes.load_from_cache
   end
 
@@ -37,6 +37,12 @@ describe BookSearch do
   #
   it 'has the right categories' do
     csv.search('title,author:alan').ids.should == [259, 307, 449]
+  end
+  it 'simply ignores extraneous categories' do
+    csv.search('title,author,quackquack:alan').ids.should == [259, 307, 449]
+  end
+  it 'will not return anything on wrong categories' do
+    csv.search('quack,moo,derp:alan').ids.should == []
   end
 
   it 'has the right categories' do
