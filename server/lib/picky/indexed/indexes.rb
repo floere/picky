@@ -5,13 +5,18 @@ module Indexed # :nodoc:all
   class Indexes
 
     attr_reader :indexes, :index_mapping
-
+    
     each_delegate :load_from_cache,
                   :to => :indexes
 
     def initialize
       clear
     end
+    
+    # Reloads all indexes, one after another,
+    # in the order they were added.
+    #
+    alias reload load_from_cache
 
     def to_s
       indexes.indented_to_s
@@ -22,13 +27,6 @@ module Indexed # :nodoc:all
     def clear
       @indexes       = []
       @index_mapping = {}
-    end
-
-    # Reloads all indexes, one after another,
-    # in the order they were added.
-    #
-    def reload
-      load_from_cache
     end
 
     # Registers an index with the indexes.
