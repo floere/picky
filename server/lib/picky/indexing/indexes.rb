@@ -66,19 +66,6 @@ module Indexing # :nodoc:all
       end
     end
 
-    # Generate only the index for the given index:category pair.
-    #
-    def generate_index_only index_name, category_name = nil
-      found = find index_name, category_name
-      found.index! if found
-    end
-    # Generate only the cache for the given index:category pair.
-    #
-    def generate_cache_only index_name, category_name = nil
-      found = find index_name, category_name
-      found.generate_caches if found
-    end
-
     # Find a given index:category pair.
     #
     def find index_name, category_name

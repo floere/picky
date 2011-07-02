@@ -9,14 +9,12 @@ class IndexBundle # :nodoc:all
            :to => :indexes
 
   delegate :analyze,
-           :reload,
            :load_from_cache,
+           :reload,
            :to => :indexed
 
   delegate :check_caches,
            :find,
-           :generate_cache_only,
-           :generate_index_only,
            :index,
            :index_for_tests,
            :to => :indexing
@@ -27,10 +25,6 @@ class IndexBundle # :nodoc:all
 
     @indexed  = Indexed::Indexes.new
     @indexing = Indexing::Indexes.new
-  end
-
-  def to_s
-    indexes.map &:to_stats
   end
 
   def register index
@@ -45,6 +39,10 @@ class IndexBundle # :nodoc:all
     name = name.to_sym
 
     self.index_mapping[name]
+  end
+  
+  def to_s
+    indexes.map &:to_stats
   end
 
 end

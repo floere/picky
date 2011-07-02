@@ -28,8 +28,6 @@ describe IndexBundle do
     
     it_delegates :check_caches, :indexing
     it_delegates :find, :indexing
-    it_delegates :generate_cache_only, :indexing
-    it_delegates :generate_index_only, :indexing
     it_delegates :index, :indexing
     it_delegates :index_for_tests, :indexing
   end

@@ -19,7 +19,15 @@ describe BookSearch do
   let(:indexing)   { Picky::TestClient.new(described_class, :path => '/indexing')   }
   
   it 'can generate a single index category without failing' do
-    Indexes.generate_index_only :book_each, :title
+    book_each_index = Indexes.find :book_each, :title
+    book_each_index.index!
+    book_each_index.cache!
+  end
+  
+  it 'can generate a single index category without failing' do
+    book_each_index = Indexes.find :book_each, :title
+    book_each_index.index!
+    book_each_index.cache!
   end
   
   it 'is has the right amount of results' do
