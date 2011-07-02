@@ -68,7 +68,7 @@ module Indexing # :nodoc:all
 
     # Find a given index:category pair.
     #
-    def find index_name, category_name
+    def find index_name, category_name = nil
       index_name = index_name.to_sym
 
       indexes.each do |index|
