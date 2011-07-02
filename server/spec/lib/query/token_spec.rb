@@ -122,33 +122,33 @@ describe Internals::Query::Token do
     end
   end
   
-  describe 'to_solr' do
-    def self.it_should_solr text, expected_result
-      it "should solrify into #{expected_result} from #{text}" do
-        described_class.processed(text).to_solr.should == expected_result
-      end
-    end
-    it_should_solr 's',            's'
-    it_should_solr 'se',           'se'
-    it_should_solr 'sea',          'sea'
-    it_should_solr 'sear',         'sear~0.74'
-    it_should_solr 'searc',        'searc~0.78'
-    it_should_solr 'search',       'search~0.81'
-    it_should_solr 'searche',      'searche~0.83'
-    it_should_solr 'searchen',     'searchen~0.85'
-    it_should_solr 'searcheng',    'searcheng~0.87'
-    it_should_solr 'searchengi',   'searchengi~0.89'
-    it_should_solr 'searchengin',  'searchengin~0.9'
-    it_should_solr 'searchengine', 'searchengine~0.9'
-
-    it_should_solr 'spec:tex',     'specific:tex'
-    it_should_solr 'with:text',    'text~0.74'
-    it_should_solr 'name:',        'name~0.74'
-    it_should_solr '',             ''
-    it_should_solr 'sp:tex',       'specific:tex'
-    it_should_solr 'sp:tex~',      'specific:tex'
-    it_should_solr 'sp:tex"',      'specific:tex'
-  end
+  # describe 'to_solr' do
+  #   def self.it_should_solr text, expected_result
+  #     it "should solrify into #{expected_result} from #{text}" do
+  #       described_class.processed(text).to_solr.should == expected_result
+  #     end
+  #   end
+  #   it_should_solr 's',            's'
+  #   it_should_solr 'se',           'se'
+  #   it_should_solr 'sea',          'sea'
+  #   it_should_solr 'sear',         'sear~0.74'
+  #   it_should_solr 'searc',        'searc~0.78'
+  #   it_should_solr 'search',       'search~0.81'
+  #   it_should_solr 'searche',      'searche~0.83'
+  #   it_should_solr 'searchen',     'searchen~0.85'
+  #   it_should_solr 'searcheng',    'searcheng~0.87'
+  #   it_should_solr 'searchengi',   'searchengi~0.89'
+  #   it_should_solr 'searchengin',  'searchengin~0.9'
+  #   it_should_solr 'searchengine', 'searchengine~0.9'
+  # 
+  #   it_should_solr 'spec:tex',     'specific:tex'
+  #   it_should_solr 'with:text',    'text~0.74'
+  #   it_should_solr 'name:',        'name~0.74'
+  #   it_should_solr '',             ''
+  #   it_should_solr 'sp:tex',       'specific:tex'
+  #   it_should_solr 'sp:tex~',      'specific:tex'
+  #   it_should_solr 'sp:tex"',      'specific:tex'
+  # end
 
   describe 'qualify' do
     def self.it_should_qualify text, expected_result
@@ -156,13 +156,13 @@ describe Internals::Query::Token do
         described_class.new(text).qualify.should == expected_result
       end
     end
-    it_should_qualify 'spec:qualifier',    :specific
-    it_should_qualify 'with:qualifier',    nil
+    it_should_qualify 'spec:qualifier',    [:specific]
+    it_should_qualify 'with:qualifier',    []
     it_should_qualify 'without qualifier', nil
     it_should_qualify 'name:',             nil
-    it_should_qualify ':broken qualifier', nil
+    it_should_qualify ':broken qualifier', [] # Unsure about that. Probably should recognize it as text.
     it_should_qualify '',                  nil
-    it_should_qualify 'sp:text',           :specific
+    it_should_qualify 'sp:text',           [:specific]
   end
 
   describe 'processed' do
@@ -270,11 +270,13 @@ describe Internals::Query::Token do
     end
     it_should_split '""',         [nil, '""']
     it_should_split 'name:',      [nil, 'name']
-    it_should_split 'name:hanke', ['name', 'hanke']
-    it_should_split 'g:gaga',     ['g', 'gaga']
-    it_should_split ':nothing',   ['', 'nothing']
+    it_should_split 'name:hanke', [['name'], 'hanke']
+    it_should_split 'g:gaga',     [['g'], 'gaga']
+    it_should_split ':nothing',   [[], 'nothing']
     it_should_split 'hello',      [nil, 'hello']
-    it_should_split 'a:b:c',      ['a', 'b:c']
+    it_should_split 'a:b:c',      [['a'], 'b:c']
+    it_should_split 'a,b:c',      [['a','b'], 'c']
+    it_should_split 'a,b,c:d',      [['a','b','c'], 'd']
   end
 
   describe "original" do
@@ -321,7 +323,23 @@ describe Internals::Query::Token do
         @token = described_class.processed('sp:qualifier')
       end
       it 'should return the qualifier' do
-        @token.user_defined_category_name.should == :specific
+        @token.user_defined_category_names.should == [:specific]
+      end
+    end
+    context 'with incorrect qualifier' do
+      before(:each) do
+        @token = described_class.processed('specific:qualifier')
+      end
+      it 'should return the qualifier' do
+        @token.user_defined_category_names.should == []
+      end
+    end
+    context 'with multiple qualifiers' do
+      before(:each) do
+        @token = described_class.processed('sp,spec:qualifier')
+      end
+      it 'should return the qualifier' do
+        @token.user_defined_category_names.should == [:specific, :specific]
       end
     end
     context 'without qualifier' do
@@ -329,7 +347,7 @@ describe Internals::Query::Token do
         @token = described_class.processed('noqualifier')
       end
       it 'should return nil' do
-        @token.user_defined_category_name.should == nil
+        @token.user_defined_category_names.should == nil
       end
     end
   end
@@ -340,14 +358,14 @@ describe Internals::Query::Token do
         described_class.new('any').send(:split, text).should == expected_result
       end
     end
-    it_should_split ':',                 [nil,        '']
-    it_should_split 'vorname:qualifier', ['vorname', 'qualifier']
-    it_should_split 'with:qualifier',    ['with',    'qualifier']
-    it_should_split 'without qualifier', [nil,       'without qualifier']
-    it_should_split 'name:',             [nil,       'name']
-    it_should_split ':broken qualifier', ['',        'broken qualifier']
-    it_should_split '',                  [nil,       '']
-    it_should_split 'fn:text',           ['fn',      'text']
+    it_should_split ':',                 [nil,         '']
+    it_should_split 'vorname:qualifier', [['vorname'], 'qualifier']
+    it_should_split 'with:qualifier',    [['with'],    'qualifier']
+    it_should_split 'without qualifier', [nil,         'without qualifier']
+    it_should_split 'name:',             [nil,         'name']
+    it_should_split ':broken qualifier', [[],          'broken qualifier']
+    it_should_split '',                  [nil,         '']
+    it_should_split 'fn:text',           [['fn'],      'text']
   end
 
   describe 'partial=' do

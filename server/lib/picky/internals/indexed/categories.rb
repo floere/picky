@@ -46,12 +46,7 @@ module Internals
       #
       def << category
         categories << category
-        # Note: [category] is an optimization, since I need an array
-        #       of categories.
-        #       It's faster to just package it in an array on loading
-        #       Picky than doing it over and over with each query.
-        #
-        category_hash[category.name] = [category]
+        category_hash[category.name] = category
       end
 
       # Return all possible combinations for the given token.
@@ -129,10 +124,13 @@ module Internals
       # an existing category.
       #
       # Note: Returns nil if the user did not define one
-      #       or if he/she has defined a non-existing one.
+      #       or [] if he/she has defined a non-existing one.
       #
       def user_defined_categories token
-        category_hash[token.user_defined_category_name]
+        names = token.user_defined_category_names
+        names && names.map do |name|
+          category_hash[name]
+        end.compact
       end
 
     end

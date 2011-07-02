@@ -35,23 +35,6 @@ describe Internals::Query::Tokens do
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"']
     end
   end
-  
-  describe 'to_solr_query' do
-    context 'many tokens' do
-      before(:each) do
-        @tokens = described_class.new [
-          Internals::Query::Token.processed('this~'),
-          Internals::Query::Token.processed('is'),
-          Internals::Query::Token.processed('a'),
-          Internals::Query::Token.processed('sp:solr'),
-          Internals::Query::Token.processed('query"')
-        ]
-      end
-      it 'should output a correct solr query' do
-        @tokens.to_solr_query.should == 'this~0.74 is a specific:solr~0.74 query~0.78'
-      end
-    end
-  end
 
   describe 'reject' do
     before(:each) do

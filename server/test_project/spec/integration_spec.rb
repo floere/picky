@@ -145,7 +145,7 @@ describe BookSearch do
 
   # Geo based area search.
   #
-  it { geo.search("north1:47.41,east1:8.55").ids.should == [1413, 5015, 9168, 10346, 10661, 10746, 10768, 10861] }
+  it { geo.search("north:47.41,east:8.55").ids.should == [1413, 5015, 9168, 10346, 10661, 10746, 10768, 10861] }
 
   # Redis.
   #
@@ -160,6 +160,12 @@ describe BookSearch do
   #
   it { csv.search('t:religion').ids.should == csv.search('title:religion').ids }
   it { csv.search('title:religion').ids.should_not == csv.search('subject:religion').ids }
+  
+  # Wrong categorization.
+  #
+  # From 2.5.0 on, Picky does not remove wrong categories anymore. Wrong categories return zero results.
+  #
+  it { csv.search('gurk:religion').ids.should == [] }
 
   # Index-specific tokenizer.
   #

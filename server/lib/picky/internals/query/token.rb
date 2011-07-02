@@ -42,10 +42,10 @@ module Internals
         self
       end
 
-      # This returns a predefined category name if the user has given one.
+      # This returns an array of predefined category names if the user has given any.
       #
-      def user_defined_category_name
-        @qualifier
+      def user_defined_category_names
+        @qualifiers
       end
 
       # Extracts a qualifier for this token and pre-assigns an allocation.
@@ -53,8 +53,9 @@ module Internals
       # Note: Removes the qualifier if it is not allowed.
       #
       def qualify
-        @qualifier, @text = split @text
-        @qualifier = Query::Qualifiers.instance.normalize @qualifier
+        @qualifiers, @text = split @text
+        @qualifiers && @qualifiers.collect! { |qualifier| Query::Qualifiers.instance.normalize qualifier }.compact!
+        @qualifiers
       end
       def extract_original
         @original = @text.dup
@@ -151,27 +152,6 @@ module Internals
         bundle.similar(@text).dup || []
       end
 
-      # Generates a solr term from this token.
-      #
-      # E.g. "name:heroes~0.75"
-      #
-      @@solr_fuzzy_mapping = {
-        1 => :'',
-        2 => :'',
-        3 => :'',
-        4 => :'~0.74',
-        5 => :'~0.78',
-        6 => :'~0.81',
-        7 => :'~0.83',
-        8 => :'~0.85',
-        9 => :'~0.87',
-       10 => :'~0.89'
-      }
-      @@solr_fuzzy_mapping.default = :'~0.9'
-      def to_solr
-        blank? ? '' : (to_s + @@solr_fuzzy_mapping[@text.size].to_s)
-      end
-
       #
       #
       def to_result
@@ -194,8 +174,10 @@ module Internals
       #
       # e.g. name:meier
       #
+      @@split_qualifier_text = ':'
+      @@split_qualifiers     = ','
       def to_s
-        [@qualifier, @text].compact.join ':'
+        [@qualifiers && @qualifiers.join(@@split_qualifiers), @text].compact.join @@split_qualifier_text
       end
 
       private
@@ -205,11 +187,11 @@ module Internals
         # Returns [qualifier, text].
         #
         def split unqualified_text
-          qualifier, text = (unqualified_text || '').split(':', 2)
+          qualifiers, text = (unqualified_text || '').split(@@split_qualifier_text, 2)
           if text.blank?
-            [nil, (qualifier || '')]
+            [nil, (qualifiers || '')]
           else
-            [qualifier, text]
+            [qualifiers.split(@@split_qualifiers), text]
           end
         end
 

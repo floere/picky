@@ -107,7 +107,7 @@ describe Internals::Indexed::Categories do
       context 'without preselected categories' do
         context 'user defined exists' do
           before(:each) do
-            @token = stub :token, :user_defined_category_name => :category2
+            @token = stub :token, :user_defined_category_names => [:category2]
           end
           context 'combination exists' do
             before(:each) do
@@ -139,7 +139,7 @@ describe Internals::Indexed::Categories do
     describe 'possible_categories' do
       context 'user defined exists' do
         before(:each) do
-          @token = stub :token, :user_defined_category_name => :category2
+          @token = stub :token, :user_defined_category_names => [:category2]
         end
         it 'should return the right categories' do
           @categories.possible_categories(@token).should == [@category2]
@@ -147,7 +147,7 @@ describe Internals::Indexed::Categories do
       end
       context 'user defined does not exist' do
         before(:each) do
-          @token = stub :token, :user_defined_category_name => nil
+          @token = stub :token, :user_defined_category_names => nil
         end
         it 'should return all categories' do
           @categories.possible_categories(@token).should == [@category1, @category2, @category3]
@@ -158,7 +158,7 @@ describe Internals::Indexed::Categories do
     describe 'user_defined_categories' do
       context 'category exists' do
         before(:each) do
-          @token = stub :token, :user_defined_category_name => :category2
+          @token = stub :token, :user_defined_category_names => [:category2]
         end
         it 'should return the right categories' do
           @categories.user_defined_categories(@token).should == [@category2]
@@ -166,10 +166,10 @@ describe Internals::Indexed::Categories do
       end
       context 'category does not exist' do
         before(:each) do
-          @token = stub :token, :user_defined_category_name => :gnoergel
+          @token = stub :token, :user_defined_category_names => [:gnoergel]
         end
         it 'should return nil' do
-          @categories.user_defined_categories(@token).should == nil
+          @categories.user_defined_categories(@token).should == []
         end
       end
     end
