@@ -14,7 +14,7 @@ class BookSearch < Application
 
     searching removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
               stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-              splits_text_on:                     /[\s\/\,\&\/]/,
+              splits_text_on:                     /[\s\/\&\/]/,
               removes_characters_after_splitting: /\|/,
               # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.
               case_sensitive:                     true,

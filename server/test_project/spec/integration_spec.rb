@@ -6,7 +6,7 @@ require 'picky-client/spec'
 describe BookSearch do
 
   before(:all) do
-    Indexes.index_for_tests
+    # Indexes.index_for_tests
     Indexes.load_from_cache
   end
 
@@ -31,6 +31,12 @@ describe BookSearch do
       ["Books", 6.6899999999999995, 2, [["author", "alan", "alan"]], [259, 307]],
       ["Books", 0.0,                1, [["title",  "alan", "alan"]], [449]]
     ]
+  end
+  
+  # Multicategory search.
+  #
+  it 'has the right categories' do
+    csv.search('title,author:alan').ids.should == [259, 307, 449]
   end
 
   it 'has the right categories' do
@@ -101,7 +107,7 @@ describe BookSearch do
 
   # Splitting.
   #
-  it { csv.search('history/fergus&history/fergus,history&fergus').ids.should == [4, 4, 4, 4, 4, 4, 4, 4] }
+  it { csv.search('history/fergus&history/history&fergus').ids.should == [4, 4, 4, 4, 4, 4, 4, 4] }
 
   # Character Removal.
   #
@@ -141,11 +147,11 @@ describe BookSearch do
 
   # Range based area search. Memory.
   #
-  it { simple_geo.search("north1:47.41,east1:8.55").ids.should == [1413, 10346, 10661, 10746, 10861] }
+  it { simple_geo.search("north1:47.41 east1:8.55").ids.should == [1413, 10346, 10661, 10746, 10861] }
 
   # Geo based area search.
   #
-  it { geo.search("north:47.41,east:8.55").ids.should == [1413, 5015, 9168, 10346, 10661, 10746, 10768, 10861] }
+  it { geo.search("north:47.41 east:8.55").ids.should == [1413, 5015, 9168, 10346, 10661, 10746, 10768, 10861] }
 
   # Redis.
   #
