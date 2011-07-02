@@ -33,9 +33,9 @@ module Internals
         #
 
         # This method
-        # * loads the base index from the db
-        # * generates derived indexes
-        # * dumps all the indexes into files
+        # * Loads the base index from the "prepared..." file.
+        # * Generates derived indexes.
+        # * Dumps all the indexes into files.
         #
         def generate_caches_from_source
           load_from_index_file
