@@ -218,9 +218,7 @@ INDEX
 
     # Define a key_format on the index.
     #
-    # Parameter is a source, either one of the standard sources or
-    # anything responding to #each and returning objects that
-    # respond to id and the category names (or the category from option).
+    # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip).
     #
     def key_format key_format
       internal_indexing.define_key_format key_format
