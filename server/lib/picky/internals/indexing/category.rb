@@ -103,7 +103,9 @@ module Internals
         exact.delete
         partial.delete
       end
-
+      
+      # Indexes, creates the "prepared_..." file.
+      #
       def index!
         prepare_index_directory
         indexer.index
@@ -113,7 +115,6 @@ module Internals
       #
       def cache!
         prepare_index_directory
-        configure
         generate_caches
       end
       # We need to set what formatting method should be used.
@@ -124,6 +125,7 @@ module Internals
         partial[:key_format] = self.key_format
       end
       def generate_caches
+        configure
         generate_caches_from_source
         generate_partial
         generate_caches_from_memory
