@@ -1,3 +1,8 @@
+h2. Version 2.5.0
+
+* hanke: (server) Searches can now search in multiple qualifiers, separating them by a ",". E.g. name,street:tyne.
+* hanke: (server) Searches will no longer search in all categories (fields) if a qualifier has been mistyped. So, namme:peter will not search in all categories, but instead return an empty result if category namme does not exist.
+
 h2. Version 2.4.3
 
 * hanke: (server) Fixed: Indexing a single category where a @#each@ source was used using @rake index:specific[index,category]@ raised an error.
