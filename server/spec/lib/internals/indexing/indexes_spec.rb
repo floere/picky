@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Indexing::Indexes do
   
   before(:each) do
+    @index   = stub :some_index, :name => :some_index
     @indexes = Indexing::Indexes.new
   end
   
@@ -17,7 +18,7 @@ describe Indexing::Indexes do
   
   describe 'clear' do
     it 'clears the indexes' do
-      @indexes.register :some_index
+      @indexes.register @index
       
       @indexes.clear
       
@@ -27,9 +28,9 @@ describe Indexing::Indexes do
   
   describe 'register' do
     it 'adds the given index to the indexes' do
-      @indexes.register :some_index
+      @indexes.register @index
       
-      @indexes.indexes.should == [:some_index]
+      @indexes.indexes.should == [@index]
     end
   end
   

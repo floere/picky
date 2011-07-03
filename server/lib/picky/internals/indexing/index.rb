@@ -13,14 +13,15 @@ module Internals
       delegate :connect_backend,
                :to => :source
 
-      each_delegate :backup_caches,
-                    :cache!,
-                    :check_caches,
-                    :clear_caches,
-                    :create_directory_structure,
-                    :generate_caches,
-                    :restore_caches,
-                    :to => :categories
+      delegate :backup_caches,
+               :cache!,
+               :check_caches,
+               :clear_caches,
+               :create_directory_structure,
+               :generate_caches,
+               :restore_caches,
+               :[],
+               :to => :categories
 
       def initialize name, options = {}
         @name           = name
@@ -30,7 +31,14 @@ module Internals
         @tokenizer      = options[:tokenizer]
         @key_format     = options[:key_format]
 
-        @categories = []
+        @categories = Categories.new
+      end
+      
+      #
+      #
+      def index
+        index! # TODO Rename to prepare.
+        cache! # TODO Rename to cache.
       end
 
       # TODO Spec. Doc.
@@ -81,21 +89,10 @@ Example:
         @key_format || :to_i
       end
 
-      #
-      #
-      def find category_name
-        category_name = category_name.to_sym
-
-        categories.each do |category|
-          next unless category.name == category_name
-          return category
-        end
-
-        raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
-      end
-
       # Decides whether to use a parallel indexer or whether to
       # delegate to each category to index themselves.
+      #
+      # TODO Rename to prepare.
       #
       def index!
         # TODO Duplicated in category.rb def indexer.
@@ -107,6 +104,7 @@ Example:
           categories.each &:index!
         end
       end
+      
       # Indexes the categories in parallel.
       #
       # Only use where the category does not have a non-#each source defined.

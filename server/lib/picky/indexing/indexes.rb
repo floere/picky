@@ -3,8 +3,8 @@ module Indexing # :nodoc:all
   # Registers the indexes held at index time, for indexing.
   #
   class Indexes
-
-    attr_reader :indexes
+    
+    include ::Shared::Indexes
 
     each_delegate :take_snapshot,
                   :generate_caches,
@@ -14,26 +14,6 @@ module Indexing # :nodoc:all
                   :clear_caches,
                   :create_directory_structure,
                   :to => :indexes
-
-    def initialize
-      clear
-    end
-
-    def to_s
-      indexes.indented_to_s
-    end
-
-    # Clears the array of indexes.
-    #
-    def clear
-      @indexes = []
-    end
-
-    # Registers an index with the indexes.
-    #
-    def register index
-      self.indexes << index
-    end
 
     # Runs the indexers in parallel (index + cache).
     #
@@ -60,27 +40,10 @@ module Indexing # :nodoc:all
     def index_for_tests
       take_snapshot
 
-      self.indexes.each do |an_index|
+      indexes.each do |an_index|
         an_index.index!
         an_index.cache!
       end
-    end
-
-    # Find a given index:category pair.
-    #
-    def find index_name, category_name = nil
-      index_name = index_name.to_sym
-
-      indexes.each do |index|
-        next unless index.name == index_name
-
-        return index unless category_name
-
-        found = index.find category_name
-        return found if found
-      end
-
-      raise %Q{Index "#{index_name}" not found. Possible indexes: "#{indexes.map(&:name).join('", "')}".}
     end
 
   end

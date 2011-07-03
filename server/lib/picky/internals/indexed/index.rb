@@ -10,6 +10,7 @@ module Internals
 
       delegate :load_from_cache,
                :analyze,
+               :[],
                :to => :categories
 
       def initialize name, options = {}

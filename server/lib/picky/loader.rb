@@ -166,7 +166,11 @@ module Loader # :nodoc:all
     load_internals 'index/file/json'
 
     load_internals 'index/files'
-
+    
+    # TODO Move?
+    #
+    load_relative 'shared/categories'
+    
     # Indexing and Indexed things.
     #
     load_internals 'indexing/bundle/super_base' # TODO Remove.
@@ -174,7 +178,7 @@ module Loader # :nodoc:all
     load_internals 'indexing/bundle/memory'
     load_internals 'indexing/bundle/redis'
     load_internals 'indexing/category'
-    # load_internals 'indexing/categories'
+    load_internals 'indexing/categories'
     load_internals 'indexing/index'
 
     load_internals 'indexing/wrappers/category/location'
@@ -275,6 +279,7 @@ module Loader # :nodoc:all
     load_relative 'index/memory'
     load_relative 'index/redis'
 
+    load_relative 'shared/indexes'
     load_relative 'indexing/indexes'
     load_relative 'indexed/indexes'
 

@@ -4,7 +4,9 @@ module Internals
 
     class Categories
 
-      attr_reader :categories, :category_hash, :ignore_unassigned_tokens
+      include ::Shared::Categories
+
+      attr_reader :ignore_unassigned_tokens
 
       each_delegate :load_from_cache,
                     :analyze,
@@ -29,24 +31,6 @@ module Internals
         clear
 
         @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false
-      end
-
-      def to_s
-        categories.indented_to_s
-      end
-
-      # Clears both the array of categories and the hash of categories.
-      #
-      def clear
-        @categories    = []
-        @category_hash = {}
-      end
-
-      # Add the given category to the list of categories.
-      #
-      def << category
-        categories << category
-        category_hash[category.name] = category
       end
 
       # Return all possible combinations for the given token.
