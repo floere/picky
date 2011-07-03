@@ -11,10 +11,16 @@ module Internals
         # Note: We could use multi, but it did not help.
         #
         def dump hash
-          redis = backend
+          clear
           hash.each_pair do |key, value|
-            redis.hset namespace, key, value
+            backend.hset namespace, key, value
           end
+        end
+        
+        # Clears the hash.
+        #
+        def clear
+          backend.del namespace
         end
 
         # Get a collection.

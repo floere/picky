@@ -10,19 +10,14 @@ describe BookSearch do
     Indexes.load_from_cache
   end
 
-  let(:books)      { Picky::TestClient.new(described_class, :path => '/books')      }
-  let(:csv)        { Picky::TestClient.new(described_class, :path => '/csv')        }
-  let(:redis)      { Picky::TestClient.new(described_class, :path => '/redis')      }
-  let(:sym)        { Picky::TestClient.new(described_class, :path => '/sym')        }
-  let(:geo)        { Picky::TestClient.new(described_class, :path => '/geo')        }
-  let(:simple_geo) { Picky::TestClient.new(described_class, :path => '/simple_geo') }
-  let(:indexing)   { Picky::TestClient.new(described_class, :path => '/indexing')   }
-  
-  it 'can generate a single index category without failing' do
-    book_each_index = Indexes.find :book_each, :title
-    book_each_index.index!
-    book_each_index.cache!
-  end
+  let(:books)          { Picky::TestClient.new(described_class, :path => '/books')          }
+  let(:csv)            { Picky::TestClient.new(described_class, :path => '/csv')            }
+  let(:redis)          { Picky::TestClient.new(described_class, :path => '/redis')          }
+  let(:sym)            { Picky::TestClient.new(described_class, :path => '/sym')            }
+  let(:geo)            { Picky::TestClient.new(described_class, :path => '/geo')            }
+  let(:simple_geo)     { Picky::TestClient.new(described_class, :path => '/simple_geo')     }
+  let(:indexing)       { Picky::TestClient.new(described_class, :path => '/indexing')       }
+  let(:redis_changing) { Picky::TestClient.new(described_class, :path => '/redis_changing') }
   
   it 'can generate a single index category without failing' do
     book_each_index = Indexes.find :book_each, :title
@@ -65,6 +60,23 @@ describe BookSearch do
     puts "Reloading the Indexes."
     Indexes.reload
     csv.search('soledad human').ids.should == [72]
+  end
+  
+  it 'can handle changing data with a Redis backend' do
+    redis_changing.search('entry').ids.should == ["1", "2", "3"]
+    
+    new_source = [
+      # RedisChangingItem.new("1", 'first entry'), # Removed.
+      RedisChangingItem.new("2", 'second entry'),
+      RedisChangingItem.new("3", 'third entry'),
+      RedisChangingItem.new("4", 'fourth entry') # Added.
+    ]
+    redis_changing_index = Indexes.indexing.find :redis_changing
+    redis_changing_index.define_source new_source
+    redis_changing_index.index!
+    redis_changing_index.cache!
+    
+    redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end
 
   # Breakage. As reported by Jason.

@@ -1,5 +1,16 @@
 # encoding: utf-8
 #
+
+class RedisChangingItem
+  
+  attr_reader :id, :name
+  
+  def initialize id, name
+    @id, @name = id, name
+  end
+  
+end
+
 class BookSearch < Application
 
     indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\.\|]/i,
@@ -189,6 +200,15 @@ class BookSearch < Application
       source   Sources::CSV.new(:text, file: "data/#{PICKY_ENVIRONMENT}/symbol_keys.csv", key_format: 'strip')
       category :text, partial: Partial::Substring.new(from: 1)
     end
+    
+    redis_changing_index = Index::Redis.new(:redis_changing) do
+      source [
+        RedisChangingItem.new("1", 'first entry'),
+        RedisChangingItem.new("2", 'second entry'),
+        RedisChangingItem.new("3", 'third entry')
+      ]
+      category :name
+    end
 
     options = {
       :weights => {
@@ -198,18 +218,19 @@ class BookSearch < Application
       }
     }
 
-    route %r{\A/admin\Z}      => LiveParameters.new
+    route %r{\A/admin\Z}          => LiveParameters.new
 
-    route %r{\A/books\Z}      => Search.new(books_index, isbn_index, options),
-          %r{\A/redis\Z}      => Search.new(redis_index, options),
-          %r{\A/csv\Z}        => Search.new(csv_test_index, options),
-          %r{\A/isbn\Z}       => Search.new(isbn_index),
-          %r{\A/sym\Z}        => Search.new(sym_keys_index),
-          %r{\A/geo\Z}        => Search.new(real_geo_index),
-          %r{\A/simple_geo\Z} => Search.new(mgeo_index),
-          %r{\A/iphone\Z}     => Search.new(iphone_locations),
-          %r{\A/indexing\Z}   => Search.new(indexing_index),
-          %r{\A/all\Z}        => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
+    route %r{\A/books\Z}          => Search.new(books_index, isbn_index, options),
+          %r{\A/redis\Z}          => Search.new(redis_index, options),
+          %r{\A/redis_changing\Z} => Search.new(redis_changing_index),
+          %r{\A/csv\Z}            => Search.new(csv_test_index, options),
+          %r{\A/isbn\Z}           => Search.new(isbn_index),
+          %r{\A/sym\Z}            => Search.new(sym_keys_index),
+          %r{\A/geo\Z}            => Search.new(real_geo_index),
+          %r{\A/simple_geo\Z}     => Search.new(mgeo_index),
+          %r{\A/iphone\Z}         => Search.new(iphone_locations),
+          %r{\A/indexing\Z}       => Search.new(indexing_index),
+          %r{\A/all\Z}            => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
     root 200
 
