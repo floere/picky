@@ -24,8 +24,8 @@ namespace :index do
   task :specific, [:index, :category] => :application do |_, options|
     index, category = options.index, options.category
     specific_index = Indexes.find index.to_sym, (category && category.to_sym)
-    specific_index.index!
-    specific_index.cache!
+    specific_index.prepare
+    specific_index.cache
   end
 
 end

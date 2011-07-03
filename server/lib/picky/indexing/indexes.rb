@@ -27,8 +27,8 @@ module Indexing # :nodoc:all
       # Run indexing/caching forked.
       #
       Cores.forked self.indexes, { randomly: randomly } do |an_index|
-        an_index.index!
-        an_index.cache!
+        an_index.prepare
+        an_index.cache
       end
 
       timed_exclaim "Indexing finished."
@@ -41,8 +41,8 @@ module Indexing # :nodoc:all
       take_snapshot
 
       indexes.each do |an_index|
-        an_index.index!
-        an_index.cache!
+        an_index.prepare
+        an_index.cache
       end
     end
 

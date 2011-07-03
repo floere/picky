@@ -21,8 +21,8 @@ describe BookSearch do
   
   it 'can generate a single index category without failing' do
     book_each_index = Indexes.find :book_each, :title
-    book_each_index.index!
-    book_each_index.cache!
+    book_each_index.prepare
+    book_each_index.cache
   end
   
   it 'is has the right amount of results' do
@@ -73,8 +73,8 @@ describe BookSearch do
     ]
     redis_changing_index = Indexes.indexing.find :redis_changing
     redis_changing_index.define_source new_source
-    redis_changing_index.index!
-    redis_changing_index.cache!
+    redis_changing_index.prepare
+    redis_changing_index.cache
     
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end

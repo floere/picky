@@ -4,7 +4,7 @@ module Internals
     module Category
 
       def index_name
-        index.name
+        @index.name
       end
       def category_name
         name
@@ -29,16 +29,16 @@ module Internals
       # Identifier for internal use.
       #
       def identifier
-        @identifier ||= "#{index.name}:#{name}"
+        @identifier ||= "#{@index.name}:#{name}"
       end
       def to_s
-        "#{index.name} #{name}"
+        "#{@index.name} #{name}"
       end
 
       # The index directory for this category.
       #
       def index_directory
-        @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{index.name}"
+        @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"
       end
       # Creates the index directory including all necessary paths above it.
       #

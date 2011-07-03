@@ -87,7 +87,7 @@ module Sources
     def take_snapshot index
       connect_backend
 
-      origin = snapshot_table_name index
+      origin = snapshot_table_name index.name
       on_database = database.connection
 
       # Drop the table if it exists.
@@ -109,16 +109,16 @@ module Sources
 
     # Counts all the entries that are used for the index.
     #
-    def count index
+    def count index_name
       connect_backend
 
-      database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(index)}").to_i
+      database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(index_name)}").to_i
     end
 
     # The name of the snapshot table created by Picky.
     #
-    def snapshot_table_name index
-      "picky_#{index.name}_index"
+    def snapshot_table_name index_name
+      "picky_#{index_name}_index"
     end
 
     # Harvests the data to index in chunks.
@@ -126,7 +126,7 @@ module Sources
     def harvest category, &block
       connect_backend
 
-      (0..count(category.index)).step(chunksize) do |offset|
+      (0..count(category.index_name)).step(chunksize) do |offset|
         get_data category, offset, &block
       end
     end
@@ -166,7 +166,7 @@ module Sources
     # The harvest statement used to pull data from the snapshot table.
     #
     def harvest_statement category
-      "SELECT id, #{category.from} FROM #{snapshot_table_name(category.index)} st"
+      "SELECT id, #{category.from} FROM #{snapshot_table_name(category.index_name)} st"
     end
 
     # The amount of records that are loaded each chunk.

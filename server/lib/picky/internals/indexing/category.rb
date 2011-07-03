@@ -6,7 +6,7 @@ module Internals
 
       include Internals::Shared::Category
 
-      attr_reader :name, :index, :exact, :partial
+      attr_reader :name, :exact, :partial
 
       # Mandatory params:
       #  * name: Category name to use as identifier and file names.
@@ -57,7 +57,7 @@ module Internals
       # one.
       #
       def key_format
-        source.respond_to?(:key_format) && source.key_format || @key_format || index.key_format
+        source.respond_to?(:key_format) && source.key_format || @key_format || @index.key_format
       end
       # The indexer is lazily generated and cached.
       #
@@ -104,16 +104,23 @@ module Internals
         partial.delete
       end
       
+      # API method.
+      #
+      def index
+        prepare
+        cache
+      end
+      
       # Indexes, creates the "prepared_..." file.
       #
-      def index!
+      def prepare
         prepare_index_directory
         indexer.index
       end
 
       # Generates all caches for this category.
       #
-      def cache!
+      def cache
         prepare_index_directory
         generate_caches
       end

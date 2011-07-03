@@ -14,7 +14,7 @@ module Internals
                :to => :source
 
       delegate :backup_caches,
-               :cache!,
+               :cache,
                :check_caches,
                :clear_caches,
                :create_directory_structure,
@@ -37,8 +37,8 @@ module Internals
       #
       #
       def index
-        index! # TODO Rename to prepare.
-        cache! # TODO Rename to cache.
+        prepare # TODO Rename to prepare.
+        cache # TODO Rename to cache.
       end
 
       # TODO Spec. Doc.
@@ -94,14 +94,14 @@ Example:
       #
       # TODO Rename to prepare.
       #
-      def index!
+      def prepare
         # TODO Duplicated in category.rb def indexer.
         #
         if source.respond_to?(:each)
           warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
           index_parallel
         else
-          categories.each &:index!
+          categories.each &:prepare
         end
       end
       
