@@ -1,3 +1,3 @@
-Partial    = Internals::Generators::Partial
-Similarity = Internals::Generators::Similarity
-Weights    = Internals::Generators::Weights
+Partial    = Generators::Partial
+Similarity = Generators::Similarity
+Weights    = Generators::Weights

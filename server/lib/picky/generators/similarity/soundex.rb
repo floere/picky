@@ -1,28 +1,24 @@
 # encoding: utf-8
 #
-module Internals
+module Generators
 
-  module Generators
+  module Similarity
 
-    module Similarity
+    # It's actually a combination of soundex
+    # and Levenshtein.
+    #
+    # It uses the soundex to get similar words
+    # and ranks them using the levenshtein.
+    #
+    class Soundex < Phonetic
 
-      # It's actually a combination of soundex
-      # and Levenshtein.
+      # Encodes the given symbol.
       #
-      # It uses the soundex to get similar words
-      # and ranks them using the levenshtein.
+      # Returns a symbol.
       #
-      class Soundex < Phonetic
-
-        # Encodes the given symbol.
-        #
-        # Returns a symbol.
-        #
-        def encoded sym
-          code = Text::Soundex.soundex sym.to_s
-          code.to_sym if code
-        end
-
+      def encoded sym
+        code = Text::Soundex.soundex sym.to_s
+        code.to_sym if code
       end
 
     end

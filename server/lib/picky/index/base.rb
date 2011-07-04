@@ -121,7 +121,6 @@ module Index
       check_options options
       
       @source = options[:source]
-      check_source @source
       
       @after_indexing        = options[:after_indexing]
       @indexing_bundle_class = options[:indexing_bundle_class] # TODO This should probably be a fixed parameter.
@@ -144,6 +143,19 @@ module Index
       #
       #
       instance_eval(&Proc.new) if block_given?
+      
+      # Check if any source has been given in the block.
+      #
+      check_source @source
+    end
+    
+    # Default bundles.
+    #
+    def indexing_bundle_class
+      Indexing::Bundle::Memory
+    end
+    def indexed_bundle_class
+      Indexed::Bundle::Memory
     end
 
     # Defines a searchable category on the index.

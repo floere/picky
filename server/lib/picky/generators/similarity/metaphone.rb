@@ -1,28 +1,24 @@
 # encoding: utf-8
 #
-module Internals
+module Generators
 
-  module Generators
+  module Similarity
 
-    module Similarity
+    # It's actually a combination of metaphone
+    # and Levenshtein.
+    #
+    # It uses the metaphone to get similar words
+    # and ranks them using the levenshtein.
+    #
+    class Metaphone < Phonetic
 
-      # It's actually a combination of metaphone
-      # and Levenshtein.
+      # Encodes the given symbol.
       #
-      # It uses the metaphone to get similar words
-      # and ranks them using the levenshtein.
+      # Returns a symbol.
       #
-      class Metaphone < Phonetic
-
-        # Encodes the given symbol.
-        #
-        # Returns a symbol.
-        #
-        def encoded sym
-          code = Text::Metaphone.metaphone sym.to_s
-          code.to_sym if code
-        end
-
+      def encoded sym
+        code = Text::Metaphone.metaphone sym.to_s
+        code.to_sym if code
       end
 
     end

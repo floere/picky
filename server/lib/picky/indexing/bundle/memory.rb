@@ -1,25 +1,21 @@
 # encoding: utf-8
 #
-module Internals
+module Indexing # :nodoc:all
 
-  module Indexing # :nodoc:all
+  module Bundle
 
-    module Bundle
+    # The memory version dumps its generated indexes to disk
+    # (mostly JSON) to load them into memory on startup.
+    #
+    class Memory < Base
 
-      # The memory version dumps its generated indexes to disk
-      # (mostly JSON) to load them into memory on startup.
+      # We're using files for the memory backend.
+      # E.g. dump writes files.
       #
-      class Memory < Base
+      alias backend files
 
-        # We're using files for the memory backend.
-        # E.g. dump writes files.
-        #
-        alias backend files
-
-        def to_s
-          "Memory\n#{@backend.indented_to_s}"
-        end
-
+      def to_s
+        "Memory\n#{@backend.indented_to_s}"
       end
 
     end

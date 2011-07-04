@@ -268,6 +268,8 @@ module Loader # :nodoc:all
     load_relative 'categories_indexing'
     
     load_relative 'index/base'
+    load_relative 'index/base_indexed'
+    load_relative 'index/base_indexing'
     load_relative 'index/memory'
     load_relative 'index/redis'
     

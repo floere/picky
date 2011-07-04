@@ -1,19 +1,15 @@
-module Internals
+module Generators # :nodoc:all
 
-  module Generators # :nodoc:all
+  # A cache generator holds an index.
+  #
+  class Base
   
-    # A cache generator holds an index.
-    #
-    class Base
-    
-      attr_reader :index
-    
-      def initialize index
-        @index = index
-      end
-    
+    attr_reader :index
+  
+    def initialize index
+      @index = index
     end
   
   end
-  
+
 end

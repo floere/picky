@@ -1,35 +1,31 @@
-module Internals
+module Generators
 
-  module Generators
+  module Similarity
 
-    module Similarity
+    # Similarity strategy that does nothing.
+    #
+    class None < Strategy
 
-      # Similarity strategy that does nothing.
+      # Does not encode text. Just returns nil.
       #
-      class None < Strategy
+      def encoded text
+        nil
+      end
 
-        # Does not encode text. Just returns nil.
-        #
-        def encoded text
-          nil
-        end
-
-        # Returns an empty index.
-        #
-        def generate_from index
-          {}
-        end
-      
-        # Returns if this strategy's generated file is saved.
-        #
-        def saved?
-          false
-        end
-
+      # Returns an empty index.
+      #
+      def generate_from index
+        {}
+      end
+    
+      # Returns if this strategy's generated file is saved.
+      #
+      def saved?
+        false
       end
 
     end
 
   end
-  
+
 end

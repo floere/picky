@@ -1,35 +1,31 @@
-module Internals
+module Generators
 
-  module Generators
+  module Partial
 
-    module Partial
+    # Does not generate a partial index.
+    #
+    class None < Strategy
 
-      # Does not generate a partial index.
+      # Returns an empty index.
       #
-      class None < Strategy
-
-        # Returns an empty index.
-        #
-        def generate_from index
-          {}
-        end
-      
-        # Returns if this strategy's generated file is saved.
-        #
-        def saved?
-          false
-        end
-      
-        # Do not use the partial bundle for getting ids and weights.
-        #
-        def use_exact_for_partial?
-          true
-        end
-
+      def generate_from index
+        {}
+      end
+    
+      # Returns if this strategy's generated file is saved.
+      #
+      def saved?
+        false
+      end
+    
+      # Do not use the partial bundle for getting ids and weights.
+      #
+      def use_exact_for_partial?
+        true
       end
 
     end
 
   end
-  
+
 end

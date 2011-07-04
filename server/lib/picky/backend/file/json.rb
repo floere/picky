@@ -1,38 +1,34 @@
-module Internals
-
-  module Index
+module Backend
   
-    module File
+  module File
+  
+    # Index files dumped in the JSON format.
+    #
+    class JSON < Basic
     
-      # Index files dumped in the JSON format.
+      # Uses the extension "json".
       #
-      class JSON < Basic
-      
-        # Uses the extension "json".
-        #
-        def extension
-          :json
-        end
-        # Loads the index hash from json format.
-        #
-        def load
-          Yajl::Parser.parse ::File.open(cache_path, 'r'), symbolize_keys: true
-        end
-        # Dumps the index hash in json format.
-        #
-        def dump hash
-          hash.dump_json cache_path
-        end
-        # A json file does not provide retrieve functionality.
-        #
-        def retrieve
-          raise "Can't retrieve from JSON file. Use text file."
-        end
-      
+      def extension
+        :json
+      end
+      # Loads the index hash from json format.
+      #
+      def load
+        Yajl::Parser.parse ::File.open(cache_path, 'r'), symbolize_keys: true
+      end
+      # Dumps the index hash in json format.
+      #
+      def dump hash
+        hash.dump_json cache_path
+      end
+      # A json file does not provide retrieve functionality.
+      #
+      def retrieve
+        raise "Can't retrieve from JSON file. Use text file."
       end
     
     end
   
   end
-  
+
 end

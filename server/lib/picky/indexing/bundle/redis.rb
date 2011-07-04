@@ -1,24 +1,20 @@
 # encoding: utf-8
 #
-module Internals
+module Indexing # :nodoc:all
 
-  module Indexing # :nodoc:all
+  module Bundle
 
-    module Bundle
+    # The Redis version dumps its generated indexes to
+    # the Redis backend.
+    #
+    class Redis < Base
 
-      # The Redis version dumps its generated indexes to
-      # the Redis backend.
-      #
-      class Redis < Base
+      attr_reader :backend
 
-        attr_reader :backend
+      def initialize name, category, *args
+        super name, category, *args
 
-        def initialize name, category, *args
-          super name, category, *args
-
-          @backend = Internals::Index::Redis.new name, category
-        end
-
+        @backend = Backend::Redis.new name, category
       end
 
     end

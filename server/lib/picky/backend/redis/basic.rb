@@ -1,85 +1,81 @@
-module Internals
+module Backend
 
-  module Index
+  class Redis
 
-    class Redis
+    # Redis Backend Accessor.
+    #
+    # Provides necessary helper methods for its
+    # subclasses.
+    # Not directly useable, as it does not provide
+    # dump/load methods.
+    #
+    class Basic
 
-      # Redis Backend Accessor.
+      attr_reader :namespace, :backend
+
+      # An index cache takes a path, without file extension,
+      # which will be provided by the subclasses.
       #
-      # Provides necessary helper methods for its
-      # subclasses.
-      # Not directly useable, as it does not provide
-      # dump/load methods.
+      def initialize namespace
+        @namespace = namespace
+
+        # TODO Turn this inside out such that people can pass in
+        # their own Redis instance.
+        #
+        # TODO Make the :db a real option.
+        #
+        @backend = ::Redis.new :db => 15
+      end
+
+      # Does nothing.
       #
-      class Basic
+      def load
+        # Nothing.
+      end
+      # We do not use Redis to retrieve data.
+      #
+      def retrieve
+        # Nothing.
+      end
 
-        attr_reader :namespace, :backend
+      # Redis does not backup.
+      #
+      def backup
+        # Nothing.
+      end
 
-        # An index cache takes a path, without file extension,
-        # which will be provided by the subclasses.
-        #
-        def initialize namespace
-          @namespace = namespace
+      # Deletes the Redis index namespace.
+      #
+      def delete
+        # Not implemented here.
+        # Note: backend.flushdb might be the way to go,
+        #       but since we cannot delete by key pattern,
+        #       we don't do anything.
+      end
 
-          # TODO Turn this inside out such that people can pass in
-          # their own Redis instance.
-          #
-          # TODO Make the :db a real option.
-          #
-          @backend = ::Redis.new :db => 15
-        end
+      # Checks.
+      #
 
-        # Does nothing.
-        #
-        def load
-          # Nothing.
-        end
-        # We do not use Redis to retrieve data.
-        #
-        def retrieve
-          # Nothing.
-        end
-
-        # Redis does not backup.
-        #
-        def backup
-          # Nothing.
-        end
-
-        # Deletes the Redis index namespace.
-        #
-        def delete
-          # Not implemented here.
-          # Note: backend.flushdb might be the way to go,
-          #       but since we cannot delete by key pattern,
-          #       we don't do anything.
-        end
-
-        # Checks.
-        #
-
-        # Is this cache suspiciously small?
-        #
-        def cache_small?
-          size < 1
-        end
-        # Is the cache ok?
-        #
-        # A small cache is still ok.
-        #
-        def cache_ok?
-          size > 0
-        end
-        # Extracts the size of the file in Bytes.
-        #
-        # Note: This is a very forgiving implementation.
-        #       But as long as Redis does not implement
-        #       DBSIZE KEYPATTERN, we are stuck with this.
-        #
-        def size
-          backend.dbsize
-        end
-
+      # Is this cache suspiciously small?
+      #
+      def cache_small?
+        size < 1
+      end
+      # Is the cache ok?
+      #
+      # A small cache is still ok.
+      #
+      def cache_ok?
+        size > 0
+      end
+      # Extracts the size of the file in Bytes.
+      #
+      # Note: This is a very forgiving implementation.
+      #       But as long as Redis does not implement
+      #       DBSIZE KEYPATTERN, we are stuck with this.
+      #
+      def size
+        backend.dbsize
       end
 
     end

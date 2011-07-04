@@ -41,21 +41,18 @@ class Category
     weights           = options[:weights]    || Generators::Weights::Default
     similarity        = options[:similarity] || Generators::Similarity::Default
 
-    bundle_class      = index.bundle_class || Internals::Indexing::Bundle::Memory
-
-    @indexing_exact   = bundle_class.new(:exact,   self, similarity, Generators::Partial::None.new, weights)
-    @indexing_partial = bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
+    @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, similarity, Generators::Partial::None.new, weights)
+    @indexing_partial = index.indexing_bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
     
     # Indexed.
     #
     # TODO Push the defaults out into the index.
     #
-    @partial_strategy = partial || Internals::Generators::Partial::Default
-    similarity        = options[:similarity] || Internals::Generators::Similarity::Default
+    @partial_strategy = partial || Generators::Partial::Default
+    similarity        = options[:similarity] || Generators::Similarity::Default
 
-    bundle_class = options[:indexed_bundle_class] || Internals::Indexed::Bundle::Memory
-    @indexed_exact   = bundle_class.new :exact,   self, similarity
-    @indexed_partial = bundle_class.new :partial, self, similarity
+    @indexed_exact   = index.indexed_bundle_class.new :exact,   self, similarity
+    @indexed_partial = index.indexed_bundle_class.new :partial, self, similarity
 
     # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
     # @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]

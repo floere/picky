@@ -1,19 +1,15 @@
-module Internals
+module Generators
 
-  module Generators
+  # Uses a logarithmic algorithm as default.
+  #
+  class WeightsGenerator < Base
 
-    # Uses a logarithmic algorithm as default.
+    # Generate a weights index based on the given index.
     #
-    class WeightsGenerator < Base
-
-      # Generate a weights index based on the given index.
-      #
-      def generate strategy = Weights::Logarithmic.new
-        strategy.generate_from self.index
-      end
-
+    def generate strategy = Weights::Logarithmic.new
+      strategy.generate_from self.index
     end
 
   end
-  
+
 end
