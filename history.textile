@@ -1,3 +1,9 @@
+h2. Version 2.6.0
+
+* hanke: (server) Breaking: @Indexes#find@ method has been removed.
+* hanke: (server) Get Indexes/Categories using the @#[]@ method. E.g. @Indexes[:books]@ to get the :book index, and @Indexes[:books][:title]@ to get the :title category of the :books index.
+* hanke: (server) @Indexes@, @Indexes[:some_index]@, and @Indexes[:some_index][:some_category]@ now all support methods @#index@ (just index: prepare data and cache data), @#reload@ (just reload the cached data into the server, no effect on Redis indexes), @#reindex@ (index and reload one category after another). E.g. @Indexes.index@ (Index all indexes, randomly), @Indexes[:some_index].reindex@ (Reindex that index), @Indexes[:some_index][:some_category].reload@ (Just reload that category).
+
 h2. Version 2.5.2
 
 * hanke: (server) Fixed: Redis indexing. Old values are now removed on reindexing.
