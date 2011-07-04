@@ -23,9 +23,10 @@ namespace :index do
   desc "Generates a specific index from index snapshots (category optional)."
   task :specific, [:index, :category] => :application do |_, options|
     index, category = options.index, options.category
-    specific_index = Indexes.find index.to_sym, (category && category.to_sym)
-    specific_index.prepare
-    specific_index.cache
+
+    specific = Indexes[index]
+    specific = specific[category] if category
+    specific.index
   end
 
 end
