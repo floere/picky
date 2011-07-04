@@ -1,13 +1,7 @@
 class Category
 
   attr_reader :name,
-              :index,
-
-              :indexing_exact,
-              :indexing_partial,
-
-              :indexed_exact,
-              :indexed_partial
+              :index
 
   # Mandatory params:
   #  * name: Category name to use as identifier and file names.
@@ -127,7 +121,7 @@ CATEGORY
   end
 
   def to_s
-    "Category(#{name} in #{@index.name})"
+    "Category(#{name})"
   end
 
 end

@@ -1,7 +1,10 @@
 #
 #
 class Category
-  
+
+  attr_reader :indexing_exact,
+              :indexing_partial
+
   # Prepares and caches this category.
   #
   # This one should be used by users.
@@ -10,13 +13,13 @@ class Category
     prepare
     cache
   end
-  
+
   # Return an appropriate source.
   #
   def source
     @source || @index.source
   end
-  
+
   # Return the key format.
   #
   # If the source has no key format, then
@@ -27,25 +30,25 @@ class Category
   def key_format
     source.respond_to?(:key_format) && source.key_format || @key_format || @index.key_format
   end
-  
+
   # Where the data is taken from.
   #
   def from
     @from || name
   end
-  
+
   # The indexer is lazily generated and cached.
   #
   def indexer
     @indexer ||= source.respond_to?(:each) ? Indexers::Parallel.new(self) : Indexers::Serial.new(self)
   end
-  
-  # TODO This is a hack to get the parallel indexer working. 
+
+  # TODO This is a hack to get the parallel indexer working.
   #
   def categories
     [self]
   end
-  
+
   # Returns an appropriate tokenizer.
   # If one isn't set on this category, will try the index,
   # and finally the default index tokenizer.
@@ -53,7 +56,7 @@ class Category
   def tokenizer
     @tokenizer || @index.tokenizer || Tokenizers::Index.default
   end
-  
+
   # Backup the caches.
   # (Revert with restore_caches)
   #
@@ -62,7 +65,7 @@ class Category
     indexing_exact.backup
     indexing_partial.backup
   end
-  
+
   # Restore the caches.
   # (Revert with backup_caches)
   #
@@ -71,7 +74,7 @@ class Category
     indexing_exact.restore
     indexing_partial.restore
   end
-  
+
   # Checks the caches for existence.
   #
   def check_caches
@@ -79,7 +82,7 @@ class Category
     indexing_exact.raise_unless_cache_exists
     indexing_partial.raise_unless_cache_exists
   end
-  
+
   # Deletes the caches.
   #
   def clear_caches
@@ -87,7 +90,7 @@ class Category
     indexing_exact.delete
     indexing_partial.delete
   end
-  
+
   # We need to set what formatting method should be used.
   # Uses the one defined in the indexer.
   #
@@ -97,7 +100,7 @@ class Category
     indexing_exact[:key_format] = self.key_format
     indexing_partial[:key_format] = self.key_format
   end
-  
+
   # Indexes, creates the "prepared_..." file.
   #
   # TODO This step could already prepare the id (if a
@@ -114,7 +117,7 @@ class Category
     prepare_index_directory
     generate_caches
   end
-  
+
   # Generate the cache data.
   #
   def generate_caches
@@ -138,5 +141,5 @@ class Category
     indexing_exact.dump
     indexing_partial.dump
   end
-  
+
 end

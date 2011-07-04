@@ -7,20 +7,11 @@ describe Indexes do
     @indexes = described_class.instance
   end
 
-  describe 'indexes' do
-    it 'exists' do
-      lambda { @indexes.indexes }.should_not raise_error
-    end
-    it 'is empty by default' do
-      @indexes.indexes.should be_empty
-    end
-  end
-
   describe 'clear' do
     it 'clears the indexes' do
-      @indexes.register @index
+      Indexes.register @index
 
-      @indexes.clear
+      Indexes.clear
 
       @indexes.indexes.should == []
     end
@@ -28,9 +19,9 @@ describe Indexes do
 
   describe 'register' do
     it 'adds the given index to the indexes' do
-      @indexes.clear
+      Indexes.clear
       
-      @indexes.register @index
+      Indexes.register @index
 
       @indexes.indexes.should == [@index]
     end

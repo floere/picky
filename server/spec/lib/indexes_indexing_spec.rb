@@ -22,10 +22,8 @@ describe Indexes do
     describe 'index_for_tests' do
       it 'takes a snapshot, then indexes and caches each' do
         indexes.should_receive(:take_snapshot).once.with.ordered
-        @index1.should_receive(:prepare).once.with.ordered
-        @index1.should_receive(:cache).once.with.ordered
-        @index2.should_receive(:prepare).once.with.ordered
-        @index2.should_receive(:cache).once.with.ordered
+        @index1.should_receive(:index).once.with.ordered
+        @index2.should_receive(:index).once.with.ordered
       
         indexes.index_for_tests
       end

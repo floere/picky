@@ -71,10 +71,8 @@ describe BookSearch do
       RedisChangingItem.new("3", 'third entry'),
       RedisChangingItem.new("4", 'fourth entry') # Added.
     ]
-    redis_changing_index = Indexes[:redis_changing]
-    redis_changing_index.define_source new_source
-    redis_changing_index.prepare
-    redis_changing_index.cache
+    Indexes[:redis_changing].source new_source
+    Indexes[:redis_changing].reindex
     
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end

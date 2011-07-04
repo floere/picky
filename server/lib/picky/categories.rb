@@ -56,7 +56,7 @@ class Categories
   end
 
   def to_s
-    categories.indented_to_s
+    categories.join(', ')
   end
 
 end

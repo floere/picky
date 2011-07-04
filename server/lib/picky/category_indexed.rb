@@ -2,6 +2,8 @@
 #
 class Category
 
+  attr_reader :indexed_exact
+
   # TODO Move to Index.
   #
   def generate_qualifiers_from options
@@ -23,8 +25,8 @@ class Category
   #
   def analyze collector
     collector[identifier] = {
-      :exact   => Analyzer.new.analyze(exact),
-      :partial => Analyzer.new.analyze(partial)
+      :exact   => Analyzer.new.analyze(indexed_exact),
+      :partial => Analyzer.new.analyze(indexed_partial)
     }
     collector
   end
@@ -44,13 +46,13 @@ class Category
   # Returns the right index bundle for this token.
   #
   def bundle_for token
-    token.partial?? indexed_partial : indexed_exact
+    token.partial? ? indexed_partial : indexed_exact
   end
 
   # The partial strategy defines whether to really use the partial index.
   #
-  def partial
-    @partial_strategy.use_exact_for_partial?? @indexed_exact : @indexed_partial
+  def indexed_partial
+    @partial_strategy.use_exact_for_partial? ? @indexed_exact : @indexed_partial
   end
 
   #

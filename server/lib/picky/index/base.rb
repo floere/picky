@@ -388,7 +388,7 @@ SOURCE
     #
     #
     def to_s
-      "#{self.class}(#{name}, result id: #{result_identifier}, #{source}, #{categories})"
+      "#{self.class}(#{name}, result_id: #{result_identifier}, source: #{source}, categories: #{categories})"
     end
 
     def to_stats # :nodoc:

@@ -29,12 +29,12 @@ describe Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.partial.should be_kind_of(Indexed::Bundle::Memory)
+          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Memory)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.partial.should be_kind_of(Indexed::Bundle::Memory)
+          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Memory)
         end
       end
     end
@@ -47,12 +47,12 @@ describe Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.partial.should be_kind_of(Indexed::Bundle::Redis)
+          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Redis)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.partial.should be_kind_of(Indexed::Bundle::Redis)
+          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Redis)
         end
       end
     end
