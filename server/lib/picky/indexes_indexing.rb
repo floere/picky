@@ -1,7 +1,7 @@
 # Indexes indexing.
 #
 class Indexes
-  
+
   instance_delegate :take_snapshot,
                     :generate_caches,
                     :backup_caches,
@@ -21,7 +21,7 @@ class Indexes
                 :create_directory_structure,
                 :to => :indexes
 
-  # Runs the indexers in parallel (index + cache).
+  # Runs the indexers in parallel (prepare + cache).
   #
   def index randomly = true
     take_snapshot
@@ -32,10 +32,7 @@ class Indexes
 
     # Run indexing/caching forked.
     #
-    Cores.forked self.indexes, { randomly: randomly } do |an_index|
-      an_index.prepare
-      an_index.cache
-    end
+    Cores.forked self.indexes, { randomly: randomly }, &:index
 
     timed_exclaim "Indexing finished."
   end
@@ -46,10 +43,7 @@ class Indexes
   def index_for_tests
     take_snapshot
 
-    indexes.each do |an_index|
-      an_index.prepare
-      an_index.cache
-    end
+    indexes.each(&:index)
   end
-  
+
 end

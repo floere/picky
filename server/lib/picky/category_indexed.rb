@@ -15,6 +15,7 @@ class Category
     indexed_exact.load
     indexed_partial.load
   end
+  alias reload load_from_cache
 
   # Loads, analyzes, and clears the index.
   #
@@ -57,5 +58,5 @@ class Category
   def combination_for token
     weight(token) && Query::Combination.new(token, self)
   end
-  
+
 end

@@ -1,14 +1,14 @@
 class Category
-  
+
   attr_reader :name,
               :index,
-              
+
               :indexing_exact,
               :indexing_partial,
-              
+
               :indexed_exact,
               :indexed_partial
-  
+
   # Mandatory params:
   #  * name: Category name to use as identifier and file names.
   #  * index: Index to which this category is attached to.
@@ -27,29 +27,28 @@ class Category
   def initialize name, index, options = {}
     @name  = name
     @index = index
-    
+
     # Indexing.
     #
     @source     = options[:source]
     @from       = options[:from]
     @tokenizer  = options[:tokenizer]
     @key_format = options[:key_format]
-    
+
     # TODO Push into Bundle. At least the weights.
     #
-    @partial_strategy = options[:partial]    || Generators::Partial::Default
-    weights           = options[:weights]    || Generators::Weights::Default
-    similarity        = options[:similarity] || Generators::Similarity::Default
+    partial    = options[:partial]    || Generators::Partial::Default
+    weights    = options[:weights]    || Generators::Weights::Default
+    similarity = options[:similarity] || Generators::Similarity::Default
 
     @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, similarity, Generators::Partial::None.new, weights)
     @indexing_partial = index.indexing_bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
-    
+
     # Indexed.
     #
     # TODO Push the defaults out into the index.
     #
-    @partial_strategy = partial || Generators::Partial::Default
-    similarity        = options[:similarity] || Generators::Similarity::Default
+    @partial_strategy = partial # TODO Duplicate work.
 
     @indexed_exact   = index.indexed_bundle_class.new :exact,   self, similarity
     @indexed_partial = index.indexed_bundle_class.new :partial, self, similarity
@@ -61,20 +60,20 @@ class Category
     #
     Query::Qualifiers.add(name, generate_qualifiers_from(options) || [name])
   end
-  
-  # # Indexes and reloads the category.
-  # #
-  # def reindex
-  #   index
-  #   reload
-  # end
-  
+
+  # Indexes and reloads the category.
+  #
+  def reindex
+    index
+    reload
+  end
+
   # Category name.
   #
   def category_name
     name
   end
-  
+
   # Index name.
   #
   def index_name
@@ -96,13 +95,13 @@ class Category
     @prepared_index_file ||= Backend::File::Text.new prepared_index_path
     @prepared_index_file.open_for_indexing &block
   end
-  
+
   # The index directory for this category.
   #
   def index_directory
     @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"
   end
-  
+
   # Creates the index directory including all necessary paths above it.
   #
   def prepare_index_directory
@@ -116,7 +115,7 @@ class Category
   def identifier
     @identifier ||= "#{@index.name}:#{name}"
   end
-  
+
   def to_info
 <<-CATEGORY
 Category(#{name}):
@@ -126,9 +125,9 @@ Partial:
 #{partial.indented_to_s(4)}
 CATEGORY
   end
-  
+
   def to_s
-    "#{@index.name} #{name}"
+    "Category(#{name} in #{@index.name})"
   end
-  
+
 end

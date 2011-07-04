@@ -87,7 +87,7 @@ module Index
 
     attr_reader :name,
                 :categories
-                
+
     delegate :[],
              :to => :categories
 
@@ -119,36 +119,36 @@ module Index
       @name = name.to_sym
 
       check_options options
-      
+
       @source = options[:source]
-      
+
       @after_indexing        = options[:after_indexing]
       @indexing_bundle_class = options[:indexing_bundle_class] # TODO This should probably be a fixed parameter.
       @tokenizer             = options[:tokenizer]
       @key_format            = options[:key_format]
-      
+
       # Indexed.
       #
       @result_identifier    = options[:result_identifier] || name
       @indexed_bundle_class = options[:indexed_bundle_class] # TODO This should probably be a fixed parameter.
-      
+
       # TODO Move ignore_unassigned_tokens to query, somehow.
       #
-      @categories = Categories.new ignore_unassigned_tokens: (options[:ignore_unassigned_tokens] || false) 
+      @categories = Categories.new ignore_unassigned_tokens: (options[:ignore_unassigned_tokens] || false)
 
       # Centralized registry.
       #
       Indexes.register self
-      
+
       #
       #
       instance_eval(&Proc.new) if block_given?
-      
-      # Check if any source has been given in the block.
+
+      # Check if any source has been given in the block or the options.
       #
       check_source @source
     end
-    
+
     # Default bundles.
     #
     def indexing_bundle_class
@@ -173,16 +173,16 @@ module Index
     #
     def category category_name, options = {}
       options = default_category_options.merge options
-      
+
       new_category = Category.new category_name.to_sym, self, options
       categories << new_category
-      
+
       new_category = yield new_category if block_given?
-      
+
       new_category
     end
     alias define_category category
-    
+
     # By default, the category uses
     # * the index's bundle type.
     #
@@ -328,7 +328,7 @@ module Index
 
     end
     alias define_geo_categories geo_categories
-    
+
     #
     # Since this is an API, we fail hard quickly.
     #
@@ -400,7 +400,7 @@ INDEX
       stats << "  result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
       stats
     end
-        
+
   end
 
 end

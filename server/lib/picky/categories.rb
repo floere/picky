@@ -1,12 +1,15 @@
 class Categories
-  
+
   attr_reader :categories, :category_hash
-  
+
   delegate :each,
            :first,
            :map,
            :to => :categories
-           
+
+  each_delegate :reindex,
+                :to => :categories
+
   # A list of indexed categories.
   #
   # Options:
@@ -34,7 +37,7 @@ class Categories
     @categories    = []
     @category_hash = {}
   end
-  
+
   # Find a given category in the categories.
   #
   def [] category_name
@@ -51,22 +54,9 @@ class Categories
     categories << category
     category_hash[category.name] = category
   end
-  
-  # TODO Phase out in 2.6.
-  #
-  def find category_name
-    category_name = category_name.to_sym
 
-    categories.each do |category|
-      next unless category.name == category_name
-      return category
-    end
-
-    raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
-  end
-  
   def to_s
     categories.indented_to_s
   end
-  
+
 end

@@ -20,7 +20,7 @@ describe BookSearch do
   let(:redis_changing) { Picky::TestClient.new(described_class, :path => '/redis_changing') }
   
   it 'can generate a single index category without failing' do
-    book_each_index = Indexes.find :book_each, :title
+    book_each_index = Indexes[:book_each][:title]
     book_each_index.prepare
     book_each_index.cache
   end
@@ -71,7 +71,7 @@ describe BookSearch do
       RedisChangingItem.new("3", 'third entry'),
       RedisChangingItem.new("4", 'fourth entry') # Added.
     ]
-    redis_changing_index = Indexes.indexing.find :redis_changing
+    redis_changing_index = Indexes[:redis_changing]
     redis_changing_index.define_source new_source
     redis_changing_index.prepare
     redis_changing_index.cache
