@@ -1,7 +1,7 @@
 h2. Version 2.6.0
 
 * hanke: (server) Breaking: @Indexes#find@ method has been removed.
-* hanke: (server) Get Indexes/Categories using the @#[]@ method. E.g. @Indexes[:books]@ to get the :book index, and @Indexes[:books][:title]@ to get the :title category of the :books index.
+* hanke: (server) Get Indexes/Categories using the @#[]@ method. E.g. @Indexes[:books]@ to get the @:books@ index, and @Indexes[:books][:title]@ to get the @:title@ category of the @:books@ index.
 * hanke: (server) @Indexes@, @Indexes[:some_index]@, and @Indexes[:some_index][:some_category]@ now all support
 
   the following methods:
