@@ -10,14 +10,15 @@ describe BookSearch do
     Indexes.load_from_cache
   end
 
-  let(:books)          { Picky::TestClient.new(described_class, :path => '/books')          }
-  let(:csv)            { Picky::TestClient.new(described_class, :path => '/csv')            }
-  let(:redis)          { Picky::TestClient.new(described_class, :path => '/redis')          }
-  let(:sym)            { Picky::TestClient.new(described_class, :path => '/sym')            }
-  let(:geo)            { Picky::TestClient.new(described_class, :path => '/geo')            }
-  let(:simple_geo)     { Picky::TestClient.new(described_class, :path => '/simple_geo')     }
-  let(:indexing)       { Picky::TestClient.new(described_class, :path => '/indexing')       }
-  let(:redis_changing) { Picky::TestClient.new(described_class, :path => '/redis_changing') }
+  let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
+  let(:csv)             { Picky::TestClient.new(described_class, :path => '/csv')             }
+  let(:redis)           { Picky::TestClient.new(described_class, :path => '/redis')           }
+  let(:sym)             { Picky::TestClient.new(described_class, :path => '/sym')             }
+  let(:geo)             { Picky::TestClient.new(described_class, :path => '/geo')             }
+  let(:simple_geo)      { Picky::TestClient.new(described_class, :path => '/simple_geo')      }
+  let(:indexing)        { Picky::TestClient.new(described_class, :path => '/indexing')        }
+  let(:memory_changing) { Picky::TestClient.new(described_class, :path => '/memory_changing') }
+  let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
   
   it 'can generate a single index category without failing' do
     book_each_index = Indexes[:book_each][:title]
@@ -62,17 +63,34 @@ describe BookSearch do
     csv.search('soledad human').ids.should == [72]
   end
   
+  it 'can handle changing data with a Memory backend' do
+    memory_changing.search('entry').ids.should == [1, 2, 3]
+    
+    new_source = [
+      # ChangingItem.new("1", 'first entry'), # Removed.
+      ChangingItem.new("2", 'second entry'),
+      ChangingItem.new("3", 'third entry'),
+      ChangingItem.new("4", 'fourth entry') # Added.
+    ]
+    Indexes[:memory_changing].source new_source
+    Indexes[:memory_changing].index
+    Indexes[:memory_changing].reload
+    
+    memory_changing.search('entry').ids.should == [2, 3, 4]
+  end
+  
   it 'can handle changing data with a Redis backend' do
     redis_changing.search('entry').ids.should == ["1", "2", "3"]
     
     new_source = [
-      # RedisChangingItem.new("1", 'first entry'), # Removed.
-      RedisChangingItem.new("2", 'second entry'),
-      RedisChangingItem.new("3", 'third entry'),
-      RedisChangingItem.new("4", 'fourth entry') # Added.
+      # ChangingItem.new("1", 'first entry'), # Removed.
+      ChangingItem.new("2", 'second entry'),
+      ChangingItem.new("3", 'third entry'),
+      ChangingItem.new("4", 'fourth entry') # Added.
     ]
     Indexes[:redis_changing].source new_source
-    Indexes[:redis_changing].reindex
+    Indexes[:redis_changing].index
+    Indexes[:redis_changing].reload
     
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end
