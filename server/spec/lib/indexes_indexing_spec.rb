@@ -1,6 +1,8 @@
+# encoding: utf-8
+#
 require 'spec_helper'
 
-describe Indexing::Indexes do
+describe Indexes do
 
   context 'after initialize' do
     let(:indexes) { described_class.new }
@@ -8,7 +10,7 @@ describe Indexing::Indexes do
       indexes.indexes.should == []
     end
   end
-  
+
   describe 'methods' do
     let(:indexes) { described_class.new }
     before(:each) do
@@ -24,7 +26,7 @@ describe Indexing::Indexes do
         @index1.should_receive(:cache).once.with.ordered
         @index2.should_receive(:prepare).once.with.ordered
         @index2.should_receive(:cache).once.with.ordered
-        
+      
         indexes.index_for_tests
       end
     end
@@ -36,7 +38,7 @@ describe Indexing::Indexes do
     describe 'clear' do
       it 'clears the indexes' do
         indexes.clear
-        
+      
         indexes.indexes.should == []
       end
     end

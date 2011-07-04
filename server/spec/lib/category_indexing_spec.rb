@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Internals::Indexing::Category do
+describe Category do
   
   before(:each) do
-    @index  = stub :index, :name => :some_index, :bundle_class => nil
+    @index  = stub :index, :name => :some_index, :indexing_bundle_class => nil
     @source = stub :some_given_source, :key_format => nil
   end
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }

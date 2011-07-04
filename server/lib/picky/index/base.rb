@@ -85,7 +85,11 @@ module Index
   #
   class Base
 
-    attr_reader :name
+    attr_reader :name,
+                :categories
+                
+    delegate :[],
+             :to => :categories
 
     # Create a new index with a given source.
     #
@@ -115,115 +119,32 @@ module Index
       @name = name.to_sym
 
       check_options options
-      @indexing = Internals::Indexing::Index.new name, options
-      @indexed  = Internals::Indexed::Index.new  name, options
+      
+      @source = options[:source]
+      check_source @source
+      
+      @after_indexing        = options[:after_indexing]
+      @indexing_bundle_class = options[:indexing_bundle_class] # TODO This should probably be a fixed parameter.
+      @tokenizer             = options[:tokenizer]
+      @key_format            = options[:key_format]
+      
+      # Indexed.
+      #
+      @result_identifier    = options[:result_identifier] || name
+      @indexed_bundle_class = options[:indexed_bundle_class] # TODO This should probably be a fixed parameter.
+      
+      # TODO Move ignore_unassigned_tokens to query, somehow.
+      #
+      @categories = Categories.new ignore_unassigned_tokens: (options[:ignore_unassigned_tokens] || false) 
 
       # Centralized registry.
       #
       Indexes.register self
-
+      
       #
       #
       instance_eval(&Proc.new) if block_given?
-
-      check_source internal_indexing.source
     end
-    def internal_indexing # :nodoc:
-      @indexing
-    end
-    def internal_indexed # :nodoc:
-      @indexed
-    end
-    #
-    # Since this is an API, we fail hard quickly.
-    #
-    def check_name name # :nodoc:
-      raise ArgumentError.new(<<-NAME
-
-
-The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a Symbol/String,
-Examples:
-  Index::Memory.new(:my_cool_index) # Recommended
-  Index::Redis.new("a-redis-index")
-NAME
-
-
-) unless name.respond_to?(:to_sym)
-    end
-    def check_options options # :nodoc:
-      raise ArgumentError.new(<<-OPTIONS
-
-
-Sources are not passed in as second parameter for #{self.class.name} anymore, but either
-* as :source option:
-  #{self.class.name}.new(#{name.inspect}, source: #{options})
-or
-* given to the #source method inside the config block:
-  #{self.class.name}.new(#{name.inspect}) do
-    source #{options}
-  end
-
-Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
-
-All the best
-  -- Picky
-
-
-OPTIONS
-) unless options.respond_to?(:[])
-    end
-    def check_source source # :nodoc:
-      raise ArgumentError.new(<<-SOURCE
-
-
-The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
-Or it could use one of the built-in sources:
-  Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
-  Sources::')}
-
-
-SOURCE
-) unless source.respond_to?(:each) || source.respond_to?(:harvest)
-    end
-
-    def to_stats # :nodoc:
-      stats = <<-INDEX
-#{name} (#{self.class}):
-  #{"source:            #{internal_indexing.source}".indented_to_s}
-  #{"categories:        #{internal_indexing.categories.map(&:name).join(', ')}".indented_to_s}
-INDEX
-      stats << "  result identifier: \"#{internal_indexed.result_identifier}\"".indented_to_s unless internal_indexed.result_identifier.to_s == internal_indexed.name.to_s
-      stats
-    end
-
-    # Define an index tokenizer on the index.
-    #
-    # Parameters are the exact same as for indexing.
-    #
-    def indexing options = {}
-      internal_indexing.define_indexing options
-    end
-    alias define_indexing indexing
-
-    # Define a source on the index.
-    #
-    # Parameter is a source, either one of the standard sources or
-    # anything responding to #each and returning objects that
-    # respond to id and the category names (or the category from option).
-    #
-    def source source
-      internal_indexing.define_source source
-    end
-    alias define_source source
-
-    # Define a key_format on the index.
-    #
-    # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip).
-    #
-    def key_format key_format
-      internal_indexing.define_key_format key_format
-    end
-    alias define_key_format key_format
 
     # Defines a searchable category on the index.
     #
@@ -239,16 +160,25 @@ INDEX
     # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: define_category(:similar_title, :from => :title).
     #
     def category category_name, options = {}
-      category_name = category_name.to_sym
-
-      indexing_category = internal_indexing.define_category category_name, options
-      indexed_category  = internal_indexed.define_category  category_name, options
-
-      yield indexing_category, indexed_category if block_given?
-
-      self
+      options = default_category_options.merge options
+      
+      new_category = Category.new category_name.to_sym, self, options
+      categories << new_category
+      
+      new_category = yield new_category if block_given?
+      
+      new_category
     end
     alias define_category category
+    
+    # By default, the category uses
+    # * the index's bundle type.
+    #
+    def default_category_options
+      {
+        :indexed_bundle_class => @indexed_bundle_class
+      }
+    end
 
     # Make this category range searchable with a fixed range. If you need other
     # ranges, define another category with a different range value.
@@ -386,6 +316,79 @@ INDEX
 
     end
     alias define_geo_categories geo_categories
+    
+    #
+    # Since this is an API, we fail hard quickly.
+    #
+    def check_name name # :nodoc:
+      raise ArgumentError.new(<<-NAME
+
+
+The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a Symbol/String,
+Examples:
+  Index::Memory.new(:my_cool_index) # Recommended
+  Index::Redis.new("a-redis-index")
+NAME
+
+
+) unless name.respond_to?(:to_sym)
+    end
+    def check_options options # :nodoc:
+      raise ArgumentError.new(<<-OPTIONS
+
+
+Sources are not passed in as second parameter for #{self.class.name} anymore, but either
+* as :source option:
+  #{self.class.name}.new(#{name.inspect}, source: #{options})
+or
+* given to the #source method inside the config block:
+  #{self.class.name}.new(#{name.inspect}) do
+    source #{options}
+  end
+
+Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
+
+All the best
+  -- Picky
+
+
+OPTIONS
+) unless options.respond_to?(:[])
+    end
+    def check_source source # :nodoc:
+      raise ArgumentError.new(<<-SOURCE
+
+
+The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
+Or it could use one of the built-in sources:
+  Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
+  Sources::')}
+
+
+SOURCE
+) unless source.respond_to?(:each) || source.respond_to?(:harvest)
+    end
+
+    def method_name
+
+    end
+
+    #
+    #
+    def to_s
+      "Indexing(#{name}, result id: #{result_identifier}, #{source}, #{categories})"
+    end
+
+    def to_stats # :nodoc:
+      stats = <<-INDEX
+#{name} (#{self.class}):
+#{"source:            #{internal_indexing.source}".indented_to_s}
+#{"categories:        #{internal_indexing.categories.map(&:name).join(', ')}".indented_to_s}
+INDEX
+      stats << "  result identifier: \"#{internal_indexed.result_identifier}\"".indented_to_s unless internal_indexed.result_identifier.to_s == internal_indexed.name.to_s
+      stats
+    end
+        
   end
 
 end

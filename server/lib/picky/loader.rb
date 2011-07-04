@@ -25,9 +25,6 @@ module Loader # :nodoc:all
   def self.load_relative filename_without_rb
     load File.join(File.dirname(__FILE__), "#{filename_without_rb}.rb")
   end
-  def self.load_internals filename_without_rb
-    load File.join(File.dirname(__FILE__), "internals/#{filename_without_rb}.rb")
-  end
 
   def self.load_user filename
     load File.join(PICKY_ROOT, "#{filename}.rb")
@@ -89,144 +86,130 @@ module Loader # :nodoc:all
 
     # Load compiled C code.
     #
-    load_internals 'ext/maybe_compile'
+    load_relative 'ext/maybe_compile'
 
     # Load extensions.
     #
-    load_internals 'extensions/object'
-    load_internals 'extensions/array'
-    load_internals 'extensions/symbol'
-    load_internals 'extensions/module'
-    load_internals 'extensions/class'
-    load_internals 'extensions/hash'
+    load_relative 'extensions/object'
+    load_relative 'extensions/array'
+    load_relative 'extensions/symbol'
+    load_relative 'extensions/module'
+    load_relative 'extensions/class'
+    load_relative 'extensions/hash'
 
     # Requiring Helpers
     #
-    load_internals 'helpers/measuring'
+    load_relative 'helpers/measuring'
 
     # Calculations.
     #
-    load_internals 'calculations/location'
+    load_relative 'calculations/location'
 
     # Index generation strategies.
     #
-    load_internals 'indexers/base'
-    load_internals 'indexers/serial'
-    load_internals 'indexers/parallel'
+    load_relative 'indexers/base'
+    load_relative 'indexers/serial'
+    load_relative 'indexers/parallel'
 
     # Generators.
     #
-    load_internals 'generators/strategy'
+    load_relative 'generators/strategy'
 
     # Partial index generation strategies.
     #
-    load_internals 'generators/partial/strategy'
-    load_internals 'generators/partial/none'
-    load_internals 'generators/partial/substring'
-    load_internals 'generators/partial/default'
+    load_relative 'generators/partial/strategy'
+    load_relative 'generators/partial/none'
+    load_relative 'generators/partial/substring'
+    load_relative 'generators/partial/default'
 
     # Weight index generation strategies.
     #
-    load_internals 'generators/weights/strategy'
-    load_internals 'generators/weights/logarithmic'
-    load_internals 'generators/weights/default'
+    load_relative 'generators/weights/strategy'
+    load_relative 'generators/weights/logarithmic'
+    load_relative 'generators/weights/default'
 
     # Similarity index generation strategies.
     #
-    load_internals 'generators/similarity/strategy'
-    load_internals 'generators/similarity/none'
-    load_internals 'generators/similarity/phonetic'
-    load_internals 'generators/similarity/metaphone'
-    load_internals 'generators/similarity/double_metaphone'
-    load_internals 'generators/similarity/soundex'
-    load_internals 'generators/similarity/default'
+    load_relative 'generators/similarity/strategy'
+    load_relative 'generators/similarity/none'
+    load_relative 'generators/similarity/phonetic'
+    load_relative 'generators/similarity/metaphone'
+    load_relative 'generators/similarity/double_metaphone'
+    load_relative 'generators/similarity/soundex'
+    load_relative 'generators/similarity/default'
 
     # Index generators.
     #
-    load_internals 'generators/base'
-    load_internals 'generators/partial_generator'
-    load_internals 'generators/weights_generator'
-    load_internals 'generators/similarity_generator'
-
-    # Shared index elements.
-    #
-    load_internals 'shared/category'
+    load_relative 'generators/base'
+    load_relative 'generators/partial_generator'
+    load_relative 'generators/weights_generator'
+    load_relative 'generators/similarity_generator'
 
     # Index store handling.
     #
-    load_internals 'index/backend'
+    load_relative 'backend/backend'
 
-    load_internals 'index/redis'
-    load_internals 'index/redis/basic'
-    load_internals 'index/redis/list_hash'
-    load_internals 'index/redis/string_hash'
+    load_relative 'backend/redis'
+    load_relative 'backend/redis/basic'
+    load_relative 'backend/redis/list_hash'
+    load_relative 'backend/redis/string_hash'
 
-    load_internals 'index/file/basic'
-    load_internals 'index/file/text'
-    load_internals 'index/file/marshal'
-    load_internals 'index/file/json'
+    load_relative 'backend/file/basic'
+    load_relative 'backend/file/text'
+    load_relative 'backend/file/marshal'
+    load_relative 'backend/file/json'
 
-    load_internals 'index/files'
-    
-    # TODO Move?
-    #
-    load_relative 'shared/categories'
+    load_relative 'backend/files'
     
     # Indexing and Indexed things.
     #
-    load_internals 'indexing/bundle/super_base' # TODO Remove.
-    load_internals 'indexing/bundle/base'
-    load_internals 'indexing/bundle/memory'
-    load_internals 'indexing/bundle/redis'
-    load_internals 'indexing/category'
-    load_internals 'indexing/categories'
-    load_internals 'indexing/index'
+    load_relative 'indexing/bundle/super_base' # TODO Remove.
+    load_relative 'indexing/bundle/base'
+    load_relative 'indexing/bundle/memory'
+    load_relative 'indexing/bundle/redis'
 
-    load_internals 'indexing/wrappers/category/location'
+    load_relative 'indexing/wrappers/category/location'
 
-    load_internals 'indexed/bundle/base'
-    load_internals 'indexed/bundle/memory'
-    load_internals 'indexed/bundle/redis'
-    load_internals 'indexed/category'
-    load_internals 'indexed/categories'
-    load_internals 'indexed/index'
+    load_relative 'indexed/bundle/base'
+    load_relative 'indexed/bundle/memory'
+    load_relative 'indexed/bundle/redis'
 
-    load_internals 'indexed/wrappers/exact_first'
+    load_relative 'indexed/wrappers/exact_first'
 
     # Bundle Wrapper
     #
-    load_internals 'indexed/wrappers/bundle/wrapper'
-    load_internals 'indexed/wrappers/bundle/calculation'
-    load_internals 'indexed/wrappers/bundle/location'
+    load_relative 'indexed/wrappers/bundle/wrapper'
+    load_relative 'indexed/wrappers/bundle/calculation'
+    load_relative 'indexed/wrappers/bundle/location'
 
-    load_internals 'indexed/wrappers/category/location'
+    load_relative 'indexed/wrappers/category/location'
 
     # Tokens.
     #
-    load_internals 'query/token'
-    load_internals 'query/tokens'
+    load_relative 'query/token'
+    load_relative 'query/tokens'
 
     # Tokenizers types.
     #
-    load_internals 'tokenizers/base'
-    load_internals 'tokenizers/index'
-    load_internals 'tokenizers/query'
+    load_relative 'tokenizers/base'
+    load_relative 'tokenizers/index'
+    load_relative 'tokenizers/query'
 
     # Query combinations, qualifiers, weigher.
     #
-    load_internals 'query/combination'
-    load_internals 'query/combinations/base'
-    load_internals 'query/combinations/memory'
-    load_internals 'query/combinations/redis'
+    load_relative 'query/combination'
+    load_relative 'query/combinations/base'
+    load_relative 'query/combinations/memory'
+    load_relative 'query/combinations/redis'
 
-    load_internals 'query/allocation'
-    load_internals 'query/allocations'
+    load_relative 'query/allocation'
+    load_relative 'query/allocations'
 
-    load_internals 'query/qualifiers'
+    load_relative 'query/qualifiers'
 
-    load_internals 'query/weights'
+    load_relative 'query/weights'
 
-    load_internals 'query/indexes'
+    load_relative 'query/indexes'
 
     # Configuration.
     #
@@ -234,14 +217,14 @@ module Loader # :nodoc:all
 
     # Adapters.
     #
-    load_internals 'adapters/rack/base'
-    load_internals 'adapters/rack/query'
-    load_internals 'adapters/rack/live_parameters'
-    load_internals 'adapters/rack'
+    load_relative 'adapters/rack/base'
+    load_relative 'adapters/rack/query'
+    load_relative 'adapters/rack/live_parameters'
+    load_relative 'adapters/rack'
 
     # Routing.
     #
-    load_internals 'frontend_adapters/rack'
+    load_relative 'frontend_adapters/rack'
   end
   # Loads the user interface parts.
   #
@@ -276,16 +259,21 @@ module Loader # :nodoc:all
 
     # API.
     #
+    load_relative 'category'
+    load_relative 'category_indexed'
+    load_relative 'category_indexing'
+    
+    load_relative 'categories'
+    load_relative 'categories_indexed'
+    load_relative 'categories_indexing'
+    
     load_relative 'index/base'
     load_relative 'index/memory'
     load_relative 'index/redis'
-
-    load_relative 'shared/indexes'
-    load_relative 'indexing/indexes'
-    load_relative 'indexed/indexes'
-
-    load_relative 'index_bundle'
-    load_relative 'aliases'
+    
+    load_relative 'indexes'
+    load_relative 'indexes_indexed'
+    load_relative 'indexes_indexing'
 
     # Results.
     #

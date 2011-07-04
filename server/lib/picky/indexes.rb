@@ -12,13 +12,19 @@ class Indexes
     @instance ||= new
   end
   
+  attr_reader :indexes,
+              :index_mapping
+  
   instance_delegate :clear,
                     :register,
                     :[],
-                    :to_s
-  
-  attr_reader :indexes,
-              :index_mapping
+                    :to_s,
+                    :size,
+                    :each
+              
+  delegate :size,
+           :each,
+           :to => :indexes
   
   def initialize
     clear

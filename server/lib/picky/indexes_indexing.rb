@@ -8,7 +8,9 @@ class Indexes
                     :restore_caches,
                     :check_caches,
                     :clear_caches,
-                    :create_directory_structure
+                    :create_directory_structure,
+                    :index,
+                    :index_for_tests
 
   each_delegate :take_snapshot,
                 :generate_caches,

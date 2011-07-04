@@ -3,7 +3,8 @@
 class Indexes
   
   instance_delegate :load_from_cache,
-                    :reload
+                    :reload,
+                    :analyze
   
   each_delegate :load_from_cache,
                 :to => :indexes

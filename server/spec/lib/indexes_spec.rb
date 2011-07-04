@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Indexing::Indexes do
+describe Indexes do
   
   before(:each) do
     @index   = stub :some_index, :name => :some_index
-    @indexes = Indexing::Indexes.new
+    @indexes = described_class.new
   end
   
   describe 'indexes' do
