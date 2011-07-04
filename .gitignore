@@ -8,6 +8,7 @@ performant.o
 
 server/.yardoc
 server/doc
+server/dump.rdb
 
 config
 
