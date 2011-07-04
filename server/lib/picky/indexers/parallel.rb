@@ -1,4 +1,4 @@
-# encoding: utf-8
+  # encoding: utf-8
 #
 module Indexers
 
@@ -10,10 +10,12 @@ module Indexers
   #
   class Parallel < Base
 
-    delegate :categories, :source, :to => :@index
+    attr_reader :index_or_category
 
-    def initialize index
-      @index = index
+    delegate :categories, :source, :to => :index_or_category
+
+    def initialize index_or_category
+      @index_or_category = index_or_category
     end
 
     def process
@@ -58,7 +60,7 @@ module Indexers
     #
     #
     def indexing_message # :nodoc:
-      timed_exclaim %Q{"#{@index.name}": Starting parallel indexing.}
+      timed_exclaim %Q{"#{@index_or_category.name}": Starting parallel indexing.}
     end
 
   end

@@ -14,6 +14,23 @@ class Category
     cache
   end
 
+  # Indexes, creates the "prepared_..." file.
+  #
+  # TODO This step could already prepare the id (if a
+  #      per category key_format is not really needed).
+  #
+  def prepare
+    prepare_index_directory
+    indexer.index # TODO Pass in params source, [self]?
+  end
+
+  # Generates all caches for this category.
+  #
+  def cache
+    prepare_index_directory
+    generate_caches
+  end
+
   # Return an appropriate source.
   #
   def source
@@ -99,23 +116,6 @@ class Category
   def configure
     indexing_exact[:key_format] = self.key_format
     indexing_partial[:key_format] = self.key_format
-  end
-
-  # Indexes, creates the "prepared_..." file.
-  #
-  # TODO This step could already prepare the id (if a
-  #      per category key_format is not really needed).
-  #
-  def prepare
-    prepare_index_directory
-    indexer.index
-  end
-
-  # Generates all caches for this category.
-  #
-  def cache
-    prepare_index_directory
-    generate_caches
   end
 
   # Generate the cache data.

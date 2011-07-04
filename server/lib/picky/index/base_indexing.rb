@@ -3,11 +3,11 @@ module Index
   #
   #
   class Base
-    
+
     attr_reader :after_indexing,
                 :bundle_class,
                 :tokenizer
-    
+
     # Delegators for indexing.
     #
     delegate :backup_caches,
@@ -18,10 +18,10 @@ module Index
              :generate_caches,
              :restore_caches,
              :to => :categories
-    
+
     delegate :connect_backend,
              :to => :source
-    
+
     # Calling index on an index will
     #  * prepare (the data)
     #  * cache (the data)
@@ -40,7 +40,7 @@ module Index
       @tokenizer = Tokenizers::Index.new options
     end
     alias define_indexing indexing
-    
+
     # Define a source on the index.
     #
     # Parameter is a source, either one of the standard sources or
@@ -68,7 +68,7 @@ end
       NO_SOURCE
 )
     end
-    
+
     # Define a key_format on the index.
     #
     # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip).
@@ -79,7 +79,7 @@ end
     def define_key_format key_format
       @key_format = key_format
     end
-    
+
     # Decides whether to use a parallel indexer or whether to
     # delegate to each category to index themselves.
     #
@@ -102,8 +102,8 @@ end
     #
     def index_parallel
       indexer = Indexers::Parallel.new self
-      categories.first.prepare_index_directory # TODO Unnice.
-      indexer.index
+      categories.first.prepare_index_directory # TODO Unnice. Move into indexer.
+      indexer.index # TODO Pass in source, categories.
     end
 
     # Indexing.
@@ -113,7 +113,7 @@ end
     def take_snapshot
       source.take_snapshot self unless source.respond_to? :each
     end
-    
+
   end
-  
+
 end
