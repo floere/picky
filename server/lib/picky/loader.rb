@@ -97,6 +97,7 @@ module Loader # :nodoc:all
     load_internals 'extensions/array'
     load_internals 'extensions/symbol'
     load_internals 'extensions/module'
+    load_internals 'extensions/class'
     load_internals 'extensions/hash'
 
     # Requiring Helpers
