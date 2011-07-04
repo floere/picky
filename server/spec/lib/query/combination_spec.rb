@@ -2,14 +2,14 @@
 #
 require 'spec_helper'
 
-describe 'Query::Combination' do
+describe Query::Combination do
 
   before(:each) do
     @bundle      = stub :bundle, :identifier => :bundle_name
-    @token       = Internals::Query::Token.processed('some_text~')
+    @token       = Query::Token.processed('some_text~')
     @category    = stub :category, :bundle_for => @bundle, :name => :some_category_name
 
-    @combination = Internals::Query::Combination.new @token, @category
+    @combination = described_class.new @token, @category
   end
   
   describe "to_s" do
@@ -41,9 +41,9 @@ describe 'Query::Combination' do
   describe 'to_result' do
     context 'functional with qualifier' do
       before(:each) do
-        token = Internals::Tokenizers::Query.new.tokenize('name:Blä~').first
+        token = Tokenizers::Query.new.tokenize('name:Blä~').first
 
-        @combination = Internals::Query::Combination.new token, @category
+        @combination = Query::Combination.new token, @category
       end
       it 'should return a correct result' do
         @combination.to_result.should == [:some_category_name, 'Blä~', :blä] # Note: Characters not substituted. That's ok.

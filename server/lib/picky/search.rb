@@ -35,7 +35,7 @@ class Search
   def initialize *index_definitions
     options      = Hash === index_definitions.last ? index_definitions.pop : {}
 
-    @indexes  = Internals::Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
+    @indexes  = Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
     searching options[:tokenizer]
     boost     options[:weights]
 
@@ -54,11 +54,11 @@ class Search
     @tokenizer = if options.respond_to?(:tokenize)
       options
     else
-      options && Internals::Tokenizers::Query.new(options)
+      options && Tokenizers::Query.new(options)
     end
   end
   def tokenizer
-    @tokenizer || Internals::Tokenizers::Query.default
+    @tokenizer || Tokenizers::Query.default
   end
   # TODO Doc. Spec.
   #
@@ -82,14 +82,14 @@ class Search
   # Picky will raise a Query::Indexes::DifferentTypesError.
   #
   @@mapping = {
-    Index::Memory => Internals::Query::Combinations::Memory,
-    Index::Redis  => Internals::Query::Combinations::Redis
+    Index::Memory => Query::Combinations::Memory,
+    Index::Redis  => Query::Combinations::Redis
   }
   def combinations_type_for index_definitions_ary
     index_types = index_definitions_ary.map(&:class)
     index_types.uniq!
     raise_different(index_types) if index_types.size > 1
-    !index_types.empty? && @@mapping[*index_types] || Internals::Query::Combinations::Memory
+    !index_types.empty? && @@mapping[*index_types] || Query::Combinations::Memory
   end
   # Currently it isn't possible using Memory and Redis etc.
   # indexes in the same query index group.

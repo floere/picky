@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Category do
   
   before(:each) do
-    @index  = stub :index, :name => :some_index, :indexing_bundle_class => nil
+    @index  = Index::Memory.new :some_index, source: []
     @source = stub :some_given_source, :key_format => nil
   end
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }
   
   context "unit specs" do
-    let(:exact) { category.exact }
-    let(:partial) { category.partial }
+    let(:exact) { category.indexing_exact }
+    let(:partial) { category.indexing_partial }
     
     describe 'backup_caches' do
       it 'delegates to both bundles' do
@@ -134,7 +134,7 @@ describe Category do
           end
           context 'it has an index' do
             before(:each) do
-              category.stub! :index => stub(:index, :key_format => :yet_another_key_format)
+              category.instance_variable_set :@index, stub(:index, :key_format => :yet_another_key_format)
             end
             it 'returns that key_format' do
               category.key_format.should == :yet_another_key_format

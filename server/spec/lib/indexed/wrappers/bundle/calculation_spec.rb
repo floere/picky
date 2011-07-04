@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Indexed::Wrappers::Bundle::Calculation do
+describe Indexed::Wrappers::Bundle::Calculation do
   
   before(:each) do
     @bundle      = stub :bundle

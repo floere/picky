@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Internals::Indexed::Wrappers::ExactFirst do
+describe Indexed::Wrappers::ExactFirst do
   
   before(:each) do
     @exact    = stub :exact
     @partial  = stub :partial
-    @category = stub :category, :exact => @exact, :partial => @partial
+    @category = stub :category, :indexed_exact => @exact, :indexed_partial => @partial
     
     @wrapper  = described_class.new @category
   end
@@ -13,17 +13,17 @@ describe Internals::Indexed::Wrappers::ExactFirst do
   describe "self.wrap" do
     context "index" do
       it "wraps each category" do
-        index = Internals::Indexed::Index.new :index_name
+        index = Index::Memory.new :some_index, source: []
         index.define_category :some_category
         
-        Internals::Indexed::Wrappers::ExactFirst.wrap index
+        Indexed::Wrappers::ExactFirst.wrap index
         
         index.categories.categories.each do |category|
-          category.should be_kind_of(Internals::Indexed::Wrappers::ExactFirst)
+          category.should be_kind_of(Indexed::Wrappers::ExactFirst)
         end
       end
       it "returns the index" do
-        index = Internals::Indexed::Index.new :index_name
+        index = Index::Memory.new :some_index, source: []
         index.define_category :some_category
         
         described_class.wrap(index).should == index
@@ -31,7 +31,7 @@ describe Internals::Indexed::Wrappers::ExactFirst do
     end
     context "category" do
       it "wraps each category" do
-        category = stub :category, :exact => :exact, :partial => :partial
+        category = stub :category, :indexed_exact => :exact, :indexed_partial => :partial
         
         described_class.wrap(category).should be_kind_of(described_class)
       end

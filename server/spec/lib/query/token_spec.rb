@@ -1,11 +1,11 @@
 # coding: utf-8
 require 'spec_helper'
 
-describe Internals::Query::Token do
+describe Query::Token do
   
   before(:all) do
-    Internals::Query::Qualifiers.instance << Internals::Query::Qualifier.new(:specific, [:sp, :spec])
-    Internals::Query::Qualifiers.instance.prepare
+    Query::Qualifiers.instance << Query::Qualifier.new(:specific, [:sp, :spec])
+    Query::Qualifiers.instance.prepare
   end
   
   describe '==' do

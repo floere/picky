@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Query::Indexes do
+describe Query::Indexes do
 
   3.times do |i|
     n       = i + 1

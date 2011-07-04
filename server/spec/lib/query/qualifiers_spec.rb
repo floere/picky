@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Internals::Query::Qualifiers do
+describe Query::Qualifiers do
   
   before(:each) do
-    described_class.instance << Internals::Query::Qualifier.new(:test1, ['t1', 'tt1', 'ttt1'])
-    described_class.instance << Internals::Query::Qualifier.new(:test2, [:t2, :tt2, :ttt2])
-    described_class.instance << Internals::Query::Qualifier.new(:test3, [:t3, :tt3, :ttt3])
+    described_class.instance << Query::Qualifier.new(:test1, ['t1', 'tt1', 'ttt1'])
+    described_class.instance << Query::Qualifier.new(:test2, [:t2, :tt2, :ttt2])
+    described_class.instance << Query::Qualifier.new(:test3, [:t3, :tt3, :ttt3])
     described_class.instance.prepare
   end
   

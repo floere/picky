@@ -3,8 +3,6 @@ require 'spec_helper'
 describe Sources::DB do
   
   before(:each) do
-    @type       = stub :type, :name => 'some_type_name'
-    
     @connection = stub :connection
     @adapter    = stub :adapter, :connection => @connection
     
@@ -24,8 +22,7 @@ describe Sources::DB do
   
   describe "get_data" do
     before(:each) do
-      @index    = stub :index, :name => :some_index_name
-      @category = stub :category, :from => :some_category, :index => @index
+      @category = stub :category, :from => :some_category, :index_name => :some_index_name
     end
     context 'mysql' do
       before(:each) do
@@ -88,20 +85,19 @@ describe Sources::DB do
       result = stub(:result, :to_i => 12_345)
       @connection.should_receive(:select_value).once.and_return(result)
       
-      @source.count @type
+      @source.count :anything
     end
     it "should get the id count" do
       result = stub(:result, :to_i => 12_345)
       @connection.should_receive(:select_value).once.with("SELECT COUNT(__picky_id) FROM picky_some_type_name_index")
       
-      @source.count @type
+      @source.count :some_type_name
     end
   end
   
   describe 'harvest' do
     before(:each) do
-      @index    = stub :index,    :name => :some_index
-      @category = stub :category, :name => :some_category, :index => @index
+      @category = stub :category, :name => :some_category, :index_name => :some_index
 
       @source.should_receive(:get_data).any_number_of_times.and_return [[:some_id, 'some_text']].cycle
       @source.stub! :count => 17

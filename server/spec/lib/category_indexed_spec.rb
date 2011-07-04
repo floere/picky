@@ -143,10 +143,10 @@ describe Category do
         @category.stub! :weight => :some_weight, :bundle_for => :bundle
       end
       it 'should return a new combination' do
-        @category.combination_for(@token).should be_kind_of(Internals::Query::Combination)
+        @category.combination_for(@token).should be_kind_of(Query::Combination)
       end
       it 'should create the combination correctly' do
-        Internals::Query::Combination.should_receive(:new).once.with @token, @category
+        Query::Combination.should_receive(:new).once.with @token, @category
 
         @category.combination_for @token
       end

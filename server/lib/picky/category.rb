@@ -93,7 +93,7 @@ class Category
     @prepared_index_path ||= "#{index_directory}/prepared_#{name}_index"
   end
   def prepared_index_file &block
-    @prepared_index_file ||= Internals::Index::File::Text.new prepared_index_path
+    @prepared_index_file ||= Backend::File::Text.new prepared_index_path
     @prepared_index_file.open_for_indexing &block
   end
   

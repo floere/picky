@@ -129,7 +129,7 @@ class Category
     indexing_exact.generate_caches_from_source
   end
   def generate_partial
-    indexing_partial.generate_partial_from exact.index
+    indexing_partial.generate_partial_from indexing_exact.index
   end
   def generate_caches_from_memory
     indexing_partial.generate_caches_from_memory

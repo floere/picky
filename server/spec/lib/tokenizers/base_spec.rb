@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::Tokenizers::Base do
+describe Tokenizers::Base do
   
   context 'with special instance' do
     let (:tokenizer) { described_class.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }

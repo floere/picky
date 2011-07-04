@@ -10,7 +10,7 @@ module Sources
 
       def initialize source, grid, precision = 1
         super source
-        @calculation = Internals::Calculations::Location.new grid, precision
+        @calculation = Calculations::Location.new grid, precision
       end
 
       # Yield the data (id, text for id) for the given category.
@@ -42,7 +42,7 @@ module Sources
 
         # TODO Move to the right place.
         #
-        category.exact[:location_minimum] = minimum
+        category.indexing_exact[:location_minimum] = minimum
       end
 
     end

@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Internals::Indexing::Bundle::Memory do
+describe Indexing::Bundle::Memory do
 
   before(:each) do
-    @index            = stub :index, :name => :some_index, :bundle_class => nil
-    @category         = Internals::Indexing::Category.new :some_category, @index
+    @index            = Index::Memory.new :some_index, source: []
+    @category         = Category.new :some_category, @index
     
-    @partial_strategy = Internals::Generators::Partial::Substring.new :from => 1
+    @partial_strategy = Generators::Partial::Substring.new :from => 1
     @exact            = described_class.new :some_name, @category, nil, @partial_strategy, nil
   end
 

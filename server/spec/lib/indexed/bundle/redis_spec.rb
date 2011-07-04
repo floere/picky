@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Internals::Indexed::Bundle::Redis do
+describe Indexed::Bundle::Redis do
 
   before(:each) do
     @backend = stub :backend
     
-    Internals::Index::Redis.stub! :new => @backend
+    Backend::Redis.stub! :new => @backend
     
-    @index        = stub :index, :name => :some_index
-    @category     = Internals::Indexed::Category.new :some_category, @index
+    @index        = Index::Memory.new :some_index, source: []
+    @category     = Category.new :some_category, @index
     
     @similarity   = stub :similarity
     @bundle       = described_class.new :some_name, @category, @similarity

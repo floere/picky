@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Query::Allocations do
+describe Query::Allocations do
 
   describe 'reduce_to' do
     before(:each) do

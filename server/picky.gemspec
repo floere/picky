@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.executables = ['picky']
   s.default_executable = "picky"
 
-  s.files = Dir["aux/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/internals/ext/ruby19/performant.c"]
+  s.files = Dir["aux/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "lib/picky/ext/ruby19/performant.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
 
-  s.extensions << 'lib/picky/internals/ext/ruby19/extconf.rb'
+  s.extensions << 'lib/picky/ext/ruby19/extconf.rb'
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'picky-client', Picky::VERSION

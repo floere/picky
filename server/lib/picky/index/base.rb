@@ -260,9 +260,9 @@ module Index
 
       options = { partial: Partial::None.new }.merge options
 
-      define_category category_name, options do |indexing_category, indexed_category|
-        Internals::Indexing::Wrappers::Category::Location.install_on indexing_category, range, precision
-        Internals::Indexed::Wrappers::Category::Location.install_on indexed_category, range, precision
+      define_category category_name, options do |category|
+        Indexing::Wrappers::Category::Location.install_on category, range, precision
+        Indexed::Wrappers::Category::Location.install_on category, range, precision
       end
     end
     alias define_ranged_category ranged_category
@@ -388,16 +388,16 @@ SOURCE
     #
     #
     def to_s
-      "Indexing(#{name}, result id: #{result_identifier}, #{source}, #{categories})"
+      "#{self.class}(#{name}, result id: #{result_identifier}, #{source}, #{categories})"
     end
 
     def to_stats # :nodoc:
       stats = <<-INDEX
 #{name} (#{self.class}):
-#{"source:            #{internal_indexing.source}".indented_to_s}
-#{"categories:        #{internal_indexing.categories.map(&:name).join(', ')}".indented_to_s}
+#{"source:            #{source}".indented_to_s}
+#{"categories:        #{categories.map(&:name).join(', ')}".indented_to_s}
 INDEX
-      stats << "  result identifier: \"#{internal_indexed.result_identifier}\"".indented_to_s unless internal_indexed.result_identifier.to_s == internal_indexed.name.to_s
+      stats << "  result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
       stats
     end
         

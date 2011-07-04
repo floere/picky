@@ -24,8 +24,8 @@ module Indexed
                :to => :@partial
 
       def initialize category
-        @exact   = category.exact
-        @partial = category.partial
+        @exact   = category.indexed_exact
+        @partial = category.indexed_partial
       end
 
       def self.wrap index_or_category

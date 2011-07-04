@@ -10,7 +10,7 @@ class Results
 
   # Takes instances of Query::Allocations as param.
   #
-  def initialize amount = 0, offset = 0, allocations = Internals::Query::Allocations.new
+  def initialize amount = 0, offset = 0, allocations = Query::Allocations.new
     @offset      = offset
     @amount      = amount
     @allocations = allocations

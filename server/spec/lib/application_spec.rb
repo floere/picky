@@ -15,8 +15,8 @@ describe Application do
           
           route %r{^/books} => Search.new(books)
         end
-        Internals::Tokenizers::Index.default.tokenize 'some text'
-        Internals::Tokenizers::Query.default.tokenize 'some text'
+        Tokenizers::Index.default.tokenize 'some text'
+        Tokenizers::Query.default.tokenize 'some text'
       }.should_not raise_error
     end
     it "should run ok" do
@@ -105,7 +105,7 @@ describe Application do
       lambda { Application.rack_adapter }.should_not raise_error
     end
     it "should return a new FrontendAdapters::Rack instance" do
-      Application.rack_adapter.should be_kind_of(Internals::FrontendAdapters::Rack)
+      Application.rack_adapter.should be_kind_of(FrontendAdapters::Rack)
     end
     it "should cache the instance" do
       Application.rack_adapter.should == Application.rack_adapter

@@ -6,7 +6,7 @@ namespace :try do
   task :index, [:text, :index, :category] => :application do |_, options|
     text, index, category = options.text, options.index, options.category
 
-    tokenizer = category ? Indexes.find(index, category).tokenizer : Internals::Tokenizers::Index.default
+    tokenizer = category ? Indexes.find(index, category).tokenizer : Tokenizers::Index.default
 
     puts "\"#{text}\" is saved in the index as              #{tokenizer.tokenize(text.dup).to_a}"
   end
@@ -15,7 +15,7 @@ namespace :try do
   task :query, [:text] => :application do |_, options|
     text = options.text
 
-    puts "\"#{text}\" as a search will be preprocessed into #{Internals::Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
+    puts "\"#{text}\" as a search will be preprocessed into #{Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
     puts
     puts "(category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')"
   end

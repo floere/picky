@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::Tokenizers::Index do
+describe Tokenizers::Index do
   
   let(:tokenizer) { described_class.new }
   

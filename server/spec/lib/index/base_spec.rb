@@ -61,67 +61,24 @@ ERROR
         api.geo_categories :some_lat, :some_lng, 1, :lat_from => :some_lat_from, :lng_from => :some_lng_from
       end
     end
-    
-    describe 'define_source' do
-      it 'delegates to the internal indexing' do
-        indexing = stub :indexing
-        api.stub! :internal_indexing => indexing
-        
-        indexing.should_receive(:define_source).once.with :some_source
-        
-        api.define_source :some_source
-      end
-      it 'has an alias' do
-        indexing = stub :indexing
-        api.stub! :internal_indexing => indexing
-        
-        indexing.should_receive(:define_source).once.with :some_source
-        
-        api.source :some_source
-      end
-    end
-    
-    describe 'define_indexing' do
-      it 'delegates to the internal indexing' do
-        indexing = stub :indexing
-        api.stub! :internal_indexing => indexing
-        
-        indexing.should_receive(:define_indexing).once.with :some_options
-        
-        api.define_indexing :some_options
-      end
-      it 'has an alias' do
-        indexing = stub :indexing
-        api.stub! :internal_indexing => indexing
-        
-        indexing.should_receive(:define_indexing).once.with :some_options
-        
-        api.indexing :some_options
-      end
-    end
 
     describe 'define_category' do
       context 'with block' do
-        it 'returns itself' do
-          api.define_category(:some_name){ |indexing, indexed| }.should == api
+        it 'returns the category' do
+          expected = nil
+          api.define_category(:some_name){ |category| expected = category }.should == expected
         end
         it 'takes a string' do
           lambda { api.define_category('some_name'){ |indexing, indexed| } }.should_not raise_error
         end
         it 'yields both the indexing category and the indexed category' do
-          api.define_category(:some_name) do |indexing, indexed|
-            indexing.should be_kind_of(Internals::Indexing::Category)
-            indexed.should be_kind_of(Internals::Indexed::Category)
+          api.define_category(:some_name) do |category|
+            category.should be_kind_of(Category)
           end
         end
-        it 'yields the indexing category which has the given name' do
-          api.define_category(:some_name) do |indexing, indexed|
-            indexing.name.should == :some_name
-          end
-        end
-        it 'yields the indexed category which has the given name' do
-          api.define_category(:some_name) do |indexing, indexed|
-            indexed.name.should == :some_name
+        it 'yields the category which has the given name' do
+          api.define_category(:some_name) do |category|
+            category.name.should == :some_name
           end
         end
       end
@@ -130,10 +87,10 @@ ERROR
           lambda { api.define_category(:some_name) }.should_not raise_error
         end
         it 'takes a string' do
-          lambda { api.define_category('some_name').should == api }.should_not raise_error
+          lambda { api.define_category('some_name') }.should_not raise_error
         end
         it 'returns itself' do
-          api.define_category(:some_name).should == api
+          api.define_category(:some_name).should be_kind_of(Category)
         end
       end
     end

@@ -20,7 +20,7 @@ describe Sources::Wrappers::Location do
         @wrapper.calculation.precision.should == 1
       end
       it "delegates harvest" do
-        @category.stub! :exact => {}
+        @category.stub! :indexing_exact => {}
         
         @source.should_receive(:harvest).once.with @category
         

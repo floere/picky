@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe Internals::Query::Tokens do
+describe Query::Tokens do
   
   before(:all) do
-    Internals::Query::Qualifiers.instance << Internals::Query::Qualifier.new(:specific, [:sp, :spec])
-    Internals::Query::Qualifiers.instance.prepare
+    Query::Qualifiers.instance << Query::Qualifier.new(:specific, [:sp, :spec])
+    Query::Qualifiers.instance.prepare
   end
   
   describe '.processed' do
     it 'generates processed tokens from all words' do
       expected = [
-        Internals::Query::Token.processed('this~'),
-        Internals::Query::Token.processed('is'),
-        Internals::Query::Token.processed('a'),
-        Internals::Query::Token.processed('sp:solr'),
-        Internals::Query::Token.processed('query"')
+        Query::Token.processed('this~'),
+        Query::Token.processed('is'),
+        Query::Token.processed('a'),
+        Query::Token.processed('sp:solr'),
+        Query::Token.processed('query"')
       ]
       
       described_class.should_receive(:new).once.with expected
@@ -23,11 +23,11 @@ describe Internals::Query::Tokens do
     end
     it 'generates processed tokens from all words' do
       expected = [
-        Internals::Query::Token.processed('this~', false),
-        Internals::Query::Token.processed('is', false),
-        Internals::Query::Token.processed('a', false),
-        Internals::Query::Token.processed('sp:solr', false),
-        Internals::Query::Token.processed('query"', false)
+        Query::Token.processed('this~', false),
+        Query::Token.processed('is', false),
+        Query::Token.processed('a', false),
+        Query::Token.processed('sp:solr', false),
+        Query::Token.processed('query"', false)
       ]
       
       described_class.should_receive(:new).once.with expected
@@ -52,7 +52,7 @@ describe Internals::Query::Tokens do
   describe 'cap' do
     context 'one token' do
       before(:each) do
-        @token = Internals::Query::Token.processed 'Token'
+        @token = Query::Token.processed 'Token'
         @tokens = described_class.new [@token]
       end
       it 'does not cut it down' do
@@ -68,15 +68,15 @@ describe Internals::Query::Tokens do
     end
     context 'many tokens' do
       before(:each) do
-        @first = Internals::Query::Token.processed 'Hello'
-        @second = Internals::Query::Token.processed 'I'
-        @third = Internals::Query::Token.processed 'Am'
-        @tokens = Internals::Query::Tokens.new [
+        @first = Query::Token.processed 'Hello'
+        @second = Query::Token.processed 'I'
+        @third = Query::Token.processed 'Am'
+        @tokens = Query::Tokens.new [
           @first,
           @second,
           @third,
-          Internals::Query::Token.processed('A'),
-          Internals::Query::Token.processed('Token')
+          Query::Token.processed('A'),
+          Query::Token.processed('Token')
         ]
       end
       it 'should cap the number of tokens' do
@@ -90,7 +90,7 @@ describe Internals::Query::Tokens do
   describe 'partialize_last' do
     context 'special case' do
       before(:each) do
-        @token = Internals::Query::Token.processed 'a*'
+        @token = Query::Token.processed 'a*'
         @tokens = described_class.new [@token]
       end
       it 'should have a last partialized token' do
@@ -104,7 +104,7 @@ describe Internals::Query::Tokens do
     end
     context 'one token' do
       before(:each) do
-        @token = Internals::Query::Token.processed 'Token'
+        @token = Query::Token.processed 'Token'
         @tokens = described_class.new [@token]
       end
       it 'should not have a last partialized token' do
@@ -118,13 +118,13 @@ describe Internals::Query::Tokens do
     end
     context 'many tokens' do
       before(:each) do
-        @first  = Internals::Query::Token.processed 'Hello'
-        @last   = Internals::Query::Token.processed 'Token'
+        @first  = Query::Token.processed 'Hello'
+        @last   = Query::Token.processed 'Token'
         @tokens = described_class.new [
           @first,
-          Internals::Query::Token.processed('I'),
-          Internals::Query::Token.processed('Am'),
-          Internals::Query::Token.processed('A'),
+          Query::Token.processed('I'),
+          Query::Token.processed('Am'),
+          Query::Token.processed('A'),
           @last
         ]
       end
@@ -178,11 +178,11 @@ describe Internals::Query::Tokens do
   describe 'to_s' do
     before(:each) do
       @tokens = described_class.new [
-        Internals::Query::Token.processed('Hello~'),
-        Internals::Query::Token.processed('I~'),
-        Internals::Query::Token.processed('Am'),
-        Internals::Query::Token.processed('A*'),
-        Internals::Query::Token.processed('Token~')
+        Query::Token.processed('Hello~'),
+        Query::Token.processed('I~'),
+        Query::Token.processed('Am'),
+        Query::Token.processed('A*'),
+        Query::Token.processed('Token~')
       ]
     end
     it 'should work correctly' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Query::Allocation do
+describe Query::Allocation do
   
   before(:each) do
     @combinations = stub :combinations

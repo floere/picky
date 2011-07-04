@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Internals::Indexed::Bundle::Memory do
+describe Indexed::Bundle::Memory do
 
   before(:each) do
-    @index        = stub :index, :name => :some_index
-    @category     = Internals::Indexed::Category.new :some_category, @index
+    @index        = Index::Memory.new :some_index, source: []
+    @category     = Category.new :some_category, @index
     
     @similarity   = stub :similarity
     @bundle       = described_class.new :some_name, @category, @similarity
@@ -160,8 +160,8 @@ Memory
   
   describe 'initialization' do
     before(:each) do
-      @index    = stub :index, :name => :some_index
-      @category = Internals::Indexed::Category.new :some_category, @index
+      @index    = Index::Memory.new :some_index, source: []
+      @category = Category.new :some_category, @index
       
       @bundle = described_class.new :some_name, @category, :similarity
     end

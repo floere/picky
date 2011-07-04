@@ -37,7 +37,7 @@ module Index
     # Parameters are the exact same as for indexing.
     #
     def indexing options = {}
-      @tokenizer = Internals::Tokenizers::Index.new options
+      @tokenizer = Tokenizers::Index.new options
     end
     alias define_indexing indexing
     

@@ -55,7 +55,7 @@ class Category
   #
   #
   def combination_for token
-    weight(token) && Internals::Query::Combination.new(token, self)
+    weight(token) && Query::Combination.new(token, self)
   end
   
 end

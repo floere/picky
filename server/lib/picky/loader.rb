@@ -73,7 +73,7 @@ module Loader # :nodoc:all
 
     # TODO Rewrite
     #
-    Internals::Query::Qualifiers.instance.prepare
+    Query::Qualifiers.instance.prepare
 
     exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
   end
@@ -82,8 +82,6 @@ module Loader # :nodoc:all
   # (Not for the user)
   #
   def self.load_framework_internals
-    load_relative 'internals'
-
     # Load compiled C code.
     #
     load_relative 'ext/maybe_compile'

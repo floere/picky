@@ -161,7 +161,7 @@ class Application
     # is used for indexing by default.
     #
     def indexing options = {}
-      Internals::Tokenizers::Index.default = Internals::Tokenizers::Index.new(options)
+      Tokenizers::Index.default = Tokenizers::Index.new(options)
     end
     alias default_indexing indexing
 
@@ -169,7 +169,7 @@ class Application
     # is used for querying by default.
     #
     def searching options = {}
-      Internals::Tokenizers::Query.default = Internals::Tokenizers::Query.new(options)
+      Tokenizers::Query.default = Tokenizers::Query.new(options)
     end
     alias default_querying searching
     alias querying searching
@@ -190,7 +190,7 @@ class Application
       rack_adapter.call env
     end
     def rack_adapter # :nodoc:
-      @rack_adapter ||= Internals::FrontendAdapters::Rack.new
+      @rack_adapter ||= FrontendAdapters::Rack.new
     end
 
     # Finalize the subclass as soon as it
@@ -236,10 +236,10 @@ APPLICATION
     def to_stats
       <<-APP
 \033[1mIndexing (default)\033[m:
-#{Internals::Tokenizers::Index.default.indented_to_s}
+#{Tokenizers::Index.default.indented_to_s}
 
 \033[1mQuerying (default)\033[m:
-#{Internals::Tokenizers::Query.default.indented_to_s}
+#{Tokenizers::Query.default.indented_to_s}
 
 \033[1mIndexes\033[m:
 #{Indexes.to_s.indented_to_s}

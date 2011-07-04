@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Indexed::Categories do
+describe Categories do
   context 'with option ignore_unassigned_tokens' do
     context 'ignore_unassigned_tokens true' do
       before(:each) do
@@ -22,16 +22,16 @@ describe Internals::Indexed::Categories do
   
   context "with real categories" do
     before(:each) do
-      @index1 = stub :index1, :name => :some_index
+      @index1 = Index::Memory.new :name, source: []
       
       @categories = described_class.new
-      @categories << Internals::Indexed::Category.new(:category1, @index1)
-      @categories << Internals::Indexed::Category.new(:category2, @index1)
-      @categories << Internals::Indexed::Category.new(:category3, @index1)
+      @categories << Category.new(:category1, @index1)
+      @categories << Category.new(:category2, @index1)
+      @categories << Category.new(:category3, @index1)
     end
     describe "similar_possible_for" do
       before(:each) do
-        @token = Internals::Query::Token.processed 'similar~'
+        @token = Query::Token.processed 'similar~'
       end
       it "returns possible categories" do
         @categories.similar_possible_for(@token).should == []
@@ -65,11 +65,11 @@ describe Internals::Indexed::Categories do
   
   context 'without options' do
     before(:each) do
-      @index1 = stub :index1, :name => :some_index
+      @index1 = Index::Memory.new :some_index, source: []
       
-      @category1 = Internals::Indexed::Category.new :category1, @index1
-      @category2 = Internals::Indexed::Category.new :category2, @index1
-      @category3 = Internals::Indexed::Category.new :category3, @index1
+      @category1 = Category.new :category1, @index1
+      @category2 = Category.new :category2, @index1
+      @category3 = Category.new :category3, @index1
       
       @categories = described_class.new
       @categories << @category1

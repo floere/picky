@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Internals::Calculations::Location do
+describe Calculations::Location do
   
   context 'with precision 1' do
     before(:each) do
