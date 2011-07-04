@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::FrontendAdapters::Rack do
+describe FrontendAdapters::Rack do
   
   before(:each) do
     @rack_adapter = described_class.new
@@ -188,7 +188,7 @@ describe Internals::FrontendAdapters::Rack do
         @rack_adapter.route %r{regexp1} => :query1, %r{regexp2} => :query2, :some => :option
       end
       it 'does not accept nil queries' do
-        lambda { @rack_adapter.route %r{some/regexp} => nil }.should raise_error(Internals::FrontendAdapters::Rack::RouteTargetNilError, /Routing for \/some\\\/regexp\/ was defined with a nil target object, i.e. \/some\\\/regexp\/ => nil./)
+        lambda { @rack_adapter.route %r{some/regexp} => nil }.should raise_error(FrontendAdapters::Rack::RouteTargetNilError, /Routing for \/some\\\/regexp\/ was defined with a nil target object, i.e. \/some\\\/regexp\/ => nil./)
       end
     end
     
@@ -202,7 +202,7 @@ describe Internals::FrontendAdapters::Rack do
     
     describe 'route_one' do
       before(:each) do
-        Internals::Adapters::Rack.stub! :app_for => :some_query_app
+        Adapters::Rack.stub! :app_for => :some_query_app
       end
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }, {}, "some_query"
@@ -223,7 +223,7 @@ describe Internals::FrontendAdapters::Rack do
     
     describe 'default' do
       it 'should call answer' do
-        @rack_adapter.should_receive(:answer).once.with nil, Internals::FrontendAdapters::Rack::STATUSES[200]
+        @rack_adapter.should_receive(:answer).once.with nil, FrontendAdapters::Rack::STATUSES[200]
         
         @rack_adapter.default 200
       end
@@ -231,21 +231,21 @@ describe Internals::FrontendAdapters::Rack do
     
     describe 'STATUSES' do
       it 'is a lambda' do
-        Internals::FrontendAdapters::Rack::STATUSES[200].respond_to?(:call).should == true
+        FrontendAdapters::Rack::STATUSES[200].respond_to?(:call).should == true
       end
       it 'is a lambda' do
-        Internals::FrontendAdapters::Rack::STATUSES[404].respond_to?(:call).should == true
+        FrontendAdapters::Rack::STATUSES[404].respond_to?(:call).should == true
       end
     end
     
     describe 'root' do
       it 'should call answer' do
-        @rack_adapter.should_receive(:answer).once.with %r{^/$}, Internals::FrontendAdapters::Rack::STATUSES[200]
+        @rack_adapter.should_receive(:answer).once.with %r{^/$}, FrontendAdapters::Rack::STATUSES[200]
         
         @rack_adapter.root 200
       end
       it 'should call answer' do
-        @rack_adapter.should_receive(:answer).once.with %r{^/$}, Internals::FrontendAdapters::Rack::STATUSES[404]
+        @rack_adapter.should_receive(:answer).once.with %r{^/$}, FrontendAdapters::Rack::STATUSES[404]
         
         @rack_adapter.root 404
       end
@@ -274,14 +274,14 @@ describe Internals::FrontendAdapters::Rack do
       context 'without app' do
         context 'with url' do
           it 'should use the 200 with default_options from the url' do
-            @routes.should_receive(:add_route).once.with Internals::FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET", :path_info => /some_url/ }
+            @routes.should_receive(:add_route).once.with FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET", :path_info => /some_url/ }
             
             @rack_adapter.answer 'some_url'
           end
         end
         context 'without url' do
           it 'should use the 200 with default_options' do
-            @routes.should_receive(:add_route).once.with Internals::FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET" }
+            @routes.should_receive(:add_route).once.with FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET" }
             
             @rack_adapter.answer
           end

@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Internals::Adapters::Rack::Base do
+describe Adapters::Rack::Base do
   
   before(:each) do
     @adapter = described_class.new
