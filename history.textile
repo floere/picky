@@ -9,6 +9,8 @@ h2. Version 2.6.0
   * @#reload@ (just reload the cached data into the server, no effect on Redis indexes)
   * @#reindex@ (index and reload one category after another)
 
+  Note: @#reload@ and @#reindex@ only make sense in a running server with memory indexes.
+
   Examples:
   * @Indexes.index@ (index all indexes, randomly)
   * @Indexes[:some_index].reindex@ (reindex that index)
