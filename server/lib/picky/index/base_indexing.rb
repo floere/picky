@@ -83,7 +83,7 @@ end
     # Decides whether to use a parallel indexer or whether to
     # delegate to each category to index themselves.
     #
-    # TODO Rename to prepare.
+    # TODO Push down into category.
     #
     def prepare
       # TODO Duplicated in category.rb def indexer.
@@ -106,12 +106,12 @@ end
       indexer.index # TODO Pass in source, categories.
     end
 
-    # Indexing.
+    # Use only if you explicitly just want to take a snapshot.
     #
-    # Note: If it is an each source we do not take a snapshot.
+    # Note: Should only be taken once per source & indexing.
     #
     def take_snapshot
-      source.take_snapshot self unless source.respond_to? :each
+      source.take_snapshot self if source.respond_to? :take_snapshot
     end
 
   end

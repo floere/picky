@@ -11,6 +11,7 @@ describe BookSearch do
   end
 
   let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
+  let(:book_each)       { Picky::TestClient.new(described_class, :path => '/book_each')       }
   let(:csv)             { Picky::TestClient.new(described_class, :path => '/csv')             }
   let(:redis)           { Picky::TestClient.new(described_class, :path => '/redis')           }
   let(:sym)             { Picky::TestClient.new(described_class, :path => '/sym')             }
@@ -238,7 +239,7 @@ describe BookSearch do
   
   # Database index reloading.
   #
-  it 'can handle changing data with a Memory backend with a DB source' do
+  it 'can handle changing data with a Memory backend with a non-each DB source' do
     books.search('1977').ids.should == [86, 394]
     
     # Some webapp adds a book.
@@ -261,6 +262,30 @@ describe BookSearch do
     added_book.destroy
     
     books.search('1977').ids.should == [86, 394, expected_id]
+  end
+  
+  # Database index reloading.
+  #
+  it 'can handle changing data with a Memory backend with an each DB source' do
+    book_each.search('1977').ids.should == ["86", "394"]
+    
+    # Some webapp adds a book.
+    #
+    BookSearch::Book.establish_connection YAML.load(File.open('app/db.yml'))
+    added_book = BookSearch::Book.create! title:  "Some Title",
+                                          author: "Tester Mc Testy",
+                                          isbn:   "1231231231231",
+                                          year:   1977
+    expected_id = added_book.id
+    
+    Indexes[:book_each].index
+    Indexes[:book_each].reload
+    
+    # We can destroy the book now as it has been indexed.
+    #
+    added_book.destroy
+    
+    book_each.search('1977').ids.should == ["86", "394", expected_id.to_s]
   end
 
 end

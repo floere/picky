@@ -230,6 +230,7 @@ class BookSearch < Application
     route %r{\A/admin\Z}           => LiveParameters.new
 
     route %r{\A/books\Z}           => Search.new(books_index, isbn_index, options),
+          %r{\A/book_each\Z}       => Search.new(book_each_index, options),
           %r{\A/redis\Z}           => Search.new(redis_index, options),
           %r{\A/memory_changing\Z} => Search.new(memory_changing_index),
           %r{\A/redis_changing\Z}  => Search.new(redis_changing_index),

@@ -18,7 +18,7 @@ module Indexers
       @index_or_category = index_or_category
     end
 
-    def process
+    def process # *categories
       comma   = ?,
       newline = ?\n
 
@@ -29,6 +29,11 @@ module Indexers
       # Index.
       #
       i = 0
+
+      # Explicitly reset the source to avoid caching trouble.
+      #
+      source.reset if source.respond_to?(:reset)
+
       source.each do |object|
         id = object.id
 
