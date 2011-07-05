@@ -1,3 +1,7 @@
+h2. Upcoming Version
+
+* hanke: (server) Breaking: Users need to reindex when installing this version. Index "index" now identified by "inverted" to be more clear.
+
 h2. Version 2.6.0
 
 * hanke: (server) Breaking: @Indexes#find@ method has been removed.
