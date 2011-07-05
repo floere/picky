@@ -236,8 +236,31 @@ describe BookSearch do
   it { csv.search("HISTORY FERGUS").ids.should == [] }
   it { csv.search("history AND OR fergus").ids.should == [4, 4] }
   
-  # Specific indexing.
+  # Database index reloading.
   #
-  
+  it 'can handle changing data with a Memory backend with a DB source' do
+    books.search('1977').ids.should == [86, 394]
+    
+    # Some webapp adds a book.
+    #
+    BookSearch::Book.establish_connection YAML.load(File.open('app/db.yml'))
+    added_book = BookSearch::Book.create! title:  "Some Title",
+                                          author: "Tester Mc Testy",
+                                          isbn:   "1231231231231",
+                                          year:   1977
+    expected_id = added_book.id
+    
+    # TODO Remove this line and include take_snapshot cleanly in indexing.
+    #
+    Indexes[:books].take_snapshot # Works if this one is not commented.
+    Indexes[:books].index
+    Indexes[:books].reload
+    
+    # We can destroy the book now as it has been indexed.
+    #
+    added_book.destroy
+    
+    books.search('1977').ids.should == [86, 394, expected_id]
+  end
 
 end

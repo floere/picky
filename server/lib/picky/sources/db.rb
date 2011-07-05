@@ -134,7 +134,6 @@ module Sources
     # Gets the data from the backend.
     #
     def get_data category, offset, &block # :nodoc:
-
       select_statement = harvest_statement_with_offset category, offset
 
       # TODO Rewrite ASAP.
