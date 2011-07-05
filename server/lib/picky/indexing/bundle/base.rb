@@ -27,50 +27,22 @@ module Indexing # :nodoc:all
     # It does all menial tasks that have nothing to do
     # with the actual index running etc.
     #
-    class Base
+    class Base < ::Bundle
 
-      attr_reader   :identifier,
-                    :files
-      attr_accessor :index,
-                    :weights,
-                    :similarity,
-                    :configuration,
-                    :partial_strategy,
-                    :weights_strategy,
-                    :similarity_strategy
-
-      delegate :clear,    :to => :index
-      delegate :[], :[]=, :to => :configuration
+      attr_accessor :partial_strategy,
+                    :weights_strategy
 
       def initialize name, category, weights_strategy, partial_strategy, similarity_strategy
-        @identifier    = "#{category.identifier}:#{name}"
-        @files         = Backend::Files.new name, category
+        super name, category, similarity_strategy
 
-        @index         = {}
-        @weights       = {}
-        @similarity    = {}
-        @configuration = {} # A hash with config options.
-
-        @weights_strategy    = weights_strategy
-        @partial_strategy    = partial_strategy
-        @similarity_strategy = similarity_strategy
+        @weights_strategy = weights_strategy
+        @partial_strategy = partial_strategy
       end
 
       # Sets up a piece of the index for the given token.
       #
-      def initialize_index_for token
-        index[token] ||= []
-      end
-
-      # Get a list of similar texts.
-      #
-      # Note: Does not return itself.
-      #
-      def similar text
-        code = similarity_strategy.encoded text
-        similar_codes = code && @similarity[code]
-        similar_codes.delete text if similar_codes
-        similar_codes || []
+      def initialize_inverted_index_for token
+        self.inverted[token] ||= []
       end
 
       # Generation
@@ -82,7 +54,7 @@ module Indexing # :nodoc:all
       # * Dumps all the indexes into files.
       #
       def generate_caches_from_source
-        load_from_index_file
+        load_from_prepared_index_file
         generate_caches_from_memory
       end
       # Generates derived indexes from the index and dumps.
@@ -106,13 +78,13 @@ module Indexing # :nodoc:all
 
       # Load the data from the db.
       #
-      def load_from_index_file
-        load_from_index_generation_message
+      def load_from_prepared_index_file
+        load_from_prepared_index_generation_message
         clear
         retrieve
       end
-      def load_from_index_generation_message
-        timed_exclaim %Q{"#{identifier}": Loading index.}
+      def load_from_prepared_index_generation_message
+        timed_exclaim %Q{"#{identifier}": Loading prepared index.}
       end
       # Retrieves the prepared index data into the index.
       #
@@ -123,8 +95,8 @@ module Indexing # :nodoc:all
       def retrieve
         key_format = self[:key_format] || :to_i
         files.retrieve do |id, token|
-          initialize_index_for token
-          index[token] << id.send(key_format)
+          initialize_inverted_index_for token
+          self.inverted[token] << id.send(key_format)
         end
       end
 
@@ -132,63 +104,63 @@ module Indexing # :nodoc:all
       # partial caching strategy of this bundle.
       #
       def generate_partial
-        generator = Generators::PartialGenerator.new self.index
-        self.index = generator.generate self.partial_strategy
+        generator = Generators::PartialGenerator.new self.inverted
+        self.inverted = generator.generate self.partial_strategy
       end
-      # Generate a partial index from the given exact index.
+      # Generate a partial index from the given exact inverted index.
       #
-      def generate_partial_from exact_index
+      def generate_partial_from exact_inverted_index
         timed_exclaim %Q{"#{identifier}": Generating partial index for index.}
-        self.index = exact_index
+        self.inverted = exact_inverted_index
         self.generate_partial
         self
-      end
-      # Generates a new similarity index (writes its index) using the
-      # given similarity caching strategy.
-      #
-      def generate_similarity
-        generator = Generators::SimilarityGenerator.new self.index
-        self.similarity = generator.generate self.similarity_strategy
       end
       # Generates a new weights index (writes its index) using the
       # given weight caching strategy.
       #
       def generate_weights
-        generator = Generators::WeightsGenerator.new self.index
+        generator = Generators::WeightsGenerator.new self.inverted
         self.weights = generator.generate self.weights_strategy
+      end
+      # Generates a new similarity index (writes its index) using the
+      # given similarity caching strategy.
+      #
+      def generate_similarity
+        generator = Generators::SimilarityGenerator.new self.inverted
+        self.similarity = generator.generate self.similarity_strategy
       end
 
       # Saves the indexes in a dump file.
       #
       def dump
-        dump_index
+        dump_inverted
         dump_similarity
         dump_weights
         dump_configuration
       end
       # Dumps the core index.
       #
-      def dump_index
-        timed_exclaim %Q{"#{identifier}": Dumping index.}
-        backend.dump_index index
+      def dump_inverted
+        timed_exclaim %Q{"#{identifier}": Dumping inverted index.}
+        backend.dump_inverted self.inverted
       end
       # Dumps the weights index.
       #
       def dump_weights
-        timed_exclaim %Q{"#{identifier}": Dumping weights of index.}
-        backend.dump_weights weights
+        timed_exclaim %Q{"#{identifier}": Dumping index weights.}
+        backend.dump_weights self.weights
       end
       # Dumps the similarity index.
       #
       def dump_similarity
-        timed_exclaim %Q{"#{identifier}": Dumping similarity of index.}
-        backend.dump_similarity similarity
+        timed_exclaim %Q{"#{identifier}": Dumping similarity index.}
+        backend.dump_similarity self.similarity
       end
       # Dumps the similarity index.
       #
       def dump_configuration
-        timed_exclaim %Q{"#{identifier}": Dumping configuration for index.}
-        backend.dump_configuration configuration
+        timed_exclaim %Q{"#{identifier}": Dumping configuration.}
+        backend.dump_configuration self.configuration
       end
 
       # Alerts the user if an index is missing.
@@ -241,14 +213,14 @@ module Indexing # :nodoc:all
       # Warns the user if the core or weights indexes are small.
       #
       def warn_if_index_small
-        warn_cache_small :index   if backend.index_cache_small?
-        warn_cache_small :weights if backend.weights_cache_small?
+        warn_cache_small :inverted if backend.inverted_cache_small?
+        warn_cache_small :weights  if backend.weights_cache_small?
       end
       # Alerts the user if the core or weights indexes are not there.
       #
       def raise_unless_index_ok
-        raise_cache_missing :index   unless backend.index_cache_ok?
-        raise_cache_missing :weights unless backend.weights_cache_ok?
+        raise_cache_missing :inverted unless backend.inverted_cache_ok?
+        raise_cache_missing :weights  unless backend.weights_cache_ok?
       end
 
     end

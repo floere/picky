@@ -17,7 +17,7 @@ module Backend
           end
         end
       end
-      
+
       # Clear the index for this list.
       #
       # Note: Perhaps we can use a server only command.
@@ -32,14 +32,14 @@ module Backend
 
       # Get a collection.
       #
-      def collection sym
-        backend.lrange "#{namespace}:#{sym}", 0, -1
+      def collection key
+        backend.zrange "#{namespace}:#{key}", 0, -1
       end
 
       # Get a single value.
       #
-      def member sym
-        raise "Can't retrieve a single value from a Redis ListHash. Use Index::Redis::StringHash."
+      def member key
+        raise "Can't retrieve single value :#{key} from a Redis ListHash. Use Index::Redis::StringHash."
       end
 
     end

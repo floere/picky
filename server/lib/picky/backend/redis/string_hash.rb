@@ -14,7 +14,7 @@ module Backend
           backend.hset namespace, key, value
         end
       end
-      
+
       # Clears the hash.
       #
       def clear
@@ -23,14 +23,14 @@ module Backend
 
       # Get a collection.
       #
-      def collection sym
-        raise "Can't retrieve a collection from a StringHash. Use Index::Redis::ListHash."
+      def collection key
+        raise "Can't retrieve collection for :#{key} from a StringHash. Use Index::Redis::ListHash."
       end
 
       # Get a single value.
       #
-      def member sym
-        backend.hget namespace, sym
+      def member key
+        backend.hget namespace, key
       end
 
     end

@@ -19,7 +19,7 @@ class Analyzer # :nodoc:all
   def analyze bundle
     bundle.load_index
     analysis[:__keys] = bundle.size
-    cardinality :index, bundle.index
+    cardinality :index, bundle.inverted
     index_analysis
     bundle.clear_index
 

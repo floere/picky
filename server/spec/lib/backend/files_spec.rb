@@ -10,7 +10,7 @@ describe Backend::Files do
     
     @prepared      = @files.prepared
     
-    @index         = @files.index
+    @index         = @files.inverted
     @weights       = @files.weights
     @similarity    = @files.similarity
     @configuration = @files.configuration
@@ -29,7 +29,7 @@ describe Backend::Files do
       it "uses the right file" do
         @index.should_receive(:dump).once.with :some_hash
         
-        @files.dump_index :some_hash
+        @files.dump_inverted :some_hash
       end
     end
     describe "dump_weights" do
@@ -63,9 +63,9 @@ describe Backend::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_index.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.json', 'r'
         
-        @files.load_index
+        @files.load_inverted
       end
     end
     describe "load_weights" do
@@ -102,7 +102,7 @@ describe Backend::Files do
       it 'uses the right method' do
         @index.should_receive(:cache_ok?).once.with
         
-        @files.index_cache_ok?
+        @files.inverted_cache_ok?
       end
     end
     describe "weights_cache_ok?" do
@@ -122,11 +122,11 @@ describe Backend::Files do
   end
   
   describe 'dump indexes' do
-    describe 'index_cache_small?' do
+    describe 'inverted_cache_small?' do
       it 'uses the right method' do
         @index.should_receive(:cache_small?).once.with
         
-        @files.index_cache_small?
+        @files.inverted_cache_small?
       end
     end
     describe 'weights_cache_small?' do

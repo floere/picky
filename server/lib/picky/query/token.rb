@@ -159,7 +159,7 @@ module Query
     # Internal identifier.
     #
     def identifier
-      "#{similar?? :similarity : :index}:#{@text}"
+      "#{similar?? :similarity : :inverted}:#{@text}"
     end
 
     # If the originals & the text are the same, they are the same.

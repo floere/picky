@@ -9,10 +9,10 @@ module Generators
     #
     class Logarithmic < Strategy
 
-      # Generates a partial index from the given index.
+      # Generates a partial index from the given inverted index.
       #
-      def generate_from index
-        index.inject({}) do |hash, text_ids|
+      def generate_from inverted
+        inverted.inject({}) do |hash, text_ids|
           text, ids = *text_ids
           weight = weight_for ids.size
           hash[text] ||= weight.round(2) if weight

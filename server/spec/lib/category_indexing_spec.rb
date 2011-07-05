@@ -79,7 +79,7 @@ describe Category do
       end
       it 'should use the exact index to generate the partial index' do
         exact_index = stub :exact_index
-        exact.stub! :index => exact_index
+        exact.stub! :inverted => exact_index
         partial.should_receive(:generate_partial_from).once.with(exact_index)
 
         category.generate_partial

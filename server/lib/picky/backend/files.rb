@@ -9,14 +9,14 @@ module Backend
       #       Yajl json lib cannot load symbolized
       #       values, just keys.
       #
-      @index         = File::JSON.new    category.index_path(bundle_name, :index)
+      @inverted      = File::JSON.new    category.index_path(bundle_name, :inverted)
       @weights       = File::JSON.new    category.index_path(bundle_name, :weights)
       @similarity    = File::Marshal.new category.index_path(bundle_name, :similarity)
       @configuration = File::JSON.new    category.index_path(bundle_name, :configuration)
     end
 
     def to_s
-      "#{self.class}(#{[@prepared, @index, @weights, @similarity, @configuration].join(', ')})"
+      "#{self.class}(#{[@prepared, @inverted, @weights, @similarity, @configuration].join(', ')})"
     end
 
   end

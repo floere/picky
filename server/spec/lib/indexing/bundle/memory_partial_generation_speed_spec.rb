@@ -27,9 +27,9 @@ describe Indexing::Bundle::Memory do
   describe 'speed' do
     context 'medium arrays' do
       before(:each) do
-        random_keys  = generate_random_keys 300
-        random_ids   = generate_random_ids  300
-        @exact.index = Hash[random_keys.zip(random_ids)]
+        random_keys     = generate_random_keys 300
+        random_ids      = generate_random_ids  300
+        @exact.inverted = Hash[random_keys.zip(random_ids)]
       end
       it 'should be fast' do
         performance_of do

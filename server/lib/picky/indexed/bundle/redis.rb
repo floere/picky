@@ -38,6 +38,48 @@ module Indexed # :nodoc:all
         @backend.setting sym
       end
 
+      # Loads the inverted index.
+      #
+      def load_inverted
+        # No loading needed.
+      end
+      # Loads the weights index.
+      #
+      def load_weights
+        # No loading needed.
+      end
+      # Loads the similarity index.
+      #
+      def load_similarity
+        # No loading needed.
+      end
+      # Loads the configuration.
+      #
+      def load_configuration
+        # No loading needed.
+      end
+
+      # Loads the inverted index.
+      #
+      def clear_inverted
+        # No clearing possible, currently.
+      end
+      # Loads the weights index.
+      #
+      def clear_weights
+        # No clearing possible, currently.
+      end
+      # Loads the similarity index.
+      #
+      def clear_similarity
+        # No clearing possible, currently.
+      end
+      # Loads the configuration.
+      #
+      def clear_configuration
+        # No clearing possible, currently.
+      end
+
     end
 
   end

@@ -4,7 +4,7 @@ module Backend
 
     attr_reader :bundle_name,
                 :prepared,
-                :index,
+                :inverted,
                 :weights,
                 :similarity,
                 :configuration,
@@ -29,8 +29,8 @@ module Backend
 
     # Dumping.
     #
-    def dump_index index_hash
-      index.dump index_hash
+    def dump_inverted inverted_hash
+      inverted.dump inverted_hash
     end
     def dump_weights weights_hash
       weights.dump weights_hash
@@ -44,8 +44,8 @@ module Backend
 
     # Loading.
     #
-    def load_index
-      index.load
+    def load_inverted
+      inverted.load
     end
     def load_similarity
       similarity.load
@@ -59,8 +59,8 @@ module Backend
 
     # Cache ok?
     #
-    def index_cache_ok?
-      index.cache_ok?
+    def inverted_cache_ok?
+      inverted.cache_ok?
     end
     def similarity_cache_ok?
       similarity.cache_ok?
@@ -71,8 +71,8 @@ module Backend
 
     # Cache small?
     #
-    def index_cache_small?
-      index.cache_small?
+    def inverted_cache_small?
+      inverted.cache_small?
     end
     def similarity_cache_small?
       similarity.cache_small?
@@ -84,7 +84,7 @@ module Backend
     # Copies the indexes to the "backup" directory.
     #
     def backup
-      index.backup
+      inverted.backup
       weights.backup
       similarity.backup
       configuration.backup
@@ -93,7 +93,7 @@ module Backend
     # Restores the indexes from the "backup" directory.
     #
     def restore
-      index.restore
+      inverted.restore
       weights.restore
       similarity.restore
       configuration.restore
@@ -102,7 +102,7 @@ module Backend
     # Delete all index files.
     #
     def delete
-      index.delete
+      inverted.delete
       weights.delete
       similarity.delete
       configuration.delete

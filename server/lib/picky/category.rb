@@ -31,12 +31,12 @@ class Category
 
     # TODO Push into Bundle. At least the weights.
     #
-    partial    = options[:partial]    || Generators::Partial::Default
     weights    = options[:weights]    || Generators::Weights::Default
+    partial    = options[:partial]    || Generators::Partial::Default
     similarity = options[:similarity] || Generators::Similarity::Default
 
-    @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, similarity, Generators::Partial::None.new, weights)
-    @indexing_partial = index.indexing_bundle_class.new(:partial, self, Generators::Similarity::None.new, partial, weights)
+    @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, weights, Generators::Partial::None.new, similarity)
+    @indexing_partial = index.indexing_bundle_class.new(:partial, self, weights, partial, Generators::Similarity::None.new)
 
     # Indexed.
     #
@@ -104,10 +104,8 @@ class Category
 
   # Identifier for internal use.
   #
-  # TODO What internal use?
-  #
   def identifier
-    @identifier ||= "#{@index.name}:#{name}"
+    @identifier ||= "#{PICKY_ENVIRONMENT}:#{@index.name}:#{name}"
   end
 
   def to_info

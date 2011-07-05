@@ -26,8 +26,8 @@ module Generators
       # In the following form:
       # [:meier, :mueller, :peter, :pater] => { MR: [:meier], MLR: [:mueller], PTR: [:peter, :pater] }
       #
-      def generate_from index
-        hash = hashify index.keys
+      def generate_from inverted
+        hash = hashify inverted.keys
         sort hash
       end
 
@@ -35,12 +35,12 @@ module Generators
 
         # Sorts the index values in place.
         #
-        def sort index
-          index.each_pair.each do |code, ary|
+        def sort hash
+          hash.each_pair.each do |code, ary|
             ary.sort_by_levenshtein! code
             ary.slice! amount, ary.size # size is not perfectly correct, but anyway
           end
-          index
+          hash
         end
 
         # Hashifies a list of symbols.

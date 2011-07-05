@@ -4,10 +4,10 @@ module Generators
   #
   class WeightsGenerator < Base
 
-    # Generate a weights index based on the given index.
+    # Generate a weights index based on the given inverted index.
     #
     def generate strategy = Weights::Logarithmic.new
-      strategy.generate_from self.index
+      strategy.generate_from self.inverted
     end
 
   end

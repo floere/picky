@@ -14,10 +14,6 @@ module Indexing # :nodoc:all
       #
       alias backend files
 
-      def to_s
-        "Memory\n#{@backend.indented_to_s}"
-      end
-
     end
 
   end

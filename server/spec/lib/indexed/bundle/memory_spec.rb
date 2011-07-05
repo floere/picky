@@ -12,21 +12,21 @@ describe Indexed::Bundle::Memory do
   
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == "Memory\n  Backend::Files(Backend::File::Text(spec/test_directory/index/test/some_index/prepared_some_category_index.txt), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_index.json), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_weights.json), Backend::File::Marshal(spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_configuration.json))\n"
+      @bundle.to_s.should == "Indexed::Bundle::Memory(test:some_index:some_category:some_name, Backend::Files(Backend::File::Text(spec/test_directory/index/test/some_index/prepared_some_category_index.txt), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_inverted.json), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_weights.json), Backend::File::Marshal(spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_configuration.json)))"
     end
   end
   
   describe 'clear_index' do
     before(:each) do
-      @bundle.instance_variable_set(:@index, :not_empty)
+      @bundle.instance_variable_set(:@inverted, :not_empty)
     end
-    it 'has not cleared the index' do
-      @bundle.index.should == :not_empty
+    it 'has not cleared the inverted index' do
+      @bundle.inverted.should == :not_empty
     end
-    it 'clears the index' do
-      @bundle.clear_index
+    it 'clears the inverted index' do
+      @bundle.clear_inverted
       
-      @bundle.index.should be_empty
+      @bundle.inverted.should be_empty
     end
   end
   describe 'clear_weights' do
@@ -71,13 +71,13 @@ describe Indexed::Bundle::Memory do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @bundle.identifier.should == 'some_index:some_category:some_name'
+      @bundle.identifier.should == 'test:some_index:some_category:some_name'
     end
   end
 
   describe 'ids' do
     before(:each) do
-      @bundle.instance_variable_set :@index, { :existing => :some_ids }
+      @bundle.instance_variable_set :@inverted, { :existing => :some_ids }
     end
     it 'should return an empty array if not found' do
       @bundle.ids(:non_existing).should == []
@@ -101,7 +101,7 @@ describe Indexed::Bundle::Memory do
   
   describe 'load' do
     it 'should trigger loads' do
-      @bundle.should_receive(:load_index).once.with
+      @bundle.should_receive(:load_inverted).once.with
       @bundle.should_receive(:load_weights).once.with
       @bundle.should_receive(:load_similarity).once.with
       @bundle.should_receive(:load_configuration).once.with
@@ -117,9 +117,9 @@ describe Indexed::Bundle::Memory do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_index.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.json', 'r'
         
-        @bundle.load_index
+        @bundle.load_inverted
       end
     end
     describe "load_weights" do
@@ -159,7 +159,7 @@ describe Indexed::Bundle::Memory do
       @bundle = described_class.new :some_name, @category, :similarity
     end
     it 'should initialize the index correctly' do
-      @bundle.index.should == {}
+      @bundle.inverted.should == {}
     end
     it 'should initialize the weights index correctly' do
       @bundle.weights.should == {}

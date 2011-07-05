@@ -24,17 +24,10 @@ module Indexed # :nodoc:all
         @backend = Backend::Files.new name, configuration
       end
 
-      def to_s
-        <<-MEMORY
-Memory
-#{@backend.indented_to_s}
-MEMORY
-      end
-
       # Get the ids for the given symbol.
       #
       def ids sym
-        @index[sym] || []
+        @inverted[sym] || []
       end
       # Get a weight for the given symbol.
       #
@@ -44,8 +37,8 @@ MEMORY
 
       # Loads the core index.
       #
-      def load_index
-        self.index = @backend.load_index
+      def load_inverted
+        self.inverted = @backend.load_inverted
       end
       # Loads the weights index.
       #
@@ -65,8 +58,8 @@ MEMORY
 
       # Loads the core index.
       #
-      def clear_index
-        self.index = {}
+      def clear_inverted
+        self.inverted = {}
       end
       # Loads the weights index.
       #

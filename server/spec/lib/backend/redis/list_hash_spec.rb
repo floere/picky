@@ -8,7 +8,7 @@ describe Backend::Redis::ListHash do
     it 'raises an error' do
       expect {
         index.member :some_sym
-      }.to raise_error("Can't retrieve a single value from a Redis ListHash. Use Index::Redis::StringHash.")
+      }.to raise_error("Can't retrieve single value :some_sym from a Redis ListHash. Use Index::Redis::StringHash.")
     end
   end
   
@@ -17,7 +17,7 @@ describe Backend::Redis::ListHash do
       backend = stub :backend
       index.should_receive(:backend).and_return backend
       
-      backend.stub! :lrange => :some_lrange_result
+      backend.stub! :zrange => :some_lrange_result
       
       index.collection(:anything).should == :some_lrange_result
     end
@@ -25,7 +25,7 @@ describe Backend::Redis::ListHash do
       backend = stub :backend
       index.should_receive(:backend).and_return backend
       
-      backend.should_receive(:lrange).once.with "some_namespace:some_sym", 0, -1
+      backend.should_receive(:zrange).once.with "some_namespace:some_sym", 0, -1
       
       index.collection :some_sym
     end

@@ -9,16 +9,16 @@ module Backend
 
       # Refine a few Redis "types".
       #
-      @index         = Redis::ListHash.new "#{category.identifier}:#{bundle_name}:index"
+      @inverted      = Redis::ListHash.new   "#{category.identifier}:#{bundle_name}:inverted"
       @weights       = Redis::StringHash.new "#{category.identifier}:#{bundle_name}:weights"
-      @similarity    = Redis::ListHash.new "#{category.identifier}:#{bundle_name}:similarity"
+      @similarity    = Redis::ListHash.new   "#{category.identifier}:#{bundle_name}:similarity"
       @configuration = Redis::StringHash.new "#{category.identifier}:#{bundle_name}:configuration"
     end
 
     # Delegate to the right collection.
     #
     def ids sym
-      index.collection sym
+      inverted.collection sym
     end
 
     # Delegate to the right member value.

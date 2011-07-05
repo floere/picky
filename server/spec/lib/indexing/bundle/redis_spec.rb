@@ -16,13 +16,13 @@ describe Indexing::Bundle::Redis do
     it 'does something' do
       expect {
         index.raise_cache_missing :similarity
-      }.to raise_error("Error: The similarity cache for some_index:some_category:some_name is missing.")
+      }.to raise_error("Error: The similarity cache for test:some_index:some_category:some_name is missing.")
     end
   end
   
   describe 'warn_cache_small' do
     it 'warns the user' do
-      index.should_receive(:warn).once.with "Warning: similarity cache for some_index:some_category:some_name smaller than 16 bytes."
+      index.should_receive(:warn).once.with "Warning: similarity cache for test:some_index:some_category:some_name smaller than 16 bytes."
       
       index.warn_cache_small :similarity
     end
@@ -30,19 +30,19 @@ describe Indexing::Bundle::Redis do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      index.identifier.should == 'some_index:some_category:some_name'
+      index.identifier.should == 'test:some_index:some_category:some_name'
     end
   end
   
   describe 'initialize_index_for' do
     context 'token not yet assigned' do
       before(:each) do
-        index.stub! :index => {}
+        index.stub! :inverted => {}
       end
       it 'should assign it an empty array' do
-        index.initialize_index_for :some_token
+        index.initialize_inverted_index_for :some_token
 
-        index.index[:some_token].should == []
+        index.inverted[:some_token].should == []
       end
     end
     context 'token already assigned' do
@@ -50,7 +50,7 @@ describe Indexing::Bundle::Redis do
         index.stub! :index => { :some_token => :already_assigned }
       end
       it 'should not assign it anymore' do
-        index.initialize_index_for :some_token
+        index.initialize_inverted_index_for :some_token
 
         index.index[:some_token].should == :already_assigned
       end
@@ -64,8 +64,8 @@ describe Indexing::Bundle::Redis do
       index.stub! :files => files
       
       @ary = stub :ary
-      @index.should_receive(:[]).any_number_of_times.and_return @ary
-      index.stub! :index => @index
+      inverted = stub :inverted, :[] => @ary
+      index.stub! :inverted => inverted
     end
     context 'id key format' do
       before(:each) do
@@ -99,13 +99,13 @@ describe Indexing::Bundle::Redis do
     end
   end
 
-  describe 'load_from_index_file' do
+  describe 'load_from_prepared_index_file' do
     it 'should call two methods in order' do
-      index.should_receive(:load_from_index_generation_message).once.ordered
+      index.should_receive(:load_from_prepared_index_generation_message).once.ordered
       index.should_receive(:clear).once.ordered
       index.should_receive(:retrieve).once.ordered
 
-      index.load_from_index_file
+      index.load_from_prepared_index_file
     end
   end
 
@@ -129,7 +129,7 @@ describe Indexing::Bundle::Redis do
 
   describe 'generate_caches_from_source' do
     it 'should call two methods in order' do
-      index.should_receive(:load_from_index_file).once.ordered
+      index.should_receive(:load_from_prepared_index_file).once.ordered
       index.should_receive(:generate_caches_from_memory).once.ordered
 
       index.generate_caches_from_source
@@ -138,7 +138,7 @@ describe Indexing::Bundle::Redis do
   
   describe 'dump' do
     it 'should trigger dumps' do
-      index.should_receive(:dump_index).once.with
+      index.should_receive(:dump_inverted).once.with
       index.should_receive(:dump_weights).once.with
       index.should_receive(:dump_similarity).once.with
       index.should_receive(:dump_configuration).once.with
@@ -256,7 +256,7 @@ describe Indexing::Bundle::Redis do
   
   describe 'initialization' do
     it 'should initialize the index correctly' do
-      index.index.should == {}
+      index.inverted.should == {}
     end
     it 'should initialize the weights index correctly' do
       index.weights.should == {}

@@ -17,7 +17,7 @@ describe Backend::Redis::StringHash do
   
   describe 'collection' do
     it 'raises' do
-      expect { index.collection :anything }.to raise_error("Can't retrieve a collection from a StringHash. Use Index::Redis::ListHash.")
+      expect { index.collection :anything }.to raise_error("Can't retrieve collection for :anything from a StringHash. Use Index::Redis::ListHash.")
     end
   end
   

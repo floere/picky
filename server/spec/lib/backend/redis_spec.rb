@@ -58,18 +58,18 @@ describe Backend::Redis do
     end
     describe 'ids' do
       it 'delegates to the index' do
-        index = stub :index
-        redis.stub! :index => index
+        inverted = stub :inverted
+        redis.stub! :inverted => inverted
 
-        index.should_receive(:collection).once.with :some_sym
+        inverted.should_receive(:collection).once.with :some_sym
 
         redis.ids :some_sym
       end
       it 'returns the value' do
-        index = stub :index
-        redis.stub! :index => index
+        inverted = stub :inverted
+        redis.stub! :inverted => inverted
 
-        index.should_receive(:collection).any_number_of_times.and_return [1,2,3]
+        inverted.should_receive(:collection).any_number_of_times.and_return [1,2,3]
 
         redis.ids(:any).should == [1,2,3]
       end
@@ -132,18 +132,18 @@ describe Backend::Redis do
     end
     describe 'ids' do
       it 'delegates to the index' do
-        index = stub :index
-        redis.stub! :index => index
+        inverted = stub :inverted
+        redis.stub! :inverted => inverted
 
-        index.should_receive(:collection).once.with :some_sym
+        inverted.should_receive(:collection).once.with :some_sym
 
         redis.ids :some_sym
       end
       it 'returns the value' do
-        index = stub :index
-        redis.stub! :index => index
+        inverted = stub :inverted
+        redis.stub! :inverted => inverted
 
-        index.should_receive(:collection).any_number_of_times.and_return [1,2,3]
+        inverted.should_receive(:collection).any_number_of_times.and_return [1,2,3]
 
         redis.ids(:any).should == [1,2,3]
       end
