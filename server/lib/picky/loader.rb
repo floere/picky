@@ -161,7 +161,6 @@ module Loader # :nodoc:all
 
     # Indexing and Indexed things.
     #
-    load_relative 'indexing/bundle/super_base' # TODO Remove.
     load_relative 'indexing/bundle/base'
     load_relative 'indexing/bundle/memory'
     load_relative 'indexing/bundle/redis'

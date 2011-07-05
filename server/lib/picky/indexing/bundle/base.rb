@@ -1,30 +1,76 @@
-# encoding: utf-8
-#
 module Indexing # :nodoc:all
 
+  # A Bundle is a number of indexes
+  # per [index, category] combination.
+  #
+  # At most, there are three indexes:
+  # * *core* index (always used)
+  # * *weights* index (always used)
+  # * *similarity* index (used with similarity)
+  #
+  # In Picky, indexing is separated from the index
+  # handling itself through a parallel structure.
+  #
+  # Both use methods provided by this base class, but
+  # have very different goals:
+  #
+  # * *Indexing*::*Bundle* is just concerned with creating index files
+  #   and providing helper functions to e.g. check the indexes.
+  #
+  # * *Index*::*Bundle* is concerned with loading these index files into
+  #   memory and looking up search data as fast as possible.
+  #
   module Bundle
 
     # This is the indexing bundle.
+    #
     # It does all menial tasks that have nothing to do
     # with the actual index running etc.
     #
-    class Base < SuperBase
+    class Base
 
-      attr_accessor :partial_strategy, :weights_strategy
+      attr_reader   :identifier,
+                    :files
+      attr_accessor :index,
+                    :weights,
+                    :similarity,
+                    :configuration,
+                    :partial_strategy,
+                    :weights_strategy,
+                    :similarity_strategy
 
-      # Path is in which directory the cache is located.
-      #
-      def initialize name, category, similarity_strategy, partial_strategy, weights_strategy
-        super name, category, similarity_strategy
+      delegate :clear,    :to => :index
+      delegate :[], :[]=, :to => :configuration
 
-        @partial_strategy    = partial_strategy
+      def initialize name, category, weights_strategy, partial_strategy, similarity_strategy
+        @identifier    = "#{category.identifier}:#{name}"
+        @files         = Backend::Files.new name, category
+
+        @index         = {}
+        @weights       = {}
+        @similarity    = {}
+        @configuration = {} # A hash with config options.
+
         @weights_strategy    = weights_strategy
+        @partial_strategy    = partial_strategy
+        @similarity_strategy = similarity_strategy
       end
 
       # Sets up a piece of the index for the given token.
       #
       def initialize_index_for token
         index[token] ||= []
+      end
+
+      # Get a list of similar texts.
+      #
+      # Note: Does not return itself.
+      #
+      def similar text
+        code = similarity_strategy.encoded text
+        similar_codes = code && @similarity[code]
+        similar_codes.delete text if similar_codes
+        similar_codes || []
       end
 
       # Generation

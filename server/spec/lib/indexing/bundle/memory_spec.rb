@@ -10,7 +10,7 @@ describe Indexing::Bundle::Memory do
     @weights     = stub :weights
     @similarity  = stub :similarity
   end
-  let(:index) { described_class.new :some_name, @category, @similarity, @partial, @weights }
+  let(:index) { described_class.new :some_name, @category, @weights, @partial, @similarity }
   
   describe 'raise_cache_missing' do
     it 'does something' do

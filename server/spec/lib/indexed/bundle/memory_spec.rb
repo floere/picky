@@ -12,14 +12,7 @@ describe Indexed::Bundle::Memory do
   
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == <<-TO_S
-Memory
-  Files:
-    Index:      spec/test_directory/index/test/some_index/some_category_some_name_index.json
-    Weights:    spec/test_directory/index/test/some_index/some_category_some_name_weights.json
-    Similarity: spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump
-    Config:     spec/test_directory/index/test/some_index/some_category_some_name_configuration.json
-      TO_S
+      @bundle.to_s.should == "Memory\n  Backend::Files(Backend::File::Text(spec/test_directory/index/test/some_index/prepared_some_category_index.txt), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_index.json), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_weights.json), Backend::File::Marshal(spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_configuration.json))\n"
     end
   end
   

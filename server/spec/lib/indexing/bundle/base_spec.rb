@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Indexing::Bundle::SuperBase do
+describe Indexing::Bundle::Base do
 
   before(:each) do
     @configuration = stub :configuration, :identifier => 'some_identifier'
     Backend::Files.stub! :new
     @similarity = Similarity::DoubleMetaphone.new 3
-    @bundle = described_class.new :some_name, @configuration, @similarity
+    @bundle = described_class.new :some_name, @configuration, :some_weights, :some_partial, @similarity
   end
   
   describe 'identifier' do
