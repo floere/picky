@@ -2,24 +2,29 @@ require 'spec_helper'
 
 describe Backend::File::JSON do
   
-  before(:each) do
-    @file = described_class.new "some_cache_path"
-  end
+  let(:file) { described_class.new 'some/cache/path/to/file' }
   
   describe "dump" do
     it "delegates to the given hash" do
       hash = stub :hash
       
-      hash.should_receive(:dump_json).once.with "some_cache_path.json"
+      hash.should_receive(:dump_json).once.with "some/cache/path/to/file.json"
       
-      @file.dump hash
+      file.dump hash
     end
   end
+  
   describe "retrieve" do
     it "raises" do
       lambda do
-        @file.retrieve
+        file.retrieve
       end.should raise_error("Can't retrieve from JSON file. Use text file.")
+    end
+  end
+  
+  describe 'to_s' do
+    it 'returns the cache path with the default file extension' do
+      file.to_s.should == 'Backend::File::JSON(some/cache/path/to/file.json)'
     end
   end
   

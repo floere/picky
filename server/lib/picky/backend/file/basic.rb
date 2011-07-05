@@ -13,6 +13,8 @@ module Backend
     #
     class Basic
 
+      # This file's location.
+      #
       attr_reader :cache_path
 
       # An index cache takes a path, without file extension,
@@ -20,10 +22,6 @@ module Backend
       #
       def initialize cache_path
         @cache_path = "#{cache_path}.#{extension}"
-      end
-
-      def to_s
-        cache_path
       end
 
       # The default extension for index files is "index".
@@ -40,12 +38,15 @@ module Backend
         prepare_backup backup_directory
         FileUtils.cp cache_path, target, verbose: true
       end
+
       # The backup directory of this file.
       # Equal to the file's dirname plus /backup
       #
+
       def backup_directory
         ::File.join ::File.dirname(cache_path), 'backup'
       end
+
       # Prepares the backup directory for the file.
       #
       def prepare_backup target
@@ -58,6 +59,7 @@ module Backend
       def restore
         FileUtils.cp backup_file_path_of(cache_path), cache_path, verbose: true
       end
+
       # The backup filename.
       #
       def backup_file_path_of path
@@ -92,6 +94,12 @@ module Backend
       #
       def size_of path
         `ls -l #{path} | awk '{print $5}'`.to_i
+      end
+
+      #
+      #
+      def to_s
+        "#{self.class}(#{cache_path})"
       end
 
     end

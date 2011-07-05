@@ -31,4 +31,10 @@ describe Backend::Redis::ListHash do
     end
   end
   
+  describe 'to_s' do
+    it 'returns the cache path with the default file extension' do
+      index.to_s.should == 'Backend::Redis::ListHash(some_namespace:*)'
+    end
+  end
+  
 end

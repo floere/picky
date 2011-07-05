@@ -145,7 +145,7 @@ module Loader # :nodoc:all
 
     # Index store handling.
     #
-    load_relative 'backend/backend'
+    load_relative 'backend/base'
 
     load_relative 'backend/redis'
     load_relative 'backend/redis/basic'
@@ -158,7 +158,7 @@ module Loader # :nodoc:all
     load_relative 'backend/file/json'
 
     load_relative 'backend/files'
-    
+
     # Indexing and Indexed things.
     #
     load_relative 'indexing/bundle/super_base' # TODO Remove.
@@ -260,17 +260,17 @@ module Loader # :nodoc:all
     load_relative 'category'
     load_relative 'category_indexed'
     load_relative 'category_indexing'
-    
+
     load_relative 'categories'
     load_relative 'categories_indexed'
     load_relative 'categories_indexing'
-    
+
     load_relative 'index/base'
     load_relative 'index/base_indexed'
     load_relative 'index/base_indexing'
     load_relative 'index/memory'
     load_relative 'index/redis'
-    
+
     load_relative 'indexes'
     load_relative 'indexes_indexed'
     load_relative 'indexes_indexing'

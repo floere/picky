@@ -1,6 +1,6 @@
 module Backend
 
-  class Files < Backend
+  class Files < Base
 
     def initialize bundle_name, category
       super bundle_name, category
@@ -16,13 +16,7 @@ module Backend
     end
 
     def to_s
-      <<-FILES
-Files:
-#{"Index:      #{@index}".indented_to_s}
-#{"Weights:    #{@weights}".indented_to_s}
-#{"Similarity: #{@similarity}".indented_to_s}
-#{"Config:     #{@configuration}".indented_to_s}
-FILES
+      "#{self.class}(#{[@prepared, @index, @weights, @similarity, @configuration].join(', ')})"
     end
 
   end

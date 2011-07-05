@@ -61,6 +61,7 @@ module Backend
       def cache_small?
         size < 1
       end
+
       # Is the cache ok?
       #
       # A small cache is still ok.
@@ -68,6 +69,7 @@ module Backend
       def cache_ok?
         size > 0
       end
+
       # Extracts the size of the file in Bytes.
       #
       # Note: This is a very forgiving implementation.
@@ -76,6 +78,12 @@ module Backend
       #
       def size
         backend.dbsize
+      end
+
+      #
+      #
+      def to_s
+        "#{self.class}(#{namespace}:*)"
       end
 
     end

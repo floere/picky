@@ -64,4 +64,10 @@ describe Backend::Redis::Basic do
     end
   end
   
+  describe 'to_s' do
+    it 'returns the cache path with the default file extension' do
+      redis.to_s.should == 'Backend::Redis::Basic(some_namespace:*)'
+    end
+  end
+  
 end

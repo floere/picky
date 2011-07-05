@@ -2,7 +2,7 @@ module Backend
 
   # TODO Needs a reconnect to be run after forking.
   #
-  class Redis < Backend
+  class Redis < Base
 
     def initialize bundle_name, category
       super bundle_name, category

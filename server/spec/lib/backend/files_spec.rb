@@ -181,5 +181,16 @@ describe Backend::Files do
       @files.bundle_name.should == :some_name
     end
   end
+  
+  describe 'to_s' do
+    it 'returns the right value' do
+      category = stub :category,
+                      :identifier => "category_identifier",
+                      :prepared_index_path => "prepared/index/path",
+                      :index_path => 'index/path'
+      
+      described_class.new("some_bundle", category).to_s.should == "Backend::Files(Backend::File::Text(prepared/index/path.txt), Backend::File::JSON(index/path.json), Backend::File::JSON(index/path.json), Backend::File::Marshal(index/path.dump), Backend::File::JSON(index/path.json))"
+    end
+  end
 
 end

@@ -1,11 +1,11 @@
 module Backend
-  
+
   module File
-  
+
     # Index files dumped in the JSON format.
     #
     class JSON < Basic
-    
+
       # Uses the extension "json".
       #
       def extension
@@ -26,9 +26,9 @@ module Backend
       def retrieve
         raise "Can't retrieve from JSON file. Use text file."
       end
-    
+
     end
-  
+
   end
 
 end

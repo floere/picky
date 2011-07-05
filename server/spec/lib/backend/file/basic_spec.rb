@@ -10,15 +10,15 @@ describe Backend::File::Basic do
     end
   end
   
-  describe 'to_s' do
-    it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'some/cache/path/to/file.index'
-    end
-  end
-  
   describe 'backup_directory' do
     it "returns the cache path's backup path" do
       file.backup_directory.should == 'some/cache/path/to/backup'
+    end
+  end
+  
+  describe 'to_s' do
+    it 'returns the cache path with the default file extension' do
+      file.to_s.should == 'Backend::File::Basic(some/cache/path/to/file.index)'
     end
   end
   
