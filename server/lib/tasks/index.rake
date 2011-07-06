@@ -1,32 +1,26 @@
 # Indexing tasks.
 #
+desc "Generate the index (index, category optional)."
+task :index, [:index, :category] => :application do |_, options|
+  index, category = options.index, options.category
+
+  specific = Indexes
+  specific = specific[index]    if index
+  specific = specific[category] if category
+  specific.index
+end
+
 namespace :index do
 
-  desc "Takes a snapshot, indexes, and caches in random order."
+  # Advanced usage.
+  #
+  # desc "Takes a snapshot, indexes, and caches in random order."
   task :randomly => :application do
     Indexes.index true
   end
-  desc "Takes a snapshot, indexes, and caches in order given."
+  # desc "Takes a snapshot, indexes, and caches in order given."
   task :ordered => :application do
     Indexes.index false
-  end
-
-  # desc "Generates the index snapshots."
-  #
-  # Note: Hidden since it is only needed by pro users.
-  #
-  # desc "Generate the data snapshots (intermediate table on a DB source)"
-  task :generate_snapshots => :application do
-    Indexes.take_snapshot
-  end
-
-  desc "Generates a specific index from index snapshots (category optional)."
-  task :specific, [:index, :category] => :application do |_, options|
-    index, category = options.index, options.category
-
-    specific = Indexes[index]
-    specific = specific[category] if category
-    specific.index
   end
 
 end

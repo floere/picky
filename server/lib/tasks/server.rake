@@ -1,5 +1,14 @@
 # Server tasks, like starting/stopping/restarting.
 #
+desc "Start the server."
+task :start do
+  Rake::Task[:'server:start'].invoke
+end
+desc "Stop the server."
+task :stop do
+  Rake::Task[:'server:stop'].invoke
+end
+
 namespace :server do
 
   # desc "Start the unicorns. (Wehee!)"
@@ -30,8 +39,15 @@ namespace :server do
   end
 
   def current_pid
-    pid = `cat #{File.join(PICKY_ROOT, 'tmp/pids/unicorn.pid')}`
-    pid.blank? ? nil : pid.chomp
+    pidfile = 'tmp/pids/unicorn.pid'
+    pid = `cat #{File.join(PICKY_ROOT, pidfile)}`
+    if pid.blank?
+      puts
+      puts "No server running (no #{pidfile} found)."
+      puts
+    else
+      pid.chomp
+    end
   end
 
 end

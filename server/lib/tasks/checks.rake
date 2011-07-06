@@ -1,11 +1,13 @@
 # Checks to help the user.
 #
-namespace :check do
+desc 'Checks if index files are small/missing (index, category optional).'
+task :check, [:index, :category] => :application do |_, options|
+  index, category = options.index, options.category
 
-  desc 'Checks the index files for files that are suspiciously small or missing.'
-  task :index => :application do
-    Indexes.check_caches
-    puts "All indexes look ok."
-  end
+  specific = Indexes
+  specific = specific[index]    if index
+  specific = specific[category] if category
+  specific.check
 
+  puts "All checked indexes look ok."
 end

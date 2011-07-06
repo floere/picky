@@ -1,34 +1,19 @@
 # Tasks for manually testing your engine configuration.
 #
-namespace :try do
+desc "Try the given text in the indexer/query (index and category optional)."
+task :try, [:text, :index, :category] => :application do |_, options|
+  text, index, category = options.text, options.index, options.category
 
-  # desc "Try how a given word would be tokenized when indexing (type:category optional)."
-  task :index, [:text, :index, :category] => :application do |_, options|
-    text, index, category = options.text, options.index, options.category
+  puts
+  fail "\x1b[31mrake try needs a text to try indexing and query preparation\x1b[m, e.g. rake 'try[yourtext]'." unless text
 
-    tokenizer = category ? Indexes.find(index, category).tokenizer : Tokenizers::Index.default
+  specific = Indexes
+  specific = specific[index]    if index
+  specific = specific[category] if category
 
-    puts "\"#{text}\" is saved in the index as              #{tokenizer.tokenize(text.dup).to_a}"
-  end
+  puts "\"#{text}\" is saved in the #{specific.identifier} index as #{specific.tokenizer.tokenize(text.dup).to_a}"
 
-  # desc "Try how a given word would be tokenized when querying."
-  task :query, [:text] => :application do |_, options|
-    text = options.text
-
-    puts "\"#{text}\" as a search will be preprocessed into #{Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
-    puts
-    puts "(category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')"
-  end
-
-  # desc "Try the given text with both the index and the query (type:category optional)."
-  task :both, [:text, :index, :category] => :application do |_, options|
-    text, index, category = options.text, options.index, options.category
-
-    puts
-    fail "\x1b[31mrake try needs a text to try indexing and query preparation\x1b[m, e.g. rake 'try[yourtext]'." unless text
-
-    Rake::Task[:"try:index"].invoke text, index, category
-    Rake::Task[:"try:query"].invoke text
-  end
-
+  puts "\"#{text}\" as a search will be tokenized into #{Tokenizers::Query.default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
+  puts
+  puts "(category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')"
 end
