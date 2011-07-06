@@ -6,27 +6,26 @@ module Indexers
   #
   # The tokenizer is taken from each category if specified, from the index, if not.
   #
-  # TODO Think about this one more. It should work on an index, but also a single category.
-  #
   class Parallel < Base
 
-    attr_reader :index_or_category
-
-    delegate :categories, :source, :to => :index_or_category
-
-    def initialize index_or_category
-      @index_or_category = index_or_category
-    end
-
-    def process # *categories
+    # Process does the actual indexing.
+    #
+    # Parameters:
+    #  * categories: An Enumerable of Category-s.
+    #
+    def process categories
       comma   = ?,
       newline = ?\n
 
       # Prepare a combined object - array.
       #
-      combined = categories.map { |category| [category, [], category.prepared_index_file, (category.tokenizer || tokenizer)] }
+      combined = categories.map do |category|
+        [category, [], category.prepared_index_file, (category.tokenizer || tokenizer)]
+      end
 
       # Index.
+      #
+      # TODO Extract into flush_every(100_000) do
       #
       i = 0
 
@@ -34,6 +33,8 @@ module Indexers
       #
       source.reset if source.respond_to?(:reset)
 
+      # Go through each object in the source.
+      #
       source.each do |object|
         id = object.id
 
@@ -57,15 +58,19 @@ module Indexers
       flush combined
       combined.each { |_, _, file, _| file.close }
     end
+
+    # Flush the combined array into the file.
+    #
     def flush combined # :nodoc:
       combined.each do |_, cache, file, _|
         file.write(cache.join) && cache.clear
       end
     end
+
     #
     #
     def indexing_message # :nodoc:
-      timed_exclaim %Q{"#{@index_or_category.name}": Starting parallel indexing.}
+      timed_exclaim %Q{"#{@index_or_category.identifier}": Starting parallel indexing.}
     end
 
   end

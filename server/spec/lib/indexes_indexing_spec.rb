@@ -51,7 +51,6 @@ describe Indexes do
       end
     end
     it_delegates_each :take_snapshot
-    it_delegates_each :generate_caches
     it_delegates_each :backup_caches
     it_delegates_each :restore_caches
     it_delegates_each :check_caches

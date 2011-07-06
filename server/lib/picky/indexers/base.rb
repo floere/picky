@@ -6,11 +6,27 @@ module Indexers
   #
   class Base
 
+    attr_reader :index_or_category
+
+    delegate :source, :to => :index_or_category
+
+    def initialize index_or_category
+      @index_or_category = index_or_category
+    end
+
     # Starts the indexing process.
     #
-    def index
+    def index categories
       indexing_message
-      process
+      prepare categories
+      process categories
+    end
+
+    # By default, an indexer
+    #  * prepares the index directories.
+    #
+    def prepare categories
+      categories.each &:prepare_index_directory
     end
 
   end

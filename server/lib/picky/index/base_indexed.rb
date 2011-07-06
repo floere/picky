@@ -18,6 +18,8 @@ module Index
     #
     # A combination is a tuple <token, index_bundle>.
     #
+    # TODO Rename and delegate.
+    #
     def possible_combinations token
       categories.possible_combinations_for token
     end

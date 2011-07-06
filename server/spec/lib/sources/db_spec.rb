@@ -102,13 +102,6 @@ describe Sources::DB do
       @source.should_receive(:get_data).any_number_of_times.and_return [[:some_id, 'some_text']].cycle
       @source.stub! :count => 17
     end
-    it 'calls connect_backend' do
-      @source.should_receive(:connect_backend).once.with()
-      
-      @source.harvest @category do |id, text|
-        p [id, text]
-      end
-    end
   end
 
   describe "harvest_statement_with_offset" do

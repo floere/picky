@@ -94,7 +94,7 @@ describe Category do
       end
     end
 
-    describe 'generate_caches' do
+    describe 'cache' do
       it 'should call multiple methods in order' do
         category.should_receive(:configure).once.with().ordered
         category.should_receive(:generate_caches_from_source).once.with().ordered
@@ -103,7 +103,7 @@ describe Category do
         category.should_receive(:dump_caches).once.with().ordered
         category.should_receive(:timed_exclaim).once.ordered
         
-        category.generate_caches
+        category.cache
       end
     end
     
@@ -159,34 +159,13 @@ describe Category do
       end
     end
     
-    describe "cache" do
-      before(:each) do
-        category.stub! :generate_caches
-        category.stub! :configure
-      end
-      it "prepares the cache directory" do
-        category.should_receive(:prepare_index_directory).once.with
-        
-        category.cache
-      end
-      it "tells the indexer to index" do
-        category.should_receive(:generate_caches).once.with
-        
-        category.cache
-      end
-    end
     describe "index" do
       before(:each) do
         @indexer = stub :indexer, :index => nil
         category.stub! :indexer => @indexer
       end
-      it "prepares the cache directory" do
-        category.should_receive(:prepare_index_directory).once.with
-        
-        category.prepare
-      end
       it "tells the indexer to index" do
-        @indexer.should_receive(:index).once.with
+        @indexer.should_receive(:index).once.with [category]
         
         category.prepare
       end

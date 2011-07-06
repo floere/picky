@@ -10,26 +10,76 @@ module Index
 
     # Delegators for indexing.
     #
-    delegate :backup_caches,
-             :cache,
+    delegate :cache,
              :check_caches,
              :clear_caches,
+             :backup_caches,
              :create_directory_structure,
-             :generate_caches,
              :restore_caches,
              :to => :categories
 
-    delegate :connect_backend,
-             :to => :source
-
-    # Calling index on an index will
-    #  * prepare (the data)
-    #  * cache (the data)
+    # Calling index on an index will call index
     # on every category.
     #
+    # Decides whether to use a parallel indexer or whether to
+    # delegate to each category to index themselves.
+    #
     def index
-      prepare
-      cache
+      if source.respond_to?(:each)
+        check_source_empty
+        index_in_parallel
+      else
+        connect_backend
+        # TODO Should probably be
+        #   with_snapshot do
+        #     categories.each &:index
+        #   end
+        #
+        # So if with_snapshot is called again from within
+        # itself, it will not be taken again (since the
+        # source knows its snapshot is taken).
+        #
+        take_snapshot
+        @indexing = true
+        categories.each &:index
+        @indexing = false
+      end
+    end
+
+    # Check if the given enumerable source is empty.
+    #
+    # Note: Checking as early as possible to tell the
+    #       user as early as possible.
+    #
+    def check_source_empty
+      warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
+    end
+
+    # Connect to the backend (if possible).
+    #
+    def connect_backend
+      source.connect_backend if source.respond_to? :connect_backend
+    end
+
+    # Take a data snapshot (if possible).
+    #
+    # Returns if the call comes from a category and it is indexing.
+    #
+    # TODO This method could take a source. Then check @indexing == source.
+    #
+    def take_snapshot
+      return if @indexing
+      source.take_snapshot self if source.respond_to? :take_snapshot
+    end
+
+    # Indexes the categories in parallel.
+    #
+    # Only use where the category does not have a non-#each source defined.
+    #
+    def index_in_parallel
+      indexer = Indexers::Parallel.new self
+      indexer.index categories
+      categories.each &:cache
     end
 
     # Define an index tokenizer on the index.
@@ -78,40 +128,6 @@ end
     end
     def define_key_format key_format
       @key_format = key_format
-    end
-
-    # Decides whether to use a parallel indexer or whether to
-    # delegate to each category to index themselves.
-    #
-    # TODO Push down into category.
-    #
-    def prepare
-      # TODO Duplicated in category.rb def indexer.
-      #
-      if source.respond_to?(:each)
-        warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
-        index_parallel
-      else
-        categories.each &:prepare
-      end
-    end
-
-    # Indexes the categories in parallel.
-    #
-    # Only use where the category does not have a non-#each source defined.
-    #
-    def index_parallel
-      indexer = Indexers::Parallel.new self
-      categories.first.prepare_index_directory # TODO Unnice. Move into indexer.
-      indexer.index # TODO Pass in source, categories.
-    end
-
-    # Use only if you explicitly just want to take a snapshot.
-    #
-    # Note: Should only be taken once per source & indexing.
-    #
-    def take_snapshot
-      source.take_snapshot self if source.respond_to? :take_snapshot
     end
 
   end

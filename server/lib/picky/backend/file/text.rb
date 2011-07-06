@@ -44,7 +44,7 @@ module Backend
 
       #
       #
-      def open_for_indexing &block
+      def open &block
         ::File.open cache_path, 'w:binary', &block
       end
 

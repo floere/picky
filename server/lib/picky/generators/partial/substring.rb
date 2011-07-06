@@ -72,10 +72,12 @@ module Generators
         # Generate for each key token the subtokens.
         #
         i = 0
+        j = 0
         inverted.each_key do |token|
           i += 1
           if i == 5000
-            timed_exclaim "Generating partial tokens for token #{token}. This appears every 5000 tokens."
+            j += 1
+            timed_exclaim %Q{#{"%8i" % (i*j)} generated (current token: "#{token}").}
             i = 0
           end
           generate_for token, inverted, result

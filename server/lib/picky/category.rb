@@ -1,7 +1,6 @@
 class Category
 
-  attr_reader :name,
-              :index
+  attr_reader :name
 
   # Mandatory params:
   #  * name: Category name to use as identifier and file names.
@@ -74,20 +73,25 @@ class Category
     @index.name
   end
 
-  # Path and partial filename of a specific index on this category.
-  #
-  def index_path bundle_name, type
-    "#{index_directory}/#{name}_#{bundle_name}_#{type}"
-  end
-
   # Path and partial filename of the prepared index on this category.
   #
   def prepared_index_path
     @prepared_index_path ||= "#{index_directory}/prepared_#{name}_index"
   end
+  # Get an opened index file.
+  #
+  # Note: If you don't use it with the block, do not forget to close it.
+  #
   def prepared_index_file &block
     @prepared_index_file ||= Backend::File::Text.new prepared_index_path
-    @prepared_index_file.open_for_indexing &block
+    @prepared_index_file.open &block
+  end
+  # Creates the index directory including all necessary paths above it.
+  #
+  # Note: Interface method called by any indexers.
+  #
+  def prepare_index_directory
+    FileUtils.mkdir_p index_directory
   end
 
   # The index directory for this category.
@@ -96,28 +100,26 @@ class Category
     @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"
   end
 
-  # Creates the index directory including all necessary paths above it.
+  # Path and partial filename of a specific subindex on this category.
   #
-  def prepare_index_directory
-    FileUtils.mkdir_p index_directory
+  # Subindexes are:
+  #  * inverted index
+  #  * weights index
+  #  * partial index
+  #  * similarity index
+  #
+  def index_path bundle_name, type
+    "#{index_directory}/#{name}_#{bundle_name}_#{type}"
   end
 
-  # Identifier for internal use.
+  # Identifier for technical output.
   #
   def identifier
-    @identifier ||= "#{PICKY_ENVIRONMENT}:#{@index.name}:#{name}"
+    @identifier ||= "#{PICKY_ENVIRONMENT}:#{index_name}:#{name}"
   end
 
-  def to_info
-<<-CATEGORY
-Category(#{name}):
-Exact:
-#{exact.indented_to_s(4)}
-Partial:
-#{partial.indented_to_s(4)}
-CATEGORY
-  end
-
+  #
+  #
   def to_s
     "Category(#{name})"
   end

@@ -1,5 +1,5 @@
 class Categories
- 
+
   attr_reader :ignore_unassigned_tokens
 
   each_delegate :load_from_cache,
@@ -15,17 +15,17 @@ class Categories
   def possible_combinations_for token
     token.similar? ? similar_possible_for(token) : possible_for(token)
   end
+
   # Gets all similar tokens and puts together the possible combinations
   # for each found similar token.
   #
   def similar_possible_for token
-    # Get as many tokens as necessary
-    #
     tokens = similar_tokens_for token
-    # possible combinations
-    #
     inject_possible_for tokens
   end
+
+  # Returns all possible similar tokens for the given token.
+  #
   def similar_tokens_for token
     text = token.text
     categories.inject([]) do |result, category|
@@ -41,6 +41,9 @@ class Categories
       result
     end
   end
+
+  #
+  #
   def inject_possible_for tokens
     tokens.inject([]) do |result, token|
       possible = possible_categories token
@@ -65,8 +68,9 @@ class Categories
     # This is an optimization to mark tokens that are ignored.
     #
     return if ignore_unassigned_tokens && possible.empty?
-    possible # wrap in combinations
+    possible
   end
+
   # This returns the possible categories for this token.
   # If the user has already preselected a category for this token,
   # like "artist:moby", if not just return all for the given token,
@@ -77,6 +81,7 @@ class Categories
   def possible_categories token
     user_defined_categories(token) || categories
   end
+
   # This returns the array of categories if the user has defined
   # an existing category.
   #
@@ -89,5 +94,5 @@ class Categories
       category_hash[name]
     end.compact
   end
-  
+
 end

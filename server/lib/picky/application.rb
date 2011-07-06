@@ -68,7 +68,7 @@
 # In full glory:
 #   class MyGreatSearch < Application
 #
-#     books = index :books do
+#     books = Index::Memory.new :books do
 #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #       category :title
 #     end
@@ -227,12 +227,6 @@ class Application
       "WARNING: No routes defined for application configuration in #{self.class}." if rack_adapter.empty?
     end
 
-    def to_s # :nodoc:
-      <<-APPLICATION
-\033[1m#{name}\033[m
-#{to_stats.indented_to_s}
-APPLICATION
-    end
     def to_stats
       <<-APP
 \033[1mIndexing (default)\033[m:
@@ -248,8 +242,13 @@ APPLICATION
 #{to_routes.indented_to_s}
 APP
     end
+
     def to_routes
       rack_adapter.to_s
+    end
+
+    def to_s # :nodoc:
+      self.name
     end
 
   end

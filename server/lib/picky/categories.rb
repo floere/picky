@@ -38,6 +38,13 @@ class Categories
     @category_hash = {}
   end
 
+  # Add the given category to the list of categories.
+  #
+  def << category
+    categories << category
+    category_hash[category.name] = category
+  end
+
   # Find a given category in the categories.
   #
   def [] category_name
@@ -46,13 +53,6 @@ class Categories
   end
   def raise_not_found category_name
     raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
-  end
-
-  # Add the given category to the list of categories.
-  #
-  def << category
-    categories << category
-    category_hash[category.name] = category
   end
 
   def to_s

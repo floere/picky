@@ -4,9 +4,9 @@ describe Indexers::Parallel do
 
   before(:each) do
     @source     = stub :source
-    @tokenizer  = stub :tokenizer
+    @index      = stub :index, :name => :some_index, :source => @source
+    
     @categories = stub :categories
-    @index      = stub :index, :name => :some_index, :categories => @categories
     
     @indexer = described_class.new @index
     @indexer.stub! :timed_exclaim
@@ -22,14 +22,6 @@ describe Indexers::Parallel do
       cache.should_receive(:clear).twice
       
       @indexer.flush [[nil, cache, file], [nil, cache, file]]
-    end
-  end
-  
-  describe "index" do
-    it "should process" do
-      @indexer.should_receive(:process).once.with
-      
-      @indexer.index
     end
   end
   

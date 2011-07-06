@@ -251,9 +251,6 @@ describe BookSearch do
                                           year:   1977
     expected_id = added_book.id
     
-    # TODO Remove this line and include take_snapshot cleanly in indexing.
-    #
-    Indexes[:books].take_snapshot # Works if this one is not commented.
     Indexes[:books].index
     Indexes[:books].reload
     

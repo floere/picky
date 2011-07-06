@@ -381,16 +381,6 @@ SOURCE
 ) unless source.respond_to?(:each) || source.respond_to?(:harvest)
     end
 
-    def method_name
-
-    end
-
-    #
-    #
-    def to_s
-      "#{self.class}(#{name}, result_id: #{result_identifier}, source: #{source}, categories: #{categories})"
-    end
-
     def to_stats # :nodoc:
       stats = <<-INDEX
 #{name} (#{self.class}):
@@ -399,6 +389,18 @@ SOURCE
 INDEX
       stats << "  result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
       stats
+    end
+
+    # Identifier used for technical output.
+    #
+    def identifier
+      "#{PICKY_ENVIRONMENT}:#{name}"
+    end
+
+    #
+    #
+    def to_s
+      "#{self.class}(#{name}, result_id: #{result_identifier}, source: #{source}, categories: #{categories})"
     end
 
   end

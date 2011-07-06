@@ -85,8 +85,6 @@ module Sources
     # Uses CREATE TABLE AS with the given SELECT statement to create a snapshot of the data.
     #
     def take_snapshot index
-      connect_backend
-
       origin = snapshot_table_name index.name
       on_database = database.connection
 
@@ -110,8 +108,6 @@ module Sources
     # Counts all the entries that are used for the index.
     #
     def count index_name
-      connect_backend
-
       database.connection.select_value("SELECT COUNT(#{@@traversal_id}) FROM #{snapshot_table_name(index_name)}").to_i
     end
 
@@ -124,8 +120,6 @@ module Sources
     # Harvests the data to index in chunks.
     #
     def harvest category, &block
-      connect_backend
-
       (0..count(category.index_name)).step(chunksize) do |offset|
         get_data category, offset, &block
       end

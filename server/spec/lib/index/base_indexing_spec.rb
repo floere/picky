@@ -2,6 +2,18 @@ require 'spec_helper'
 
 describe Index::Base do
   
+  context 'in general' do
+    let(:index) { described_class.new :some_name, source: [] }
+    
+    it 'does things in order' do
+      index.should_receive(:take_snapshot).once.with.ordered
+      index.should_receive(:prepare).once.with.ordered
+      index.should_receive(:cache).once.with.ordered
+      
+      index.index
+    end
+  end
+  
   context "with categories" do
     before(:each) do
       @source = []

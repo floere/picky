@@ -1,12 +1,11 @@
 class Categories
-  
-  each_delegate :backup_caches,
-                :cache,
+
+  each_delegate :cache,
                 :check_caches,
                 :clear_caches,
-                :create_directory_structure,
-                :generate_caches,
+                :backup_caches,
                 :restore_caches,
+                :create_directory_structure,
                 :to => :categories
-  
+
 end

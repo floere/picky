@@ -16,22 +16,43 @@ class Category
 
   # Indexes, creates the "prepared_..." file.
   #
-  # TODO This step could already prepare the id (if a
-  #      per category key_format is not really needed).
+  # Assumes
   #
   def prepare
-    prepare_index_directory
-    indexer.index # TODO Pass in params source, [self]?
+    source.connect_backend if source.respond_to? :connect_backend
+    @index.take_snapshot # Only takes a snapshot if necessary.
+    indexer.index [self]
   end
 
   # Generates all caches for this category.
   #
   def cache
-    prepare_index_directory
-    generate_caches
+    configure
+    generate_caches_from_source
+    generate_partial
+    generate_caches_from_memory
+    dump_caches
+    timed_exclaim %Q{"#{identifier}": Caching finished.}
+  end
+  # Generate the cache data.
+  #
+  def generate_caches_from_source
+    indexing_exact.generate_caches_from_source
+  end
+  def generate_partial
+    indexing_partial.generate_partial_from indexing_exact.inverted
+  end
+  def generate_caches_from_memory
+    indexing_partial.generate_caches_from_memory
+  end
+  def dump_caches
+    indexing_exact.dump
+    indexing_partial.dump
   end
 
   # Return an appropriate source.
+  #
+  # If we have no explicit source, we'll check the index for one.
   #
   def source
     @source || @index.source
@@ -56,14 +77,10 @@ class Category
 
   # The indexer is lazily generated and cached.
   #
+  # TODO Really cache?
+  #
   def indexer
     @indexer ||= source.respond_to?(:each) ? Indexers::Parallel.new(self) : Indexers::Serial.new(self)
-  end
-
-  # TODO This is a hack to get the parallel indexer working.
-  #
-  def categories
-    [self]
   end
 
   # Returns an appropriate tokenizer.
@@ -74,22 +91,14 @@ class Category
     @tokenizer || @index.tokenizer || Tokenizers::Index.default
   end
 
-  # Backup the caches.
-  # (Revert with restore_caches)
+  # We need to set what formatting method should be used.
+  # Uses the one defined in the indexer.
   #
-  def backup_caches
-    timed_exclaim "Backing up #{identifier}."
-    indexing_exact.backup
-    indexing_partial.backup
-  end
-
-  # Restore the caches.
-  # (Revert with backup_caches)
+  # TODO Make this more dynamic.
   #
-  def restore_caches
-    timed_exclaim "Restoring #{identifier}."
-    indexing_exact.restore
-    indexing_partial.restore
+  def configure
+    indexing_exact[:key_format] = self.key_format
+    indexing_partial[:key_format] = self.key_format
   end
 
   # Checks the caches for existence.
@@ -108,38 +117,22 @@ class Category
     indexing_partial.delete
   end
 
-  # We need to set what formatting method should be used.
-  # Uses the one defined in the indexer.
+  # Backup the caches.
+  # (Revert with restore_caches)
   #
-  # TODO Make this more dynamic.
-  #
-  def configure
-    indexing_exact[:key_format] = self.key_format
-    indexing_partial[:key_format] = self.key_format
+  def backup_caches
+    timed_exclaim "Backing up #{identifier}."
+    indexing_exact.backup
+    indexing_partial.backup
   end
 
-  # Generate the cache data.
+  # Restore the caches.
+  # (Revert with backup_caches)
   #
-  def generate_caches
-    configure
-    generate_caches_from_source
-    generate_partial
-    generate_caches_from_memory
-    dump_caches
-    timed_exclaim %Q{"#{identifier}": Caching finished.}
-  end
-  def generate_caches_from_source
-    indexing_exact.generate_caches_from_source
-  end
-  def generate_partial
-    indexing_partial.generate_partial_from indexing_exact.inverted
-  end
-  def generate_caches_from_memory
-    indexing_partial.generate_caches_from_memory
-  end
-  def dump_caches
-    indexing_exact.dump
-    indexing_partial.dump
+  def restore_caches
+    timed_exclaim "Restoring #{identifier}."
+    indexing_exact.restore
+    indexing_partial.restore
   end
 
 end
