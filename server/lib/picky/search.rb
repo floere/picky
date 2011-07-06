@@ -58,9 +58,13 @@ class Search
       options && Tokenizers::Query.new(options)
     end
   end
+
+  # Returns the tokenizer if set or if not, the query tokenizer.
+  #
   def tokenizer
     @tokenizer || Tokenizers::Query.default
   end
+
   # TODO Doc. Spec.
   #
   # Example:

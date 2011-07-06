@@ -98,7 +98,7 @@ class Category
   # and finally the default index tokenizer.
   #
   def tokenizer
-    @tokenizer || @index.tokenizer || Tokenizers::Index.default
+    @tokenizer || @index.tokenizer
   end
 
   # We need to set what formatting method should be used.
@@ -113,7 +113,7 @@ class Category
 
   # Checks the caches for existence.
   #
-  def check_caches
+  def check
     timed_exclaim "Checking #{identifier}."
     indexing_exact.raise_unless_cache_exists
     indexing_partial.raise_unless_cache_exists
@@ -121,7 +121,7 @@ class Category
 
   # Deletes the caches.
   #
-  def clear_caches
+  def clear
     timed_exclaim "Deleting #{identifier}."
     indexing_exact.delete
     indexing_partial.delete
@@ -130,7 +130,7 @@ class Category
   # Backup the caches.
   # (Revert with restore_caches)
   #
-  def backup_caches
+  def backup
     timed_exclaim "Backing up #{identifier}."
     indexing_exact.backup
     indexing_partial.backup
@@ -139,7 +139,7 @@ class Category
   # Restore the caches.
   # (Revert with backup_caches)
   #
-  def restore_caches
+  def restore
     timed_exclaim "Restoring #{identifier}."
     indexing_exact.restore
     indexing_partial.restore

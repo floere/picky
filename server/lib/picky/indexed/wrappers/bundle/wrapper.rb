@@ -16,11 +16,11 @@ module Indexed
         end
 
         delegate :load,
-                 :load_index,
+                 :load_inverted,
                  :load_weights,
                  :load_similarity,
                  :load_configuration,
-                 :clear_index,
+                 :clear_inverted,
                  :clear_weights,
                  :clear_similarity,
                  :clear_configuration,
@@ -29,7 +29,7 @@ module Indexed
                  :identifier,
                  :analyze,
                  :size,
-                 :index,
+                 :inverted,
                  :weights,
                  :similarity,
                  :configuration,

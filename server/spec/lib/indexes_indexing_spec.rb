@@ -49,11 +49,10 @@ describe Indexes do
         end
       end
     end
-    it_delegates_each :check_caches
-    it_delegates_each :clear_caches
-    it_delegates_each :backup_caches
-    it_delegates_each :restore_caches
-    it_delegates_each :create_directory_structure
+    it_delegates_each :check
+    it_delegates_each :clear
+    it_delegates_each :backup
+    it_delegates_each :restore
   end
   
 end

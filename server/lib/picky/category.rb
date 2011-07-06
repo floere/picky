@@ -79,6 +79,12 @@ class Category
     @index.name
   end
 
+  # The category itself just yields itself.
+  #
+  def each_category
+    yield self
+  end
+
   # Path and partial filename of the prepared index on this category.
   #
   def prepared_index_path

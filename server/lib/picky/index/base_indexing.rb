@@ -5,17 +5,15 @@ module Index
   class Base
 
     attr_reader :after_indexing,
-                :bundle_class,
-                :tokenizer
+                :bundle_class
 
     # Delegators for indexing.
     #
     delegate :cache,
-             :check_caches,
-             :clear_caches,
-             :backup_caches,
-             :create_directory_structure,
-             :restore_caches,
+             :check,
+             :clear,
+             :backup,
+             :restore,
              :to => :categories
 
     # Calling index on an index will call index
@@ -76,6 +74,14 @@ module Index
       @tokenizer = Tokenizers::Index.new options
     end
     alias define_indexing indexing
+
+    # Returns the installed tokenizer or the default.
+    #
+    # TODO Spec.
+    #
+    def tokenizer
+      @tokenizer || Indexes.tokenizer
+    end
 
     # Define a source on the index.
     #

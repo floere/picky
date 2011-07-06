@@ -89,6 +89,7 @@ module Index
                 :categories
 
     delegate :[],
+             :each_category,
              :to => :categories
 
     # Create a new index with a given source.

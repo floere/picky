@@ -14,10 +14,11 @@ class Indexes
            :to => :indexes
 
   each_delegate :reindex,
+                :each_category,
                 :to => :indexes
 
   def initialize
-    clear
+    clear_indexes
   end
 
   # Return the Indexes instance.
@@ -32,11 +33,12 @@ class Indexes
                     :[],
                     :to_s,
                     :size,
-                    :each
+                    :each,
+                    :each_category
 
   # Clears the indexes and the mapping.
   #
-  def clear
+  def clear_indexes
     @indexes       = []
     @index_mapping = {}
   end

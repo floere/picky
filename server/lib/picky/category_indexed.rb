@@ -13,18 +13,6 @@ class Category
   end
   alias reload load_from_cache
 
-  # Loads, analyzes, and clears the index.
-  #
-  # Note: The idea is not to run this while the search engine is running.
-  #
-  def analyze collector
-    collector[identifier] = {
-      :exact   => Analyzer.new.analyze(indexed_exact),
-      :partial => Analyzer.new.analyze(indexed_partial)
-    }
-    collector
-  end
-
   # Gets the weight for this token's text.
   #
   def weight token

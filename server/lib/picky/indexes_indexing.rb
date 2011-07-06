@@ -3,18 +3,17 @@
 class Indexes
 
   instance_delegate :index,
-                    :check_caches,
-                    :clear_caches,
-                    :backup_caches,
-                    :restore_caches,
-                    :create_directory_structure,
-                    :index_for_tests
+                    :check,
+                    :clear,
+                    :backup,
+                    :restore,
+                    :index_for_tests,
+                    :tokenizer
 
-  each_delegate :check_caches,
-                :clear_caches,
-                :backup_caches,
-                :restore_caches,
-                :create_directory_structure,
+  each_delegate :check,
+                :clear,
+                :backup,
+                :restore,
                 :to => :indexes
 
   # Runs the indexers in parallel (prepare + cache).
@@ -36,6 +35,12 @@ class Indexes
   #
   def index_for_tests
     indexes.each(&:index)
+  end
+
+  # TODO Doc. Spec. Split into Query/Index.
+  #
+  def tokenizer
+    Tokenizers::Index.default
   end
 
 end

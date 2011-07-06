@@ -8,6 +8,7 @@ class Categories
            :to => :categories
 
   each_delegate :reindex,
+                :each_category,
                 :to => :categories
 
   # A list of indexed categories.
@@ -26,14 +27,14 @@ class Categories
   #                              Nifty! :)
   #
   def initialize options = {}
-    clear
+    clear_categories
 
     @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false
   end
 
   # Clears both the array of categories and the hash of categories.
   #
-  def clear
+  def clear_categories
     @categories    = []
     @category_hash = {}
   end
