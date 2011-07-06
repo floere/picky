@@ -5,8 +5,8 @@
 #
 class Statistics # :nodoc:all
 
-  def self.instance
-    @statistics ||= new
+  def initialize
+    @indexes = ["\033[1mIndexes analysis\033[m:"]
   end
 
   def preamble
@@ -28,18 +28,15 @@ PREAMBLE
 
   # Gathers information about the indexes.
   #
-  def analyze
-    preamble
-
-    @indexes = ["\033[1mIndexes analysis\033[m:"]
-    Indexes.analyze.each_pair do |name, index|
+  def analyze object
+    object.each_category do |category|
       @indexes << <<-ANALYSIS
-#{"#{name}:".indented_to_s}:
-#{"exact:\n#{index[:exact].indented_to_s}".indented_to_s(4)}
-#{"partial*:\n#{index[:partial].indented_to_s}".indented_to_s(4)}
+#{"#{category.index_name}".indented_to_s}\n
+#{"#{category.name}".indented_to_s(4)}\n
+#{"exact\n#{Analyzer.new.analyze(category.indexed_exact).indented_to_s}".indented_to_s(6)}\n
+#{"partial\n#{Analyzer.new.analyze(category.indexed_partial).indented_to_s}".indented_to_s(6)}
 ANALYSIS
     end
-    @indexes = @indexes.join "\n"
   end
 
   # Outputs all gathered statistics.
@@ -49,7 +46,7 @@ ANALYSIS
 
 Picky Configuration:
 
-#{[@preamble, @application, @indexes].compact.join("\n")}
+#{[@preamble, @application, @indexes.join("\n")].compact.join("\n")}
 STATS
   end
 
