@@ -56,7 +56,10 @@ module Indexers
         i += 1
       end
       flush combined
-      combined.each { |_, _, file, _| file.close }
+      combined.each do |_, _, file, _|
+        timed_exclaim %Q{"#{@index_or_category.identifier}":   => #{file.path}.}
+        file.close
+      end
     end
 
     # Flush the combined array into the file.
@@ -70,10 +73,10 @@ module Indexers
     #
     #
     def start_indexing_message # :nodoc:
-      timed_exclaim %Q{"#{@index_or_category.identifier}": Starting parallel indexing for prepared data file.}
+      timed_exclaim %Q{"#{@index_or_category.identifier}": Starting parallel data preparation.}
     end
     def finish_indexing_message # :nodoc:
-      timed_exclaim %Q{"#{@index_or_category.identifier}": Finished parallel indexing for prepared data file.}
+      timed_exclaim %Q{"#{@index_or_category.identifier}": Finished parallel data preparation.}
     end
 
   end

@@ -3,14 +3,32 @@ require 'spec_helper'
 describe Index::Base do
   
   context 'in general' do
-    let(:index) { described_class.new :some_name, source: [] }
-    
-    it 'does things in order' do
-      index.should_receive(:take_snapshot).once.with.ordered
-      index.should_receive(:prepare).once.with.ordered
-      index.should_receive(:cache).once.with.ordered
-      
-      index.index
+    context 'with #each source' do
+      let(:index) { described_class.new :some_name, source: [] }
+
+      it 'does things in order' do
+        index.should_receive(:check_source_empty).once.with.ordered
+        index.should_receive(:index_in_parallel).once.with.ordered
+
+        index.index
+      end
+    end
+    context 'with non#each source' do
+      let(:source) { stub :source, :harvest => nil }
+      let(:index) { described_class.new :some_name, source: source }
+
+      it 'does things in order' do
+        category = stub :category        
+        index.stub! :categories => [
+          category,
+          category,
+          category
+        ]
+
+        category.should_receive(:index).exactly(3).times
+
+        index.index
+      end
     end
   end
   

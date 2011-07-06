@@ -84,7 +84,7 @@ module Indexing # :nodoc:all
         retrieve
       end
       def load_from_prepared_index_generation_message
-        timed_exclaim %Q{"#{identifier}": Loading prepared index.}
+        timed_exclaim %Q{"#{identifier}": Loading prepared data into memory.}
       end
       # Retrieves the prepared index data into the index.
       #
@@ -133,6 +133,7 @@ module Indexing # :nodoc:all
       # Saves the indexes in a dump file.
       #
       def dump
+        timed_exclaim %Q{"#{identifier}": Dumping data.}
         dump_inverted
         dump_similarity
         dump_weights
@@ -141,25 +142,25 @@ module Indexing # :nodoc:all
       # Dumps the core index.
       #
       def dump_inverted
-        timed_exclaim %Q{"#{identifier}": Dumping inverted index.}
+        # timed_exclaim %Q{"#{identifier}": Dumping inverted index.}
         backend.dump_inverted self.inverted
       end
       # Dumps the weights index.
       #
       def dump_weights
-        timed_exclaim %Q{"#{identifier}": Dumping index weights.}
+        # timed_exclaim %Q{"#{identifier}": Dumping index weights.}
         backend.dump_weights self.weights
       end
       # Dumps the similarity index.
       #
       def dump_similarity
-        timed_exclaim %Q{"#{identifier}": Dumping similarity index.}
+        # timed_exclaim %Q{"#{identifier}": Dumping similarity index.}
         backend.dump_similarity self.similarity
       end
       # Dumps the similarity index.
       #
       def dump_configuration
-        timed_exclaim %Q{"#{identifier}": Dumping configuration.}
+        # timed_exclaim %Q{"#{identifier}": Dumping configuration.}
         backend.dump_configuration self.configuration
       end
 

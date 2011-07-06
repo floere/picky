@@ -8,11 +8,13 @@ module Backend
                 :weights,
                 :similarity,
                 :configuration,
-                :category
+                :category,
+                :identifier
 
     delegate :index_name, :category_name, :to => :@category
 
     def initialize bundle_name, category
+      @identifier  = "#{category.identifier}:#{bundle_name}"
       @bundle_name = bundle_name
       @category    = category
       @prepared    = File::Text.new category.prepared_index_path
@@ -30,15 +32,19 @@ module Backend
     # Dumping.
     #
     def dump_inverted inverted_hash
+      timed_exclaim %Q{"#{identifier}":   => #{inverted}.}
       inverted.dump inverted_hash
     end
     def dump_weights weights_hash
+      timed_exclaim %Q{"#{identifier}":   => #{weights}.}
       weights.dump weights_hash
     end
     def dump_similarity similarity_hash
+      timed_exclaim %Q{"#{identifier}":   => #{similarity}.}
       similarity.dump similarity_hash
     end
     def dump_configuration configuration_hash
+      timed_exclaim %Q{"#{identifier}":   => #{configuration}.}
       configuration.dump configuration_hash
     end
 

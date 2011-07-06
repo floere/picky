@@ -21,9 +21,10 @@ describe Indexers::Base do
   
   describe 'index' do
     it 'messages, then processed' do
-      indexer.should_receive(:indexing_message).once.with.ordered
+      indexer.should_receive(:start_indexing_message).once.with.ordered
       indexer.should_receive(:prepare).once.with(:categories).ordered
       indexer.should_receive(:process).once.with(:categories).ordered
+      indexer.should_receive(:finish_indexing_message).once.with.ordered
       
       indexer.index :categories
     end
@@ -42,20 +43,6 @@ describe Indexers::Base do
       categories.each do |category|
         category.should_receive(:prepare_index_directory).once.with
       end
-      
-      indexer.prepare categories
-    end
-    it 'calls a certain method on each category' do
-      source = stub :source
-      some_index_or_category.stub! :source => source
-      
-      category1 = stub :category1, :prepare_index_directory => nil
-      category2 = stub :category2, :prepare_index_directory => nil
-      category3 = stub :category3, :prepare_index_directory => nil
-      
-      categories = [category1, category2, category3]
-      
-      source.should_receive(:connect_backend).once.with
       
       indexer.prepare categories
     end
