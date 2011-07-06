@@ -1,8 +1,8 @@
 h2. Upcoming Version
 
-* hanke: (server) Rake tasks rewritten to be simpler and clearer. Most notably, @index:specific[index,category]@ is now just @index[index,category]@ (both optional).
 * hanke: (server) Breaking: Method @#take_snapshot@ removed from Indexes/Index/Category (not needed anymore).
 * hanke: (server) Breaking: Users need to reindex when installing this version (index "index" now identified by "inverted" to be more clear).
+* hanke: (server) Rake tasks rewritten to be simpler and clearer. Most notably, @index:specific[index,category]@ is now just @index[index,category]@ (both optional).
 * hanke: (server) Reindexing now possible in running server, also for ActiveRecord Arel sources.
 * hanke: (server) More verbose indexing output with file locations.
 * hanke: (server) Taking data snapshots improved.
