@@ -7,11 +7,11 @@ describe Indexes do
     @indexes = described_class.instance
   end
 
-  describe 'clear' do
+  describe 'clear_indexes' do
     it 'clears the indexes' do
-      Indexes.register @index
+      @indexes.register @index
 
-      Indexes.clear
+      @indexes.clear_indexes
 
       @indexes.indexes.should == []
     end
@@ -19,7 +19,7 @@ describe Indexes do
 
   describe 'register' do
     it 'adds the given index to the indexes' do
-      Indexes.clear
+      @indexes.clear_indexes
       
       Indexes.register @index
 

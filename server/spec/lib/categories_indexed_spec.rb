@@ -39,7 +39,7 @@ describe Categories do
     end
   end
   
-  describe 'clear' do
+  describe 'clear_categories' do
     before(:each) do
       @categories = described_class.new
     end
@@ -56,7 +56,7 @@ describe Categories do
     it "is clear again after clearing" do
       @categories << stub(:category, :name => :some_name)
       
-      @categories.clear
+      @categories.clear_categories
       
       @categories.categories.should be_empty
       @categories.category_hash.should be_empty      

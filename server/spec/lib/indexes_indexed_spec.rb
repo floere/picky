@@ -38,12 +38,12 @@ describe Indexes do
     end
     describe 'clear' do
       it 'clears the indexes' do
-        indexes.clear
+        indexes.clear_indexes
         
         indexes.indexes.should == []
       end
       it 'clears the mapping' do
-        indexes.clear
+        indexes.clear_indexes
         
         indexes.index_mapping.should == {}
       end

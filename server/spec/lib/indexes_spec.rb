@@ -16,11 +16,11 @@ describe Indexes do
     end
   end
 
-  describe 'clear' do
+  describe 'clear_indexes' do
     it 'clears the indexes' do
       @indexes.register @index
 
-      @indexes.clear
+      @indexes.clear_indexes
 
       @indexes.indexes.should == []
     end
@@ -28,7 +28,7 @@ describe Indexes do
 
   describe 'register' do
     it 'adds the given index to the indexes' do
-      @indexes.clear
+      @indexes.clear_indexes
       
       @indexes.register @index
 

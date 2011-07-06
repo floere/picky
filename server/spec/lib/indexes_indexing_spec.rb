@@ -32,9 +32,9 @@ describe Indexes do
         indexes.indexes.should == [@index1, @index2]
       end
     end
-    describe 'clear' do
+    describe 'clear_indexes' do
       it 'clears the indexes' do
-        indexes.clear
+        indexes.clear_indexes
       
         indexes.indexes.should == []
       end

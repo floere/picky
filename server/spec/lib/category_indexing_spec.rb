@@ -12,36 +12,36 @@ describe Category do
     let(:exact) { category.indexing_exact }
     let(:partial) { category.indexing_partial }
     
-    describe 'backup_caches' do
+    describe 'backup' do
       it 'delegates to both bundles' do
         exact.should_receive(:backup).once.with()
         partial.should_receive(:backup).once.with()
         
-        category.backup_caches
+        category.backup
       end
     end
-    describe 'restore_caches' do
+    describe 'restore' do
       it 'delegates to both bundles' do
         exact.should_receive(:restore).once.with()
         partial.should_receive(:restore).once.with()
         
-        category.restore_caches
+        category.restore
       end
     end
-    describe 'check_caches' do
+    describe 'check' do
       it 'delegates to both bundles' do
         exact.should_receive(:raise_unless_cache_exists).once.with()
         partial.should_receive(:raise_unless_cache_exists).once.with()
         
-        category.check_caches
+        category.check
       end
     end
-    describe 'clear_caches' do
+    describe 'clear' do
       it 'delegates to both bundles' do
         exact.should_receive(:delete).once.with()
         partial.should_receive(:delete).once.with()
         
-        category.clear_caches
+        category.clear
       end
     end
     
