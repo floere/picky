@@ -21,7 +21,6 @@ describe Indexes do
     end
     describe 'index_for_tests' do
       it 'takes a snapshot, then indexes and caches each' do
-        indexes.should_receive(:take_snapshot).once.with.ordered
         @index1.should_receive(:index).once.with.ordered
         @index2.should_receive(:index).once.with.ordered
       
@@ -50,11 +49,10 @@ describe Indexes do
         end
       end
     end
-    it_delegates_each :take_snapshot
-    it_delegates_each :backup_caches
-    it_delegates_each :restore_caches
     it_delegates_each :check_caches
     it_delegates_each :clear_caches
+    it_delegates_each :backup_caches
+    it_delegates_each :restore_caches
     it_delegates_each :create_directory_structure
   end
   

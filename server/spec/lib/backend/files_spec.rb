@@ -25,6 +25,9 @@ describe Backend::Files do
   end
   
   describe "dump indexes" do
+    before(:each) do
+      @files.stub! :timed_exclaim
+    end
     describe "dump_index" do
       it "uses the right file" do
         @index.should_receive(:dump).once.with :some_hash

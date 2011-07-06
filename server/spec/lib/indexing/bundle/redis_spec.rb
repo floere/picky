@@ -138,6 +138,8 @@ describe Indexing::Bundle::Redis do
   
   describe 'dump' do
     it 'should trigger dumps' do
+      index.stub! :timed_exclaim
+      
       index.should_receive(:dump_inverted).once.with
       index.should_receive(:dump_weights).once.with
       index.should_receive(:dump_similarity).once.with
