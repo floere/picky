@@ -9,7 +9,8 @@ h2. Upcoming Version
 
 h2. Version 2.6.0
 
-* hanke: (server) Breaking: @Indexes#find@ method has been removed.
+* hanke: (server) Breaking: @Indexes#find@ method has been removed. Use @Indexes[index_name]@ and @Indexes[index_name][category_name]@.
+* hanke: (server) Breaking: @Index#index!@, @Index#cache!@, @Category#index!@, @Category#cache!@ have been removed. Use @Indexes.index@ (combines @index!@ and @cache!@), or @Indexes[books].index@, or @Indexes[books][title].index@.
 * hanke: (server) Get Indexes/Categories using the @#[]@ method. E.g. @Indexes[:books]@ to get the @:books@ index, and @Indexes[:books][:author]@ to get the @:author@ category of the @:books@ index.
 * hanke: (server) @Indexes@, @Indexes[:some_index]@, and @Indexes[:some_index][:some_category]@ now all support
 
