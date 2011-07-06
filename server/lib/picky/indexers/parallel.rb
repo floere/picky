@@ -70,10 +70,10 @@ module Indexers
     #
     #
     def start_indexing_message # :nodoc:
-      timed_exclaim %Q{"#{@index_or_category.identifier}": Starting parallel indexing.}
+      timed_exclaim %Q{"#{@index_or_category.identifier}": Starting parallel indexing for prepared data file.}
     end
     def finish_indexing_message # :nodoc:
-      timed_exclaim %Q{"#{@index_or_category.identifier}": Finished parallel indexing.}
+      timed_exclaim %Q{"#{@index_or_category.identifier}": Finished parallel indexing for prepared data file.}
     end
 
   end
