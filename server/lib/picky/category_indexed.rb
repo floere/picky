@@ -4,12 +4,6 @@ class Category
 
   attr_reader :indexed_exact
 
-  # TODO Move to Index.
-  #
-  def generate_qualifiers_from options
-    options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
-  end
-
   # Loads the index from cache.
   #
   def load_from_cache

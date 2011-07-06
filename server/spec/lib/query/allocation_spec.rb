@@ -34,7 +34,7 @@ describe Query::Allocation do
         @allocation.stub! :ids => :ids
       end
       it "represents correctly" do
-        @allocation.to_s.should == "Allocation: some_result_identifier, score, 10, combinations_result, ids"
+        @allocation.to_s.should == "Allocation([:some_result_identifier, :score, 10, \"combinations_result\", :ids])"
       end
     end
   end

@@ -24,6 +24,7 @@ class Search
   #   * weights:   A hash of weights, or a Query::Weights object.
   #
   # TODO Add identifiers_to_remove (rename) and reduce_allocations_to_amount (rename).
+  # TODO categories_to_remove ?
   #
   # It is also possible to define the tokenizer and weights like so.
   # Example:

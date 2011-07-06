@@ -54,6 +54,12 @@ class Category
     Query::Qualifiers.add(name, generate_qualifiers_from(options) || [name])
   end
 
+  # TODO Move to Index.
+  #
+  def generate_qualifiers_from options
+    options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
+  end
+
   # Indexes and reloads the category.
   #
   def reindex

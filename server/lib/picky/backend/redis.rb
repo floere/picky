@@ -1,6 +1,6 @@
 module Backend
 
-  # TODO Needs a reconnect to be run after forking.
+  #
   #
   class Redis < Base
 

@@ -6,7 +6,7 @@ module Query
   class Allocation # :nodoc:all
 
     attr_reader :count, :ids, :score, :combinations, :result_identifier
-  
+
     #
     #
     def initialize combinations, result_identifier
@@ -76,9 +76,9 @@ module Query
     #
     #
     def to_s
-      "Allocation: #{to_result.join(', ')}"
+      "Allocation(#{to_result})"
     end
 
   end
-  
+
 end

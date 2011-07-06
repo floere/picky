@@ -17,6 +17,8 @@ module Query
     #
     # Note: Use this if you do not want a qualified and normalized token.
     #
+    # TODO text, qualifiers
+    #
     def initialize text
       @text = text
     end
@@ -49,6 +51,8 @@ module Query
     # Extracts a qualifier for this token and pre-assigns an allocation.
     #
     # Note: Removes the qualifier if it is not allowed.
+    #
+    # TODO Extract this sind it is Search-based.
     #
     def qualify
       @qualifiers, @text = split @text
