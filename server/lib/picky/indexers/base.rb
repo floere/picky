@@ -17,9 +17,10 @@ module Indexers
     # Starts the indexing process.
     #
     def index categories
-      indexing_message
+      start_indexing_message
       prepare categories
       process categories
+      finish_indexing_message
     end
 
     # By default, an indexer

@@ -18,7 +18,7 @@ module Sources
   # A source has 1 mandatory and 2 optional methods:
   # * connect_backend (_optional_): called once for each type/category pair.
   # * harvest: Used by the indexer to gather data. Yields an indexed_id (string or integer) and a string value.
-  # * take_snapshot (_optional_): called once for each type.
+  # * take_snapshot (_optional_): called once for each index or category (if indexing a single category).
   #
   # This base class "implements" all these methods, but they don't do anything.
   # Subclass this class <tt>class MySource < Base</tt> and override the methods in your source to do something.
@@ -56,13 +56,32 @@ module Sources
 
     # Used to take a snapshot of your data if it is fast changing.
     #
-    # Called once for each type before harvesting.
+    # Called once for each index before harvesting.
+    # If it has been called on a source already by an index,
+    # it won't be called again for a category inside that index.
     #
     # Example:
     # * In a DB source, a table based on the source's select statement is created.
     #
     def take_snapshot index
 
+    end
+
+    # Used to check if a snapshot has been done already.
+    #
+    # Example:
+    # * In a DB source, a table based on the source's select statement is created.
+    #
+    def with_snapshot index
+      connect_backend
+      @snapshot_taken ||= 0
+      if @snapshot_taken.zero?
+        timed_exclaim %Q{"#{index.identifier}": Taking snapshot of source data (if supported).}
+        take_snapshot index
+      end
+      @snapshot_taken += 1
+      yield
+      @snapshot_taken -= 1
     end
 
   end

@@ -29,20 +29,9 @@ module Index
         check_source_empty
         index_in_parallel
       else
-        connect_backend
-        # TODO Should probably be
-        #   with_snapshot do
-        #     categories.each &:index
-        #   end
-        #
-        # So if with_snapshot is called again from within
-        # itself, it will not be taken again (since the
-        # source knows its snapshot is taken).
-        #
-        take_snapshot
-        @indexing = true
-        categories.each &:index
-        @indexing = false
+        with_data_snapshot do
+          categories.each &:index
+        end
       end
     end
 
@@ -55,26 +44,23 @@ module Index
       warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
     end
 
-    # Connect to the backend (if possible).
+    # Note: Duplicated in category_indexing.rb.
     #
-    def connect_backend
-      source.connect_backend if source.respond_to? :connect_backend
-    end
-
-    # Take a data snapshot (if possible).
+    # Take a data snapshot if the source offers it.
     #
-    # Returns if the call comes from a category and it is indexing.
-    #
-    # TODO This method could take a source. Then check @indexing == source.
-    #
-    def take_snapshot
-      return if @indexing
-      source.take_snapshot self if source.respond_to? :take_snapshot
+    def with_data_snapshot
+      if source.respond_to? :with_snapshot
+        source.with_snapshot(self) do
+          yield
+        end
+      else
+        yield
+      end
     end
 
     # Indexes the categories in parallel.
     #
-    # Only use where the category does not have a non-#each source defined.
+    # Only use where the category does have a #each source defined.
     #
     def index_in_parallel
       indexer = Indexers::Parallel.new self

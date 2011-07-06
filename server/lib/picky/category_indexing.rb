@@ -16,12 +16,22 @@ class Category
 
   # Indexes, creates the "prepared_..." file.
   #
-  # Assumes
-  #
   def prepare
-    source.connect_backend if source.respond_to? :connect_backend
-    @index.take_snapshot # Only takes a snapshot if necessary.
-    indexer.index [self]
+    with_data_snapshot do
+      indexer.index [self]
+    end
+  end
+
+  # Take a data snapshot if the source offers it.
+  #
+  def with_data_snapshot
+    if source.respond_to? :with_snapshot
+      source.with_snapshot(@index) do
+        yield
+      end
+    else
+      yield
+    end
   end
 
   # Generates all caches for this category.

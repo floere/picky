@@ -42,8 +42,11 @@ module Indexers
 
     #
     #
-    def indexing_message # :nodoc:
+    def start_indexing_message # :nodoc:
       timed_exclaim %Q{"#{@index_or_category.identifier}": Starting serial indexing.}
+    end
+    def finish_indexing_message # :nodoc:
+      timed_exclaim %Q{"#{@index_or_category.identifier}": Finished serial indexing.}
     end
 
   end
