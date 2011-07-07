@@ -13,7 +13,9 @@ GEM
     activesupport (3.0.7)
     arel (2.0.10)
     builder (2.1.2)
+    daemons (1.0.10)
     diff-lcs (1.1.2)
+    eventmachine (0.12.10)
     haml (3.0.25)
     i18n (0.5.0)
     kgio (2.4.1)
@@ -36,10 +38,16 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
+    shotgun (0.9)
+      rack (>= 1.0)
     sinatra (1.2.6)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
     text (0.2.0)
+    thin (1.2.11)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     tilt (1.3.1)
     tzinfo (0.3.27)
     unicorn (3.6.2)
@@ -64,7 +72,9 @@ DEPENDENCIES
   rake
   redis
   rspec
+  shotgun
   sinatra
   text (~> 0.2.0)
+  thin
   unicorn
   yajl-ruby (~> 0.7.8)

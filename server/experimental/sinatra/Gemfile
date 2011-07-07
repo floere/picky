@@ -3,6 +3,8 @@ source :gemcutter
 # Gems required by Picky.
 #
 gem 'rake'
+gem 'shotgun'
+gem 'thin'
 gem 'bundler',    '>= 0.9.26'
 gem 'rack',       '~> 1.2.1'
 gem 'rack-mount', '~> 0.6.9'

@@ -41,6 +41,10 @@ end
 texts.index
 texts.reload
 
+Signal.trap('USR1') do
+  texts.reindex # kill -USR1 <pid>
+end
+
 
 search = Search.new texts
 
