@@ -2,6 +2,6 @@
 /test_project/log/*.log
 /test_project/tmp
 
-/test_project/experimental/sinatra/index
+/experimental/sinatra/index
 
 spec/performance_ratio.rb

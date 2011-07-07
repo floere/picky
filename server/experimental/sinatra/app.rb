@@ -15,7 +15,7 @@
 #
 
 require 'sinatra'
-require File.expand_path '../../../../lib/picky', __FILE__
+require File.expand_path '../../../lib/picky', __FILE__
 
 class Model
   attr_reader :id, :text
