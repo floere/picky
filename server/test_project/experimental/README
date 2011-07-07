@@ -1,0 +1,3 @@
+Notes
+
+Sinatra: cd into sinatra and "bundle exec ruby app.rb" there. Will create an index directory. See app.rb for how to search etc.
