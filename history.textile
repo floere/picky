@@ -1,4 +1,4 @@
-h2. Upcoming Version
+h2. Version 2.7.0
 
 * hanke: (server) Breaking: Method @#take_snapshot@ removed from Indexes/Index/Category (not needed anymore).
 * hanke: (server) Breaking: Users need to reindex when installing this version (index "index" now identified by "inverted" to be more clear).
@@ -6,6 +6,7 @@ h2. Upcoming Version
 * hanke: (server) Reindexing now possible in running server, also for ActiveRecord Arel sources.
 * hanke: (server) More verbose indexing output with file locations.
 * hanke: (server) Taking data snapshots improved.
+* hanke: (client) Fix for e.g. @picky search localhost:8080/books@ if highline gem is missing (thanks tonini!).
 
 h2. Version 2.6.0
 
