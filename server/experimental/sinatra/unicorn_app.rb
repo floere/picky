@@ -2,12 +2,12 @@
 #   bundle exec unicorn
 #
 # Example queries:
-#   curl 'localhost:8080/books?query=hi'
-#   curl 'localhost:8080/books?query=m'
-#   curl 'localhost:8080/books?query=ho~'
+#   curl 'localhost:8080/texts?query=hi'
+#   curl 'localhost:8080/texts?query=m'
+#   curl 'localhost:8080/texts?query=ho~'
 #
 # With the command line interface:
-#   picky search localhost:8080/books
+#   picky search localhost:8080/texts
 #
 # Sometimes I get:
 #   "invalid byte sequence in UTF-8"
@@ -47,7 +47,7 @@ class UnicornApp < Sinatra::Application
 
   search = Search.new texts
 
-  get '/books' do
+  get '/texts' do
     results = search.search_with_text params[:query]
     results.to_json
   end

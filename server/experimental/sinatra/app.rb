@@ -2,12 +2,12 @@
 #   bundle exec ruby app.rb
 #
 # Example queries:
-#   curl 'localhost:4567/books?query=hi'
-#   curl 'localhost:4567/books?query=m'
-#   curl 'localhost:4567/books?query=ho~'
+#   curl 'localhost:4567/texts?query=hi'
+#   curl 'localhost:4567/texts?query=m'
+#   curl 'localhost:4567/texts?query=ho~'
 #
 # With the command line interface:
-#   picky search localhost:4567/books
+#   picky search localhost:4567/texts
 #
 # Sometimes I get:
 #   "invalid byte sequence in UTF-8"
@@ -48,7 +48,7 @@ end
 
 search = Search.new texts
 
-get '/books' do
+get '/texts' do
   results = search.search_with_text params[:query]
   results.to_json
 end
