@@ -17,7 +17,7 @@ module Tokenizers
       @locations = []
     end
 
-    # TODO Work on this!
+    #
     #
     def tokenize text
 

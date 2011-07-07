@@ -37,7 +37,7 @@ describe Application do
                     normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
                     
                     substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
-                    maximum_tokens: 5 # TODO maximum_words?
+                    maximum_tokens: 5
           
           books_index = Index::Memory.new :books,
                                           source: Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')

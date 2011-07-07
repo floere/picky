@@ -87,13 +87,11 @@ describe Query::Token do
         it 'generates all similar' do
           @token.next_similar(@bundle).should == nil
         end
-        # TODO
-        #
-        # it 'should have a certain text' do
-        #   @token.next_similar @bundle
-        #   
-        #   @token.text.should == :nonsimilar
-        # end
+        it 'should have a certain text' do
+          @token.next_similar @bundle
+          
+          @token.text.should == :nonsimilar
+        end
       end
     end
   end
