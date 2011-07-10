@@ -21,8 +21,10 @@
 #
 class Bundle
 
-  attr_reader   :identifier,
-                :files
+  attr_reader :category,
+              :identifier,
+              :files
+
   attr_accessor :inverted,
                 :weights,
                 :similarity,
@@ -32,8 +34,9 @@ class Bundle
   delegate :clear,    :to => :inverted
   delegate :[], :[]=, :to => :configuration
 
-  def initialize name, category, similarity_strategy
-    @identifier    = "#{category.identifier}:#{name}"
+  def initialize name, category, similarity_strategy, options = {}
+    @category      = category
+    @identifier    = "#{category.identifier}:#{name}" # TODO Make dynamic.
     @files         = Backend::Files.new name, category
 
     @inverted      = {}
@@ -53,6 +56,10 @@ class Bundle
     similar_codes = code && @similarity[code]
     similar_codes.delete text if similar_codes
     similar_codes || []
+  end
+
+  def key_format
+    @key_format || @category.key_format || :to_i
   end
 
   def to_s

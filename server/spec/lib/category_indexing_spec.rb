@@ -96,7 +96,6 @@ describe Category do
 
     describe 'cache' do
       it 'should call multiple methods in order' do
-        category.should_receive(:configure).once.with().ordered
         category.should_receive(:generate_caches_from_source).once.with().ordered
         category.should_receive(:generate_partial).once.with().ordered
         category.should_receive(:generate_caches_from_memory).once.with().ordered

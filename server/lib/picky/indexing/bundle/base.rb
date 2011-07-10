@@ -32,11 +32,12 @@ module Indexing # :nodoc:all
       attr_accessor :partial_strategy,
                     :weights_strategy
 
-      def initialize name, category, weights_strategy, partial_strategy, similarity_strategy
-        super name, category, similarity_strategy
+      def initialize name, category, weights_strategy, partial_strategy, similarity_strategy, options = {}
+        super name, category, similarity_strategy, options
 
         @weights_strategy = weights_strategy
         @partial_strategy = partial_strategy
+        @key_format       = options[:key_format]
       end
 
       # Sets up a piece of the index for the given token.
@@ -93,10 +94,10 @@ module Indexing # :nodoc:all
       # and later dumping the optimized index.
       #
       def retrieve
-        key_format = self[:key_format] || :to_i
+        format = category.key_format || :to_i # Optimization.
         files.retrieve do |id, token|
           initialize_inverted_index_for token
-          self.inverted[token] << id.send(key_format)
+          self.inverted[token] << id.send(format)
         end
       end
 

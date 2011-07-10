@@ -36,10 +36,12 @@ class Category
     partial    = options[:partial]    || Generators::Partial::Default
     similarity = options[:similarity] || Generators::Similarity::Default
 
-    @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, weights, Generators::Partial::None.new, similarity)
-    @indexing_partial = index.indexing_bundle_class.new(:partial, self, weights, partial, Generators::Similarity::None.new)
+    @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, weights, Generators::Partial::None.new, similarity, options)
+    @indexing_partial = index.indexing_bundle_class.new(:partial, self, weights, partial, Generators::Similarity::None.new, options)
 
     # Indexed.
+    #
+    # TODO Use exact for partial – also for indexing!?
     #
     @indexed_exact   = index.indexed_bundle_class.new :exact, self, similarity
     @indexed_partial = if partial.use_exact_for_partial?

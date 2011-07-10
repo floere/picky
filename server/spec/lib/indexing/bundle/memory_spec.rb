@@ -69,7 +69,7 @@ describe Indexing::Bundle::Memory do
     end
     context 'id key format' do
       before(:each) do
-        index.should_receive(:[]).once.with(:key_format).and_return :to_i
+        @category.stub! :key_format => :to_i
       end
       it 'should call the other methods correctly' do
         @ary.should_receive(:<<).once.with 1234
@@ -79,7 +79,7 @@ describe Indexing::Bundle::Memory do
     end
     context 'other key format' do
       before(:each) do
-        index.should_receive(:[]).once.with(:key_format).and_return :strip
+        @category.stub! :key_format => :strip
       end
       it 'should call the other methods correctly' do
         @ary.should_receive(:<<).once.with '1234'
@@ -89,7 +89,7 @@ describe Indexing::Bundle::Memory do
     end
     context 'no key format - default' do
       before(:each) do
-        index.should_receive(:[]).once.with(:key_format).and_return nil
+        @category.stub! :key_format => nil
       end
       it 'should call the other methods correctly' do
         @ary.should_receive(:<<).once.with 1234

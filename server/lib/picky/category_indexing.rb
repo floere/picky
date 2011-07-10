@@ -37,7 +37,6 @@ class Category
   # Generates all caches for this category.
   #
   def cache
-    configure
     generate_caches_from_source
     generate_partial
     generate_caches_from_memory
@@ -70,10 +69,9 @@ class Category
 
   # Return the key format.
   #
-  # If the source has no key format, then
-  # check for an explicit key format, and
-  # if none is defined, ask the index for
-  # one.
+  # If the source has no key format, and
+  # none is defined on this category, ask
+  # the index for one.
   #
   def key_format
     source.respond_to?(:key_format) && source.key_format || @key_format || @index.key_format
@@ -99,16 +97,6 @@ class Category
   #
   def tokenizer
     @tokenizer || @index.tokenizer
-  end
-
-  # We need to set what formatting method should be used.
-  # Uses the one defined in the indexer.
-  #
-  # TODO Make this more dynamic.
-  #
-  def configure
-    indexing_exact[:key_format] = self.key_format
-    indexing_partial[:key_format] = self.key_format
   end
 
   # Checks the caches for existence.

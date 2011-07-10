@@ -16,12 +16,12 @@ module Indexed # :nodoc:all
 
       delegate :[], :to => :configuration
 
-      def initialize name, configuration, *args
-        super name, configuration, *args
+      def initialize name, category, *args
+        super name, category, *args
 
         @configuration = {} # A hash with config options.
 
-        @backend = Backend::Files.new name, configuration
+        @backend = Backend::Files.new name, category
       end
 
       # Get the ids for the given symbol.
