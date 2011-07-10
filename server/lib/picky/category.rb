@@ -30,6 +30,8 @@ class Category
 
     # TODO Push into Bundle. At least the weights.
     #
+    # TODO Extract defaults into Index?
+    #
     weights    = options[:weights]    || Generators::Weights::Default
     partial    = options[:partial]    || Generators::Partial::Default
     similarity = options[:similarity] || Generators::Similarity::Default
@@ -39,12 +41,12 @@ class Category
 
     # Indexed.
     #
-    # TODO Push the defaults out into the index.
-    #
-    @partial_strategy = partial # TODO Duplicate work.
-
-    @indexed_exact   = index.indexed_bundle_class.new :exact,   self, similarity
-    @indexed_partial = index.indexed_bundle_class.new :partial, self, similarity
+    @indexed_exact   = index.indexed_bundle_class.new :exact, self, similarity
+    @indexed_partial = if partial.use_exact_for_partial?
+      @indexed_exact
+    else
+      index.indexed_bundle_class.new :partial, self, similarity
+    end
 
     # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
     # @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
