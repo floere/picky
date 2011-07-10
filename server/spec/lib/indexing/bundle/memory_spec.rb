@@ -59,9 +59,9 @@ describe Indexing::Bundle::Memory do
   
   describe 'retrieve' do
     before(:each) do
-      files = stub :files
-      files.should_receive(:retrieve).once.and_yield '  1234', :some_token
-      index.stub! :files => files
+      backend = stub :backend
+      backend.should_receive(:retrieve).once.and_yield '  1234', :some_token
+      index.stub! :backend => backend
       
       @ary = stub :ary
       inverted = stub :inverted, :[] => @ary
@@ -211,11 +211,11 @@ describe Indexing::Bundle::Memory do
   end
   describe 'warn_if_similarity_small' do
     before(:each) do
-      @files = index.files
+      @backend = index.backend
     end
     context "files similarity cache small" do
       before(:each) do
-        @files.stub! :similarity_cache_small? => true
+        @backend.stub! :similarity_cache_small? => true
       end
       it "warns" do
         index.should_receive(:warn_cache_small).once.with :similarity
@@ -225,7 +225,7 @@ describe Indexing::Bundle::Memory do
     end
     context "files similarity cache not small" do
       before(:each) do
-        @files.stub! :similarity_cache_small? => false
+        @backend.stub! :similarity_cache_small? => false
       end
       it "does not warn" do
         index.should_receive(:warn_cache_small).never
@@ -236,11 +236,11 @@ describe Indexing::Bundle::Memory do
   end
   describe 'raise_unless_similarity_ok' do
     before(:each) do
-      @files = index.files
+      @backend = index.backend
     end
     context "files similarity cache ok" do
       before(:each) do
-        @files.stub! :similarity_cache_ok? => true
+        @backend.stub! :similarity_cache_ok? => true
       end
       it "warns" do
         index.should_receive(:raise_cache_missing).never
@@ -250,7 +250,7 @@ describe Indexing::Bundle::Memory do
     end
     context "files similarity cache not ok" do
       before(:each) do
-        @files.stub! :similarity_cache_ok? => false
+        @backend.stub! :similarity_cache_ok? => false
       end
       it "does not warn" do
         index.should_receive(:raise_cache_missing).once.with :similarity

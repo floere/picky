@@ -12,7 +12,7 @@ describe Indexed::Bundle::Memory do
   
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == "Indexed::Bundle::Memory(test:some_index:some_category:some_name, Backend::Files(Backend::File::Text(spec/test_directory/index/test/some_index/prepared_some_category_index.txt), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_inverted.json), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_weights.json), Backend::File::Marshal(spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump), Backend::File::JSON(spec/test_directory/index/test/some_index/some_category_some_name_configuration.json)))"
+      @bundle.to_s.should == "Indexed::Bundle::Memory(test:some_index:some_category:some_name)"
     end
   end
   

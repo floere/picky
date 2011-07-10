@@ -3,21 +3,22 @@ module Backend
   class Base
 
     attr_reader :bundle_name,
+                :category,
                 :prepared,
                 :inverted,
                 :weights,
                 :similarity,
-                :configuration,
-                :category,
-                :identifier
+                :configuration
 
     delegate :index_name, :category_name, :to => :@category
 
     def initialize bundle_name, category
-      @identifier  = "#{category.identifier}:#{bundle_name}"
       @bundle_name = bundle_name
       @category    = category
       @prepared    = File::Text.new category.prepared_index_path
+    end
+    def identifier
+      "#{category.identifier}:#{bundle_name}"
     end
 
     # Delegators.

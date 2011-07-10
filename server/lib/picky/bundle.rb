@@ -22,8 +22,7 @@
 class Bundle
 
   attr_reader :category,
-              :identifier,
-              :files
+              :identifier
 
   attr_accessor :inverted,
                 :weights,
@@ -37,7 +36,6 @@ class Bundle
   def initialize name, category, similarity_strategy, options = {}
     @category      = category
     @identifier    = "#{category.identifier}:#{name}" # TODO Make dynamic.
-    @files         = Backend::Files.new name, category
 
     @inverted      = {}
     @weights       = {}
@@ -63,7 +61,7 @@ class Bundle
   end
 
   def to_s
-    "#{self.class}(#{identifier}, #{files})"
+    "#{self.class}(#{identifier})"
   end
 
 end

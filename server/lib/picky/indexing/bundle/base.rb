@@ -29,6 +29,8 @@ module Indexing # :nodoc:all
     #
     class Base < ::Bundle
 
+      attr_reader :backend
+
       attr_accessor :partial_strategy,
                     :weights_strategy
 
@@ -95,7 +97,7 @@ module Indexing # :nodoc:all
       #
       def retrieve
         format = category.key_format || :to_i # Optimization.
-        files.retrieve do |id, token|
+        backend.retrieve do |id, token|
           initialize_inverted_index_for token
           self.inverted[token] << id.send(format)
         end
