@@ -124,14 +124,12 @@ module Index
       @source = options[:source]
 
       @after_indexing        = options[:after_indexing]
-      @indexing_bundle_class = options[:indexing_bundle_class] # TODO This should probably be a fixed parameter.
       @tokenizer             = options[:tokenizer]
       @key_format            = options[:key_format]
 
       # Indexed.
       #
       @result_identifier    = options[:result_identifier] || name
-      @indexed_bundle_class = options[:indexed_bundle_class] # TODO This should probably be a fixed parameter.
 
       # TODO Move ignore_unassigned_tokens to query, somehow.
       #
@@ -173,8 +171,6 @@ module Index
     # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: define_category(:similar_title, :from => :title).
     #
     def category category_name, options = {}
-      options = default_category_options.merge options
-
       new_category = Category.new category_name.to_sym, self, options
       categories << new_category
 
@@ -183,15 +179,6 @@ module Index
       new_category
     end
     alias define_category category
-
-    # By default, the category uses
-    # * the index's bundle type.
-    #
-    def default_category_options
-      {
-        :indexed_bundle_class => @indexed_bundle_class
-      }
-    end
 
     # Make this category range searchable with a fixed range. If you need other
     # ranges, define another category with a different range value.
