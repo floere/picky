@@ -12,7 +12,7 @@ module Indexing # :nodoc:all
       def initialize name, category, *args
         super name, category, *args
 
-        @backend = Backend::Redis.new name, category
+        @backend = Backend::Redis.new self
       end
 
     end

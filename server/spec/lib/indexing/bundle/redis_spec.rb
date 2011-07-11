@@ -59,9 +59,9 @@ describe Indexing::Bundle::Redis do
   
   describe 'retrieve' do
     before(:each) do
-      backend = stub :backend
-      backend.should_receive(:retrieve).once.and_yield '  1234', :some_token
-      index.stub! :backend => backend
+      prepared = stub :prepared
+      prepared.should_receive(:retrieve).once.and_yield '  1234', :some_token
+      index.stub! :prepared => prepared
       
       @ary = stub :ary
       inverted = stub :inverted, :[] => @ary

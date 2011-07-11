@@ -2,33 +2,24 @@ module Backend
 
   class Base
 
-    attr_reader :bundle_name,
-                :category,
-                :prepared,
+    attr_reader :bundle,
                 :inverted,
                 :weights,
                 :similarity,
                 :configuration
 
-    delegate :index_name, :category_name, :to => :@category
+    delegate :identifier,
+             :to => :bundle
 
-    def initialize bundle_name, category
-      @bundle_name = bundle_name
-      @category    = category
-      @prepared    = File::Text.new category.prepared_index_path
+    def initialize bundle
+      @bundle = bundle
     end
     def identifier
-      "#{category.identifier}:#{bundle_name}"
+      bundle.identifier
     end
 
     # Delegators.
     #
-
-    # Retrieving data.
-    #
-    def retrieve &block
-      prepared.retrieve &block
-    end
 
     # Dumping.
     #
@@ -118,7 +109,7 @@ module Backend
     #
     #
     def to_s
-      "#{self.class}(#{prepared}, #{bundle_name}, #{category.identifier})"
+      "#{self.class}(#{bundle.identifier})"
     end
 
   end

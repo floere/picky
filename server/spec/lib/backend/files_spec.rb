@@ -5,23 +5,14 @@ describe Backend::Files do
   before(:each) do
     index         = Index::Memory.new :some_index, source: []
     category      = Category.new :some_category, index
+    bundle        = Indexing::Bundle::Base.new :some_bundle, category, nil, nil, nil
     
-    @files         = described_class.new :some_name, category
-    
-    @prepared      = @files.prepared
+    @files         = described_class.new bundle
     
     @index         = @files.inverted
     @weights       = @files.weights
     @similarity    = @files.similarity
     @configuration = @files.configuration
-  end
-  
-  describe "retrieve" do
-    it "delegates to the prepared" do
-      @prepared.should_receive(:retrieve).once.with
-      
-      @files.retrieve
-    end
   end
   
   describe "dump indexes" do
@@ -66,7 +57,7 @@ describe Backend::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_bundle_inverted.json', 'r'
         
         @files.load_inverted
       end
@@ -75,7 +66,7 @@ describe Backend::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_bundle_weights.json', 'r'
         
         @files.load_weights
       end
@@ -84,7 +75,7 @@ describe Backend::Files do
       it "uses the right file" do
         Marshal.stub! :load
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump', 'r:binary'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_bundle_similarity.dump', 'r:binary'
         
         @files.load_similarity
       end
@@ -93,7 +84,7 @@ describe Backend::Files do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_bundle_configuration.json', 'r'
         
         @files.load_configuration
       end
@@ -181,18 +172,17 @@ describe Backend::Files do
   
   describe 'initialization' do
     it 'should initialize the name correctly' do
-      @files.bundle_name.should == :some_name
+      @files.bundle.name.should == :some_bundle
     end
   end
   
   describe 'to_s' do
     it 'returns the right value' do
-      category = stub :category,
-                      :identifier => "category_identifier",
-                      :prepared_index_path => "prepared/index/path",
-                      :index_path => 'index/path'
+      bundle   = stub :bundle,
+                      :index_path => 'index/path',
+                      :prepared_index_path => 'prepared/index/path'
       
-      described_class.new("some_bundle", category).to_s.should == "Backend::Files(Backend::File::Text(prepared/index/path.txt), Backend::File::JSON(index/path.json), Backend::File::JSON(index/path.json), Backend::File::Marshal(index/path.dump), Backend::File::JSON(index/path.json))"
+      described_class.new(bundle).to_s.should == "Backend::Files(Backend::File::JSON(index/path.json), Backend::File::JSON(index/path.json), Backend::File::Marshal(index/path.dump), Backend::File::JSON(index/path.json))"
     end
   end
 

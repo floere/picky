@@ -29,7 +29,8 @@ module Indexing # :nodoc:all
     #
     class Base < ::Bundle
 
-      attr_reader :backend
+      attr_reader :backend,
+                  :prepared
 
       attr_accessor :partial_strategy,
                     :weights_strategy
@@ -40,6 +41,7 @@ module Indexing # :nodoc:all
         @weights_strategy = weights_strategy
         @partial_strategy = partial_strategy
         @key_format       = options[:key_format]
+        @prepared         = Backend::File::Text.new category.prepared_index_path
       end
 
       # Sets up a piece of the index for the given token.
@@ -97,7 +99,7 @@ module Indexing # :nodoc:all
       #
       def retrieve
         format = category.key_format || :to_i # Optimization.
-        backend.retrieve do |id, token|
+        prepared.retrieve do |id, token|
           initialize_inverted_index_for token
           self.inverted[token] << id.send(format)
         end

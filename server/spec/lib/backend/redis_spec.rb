@@ -7,10 +7,12 @@ describe Backend::Redis do
       index    = stub :index,
                       :name => :some_index,
                       :indexing_bundle_class => Indexing::Bundle::Memory,
-                      :indexed_bundle_class  => Indexed::Bundle::Memory
-      category = Category.new :some_category, index
+                      :indexed_bundle_class  => Indexed::Bundle::Memory,
+                      :identifier => :some_index_identifier
+      Category.new :some_category, index
     end
-    let(:redis) { described_class.new :some_name, category }
+    let(:bundle) { Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil }
+    let(:redis) { described_class.new bundle }
 
     describe 'setting' do
       it 'delegates to the configuration' do
@@ -78,13 +80,15 @@ describe Backend::Redis do
   
   context 'indexed' do
     let(:category) do
-      index    = stub :index,
-                      :name => :some_index,
-                      :indexing_bundle_class => Indexing::Bundle::Memory,
-                      :indexed_bundle_class  => Indexed::Bundle::Memory
-      category = Category.new :some_category, index
+      index = stub :index,
+                   :name => :some_index,
+                   :indexing_bundle_class => Indexing::Bundle::Memory,
+                   :indexed_bundle_class  => Indexed::Bundle::Memory,
+                   :identifier => :some_index_identifier
+      Category.new :some_category, index
     end
-    let(:redis) { described_class.new :some_name, category }
+    let(:bundle) { Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil }
+    let(:redis) { described_class.new bundle }
 
     describe 'setting' do
       it 'delegates to the configuration' do
@@ -153,10 +157,13 @@ describe Backend::Redis do
   describe 'to_s' do
     it 'returns the right value' do
       category = stub :category,
+                      :name => :some_category,
                       :identifier => "category_identifier",
-                      :prepared_index_path => "prepared/index/path"
+                      :prepared_index_path => "prepared/index/path",
+                      :index_directory => 'some/index/directory'
+      bundle = Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil
       
-      described_class.new("some_bundle", category).to_s.should == "Backend::Redis(Backend::File::Text(prepared/index/path.txt), some_bundle, category_identifier)"
+      described_class.new(bundle).to_s.should == "Backend::Redis(category_identifier:some_bundle)"
     end
   end
 

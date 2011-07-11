@@ -28,26 +28,22 @@ class Category
     @tokenizer  = options[:tokenizer]
     @key_format = options[:key_format]
 
-    # TODO Push into Bundle. At least the weights.
-    #
-    # TODO Extract defaults into Index?
-    #
     weights    = options[:weights]    || Generators::Weights::Default
     partial    = options[:partial]    || Generators::Partial::Default
     similarity = options[:similarity] || Generators::Similarity::Default
 
-    @indexing_exact   = index.indexing_bundle_class.new(:exact,   self, weights, Generators::Partial::None.new, similarity, options)
-    @indexing_partial = index.indexing_bundle_class.new(:partial, self, weights, partial, Generators::Similarity::None.new, options)
+    @indexing_exact   = index.indexing_bundle_class.new :exact,   self, weights, Generators::Partial::None.new, similarity, options
+    @indexing_partial = index.indexing_bundle_class.new :partial, self, weights, partial, Generators::Similarity::None.new, options
 
     # Indexed.
     #
     # TODO Use exact for partial – also for indexing!?
     #
-    @indexed_exact   = index.indexed_bundle_class.new :exact, self, similarity
-    @indexed_partial = if partial.use_exact_for_partial?
-      @indexed_exact
+    @indexed_exact  = index.indexed_bundle_class.new  :exact, self, similarity
+    if partial.use_exact_for_partial?
+      @indexed_partial  = @indexed_exact
     else
-      index.indexed_bundle_class.new :partial, self, similarity
+      @indexed_partial  = index.indexed_bundle_class.new  :partial, self, similarity
     end
 
     # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
@@ -58,7 +54,7 @@ class Category
     Query::Qualifiers.add(name, generate_qualifiers_from(options) || [name])
   end
 
-  # TODO Move to Index.
+  # TODO Move to Search.
   #
   def generate_qualifiers_from options
     options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
@@ -72,6 +68,8 @@ class Category
   end
 
   # Category name.
+  #
+  # TODO Remove? Alias?
   #
   def category_name
     name
@@ -98,6 +96,8 @@ class Category
   #
   # Note: If you don't use it with the block, do not forget to close it.
   #
+  # TODO Move to bundle.
+  #
   def prepared_index_file &block
     @prepared_index_file ||= Backend::File::Text.new prepared_index_path
     @prepared_index_file.open &block
@@ -112,26 +112,16 @@ class Category
 
   # The index directory for this category.
   #
+  # TODO Push down into files?
+  #
   def index_directory
     @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"
-  end
-
-  # Path and partial filename of a specific subindex on this category.
-  #
-  # Subindexes are:
-  #  * inverted index
-  #  * weights index
-  #  * partial index
-  #  * similarity index
-  #
-  def index_path bundle_name, type
-    "#{index_directory}/#{name}_#{bundle_name}_#{type}"
   end
 
   # Identifier for technical output.
   #
   def identifier
-    @identifier ||= "#{PICKY_ENVIRONMENT}:#{index_name}:#{name}"
+    "#{@index.identifier}:#{name}"
   end
 
   #

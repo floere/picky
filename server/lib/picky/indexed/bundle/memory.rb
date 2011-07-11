@@ -21,7 +21,7 @@ module Indexed # :nodoc:all
 
         @configuration = {} # A hash with config options.
 
-        @backend = Backend::Files.new name, category
+        @backend = Backend::Files.new self
       end
 
       # Get the ids for the given symbol.

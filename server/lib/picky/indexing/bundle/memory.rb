@@ -12,7 +12,7 @@ module Indexing # :nodoc:all
       def initialize name, category, *args
         super name, category, *args
 
-        @backend = Backend::Files.new name, category
+        @backend = Backend::Files.new self
       end
 
     end

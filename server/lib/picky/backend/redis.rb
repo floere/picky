@@ -4,15 +4,15 @@ module Backend
   #
   class Redis < Base
 
-    def initialize bundle_name, category
-      super bundle_name, category
+    def initialize bundle
+      super bundle
 
       # Refine a few Redis "types".
       #
-      @inverted      = Redis::ListHash.new   "#{category.identifier}:#{bundle_name}:inverted"
-      @weights       = Redis::StringHash.new "#{category.identifier}:#{bundle_name}:weights"
-      @similarity    = Redis::ListHash.new   "#{category.identifier}:#{bundle_name}:similarity"
-      @configuration = Redis::StringHash.new "#{category.identifier}:#{bundle_name}:configuration"
+      @inverted      = Redis::ListHash.new   "#{bundle.identifier}:inverted"
+      @weights       = Redis::StringHash.new "#{bundle.identifier}:weights"
+      @similarity    = Redis::ListHash.new   "#{bundle.identifier}:similarity"
+      @configuration = Redis::StringHash.new "#{bundle.identifier}:configuration"
     end
 
     # Delegate to the right collection.
