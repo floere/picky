@@ -76,6 +76,12 @@ module Query
       @tokens.reject! &:blank?
     end
 
+    #
+    #
+    def categorize mapper
+      @tokens.each { |token| token.categorize mapper }
+    end
+
     # Returns a solr query.
     #
     def to_solr_query

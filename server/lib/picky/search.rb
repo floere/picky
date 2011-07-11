@@ -34,9 +34,9 @@ class Search
   #   end
   #
   def initialize *index_definitions
-    options      = Hash === index_definitions.last ? index_definitions.pop : {}
+    options = Hash === index_definitions.last ? index_definitions.pop : {}
 
-    @indexes  = Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
+    @indexes = Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
     searching options[:tokenizer]
     boost     options[:weights]
 
@@ -160,7 +160,7 @@ class Search
   # Gets sorted allocations for the tokens.
   #
   def sorted_allocations tokens # :nodoc:
-    @indexes.prepared_allocations_for tokens, weights
+    indexes.prepared_allocations_for tokens, weights
   end
 
   # Display some nice information for the user.

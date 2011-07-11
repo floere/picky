@@ -75,7 +75,7 @@ class Bundle
   #  * similarity index
   #
   def index_path type
-    "#{index_directory}/#{category.name}_#{name}_#{type}"
+    ::File.join index_directory, "#{category.name}_#{name}_#{type}"
   end
 
   def to_s

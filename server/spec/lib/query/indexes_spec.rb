@@ -9,7 +9,12 @@ describe Query::Indexes do
     let(name) { stub name, :internal_indexed => stub(indexed) }
   end
 
-  let(:indexes) { described_class.new index1, index2, index3 }
+  let(:indexes) do
+    indexes = described_class.allocate
+    indexes.stub! :map_categories
+    indexes.send :initialize, index1, index2, index3
+    indexes
+  end
   
   describe 'expand_combinations_from' do
     it 'generates all possible combinations from the given ones' do

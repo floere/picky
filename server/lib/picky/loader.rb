@@ -71,10 +71,6 @@ module Loader # :nodoc:all
     #
     Application.finalize_apps
 
-    # TODO Rewrite
-    #
-    Query::Qualifiers.instance.prepare
-
     exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
   end
 
@@ -204,7 +200,7 @@ module Loader # :nodoc:all
     load_relative 'query/allocation'
     load_relative 'query/allocations'
 
-    load_relative 'query/qualifiers'
+    load_relative 'query/qualifier_category_mapper'
 
     load_relative 'query/weights'
 

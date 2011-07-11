@@ -8,16 +8,14 @@ module Query
   #
   class Token # :nodoc:all
 
-    attr_reader :text, :original
+    attr_reader :text, :original, :qualifiers, :user_defined_categories
     attr_writer :similar
 
     delegate :blank?, :to => :text
 
     # Normal initializer.
     #
-    # Note: Use this if you do not want a qualified and normalized token.
-    #
-    # TODO text, qualifiers
+    # Note: Use this if you do not want a normalized token.
     #
     def initialize text
       @text = text
@@ -31,10 +29,10 @@ module Query
     def self.processed text, downcase = true
       new(text).process downcase
     end
-    def process downcases = true
+    def process downcased = true
       qualify
       extract_original
-      downcase if downcases
+      downcase if downcased
       partialize
       similarize
       remove_illegals
@@ -42,23 +40,18 @@ module Query
       self
     end
 
-    # This returns an array of predefined category names if the user has given any.
+    # Translates this token's qualifiers into actual categories.
     #
-    def user_defined_category_names
-      @qualifiers
+    # Note: If this is not done, there is no mapping.
+    #
+    def categorize mapper
+      @user_defined_categories = @qualifiers && @qualifiers.map do |qualifier|
+        mapper.map qualifier
+      end.compact
     end
 
-    # Extracts a qualifier for this token and pre-assigns an allocation.
+    # Dups the original text.
     #
-    # Note: Removes the qualifier if it is not allowed.
-    #
-    # TODO Extract this sind it is Search-based.
-    #
-    def qualify
-      @qualifiers, @text = split @text
-      @qualifiers && @qualifiers.collect! { |qualifier| Query::Qualifiers.instance.normalize qualifier }.compact!
-      @qualifiers
-    end
     def extract_original
       @original = @text.dup
     end
@@ -154,6 +147,19 @@ module Query
       bundle.similar(@text).dup || []
     end
 
+    # Splits text into a qualifier and text.
+    #
+    @@split_qualifier_text = ':'
+    @@split_qualifiers     = ','
+    def qualify
+      @qualifiers, @text = (@text || '').split(@@split_qualifier_text, 2)
+      @qualifiers, @text = if @text.blank?
+        [nil, (@qualifiers || '')]
+      else
+        [@qualifiers.split(@@split_qualifiers), @text]
+      end
+    end
+
     #
     #
     def to_result
@@ -172,30 +178,13 @@ module Query
       self.original == other.original && self.text == other.text
     end
 
-    # Displays the qualifier text and the text, joined.
+    # Displays the text and the qualifiers.
     #
     # e.g. name:meier
     #
-    @@split_qualifier_text = ':'
-    @@split_qualifiers     = ','
     def to_s
-      [@qualifiers && @qualifiers.join(@@split_qualifiers), @text].compact.join @@split_qualifier_text
+      "#{self.class}(#{[@text, (@qualifiers.inspect unless @qualifiers.blank?)].compact.join(', ')})"
     end
-
-    private
-
-      # Splits text into a qualifier and text.
-      #
-      # Returns [qualifier, text].
-      #
-      def split unqualified_text
-        qualifiers, text = (unqualified_text || '').split(@@split_qualifier_text, 2)
-        if text.blank?
-          [nil, (qualifiers || '')]
-        else
-          [qualifiers.split(@@split_qualifiers), text]
-        end
-      end
 
   end
 

@@ -3,11 +3,6 @@ require 'spec_helper'
 
 describe Query::Token do
   
-  before(:all) do
-    Query::Qualifiers.instance << Query::Qualifier.new(:specific, [:sp, :spec])
-    Query::Qualifiers.instance.prepare
-  end
-  
   describe '==' do
     it 'is equal if the originals are equal' do
       described_class.processed('similar~').should == described_class.processed('similar~')
@@ -154,13 +149,30 @@ describe Query::Token do
         described_class.new(text).qualify.should == expected_result
       end
     end
-    it_should_qualify 'spec:qualifier',    [:specific]
-    it_should_qualify 'with:qualifier',    []
-    it_should_qualify 'without qualifier', nil
-    it_should_qualify 'name:',             nil
-    it_should_qualify ':broken qualifier', [] # Unsure about that. Probably should recognize it as text.
-    it_should_qualify '',                  nil
-    it_should_qualify 'sp:text',           [:specific]
+    it_should_qualify 'spec:qualifier',    [['spec'],      'qualifier']
+    it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
+    it_should_qualify 'without qualifier', [nil,           'without qualifier']
+    it_should_qualify 'name:',             [nil,           'name']
+    it_should_qualify ':broken qualifier', [[],            'broken qualifier'] # Unsure about that. Probably should recognize it as text.
+    it_should_qualify '',                  [nil,           '']
+    it_should_qualify 'sp:text',           [['sp'],        'text']
+    it_should_qualify '""',                [nil,           '""']
+    it_should_qualify 'name:',             [nil,           'name']
+    it_should_qualify 'name:hanke',        [['name'],      'hanke']
+    it_should_qualify 'g:gaga',            [['g'],         'gaga']
+    it_should_qualify ':nothing',          [[],            'nothing']
+    it_should_qualify 'hello',             [nil,           'hello']
+    it_should_qualify 'a:b:c',             [['a'],         'b:c']
+    it_should_qualify 'a,b:c',             [['a','b'],     'c']
+    it_should_qualify 'a,b,c:d',           [['a','b','c'], 'd']
+    it_should_qualify ':',                 [nil,           '']
+    it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
+    it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
+    it_should_qualify 'without qualifier', [nil,           'without qualifier']
+    it_should_qualify 'name:',             [nil,           'name']
+    it_should_qualify ':broken qualifier', [[],            'broken qualifier']
+    it_should_qualify '',                  [nil,           '']
+    it_should_qualify 'fn:text',           [['fn'],        'text']
   end
 
   describe 'processed' do
@@ -260,23 +272,6 @@ describe Query::Token do
     end
   end
 
-  describe 'split' do
-    def self.it_should_split text, expected_qualifier
-      it "should extract #{expected_qualifier} from #{text}" do
-        described_class.new('any').send(:split, text).should == expected_qualifier
-      end
-    end
-    it_should_split '""',         [nil, '""']
-    it_should_split 'name:',      [nil, 'name']
-    it_should_split 'name:hanke', [['name'], 'hanke']
-    it_should_split 'g:gaga',     [['g'], 'gaga']
-    it_should_split ':nothing',   [[], 'nothing']
-    it_should_split 'hello',      [nil, 'hello']
-    it_should_split 'a:b:c',      [['a'], 'b:c']
-    it_should_split 'a,b:c',      [['a','b'], 'c']
-    it_should_split 'a,b,c:d',      [['a','b','c'], 'd']
-  end
-
   describe "original" do
     it "should keep the original text even when processed" do
       token = described_class.processed "I'm the original token text."
@@ -303,25 +298,25 @@ describe Query::Token do
       it "should display qualifier and text combined with a ':'" do
         token = described_class.processed('sp:qualifier')
 
-        token.to_s.should == 'specific:qualifier'
+        token.to_s.should == 'Query::Token(qualifier, ["sp"])'
       end
     end
     describe "without qualifier" do
       it "should display just the text" do
         token = described_class.processed('text')
 
-        token.to_s.should == 'text'
+        token.to_s.should == 'Query::Token(text)'
       end
     end
   end
 
-  describe 'user_defined_category_name' do
+  describe 'qualifiers' do
     context 'with qualifier' do
       before(:each) do
         @token = described_class.processed('sp:qualifier')
       end
       it 'should return the qualifier' do
-        @token.user_defined_category_names.should == [:specific]
+        @token.qualifiers.should == ['sp']
       end
     end
     context 'with incorrect qualifier' do
@@ -329,7 +324,7 @@ describe Query::Token do
         @token = described_class.processed('specific:qualifier')
       end
       it 'should return the qualifier' do
-        @token.user_defined_category_names.should == []
+        @token.qualifiers.should == ['specific']
       end
     end
     context 'with multiple qualifiers' do
@@ -337,7 +332,7 @@ describe Query::Token do
         @token = described_class.processed('sp,spec:qualifier')
       end
       it 'should return the qualifier' do
-        @token.user_defined_category_names.should == [:specific, :specific]
+        @token.qualifiers.should == ['sp', 'spec']
       end
     end
     context 'without qualifier' do
@@ -345,25 +340,9 @@ describe Query::Token do
         @token = described_class.processed('noqualifier')
       end
       it 'should return nil' do
-        @token.user_defined_category_names.should == nil
+        @token.qualifiers.should == nil
       end
     end
-  end
-
-  describe "split" do
-    def self.it_should_split text, expected_result
-      it "should split #{expected_result} from #{text}" do
-        described_class.new('any').send(:split, text).should == expected_result
-      end
-    end
-    it_should_split ':',                 [nil,         '']
-    it_should_split 'vorname:qualifier', [['vorname'], 'qualifier']
-    it_should_split 'with:qualifier',    [['with'],    'qualifier']
-    it_should_split 'without qualifier', [nil,         'without qualifier']
-    it_should_split 'name:',             [nil,         'name']
-    it_should_split ':broken qualifier', [[],          'broken qualifier']
-    it_should_split '',                  [nil,         '']
-    it_should_split 'fn:text',           [['fn'],      'text']
   end
 
   describe 'partial=' do

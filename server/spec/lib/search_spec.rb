@@ -6,7 +6,7 @@ describe Search do
   
   before(:each) do
     @type      = stub :type
-    @index     = stub :some_index, :internal_indexed => @type
+    @index     = stub :some_index, :internal_indexed => @type, :each_category => []
   end
   
   describe 'tokenized' do
@@ -112,6 +112,8 @@ describe Search do
       @search.search_with_text :text, :results, :offset
     end
     it "uses the tokenizer" do
+      @search.stub! :search
+      
       @search.should_receive(:tokenized).once.with :text
       
       @search.search_with_text :text, :anything
@@ -132,7 +134,7 @@ describe Search do
   
   describe 'to_s' do
     before(:each) do
-      @index.stub! :name => :some_index
+      @index.stub! :name => :some_index, :each_category => []
     end
     context 'with weights' do
       before(:each) do

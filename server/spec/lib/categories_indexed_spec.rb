@@ -107,7 +107,7 @@ describe Categories do
       context 'without preselected categories' do
         context 'user defined exists' do
           before(:each) do
-            @token = stub :token, :user_defined_category_names => [:category2]
+            @token = stub :token, :user_defined_categories => [@category2]
           end
           context 'combination exists' do
             before(:each) do
@@ -139,7 +139,7 @@ describe Categories do
     describe 'possible_categories' do
       context 'user defined exists' do
         before(:each) do
-          @token = stub :token, :user_defined_category_names => [:category2]
+          @token = stub :token, :user_defined_categories => [@category2]
         end
         it 'should return the right categories' do
           @categories.possible_categories(@token).should == [@category2]
@@ -147,7 +147,7 @@ describe Categories do
       end
       context 'user defined does not exist' do
         before(:each) do
-          @token = stub :token, :user_defined_category_names => nil
+          @token = stub :token, :user_defined_categories => nil
         end
         it 'should return all categories' do
           @categories.possible_categories(@token).should == [@category1, @category2, @category3]
@@ -155,24 +155,6 @@ describe Categories do
       end
     end
 
-    describe 'user_defined_categories' do
-      context 'category exists' do
-        before(:each) do
-          @token = stub :token, :user_defined_category_names => [:category2]
-        end
-        it 'should return the right categories' do
-          @categories.user_defined_categories(@token).should == [@category2]
-        end
-      end
-      context 'category does not exist' do
-        before(:each) do
-          @token = stub :token, :user_defined_category_names => [:gnoergel]
-        end
-        it 'should return nil' do
-          @categories.user_defined_categories(@token).should == []
-        end
-      end
-    end
   end
   
 end

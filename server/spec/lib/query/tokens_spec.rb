@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe Query::Tokens do
   
-  before(:all) do
-    Query::Qualifiers.instance << Query::Qualifier.new(:specific, [:sp, :spec])
-    Query::Qualifiers.instance.prepare
-  end
-  
   describe '.processed' do
     it 'generates processed tokens from all words' do
       expected = [

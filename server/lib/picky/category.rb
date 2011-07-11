@@ -27,6 +27,7 @@ class Category
     @from       = options[:from]
     @tokenizer  = options[:tokenizer]
     @key_format = options[:key_format]
+    @qualifiers = extract_qualifiers_from options
 
     weights    = options[:weights]    || Generators::Weights::Default
     partial    = options[:partial]    || Generators::Partial::Default
@@ -46,16 +47,6 @@ class Category
 
     # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
     # @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
-
-    # TODO Extract? Yes.
-    #
-    Query::Qualifiers.add(name, generate_qualifiers_from(options) || [name])
-  end
-
-  # TODO Move to Search.
-  #
-  def generate_qualifiers_from options
-    options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
   end
 
   # Indexes and reloads the category.
@@ -77,6 +68,18 @@ class Category
   #
   def index_name
     @index.name
+  end
+
+  # Returns the qualifiers if set or
+  # just the name if not.
+  #
+  def qualifiers
+    @qualifiers || [name]
+  end
+  # Extract qualifiers from the options.
+  #
+  def extract_qualifiers_from options
+    options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
   end
 
   # The category itself just yields itself.
@@ -123,7 +126,7 @@ class Category
   #
   #
   def to_s
-    "Category(#{name})"
+    "#{self.class}(#{identifier})"
   end
 
 end

@@ -21,6 +21,15 @@ module Query
     def initialize *indexes, combinations_type
       @indexes           = indexes
       @combinations_type = combinations_type
+      @mapper            = Query::QualifierCategoryMapper.new
+      map_categories
+    end
+    def map_categories
+      @indexes.each do |index|
+        index.each_category do |category|
+          @mapper.add category
+        end
+      end
     end
 
     # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
@@ -54,6 +63,8 @@ module Query
     # Returns a number of possible allocations for the given tokens.
     #
     def allocations_for tokens
+      tokens.categorize @mapper
+
       Allocations.new allocations_ary_for(tokens)
     end
     def allocations_ary_for tokens
