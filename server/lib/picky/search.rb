@@ -43,8 +43,6 @@ class Search
     instance_eval(&Proc.new) if block_given?
   end
 
-  # TODO Doc. Spec.
-  #
   # Example:
   #   Search.new(index1, index2, index3) do
   #     searching removes_characters: /[^a-z]/, etc.
@@ -65,8 +63,6 @@ class Search
     @tokenizer || Tokenizers::Query.default
   end
 
-  # TODO Doc. Spec.
-  #
   # Example:
   #   Search.new(index1, index2, index3) do
   #     searching removes_characters: /[^a-z]/, etc.

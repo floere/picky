@@ -85,8 +85,6 @@ class Category
 
   # The indexer is lazily generated and cached.
   #
-  # TODO Really cache?
-  #
   def indexer
     @indexer ||= source.respond_to?(:each) ? Indexers::Parallel.new(self) : Indexers::Serial.new(self)
   end
