@@ -32,15 +32,6 @@ class Category
     token.partial? ? indexed_partial : indexed_exact
   end
 
-  # The partial strategy defines whether to
-  # really use the partial index.
-  #
-  # TODO Really make this dynamic?
-  #
-  # def indexed_partial
-  #   @partial_strategy.use_exact_for_partial? ? @indexed_exact : @indexed_partial
-  # end
-
   # Returns a combination for the token,
   # or nil, if there is none.
   #

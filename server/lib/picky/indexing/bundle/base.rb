@@ -97,6 +97,8 @@ module Indexing # :nodoc:all
       # derived indexes (like weights, similarity)
       # and later dumping the optimized index.
       #
+      # TODO Move this out to the category?
+      #
       def retrieve
         format = category.key_format || :to_i # Optimization.
         prepared.retrieve do |id, token|

@@ -94,8 +94,6 @@ class Category
   #
   # Note: If you don't use it with the block, do not forget to close it.
   #
-  # TODO Move to bundle.
-  #
   def prepared_index_file &block
     @prepared_index_file ||= Backend::File::Text.new prepared_index_path
     @prepared_index_file.open &block
