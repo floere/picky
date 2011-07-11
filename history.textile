@@ -1,3 +1,7 @@
+h2. Upcoming Version
+
+* hanke: (server) Note: The key_format is not saved in the index configuration anymore.
+
 h2. Version 2.7.0
 
 * hanke: (server) Breaking: Method @#take_snapshot@ removed from Indexes/Index/Category (not needed anymore).

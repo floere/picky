@@ -9,8 +9,6 @@ module Adapters
   #
   module Rack
 
-    # TODO Rename to Search.
-    #
     class Search < Base
 
       @@defaults = {
