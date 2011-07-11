@@ -37,8 +37,6 @@ class Category
 
     # Indexed.
     #
-    # TODO Use exact for partial – also for indexing!?
-    #
     @indexed_exact  = index.indexed_bundle_class.new  :exact, self, similarity
     if partial.use_exact_for_partial?
       @indexed_partial  = @indexed_exact
