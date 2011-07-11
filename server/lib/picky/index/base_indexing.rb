@@ -77,8 +77,6 @@ module Index
 
     # Returns the installed tokenizer or the default.
     #
-    # TODO Spec.
-    #
     def tokenizer
       @tokenizer || Indexes.tokenizer
     end

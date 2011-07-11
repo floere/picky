@@ -2,6 +2,23 @@ require 'spec_helper'
 
 describe Index::Base do
   
+  describe 'tokenizer' do
+    context 'with tokenizer' do
+      let(:index) { described_class.new :some_name, source: [], tokenizer: 'some tokenizer' }
+
+      it 'does things in order' do
+        index.tokenizer.should == 'some tokenizer'
+      end
+    end
+    context 'without tokenizer' do
+      let(:index) { described_class.new :some_name, source: [] }
+
+      it 'does things in order' do
+        index.tokenizer.should == Indexes.tokenizer
+      end
+    end
+  end
+  
   context 'in general' do
     context 'with #each source' do
       let(:index) { described_class.new :some_name, source: [] }
