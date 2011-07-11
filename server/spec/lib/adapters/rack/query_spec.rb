@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::Query do
+describe Adapters::Rack::Search do
   
   before(:each) do
     @query   = stub :query

@@ -11,7 +11,7 @@ module Adapters
 
     # TODO Rename to Search.
     #
-    class Query < Base
+    class Search < Base
 
       @@defaults = {
         query_key:    'query'.freeze,

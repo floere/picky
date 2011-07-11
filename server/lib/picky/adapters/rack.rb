@@ -12,11 +12,11 @@ module Adapters
   #   Adapters::Rack.app_for(thing, options)
   #
   module Rack
-  
+
     # Generates the appropriate app for Rack.
     #
     @@mapping = {
-      :search_with_text => Query,
+      :search_with_text => Search,
       :parameters       => LiveParameters
     }
     def self.app_for thing, options = {}
@@ -24,7 +24,7 @@ module Adapters
         return adapter.new(thing).to_app(options) if thing.respond_to?(method)
       end
     end
-  
+
   end
 
 end
