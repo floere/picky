@@ -47,7 +47,7 @@ describe Query::Weights do
   
     describe 'to_s' do
       it 'is correct' do
-        @weights.to_s.should == "{[:test1, :test2]=>6, [:test1]=>5, [:test3]=>3, [:test3, :test2]=>4, [:test1, :test4]=>5, [:test4, :test1]=>5, [:test4, :test1, :test2]=>4, [:test1, :test4, :test2]=>4, [:test4, :test5]=>3, [:test5, :test1]=>2, [:test1, :test5]=>2, [:test3, :test1]=>2, [:test1, :test3]=>2}"
+        @weights.to_s.should == "Query::Weights({[:test1, :test2]=>6, [:test1]=>5, [:test3]=>3, [:test3, :test2]=>4, [:test1, :test4]=>5, [:test4, :test1]=>5, [:test4, :test1, :test2]=>4, [:test1, :test4, :test2]=>4, [:test4, :test5]=>3, [:test5, :test1]=>2, [:test1, :test5]=>2, [:test3, :test1]=>2, [:test1, :test3]=>2})"
       end
     end
     describe 'empty?' do

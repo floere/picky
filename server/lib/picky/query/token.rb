@@ -120,7 +120,7 @@ module Query
 
     # Returns a token with the next similar text.
     #
-    # TODO Rewrite this. It is hard to understand. Also spec performance.
+    # THINK Rewrite this. It is hard to understand. Also spec performance.
     #
     def next_similar_token category
       token = self.dup

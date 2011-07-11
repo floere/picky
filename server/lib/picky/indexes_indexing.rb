@@ -37,7 +37,7 @@ class Indexes
     indexes.each(&:index)
   end
 
-  # TODO Doc. Spec. Split into Query/Index.
+  #
   #
   def tokenizer
     Tokenizers::Index.default

@@ -6,6 +6,8 @@ module Query
 
     attr_reader :weights
 
+    delegate :empty?, :to => :weights
+
     #
     #
     def initialize weights = {}
@@ -42,12 +44,6 @@ module Query
       weight_for combinations.map(&:category_name).clustered_uniq_fast
     end
 
-    # Are there any weights defined?
-    #
-    def empty?
-      @weights.empty?
-    end
-
     def == other
       @weights == other.weights
     end
@@ -55,7 +51,7 @@ module Query
     # Prints out a nice representation of the configured weights.
     #
     def to_s
-      @weights.to_s
+      "#{self.class}(#{@weights})"
     end
 
   end
