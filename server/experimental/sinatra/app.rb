@@ -49,6 +49,6 @@ end
 search = Search.new texts
 
 get '/texts' do
-  results = search.search_with_text params[:query]
+  results = search.search_with_text params[:query], params[:ids] || 20, params[:offset] || 0
   results.to_json
 end
