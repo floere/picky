@@ -32,44 +32,34 @@ module Loader # :nodoc:all
   def self.load_user_lib filename
     load_user File.join('lib', filename)
   end
-  def self.load_all_user_in dirname
-    Dir[File.join(PICKY_ROOT, dirname, '**', '*.rb')].each do |filename|
-      load filename
-    end
-  end
+  # def self.load_all_user_in dirname
+  #   Dir[File.join(PICKY_ROOT, dirname, '**', '*.rb')].each do |filename|
+  #     load filename
+  #   end
+  # end
 
   # Load the user's application.
   #
   def self.load_application
-    # Add lib dir to load path.
-    #
-    # add_lib_dir
+    # # Picky autoloading.
+    # #
+    # begin
+    #   load_all_user_in 'lib/initializers'
+    #   load_all_user_in 'lib/tokenizers'
+    #   load_all_user_in 'lib/indexers'
+    #   load_all_user_in 'lib/query'
+    # rescue NameError => name_error
+    #   namespaced_class_name = name_error.message.gsub /^uninitialized\sconstant\s/, ''
+    #   load_user_lib namespaced_class_name.underscore # Try it once.
+    #   retry
+    # end
 
-    # Picky autoloading.
+    # (Re)load (and finalize) the user's config.
     #
-    begin
-      load_all_user_in 'lib/initializers'
-      load_all_user_in 'lib/tokenizers'
-      load_all_user_in 'lib/indexers'
-      load_all_user_in 'lib/query'
-    rescue NameError => name_error
-      namespaced_class_name = name_error.message.gsub /^uninitialized\sconstant\s/, ''
-      load_user_lib namespaced_class_name.underscore # Try it once.
-      retry
+    Application.reload do
+      load_user 'app/logging'
+      load_user 'app/application'
     end
-
-    # Prepare the application for reload.
-    #
-    # TODO Application.prepare_for_reload
-
-    # Load the user's config.
-    #
-    load_user 'app/logging'
-    load_user 'app/application'
-
-    # Finalize the applications.
-    #
-    Application.finalize_apps
 
     exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
   end

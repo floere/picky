@@ -31,16 +31,14 @@ class Results
       duration:    duration,
       total:       total }
   end
-  # The default format is json.
-  #
-  def to_response options = {}
-    to_json options
-  end
   # Convert to json format.
   #
   def to_json options = {}
     serialize.to_json options
   end
+  # The default format is json.
+  #
+  alias to_response to_json
 
   # This starts the actual processing.
   #

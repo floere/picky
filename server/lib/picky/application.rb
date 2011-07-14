@@ -190,7 +190,18 @@ class Application
       rack_adapter.call env
     end
     def rack_adapter # :nodoc:
-      @rack_adapter ||= FrontendAdapters::Rack.new
+      @rack_adapter || reset_rack_adapter
+    end
+    def reset_rack_adapter
+      @rack_adapter = FrontendAdapters::Rack.new
+    end
+
+    # Reloads & finalizes the apps.
+    #
+    def reload
+      reset_rack_adapter
+      yield
+      finalize_apps
     end
 
     # Finalize the subclass as soon as it
