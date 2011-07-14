@@ -9,9 +9,9 @@ require File.expand_path '../../lib/picky', __FILE__
 #
 Loader.load_application
 
-# Load the data. This loads data from cache files e.g. "some_index/*_index.dump" into constant Indexes::SomeIndex.
+# Load the indexes.
 #
-Indexes.load_from_cache
+Indexes.reload
 
 # Use Harakiri middleware to kill unicorn child after X requests.
 #
