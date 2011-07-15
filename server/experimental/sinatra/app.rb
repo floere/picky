@@ -37,17 +37,14 @@ texts = Index::Memory.new :texts do
            partial: Partial::Substring.new(from: 1),
            similarity: Similarity::DoubleMetaphone.new(3)
 end
-
 texts.index
 texts.reload
-
 Signal.trap('USR1') do
   texts.reindex # kill -USR1 <pid>
 end
 
 
 search = Search.new texts
-
 get '/texts' do
   results = search.search_with_text params[:query], params[:ids] || 20, params[:offset] || 0
   results.to_json

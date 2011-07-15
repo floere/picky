@@ -17,6 +17,10 @@
 require 'sinatra'
 require File.expand_path '../../../lib/picky', __FILE__
 
+# This could be replaced by
+#   require 'model'
+# or similar.
+#
 class Model
   attr_reader :id, :text
   def initialize id, text
@@ -34,19 +38,22 @@ end
 
 class UnicornApp < Sinatra::Application
 
+  extend Picky::Sinatra
+
   texts = Index::Memory.new :texts do
     source   Model.all
     category :text,
              partial: Partial::Substring.new(from: 1),
              similarity: Similarity::DoubleMetaphone.new(3)
   end
-
   texts.index
   texts.reload
+  Signal.trap('USR1') do
+    texts.reindex # kill -USR1 <pid>
+  end
 
 
   search = Search.new texts
-
   get '/texts' do
     results = search.search_with_text params[:query]
     results.to_json

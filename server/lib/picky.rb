@@ -14,3 +14,7 @@ require File.expand_path '../picky/loader', __FILE__
 #
 Loader.load_framework
 puts "Loaded picky with environment '#{PICKY_ENVIRONMENT}' in #{PICKY_ROOT} on Ruby #{RUBY_VERSION}."
+
+# Check if delegators need to be installed.
+#
+require File.expand_path '../picky/sinatra', __FILE__

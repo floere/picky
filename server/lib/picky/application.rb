@@ -202,8 +202,10 @@ class Application
     #
     def reload
       reset_rack_adapter
-      yield # TODO Move loader stuff here.
+      Loader.load_user 'app/logging'
+      Loader.load_user 'app/application'
       finalize_apps
+      exclaim "Application #{apps.map(&:name).join(', ')} loaded."
     end
 
     # Finalize the subclass as soon as it

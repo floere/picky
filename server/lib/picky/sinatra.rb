@@ -5,14 +5,30 @@ module Picky
   #
   module Sinatra
 
-    def indexing
-
+    # Privatizes app file methods.
+    #
+    def self.extended into
+      private :indexing, :searching
     end
 
-    def searching
+    # Delegates to Application.
+    #
+    def indexing options
+      Application.indexing options
+    end
 
+    # Delegates to Application.
+    #
+    def searching options
+      Application.searching options
     end
 
   end
 
+end
+
+# Check if toplevel Sinatra picky methods need to be installed.
+#
+if private_methods.include? :get
+  extend Picky::Sinatra
 end

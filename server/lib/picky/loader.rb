@@ -6,7 +6,7 @@ module Loader # :nodoc:all
   # First itself, then the app.
   #
   def self.reload
-    Dir.chdir(PICKY_ROOT)
+    Dir.chdir PICKY_ROOT
     exclaim 'Reloading loader.'
     load_self
     exclaim 'Reloading framework.'
@@ -22,46 +22,22 @@ module Loader # :nodoc:all
     load __FILE__
   end
 
+  # Load a file relative to this.
+  #
   def self.load_relative filename_without_rb
     load File.join(File.dirname(__FILE__), "#{filename_without_rb}.rb")
   end
 
+  # Load a user file.
+  #
   def self.load_user filename
     load File.join(PICKY_ROOT, "#{filename}.rb")
   end
-  # def self.load_user_lib filename
-  #   load_user File.join('lib', filename)
-  # end
-  # def self.load_all_user_in dirname
-  #   Dir[File.join(PICKY_ROOT, dirname, '**', '*.rb')].each do |filename|
-  #     load filename
-  #   end
-  # end
 
   # Load the user's application.
   #
   def self.load_application
-    # # Picky autoloading.
-    # #
-    # begin
-    #   load_all_user_in 'lib/initializers'
-    #   load_all_user_in 'lib/tokenizers'
-    #   load_all_user_in 'lib/indexers'
-    #   load_all_user_in 'lib/query'
-    # rescue NameError => name_error
-    #   namespaced_class_name = name_error.message.gsub /^uninitialized\sconstant\s/, ''
-    #   load_user_lib namespaced_class_name.underscore # Try it once.
-    #   retry
-    # end
-
-    # (Re)load (and finalize) the user's config.
-    #
-    Application.reload do
-      load_user 'app/logging'
-      load_user 'app/application'
-    end
-
-    exclaim "Application #{Application.apps.map(&:name).join(', ')} loaded."
+    Application.reload
   end
 
   # Loads the internal parts of the framework.
