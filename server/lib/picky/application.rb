@@ -202,8 +202,9 @@ class Application
     #
     def reload
       reset_rack_adapter
-      Loader.load_user 'app/logging'
-      Loader.load_user 'app/application'
+      Loader.load_user 'app'             # Sinatra app_file.
+      Loader.load_user 'app/logging'     # Standard Picky logging.
+      Loader.load_user 'app/application' # Standard Picky appfile.
       finalize_apps
       exclaim "Application #{apps.map(&:name).join(', ')} loaded."
     end
