@@ -163,7 +163,7 @@ class Application
     def indexing options = {}
       Tokenizers::Index.default = Tokenizers::Index.new(options)
     end
-    alias default_indexing indexing
+    alias default_indexing indexing # TODO Remove.
 
     # Returns a configured tokenizer that
     # is used for querying by default.
@@ -171,12 +171,14 @@ class Application
     def searching options = {}
       Tokenizers::Query.default = Tokenizers::Query.new(options)
     end
-    alias default_querying searching
-    alias querying searching
+    alias default_querying searching # TODO Remove.
+    alias querying searching # TODO Remove.
 
     # Routes.
     #
-    delegate :route, :root, :to => :rack_adapter
+    delegate :route,
+             :root, # TODO Remove. Simplify.
+             :to => :rack_adapter
 
     #
     # API
@@ -200,7 +202,7 @@ class Application
     #
     def reload
       reset_rack_adapter
-      yield
+      yield # TODO Move loader stuff here.
       finalize_apps
     end
 
