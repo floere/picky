@@ -31,7 +31,8 @@ module Loader # :nodoc:all
   # Load a user file.
   #
   def self.load_user filename
-    load File.join(PICKY_ROOT, "#{filename}.rb")
+    file_name = File.join PICKY_ROOT, "#{filename}.rb"
+    load file_name if File.exists? file_name
   end
 
   # Load the user's application.
