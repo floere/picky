@@ -26,6 +26,9 @@ class Indexes
   def self.instance
     @instance ||= new
   end
+  def self.identifier
+    name
+  end
 
   instance_delegate :clear,
                     :register,
