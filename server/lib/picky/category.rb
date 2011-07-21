@@ -56,14 +56,6 @@ class Category
     reload
   end
 
-  # Category name.
-  #
-  # TODO Remove? Alias?
-  #
-  def category_name
-    name
-  end
-
   # Index name.
   #
   def index_name
