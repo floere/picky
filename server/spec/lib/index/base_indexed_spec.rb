@@ -39,7 +39,7 @@ describe Index::Base do
     end
     describe "possible_combinations" do
       it "delegates to the combinator" do
-        @categories.should_receive(:possible_combinations_for).once.with :some_token
+        @categories.should_receive(:possible_combinations).once.with :some_token
         
         @index.possible_combinations :some_token
       end

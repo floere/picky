@@ -77,7 +77,7 @@ describe Categories do
       @categories << @category3
     end
     
-    describe "possible_combinations_for" do
+    describe "possible_combinations" do
       before(:each) do
         @token = stub :token
       end
@@ -88,7 +88,7 @@ describe Categories do
         it "calls the right method" do
           @categories.should_receive(:similar_possible_for).once.with @token
           
-          @categories.possible_combinations_for @token
+          @categories.possible_combinations @token
         end
       end
       context "with non-similar token" do
@@ -98,7 +98,7 @@ describe Categories do
         it "calls the right method" do
           @categories.should_receive(:possible_for).once.with @token
           
-          @categories.possible_combinations_for @token
+          @categories.possible_combinations @token
         end
       end
     end
