@@ -243,9 +243,6 @@ class BookSearch < Application
           %r{\A/indexing\Z}        => Search.new(indexing_index),
           %r{\A/all\Z}             => Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
-    root 200
-
 end
 
-previous_handler = Signal.trap('USR1') { }
-Signal.trap('USR1') { Indexes.reload; previous_handler.call }
+previous_handler = Signal.trap('USR1') { Indexes.reload; previous_handler.call }
