@@ -163,7 +163,6 @@ class Application
     def indexing options = {}
       Tokenizers::Index.default = Tokenizers::Index.new(options)
     end
-    alias default_indexing indexing # TODO Remove.
 
     # Returns a configured tokenizer that
     # is used for querying by default.
@@ -171,18 +170,10 @@ class Application
     def searching options = {}
       Tokenizers::Query.default = Tokenizers::Query.new(options)
     end
-    alias default_querying searching # TODO Remove.
-    alias querying searching # TODO Remove.
 
     # Routes.
     #
-    delegate :route,
-             :root, # TODO Remove. Simplify.
-             :to => :rack_adapter
-
-    #
-    # API
-
+    delegate :route, :to => :rack_adapter
 
     # A Picky application implements the Rack interface.
     #
