@@ -17,31 +17,30 @@
 require 'sinatra'
 require File.expand_path '../../../lib/picky', __FILE__
 
-# This could be replaced by
+# This could be moved into a model file
 #   require 'model'
-# or similar.
+# or similar, of course.
 #
 class Model
   attr_reader :id, :text
   def initialize id, text
     @id, @text = id, text
   end
-  def self.all
-    [
-      new(1, "Hi"),
-      new(2, "It's"),
-      new(3, "Mister"),
-      new(4, "Model")
-    ]
-  end
 end
+
+data = [
+  Model.new(1, "Hi"),
+  Model.new(2, "It's"),
+  Model.new(3, "Mister"),
+  Model.new(4, "Model")
+]
 
 class UnicornApp < Sinatra::Application
 
   extend Picky::Sinatra
 
   texts = Index::Memory.new :texts do
-    source   Model.all # all returns something responding to #each.
+    source   data
     category :text,
              partial: Partial::Substring.new(from: 1),
              similarity: Similarity::DoubleMetaphone.new(3)

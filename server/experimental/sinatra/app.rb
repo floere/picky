@@ -17,6 +17,10 @@
 require 'sinatra'
 require File.expand_path '../../../lib/picky', __FILE__
 
+# This could be moved into a model file
+#   require 'model'
+# or similar, of course.
+#
 class Model
   attr_reader :id, :text
   def initialize id, text
