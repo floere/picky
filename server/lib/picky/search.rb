@@ -87,10 +87,17 @@ class Search
     Index::Redis  => Query::Combinations::Redis
   }
   def combinations_type_for index_definitions_ary
+    index_types = extract_index_types index_definitions_ary
+    !index_types.empty? && @@mapping[*index_types] || Query::Combinations::Memory
+  end
+  def extract_index_types index_definitions_ary
     index_types = index_definitions_ary.map(&:class)
     index_types.uniq!
-    raise_different(index_types) if index_types.size > 1
-    !index_types.empty? && @@mapping[*index_types] || Query::Combinations::Memory
+    check_index_types index_types
+    index_types
+  end
+  def check_index_types index_types
+    raise_different index_types if index_types.size > 1
   end
   # Currently it isn't possible using Memory and Redis etc.
   # indexes in the same query index group.
