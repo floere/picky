@@ -45,6 +45,6 @@ describe BookSearch do
   
   it_should_route '/ibbbbsn?query=blarf', 404
   
-  it_should_route '/', 200
+  # it_should_route '/', 200
   
 end
