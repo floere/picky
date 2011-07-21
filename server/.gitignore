@@ -3,5 +3,6 @@
 /test_project/tmp
 
 /experimental/sinatra/index
+/experimental/sinatra_unicorn/index
 
 spec/performance_ratio.rb
