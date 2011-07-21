@@ -207,10 +207,6 @@ module Loader # :nodoc:all
     #
     load_relative 'character_substituters/west_european'
 
-    # Signal handling
-    #
-    load_relative 'signals'
-
     # Logging.
     #
     load_relative 'loggers/search'
