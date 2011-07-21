@@ -27,7 +27,7 @@ module Indexed # :nodoc:all
       end
       # Get a weight for the given symbol.
       #
-      # A weight is a string value in Redis. TODO Convert?
+      # A weight is a string value in Redis.
       #
       def weight sym
         @backend.weight sym
