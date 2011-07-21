@@ -44,9 +44,7 @@ module Sources
 
     # Creates a database adapter for use with this source.
     def create_database_adapter # :nodoc:
-      # TODO Do not use ActiveRecord directly.
-      #
-      # TODO Use set_table_name etc.
+      # TODO Do not use ActiveRecord directly. Use set_table_name etc.
       #
       adapter_class = Class.new ActiveRecord::Base
       adapter_class.abstract_class = true
@@ -85,6 +83,8 @@ module Sources
     # Uses CREATE TABLE AS with the given SELECT statement to create a snapshot of the data.
     #
     def take_snapshot index
+      timed_exclaim %Q{"#{index.identifier}": Taking snapshot of database data.}
+
       origin = snapshot_table_name index.name
       on_database = database.connection
 

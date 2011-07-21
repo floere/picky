@@ -76,7 +76,6 @@ module Sources
       connect_backend
       @snapshot_taken ||= 0
       if @snapshot_taken.zero?
-        timed_exclaim %Q{"#{index.identifier}": Taking snapshot of source data (if supported).}
         take_snapshot index
       end
       @snapshot_taken += 1
