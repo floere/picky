@@ -1,3 +1,5 @@
-Notes
+Notes:
 
-Sinatra: cd into sinatra and "bundle exec ruby app.rb" there. Will create an index directory. See app.rb for how to search etc.
+One file Sinatra: cd into sinatra and "bundle exec ruby app.rb" there. Will create an index directory. See app.rb for how to search etc.
+
+Sinatra App w/ Unicorn: cd into sinatra and "bundle exec unicorn -c unicorn.cfg" there. Will create an index directory. See app.rb for how to search etc.

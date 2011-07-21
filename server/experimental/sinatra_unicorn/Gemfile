@@ -20,7 +20,7 @@ gem 'rack_fast_escape', '2009.06.24'
 
 # Required by your project.
 #
-gem 'thin'
+gem 'unicorn'
 gem 'mysql'
 gem 'sinatra'
 gem 'haml'

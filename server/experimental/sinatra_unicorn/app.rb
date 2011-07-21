@@ -41,7 +41,7 @@ class UnicornApp < Sinatra::Application
   extend Picky::Sinatra
 
   texts = Index::Memory.new :texts do
-    source   Model.all
+    source   Model.all # all returns something responding to #each.
     category :text,
              partial: Partial::Substring.new(from: 1),
              similarity: Similarity::DoubleMetaphone.new(3)

@@ -13,13 +13,12 @@ GEM
     activesupport (3.0.7)
     arel (2.0.10)
     builder (2.1.2)
-    daemons (1.0.10)
     diff-lcs (1.1.2)
-    eventmachine (0.12.10)
     haml (3.0.25)
     i18n (0.5.0)
+    kgio (2.4.1)
     mysql (2.8.1)
-    picky-client (2.6.0)
+    picky-client (2.7.0)
       activesupport (>= 3.0.0)
       yajl-ruby (>= 0.7.8)
     rack (1.2.3)
@@ -27,6 +26,7 @@ GEM
       rack (>= 1.0.0)
     rack_fast_escape (2009.06.24)
       url_escape
+    raindrops (0.7.0)
     rake (0.9.0)
     redis (2.2.0)
     rspec (2.6.0)
@@ -41,12 +41,12 @@ GEM
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
     text (0.2.0)
-    thin (1.2.11)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     tilt (1.3.1)
     tzinfo (0.3.27)
+    unicorn (4.0.1)
+      kgio (~> 2.4)
+      rack
+      raindrops (~> 0.6)
     url_escape (2009.06.24)
     yajl-ruby (0.7.9)
 
@@ -68,5 +68,5 @@ DEPENDENCIES
   rspec
   sinatra
   text (~> 0.2.0)
-  thin
+  unicorn
   yajl-ruby (~> 0.7.8)
