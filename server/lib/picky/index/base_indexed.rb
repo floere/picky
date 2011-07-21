@@ -10,19 +10,10 @@ module Index
     delegate :load_from_cache,
              :analyze,
              :reindex,
+             :possible_combinations,
              :to => :categories
 
     alias reload load_from_cache
-
-    # Return the possible combinations for this token.
-    #
-    # A combination is a tuple <token, index_bundle>.
-    #
-    # TODO Rename and delegate.
-    #
-    def possible_combinations token
-      categories.possible_combinations_for token
-    end
 
   end
 
