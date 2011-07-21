@@ -35,10 +35,6 @@ module Query
     # Note: Cache this if more complicated weighings become necessary.
     #
     def score combinations
-      # TODO Or hide: combinations#to_weights_key (but it's an array, so…)
-      #
-      # TODO combinations could cluster uniq as combinations are added (since combinations don't change).
-      #
       # TODO Or it could use actual combinations? Could it? Or make combinations comparable to Symbols.
       #
       weight_for combinations.map(&:category_name).clustered_uniq_fast
