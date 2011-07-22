@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Backend::Files do
 
   before(:each) do
-    index         = Index::Memory.new :some_index, source: []
+    index         = Indexes::Memory.new :some_index, source: []
     category      = Category.new :some_category, index
     bundle        = Indexing::Bundle::Base.new :some_bundle, category, nil, nil, nil
     

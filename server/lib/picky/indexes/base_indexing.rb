@@ -1,4 +1,4 @@
-module Index
+class Indexes
 
   #
   #
@@ -99,7 +99,7 @@ module Index
 
 No source given for index #{name}. An index needs a source.
 Example:
-Index::Memory.new(:with_source) do
+Indexes::Memory.new(:with_source) do
   source   Sources::CSV.new(:title, file: 'data/books.csv')
   category :title
   category :author

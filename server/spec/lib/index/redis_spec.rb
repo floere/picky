@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Index::Redis do
+describe Indexes::Redis do
   
   let(:some_source) { stub :source, :harvest => nil }
   

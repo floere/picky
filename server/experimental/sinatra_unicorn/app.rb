@@ -39,7 +39,7 @@ class UnicornApp < Sinatra::Application
 
   extend Picky::Sinatra
 
-  texts = Index::Memory.new :texts do
+  texts = Indexes::Memory.new :texts do
     source   data
     category :text,
              partial: Partial::Substring.new(from: 1),

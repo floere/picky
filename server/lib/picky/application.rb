@@ -13,14 +13,14 @@
 # will generate an example <tt>project_name/app/application.rb</tt> file for you
 # with some example code inside.
 #
-# == Index::Memory.new(name)
+# == Indexes::Memory.new(name)
 #
-# Next, define where your data comes from, creating an <tt>Index</tt>. You use the <tt>Index::Memory.new</tt> method for that:
-#   my_index = Index::Memory.new :some_index_name
+# Next, define where your data comes from, creating an <tt>Index</tt>. You use the <tt>Indexes::Memory.new</tt> method for that:
+#   my_index = Indexes::Memory.new :some_index_name
 # You give the index a name (or identifier), and a source (see Sources), where its data comes from. Let's do that:
 #   class MyGreatSearch < Application
 #
-#     books = Index::Memory.new :books do
+#     books = Indexes::Memory.new :books do
 #       source Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #     end
 #
@@ -29,7 +29,7 @@
 #
 # That on itself won't do much good.
 #
-# Note that a Redis index is also available: Index::Redis.new.
+# Note that a Redis index is also available: Indexes::Redis.new.
 #
 # == category(identifier, options = {})
 #
@@ -41,7 +41,7 @@
 # Let's go ahead and define a category:
 #   class MyGreatSearch < Application
 #
-#     books = Index::Memory.new :books do
+#     books = Indexes::Memory.new :books do
 #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #       category :title
 #     end
@@ -68,7 +68,7 @@
 # In full glory:
 #   class MyGreatSearch < Application
 #
-#     books = Index::Memory.new :books do
+#     books = Indexes::Memory.new :books do
 #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #       category :title
 #     end
@@ -132,7 +132,7 @@
 #               substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
 #               maximum_tokens: 4
 #
-#     books = Index::Memory.new :books do
+#     books = Indexes::Memory.new :books do
 #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
 #       category :title,
 #                qualifiers: [:t, :title, :titre],

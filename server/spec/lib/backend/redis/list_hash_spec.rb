@@ -8,7 +8,7 @@ describe Backend::Redis::ListHash do
     it 'raises an error' do
       expect {
         index.member :some_sym
-      }.to raise_error("Can't retrieve single value :some_sym from a Redis ListHash. Use Index::Redis::StringHash.")
+      }.to raise_error("Can't retrieve single value :some_sym from a Redis ListHash. Use Indexes::Redis::StringHash.")
     end
   end
   

@@ -1,4 +1,4 @@
-module Index
+class Indexes
 
   #
   #

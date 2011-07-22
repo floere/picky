@@ -35,7 +35,7 @@ data = [
   Model.new(4, "Model")
 ]
 
-texts = Index::Memory.new :texts do
+texts = Indexes::Memory.new :texts do
   source data
   category :text,
            partial: Partial::Substring.new(from: 1),

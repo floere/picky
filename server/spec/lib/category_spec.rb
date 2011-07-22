@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Category do
   
-  let(:index) { Index::Memory.new :some_index, source: [] }
+  let(:index) { Indexes::Memory.new :some_index, source: [] }
   let(:category) { described_class.new :some_category, index }
   
   it 'should set defaults correctly' do

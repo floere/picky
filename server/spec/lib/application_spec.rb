@@ -8,7 +8,7 @@ describe Application do
     it "should run ok" do
       lambda {
         class MinimalTestApplication < Application
-          books = Index::Memory.new :books, source: Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
+          books = Indexes::Memory.new :books, source: Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
           books.define_category :title
           
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
@@ -39,7 +39,7 @@ describe Application do
                     substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
                     maximum_tokens: 5
           
-          books_index = Index::Memory.new :books,
+          books_index = Indexes::Memory.new :books,
                                           source: Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
           books_index.define_category :title,
                                       similarity: Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
@@ -48,7 +48,7 @@ describe Application do
           books_index.define_category :isbn,
                                       partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
           
-          geo_index = Index::Memory.new :geo do
+          geo_index = Indexes::Memory.new :geo do
             source          Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
             indexing        removes_characters: /[^a-z]/
             category        :location,

@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Index::Base do
+describe Indexes::Base do
   
   let(:some_source) { stub :source, :harvest => nil, :inspect => 'some_source' }
   
@@ -20,12 +20,12 @@ describe Index::Base do
       expect { described_class.new :some_index_name, some_source }.to raise_error(<<-ERROR
 
 
-Sources are not passed in as second parameter for Index::Base anymore, but either
+Sources are not passed in as second parameter for Indexes::Base anymore, but either
 * as :source option:
-  Index::Base.new(:some_index_name, source: some_source)
+  Indexes::Base.new(:some_index_name, source: some_source)
 or
 * given to the #source method inside the config block:
-  Index::Base.new(:some_index_name) do
+  Indexes::Base.new(:some_index_name) do
     source some_source
   end
 

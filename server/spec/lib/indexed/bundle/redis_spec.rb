@@ -7,7 +7,7 @@ describe Indexed::Bundle::Redis do
     
     Backend::Redis.stub! :new => @backend
     
-    @index        = Index::Memory.new :some_index, source: []
+    @index        = Indexes::Memory.new :some_index, source: []
     @category     = Category.new :some_category, @index
     
     @similarity   = stub :similarity

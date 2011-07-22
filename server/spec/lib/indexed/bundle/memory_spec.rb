@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Indexed::Bundle::Memory do
 
   before(:each) do
-    @index        = Index::Memory.new :some_index, source: []
+    @index        = Indexes::Memory.new :some_index, source: []
     @category     = Category.new :some_category, @index
     
     @similarity   = stub :similarity
@@ -153,7 +153,7 @@ describe Indexed::Bundle::Memory do
   
   describe 'initialization' do
     before(:each) do
-      @index    = Index::Memory.new :some_index, source: []
+      @index    = Indexes::Memory.new :some_index, source: []
       @category = Category.new :some_category, @index
       
       @bundle = described_class.new :some_name, @category, :similarity

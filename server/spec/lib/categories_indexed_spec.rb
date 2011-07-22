@@ -22,7 +22,7 @@ describe Categories do
   
   context "with real categories" do
     before(:each) do
-      @index1 = Index::Memory.new :name, source: []
+      @index1 = Indexes::Memory.new :name, source: []
       
       @categories = described_class.new
       @categories << Category.new(:category1, @index1)
@@ -65,7 +65,7 @@ describe Categories do
   
   context 'without options' do
     before(:each) do
-      @index1 = Index::Memory.new :some_index, source: []
+      @index1 = Indexes::Memory.new :some_index, source: []
       
       @category1 = Category.new :category1, @index1
       @category2 = Category.new :category2, @index1

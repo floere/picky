@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Indexing::Bundle::Redis do
 
   before(:each) do
-    @index       = Index::Memory.new :some_index, source: []
+    @index       = Indexes::Memory.new :some_index, source: []
     @category    = Category.new :some_category, @index
     
     @partial     = stub :partial

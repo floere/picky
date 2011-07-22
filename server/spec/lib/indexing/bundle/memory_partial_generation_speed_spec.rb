@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Indexing::Bundle::Memory do
 
   before(:each) do
-    @index            = Index::Memory.new :some_index, source: []
+    @index            = Indexes::Memory.new :some_index, source: []
     @category         = Category.new :some_category, @index
     
     @partial_strategy = Generators::Partial::Substring.new :from => 1

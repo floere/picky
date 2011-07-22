@@ -24,7 +24,7 @@ module Backend
       # Get a collection.
       #
       def collection key
-        raise "Can't retrieve collection for :#{key} from a StringHash. Use Index::Redis::ListHash."
+        raise "Can't retrieve collection for :#{key} from a StringHash. Use Indexes::Redis::ListHash."
       end
 
       # Get a single value.

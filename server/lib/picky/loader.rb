@@ -225,15 +225,15 @@ module Loader # :nodoc:all
     load_relative 'categories_indexed'
     load_relative 'categories_indexing'
 
-    load_relative 'index/base'
-    load_relative 'index/base_indexed'
-    load_relative 'index/base_indexing'
-    load_relative 'index/memory'
-    load_relative 'index/redis'
-
     load_relative 'indexes'
     load_relative 'indexes_indexed'
     load_relative 'indexes_indexing'
+
+    load_relative 'indexes/base'
+    load_relative 'indexes/base_indexed'
+    load_relative 'indexes/base_indexing'
+    load_relative 'indexes/memory'
+    load_relative 'indexes/redis'
 
     # Results.
     #

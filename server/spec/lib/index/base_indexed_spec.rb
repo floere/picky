@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Index::Base do
+describe Indexes::Base do
   
   context 'without stubbed categories' do
     before(:each) do

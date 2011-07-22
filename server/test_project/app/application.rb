@@ -33,7 +33,7 @@ class BookSearch < Application
               maximum_tokens:                     5,
               substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
 
-    books_index = Index::Memory.new :books, result_identifier: 'boooookies' do
+    books_index = Indexes::Memory.new :books, result_identifier: 'boooookies' do
       source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
       category :id
       category :title,
@@ -46,7 +46,7 @@ class BookSearch < Application
 
     class Book < ActiveRecord::Base; end
     Book.establish_connection YAML.load(File.open('app/db.yml'))
-    book_each_index = Index::Memory.new :book_each do
+    book_each_index = Indexes::Memory.new :book_each do
       key_format :to_s
       source     Book.order('title ASC')
       category   :id
@@ -58,7 +58,7 @@ class BookSearch < Application
       category   :year, qualifiers: [:y, :year, :annee]
     end
 
-    isbn_index = Index::Memory.new :isbn do
+    isbn_index = Indexes::Memory.new :isbn do
       source   Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml')
       category :isbn, :qualifiers => [:i, :isbn]
     end
@@ -81,7 +81,7 @@ class BookSearch < Application
 
     end
 
-    rss_index = Index::Memory.new :rss do
+    rss_index = Indexes::Memory.new :rss do
       source     EachRSSItemProxy.new
       key_format :to_s
 
@@ -91,7 +91,7 @@ class BookSearch < Application
 
     # Breaking example to test the nice error message.
     #
-    # breaking = Index::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml') do
+    # breaking = Indexes::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'app/db.yml') do
     #   category :isbn, :qualifiers => [:i, :isbn]
     # end
 
@@ -105,24 +105,24 @@ class BookSearch < Application
         @isbn = isbn
       end
     end
-    isbn_each_index = Index::Memory.new :isbn_each, source: [ISBN.new('ABC'), ISBN.new('DEF')] do
+    isbn_each_index = Indexes::Memory.new :isbn_each, source: [ISBN.new('ABC'), ISBN.new('DEF')] do
       category :isbn, :qualifiers => [:i, :isbn], :key_format => :to_s
     end
 
-    mgeo_index = Index::Memory.new :memory_geo do
+    mgeo_index = Indexes::Memory.new :memory_geo do
       source          Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
       category        :location
       ranged_category :north1, 0.008, precision: 3, from: :north
       ranged_category :east1,  0.008, precision: 3, from: :east
     end
 
-    real_geo_index = Index::Memory.new :real_geo do
+    real_geo_index = Indexes::Memory.new :real_geo do
       source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
       category       :location, partial: Partial::Substring.new(from: 1)
       geo_categories :north, :east, 1, precision: 3
     end
 
-    iphone_locations = Index::Memory.new :iphone do
+    iphone_locations = Indexes::Memory.new :iphone do
       source Sources::CSV.new(
         :mcc,
         :mnc,
@@ -143,17 +143,17 @@ class BookSearch < Application
       geo_categories  :latitude, :longitude, 25, precision: 3
     end
 
-    Index::Memory.new :underscore_regression do
+    Indexes::Memory.new :underscore_regression do
       source         Sources::CSV.new(:location, file: 'data/ch.csv')
       category       :some_place, :from => :location
     end
 
-    # rgeo_index = Index::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    # rgeo_index = Indexes::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     # rgeo_index.define_category :location
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
-    csv_test_index = Index::Memory.new(:csv_test, result_identifier: 'Books') do
+    csv_test_index = Indexes::Memory.new(:csv_test, result_identifier: 'Books') do
       source     Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
 
       category :title,
@@ -170,7 +170,7 @@ class BookSearch < Application
       category :subjects, qualifiers: [:s, :subject]
     end
 
-    indexing_index = Index::Memory.new(:special_indexing) do
+    indexing_index = Indexes::Memory.new(:special_indexing) do
       source   Sources::CSV.new(:title, file: 'data/books.csv')
       indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
                splits_text_on:     /[\s\/\-\"\&\/]/
@@ -180,7 +180,7 @@ class BookSearch < Application
                similarity: Similarity::DoubleMetaphone.new(2)
     end
 
-   redis_index = Index::Redis.new(:redis) do
+   redis_index = Indexes::Redis.new(:redis) do
      source   Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'data/books.csv')
      category :title,
               qualifiers: [:t, :title, :titre],
@@ -196,12 +196,12 @@ class BookSearch < Application
      category :subjects,  qualifiers: [:s, :subject]
    end
 
-    sym_keys_index = Index::Memory.new :symbol_keys do
+    sym_keys_index = Indexes::Memory.new :symbol_keys do
       source   Sources::CSV.new(:text, file: "data/#{PICKY_ENVIRONMENT}/symbol_keys.csv", key_format: 'strip')
       category :text, partial: Partial::Substring.new(from: 1)
     end
 
-    memory_changing_index = Index::Memory.new(:memory_changing) do
+    memory_changing_index = Indexes::Memory.new(:memory_changing) do
       source [
         ChangingItem.new("1", 'first entry'),
         ChangingItem.new("2", 'second entry'),
@@ -210,7 +210,7 @@ class BookSearch < Application
       category :name
     end
 
-    redis_changing_index = Index::Redis.new(:redis_changing) do
+    redis_changing_index = Indexes::Redis.new(:redis_changing) do
       source [
         ChangingItem.new("1", 'first entry'),
         ChangingItem.new("2", 'second entry'),

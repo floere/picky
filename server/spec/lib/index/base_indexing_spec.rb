@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Index::Base do
+describe Indexes::Base do
   
   describe 'tokenizer' do
     context 'with tokenizer' do

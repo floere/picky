@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Category do
   
   before(:each) do
-    @index  = Index::Memory.new :some_index, source: []
+    @index  = Indexes::Memory.new :some_index, source: []
     @source = stub :some_given_source, :key_format => nil
   end
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }

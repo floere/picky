@@ -83,8 +83,8 @@ class Search
   # Picky will raise a Query::Indexes::DifferentTypesError.
   #
   @@mapping = {
-    Index::Memory => Query::Combinations::Memory,
-    Index::Redis  => Query::Combinations::Redis
+    Indexes::Memory => Query::Combinations::Memory,
+    Indexes::Redis  => Query::Combinations::Redis
   }
   def combinations_type_for index_definitions_ary
     index_types = extract_index_types index_definitions_ary

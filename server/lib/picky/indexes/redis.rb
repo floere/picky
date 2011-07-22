@@ -1,9 +1,9 @@
-module Index
+class Indexes
 
   # An index that is persisted in Redis.
   #
   class Redis < Base
-    
+
     def indexing_bundle_class
       Indexing::Bundle::Redis
     end

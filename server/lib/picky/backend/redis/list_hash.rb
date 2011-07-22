@@ -39,7 +39,7 @@ module Backend
       # Get a single value.
       #
       def member key
-        raise "Can't retrieve single value :#{key} from a Redis ListHash. Use Index::Redis::StringHash."
+        raise "Can't retrieve single value :#{key} from a Redis ListHash. Use Indexes::Redis::StringHash."
       end
 
     end

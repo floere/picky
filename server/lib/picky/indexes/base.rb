@@ -9,14 +9,14 @@
 #
 # This is a step-by-step description on how to create an index.
 #
-# Start by choosing an <tt>Index::Memory</tt> or an <tt>Index::Redis</tt>.
-# In the example, we will be using an in-memory index, <tt>Index::Memory</tt>.
+# Start by choosing an <tt>Indexes::Memory</tt> or an <tt>Indexes::Redis</tt>.
+# In the example, we will be using an in-memory index, <tt>Indexes::Memory</tt>.
 #
-#   books = Index::Memory.new(:books)
+#   books = Indexes::Memory.new(:books)
 #
 # That in itself won't do much good, that's why we add a data source:
 #
-#   books = Index::Memory.new(:books) do
+#   books = Indexes::Memory.new(:books) do
 #     source Sources::CSV.new(:title, :author, file: 'data/books.csv')
 #   end
 #
@@ -26,7 +26,7 @@
 #
 # For example, a 3.0 ActiveRecord class:
 #
-#   books = Index::Memory.new(:books) do
+#   books = Indexes::Memory.new(:books) do
 #     source Book.order('isbn ASC')
 #   end
 #
@@ -34,18 +34,18 @@
 #
 # Let's add a few categories:
 #
-#   books = Index::Memory.new(:books) do
+#   books = Indexes::Memory.new(:books) do
 #     source   Book.order('isbn ASC')
 #     category :title
 #     category :author
 #     category :isbn
 #   end
 #
-# Categories offer quite a few options, see <tt>Index::Base#category</tt> for details.
+# Categories offer quite a few options, see <tt>Indexes::Base#category</tt> for details.
 #
 # After adding more options, it might look like this:
 #
-#   books = Index::Memory.new(:books) do
+#   books = Indexes::Memory.new(:books) do
 #     source   Book.order('isbn ASC')
 #     category :title,
 #              partial: Partial::Substring.new(from: 1),
@@ -62,7 +62,7 @@
 #
 # If it uses <tt>String</tt> ids, use <tt>#key_format</tt> to define a formatting method:
 #
-#   books = Index::Memory.new(:books) do
+#   books = Indexes::Memory.new(:books) do
 #     key_format :to_s
 #     source     Book.order('isbn ASC')
 #     category   :title
@@ -74,7 +74,7 @@
 #
 #   route %r{^/media$} => Search.new(books, dvds, mp3s)
 #
-module Index
+class Indexes
 
   # This class defines the indexing and index API that is exposed to the user
   # as the #index method inside the Application class.
@@ -105,11 +105,11 @@ module Index
     # * key_format: The format the ids of this index are in. Optional, can be defined in the block using #key_format.
     #
     # Examples:
-    #   my_index = Index::Memory.new(:my_index, source: some_source) do
+    #   my_index = Indexes::Memory.new(:my_index, source: some_source) do
     #     category :bla
     #   end
     #
-    #   my_index = Index::Memory.new(:my_index) do
+    #   my_index = Indexes::Memory.new(:my_index) do
     #     source   Sources::CSV.new(file: 'data/index.csv')
     #     category :bla
     #   end
@@ -193,7 +193,7 @@ module Index
     #
     # Optionally, you give it a precision value to reduce the error margin
     # around 47 (Picky is a bit liberal).
-    #   Index::Memory.new :range do
+    #   Indexes::Memory.new :range do
     #     ranged_category :values_inside_1_100, 2, precision: 5
     #   end
     #
@@ -206,7 +206,7 @@ module Index
     # == Protip 1
     #
     # Create two ranged categories to make an area search:
-    #   Index::Memory.new :area do
+    #   Indexes::Memory.new :area do
     #     ranged_category :x, 1
     #     ranged_category :y, 1
     #   end
@@ -324,10 +324,10 @@ module Index
       raise ArgumentError.new(<<-NAME
 
 
-The index identifier (you gave "#{name}") for Index::Memory/Index::Redis should be a Symbol/String,
+The index identifier (you gave "#{name}") for Indexes::Memory/Indexes::Redis should be a Symbol/String,
 Examples:
-  Index::Memory.new(:my_cool_index) # Recommended
-  Index::Redis.new("a-redis-index")
+  Indexes::Memory.new(:my_cool_index) # Recommended
+  Indexes::Redis.new("a-redis-index")
 NAME
 
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Category do
 
   before(:each) do
-    @index               = Index::Base.new :some_index, source: []
+    @index               = Indexes::Base.new :some_index, source: []
     @partial_strategy    = stub :partial, :use_exact_for_partial? => false
     @weights_strategy    = stub :weights
     @similarity_strategy = stub :similarity
@@ -40,7 +40,7 @@ describe Category do
     end
     context 'indexed_bundle_class defined differently' do
       before(:each) do
-        @category = described_class.new :some_name, Index::Redis.new(:some_index_name, source: [])
+        @category = described_class.new :some_name, Indexes::Redis.new(:some_index_name, source: [])
       end
       context 'with a partial strategy that uses the exact index' do
         before(:each) do
