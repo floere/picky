@@ -87,8 +87,17 @@ class Indexes
     # anything responding to #each and returning objects that
     # respond to id and the category names (or the category from option).
     #
-    def source some_source = nil
-      some_source ? define_source(some_source) : (@source || raise_no_source)
+    def source some_source = nil, &block
+      some_source ||= block
+      some_source ? define_source(some_source) : (@source && extract_source || raise_no_source)
+    end
+    # Extract the actual source if it is wrapped in a time
+    # capsule, i.e. a block/lambda.
+    #
+    # TODO Extract into module.
+    #
+    def extract_source
+      @source = @source.respond_to?(:call) ? @source.call : @source
     end
     def define_source source
       @source = source

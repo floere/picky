@@ -359,14 +359,14 @@ OPTIONS
       raise ArgumentError.new(<<-SOURCE
 
 
-The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text).
+The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text), OR it can be a lambda/block, returning such a source.
 Or it could use one of the built-in sources:
   Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
   Sources::')}
 
 
 SOURCE
-) unless source.respond_to?(:each) || source.respond_to?(:harvest)
+) unless source.respond_to?(:each) || source.respond_to?(:harvest) || source.respond_to?(:call)
     end
 
     def to_stats # :nodoc:

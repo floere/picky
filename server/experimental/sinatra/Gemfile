@@ -19,11 +19,8 @@ gem 'rack_fast_escape', '2009.06.24'
 
 # Required by your project.
 #
-gem 'thin'
-gem 'mysql'
+gem 'thin' # Or another webserver.
 gem 'sinatra'
-gem 'haml'
-gem 'redis'
 
 group :test do
   gem 'picky-client'
