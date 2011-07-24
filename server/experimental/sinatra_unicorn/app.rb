@@ -20,6 +20,8 @@ class UnicornApp < Sinatra::Application
 
   extend Picky::Sinatra
 
+  indexing splits_text_on: /[\s\t]/
+
   texts = Indexes::Memory.new :texts do
     source   Model.all
     category :text,
