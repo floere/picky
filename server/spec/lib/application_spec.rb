@@ -2,12 +2,12 @@
 #
 require 'spec_helper'
 
-describe Application do
+describe Picky::Application do
   
   describe "integration" do
     it "should run ok" do
       lambda {
-        class MinimalTestApplication < Application
+        class MinimalTestApplication < described_class
           books = Indexes::Memory.new :books, source: Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
           books.define_category :title
           
@@ -23,7 +23,7 @@ describe Application do
       lambda {
         # Here we just test if the API can be called ok.
         #
-        class TestApplication < Application
+        class TestApplication < described_class
           indexing  removes_characters:                 /[^a-zA-Z0-9\s\/\-\"\&\.]/,
                     stopwords:                          /\b(and|the|of|it|in|for)\b/,
                     splits_text_on:                     /[\s\/\-\"\&\.]/,
@@ -70,57 +70,57 @@ describe Application do
   
   describe 'finalize' do
     before(:each) do
-      Application.stub! :check
+      described_class.stub! :check
     end
     it 'checks if all is ok' do
-      Application.should_receive(:check).once.with
+      described_class.should_receive(:check).once.with
       
-      Application.finalize
+      described_class.finalize
     end
     it 'tells the rack adapter to finalize' do
-      Application.rack_adapter.should_receive(:finalize).once.with
+      described_class.rack_adapter.should_receive(:finalize).once.with
       
-      Application.finalize
+      described_class.finalize
     end
   end
   
   describe 'check' do
     it 'does something' do
-      Application.should_receive(:warn).once.with "\nWARNING: No routes defined for application configuration in Class.\n\n"
+      described_class.should_receive(:warn).once.with "\nWARNING: No routes defined for application configuration in Class.\n\n"
       
-      Application.check
+      described_class.check
     end
   end
   
   describe 'delegation' do
     it "should delegate route" do
-      Application.rack_adapter.should_receive(:route).once.with :path => :query
+      described_class.rack_adapter.should_receive(:route).once.with :path => :query
       
-      Application.route :path => :query
+      described_class.route :path => :query
     end
   end
   
   describe 'rack_adapter' do
     it 'should be there' do
-      lambda { Application.rack_adapter }.should_not raise_error
+      lambda { described_class.rack_adapter }.should_not raise_error
     end
     it "should return a new FrontendAdapters::Rack instance" do
-      Application.rack_adapter.should be_kind_of(FrontendAdapters::Rack)
+      described_class.rack_adapter.should be_kind_of(FrontendAdapters::Rack)
     end
     it "should cache the instance" do
-      Application.rack_adapter.should == Application.rack_adapter
+      described_class.rack_adapter.should == described_class.rack_adapter
     end
   end
   
   describe 'call' do
     before(:each) do
       @routes = stub :routes
-      Application.stub! :rack_adapter => @routes
+      described_class.stub! :rack_adapter => @routes
     end
     it 'should delegate' do
       @routes.should_receive(:call).once.with :env
       
-      Application.call :env
+      described_class.call :env
     end
   end
   
