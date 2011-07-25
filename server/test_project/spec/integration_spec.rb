@@ -1,13 +1,13 @@
 # coding: utf-8
 #
 require 'spec_helper'
-require 'picky-client/spec'
+require File.expand_path '../../../../client/lib/picky-client/spec', __FILE__
 
 describe BookSearch do
 
   before(:all) do
-    Indexes.index_for_tests
-    Indexes.load_from_cache
+    Picky::Indexes.index_for_tests
+    Picky::Indexes.load_from_cache
   end
 
   let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
@@ -22,7 +22,7 @@ describe BookSearch do
   let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
   
   it 'can generate a single index category without failing' do
-    book_each_index = Indexes[:book_each][:title]
+    book_each_index = Picky::Indexes[:book_each][:title]
     book_each_index.prepare
     book_each_index.cache
   end
@@ -60,7 +60,7 @@ describe BookSearch do
   it 'finds the same after reloading' do
     csv.search('soledad human').ids.should == [72]
     puts "Reloading the Indexes."
-    Indexes.reload
+    Picky::Indexes.reload
     csv.search('soledad human').ids.should == [72]
   end
   
@@ -73,9 +73,9 @@ describe BookSearch do
       ChangingItem.new("3", 'third entry'),
       ChangingItem.new("4", 'fourth entry') # Added.
     ]
-    Indexes[:memory_changing].source new_source
-    Indexes[:memory_changing].index
-    Indexes[:memory_changing].reload
+    Picky::Indexes[:memory_changing].source new_source
+    Picky::Indexes[:memory_changing].index
+    Picky::Indexes[:memory_changing].reload
     
     memory_changing.search('entry').ids.should == [2, 3, 4]
   end
@@ -89,9 +89,9 @@ describe BookSearch do
       ChangingItem.new("3", 'third entry'),
       ChangingItem.new("4", 'fourth entry') # Added.
     ]
-    Indexes[:redis_changing].source new_source
-    Indexes[:redis_changing].index
-    Indexes[:redis_changing].reload
+    Picky::Indexes[:redis_changing].source new_source
+    Picky::Indexes[:redis_changing].index
+    Picky::Indexes[:redis_changing].reload
     
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end
@@ -251,8 +251,8 @@ describe BookSearch do
                                           year:   1977
     expected_id = added_book.id
     
-    Indexes[:books].index
-    Indexes[:books].reload
+    Picky::Indexes[:books].index
+    Picky::Indexes[:books].reload
     
     # We can destroy the book now as it has been indexed.
     #
@@ -275,8 +275,8 @@ describe BookSearch do
                                           year:   1977
     expected_id = added_book.id
     
-    Indexes[:book_each].index
-    Indexes[:book_each].reload
+    Picky::Indexes[:book_each].index
+    Picky::Indexes[:book_each].reload
     
     # We can destroy the book now as it has been indexed.
     #

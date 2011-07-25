@@ -2,7 +2,7 @@ ENV['PICKY_ENV'] = 'test'
 
 require File.expand_path '../../../lib/picky', __FILE__
 
-SearchLog = Loggers::Search.new ::Logger.new(STDOUT)
+SearchLog = Picky::Loggers::Search.new ::Logger.new(STDOUT)
 puts "Using STDOUT as test log."
 
-Loader.load_application
+Picky::Loader.load_application

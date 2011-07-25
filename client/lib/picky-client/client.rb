@@ -91,7 +91,7 @@ module Picky
     def search query, params = {}
       return {} unless query && !query.empty?
 
-      Yajl::Parser.parse search_unparsed(query, params), @@parser_options
+      ::Yajl::Parser.parse search_unparsed(query, params), @@parser_options
     end
     # Use this method for live queries – they can pass the
     # JSON string with the results through without parsing.
@@ -109,7 +109,7 @@ module Picky
 
     def send_search params = {}
       params = defaultize params
-      Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port
+      ::Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port
     end
 
   end

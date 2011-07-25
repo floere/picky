@@ -178,10 +178,10 @@ module Picky
 
     end
 
-    # Aka.
-    #
-    ::LiveParameters = LiveParameters
-
   end
+
+  # Aka.
+  #
+  LiveParameters = Interfaces::LiveParameters
 
 end

@@ -12,7 +12,7 @@ module Picky
     def initialize rack_app, options = {}
       super options
 
-      @request = Rack::MockRequest.new rack_app
+      @request = ::Rack::MockRequest.new rack_app
     end
 
     # Wraps the search method to always extend the result with Convenience.
