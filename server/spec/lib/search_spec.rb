@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Search do
+describe Picky::Search do
   
   before(:each) do
     @type      = stub :type
@@ -29,7 +29,7 @@ describe Search do
       end
     end
     it 'works' do
-      search.weights.should == Query::Weights.new([:a, :b] => 3, [:c, :d] => -1)
+      search.weights.should == Picky::Query::Weights.new([:a, :b] => 3, [:c, :d] => -1)
     end
   end
   
@@ -37,7 +37,7 @@ describe Search do
     context 'no tokenizer predefined' do
       let(:search) { described_class.new }
       it 'returns the default tokenizer' do
-        search.tokenizer.should == Tokenizers::Query.default
+        search.tokenizer.should == Picky::Tokenizers::Query.default
       end
     end
     context 'tokenizer predefined' do
@@ -62,18 +62,18 @@ describe Search do
     let(:search) { described_class.new }
     it 'returns a specific Combination for a specific input' do
       some_source = stub(:source, :harvest => nil)
-      search.combinations_type_for([Indexes::Memory.new(:gu, source: some_source)]).should == Query::Combinations::Memory
+      search.combinations_type_for([Picky::Indexes::Memory.new(:gu, source: some_source)]).should == Picky::Query::Combinations::Memory
     end
     it 'just works on the same types' do
-      search.combinations_type_for([:blorf, :blarf]).should == Query::Combinations::Memory
+      search.combinations_type_for([:blorf, :blarf]).should == Picky::Query::Combinations::Memory
     end
     it 'just uses standard combinations' do
-      search.combinations_type_for([:blorf]).should == Query::Combinations::Memory
+      search.combinations_type_for([:blorf]).should == Picky::Query::Combinations::Memory
     end
     it 'raises on multiple types' do
       expect do
         search.combinations_type_for [:blorf, "blarf"]
-      end.to raise_error(Search::DifferentTypesError)
+      end.to raise_error(Picky::Search::DifferentTypesError)
     end
     it 'raises with the right message on multiple types' do
       expect do
@@ -86,23 +86,23 @@ describe Search do
     it "creates a default weight when no weights are given" do
       search = described_class.new
       
-      search.weights.should be_kind_of(Query::Weights)
+      search.weights.should be_kind_of(Picky::Query::Weights)
     end
     it "handles :weights options when not yet wrapped" do
       search = described_class.new :weights => { [:a, :b] => +3 }
       
-      search.weights.should be_kind_of(Query::Weights)
+      search.weights.should be_kind_of(Picky::Query::Weights)
     end
     it "handles :weights options when already wrapped" do
-      search = described_class.new :weights => Query::Weights.new([:a, :b] => +3)
+      search = described_class.new :weights => Picky::Query::Weights.new([:a, :b] => +3)
       
-      search.weights.should be_kind_of(Query::Weights)
+      search.weights.should be_kind_of(Picky::Query::Weights)
     end
   end
   
   describe "search_with_text" do
     before(:each) do
-      @search = Search.new
+      @search = described_class.new
     end
     it "delegates to search" do
       @search.stub! :tokenized => :tokens
@@ -124,7 +124,7 @@ describe Search do
     context 'with tokenizer' do
       before(:each) do
         @tokenizer = stub :tokenizer, :tokenize => :some_tokenized_text
-        @search    = Search.new @index, tokenizer: @tokenizer
+        @search    = described_class.new @index, tokenizer: @tokenizer
       end
       it 'should tokenize using the tokenizer' do
         @search.tokenized('some text').should == :some_tokenized_text
@@ -138,18 +138,18 @@ describe Search do
     end
     context 'with weights' do
       before(:each) do
-        @search = Search.new @index, weights: :some_weights
+        @search = described_class.new @index, weights: :some_weights
       end
       it 'works correctly' do
-        @search.to_s.should == 'Search(some_index, weights: some_weights)'
+        @search.to_s.should == 'Picky::Search(some_index, weights: some_weights)'
       end
     end
     context 'without weights' do
       before(:each) do
-        @search = Search.new @index
+        @search = described_class.new @index
       end
       it 'works correctly' do
-        @search.to_s.should == 'Search(some_index)'
+        @search.to_s.should == 'Picky::Search(some_index)'
       end
     end
   end

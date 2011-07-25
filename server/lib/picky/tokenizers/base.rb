@@ -86,6 +86,7 @@ module Picky
           #
           text.gsub!(regex, replace) and break
         end
+
         remove_after_normalizing_illegals text
         text
       end
@@ -199,8 +200,9 @@ module Picky
       def pretokenize text
         words = split text
         words.collect! do |word|
-        normalize_with_patterns word
-        word
+          normalize_with_patterns word
+          word
+        end
       end
       # Basic postprocessing (overridden in both query/index tokenizers).
       #

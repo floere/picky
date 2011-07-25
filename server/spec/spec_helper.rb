@@ -19,7 +19,7 @@ Object.send :remove_const, :PICKY_ROOT
 PICKY_ROOT = 'spec/test_directory'
 puts "Redefined PICKY_ROOT to '#{PICKY_ROOT}' for the tests."
 
-PickyLog = Loggers::Search.new ::Logger.new(STDOUT)
+PickyLog = Picky::Loggers::Search.new ::Logger.new(STDOUT)
 puts "Using STDOUT as test log."
 
 begin

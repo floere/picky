@@ -1,7 +1,7 @@
+# encoding: utf-8
+#
 module Picky
 
-  # encoding: utf-8
-  #
   module CharacterSubstituters # :nodoc:all
 
     # Substitutes Umlauts like

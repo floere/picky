@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Indexed::Bundle::Redis do
+describe Picky::Indexed::Bundle::Redis do
 
   before(:each) do
     @backend = stub :backend
     
-    Backend::Redis.stub! :new => @backend
+    Picky::Backend::Redis.stub! :new => @backend
     
-    @index        = Indexes::Memory.new :some_index, source: []
-    @category     = Category.new :some_category, @index
+    @index        = Picky::Indexes::Memory.new :some_index, source: []
+    @category     = Picky::Category.new :some_category, @index
     
     @similarity   = stub :similarity
     @bundle       = described_class.new :some_name, @category, @similarity

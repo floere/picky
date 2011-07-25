@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexed::Wrappers::ExactFirst do
+describe Picky::Indexed::Wrappers::ExactFirst do
   
   before(:each) do
     @exact    = stub :exact
@@ -13,17 +13,17 @@ describe Indexed::Wrappers::ExactFirst do
   describe "self.wrap" do
     context "index" do
       it "wraps each category" do
-        index = Indexes::Memory.new :some_index, source: []
+        index = Picky::Indexes::Memory.new :some_index, source: []
         index.define_category :some_category
         
-        Indexed::Wrappers::ExactFirst.wrap index
+        Picky::Indexed::Wrappers::ExactFirst.wrap index
         
         index.categories.categories.each do |category|
-          category.should be_kind_of(Indexed::Wrappers::ExactFirst)
+          category.should be_kind_of(Picky::Indexed::Wrappers::ExactFirst)
         end
       end
       it "returns the index" do
-        index = Indexes::Memory.new :some_index, source: []
+        index = Picky::Indexes::Memory.new :some_index, source: []
         index.define_category :some_category
         
         described_class.wrap(index).should == index

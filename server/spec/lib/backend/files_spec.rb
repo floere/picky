@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Backend::Files do
+describe Picky::Backend::Files do
 
   before(:each) do
-    index         = Indexes::Memory.new :some_index, source: []
-    category      = Category.new :some_category, index
-    bundle        = Indexing::Bundle::Base.new :some_bundle, category, nil, nil, nil
+    index         = Picky::Indexes::Memory.new :some_index, source: []
+    category      = Picky::Category.new :some_category, index
+    bundle        = Picky::Indexing::Bundle::Base.new :some_bundle, category, nil, nil, nil
     
     @files         = described_class.new bundle
     
@@ -182,7 +182,7 @@ describe Backend::Files do
                       :index_path => 'index/path',
                       :prepared_index_path => 'prepared/index/path'
       
-      described_class.new(bundle).to_s.should == "Backend::Files(Backend::File::JSON(index/path.json), Backend::File::JSON(index/path.json), Backend::File::Marshal(index/path.dump), Backend::File::JSON(index/path.json))"
+      described_class.new(bundle).to_s.should == "Picky::Backend::Files(Picky::Backend::File::JSON(index/path.json), Picky::Backend::File::JSON(index/path.json), Picky::Backend::File::Marshal(index/path.dump), Picky::Backend::File::JSON(index/path.json))"
     end
   end
 

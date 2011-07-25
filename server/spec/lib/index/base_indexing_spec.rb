@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexes::Base do
+describe Picky::Indexes::Base do
   
   describe 'tokenizer' do
     context 'with tokenizer' do
@@ -14,7 +14,7 @@ describe Indexes::Base do
       let(:index) { described_class.new :some_name, source: [] }
 
       it 'does things in order' do
-        index.tokenizer.should == Indexes.tokenizer
+        index.tokenizer.should == Picky::Indexes.tokenizer
       end
     end
   end

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Indexing::Bundle::Memory do
+describe Picky::Indexing::Bundle::Memory do
 
   before(:each) do
-    @index    = Indexes::Memory.new :some_index, source: []
-    @category = Category.new :some_category, @index
+    @index    = Picky::Indexes::Memory.new :some_index, source: []
+    @category = Picky::Category.new :some_category, @index
     
     @partial     = stub :partial
     @weights     = stub :weights

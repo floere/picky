@@ -29,7 +29,7 @@ module Picky
       # It does all menial tasks that have nothing to do
       # with the actual index running etc.
       #
-      class Base < ::Bundle
+      class Base < Picky::Bundle
 
         attr_reader :backend,
                     :prepared
@@ -199,40 +199,40 @@ module Picky
         end
 
         # Outputs a warning for the given cache.
+        #
+        def warn_cache_small what
+          warn "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
+        end
+        # Raises an appropriate error message for the given cache.
+        #
+        def raise_cache_missing what
+          raise "Error: The #{what} cache for #{identifier} is missing."
+        end
 
+        # Warns the user if the similarity index is small.
+        #
+        def warn_if_similarity_small
+          warn_cache_small :similarity if backend.similarity_cache_small?
+        end
+        # Alerts the user if the similarity index is not there.
+        #
+        def raise_unless_similarity_ok
+          raise_cache_missing :similarity unless backend.similarity_cache_ok?
+        end
 
-    end  #
-      def warn_cache_small what
-        warn "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
-      end
-      # Raises an appropriate error message for the given cache.
-      #
-      def raise_cache_missing what
-        raise "Error: The #{what} cache for #{identifier} is missing."
-      end
+        # Warns the user if the core or weights indexes are small.
+        #
+        def warn_if_index_small
+          warn_cache_small :inverted if backend.inverted_cache_small?
+          warn_cache_small :weights  if backend.weights_cache_small?
+        end
+        # Alerts the user if the core or weights indexes are not there.
+        #
+        def raise_unless_index_ok
+          raise_cache_missing :inverted unless backend.inverted_cache_ok?
+          raise_cache_missing :weights  unless backend.weights_cache_ok?
+        end
 
-      # Warns the user if the similarity index is small.
-      #
-      def warn_if_similarity_small
-        warn_cache_small :similarity if backend.similarity_cache_small?
-      end
-      # Alerts the user if the similarity index is not there.
-      #
-      def raise_unless_similarity_ok
-        raise_cache_missing :similarity unless backend.similarity_cache_ok?
-      end
-
-      # Warns the user if the core or weights indexes are small.
-      #
-      def warn_if_index_small
-        warn_cache_small :inverted if backend.inverted_cache_small?
-        warn_cache_small :weights  if backend.weights_cache_small?
-      end
-      # Alerts the user if the core or weights indexes are not there.
-      #
-      def raise_unless_index_ok
-        raise_cache_missing :inverted unless backend.inverted_cache_ok?
-        raise_cache_missing :weights  unless backend.weights_cache_ok?
       end
 
     end

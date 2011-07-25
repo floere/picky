@@ -18,7 +18,7 @@ module Picky
     #
     module Bundle
 
-      class Base < ::Bundle
+      class Base < Picky::Bundle
 
         # Loads all indexes.
         #

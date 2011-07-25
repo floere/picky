@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backend::Redis::StringHash do
+describe Picky::Backend::Redis::StringHash do
   
   let(:index) { described_class.new :some_namespace }
     
@@ -40,7 +40,7 @@ describe Backend::Redis::StringHash do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      index.to_s.should == 'Backend::Redis::StringHash(some_namespace:*)'
+      index.to_s.should == 'Picky::Backend::Redis::StringHash(some_namespace:*)'
     end
   end
   
