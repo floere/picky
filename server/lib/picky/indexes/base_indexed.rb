@@ -1,19 +1,23 @@
-class Indexes
+module Picky
 
-  #
-  #
-  class Base
+  class Indexes
 
-    attr_reader :result_identifier,
-                :combinator
+    #
+    #
+    class Base
 
-    delegate :load_from_cache,
-             :analyze,
-             :reindex,
-             :possible_combinations,
-             :to => :categories
+      attr_reader :result_identifier,
+                  :combinator
 
-    alias reload load_from_cache
+      delegate :load_from_cache,
+               :analyze,
+               :reindex,
+               :possible_combinations,
+               :to => :categories
+
+      alias reload load_from_cache
+
+    end
 
   end
 

@@ -1,3 +1,7 @@
-# Raised if no source is available on a category.
-#
-class NoSourceSpecifiedException < StandardError; end
+module Picky
+
+  # Raised if no source is available on a category.
+  #
+  class NoSourceSpecifiedException < StandardError; end
+
+end

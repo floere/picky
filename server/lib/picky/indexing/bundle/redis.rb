@@ -1,18 +1,22 @@
-# encoding: utf-8
-#
-module Indexing # :nodoc:all
+module Picky
 
-  module Bundle
+  # encoding: utf-8
+  #
+  module Indexing # :nodoc:all
 
-    # The Redis version dumps its generated indexes to
-    # the Redis backend.
-    #
-    class Redis < Base
+    module Bundle
 
-      def initialize name, category, *args
-        super name, category, *args
+      # The Redis version dumps its generated indexes to
+      # the Redis backend.
+      #
+      class Redis < Base
 
-        @backend = Backend::Redis.new self
+        def initialize name, category, *args
+          super name, category, *args
+
+          @backend = Backend::Redis.new self
+        end
+
       end
 
     end

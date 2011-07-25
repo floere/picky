@@ -1,27 +1,31 @@
-module Generators
+module Picky
 
-  module Partial
+  module Generators
 
-    # Does not generate a partial index.
-    #
-    class None < Strategy
+    module Partial
 
-      # Returns an empty index.
+      # Does not generate a partial index.
       #
-      def generate_from index
-        {}
-      end
-    
-      # Returns if this strategy's generated file is saved.
-      #
-      def saved?
-        false
-      end
-    
-      # Do not use the partial bundle for getting ids and weights.
-      #
-      def use_exact_for_partial?
-        true
+      class None < Strategy
+
+        # Returns an empty index.
+        #
+        def generate_from index
+          {}
+        end
+
+        # Returns if this strategy's generated file is saved.
+        #
+        def saved?
+          false
+        end
+
+        # Do not use the partial bundle for getting ids and weights.
+        #
+        def use_exact_for_partial?
+          true
+        end
+
       end
 
     end

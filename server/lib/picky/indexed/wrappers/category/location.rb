@@ -1,25 +1,29 @@
-module Indexed
-  module Wrappers
-    module Category
+module Picky
 
-      module Location
+  module Indexed
+    module Wrappers
+      module Category
 
-        def self.install_on category, grid, precision = 1
-          wrapped_exact = Indexed::Wrappers::Bundle::Location.new category.indexed_exact, grid: grid, precision: precision
+        module Location
 
-          category.class_eval do
-            define_method :indexed_exact do
-              wrapped_exact
+          def self.install_on category, grid, precision = 1
+            wrapped_exact = Indexed::Wrappers::Bundle::Location.new category.indexed_exact, grid: grid, precision: precision
+
+            category.class_eval do
+              define_method :indexed_exact do
+                wrapped_exact
+              end
+              define_method :indexed_partial do
+                wrapped_exact
+              end
             end
-            define_method :indexed_partial do
-              wrapped_exact
-            end
+
           end
 
         end
 
       end
-
     end
   end
+
 end

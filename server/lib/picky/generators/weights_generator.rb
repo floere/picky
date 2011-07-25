@@ -1,13 +1,17 @@
-module Generators
+module Picky
 
-  # Uses a logarithmic algorithm as default.
-  #
-  class WeightsGenerator < Base
+  module Generators
 
-    # Generate a weights index based on the given inverted index.
+    # Uses a logarithmic algorithm as default.
     #
-    def generate strategy = Weights::Logarithmic.new
-      strategy.generate_from self.inverted
+    class WeightsGenerator < Base
+
+      # Generate a weights index based on the given inverted index.
+      #
+      def generate strategy = Weights::Logarithmic.new
+        strategy.generate_from self.inverted
+      end
+
     end
 
   end

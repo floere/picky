@@ -1,13 +1,17 @@
-module Generators # :nodoc:all
+module Picky
 
-  # A cache generator holds an index.
-  #
-  class Base
+  module Generators # :nodoc:all
 
-    attr_reader :inverted
+    # A cache generator holds an index.
+    #
+    class Base
 
-    def initialize inverted
-      @inverted = inverted
+      attr_reader :inverted
+
+      def initialize inverted
+        @inverted = inverted
+      end
+
     end
 
   end

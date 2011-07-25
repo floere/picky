@@ -1,86 +1,90 @@
-# = Data Sources
-#
-# Currently, Picky offers the following Sources:
-# * CSV (comma – or other – separated file)
-# * Couch (CouchDB, key-value store)
-# * DB (Databases, foremost MySQL)
-# * Delicious (http://del.icio.us, online bookmarking service)
-# See also:
-# http://github.com/floere/picky/wiki/Sources-Configuration
-#
-# Don't worry if your source isn't here. Adding your own is easy:
-# http://github.com/floere/picky/wiki/Contributing-sources
-#
-module Sources
+module Picky
 
-  # Sources are where your data comes from.
+  # = Data Sources
   #
-  # A source has 1 mandatory and 2 optional methods:
-  # * connect_backend (_optional_): called once for each type/category pair.
-  # * harvest: Used by the indexer to gather data. Yields an indexed_id (string or integer) and a string value.
-  # * take_snapshot (_optional_): called once for each index or category (if indexing a single category).
+  # Currently, Picky offers the following Sources:
+  # * CSV (comma – or other – separated file)
+  # * Couch (CouchDB, key-value store)
+  # * DB (Databases, foremost MySQL)
+  # * Delicious (http://del.icio.us, online bookmarking service)
+  # See also:
+  # http://github.com/floere/picky/wiki/Sources-Configuration
   #
-  # This base class "implements" all these methods, but they don't do anything.
-  # Subclass this class <tt>class MySource < Base</tt> and override the methods in your source to do something.
+  # Don't worry if your source isn't here. Adding your own is easy:
+  # http://github.com/floere/picky/wiki/Contributing-sources
   #
-  class Base
+  module Sources
 
-    attr_reader :key_format
+    # Sources are where your data comes from.
+    #
+    # A source has 1 mandatory and 2 optional methods:
+    # * connect_backend (_optional_): called once for each type/category pair.
+    # * harvest: Used by the indexer to gather data. Yields an indexed_id (string or integer) and a string value.
+    # * take_snapshot (_optional_): called once for each index or category (if indexing a single category).
+    #
+    # This base class "implements" all these methods, but they don't do anything.
+    # Subclass this class <tt>class MySource < Base</tt> and override the methods in your source to do something.
+    #
+    class Base
 
-    # Connect to the backend.
-    #
-    # Called once per index/category combination before harvesting.
-    #
-    # Examples:
-    # * The DB backend connects the DB adapter.
-    # * We open a connection to a key value store.
-    # * We open an file with data.
-    #
-    def connect_backend
+      attr_reader :key_format
 
-    end
+      # Connect to the backend.
+      #
+      # Called once per index/category combination before harvesting.
+      #
+      # Examples:
+      # * The DB backend connects the DB adapter.
+      # * We open a connection to a key value store.
+      # * We open an file with data.
+      #
+      def connect_backend
 
-    # Called by the indexer when gathering data.
-    #
-    # Yields the data (id, text for id) for the given category.
-    #
-    # When implementing or overriding your own,
-    # be sure to <tt>yield(id, text_for_id)</tt> (or <tt>block.call(id, text_for_id)</tt>)
-    # for the given type symbol and category symbol.
-    #
-    # Note: Since harvest needs to be implemented, it has no default impementation.
-    #
-    # def harvest category # :yields: id, text_for_id
-    #
-    # end
-
-    # Used to take a snapshot of your data if it is fast changing.
-    #
-    # Called once for each index before harvesting.
-    # If it has been called on a source already by an index,
-    # it won't be called again for a category inside that index.
-    #
-    # Example:
-    # * In a DB source, a table based on the source's select statement is created.
-    #
-    def take_snapshot index
-
-    end
-
-    # Used to check if a snapshot has been done already.
-    #
-    # Example:
-    # * In a DB source, a table based on the source's select statement is created.
-    #
-    def with_snapshot index
-      connect_backend
-      @snapshot_taken ||= 0
-      if @snapshot_taken.zero?
-        take_snapshot index
       end
-      @snapshot_taken += 1
-      yield
-      @snapshot_taken -= 1
+
+      # Called by the indexer when gathering data.
+      #
+      # Yields the data (id, text for id) for the given category.
+      #
+      # When implementing or overriding your own,
+      # be sure to <tt>yield(id, text_for_id)</tt> (or <tt>block.call(id, text_for_id)</tt>)
+      # for the given type symbol and category symbol.
+      #
+      # Note: Since harvest needs to be implemented, it has no default impementation.
+      #
+      # def harvest category # :yields: id, text_for_id
+      #
+      # end
+
+      # Used to take a snapshot of your data if it is fast changing.
+      #
+      # Called once for each index before harvesting.
+      # If it has been called on a source already by an index,
+      # it won't be called again for a category inside that index.
+      #
+      # Example:
+      # * In a DB source, a table based on the source's select statement is created.
+      #
+      def take_snapshot index
+
+      end
+
+      # Used to check if a snapshot has been done already.
+      #
+      # Example:
+      # * In a DB source, a table based on the source's select statement is created.
+      #
+      def with_snapshot index
+        connect_backend
+        @snapshot_taken ||= 0
+        if @snapshot_taken.zero?
+          take_snapshot index
+        end
+        @snapshot_taken += 1
+        yield
+        @snapshot_taken -= 1
+      end
+
     end
 
   end

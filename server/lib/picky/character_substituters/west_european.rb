@@ -1,37 +1,43 @@
-# encoding: utf-8
-#
-module CharacterSubstituters # :nodoc:all
-  # Substitutes Umlauts like
-  # ä, ö, ü => ae, oe, ue.
-  # (and more, see specs)
+module Picky
+
+  # encoding: utf-8
   #
-  class WestEuropean
+  module CharacterSubstituters # :nodoc:all
 
-    def initialize
-      @chars = ActiveSupport::Multibyte.proxy_class
-    end
+    # Substitutes Umlauts like
+    # ä, ö, ü => ae, oe, ue.
+    # (and more, see specs)
+    #
+    class WestEuropean
 
-    def to_s
-      self.class.name
-    end
+      def initialize
+        @chars = ActiveSupport::Multibyte.proxy_class
+      end
 
-    def substitute text
-      trans = @chars.new(text).normalize(:kd)
+      def to_s
+        self.class.name
+      end
 
-      # substitute special cases
-      #
-      trans.gsub!('ß', 'ss')
+      def substitute text
+        trans = @chars.new(text).normalize(:kd)
 
-      # substitute umlauts (of A,O,U,a,o,u)
-      #
-      trans.gsub!(/([AOUaou])\314\210/u, '\1e')
+        # substitute special cases
+        #
+        trans.gsub!('ß', 'ss')
 
-      # get rid of ecutes, graves and …
-      #
-      trans.unpack('U*').select { |cp|
-        cp < 0x0300 || cp > 0x035F
-      }.pack('U*')
+        # substitute umlauts (of A,O,U,a,o,u)
+        #
+        trans.gsub!(/([AOUaou])\314\210/u, '\1e')
+
+        # get rid of ecutes, graves and …
+        #
+        trans.unpack('U*').select { |cp|
+          cp < 0x0300 || cp > 0x035F
+        }.pack('U*')
+      end
+
     end
 
   end
+
 end

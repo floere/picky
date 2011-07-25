@@ -1,18 +1,22 @@
-# encoding: utf-8
-#
-module Indexing # :nodoc:all
+module Picky
 
-  module Bundle
+  # encoding: utf-8
+  #
+  module Indexing # :nodoc:all
 
-    # The memory version dumps its generated indexes to disk
-    # (mostly JSON) to load them into memory on startup.
-    #
-    class Memory < Base
+    module Bundle
 
-      def initialize name, category, *args
-        super name, category, *args
+      # The memory version dumps its generated indexes to disk
+      # (mostly JSON) to load them into memory on startup.
+      #
+      class Memory < Base
 
-        @backend = Backend::Files.new self
+        def initialize name, category, *args
+          super name, category, *args
+
+          @backend = Backend::Files.new self
+        end
+
       end
 
     end

@@ -1,27 +1,31 @@
-module Generators
+module Picky
 
-  module Similarity
+  module Generators
 
-    # Similarity strategy that does nothing.
-    #
-    class None < Strategy
+    module Similarity
 
-      # Does not encode text. Just returns nil.
+      # Similarity strategy that does nothing.
       #
-      def encoded text
-        nil
-      end
+      class None < Strategy
 
-      # Returns an empty index.
-      #
-      def generate_from index
-        {}
-      end
-    
-      # Returns if this strategy's generated file is saved.
-      #
-      def saved?
-        false
+        # Does not encode text. Just returns nil.
+        #
+        def encoded text
+          nil
+        end
+
+        # Returns an empty index.
+        #
+        def generate_from index
+          {}
+        end
+
+        # Returns if this strategy's generated file is saved.
+        #
+        def saved?
+          false
+        end
+
       end
 
     end

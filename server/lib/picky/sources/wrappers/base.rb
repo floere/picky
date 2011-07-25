@@ -1,24 +1,28 @@
-module Sources
+module Picky
 
-  # Source wrappers can be used to rewrite data before it goes into the index.
-  #
-  # For example if you want to normalize data.
-  #
-  module Wrappers # :nodoc:all
+  module Sources
 
-    class Base
+    # Source wrappers can be used to rewrite data before it goes into the index.
+    #
+    # For example if you want to normalize data.
+    #
+    module Wrappers # :nodoc:all
 
-      attr_reader :source
+      class Base
 
-      # Wraps an indexing category.
-      #
-      def initialize source
-        @source = source
+        attr_reader :source
+
+        # Wraps an indexing category.
+        #
+        def initialize source
+          @source = source
+        end
+
+        # Default is delegation for all methods
+        #
+        delegate :harvest, :connect_backend, :take_snapshot, :key_format, :to => :source
+
       end
-
-      # Default is delegation for all methods
-      #
-      delegate :harvest, :connect_backend, :take_snapshot, :key_format, :to => :source
 
     end
 
