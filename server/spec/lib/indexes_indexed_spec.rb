@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexes do
+describe Picky::Indexes do
 
   context 'after initialize' do
     let(:indexes) { described_class.new }

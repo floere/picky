@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Category do
+describe Picky::Category do
 
   before(:each) do
-    @index               = Indexes::Base.new :some_index, source: []
+    @index               = Picky::Indexes::Base.new :some_index, source: []
     @partial_strategy    = stub :partial, :use_exact_for_partial? => false
     @weights_strategy    = stub :weights
     @similarity_strategy = stub :similarity
@@ -29,30 +29,30 @@ describe Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Memory)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Memory)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Memory)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Memory)
         end
       end
     end
     context 'indexed_bundle_class defined differently' do
       before(:each) do
-        @category = described_class.new :some_name, Indexes::Redis.new(:some_index_name, source: [])
+        @category = described_class.new :some_name, Picky::Indexes::Redis.new(:some_index_name, source: [])
       end
       context 'with a partial strategy that uses the exact index' do
         before(:each) do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Redis)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Redis)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Indexed::Bundle::Redis)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Redis)
         end
       end
     end
@@ -125,10 +125,10 @@ describe Category do
         @category.stub! :weight => :some_weight, :bundle_for => :bundle
       end
       it 'should return a new combination' do
-        @category.combination_for(@token).should be_kind_of(Query::Combination)
+        @category.combination_for(@token).should be_kind_of(Picky::Query::Combination)
       end
       it 'should create the combination correctly' do
-        Query::Combination.should_receive(:new).once.with @token, @category
+        Picky::Query::Combination.should_receive(:new).once.with @token, @category
 
         @category.combination_for @token
       end

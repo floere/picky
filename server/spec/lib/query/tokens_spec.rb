@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Query::Tokens do
+describe Picky::Query::Tokens do
   
   describe '.processed' do
     it 'generates processed tokens from all words' do
       expected = [
-        Query::Token.processed('this~'),
-        Query::Token.processed('is'),
-        Query::Token.processed('a'),
-        Query::Token.processed('sp:solr'),
-        Query::Token.processed('query"')
+        Picky::Query::Token.processed('this~'),
+        Picky::Query::Token.processed('is'),
+        Picky::Query::Token.processed('a'),
+        Picky::Query::Token.processed('sp:solr'),
+        Picky::Query::Token.processed('query"')
       ]
       
       described_class.should_receive(:new).once.with expected
@@ -18,11 +18,11 @@ describe Query::Tokens do
     end
     it 'generates processed tokens from all words' do
       expected = [
-        Query::Token.processed('this~', false),
-        Query::Token.processed('is', false),
-        Query::Token.processed('a', false),
-        Query::Token.processed('sp:solr', false),
-        Query::Token.processed('query"', false)
+        Picky::Query::Token.processed('this~', false),
+        Picky::Query::Token.processed('is', false),
+        Picky::Query::Token.processed('a', false),
+        Picky::Query::Token.processed('sp:solr', false),
+        Picky::Query::Token.processed('query"', false)
       ]
       
       described_class.should_receive(:new).once.with expected
@@ -47,7 +47,7 @@ describe Query::Tokens do
   describe 'cap' do
     context 'one token' do
       before(:each) do
-        @token = Query::Token.processed 'Token'
+        @token = Picky::Query::Token.processed 'Token'
         @tokens = described_class.new [@token]
       end
       it 'does not cut it down' do
@@ -63,15 +63,15 @@ describe Query::Tokens do
     end
     context 'many tokens' do
       before(:each) do
-        @first = Query::Token.processed 'Hello'
-        @second = Query::Token.processed 'I'
-        @third = Query::Token.processed 'Am'
-        @tokens = Query::Tokens.new [
+        @first  = Picky::Query::Token.processed 'Hello'
+        @second = Picky::Query::Token.processed 'I'
+        @third  = Picky::Query::Token.processed 'Am'
+        @tokens = described_class.new [
           @first,
           @second,
           @third,
-          Query::Token.processed('A'),
-          Query::Token.processed('Token')
+          Picky::Query::Token.processed('A'),
+          Picky::Query::Token.processed('Token')
         ]
       end
       it 'should cap the number of tokens' do
@@ -85,7 +85,7 @@ describe Query::Tokens do
   describe 'partialize_last' do
     context 'special case' do
       before(:each) do
-        @token = Query::Token.processed 'a*'
+        @token = Picky::Query::Token.processed 'a*'
         @tokens = described_class.new [@token]
       end
       it 'should have a last partialized token' do
@@ -99,7 +99,7 @@ describe Query::Tokens do
     end
     context 'one token' do
       before(:each) do
-        @token = Query::Token.processed 'Token'
+        @token = Picky::Query::Token.processed 'Token'
         @tokens = described_class.new [@token]
       end
       it 'should not have a last partialized token' do
@@ -113,13 +113,13 @@ describe Query::Tokens do
     end
     context 'many tokens' do
       before(:each) do
-        @first  = Query::Token.processed 'Hello'
-        @last   = Query::Token.processed 'Token'
+        @first  = Picky::Query::Token.processed 'Hello'
+        @last   = Picky::Query::Token.processed 'Token'
         @tokens = described_class.new [
           @first,
-          Query::Token.processed('I'),
-          Query::Token.processed('Am'),
-          Query::Token.processed('A'),
+          Picky::Query::Token.processed('I'),
+          Picky::Query::Token.processed('Am'),
+          Picky::Query::Token.processed('A'),
           @last
         ]
       end
@@ -173,11 +173,11 @@ describe Query::Tokens do
   describe 'to_s' do
     before(:each) do
       @tokens = described_class.new [
-        Query::Token.processed('Hello~'),
-        Query::Token.processed('I~'),
-        Query::Token.processed('Am'),
-        Query::Token.processed('A*'),
-        Query::Token.processed('Token~')
+        Picky::Query::Token.processed('Hello~'),
+        Picky::Query::Token.processed('I~'),
+        Picky::Query::Token.processed('Am'),
+        Picky::Query::Token.processed('A*'),
+        Picky::Query::Token.processed('Token~')
       ]
     end
     it 'should work correctly' do

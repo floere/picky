@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexes do
+describe Picky::Indexes do
 
   before(:each) do
     @index   = stub :some_index, :name => :some_index
@@ -21,7 +21,7 @@ describe Indexes do
     it 'adds the given index to the indexes' do
       @indexes.clear_indexes
       
-      Indexes.register @index
+      described_class.register @index
 
       @indexes.indexes.should == [@index]
     end

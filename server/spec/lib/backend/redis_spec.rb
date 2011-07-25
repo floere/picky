@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe Backend::Redis do
+describe Picky::Backend::Redis do
 
   context 'indexing' do
     let(:category) do
       index    = stub :index,
                       :name => :some_index,
-                      :indexing_bundle_class => Indexing::Bundle::Memory,
-                      :indexed_bundle_class  => Indexed::Bundle::Memory,
+                      :indexing_bundle_class => Picky::Indexing::Bundle::Memory,
+                      :indexed_bundle_class  => Picky::Indexed::Bundle::Memory,
                       :identifier => :some_index_identifier
-      Category.new :some_category, index
+      Picky::Category.new :some_category, index
     end
-    let(:bundle) { Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil }
+    let(:bundle) { Picky::Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil }
     let(:redis) { described_class.new bundle }
 
     describe 'setting' do
@@ -82,12 +82,12 @@ describe Backend::Redis do
     let(:category) do
       index = stub :index,
                    :name => :some_index,
-                   :indexing_bundle_class => Indexing::Bundle::Memory,
-                   :indexed_bundle_class  => Indexed::Bundle::Memory,
+                   :indexing_bundle_class => Picky::Indexing::Bundle::Memory,
+                   :indexed_bundle_class  => Picky::Indexed::Bundle::Memory,
                    :identifier => :some_index_identifier
-      Category.new :some_category, index
+      Picky::Category.new :some_category, index
     end
-    let(:bundle) { Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil }
+    let(:bundle) { Picky::Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil }
     let(:redis) { described_class.new bundle }
 
     describe 'setting' do
@@ -161,9 +161,9 @@ describe Backend::Redis do
                       :identifier => "category_identifier",
                       :prepared_index_path => "prepared/index/path",
                       :index_directory => 'some/index/directory'
-      bundle = Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil
+      bundle = Picky::Indexing::Bundle::Memory.new :some_bundle, category, nil, nil, nil
       
-      described_class.new(bundle).to_s.should == "Backend::Redis(category_identifier:some_bundle)"
+      described_class.new(bundle).to_s.should == "Picky::Backend::Redis(category_identifier:some_bundle)"
     end
   end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Query::QualifierCategoryMapper do
+describe Picky::Query::QualifierCategoryMapper do
   
   let(:mapper) { described_class.new }
   before(:each) do

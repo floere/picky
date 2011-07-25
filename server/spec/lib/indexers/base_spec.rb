@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexers::Base do
+describe Picky::Indexers::Base do
 
   let(:some_index_or_category) { stub :some_index_or_category, :name => 'some index or category' }
   let(:indexer) { described_class.new some_index_or_category }

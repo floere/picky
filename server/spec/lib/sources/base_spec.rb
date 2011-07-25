@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sources::Base do
+describe Picky::Sources::Base do
   context 'with the base class' do
     let(:source) { described_class.new }
     

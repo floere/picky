@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexes do
+describe Picky::Indexes do
 
   before(:each) do
     @index   = stub :some_index, :name => :some_index

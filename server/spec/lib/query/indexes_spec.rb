@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Query::Indexes do
+describe Picky::Query::Indexes do
 
   3.times do |i|
     n       = i + 1

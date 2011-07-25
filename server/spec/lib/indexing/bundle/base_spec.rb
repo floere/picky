@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Indexing::Bundle::Base do
+describe Picky::Indexing::Bundle::Base do
 
   before(:each) do
     @category = stub :category,
                      :prepared_index_path => 'prepared/index/path',
                      :identifier => 'some_identifier'
-    Backend::Files.stub! :new
-    @similarity = Similarity::DoubleMetaphone.new 3
+    Picky::Backend::Files.stub! :new
+    @similarity = Picky::Similarity::DoubleMetaphone.new 3
     @bundle = described_class.new :some_name, @category, :some_weights, :some_partial, @similarity
   end
   

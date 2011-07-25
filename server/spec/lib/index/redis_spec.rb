@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Indexes::Redis do
+describe Picky::Indexes::Redis do
   
   let(:some_source) { stub :source, :harvest => nil }
   

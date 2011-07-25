@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Query::Allocation do
+describe Picky::Query::Allocation do
   
   before(:each) do
     @combinations = stub :combinations

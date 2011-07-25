@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Indexes::Base do
+describe Picky::Indexes::Base do
   
   let(:some_source) { stub :source, :harvest => nil, :inspect => 'some_source' }
   
@@ -20,12 +20,12 @@ describe Indexes::Base do
       expect { described_class.new :some_index_name, some_source }.to raise_error(<<-ERROR
 
 
-Sources are not passed in as second parameter for Indexes::Base anymore, but either
+Sources are not passed in as second parameter for Picky::Indexes::Base anymore, but either
 * as :source option:
-  Indexes::Base.new(:some_index_name, source: some_source)
+  Picky::Indexes::Base.new(:some_index_name, source: some_source)
 or
 * given to the #source method inside the config block:
-  Indexes::Base.new(:some_index_name) do
+  Picky::Indexes::Base.new(:some_index_name) do
     source some_source
   end
 
@@ -44,7 +44,7 @@ ERROR
     it 'registers with the indexes' do
       @api = described_class.allocate
       
-      ::Indexes.should_receive(:register).once.with @api
+      Picky::Indexes.should_receive(:register).once.with @api
       
       @api.send :initialize, :some_index_name, source: some_source
     end
@@ -73,7 +73,7 @@ ERROR
         end
         it 'yields both the indexing category and the indexed category' do
           api.define_category(:some_name) do |category|
-            category.should be_kind_of(Category)
+            category.should be_kind_of(Picky::Category)
           end
         end
         it 'yields the category which has the given name' do
@@ -90,7 +90,7 @@ ERROR
           lambda { api.define_category('some_name') }.should_not raise_error
         end
         it 'returns itself' do
-          api.define_category(:some_name).should be_kind_of(Category)
+          api.define_category(:some_name).should be_kind_of(Picky::Category)
         end
       end
     end

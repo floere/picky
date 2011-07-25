@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Query::Allocations do
+describe Picky::Query::Allocations do
 
   describe 'reduce_to' do
     before(:each) do

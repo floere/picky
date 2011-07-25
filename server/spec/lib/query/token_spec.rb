@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'spec_helper'
 
-describe Query::Token do
+describe Picky::Query::Token do
   
   describe '==' do
     it 'is equal if the originals are equal' do
@@ -298,14 +298,14 @@ describe Query::Token do
       it "should display qualifier and text combined with a ':'" do
         token = described_class.processed('sp:qualifier')
 
-        token.to_s.should == 'Query::Token(qualifier, ["sp"])'
+        token.to_s.should == 'Picky::Query::Token(qualifier, ["sp"])'
       end
     end
     describe "without qualifier" do
       it "should display just the text" do
         token = described_class.processed('text')
 
-        token.to_s.should == 'Query::Token(text)'
+        token.to_s.should == 'Picky::Query::Token(text)'
       end
     end
   end

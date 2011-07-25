@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexers::Serial do
+describe Picky::Indexers::Serial do
 
   before(:each) do
     @tokenizer = stub :tokenizer

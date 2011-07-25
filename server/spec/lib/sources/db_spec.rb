@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sources::DB do
+describe Picky::Sources::DB do
   
   before(:each) do
     @connection = stub :connection
@@ -16,7 +16,7 @@ describe Sources::DB do
   
   describe 'to_s' do
     it 'does something' do
-      @source.to_s.should == 'Sources::DB("some statement", {:option=>:some_options})'
+      @source.to_s.should == 'Picky::Sources::DB("some statement", {:option=>:some_options})'
     end
   end
   

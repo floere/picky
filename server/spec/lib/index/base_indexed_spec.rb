@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexes::Base do
+describe Picky::Indexes::Base do
   
   context 'without stubbed categories' do
     before(:each) do
@@ -14,7 +14,7 @@ describe Indexes::Base do
         @index.categories.categories.size.should == 1 
       end
       it 'returns the new category' do
-        @index.define_category(:some_category_name).should be_kind_of(Category)
+        @index.define_category(:some_category_name).should be_kind_of(Picky::Category)
       end
     end
   end
