@@ -4,7 +4,7 @@ module Picky
 
     #
     #
-    class Base
+    class Index
 
       attr_reader :result_identifier,
                   :combinator

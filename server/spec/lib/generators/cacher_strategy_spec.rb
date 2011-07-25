@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Generators::Strategy do
+describe Picky::Generators::Strategy do
   
   describe "saved?" do
     it "returns the right answer" do

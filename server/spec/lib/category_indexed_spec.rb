@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Category do
 
   before(:each) do
-    @index               = Picky::Indexes::Base.new :some_index, source: []
+    @index               = Picky::Indexes::Index.new :some_index, source: []
     @partial_strategy    = stub :partial, :use_exact_for_partial? => false
     @weights_strategy    = stub :weights
     @similarity_strategy = stub :similarity

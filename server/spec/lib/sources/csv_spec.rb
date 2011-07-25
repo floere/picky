@@ -1,18 +1,18 @@
 require 'spec_helper'
 require 'csv'
 
-describe Sources::CSV do
+describe Picky::Sources::CSV do
   
   describe 'to_s' do
     let(:source) { described_class.new :a, :b, :c, file:'some/file.csv' }
     it 'outputs the correct string' do
-      source.to_s.should == 'Sources::CSV(a, b, c, {:file=>"some/file.csv"})'
+      source.to_s.should == 'Picky::Sources::CSV(a, b, c, {:file=>"some/file.csv"})'
     end
   end
   
   describe 'without separator' do
     before(:each) do
-      @source = Sources::CSV.new :a, :b, :c, :file => :some_file
+      @source = described_class.new :a, :b, :c, :file => :some_file
     end
     it 'calls foreach correctly' do
       block = lambda { |*args| }
@@ -24,7 +24,7 @@ describe Sources::CSV do
   end
   describe 'with separator' do
     before(:each) do
-      @source = Sources::CSV.new :a, :b, :c, :file => :some_file, :col_sep => 'some_separator'
+      @source = described_class.new :a, :b, :c, :file => :some_file, :col_sep => 'some_separator'
     end
     it 'calls foreach correctly' do
       block = lambda { |*args| }
@@ -37,7 +37,7 @@ describe Sources::CSV do
   
   context "without file" do
     it "should fail correctly" do
-      lambda { @source = Sources::CSV.new(:a, :b, :c) }.should raise_error(Sources::NoCSVFileGiven)
+      lambda { @source = described_class.new(:a, :b, :c) }.should raise_error(described_class::NoFileGiven)
     end
   end
   context "with file" do
@@ -46,7 +46,7 @@ describe Sources::CSV do
     end
     context 'without separator' do
       before(:each) do
-        @source = Sources::CSV.new :a, :b, :c, :file => :some_file
+        @source = described_class.new :a, :b, :c, :file => :some_file
       end
       describe "harvest" do
         it "should yield the right data" do
@@ -66,7 +66,7 @@ describe Sources::CSV do
     end
     context 'with key_format method' do
       before(:each) do
-        @source = Sources::CSV.new :a, :b, :c, :file => :some_file, :key_format => :strip
+        @source = described_class.new :a, :b, :c, :file => :some_file, :key_format => :strip
       end
       describe "harvest" do
         it "should yield the right data" do

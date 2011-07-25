@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::Search do
+describe Picky::Adapters::Rack::Search do
   
   before(:each) do
     @query   = stub :query

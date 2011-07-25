@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Generators::SimilarityGenerator do
+describe Picky::Generators::SimilarityGenerator do
 
   context 'integration' do
     it 'should generate the correct values' do
@@ -15,7 +15,7 @@ describe Generators::SimilarityGenerator do
                                                   :meyer => nil,
                                                   :peter => nil
 
-      generator.generate(Generators::Similarity::DoubleMetaphone.new).should == { :MR => [:meier, :maier, :mayer, :meyer], :PTR => [:peter] }
+      generator.generate(Picky::Generators::Similarity::DoubleMetaphone.new).should == { :MR => [:meier, :maier, :mayer, :meyer], :PTR => [:peter] }
     end
   end
 

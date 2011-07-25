@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Generators::WeightsGenerator do
+describe Picky::Generators::WeightsGenerator do
 
   context 'integration' do
     it 'should generate the correct values' do

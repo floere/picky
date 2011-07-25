@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::LiveParameters do
+describe Picky::Adapters::Rack::LiveParameters do
   
   let(:live_parameters) { stub :live_parameters }
   let(:adapter) { described_class.new live_parameters }

@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Tokenizers::Index do
+describe Picky::Tokenizers::Index do
   
   let(:tokenizer) { described_class.new }
   

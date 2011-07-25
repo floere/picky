@@ -4,7 +4,7 @@ module Picky
 
     # An index that is persisted in Redis.
     #
-    class Redis < Base
+    class Redis < Index
 
       def indexing_bundle_class
         Indexing::Bundle::Redis

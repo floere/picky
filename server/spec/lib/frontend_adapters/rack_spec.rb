@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe FrontendAdapters::Rack do
+describe Picky::FrontendAdapters::Rack do
   
   before(:each) do
     @rack_adapter = described_class.new
@@ -47,14 +47,14 @@ describe FrontendAdapters::Rack do
     end
     context 'with routes' do
       before(:each) do
-        @rack_adapter.route %r{something} => Search.new
+        @rack_adapter.route %r{something} => Picky::Search.new
       end
       it 'returns the right answer' do
         @rack_adapter.empty?.should == false
       end
       describe 'to_s' do
         it 'outputs correctly' do
-          @rack_adapter.to_s.should == "Note: Anchored (✓) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n   something => Search()"
+          @rack_adapter.to_s.should == "Note: Anchored (✓) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n   something => Picky::Search()"
         end
       end
     end
@@ -107,10 +107,10 @@ describe FrontendAdapters::Rack do
       env = rack_defaults_for '/searches/some_route?query=some_query'
       
       search = stub :search
-      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Results.new)
-      Search.stub! :new => search
+      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Picky::Results.new)
+      Picky::Search.stub! :new => search
       
-      @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index)
+      @rack_adapter.route '/searches/some_route' => Picky::Search.new(:some_index, :some_other_index)
       
       @rack_adapter.routes.freeze
       @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/json", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
@@ -119,10 +119,10 @@ describe FrontendAdapters::Rack do
       env = rack_defaults_for '/searches/some_route?query=some_query&type=some_type'
       
       search = stub :search
-      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Results.new)
-      Search.stub! :new => search
+      search.should_receive(:search_with_text).once.with(anything, 20, 0).and_return(Picky::Results.new)
+      Picky::Search.stub! :new => search
       
-      @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index), :query => { :type => :some_type }
+      @rack_adapter.route '/searches/some_route' => Picky::Search.new(:some_index, :some_other_index), :query => { :type => :some_type }
       
       @rack_adapter.routes.freeze
       @rack_adapter.call(env).should == [200, {"Content-Type"=>"application/json", "Content-Length"=>"52"}, ["{\"allocations\":[],\"offset\":0,\"duration\":0,\"total\":0}"]]
@@ -132,9 +132,9 @@ describe FrontendAdapters::Rack do
       
       search = stub :search
       search.should_receive(:search_with_text).never
-      Search.stub! :new => search
+      Picky::Search.stub! :new => search
       
-      @rack_adapter.route '/searches/some_route' => Search.new(:some_index, :some_other_index)
+      @rack_adapter.route '/searches/some_route' => Picky::Search.new(:some_index, :some_other_index)
       
       @rack_adapter.routes.freeze
       @rack_adapter.call(env).should == [404, {"Content-Type"=>"text/html", "X-Cascade"=>"pass"}, ["Not Found"]]
@@ -188,7 +188,7 @@ describe FrontendAdapters::Rack do
         @rack_adapter.route %r{regexp1} => :query1, %r{regexp2} => :query2, :some => :option
       end
       it 'does not accept nil queries' do
-        lambda { @rack_adapter.route %r{some/regexp} => nil }.should raise_error(FrontendAdapters::Rack::RouteTargetNilError, /Routing for \/some\\\/regexp\/ was defined with a nil target object, i.e. \/some\\\/regexp\/ => nil./)
+        lambda { @rack_adapter.route %r{some/regexp} => nil }.should raise_error(Picky::FrontendAdapters::Rack::RouteTargetNilError, /Routing for \/some\\\/regexp\/ was defined with a nil target object, i.e. \/some\\\/regexp\/ => nil./)
       end
     end
     
@@ -202,7 +202,7 @@ describe FrontendAdapters::Rack do
     
     describe 'route_one' do
       before(:each) do
-        Adapters::Rack.stub! :app_for => :some_query_app
+        Picky::Adapters::Rack.stub! :app_for => :some_query_app
       end
       it 'should add the right route' do
         @routes.should_receive(:add_route).once.with :some_query_app, { :request_method => "GET", :path_info => /some_url/ }, {}, "some_query"
@@ -223,7 +223,7 @@ describe FrontendAdapters::Rack do
     
     describe 'default' do
       it 'should call answer' do
-        @rack_adapter.should_receive(:answer).once.with nil, FrontendAdapters::Rack::STATUSES[200]
+        @rack_adapter.should_receive(:answer).once.with nil, Picky::FrontendAdapters::Rack::STATUSES[200]
         
         @rack_adapter.default 200
       end
@@ -231,21 +231,21 @@ describe FrontendAdapters::Rack do
     
     describe 'STATUSES' do
       it 'is a lambda' do
-        FrontendAdapters::Rack::STATUSES[200].respond_to?(:call).should == true
+        Picky::FrontendAdapters::Rack::STATUSES[200].respond_to?(:call).should == true
       end
       it 'is a lambda' do
-        FrontendAdapters::Rack::STATUSES[404].respond_to?(:call).should == true
+        Picky::FrontendAdapters::Rack::STATUSES[404].respond_to?(:call).should == true
       end
     end
     
     describe 'root' do
       it 'should call answer' do
-        @rack_adapter.should_receive(:answer).once.with %r{^/$}, FrontendAdapters::Rack::STATUSES[200]
+        @rack_adapter.should_receive(:answer).once.with %r{^/$}, Picky::FrontendAdapters::Rack::STATUSES[200]
         
         @rack_adapter.root 200
       end
       it 'should call answer' do
-        @rack_adapter.should_receive(:answer).once.with %r{^/$}, FrontendAdapters::Rack::STATUSES[404]
+        @rack_adapter.should_receive(:answer).once.with %r{^/$}, Picky::FrontendAdapters::Rack::STATUSES[404]
         
         @rack_adapter.root 404
       end
@@ -274,14 +274,14 @@ describe FrontendAdapters::Rack do
       context 'without app' do
         context 'with url' do
           it 'should use the 200 with default_options from the url' do
-            @routes.should_receive(:add_route).once.with FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET", :path_info => /some_url/ }
+            @routes.should_receive(:add_route).once.with Picky::FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET", :path_info => /some_url/ }
             
             @rack_adapter.answer 'some_url'
           end
         end
         context 'without url' do
           it 'should use the 200 with default_options' do
-            @routes.should_receive(:add_route).once.with FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET" }
+            @routes.should_receive(:add_route).once.with Picky::FrontendAdapters::Rack::STATUSES[200], { :request_method => "GET" }
             
             @rack_adapter.answer
           end

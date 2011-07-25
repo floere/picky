@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Calculations::Location do
+describe Picky::Calculations::Location do
   
   context 'with precision 1' do
     before(:each) do

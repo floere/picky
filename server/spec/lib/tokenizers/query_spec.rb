@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'spec_helper'
 
-describe Tokenizers::Query do
+describe Picky::Tokenizers::Query do
 
   let(:tokenizer) { described_class.new }
   

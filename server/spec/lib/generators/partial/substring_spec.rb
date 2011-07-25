@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Generators::Partial::Substring do
+describe Picky::Generators::Partial::Substring do
   
   context 'default from' do
     let(:generator) { described_class.new }

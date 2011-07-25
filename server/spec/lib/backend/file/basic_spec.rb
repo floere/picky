@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backend::File::Basic do
+describe Picky::Backend::File::Basic do
   
   let(:file) { described_class.new 'some/cache/path/to/file' }
   
@@ -18,7 +18,7 @@ describe Backend::File::Basic do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'Backend::File::Basic(some/cache/path/to/file.index)'
+      file.to_s.should == 'Picky::Backend::File::Basic(some/cache/path/to/file.index)'
     end
   end
   

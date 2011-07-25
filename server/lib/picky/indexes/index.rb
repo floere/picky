@@ -85,7 +85,7 @@ module Picky
     #
     # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Index*.
     #
-    class Base
+    class Index
 
       attr_reader :name,
                   :categories

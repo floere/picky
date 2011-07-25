@@ -2,19 +2,19 @@
 #
 require 'spec_helper'
 
-describe LiveParameters do
+describe Picky::Interfaces::LiveParameters do
   
   before(:each) do
     @parent = stub :parent
     @child  = stub :child
     IO.stub! :pipe => [@child, @parent]
-    @parameters = LiveParameters.new
+    @parameters = described_class.new
     @parameters.stub! :exclaim
   end
   
-  describe Interfaces::LiveParameters::CouldNotUpdateConfigurationError do
+  describe Picky::Interfaces::LiveParameters::CouldNotUpdateConfigurationError do
     before(:each) do
-      @error = Interfaces::LiveParameters::CouldNotUpdateConfigurationError.new :some_key, 'some message'
+      @error = Picky::Interfaces::LiveParameters::CouldNotUpdateConfigurationError.new :some_key, 'some message'
     end
   end
   
@@ -53,7 +53,7 @@ describe LiveParameters do
     end
     context 'updating failed' do
       before(:each) do
-        @parameters.should_receive(:try_updating_configuration_with).and_raise Interfaces::LiveParameters::CouldNotUpdateConfigurationError.new(:a, 'hello')
+        @parameters.should_receive(:try_updating_configuration_with).and_raise Picky::Interfaces::LiveParameters::CouldNotUpdateConfigurationError.new(:a, 'hello')
       end
       it 'kills itself and returns' do
         @parameters.should_receive(:close_child).once.ordered

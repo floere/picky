@@ -7,7 +7,7 @@ require 'spec_helper'
 #
 require File.expand_path '../../../lib/picky/statistics', __FILE__
 
-describe Statistics do
+describe Picky::Statistics do
   
   let(:stats) { described_class.new }
   

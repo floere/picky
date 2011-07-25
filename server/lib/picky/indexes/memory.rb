@@ -4,7 +4,7 @@ module Picky
 
     # An index that is persisted in files, loaded at startup and kept in memory at runtime.
     #
-    class Memory < Base
+    class Memory < Index
 
       def indexing_bundle_class
         Indexing::Bundle::Memory

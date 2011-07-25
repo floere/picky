@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Indexers::Parallel do
+describe Picky::Indexers::Parallel do
 
   before(:each) do
     @source     = stub :source

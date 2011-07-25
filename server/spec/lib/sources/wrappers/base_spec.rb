@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Sources::Wrappers::Base do
+describe Picky::Sources::Wrappers::Base do
   
   before(:each) do
-    @source   = stub :source
+    @source = stub :source
   end
   
   context "with backend" do

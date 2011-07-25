@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Sources::Delicious do
+describe Picky::Sources::Delicious do
   
   context "with file" do
     
     describe 'to_s' do
       it 'outputs correctly' do
-        described_class.new(:username, :password).to_s.should == 'Sources::Delicious(username)'
+        described_class.new(:username, :password).to_s.should == 'Picky::Sources::Delicious(username)'
       end
     end
     
     describe "check_gem" do
       before(:each) do
-        @source = Sources::Delicious.allocate
+        @source = described_class.allocate
       end
       context "doesn't find www/delicious" do
         before(:each) do
@@ -37,7 +37,7 @@ describe Sources::Delicious do
     
     describe "harvest" do
       before(:each) do
-        @source = Sources::Delicious.new(:username, :password)
+        @source = described_class.new(:username, :password)
 
         post1       = WWW::Delicious::Post.new
         post1.uid   = "5045d67b3f251e4ae966dffe71501763"
@@ -70,7 +70,7 @@ describe Sources::Delicious do
     end
     describe "get_data" do
       before(:each) do
-        @source = Sources::Delicious.new(:username, :password)
+        @source = described_class.new(:username, :password)
         
         post1       = WWW::Delicious::Post.new
         post1.uid   = "5045d67b3f251e4ae966dffe71501763"

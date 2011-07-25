@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Tokenizers::Base do
+describe Picky::Tokenizers::Base do
   
   context 'with special instance' do
     let (:tokenizer) { described_class.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
@@ -65,7 +65,7 @@ EXPECTED
         expect { tokenizer.substitutes_characters_with Object.new }.to raise_error("The substitutes_characters_with option needs a character substituter, which responds to #substitute.")
       end
       it "uses the substituter to replace characters" do
-        tokenizer.substitutes_characters_with CharacterSubstituters::WestEuropean.new
+        tokenizer.substitutes_characters_with Picky::CharacterSubstituters::WestEuropean.new
 
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
       end

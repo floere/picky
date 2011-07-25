@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backend::File::JSON do
+describe Picky::Backend::File::JSON do
   
   let(:file) { described_class.new 'some/cache/path/to/file' }
   
@@ -24,7 +24,7 @@ describe Backend::File::JSON do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'Backend::File::JSON(some/cache/path/to/file.json)'
+      file.to_s.should == 'Picky::Backend::File::JSON(some/cache/path/to/file.json)'
     end
   end
   

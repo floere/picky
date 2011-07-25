@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Generators::Weights::Logarithmic do
+describe Picky::Generators::Weights::Logarithmic do
 
   before(:each) do
     @cacher = described_class.new

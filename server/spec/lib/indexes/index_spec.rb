@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Picky::Indexes::Base do
+describe Picky::Indexes::Index do
   
   let(:some_source) { stub :source, :harvest => nil, :inspect => 'some_source' }
   
@@ -16,27 +16,8 @@ describe Picky::Indexes::Base do
     it 'fails correctly' do
       expect { described_class.new :some_index_name, source: :some_source }.to raise_error
     end
-    it 'fails with a good message deprecated way of source passing is used' do
-      expect { described_class.new :some_index_name, some_source }.to raise_error(<<-ERROR
-
-
-Sources are not passed in as second parameter for Picky::Indexes::Base anymore, but either
-* as :source option:
-  Picky::Indexes::Base.new(:some_index_name, source: some_source)
-or
-* given to the #source method inside the config block:
-  Picky::Indexes::Base.new(:some_index_name) do
-    source some_source
-  end
-
-Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
-
-All the best
-  -- Picky
-
-
-ERROR
-)
+    it 'fails correctly' do
+      expect { described_class.new :some_index_name, some_source }.to raise_error
     end
     it 'does not fail' do
       expect { described_class.new :some_index_name, source: [] }.to_not raise_error

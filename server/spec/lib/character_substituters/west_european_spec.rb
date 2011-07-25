@@ -2,19 +2,20 @@
 #
 require 'spec_helper'
 
-describe CharacterSubstituters do
+describe Picky::CharacterSubstituters::WestEuropean do
+  
   before(:all) do
-    @substituter = CharacterSubstituters::WestEuropean.new.tap { |s| s.substitute '' }
+    @substituter = described_class.new.tap { |s| s.substitute '' }
   end
 
   # A bit of metaprogramming to help with the myriads of its.
   #
-  def self.it_should_substitute(special_character, normal_character)
+  def self.it_should_substitute special_character, normal_character
     it "should substitute #{special_character} with #{normal_character}" do
       @substituter.substitute(special_character).should == normal_character
     end
   end
-  def self.it_should_not_substitute(special_character)
+  def self.it_should_not_substitute special_character 
     it "should not substitute #{special_character}" do
       @substituter.substitute(special_character).should == special_character
     end
@@ -36,7 +37,7 @@ describe CharacterSubstituters do
   
   describe 'to_s' do
     it 'outputs correctly' do
-      @substituter.to_s.should == 'CharacterSubstituters::WestEuropean'
+      @substituter.to_s.should == 'Picky::CharacterSubstituters::WestEuropean'
     end
   end
 

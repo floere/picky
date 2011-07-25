@@ -2,13 +2,6 @@ module Picky
 
   module Sources
 
-    # Raised when a CSV source is instantiated without a file.
-    #
-    # Example:
-    #   Sources::CSV.new(:column1, :column2) # without file option
-    #
-    class NoCSVFileGiven < StandardError; end
-
     # Describes a CSV source, a file with comma separated values in it.
     #
     # The first column is implicitly assumed to be the id column.
@@ -21,6 +14,13 @@ module Picky
     #  Sources::CSV.new(:title, :author, :isbn, file:'data/a_csv_file.csv', row_sep:"\n")
     #
     class CSV < Base
+
+      # Raised when a CSV source is instantiated without a file.
+      #
+      # Example:
+      #   Sources::CSV.new(:column1, :column2) # without file option
+      #
+      class NoFileGiven < StandardError; end
 
       # The CSV file's path, relative to PICKY_ROOT.
       #
@@ -55,7 +55,7 @@ module Picky
       # Raises a NoCSVFileGiven exception.
       #
       def raise_no_file_given category_names # :nodoc:
-        raise NoCSVFileGiven.new(category_names.join(', '))
+        raise NoFileGiven.new(category_names.join(', '))
       end
 
       # Harvests the data to index.

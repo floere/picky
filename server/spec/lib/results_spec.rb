@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Results do
+describe Picky::Results do
   
   describe "from" do
     before(:each) do

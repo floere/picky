@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backend::File::Marshal do
+describe Picky::Backend::File::Marshal do
   
   let(:file) { described_class.new 'some/cache/path/to/file' }
   
@@ -24,7 +24,7 @@ describe Backend::File::Marshal do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'Backend::File::Marshal(some/cache/path/to/file.dump)'
+      file.to_s.should == 'Picky::Backend::File::Marshal(some/cache/path/to/file.dump)'
     end
   end
   

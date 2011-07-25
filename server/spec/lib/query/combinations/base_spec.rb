@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Query::Combinations::Base do
+describe Picky::Query::Combinations::Base do
 
   before(:each) do
     @combinations_ary = stub :combinations_ary

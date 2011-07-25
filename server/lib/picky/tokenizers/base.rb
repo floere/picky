@@ -13,14 +13,14 @@ module Picky
       def to_s
         reject_condition_location = @reject_condition.to_s[/:(\d+) \(lambda\)/, 1]
         <<-TOKENIZER
-  Removes characters:        #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
-  Stopwords:                 #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
-  Splits text on:            #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
-  Removes chars after split: #{@removes_characters_after_splitting_regexp ? "/#{@removes_characters_after_splitting_regexp.source}/" : '-'}
-  Normalizes words:          #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
-  Rejects tokens?            #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
-  Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' }
-  Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
+Removes characters:        #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
+Stopwords:                 #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
+Splits text on:            #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
+Removes chars after split: #{@removes_characters_after_splitting_regexp ? "/#{@removes_characters_after_splitting_regexp.source}/" : '-'}
+Normalizes words:          #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
+Rejects tokens?            #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
+Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' }
+Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
         TOKENIZER
       end
 

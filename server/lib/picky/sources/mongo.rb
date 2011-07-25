@@ -2,14 +2,6 @@ module Picky
 
   module Sources
 
-    # Raised when a Mongo source is instantiated without a valid uri.
-  	#
-  	# Important!
-    # You have to start your mongodb with --rest in order to use
-    # the rest / http interface
-  	#
-    class NoMongoDBGiven < StandardError; end
-
     # Important note: We're not sure if this works already.
     #
     # A Mongo database source.
@@ -24,6 +16,15 @@ module Picky
     # See http://github.com/archiloque/rest-client.
     #
     class Mongo < Base
+
+      # Raised when a Mongo source is instantiated without a valid uri.
+    	#
+    	# Important!
+      # You have to start your mongodb with --rest in order to use
+      # the rest / http interface
+    	#
+      class NoDBGiven < StandardError; end
+
   		@@id_key = '_id'
       #
       #
@@ -66,7 +67,7 @@ module Picky
   		end
 
       def raise_no_db_given category_names # :nodoc:
-        raise NoMongoDBGiven.new(category_names.join(', '))
+        raise NoDBGiven.new(category_names.join(', '))
       end
 
       def to_s

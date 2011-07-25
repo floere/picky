@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Generators::Partial::None do
+describe Picky::Generators::Partial::None do
   
   it 'is not saved' do
     described_class.new.saved?.should == false
   end
   it "has the right superclass" do
-    described_class.should < Generators::Partial::Strategy
+    described_class.should < Picky::Generators::Partial::Strategy
   end
   it "returns an empty index" do
     described_class.new.generate_from(:unimportant).should == {}

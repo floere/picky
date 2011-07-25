@@ -2,13 +2,6 @@ module Picky
 
   module Sources
 
-    # Raised when a Couch source is instantiated without a file.
-    #
-    # Example:
-    #   Sources::Couch.new(:column1, :column2) # without file option
-    #
-    class NoCouchDBGiven < StandardError; end
-
     # A Couch database source.
     #
     # Options:
@@ -17,10 +10,17 @@ module Picky
     # See http://github.com/archiloque/rest-client.
     #
     # Examples:
-    #  Sources::Couch.new(:title, :author, :isbn, url:'localhost:5984')
-    #  Sources::Couch.new(:title, :author, :isbn, url:'localhost:5984', user:'someuser', password:'somepassword')
+    #  Picky::Sources::Couch.new(:title, :author, :isbn, url:'localhost:5984')
+    #  Picky::Sources::Couch.new(:title, :author, :isbn, url:'localhost:5984', user:'someuser', password:'somepassword')
     #
     class Couch < Base
+
+      # Raised when a Couch source is instantiated without a file.
+      #
+      # Example:
+      #   Picky::Sources::Couch.new(:column1, :column2) # without file option
+      #
+      class NoDBGiven < StandardError; end
 
       #
       #
@@ -68,7 +68,7 @@ module Picky
       end
 
       def raise_no_db_given category_names # :nodoc:
-        raise NoCouchDBGiven.new(category_names.join(', '))
+        raise NoDBGiven.new(category_names.join(', '))
       end
     end
   end

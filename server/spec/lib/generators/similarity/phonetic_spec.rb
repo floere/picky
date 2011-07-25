@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Generators::Similarity::Phonetic do
+describe Picky::Generators::Similarity::Phonetic do
 
   it 'raises if you try to use Phonetic directly' do
     expect {

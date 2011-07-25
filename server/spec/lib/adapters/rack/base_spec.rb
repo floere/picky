@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Adapters::Rack::Base do
+describe Picky::Adapters::Rack::Base do
   
   before(:each) do
     @adapter = described_class.new

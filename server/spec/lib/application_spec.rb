@@ -8,15 +8,19 @@ describe Picky::Application do
     it "should run ok" do
       lambda {
         class MinimalTestApplication < described_class
-          books = Indexes::Memory.new :books, source: Sources::DB.new('SELECT id, title FROM books', :file => 'app/db.yml')
+          books = Picky::Indexes::Memory.new :books,
+                                             source: Picky::Sources::DB.new(
+                                               'SELECT id, title FROM books',
+                                               :file => 'app/db.yml'
+                                             )
           books.define_category :title
           
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
-          route %r{^/books} => Search.new(books)
+          route %r{^/books} => Picky::Search.new(books)
         end
-        Tokenizers::Index.default.tokenize 'some text'
-        Tokenizers::Query.default.tokenize 'some text'
+        Picky::Tokenizers::Index.default.tokenize 'some text'
+        Picky::Tokenizers::Query.default.tokenize 'some text'
       }.should_not raise_error
     end
     it "should run ok" do
@@ -36,31 +40,34 @@ describe Picky::Application do
                     splits_text_on:     /[\s\/\-\,\&]+/,
                     normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
                     
-                    substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+                    substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
                     maximum_tokens: 5
           
-          books_index = Indexes::Memory.new :books,
-                                          source: Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', :file => 'app/db.yml')
+          books_index = Picky::Indexes::Memory.new :books,
+                                                   source: Picky::Sources::DB.new(
+                                                     'SELECT id, title, author, isbn13 as isbn FROM books',
+                                                     :file => 'app/db.yml'
+                                                   )
           books_index.define_category :title,
-                                      similarity: Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
+                                      similarity: Picky::Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
           books_index.define_category :author,
-                                      similarity: Similarity::Soundex.new(2)
+                                      similarity: Picky::Similarity::Soundex.new(2)
           books_index.define_category :isbn,
-                                      partial: Partial::None.new # Partially searching on an ISBN makes not much sense.
+                                      partial: Picky::Partial::None.new # Partially searching on an ISBN makes not much sense.
           
-          geo_index = Indexes::Memory.new :geo do
-            source          Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+          geo_index = Picky::Indexes::Memory.new :geo do
+            source          Picky::Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
             indexing        removes_characters: /[^a-z]/
             category        :location,
-                            similarity: Similarity::Metaphone.new(4)
+                            similarity: Picky::Similarity::Metaphone.new(4)
             ranged_category :north1, 1, precision: 3, from: :north
             ranged_category :east1,  1, precision: 3, from: :east
           end
           
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
-          route %r{^/books} => Search.new(books_index)
-          route %r{^/buks}  => Search.new(books_index) do
+          route %r{^/books} => Picky::Search.new(books_index)
+          route %r{^/buks}  => Picky::Search.new(books_index) do
             searching removes_characters: /[buks]/
           end
         end
@@ -105,7 +112,7 @@ describe Picky::Application do
       lambda { described_class.rack_adapter }.should_not raise_error
     end
     it "should return a new FrontendAdapters::Rack instance" do
-      described_class.rack_adapter.should be_kind_of(FrontendAdapters::Rack)
+      described_class.rack_adapter.should be_kind_of(Picky::FrontendAdapters::Rack)
     end
     it "should cache the instance" do
       described_class.rack_adapter.should == described_class.rack_adapter

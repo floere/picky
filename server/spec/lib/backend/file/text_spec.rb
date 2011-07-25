@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backend::File::Text do
+describe Picky::Backend::File::Text do
   
   before(:each) do
     @file = described_class.new "some_cache_path"

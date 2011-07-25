@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Helpers::Measuring do
-  include Helpers::Measuring
+describe Picky::Helpers::Measuring do
+  include Picky::Helpers::Measuring
   
   describe "#timed" do
     it "should return some duration" do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Indexes::Base do
+describe Picky::Indexes::Index do
   
   describe 'tokenizer' do
     context 'with tokenizer' do
@@ -59,7 +59,7 @@ describe Picky::Indexes::Base do
     end
     describe "raise_no_source" do
       it "should raise" do
-        lambda { @index.raise_no_source }.should raise_error(NoSourceSpecifiedException)
+        lambda { @index.raise_no_source }.should raise_error(Picky::NoSourceSpecifiedException)
       end
     end
     describe 'define_source' do

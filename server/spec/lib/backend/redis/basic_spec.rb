@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backend::Redis::Basic do
+describe Picky::Backend::Redis::Basic do
   
   let(:redis) { described_class.new "some_namespace" }
 
@@ -66,7 +66,7 @@ describe Backend::Redis::Basic do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      redis.to_s.should == 'Backend::Redis::Basic(some_namespace:*)'
+      redis.to_s.should == 'Picky::Backend::Redis::Basic(some_namespace:*)'
     end
   end
   

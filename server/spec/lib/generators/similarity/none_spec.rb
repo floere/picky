@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Generators::Similarity::None do
+describe Picky::Generators::Similarity::None do
 
   before(:each) do
     @similarity = described_class.new

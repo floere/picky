@@ -1,10 +1,9 @@
 require 'spec_helper'
 
-describe Indexed::Wrappers::Bundle::Calculation do
+describe Picky::Indexed::Wrappers::Bundle::Calculation do
   
   before(:each) do
-    @bundle      = stub :bundle
-    
+    @bundle = stub :bundle
     @calculation = described_class.new @bundle
   end
   

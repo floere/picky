@@ -1,14 +1,14 @@
 # encoding: utf-8
 require 'spec_helper'
 
-describe Rack::Harakiri do
+describe Picky::Rack::Harakiri do
   before(:each) do
     @app = stub :app
     Process.stub! :kill # not taking any chances
   end
   context "defaults" do
     before(:each) do
-      @ronin = Rack::Harakiri.new @app
+      @ronin = described_class.new @app
     end
     it "should quit after a default amount of requests" do
       @ronin.instance_variable_get(:@quit_after_requests).should == 50
@@ -56,11 +56,11 @@ describe Rack::Harakiri do
   end
   context "with harakiri set" do
     before(:each) do
-      Rack::Harakiri.after = 100
-      @ronin = Rack::Harakiri.new @app
+      described_class.after = 100
+      @ronin = described_class.new @app
     end
     after(:each) do
-      Rack::Harakiri.after = nil
+      described_class.after = nil
     end
     it "should quit after an amount of requests" do
       @ronin.instance_variable_get(:@quit_after_requests).should == 100

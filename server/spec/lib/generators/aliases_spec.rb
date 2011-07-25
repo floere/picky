@@ -3,13 +3,13 @@ require 'spec_helper'
 describe 'aliases' do
 
   it 'aliases correctly' do
-    Partial.should == Generators::Partial
+    Picky::Partial.should == Picky::Generators::Partial
   end
   it 'aliases correctly' do
-    Similarity.should == Generators::Similarity
+    Picky::Similarity.should == Picky::Generators::Similarity
   end
   it 'aliases correctly' do
-    Weights.should == Generators::Weights
+    Picky::Weights.should == Picky::Generators::Weights
   end
   
 end

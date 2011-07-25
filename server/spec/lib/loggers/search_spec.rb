@@ -2,11 +2,11 @@
 #
 require 'spec_helper'
 
-describe Loggers::Search do
+describe Picky::Loggers::Search do
   
   before(:each) do
     @destination = stub :destination
-    @logger      = Loggers::Search.new @destination
+    @logger      = described_class.new @destination
   end
   describe "log" do
     it "should delegate to info" do

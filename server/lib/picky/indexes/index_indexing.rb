@@ -4,7 +4,7 @@ module Picky
 
     #
     #
-    class Base
+    class Index
 
       attr_reader :after_indexing,
                   :bundle_class

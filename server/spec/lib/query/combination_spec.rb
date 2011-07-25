@@ -2,11 +2,11 @@
 #
 require 'spec_helper'
 
-describe Query::Combination do
+describe Picky::Query::Combination do
 
   before(:each) do
     @bundle      = stub :bundle, :identifier => :bundle_name
-    @token       = Query::Token.processed('some_text~')
+    @token       = Picky::Query::Token.processed('some_text~')
     @category    = stub :category, :bundle_for => @bundle, :name => :some_category_name
 
     @combination = described_class.new @token, @category
@@ -41,9 +41,9 @@ describe Query::Combination do
   describe 'to_result' do
     context 'functional with qualifier' do
       before(:each) do
-        token = Tokenizers::Query.new.tokenize('name:Blä~').first
+        token = Picky::Tokenizers::Query.new.tokenize('name:Blä~').first
 
-        @combination = Query::Combination.new token, @category
+        @combination = Picky::Query::Combination.new token, @category
       end
       it 'should return a correct result' do
         @combination.to_result.should == [:some_category_name, 'Blä~', :blä] # Note: Characters not substituted. That's ok.

@@ -46,12 +46,12 @@ module Picky
       # Converts words into real tokens.
       #
       def tokens_for words
-        ::Query::Tokens.processed words, downcase?
+        Picky::Query::Tokens.processed words, downcase?
       end
       # Returns a tokens object.
       #
       def empty_tokens
-        ::Query::Tokens.new
+        Picky::Query::Tokens.new
       end
 
     end

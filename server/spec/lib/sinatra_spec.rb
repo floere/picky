@@ -22,12 +22,12 @@ describe Picky::Sinatra do
       extendee.send :searching, some: 'option'
     end
     it 'gets delegated correctly' do
-      Application.should_receive(:indexing).once.with some: 'option'
+      Picky::Application.should_receive(:indexing).once.with some: 'option'
       
       extendee.send :indexing, some: 'option'
     end
     it 'gets delegated correctly' do
-      Application.should_receive(:searching).once.with some: 'option'
+      Picky::Application.should_receive(:searching).once.with some: 'option'
       
       extendee.send :searching, some: 'option'
     end

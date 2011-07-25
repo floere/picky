@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Symbol do
   
   context 'performance' do
-    include Helpers::Measuring
+    include Picky::Helpers::Measuring
     before(:each) do
       @token = (((0..9).to_a)*10).to_s.to_sym
     end

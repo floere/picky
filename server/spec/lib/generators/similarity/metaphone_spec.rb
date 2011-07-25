@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Generators::Similarity::Metaphone do
+describe Picky::Generators::Similarity::Metaphone do
 
   before(:each) do
     @similarity = described_class.new

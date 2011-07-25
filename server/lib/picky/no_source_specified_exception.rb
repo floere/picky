@@ -1,6 +1,6 @@
 module Picky
 
-  # Raised if no source is available on a category.
+  # Raised if no source is available on an index.
   #
   class NoSourceSpecifiedException < StandardError; end
 
