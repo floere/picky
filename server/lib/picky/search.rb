@@ -126,13 +126,17 @@ module Picky
     #
     # Note: The Rack adapter calls this method after unravelling the HTTP request.
     #
+    # TODO Rename to search.
+    #
     def search_with_text text, ids = 20, offset = 0
-      search tokenized(text), ids, offset
+      search tokenized(text), ids.to_i, offset.to_i
     end
 
     # Runs the actual search using Query::Tokens.
     #
     # Note: Internal method, use #search_with_text.
+    #
+    # TODO Rename to search_with.
     #
     def search tokens, ids = 20, offset = 0
       results = nil
