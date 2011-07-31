@@ -1,5 +1,3 @@
-require 'rack/mount'
-
 module Picky
 
   module FrontendAdapters
@@ -7,6 +5,19 @@ module Picky
     # TODO Rename to Routing again. Push everything back into appropriate Adapters.
     #
     class Rack # :nodoc:all
+
+      def initialize
+        check_gem
+      end
+
+      # Tries to require the rest_client gem.
+      #
+      def check_gem # :nodoc:
+        require 'rack/mount'
+      rescue LoadError
+        warn_gem_missing 'rack-mount', 'the Picky routing'
+        exit 1
+      end
 
       #
       #
