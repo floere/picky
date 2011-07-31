@@ -194,7 +194,6 @@ module Picky
       # Reloads & finalizes the apps.
       #
       def reload
-        reset_rack_adapter
         Loader.load_user 'app'             # Sinatra app_file.
         Loader.load_user 'app/logging'     # Standard Picky logging.
         Loader.load_user 'app/application' # Standard Picky appfile.
