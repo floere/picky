@@ -19,7 +19,7 @@ gem 'activerecord',  '~> 3.0', :require => 'active_record'
 gem 'sinatra'
 gem 'unicorn'
 gem 'mysql' # Project specific.
-gem 'redis' # project specific.
+gem 'redis' # Project specific.
 
 group :test do
   gem 'picky-client'

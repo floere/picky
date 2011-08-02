@@ -1,1 +1,1 @@
-require 'picky-tasks'
+require 'picky/tasks'
