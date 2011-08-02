@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'picky'
-require File.expand_path '../model', __FILE__
 
 class BookSearch < Sinatra::Application
 
@@ -8,10 +7,8 @@ class BookSearch < Sinatra::Application
 
   # Define an index.
   #
-  books_index = Index::Memory.new :books do
-    source do # Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
-      CSV.open("data/#{PICKY_ENVIRONMENT}/library.csv")
-    end
+  books_index = Indexes::Memory.new :books do
+    source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
     indexing removes_characters: /[^a-zA-Z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
              splits_text_on:     /[\s\/\-\_\:\"\&\/]/
@@ -24,23 +21,23 @@ class BookSearch < Sinatra::Application
 
   # Index and load on startup.
   #
-  texts.index
-  texts.reload
+  # books_index.index
+  # books_index.reload
 
   # Index and load on USR1 signal.
   #
   Signal.trap('USR1') do
-    texts.reindex # kill -USR1 <pid>
+    books_index.reindex # kill -USR1 <pid>
   end
 
   # Define a search over the books index.
   #
   search = Search.new(books_index) do
-    boost [:title, :author] => +3, [:title] => +1
     searching removes_characters: /[^a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/,
               substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+    boost [:title, :author] => +3, [:title] => +1
   end
 
   # Route /books to the books search.

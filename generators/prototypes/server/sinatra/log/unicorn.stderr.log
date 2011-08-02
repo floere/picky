@@ -1,0 +1,16 @@
+I, [2011-08-02T22:24:54.595350 #5295]  INFO -- : listening on addr=0.0.0.0:8080 fd=3
+I, [2011-08-02T22:24:54.595851 #5295]  INFO -- : Refreshing Gem list
+worker=0 spawning...
+worker=1 spawning...
+worker=2 spawning...
+master process ready
+worker=0 spawned pid=5296
+worker=1 spawned pid=5297
+worker=0 ready
+worker=1 ready
+worker=2 spawned pid=5298
+worker=2 ready
+reaped #<Process::Status: pid 5298 exit 0> worker=2
+reaped #<Process::Status: pid 5297 exit 0> worker=1
+reaped #<Process::Status: pid 5296 exit 0> worker=0
+master complete

@@ -16,7 +16,7 @@ namespace :server do
   task :start => :framework do
     chdir_to_root
     daemonize = PICKY_ENVIRONMENT == 'production' ? '-D' : ''
-    command = "export PICKY_ENV=#{PICKY_ENVIRONMENT}; unicorn -c unicorn.ru #{daemonize}".strip
+    command = "export PICKY_ENV=#{PICKY_ENVIRONMENT}; unicorn -c unicorn.rb #{daemonize}".strip
     puts "Running \`#{command}\`."
     exec command
   end
