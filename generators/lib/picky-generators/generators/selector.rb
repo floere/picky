@@ -1,18 +1,19 @@
 module Picky
-  
+
   module Generators
 
     # Selects the right generator.
     #
     class Selector
-  
+
       attr_reader :types
 
       def initialize
         @types = {
           :sinatra_client       => [Client::Sinatra, :sinatra_client_name],
           :unicorn_server       => [Server::Unicorn, :unicorn_server_name],
-          :empty_unicorn_server => [Server::EmptyUnicorn, :empty_unicorn_server_name] 
+          :empty_unicorn_server => [Server::EmptyUnicorn, :empty_unicorn_server_name],
+          :sinatra_server       => [Server::Sinatra]
         }
       end
 
@@ -41,7 +42,7 @@ module Picky
         klass.new *args
       end
     end
-    
+
   end
-  
+
 end

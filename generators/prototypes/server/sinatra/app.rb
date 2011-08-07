@@ -24,8 +24,10 @@ class BookSearch < Sinatra::Application
 
   # Index and load on startup.
   #
-  # books_index.index
-  # books_index.reload
+  unless PICKY_ENVIRONMENT == 'test'
+    books_index.index
+    books_index.reload
+  end
 
   # Index and load on USR1 signal.
   #
