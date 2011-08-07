@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 require 'spec_helper'
 
 describe Symbol do
@@ -97,6 +99,18 @@ describe Symbol do
           end
           result.should == [:reinke, :reink]
         end
+      end
+    end
+    context 'japanese symbol' do
+      before(:each) do
+        @sym = :日本語
+      end
+      it "should return an array of japanese symbols, each 1 smaller than the other" do
+        result = []
+        @sym.each_subtoken do |subtoken|
+          result << subtoken
+        end
+        result.should == [:日本語, :日本, :日]
       end
     end
     context 'very short symbol' do
