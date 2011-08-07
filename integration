@@ -27,22 +27,26 @@ def client query, match
   end
 end
 
-# Runs a whole integration.
-#
+def install_sinatra_server
+  puts "Installing the Sinatra/Unicorn server."
+  system "picky generate sinatra_server sandbox/server"
+  system "cd sandbox/server; bundle install --local"
+  system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
 
-begin
-  puts "Please run using Ruby 1.9" if RUBY_VERSION < '1.9.0'
+  sleep 5 # loading
+end
 
-  system "./install"
-
-  puts "Installing the server."
+def install_unicorn_server
+  puts "Installing the Picky/Unicorn server."
   system "picky generate unicorn_server sandbox/server"
   system "cd sandbox/server; bundle install --local"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec rake start &"
 
   sleep 5 # loading
+end
 
+def run_search_requests_on_server
   puts
   puts "Running search requests on the server"
   server "alan", "author"
@@ -53,14 +57,18 @@ begin
   server "title:lyterature~+2002", "literature"
   puts
   puts
+end
 
+def install_sinatra_client
   puts "Installing the client."
   system "picky generate sinatra_client sandbox/client"
   system "cd sandbox/client; bundle install --local"
   system "cd sandbox/client; unicorn -p 3210 &"
 
   sleep 5 # loading
+end
 
+def run_search_requests_on_client
   puts
   puts "Running search requests on the client directly"
   client "alan", "author"
@@ -72,24 +80,71 @@ begin
   client "alan", "Alan Turing"
   puts
   puts
+end
 
+def open_client_in_browser
   system "open -a 'Google Chrome' http://localhost:3210/?q=alan"
   sleep 1
   system "open -a 'Google Chrome' http://localhost:3210/?q=a%2A%20b"
   sleep 5
+end
 
+def run_server_integration_tests
   puts "Now the server integration specs"
   if system('cd sandbox/server; bundle exec rake spec')
     puts "Yay! Integration specs ran through!"
   else
     raise "Integration specs failed!"
   end
+end
 
+def run_server_speed_tests
   puts "Now for a speed test"
   queries = ['alan', 'pinchn~', 'sp', 'title:lyterature~+2002'].cycle
   100.times do
     ask_server queries.next
   end
+end
+
+def kill_server
+  system "killall 'unicorn master -c unicorn.rb'"
+end
+
+def kill_client
+  system "killall 'unicorn master -p 3210'"
+end
+
+def delete_server_directory
+  system "rm -r sandbox/server"
+end
+
+def delete_client_directory
+  system "rm -r sandbox/client"
+end
+
+# Runs a whole integration.
+#
+begin
+  puts "Please run using Ruby 1.9" if RUBY_VERSION < '1.9.0'
+
+  system "./install"
+
+  install_sinatra_server
+  run_search_requests_on_server
+  install_sinatra_client
+  run_search_requests_on_client
+  open_client_in_browser
+
+  kill_server
+  delete_server_directory
+
+  install_unicorn_server
+  run_search_requests_on_server
+  run_search_requests_on_client
+  open_client_in_browser
+
+  run_server_integration_tests
+  run_server_speed_tests
 
   puts
   puts "SUCCESS! #{@tests} tests run without a hitch :)"
@@ -98,9 +153,9 @@ ensure
   puts "Press enter to kill (Break and have mercy with Ctrl-C)"
   gets
 
-  system "killall 'unicorn master -c unicorn.ru'"
-  system "killall 'unicorn master -p 3210'"
+  kill_server
+  kill_client
 
-  system "rm -r sandbox/client"
-  system "rm -r sandbox/server"
+  delete_server_directory
+  delete_client_directory
 end
