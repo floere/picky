@@ -26,7 +26,7 @@ describe Picky::Generators::Server::Sinatra do
       @sinatra.should_receive(:exclaim).once.ordered # Initial explanation
       @sinatra.should_receive(:create_target_directory).once.ordered
       @sinatra.should_receive(:copy_all_files)
-      @sinatra.should_receive(:exclaim).at_least(8).times.ordered # Some user steps to do
+      @sinatra.should_receive(:exclaim).at_least(9).times.ordered # Some user steps to do
       
       @sinatra.generate
     end
