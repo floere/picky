@@ -14,11 +14,11 @@ require 'picky'
 #
 # (in that order).
 #
-Loader.load_application
+Picky::Loader.load_application
 
 # Load the indexes into the memory.
 #
-Indexes.load_from_cache
+Picky::Indexes.reload
 
 # TODO Decide if you want to use the Unicorn killing trick. (Good with large data sets)
 #

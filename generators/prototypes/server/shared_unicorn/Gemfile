@@ -2,7 +2,7 @@ source :gemcutter
 
 # Gems required by Picky.
 #
-gem 'picky',      '~> 2.0'
+gem 'picky',      '3.0.0.pre1'
 gem 'rake'
 gem 'bundler'
 gem 'rack',       '~> 1.2.2'
@@ -30,6 +30,6 @@ gem 'mysql'
 # Integration testing needs the client.
 #
 group :test do
+  gem 'picky-client', '3.0.0.pre1'
   gem 'rspec'
-  gem 'picky-client'
 end

@@ -5,7 +5,12 @@
 #
 # Questions? Mail me, IRC #picky, the google group, http://github.com/floere/picky/wiki.
 #
-class PickySearch < Application
+class PickySearch < Picky::Application
+
+  # So we don't have to write Picky::
+  # in front of everything.
+  #
+  include Picky
 
   # How text is indexed. Move to Index block to make it index specific.
   #
@@ -21,7 +26,7 @@ class PickySearch < Application
             maximum_tokens: 5, # Amount of tokens used in a search (5 = default).
             substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
 
-  books_index = Index::Memory.new :books do
+  books_index = Indexes::Memory.new :books do
     source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
     category :title,
              similarity: Similarity::DoubleMetaphone.new(3), # Default is no similarity.

@@ -21,7 +21,9 @@ describe Picky::Generators::Selector do
       it "should not raise if a generator is available" do
         lambda { @selector.generator_for('unicorn_server', 'some_project') }.should_not raise_error
       end
-      
+      it "should not raise if a generator is available" do
+        lambda { @selector.generator_for('sinatra_server', 'some_project') }.should_not raise_error
+      end
       it "should raise if a generator is not available" do
         lambda { @selector.generator_for('blarf', 'gnorf') }.should raise_error(Picky::Generators::NotFoundException)
       end

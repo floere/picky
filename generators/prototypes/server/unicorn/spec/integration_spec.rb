@@ -6,8 +6,8 @@ require 'picky-client/spec'
 describe 'Integration Tests' do
   
   before(:all) do
-    Indexes.index_for_tests
-    Indexes.load_from_cache
+    Picky::Indexes.index_for_tests
+    Picky::Indexes.load_from_cache
   end
   
   let(:books) { Picky::TestClient.new(PickySearch, :path => '/books') }
