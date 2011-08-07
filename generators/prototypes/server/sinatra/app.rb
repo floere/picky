@@ -16,7 +16,7 @@ class BookSearch < Sinatra::Application
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
              splits_text_on:     /[\s\/\-\_\:\"\&\/]/
     category :title,
-             similarity: Similarity::DoubleMetaphone.new(3),  
+             similarity: Similarity::DoubleMetaphone.new(3),
              partial: Partial::Substring.new(from: 1) # Default is from: -3.
     category :author, partial: Partial::Substring.new(from: 1)
     category :year, partial: Partial::None.new
