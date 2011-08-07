@@ -22,13 +22,6 @@ class BookSearch < Sinatra::Application
     category :year, partial: Partial::None.new
   end
 
-  # Index and load on startup.
-  #
-  unless PICKY_ENVIRONMENT == 'test'
-    books_index.index
-    books_index.reload
-  end
-
   # Index and load on USR1 signal.
   #
   Signal.trap('USR1') do
