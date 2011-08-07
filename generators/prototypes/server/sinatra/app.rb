@@ -3,6 +3,9 @@ require 'picky'
 
 class BookSearch < Sinatra::Application
 
+  # We do this so we don't have to type
+  # Picky:: in front of everything.
+  #
   include Picky
 
   # Define an index.
@@ -13,7 +16,7 @@ class BookSearch < Sinatra::Application
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
              splits_text_on:     /[\s\/\-\_\:\"\&\/]/
     category :title,
-             similarity: Similarity::DoubleMetaphone.new(3), # Default is no similarity.
+             similarity: Similarity::DoubleMetaphone.new(3),  
              partial: Partial::Substring.new(from: 1) # Default is from: -3.
     category :author, partial: Partial::Substring.new(from: 1)
     category :year, partial: Partial::None.new
