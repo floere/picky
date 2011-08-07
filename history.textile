@@ -1,6 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.0.0.pre1
+
 * hanke: (server) Note: The key_format is not saved in the index configuration anymore.
+* hanke: (generator) New example server, sinatra_server. The new default, very flexible.
 
 h2. Version 2.7.0
 
