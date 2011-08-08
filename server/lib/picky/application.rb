@@ -175,7 +175,9 @@ module Picky
 
       # Routes.
       #
-      delegate :route, :to => :rack_adapter
+      def route options
+        rack_adapter.route options
+      end
 
       # A Picky application implements the Rack interface.
       #
