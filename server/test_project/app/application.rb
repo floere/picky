@@ -1,6 +1,5 @@
 # encoding: utf-8
 #
-
 class ChangingItem
 
   attr_reader :id, :name
