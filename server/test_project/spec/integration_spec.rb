@@ -20,6 +20,7 @@ describe BookSearch do
   let(:indexing)        { Picky::TestClient.new(described_class, :path => '/indexing')        }
   let(:memory_changing) { Picky::TestClient.new(described_class, :path => '/memory_changing') }
   let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
+  let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')  }
   
   it 'can generate a single index category without failing' do
     book_each_index = Picky::Indexes[:book_each][:title]
@@ -236,6 +237,13 @@ describe BookSearch do
   it { csv.search("history fergus").ids.should == [4, 4] }
   it { csv.search("HISTORY FERGUS").ids.should == [] }
   it { csv.search("history AND OR fergus").ids.should == [4, 4] }
+  
+  # Japanese characters (UTF-8).
+  #
+  it { japanese.search("日本語").ids.should == [1] }
+  it { japanese.search("にほんご").ids.should == [1] }
+  it { japanese.search("食べる").ids.should == [2] }
+  it { japanese.search("たべる").ids.should == [2] }
   
   # Database index reloading.
   #

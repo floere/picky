@@ -219,6 +219,17 @@ class BookSearch < Picky::Application
       category :name
     end
 
+    japanese_index = Picky::Indexes::Memory.new(:japanese) do
+      source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+
+      indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
+               :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
+               :splits_text_on =>    /[\s;]/
+
+      category :japanese,
+               :partial => Picky::Partial::Substring.new(from: 1)
+    end
+
     options = {
       :weights => {
         [:author]         => 6,
@@ -240,8 +251,14 @@ class BookSearch < Picky::Application
           %r{\A/geo\Z}             => Picky::Search.new(real_geo_index),
           %r{\A/simple_geo\Z}      => Picky::Search.new(mgeo_index),
           %r{\A/iphone\Z}          => Picky::Search.new(iphone_locations),
-          %r{\A/indexing\Z}        => Picky::Search.new(indexing_index),
-          %r{\A/all\Z}             => Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
+          %r{\A/indexing\Z}        => Picky::Search.new(indexing_index)
+    route %r{\A/japanese\Z}        => Picky::Search.new(japanese_index) do
+            searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i,
+                      stopwords:          /\b(and|the|of|it|in|for)\b/i,
+                      splits_text_on:     /[\s\/\-\&]+/,
+                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new
+          end
+    route %r{\A/all\Z}             => Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
 end
 
