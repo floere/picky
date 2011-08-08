@@ -45,7 +45,7 @@ GEM
       kgio (~> 2.3)
       rack
     url_escape (2009.06.24)
-    yajl-ruby (0.7.9)
+    yajl-ruby (0.8.2)
 
 PLATFORMS
   ruby
@@ -53,17 +53,17 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 3.0)
   activesupport (~> 3.0)
-  bundler (>= 0.9.26)
+  bundler
   haml
   mysql
   picky-client
-  rack (~> 1.2.1)
-  rack-mount (~> 0.6.9)
+  rack
+  rack-mount
   rack_fast_escape (= 2009.06.24)
   rake
   redis
   rspec
   sinatra
-  text (~> 0.2.0)
+  text
   unicorn
-  yajl-ruby (~> 0.7.8)
+  yajl-ruby
