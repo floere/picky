@@ -252,12 +252,13 @@ class BookSearch < Picky::Application
           %r{\A/simple_geo\Z}      => Picky::Search.new(mgeo_index),
           %r{\A/iphone\Z}          => Picky::Search.new(iphone_locations),
           %r{\A/indexing\Z}        => Picky::Search.new(indexing_index)
-    route %r{\A/japanese\Z}        => Picky::Search.new(japanese_index) do
-            searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i,
-                      stopwords:          /\b(and|the|of|it|in|for)\b/i,
-                      splits_text_on:     /[\s\/\-\&]+/,
-                      substitutes_characters_with: CharacterSubstituters::WestEuropean.new
-          end
+    japanese_search = Picky::Search.new(japanese_index) do
+      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i,
+                stopwords:          /\b(and|the|of|it|in|for)\b/i,
+                splits_text_on:     /[\s\/\-\&]+/,
+                substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new
+    end
+    route %r{\A/japanese\Z}        => japanese_search
     route %r{\A/all\Z}             => Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
 
 end
