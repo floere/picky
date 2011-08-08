@@ -36,7 +36,7 @@ module Picky
         def retrieve
           id    = nil
           token = nil
-          ::File.open(cache_path, 'r:binary') do |file|
+          ::File.open(cache_path, 'r:utf-8') do |file|
             file.each_line do |line|
               id, token = line.split ?,, 2
               yield id, (token.chomp! || token).to_sym
@@ -47,7 +47,7 @@ module Picky
         #
         #
         def open &block
-          ::File.open cache_path, 'w:binary', &block
+          ::File.open cache_path, 'w:utf-8', &block
         end
 
 
