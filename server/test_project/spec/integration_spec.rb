@@ -244,6 +244,10 @@ describe BookSearch do
   it { japanese.search("にほんご").ids.should == [1] }
   it { japanese.search("食べる").ids.should == [2] }
   it { japanese.search("たべる").ids.should == [2] }
+  #
+  # Partial.
+  #
+  it { japanese.search("日").ids.should == [1] }
   
   # Database index reloading.
   #
