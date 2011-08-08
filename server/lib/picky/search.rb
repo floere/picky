@@ -39,8 +39,8 @@ module Picky
       options = Hash === index_definitions.last ? index_definitions.pop : {}
 
       @indexes = Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
-      searching options[:tokenizer] if options[:tokenizer]
-      boost     options[:weights]
+      searching options[:tokenizer] if options[:tokenizer] # TODO Remove.
+      boost     options[:weights] # TODO Remove.
 
       instance_eval(&Proc.new) if block_given?
 
