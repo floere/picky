@@ -7,11 +7,11 @@ require File.expand_path '../../lib/picky', __FILE__
 
 # Load your application.
 #
-Loader.load_application
+Picky::Loader.load_application
 
 # Load the indexes.
 #
-Indexes.reload
+Picky::Indexes.reload
 
 # Use Harakiri middleware to kill unicorn child after X requests.
 #
