@@ -1,0 +1,138 @@
+!!!
+%html{ :lang => 'en' }
+  %head
+    %link{:href => "stylesheets/picky.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+
+    = js 'jquery-1.5.0.min'
+    = js 'history.min'
+    = js 'history.adapter.jquery.min'
+    = js 'picky.min'
+
+  %body
+    %img{:src => "images/picky.png"}/
+    %p
+      %a{:href => "http://floere.github.com/picky"} To the Picky Homepage
+      \/
+      %a{:href => '/configure' } Configuring this app server
+    %p
+      Try a few examples
+      = succeed ":" do
+        %span.explanation (on a simple database with 540 books - note that the server is on Heroku and needs a little time to ramp up)
+    %p
+      A simple word,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('alan');"} alan
+      %span.explanation
+        (Finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.)
+        %span
+    %p
+      With qualifier,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('title:women');"} title:women
+      %span.explanation
+        (Finds "women*" just in titles.)
+        %span
+    %p
+      With similarity,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
+      %span.explanation (Finds "pynchon", note: Only title in example with similarity. Uses a combination of double metaphone and Levenshtein.)
+    %p
+      More complex,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~');"} title:lyterature~
+      %span.explanation (Finds similar titles)
+    %p
+      With choice,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
+      %span.explanation (Finds "sp*" in multiple categories. Choose the one you're looking for.)
+    %p
+      More complex,
+      = succeed "." do
+        %a{:href => "#", :onclick => "pickyClient.insert('soc* p');"} soc* p
+      %span.explanation (This is where Picky really shines, "the title started with soc, and the author starts with p")
+    .content
+      = Picky::Helper.cached_interface
+      :javascript
+        $(window).load(function() {
+          pickyClient = new PickyClient({
+            // A full query displays the rendered results.
+            //
+            full: '/search/full',
+            // fullResults: 100, // Optional. Amount of ids to search for, default 20.
+
+            // A live query just updates the count and does not need
+            // to render (could go straight to the search server).
+            //
+            live: '/search/live',
+            // liveResults: 0, // Optional. Amount of ids to search for, default 0.
+
+            // showResultsLimit: 10, // Optional. Default is 10.
+
+            // Wrap each li group (like author-title, or title-isbn etc.) of results
+            // in this element.
+            // Optional. Default is '<ol class="results"></ol>'.
+            //
+            // wrapResults: '<div class="hello"><ol class="world"></ol></div>',
+
+            // before: function(params, query) {  }, // Optional. Before Picky sends any data.
+            // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+            // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+
+            // This is used to generate the correct query strings, localized. E.g. "subject:war".
+            // Optional. If you don't give these, the field identifier given in the Picky server is used.
+            //
+            qualifiers: {
+              en:{
+                subjects:  'subject'
+              }
+            },
+
+            // Use this to group the choices (those are used when Picky needs more feedback).
+            // If a category is missing, it is appended in a virtual group at the end.
+            // Optional. Default is [].
+            //
+            groups: [['author', 'title', 'subjects']],
+            // This is used for formatting inside the choice groups.
+            //
+            // Use %n$s, where n is the position of the category in the key.
+            // Optional. Default is {}.
+            //
+            choices: {
+              en:{
+                'title': {
+                  format: "<strong>%1$s</strong>",
+                  filter: function(text) { return text.toUpperCase(); },
+                  ignoreSingle: false
+                },
+                'author,title':    '%1$s, who wrote %2$s',
+                'title,author':    '%2$s, written by %2$s',
+                'title,subjects': '%1$s, about %2$s',
+                'author,subjects': '%1$s, who wrote about %2$s'
+              }
+            },
+
+            // This is used to explain the preceding word in the suggestion text (if it
+            // has not yet been defined by the choices above), localized. E.g. "Peter (author)".
+            // Optional. Default are the field identifiers from the Picky server.
+            //
+            explanations: {
+              en:{
+                title:     'titled',
+                author:    'written by',
+                year:      'published in'
+                // publisher: 'published by',
+                // subjects:  'topics'
+              }
+            }
+          });
+
+          // An initial search text, prefilled
+          // this one is passed through the query param q.
+          //
+          // Example: www.mysearch.com/?q=example
+          //
+          pickyClient.insertFromURL('#{@query}');
+        });
