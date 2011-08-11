@@ -35,8 +35,8 @@ end
 
 # Route to a search, return json.
 #
-search = Picky::Search.new texts
+text_search = Picky::Search.new texts
 get '/texts' do
-  results = search.search_with_text params[:query], params[:ids] || 20, params[:offset] || 0
+  results = text_search.search params[:query], params[:ids] || 20, params[:offset] || 0
   results.to_json
 end

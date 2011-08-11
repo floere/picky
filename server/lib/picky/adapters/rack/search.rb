@@ -7,7 +7,7 @@ module Picky
     # adapter for it.
     #
     # For example, if you give it a query, it will extract the query param etc.
-    # and call search_with_text on it if it is called by Rack.
+    # and call search on it if it is called by Rack.
     #
     module Rack
 
@@ -35,7 +35,7 @@ module Picky
           lambda do |env|
             params  = ::Rack::Request.new(env).params
 
-            results = query.search_with_text *extracted(params)
+            results = query.search *extracted(params)
 
             PickyLog.log results.to_log(params[query_key])
 

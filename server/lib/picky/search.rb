@@ -1,14 +1,16 @@
+# encoding: utf-8
+#
 module Picky
 
-  # = Picky Queries
+  # = Picky Searches
   #
   # A Picky Search is an object which:
-  # * holds one or more indexes
-  # * offers an interface to query these indexes.
+  #  * holds one or more indexes
+  #  * offers an interface to query these indexes.
   #
   # You connect URL paths to indexes via a Query.
   #
-  # We recommend not to use this directly, but connect it to an URL and query through one of these
+  # We recommend to not use this directly, but connect it to an URL and query through one of these
   # (Protip: Use "curl 'localhost:8080/query/path?query=exampletext')" in a Terminal.
   #
   class Search
@@ -16,41 +18,40 @@ module Picky
     include Helpers::Measuring
 
     attr_reader   :indexes
-    attr_writer   :tokenizer
-    attr_accessor :weights
+    attr_accessor :tokenizer, :weights
 
     # Takes:
     # * A number of indexes
-    # * Options hash (optional) with:
-    #   * tokenizer: Tokenizers::Query.default by default.
-    #   * weights:   A hash of weights, or a Query::Weights object.
     #
     # TODO Add identifiers_to_remove (rename) and reduce_allocations_to_amount (rename).
     # TODO categories_to_remove ?
     #
     # It is also possible to define the tokenizer and weights like so.
     # Example:
-    #   Search.new(index1, index2, index3) do
+    #   search = Search.new(index1, index2, index3) do
     #     searching removes_characters: /[^a-z]/, etc.
     #     weights [:author, :title] => +3, [:title, :isbn] => +1
     #   end
     #
     def initialize *index_definitions
-      options = Hash === index_definitions.last ? index_definitions.pop : {}
-
       @indexes = Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
-      searching options[:tokenizer] if options[:tokenizer] # TODO Remove.
-      boost     options[:weights] # TODO Remove.
 
       instance_eval(&Proc.new) if block_given?
+
+      @tokenizer ||= Tokenizers::Query.default
+      @weights   ||= Query::Weights.new
 
       self
     end
 
-    # Example:
-    #   Search.new(index1, index2, index3) do
-    #     searching removes_characters: /[^a-z]/, etc.
-    #     weights [:author, :title] => +3, [:title, :isbn] => +1
+    # Examples:
+    #   search = Search.new(index1, index2, index3) do
+    #     searching removes_characters: /[^a-z]/,
+    #               # etc.
+    #   end
+    #
+    #   search = Search.new(index1, index2, index3) do
+    #     searching MyTokenizerThatRespondsToTheMethodTokenize.new
     #   end
     #
     def searching options
@@ -61,21 +62,67 @@ module Picky
       end
     end
 
-    # Returns the tokenizer if set or if not, the query tokenizer.
-    #
-    def tokenizer
-      @tokenizer || Tokenizers::Query.default
-    end
-
     # Example:
-    #   Search.new(index1, index2, index3) do
-    #     searching removes_characters: /[^a-z]/, etc.
-    #     boost [:author, :title] => +3, [:title, :isbn] => +1
+    #   search = Search.new(books_index, dvd_index, mp3_index) do
+    #     boost [:author, :title] => +3,
+    #           [:title, :isbn]   => +1
     #   end
     #
     def boost options
       weights  = options || Query::Weights.new
       @weights = Hash === weights ? Query::Weights.new(weights) : weights
+    end
+
+    # This is the main entry point for a query.
+    # Use this in specs and also for running queries.
+    #
+    # Parameters:
+    # * text: The search text.
+    # * ids = 20: _optional_ The amount of ids to calculate (with offset).
+    # * offset = 0: _optional_ The offset from which position to return the ids. Useful for pagination.
+    #
+    # Note: The Rack adapter calls this method after unravelling the HTTP request.
+    #
+    def search text, ids = 20, offset = 0
+      search_with tokenized(text), ids.to_i, offset.to_i
+    end
+
+    # Runs the actual search using Query::Tokens.
+    #
+    # Note: Internal method, use #search
+    #
+    def search_with tokens, ids = 20, offset = 0
+      results = nil
+
+      duration = timed do
+        results = execute tokens, ids, offset
+      end
+      results.duration = duration.round 6
+
+      results
+    end
+
+    # Execute a search using Query::Tokens.
+    #
+    # Note: Internal method, use #search.
+    #
+    def execute tokens, ids, offset
+      Results.from ids, offset, sorted_allocations(tokens)
+    end
+
+    # Delegates the tokenizing to the query tokenizer.
+    #
+    # Parameters:
+    # * text: The text to tokenize.
+    #
+    def tokenized text
+      tokenizer.tokenize text
+    end
+
+    # Gets sorted allocations for the tokens.
+    #
+    def sorted_allocations tokens # :nodoc:
+      indexes.prepared_allocations_for tokens, weights
     end
 
     # Returns the right combinations strategy for
@@ -116,62 +163,6 @@ module Picky
     end
     def raise_different index_types
       raise DifferentTypesError.new(index_types)
-    end
-
-    # This is the main entry point for a query.
-    # Use this in specs and also for running queries.
-    #
-    # Parameters:
-    # * text: The search text.
-    # * ids = 20: _optional_ The amount of ids to calculate (with offset).
-    # * offset = 0: _optional_ The offset from which position to return the ids. Useful for pagination.
-    #
-    # Note: The Rack adapter calls this method after unravelling the HTTP request.
-    #
-    # TODO Rename to search.
-    #
-    def search_with_text text, ids = 20, offset = 0
-      search tokenized(text), ids.to_i, offset.to_i
-    end
-
-    # Runs the actual search using Query::Tokens.
-    #
-    # Note: Internal method, use #search_with_text.
-    #
-    # TODO Rename to search_with.
-    #
-    def search tokens, ids = 20, offset = 0
-      results = nil
-
-      duration = timed do
-        results = execute tokens, ids, offset
-      end
-      results.duration = duration.round 6
-
-      results
-    end
-
-    # Execute a search using Query::Tokens.
-    #
-    # Note: Internal method, use #search_with_text.
-    #
-    def execute tokens, ids, offset
-      Results.from ids, offset, sorted_allocations(tokens)
-    end
-
-    # Delegates the tokenizing to the query tokenizer.
-    #
-    # Parameters:
-    # * text: The text to tokenize.
-    #
-    def tokenized text
-      tokenizer.tokenize text
-    end
-
-    # Gets sorted allocations for the tokens.
-    #
-    def sorted_allocations tokens # :nodoc:
-      indexes.prepared_allocations_for tokens, weights
     end
 
     # Display some nice information for the user.

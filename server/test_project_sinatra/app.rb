@@ -230,6 +230,17 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
+  japanese_index = Picky::Indexes::Memory.new(:japanese) do
+    source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+
+    indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
+             :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
+             :splits_text_on =>    /[\s;]/
+
+    category :japanese,
+             :partial => Picky::Partial::Substring.new(from: 1)
+  end
+
   Indexes.reload
 
   options = {
@@ -245,55 +256,55 @@ class BookSearch < Sinatra::Application
   #
   books_search = Search.new books_index, isbn_index, options
   get %r{\A/books\Z} do
-    books_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    books_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   book_each_search = Search.new book_each_index, options
   get %r{\A/book_each\Z} do
-    book_each_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    book_each_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   redis_search = Search.new redis_index, options
   get %r{\A/redis\Z} do
-    redis_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    redis_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   memory_changing_search = Search.new memory_changing_index
   get %r{\A/memory_changing\Z} do
-    memory_changing_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    memory_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   redis_changing_search = Search.new redis_changing_index
   get %r{\A/redis_changing\Z} do
-    redis_changing_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    redis_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   csv_test_search = Search.new csv_test_index, options
   get %r{\A/csv\Z} do
-    csv_test_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    csv_test_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   isbn_search = Search.new isbn_index
   get %r{\A/isbn\Z} do
-    isbn_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    isbn_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   sym_keys_search = Search.new sym_keys_index
   get %r{\A/sym\Z} do
-    sym_keys_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    sym_keys_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   real_geo_search = Search.new real_geo_index
   get %r{\A/geo\Z} do
-    real_geo_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    real_geo_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   mgeo_search = Search.new mgeo_index
   get %r{\A/simple_geo\Z} do
-    mgeo_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    mgeo_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   iphone_search = Search.new iphone_locations
   get %r{\A/iphone\Z} do
-    iphone_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    iphone_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   indexing_search = Search.new indexing_index
   get %r{\A/indexing\Z} do
-    indexing_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    indexing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index, options
   get %r{\A/all\Z} do
-    all_search.search_with_text(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    all_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
 
 end

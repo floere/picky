@@ -42,12 +42,6 @@ describe Picky::Search do
     end
     context 'tokenizer predefined' do
       let(:predefined) { stub(:tokenizer, :tokenize => nil) }
-      context 'by way of hash' do
-        let(:search) { described_class.new(tokenizer: predefined) }
-        it 'returns the predefined tokenizer' do
-          search.tokenizer.should == predefined
-        end
-      end
       context 'by way of DSL' do
         let(:search) { pre = predefined; described_class.new { searching pre } }
         it 'returns the predefined tokenizer' do
@@ -89,42 +83,44 @@ describe Picky::Search do
       search.weights.should be_kind_of(Picky::Query::Weights)
     end
     it "handles :weights options when not yet wrapped" do
-      search = described_class.new :weights => { [:a, :b] => +3 }
+      search = described_class.new do boost [:a, :b] => +3 end
       
       search.weights.should be_kind_of(Picky::Query::Weights)
     end
     it "handles :weights options when already wrapped" do
-      search = described_class.new :weights => Picky::Query::Weights.new([:a, :b] => +3)
+      search = described_class.new do boost Picky::Query::Weights.new([:a, :b] => +3) end
       
       search.weights.should be_kind_of(Picky::Query::Weights)
     end
   end
   
-  describe "search_with_text" do
+  describe "search" do
     before(:each) do
       @search = described_class.new
     end
-    it "delegates to search" do
+    it "delegates to search_with" do
       @search.stub! :tokenized => :tokens
       
-      @search.should_receive(:search).once.with :tokens, 20, 0
+      @search.should_receive(:search_with).once.with :tokens, 20, 0
       
-      @search.search_with_text :text, 20, 0
+      @search.search :text, 20, 0
     end
     it "uses the tokenizer" do
-      @search.stub! :search
+      @search.stub! :search_with
       
       @search.should_receive(:tokenized).once.with :text
       
-      @search.search_with_text :text, 20 # (unimportant)
+      @search.search :text, 20 # (unimportant)
     end
   end
   
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
-        @tokenizer = stub :tokenizer, :tokenize => :some_tokenized_text
-        @search    = described_class.new @index, tokenizer: @tokenizer
+        tokenizer = stub :tokenizer, :tokenize => :some_tokenized_text
+        @search = described_class.new @index do
+          searching tokenizer
+        end
       end
       it 'should tokenize using the tokenizer' do
         @search.tokenized('some text').should == :some_tokenized_text
@@ -138,7 +134,7 @@ describe Picky::Search do
     end
     context 'with weights' do
       before(:each) do
-        @search = described_class.new @index, weights: :some_weights
+        @search = described_class.new @index do boost :some_weights end
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, weights: some_weights)'

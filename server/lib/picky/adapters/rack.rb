@@ -8,7 +8,7 @@ module Picky
     # adapter for it.
     #
     # For example, if you give it a query, it will extract the query param etc.
-    # and call search_with_text on it if it is called by Rack.
+    # and call search on it if it is called by Rack.
     #
     # Usage:
     #   Adapters::Rack.app_for(thing, options)
@@ -18,8 +18,8 @@ module Picky
       # Generates the appropriate app for Rack.
       #
       @@mapping = {
-        :search_with_text => Search,
-        :parameters       => LiveParameters
+        :search     => Search,
+        :parameters => LiveParameters
       }
       def self.app_for thing, options = {}
         @@mapping.each_pair do |method, adapter|

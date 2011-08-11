@@ -17,7 +17,10 @@ module Picky
         #
         def load
           Yajl::Parser.parse ::File.open(cache_path, 'r'), symbolize_keys: true
-          # Yajl::Parser.parse(::File.open(cache_path, 'r')).inject({}) do |hash, (k, v)| #, symbolize_keys: true
+
+          # Note: Circumvents the yajl symbolize utf-8 characters problem.
+          #
+          # Yajl::Parser.parse(::File.open(cache_path, 'r')).inject({}) do |hash, (k, v)|
           #   hash[k.to_sym] = v
           #   hash
           # end

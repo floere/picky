@@ -1,5 +1,8 @@
 # encoding: utf-8
 #
+# TODO Should probably be renamed, as it also removes
+# diactritics from japanese characters, like べ to へ.
+#
 module Picky
 
   module CharacterSubstituters # :nodoc:all

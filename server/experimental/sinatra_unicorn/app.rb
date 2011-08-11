@@ -40,9 +40,9 @@ class UnicornApp < Sinatra::Application
     texts.reindex # kill -USR1 <pid>
   end
 
-  search = Picky::Search.new texts
+  text_search = Picky::Search.new texts
   get '/texts' do
-    results = search.search_with_text params[:query], params[:ids] || 20, params[:offset] || 0
+    results = text_search.search params[:query], params[:ids] || 20, params[:offset] || 0
     results.to_json
   end
 

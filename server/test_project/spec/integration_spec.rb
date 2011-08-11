@@ -105,7 +105,7 @@ describe BookSearch do
   # # As reported by Simon.
   # #
   # it 'finds a location' do
-  #   @underscore.search_with_text('some_place:Zuger some_place:See').should == []
+  #   @underscore.search('some_place:Zuger some_place:See').should == []
   # end
 
   # Respects ids param and offset.
