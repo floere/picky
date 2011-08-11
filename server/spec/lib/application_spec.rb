@@ -8,11 +8,12 @@ describe Picky::Application do
     it "should run ok" do
       lambda {
         class MinimalTestApplication < described_class
-          books = Picky::Indexes::Memory.new :books,
-                                             source: Picky::Sources::DB.new(
-                                               'SELECT id, title FROM books',
-                                               :file => 'app/db.yml'
-                                             )
+          books = Picky::Indexes::Memory.new :books do
+                  source Picky::Sources::DB.new(
+                    'SELECT id, title FROM books',
+                    :file => 'app/db.yml'
+                  )
+                  end
           books.define_category :title
           
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
@@ -43,11 +44,13 @@ describe Picky::Application do
                     substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
                     maximum_tokens: 5
           
-          books_index = Picky::Indexes::Memory.new :books,
-                                                   source: Picky::Sources::DB.new(
-                                                     'SELECT id, title, author, isbn13 as isbn FROM books',
-                                                     :file => 'app/db.yml'
-                                                   )
+          books_index = Picky::Indexes::Memory.new :books do
+            source Picky::Sources::DB.new(
+              'SELECT id, title, author, isbn13 as isbn FROM books',
+              :file => 'app/db.yml'
+            )
+          end
+          
           books_index.define_category :title,
                                       similarity: Picky::Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
           books_index.define_category :author,

@@ -4,7 +4,7 @@ describe Picky::Indexes::Index do
   
   context 'without stubbed categories' do
     before(:each) do
-      @index = described_class.new :some_index_name, source: []
+      @index = described_class.new :some_index_name
     end
     
     describe 'define_category' do
@@ -23,7 +23,7 @@ describe Picky::Indexes::Index do
     before(:each) do
       @categories = stub :categories
       
-      @index = described_class.new :some_name, source: []
+      @index = described_class.new :some_name
       @index.define_category :some_category_name1
       @index.define_category :some_category_name2
       
@@ -48,7 +48,7 @@ describe Picky::Indexes::Index do
   
   context "no categories" do
     it "works" do
-      described_class.new :some_name, source: []
+      described_class.new :some_name
     end
   end
   

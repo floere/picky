@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Backend::Files do
 
   before(:each) do
-    index         = Picky::Indexes::Memory.new :some_index, source: []
+    index         = Picky::Indexes::Memory.new :some_index
     category      = Picky::Category.new :some_category, index
     bundle        = Picky::Indexing::Bundle::Base.new :some_bundle, category, nil, nil, nil
     

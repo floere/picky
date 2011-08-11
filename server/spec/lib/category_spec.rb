@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Category do
   
-  let(:index) { Picky::Indexes::Memory.new :some_index, source: [] }
+  let(:index) { Picky::Indexes::Memory.new :some_index }
   let(:category) { described_class.new :some_category, index }
   
   it 'should set defaults correctly' do

@@ -4,14 +4,25 @@ describe Picky::Indexes::Index do
   
   describe 'tokenizer' do
     context 'with tokenizer' do
-      let(:index) { described_class.new :some_name, source: [], tokenizer: 'some tokenizer' }
+      let(:tokenizer) { stub :tokenizer, :tokenize => '' }
+      let(:index) do
+        the_tokenizer = tokenizer
+        described_class.new :some_name do
+          source []
+          indexing the_tokenizer
+        end
+      end
 
       it 'does things in order' do
-        index.tokenizer.should == 'some tokenizer'
+        index.tokenizer.should == tokenizer
       end
     end
     context 'without tokenizer' do
-      let(:index) { described_class.new :some_name, source: [] }
+      let(:index) do
+        described_class.new :some_name do
+          source []
+        end
+      end
 
       it 'does things in order' do
         index.tokenizer.should == Picky::Indexes.tokenizer
@@ -21,7 +32,11 @@ describe Picky::Indexes::Index do
   
   context 'in general' do
     context 'with #each source' do
-      let(:index) { described_class.new :some_name, source: [] }
+      let(:index) do
+        described_class.new :some_name do
+          source []
+        end
+      end
 
       it 'does things in order' do
         index.should_receive(:check_source_empty).once.with.ordered
@@ -32,7 +47,12 @@ describe Picky::Indexes::Index do
     end
     context 'with non#each source' do
       let(:source) { stub :source, :harvest => nil }
-      let(:index) { described_class.new :some_name, source: source }
+      let(:index) do
+        the_source = source
+        described_class.new :some_name do
+          source the_source
+        end
+      end
 
       it 'does things in order' do
         category = stub :category        
@@ -51,9 +71,11 @@ describe Picky::Indexes::Index do
   
   context "with categories" do
     before(:each) do
-      @source = []
+      the_source = []
       
-      @index = described_class.new :some_name, source: @source
+      @index = described_class.new :some_name do
+        source the_source
+      end
       @index.define_category :some_category_name1
       @index.define_category :some_category_name2
     end
@@ -64,9 +86,11 @@ describe Picky::Indexes::Index do
     end
     describe 'define_source' do
       it 'can be set with this method' do
-        @index.define_source :some_other_source
+        source = stub :source, :each => [].each
+        
+        @index.define_source source
 
-        @index.source.should == :some_other_source
+        @index.source.should == source
       end
     end
     describe 'find' do
@@ -95,7 +119,9 @@ describe Picky::Indexes::Index do
   
   context "no categories" do
     it "works" do
-      described_class.new :some_name, source: []
+      described_class.new :some_name do
+        source []
+      end
     end
   end
   

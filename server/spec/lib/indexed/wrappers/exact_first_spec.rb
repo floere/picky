@@ -13,7 +13,7 @@ describe Picky::Indexed::Wrappers::ExactFirst do
   describe "self.wrap" do
     context "index" do
       it "wraps each category" do
-        index = Picky::Indexes::Memory.new :some_index, source: []
+        index = Picky::Indexes::Memory.new :some_index
         index.define_category :some_category
         
         Picky::Indexed::Wrappers::ExactFirst.wrap index
@@ -23,7 +23,7 @@ describe Picky::Indexed::Wrappers::ExactFirst do
         end
       end
       it "returns the index" do
-        index = Picky::Indexes::Memory.new :some_index, source: []
+        index = Picky::Indexes::Memory.new :some_index
         index.define_category :some_category
         
         described_class.wrap(index).should == index

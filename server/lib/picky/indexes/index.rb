@@ -99,41 +99,25 @@ module Picky
       # === Parameters
       # * name: A name that will be used for the index directory and in the Picky front end.
       #
-      # === Options
+      # === Options (all are used in the block, see examples)
       # * source: Where the data comes from, e.g. Sources::CSV.new(...). Optional, can be defined in the block using #source.
       # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
       # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
-      # * tokenizer: The tokenizer to use for this index. Optional, can be defined in the block using #indexing.
-      # * key_format: The format the ids of this index are in. Optional, can be defined in the block using #key_format.
+      # * tokenizer: Call and pass either a tokenizer (responds to #tokenize) or the options for a tokenizer..
+      # * key_format: Call and pass in a format method for the ids (default is #to_i).
       #
-      # Examples:
-      #   my_index = Indexes::Memory.new(:my_index, source: some_source) do
-      #     category :bla
-      #   end
-      #
+      # Example:
       #   my_index = Indexes::Memory.new(:my_index) do
-      #     source   Sources::CSV.new(file: 'data/index.csv')
-      #     category :bla
+      #     source            Sources::CSV.new(file: 'data/index.csv')
+      #     key_format        :to_sym
+      #     category          :bla
+      #     result_identifier :my_special_results
       #   end
-      #
       #
       def initialize name, options = {}
-        check_name name
-        @name = name.to_sym
+        @name              = name.to_sym
 
-        check_options options
-
-        @source = options[:source]
-
-        @after_indexing        = options[:after_indexing]
-        @tokenizer             = options[:tokenizer]
-        @key_format            = options[:key_format]
-
-        # Indexed.
-        #
-        @result_identifier    = options[:result_identifier] || name
-
-        # TODO Move ignore_unassigned_tokens to query, somehow.
+        # TODO Move ignore_unassigned_tokens to query, somehow. Then, remove options.
         #
         @categories = Categories.new ignore_unassigned_tokens: (options[:ignore_unassigned_tokens] || false)
 
@@ -141,13 +125,7 @@ module Picky
         #
         Indexes.register self
 
-        #
-        #
         instance_eval(&Proc.new) if block_given?
-
-        # Check if any source has been given in the block or the options.
-        #
-        check_source @source
       end
 
       # Default bundles.
@@ -319,58 +297,6 @@ module Picky
       end
       alias define_geo_categories geo_categories
 
-      #
-      # Since this is an API, we fail hard quickly.
-      #
-      def check_name name # :nodoc:
-        raise ArgumentError.new(<<-NAME
-
-
-  The index identifier (you gave "#{name}") for Indexes::Memory/Indexes::Redis should be a Symbol/String,
-  Examples:
-    Indexes::Memory.new(:my_cool_index) # Recommended
-    Indexes::Redis.new("a-redis-index")
-  NAME
-
-
-  ) unless name.respond_to?(:to_sym)
-      end
-      def check_options options # :nodoc:
-        raise ArgumentError.new(<<-OPTIONS
-
-
-  Sources are not passed in as second parameter for #{self.class.name} anymore, but either
-  * as :source option:
-    #{self.class.name}.new(#{name.inspect}, source: #{options})
-  or
-  * given to the #source method inside the config block:
-    #{self.class.name}.new(#{name.inspect}) do
-      source #{options}
-    end
-
-  Sorry about that breaking change (in 2.2.0), didn't want to go to 3.0.0 yet!
-
-  All the best
-    -- Picky
-
-
-  OPTIONS
-  ) unless options.respond_to?(:[])
-      end
-      def check_source source # :nodoc:
-        raise ArgumentError.new(<<-SOURCE
-
-
-  The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text), OR it can be a lambda/block, returning such a source.
-  Or it could use one of the built-in sources:
-    Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
-    Sources::')}
-
-
-  SOURCE
-  ) unless source.respond_to?(:each) || source.respond_to?(:harvest) || source.respond_to?(:call)
-      end
-
       def to_stats # :nodoc:
         stats = <<-INDEX
   #{name} (#{self.class}):
@@ -390,7 +316,7 @@ module Picky
       #
       #
       def to_s
-        "#{self.class}(#{name}, result_id: #{result_identifier}, source: #{source}, categories: #{categories})"
+        "#{self.class}(#{name}, result_id: #{result_identifier}, source: #{@source}, categories: #{categories})"
       end
 
     end

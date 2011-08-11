@@ -32,7 +32,7 @@ class BookSearch < Picky::Application
               maximum_tokens:                     5,
               substitutes_characters_with:        Picky::CharacterSubstituters::WestEuropean.new
 
-    books_index = Picky::Indexes::Memory.new :books, result_identifier: 'boooookies' do
+    books_index = Picky::Indexes::Memory.new :books do
       source   Picky::Sources::DB.new('SELECT id, title, author, year FROM books', file: 'app/db.yml')
       category :id
       category :title,
@@ -41,6 +41,7 @@ class BookSearch < Picky::Application
                similarity: Picky::Similarity::DoubleMetaphone.new(2)
       category :author, partial: Picky::Partial::Substring.new(:from => -2)
       category :year, qualifiers: [:y, :year, :annee]
+      result_identifier 'boooookies'
     end
 
     class Book < ActiveRecord::Base; end
@@ -104,7 +105,8 @@ class BookSearch < Picky::Application
         @isbn = isbn
       end
     end
-    isbn_each_index = Picky::Indexes::Memory.new :isbn_each, source: [ISBN.new('ABC'), ISBN.new('DEF')] do
+    isbn_each_index = Picky::Indexes::Memory.new :isbn_each do
+      source   [ISBN.new('ABC'), ISBN.new('DEF')]
       category :isbn, :qualifiers => [:i, :isbn], :key_format => :to_s
     end
 

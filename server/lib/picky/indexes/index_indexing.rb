@@ -6,8 +6,7 @@ module Picky
     #
     class Index
 
-      attr_reader :after_indexing,
-                  :bundle_class
+      attr_reader :bundle_class
 
       # Delegators for indexing.
       #
@@ -34,6 +33,19 @@ module Picky
           end
         end
       end
+
+      # Define an index tokenizer on the index.
+      #
+      # Parameters are the exact same as for indexing.
+      #
+      def indexing options = {}
+        @tokenizer = if options.respond_to?(:tokenize)
+          options
+        else
+          options && Tokenizers::Index.new(options)
+        end
+      end
+      alias define_indexing indexing
 
       # Check if the given enumerable source is empty.
       #
@@ -68,15 +80,6 @@ module Picky
         categories.each &:cache
       end
 
-      # Define an index tokenizer on the index.
-      #
-      # Parameters are the exact same as for indexing.
-      #
-      def indexing options = {}
-        @tokenizer = Tokenizers::Index.new options
-      end
-      alias define_indexing indexing
-
       # Returns the installed tokenizer or the default.
       #
       def tokenizer
@@ -102,6 +105,7 @@ module Picky
         @source = @source.respond_to?(:call) ? @source.call : @source
       end
       def define_source source
+        check_source source
         @source = source
       end
       def raise_no_source
@@ -119,6 +123,19 @@ module Picky
         NO_SOURCE
   )
       end
+      def check_source source # :nodoc:
+        raise ArgumentError.new(<<-SOURCE
+
+
+  The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text), OR it can be a lambda/block, returning such a source.
+  Or it could use one of the built-in sources:
+    Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
+    Sources::')}
+
+
+  SOURCE
+  ) unless source.respond_to?(:each) || source.respond_to?(:harvest) || source.respond_to?(:call)
+      end
 
       # Define a key_format on the index.
       #
@@ -129,6 +146,18 @@ module Picky
       end
       def define_key_format key_format
         @key_format = key_format
+      end
+
+      # Define what to do after indexing.
+      # (Only used in the Sources::DB)
+      #
+      # TODO Spec.
+      #
+      def after_indexing after_indexing = nil
+        after_indexing ? define_key_format(after_indexing) : @after_indexing
+      end
+      def define_after_indexing after_indexing
+        @after_indexing = after_indexing
       end
 
     end

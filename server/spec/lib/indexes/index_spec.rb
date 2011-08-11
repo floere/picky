@@ -8,31 +8,37 @@ describe Picky::Indexes::Index do
   
   context 'initializer' do
     it 'works' do
-      expect { described_class.new :some_index_name, source: some_source }.to_not raise_error
+      the_source = some_source
+      expect { described_class.new :some_index_name do source the_source end }.to_not raise_error
     end
     it 'fails correctly' do
       expect { described_class.new 0, some_source }.to raise_error
     end
     it 'fails correctly' do
-      expect { described_class.new :some_index_name, source: :some_source }.to raise_error
-    end
-    it 'fails correctly' do
       expect { described_class.new :some_index_name, some_source }.to raise_error
     end
     it 'does not fail' do
-      expect { described_class.new :some_index_name, source: [] }.to_not raise_error
+      expect { described_class.new :some_index_name do source [] end }.to_not raise_error
     end
     it 'registers with the indexes' do
       @api = described_class.allocate
       
       Picky::Indexes.should_receive(:register).once.with @api
       
-      @api.send :initialize, :some_index_name, source: some_source
+      the_source = some_source
+      @api.send :initialize, :some_index_name do
+        source the_source
+      end
     end
   end
   
   context 'unit' do
-    let(:api) { described_class.new :some_index_name, source: some_source }
+    let(:api) do
+      the_source = some_source
+      described_class.new :some_index_name do
+        source the_source
+      end
+    end
     
     describe 'geo_categories' do
       it 'delegates correctly' do

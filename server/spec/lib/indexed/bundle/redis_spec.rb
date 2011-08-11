@@ -7,7 +7,7 @@ describe Picky::Indexed::Bundle::Redis do
     
     Picky::Backend::Redis.stub! :new => @backend
     
-    @index        = Picky::Indexes::Memory.new :some_index, source: []
+    @index        = Picky::Indexes::Memory.new :some_index
     @category     = Picky::Category.new :some_category, @index
     
     @similarity   = stub :similarity

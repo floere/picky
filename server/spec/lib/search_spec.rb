@@ -56,7 +56,11 @@ describe Picky::Search do
     let(:search) { described_class.new }
     it 'returns a specific Combination for a specific input' do
       some_source = stub(:source, :harvest => nil)
-      search.combinations_type_for([Picky::Indexes::Memory.new(:gu, source: some_source)]).should == Picky::Query::Combinations::Memory
+      search.combinations_type_for([
+        Picky::Indexes::Memory.new(:gu) do
+          source some_source
+        end]
+      ).should == Picky::Query::Combinations::Memory
     end
     it 'just works on the same types' do
       search.combinations_type_for([:blorf, :blarf]).should == Picky::Query::Combinations::Memory

@@ -8,7 +8,7 @@ describe Picky::Indexes::Redis do
   
   describe 'initialize' do
     it 'works' do
-      described_class.new :some_name, source: some_source
+      described_class.new :some_name
     end
   end
   
