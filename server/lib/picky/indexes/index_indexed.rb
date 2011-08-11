@@ -21,8 +21,6 @@ module Picky
       #
       # Default is the name of the index.
       #
-      # TODO Spec.
-      #
       def result_identifier result_identifier = nil
         result_identifier ? define_result_identifier(result_identifier) : (@result_identifier || @name)
       end

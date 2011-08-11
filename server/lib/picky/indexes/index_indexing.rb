@@ -151,10 +151,8 @@ module Picky
       # Define what to do after indexing.
       # (Only used in the Sources::DB)
       #
-      # TODO Spec.
-      #
       def after_indexing after_indexing = nil
-        after_indexing ? define_key_format(after_indexing) : @after_indexing
+        after_indexing ? define_after_indexing(after_indexing) : @after_indexing
       end
       def define_after_indexing after_indexing
         @after_indexing = after_indexing
