@@ -230,39 +230,35 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
-  japanese_index = Picky::Indexes::Memory.new(:japanese) do
-    source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+  # japanese_index = Picky::Indexes::Memory.new(:japanese) do
+  #   source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+  #
+  #   indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
+  #            :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
+  #            :splits_text_on =>    /[\s;]/
+  #
+  #   category :japanese,
+  #            :partial => Picky::Partial::Substring.new(from: 1)
+  # end
 
-    indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
-             :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
-             :splits_text_on =>    /[\s;]/
-
-    category :japanese,
-             :partial => Picky::Partial::Substring.new(from: 1)
-  end
-
-  Indexes.reload
-
-  options = {
-    :weights => {
-      [:author]         => 6,
-      [:title, :author] => 5,
-      [:author, :year]  => 2
-    }
+  weights = {
+    [:author]         => +6,
+    [:title, :author] => +5,
+    [:author, :year]  => +2
   }
 
   # This looks horrible – but usually you have it only once.
   # It's flexible.
   #
-  books_search = Search.new books_index, isbn_index, options
+  books_search = Search.new books_index, isbn_index do boost weights end
   get %r{\A/books\Z} do
     books_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  book_each_search = Search.new book_each_index, options
+  book_each_search = Search.new book_each_index do boost weights end
   get %r{\A/book_each\Z} do
     book_each_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  redis_search = Search.new redis_index, options
+  redis_search = Search.new redis_index do boost weights end
   get %r{\A/redis\Z} do
     redis_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
@@ -274,7 +270,7 @@ class BookSearch < Sinatra::Application
   get %r{\A/redis_changing\Z} do
     redis_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  csv_test_search = Search.new csv_test_index, options
+  csv_test_search = Search.new csv_test_index do boost weights end
   get %r{\A/csv\Z} do
     csv_test_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
@@ -302,7 +298,11 @@ class BookSearch < Sinatra::Application
   get %r{\A/indexing\Z} do
     indexing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index, options
+  # japanese_search = Search.new japanese_index
+  # get %r{\A/japanese\Z} do
+  #   japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  # end
+  all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
   get %r{\A/all\Z} do
     all_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end

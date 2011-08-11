@@ -14,7 +14,6 @@ GEM
     arel (2.0.7)
     builder (2.1.2)
     diff-lcs (1.1.2)
-    haml (3.0.25)
     i18n (0.5.0)
     kgio (2.3.3)
     mysql (2.8.1)
@@ -35,11 +34,7 @@ GEM
     rspec-expectations (2.5.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.5.0)
-    sinatra (1.2.1)
-      rack (~> 1.1)
-      tilt (>= 1.2.2, < 2.0)
     text (0.2.0)
-    tilt (1.2.2)
     tzinfo (0.3.24)
     unicorn (3.5.0)
       kgio (~> 2.3)
@@ -53,8 +48,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 3.0)
   activesupport (~> 3.0)
-  bundler
-  haml
   mysql
   picky-client
   rack
@@ -63,7 +56,6 @@ DEPENDENCIES
   rake
   redis
   rspec
-  sinatra
   text
   unicorn
   yajl-ruby

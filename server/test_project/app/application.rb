@@ -218,46 +218,44 @@ class BookSearch < Picky::Application
       category :name
     end
 
-    japanese_index = Picky::Indexes::Memory.new(:japanese) do
-      source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+    # japanese_index = Picky::Indexes::Memory.new(:japanese) do
+    #   source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+    #
+    #   indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
+    #            :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
+    #            :splits_text_on =>    /[\s;]/
+    #
+    #   category :japanese,
+    #            :partial => Picky::Partial::Substring.new(from: 1)
+    # end
 
-      indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
-               :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
-               :splits_text_on =>    /[\s;]/
-
-      category :japanese,
-               :partial => Picky::Partial::Substring.new(from: 1)
-    end
-
-    options = {
-      :weights => {
-        [:author]         => 6,
-        [:title, :author] => 5,
-        [:author, :year]  => 2
-      }
+    weights = {
+      [:author]         => +6,
+      [:title, :author] => +5,
+      [:author, :year]  => +2
     }
 
     route %r{\A/admin\Z}           => Picky::LiveParameters.new
 
-    route %r{\A/books\Z}           => Picky::Search.new(books_index, isbn_index, options),
-          %r{\A/book_each\Z}       => Picky::Search.new(book_each_index, options),
-          %r{\A/redis\Z}           => Picky::Search.new(redis_index, options),
+    route %r{\A/books\Z}           => (Picky::Search.new(books_index, isbn_index) do boost weights end),
+          %r{\A/book_each\Z}       => (Picky::Search.new(book_each_index) do boost weights end),
+          %r{\A/redis\Z}           => (Picky::Search.new(redis_index) do boost weights end),
           %r{\A/memory_changing\Z} => Picky::Search.new(memory_changing_index),
           %r{\A/redis_changing\Z}  => Picky::Search.new(redis_changing_index),
-          %r{\A/csv\Z}             => Picky::Search.new(csv_test_index, options),
+          %r{\A/csv\Z}             => (Picky::Search.new(csv_test_index) do boost weights end),
           %r{\A/isbn\Z}            => Picky::Search.new(isbn_index),
           %r{\A/sym\Z}             => Picky::Search.new(sym_keys_index),
           %r{\A/geo\Z}             => Picky::Search.new(real_geo_index),
           %r{\A/simple_geo\Z}      => Picky::Search.new(mgeo_index),
           %r{\A/iphone\Z}          => Picky::Search.new(iphone_locations),
           %r{\A/indexing\Z}        => Picky::Search.new(indexing_index)
-    japanese_search = Picky::Search.new(japanese_index) do
-      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
-                stopwords:          /\b(and|the|of|it|in|for)\b/i,
-                splits_text_on:     /[\s\/\-\&]+/
-    end
-    route %r{\A/japanese\Z}        => japanese_search
-    route %r{\A/all\Z}             => Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index, options)
+    # japanese_search = Picky::Search.new(japanese_index) do
+    #   searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
+    #             stopwords:          /\b(and|the|of|it|in|for)\b/i,
+    #             splits_text_on:     /[\s\/\-\&]+/
+    # end
+    # route %r{\A/japanese\Z}        => japanese_search
+    route %r{\A/all\Z}             => (Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index) do boost weights end)
 
 end
 

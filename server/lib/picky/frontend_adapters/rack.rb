@@ -40,7 +40,6 @@ module Picky
       # API method.
       #
       def route options = {}
-        raise "Warning: Search block passed into #route method!" if block_given?
         mappings, route_options = split options
         mappings.each do |url, query|
           route_one url, query, route_options

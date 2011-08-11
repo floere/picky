@@ -176,6 +176,7 @@ module Picky
       # Routes.
       #
       def route options
+        raise "Warning: block passed into #route method, not into Search.new!" if block_given?
         rack_adapter.route options
       end
 

@@ -2,7 +2,6 @@ source :gemcutter
 
 # Gems required by Picky.
 #
-gem 'bundler'
 gem 'rake'
 gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.

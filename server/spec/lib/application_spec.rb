@@ -67,9 +67,11 @@ describe Picky::Application do
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
           
           route %r{^/books} => Picky::Search.new(books_index)
-          route %r{^/buks}  => Picky::Search.new(books_index) do
+          
+          buks_search = Picky::Search.new(books_index) do
             searching removes_characters: /[buks]/
           end
+          route %r{^/buks} => buks_search
         end
       }.should_not raise_error
     end
@@ -116,6 +118,21 @@ describe Picky::Application do
     end
     it "should cache the instance" do
       described_class.rack_adapter.should == described_class.rack_adapter
+    end
+  end
+  
+  describe 'route' do
+    it 'is delegated' do
+      described_class.rack_adapter.should_receive(:route).once.with :some_options
+      
+      described_class.route(:some_options)
+    end
+    it 'raises on block' do
+      expect {
+        described_class.route :quack => Hash.new do # Anything with a block.
+          # do something
+        end
+      }.to raise_error("Warning: block passed into #route method, not into Search.new!")
     end
   end
   

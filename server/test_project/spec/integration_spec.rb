@@ -7,7 +7,7 @@ describe BookSearch do
 
   before(:all) do
     Picky::Indexes.index_for_tests
-    Picky::Indexes.load_from_cache
+    Picky::Indexes.reload
   end
 
   let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
@@ -238,16 +238,16 @@ describe BookSearch do
   it { csv.search("HISTORY FERGUS").ids.should == [] }
   it { csv.search("history AND OR fergus").ids.should == [4, 4] }
   
-  # Japanese characters (UTF-8).
-  #
-  it { japanese.search("日本語").ids.should == [1] }
-  it { japanese.search("にほんご").ids.should == [1] }
-  it { japanese.search("食べる").ids.should == [2] }
-  it { japanese.search("たべる").ids.should == [2] }
-  #
-  # Partial.
-  #
-  it { japanese.search("日").ids.should == [1] }
+  # # Japanese characters (UTF-8).
+  # #
+  # it { japanese.search("日本語").ids.should == [1] }
+  # it { japanese.search("にほんご").ids.should == [1] }
+  # it { japanese.search("食べる").ids.should == [2] }
+  # it { japanese.search("たべる").ids.should == [2] }
+  # #
+  # # Partial.
+  # #
+  # it { japanese.search("日").ids.should == [1] }
   
   # Database index reloading.
   #

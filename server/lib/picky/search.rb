@@ -68,8 +68,8 @@ module Picky
     #           [:title, :isbn]   => +1
     #   end
     #
-    def boost options
-      weights  = options || Query::Weights.new
+    def boost weights
+      weights  ||= Query::Weights.new
       @weights = Hash === weights ? Query::Weights.new(weights) : weights
     end
 
