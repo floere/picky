@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.0.0.pre5
+
+* hanke: (server) Renamed Picky::Result#serialize -> Picky::Result#to_hash.
+
 h2. Version 3.0.0.pre4
 
 * hanke: (generators) Added an All-In-One (Client + Server) Sinatra web app. This proves useful when wishing to use Picky on Heroku.
