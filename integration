@@ -136,6 +136,9 @@ begin
   run_search_requests_on_client
   open_client_in_browser
 
+  run_server_integration_tests
+  run_server_speed_tests
+
   kill_server
   delete_server_directory
 

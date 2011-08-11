@@ -18,11 +18,11 @@ describe 'Integration Tests' do
   
   # Testing a specific order of result ids.
   #
-  it { books.search('alan').ids.should == [259, 307, 449] }
+  it { books.search('alan').ids.should == [449, 259, 307] }
   
   # Testing an order of result categories.
   #
-  it { books.search('alan').should have_categories(['author'], ['title']) }
-  it { books.search('alan p').should have_categories(['author', 'title'], ['title', 'author']) }
+  it { books.search('alan').should have_categories(['title'], ['author']) }
+  it { books.search('alan p').should have_categories(['title', 'author'], ['author', 'title']) }
   
 end
