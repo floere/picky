@@ -122,7 +122,7 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
       #
       # Note: Currently only for indexing.
       #
-      def reject_token_if &condition
+      def rejects_token_if &condition
         @reject_condition = condition
       end
       def reject tokens
@@ -172,7 +172,7 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
         # Defaults.
         #
         splits_text_on options[:splits_text_on] || /\s/
-        reject_token_if &(options[:reject_token_if] || options[:rejects_token_if] || :blank?) # TODO Decide on using an s or not.
+        rejects_token_if &(options[:rejects_token_if] || :blank?)
       end
 
       # Default preprocessing hook.

@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Picky::Tokenizers::Base do
   
   context 'with special instance' do
-    let (:tokenizer) { described_class.new reject_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
+    let (:tokenizer) { described_class.new rejects_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
     it 'rejects tokens with length < 2' do
       tokenizer.reject([:'', :a, :ab, :abc]).should == [:ab, :abc]
     end
@@ -46,12 +46,12 @@ EXPECTED
           end
         end
     
-    describe 'reject_token_if' do
+    describe 'rejects_token_if' do
       it 'rejects empty tokens by default' do
         tokenizer.reject(['a', nil, '', 'b']).should == ['a', 'b']
       end
       it 'rejects tokens based on the given rejection criteria if set' do
-        tokenizer.reject_token_if &:nil?
+        tokenizer.rejects_token_if &:nil?
 
         tokenizer.reject(['a', nil, '', 'b']).should == ['a', '', 'b']
       end
