@@ -39,7 +39,7 @@ module Picky
 
             Picky.logger && Picky.logger.info(results.to_log(params[query_key]))
 
-            respond_with results.to_response, content_type
+            respond_with results.to_json, content_type
           end
         end
 

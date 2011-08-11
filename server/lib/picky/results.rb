@@ -27,9 +27,7 @@ module Picky
 
     # Returns a hash with the allocations, offset, duration and total.
     #
-    # TODO Rename to_h?
-    #
-    def serialize
+    def to_hash
       { allocations: allocations.to_result,
         offset:      offset,
         duration:    duration,
@@ -38,11 +36,8 @@ module Picky
     # Convert to json format.
     #
     def to_json options = {}
-      serialize.to_json options
+      to_hash.to_json options
     end
-    # The default format is json.
-    #
-    alias to_response to_json
 
     # This starts the actual processing.
     #

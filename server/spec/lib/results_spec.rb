@@ -60,13 +60,13 @@ describe Picky::Results do
       @results = described_class.new
     end
     it 'should do it correctly' do
-      @results.stub! :serialize => :serialized
+      @results.stub! :to_hash => :serialized
 
       @results.to_json.should == '"serialized"'
     end
   end
 
-  describe 'serialize' do
+  describe 'to_hash' do
     before(:each) do
       @allocations = stub :allocations, :process! => nil, :to_result => :allocations, :total => :some_total
 
@@ -76,7 +76,7 @@ describe Picky::Results do
     it 'should do it correctly' do
       @results.prepare!
 
-      @results.serialize.should == { :allocations => :allocations, :offset => :some_offset, :duration => :some_duration, :total => :some_total }
+      @results.to_hash.should == { :allocations => :allocations, :offset => :some_offset, :duration => :some_duration, :total => :some_total }
     end
   end
 

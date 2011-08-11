@@ -2,7 +2,7 @@ source :gemcutter
 
 # Gems required by Picky.
 #
-gem 'picky', '3.0.0.pre4' # '~> 3.0'
+gem 'picky', '3.0.0.pre5' # '~> 3.0'
 gem 'rake'
 gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.
@@ -22,6 +22,6 @@ gem 'mysql' # Project specific.
 gem 'redis' # Project specific.
 
 group :test do
-  gem 'picky-client', '3.0.0.pre4'
+  gem 'picky-client', '3.0.0.pre5'
   gem 'rspec'
 end
