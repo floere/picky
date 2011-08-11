@@ -3,6 +3,8 @@ h2. Upcoming Version
 h2. Version 3.0.0.pre2
 
 * hanke: (server) Breaking: Index::Memory and Index::Redis do not accept options anymore. Define options in the block or on the resulting instances.
+* hanke: (server) Breaking: PickyLog removed. In the classic server, use Picky.logger = MyLogger.new to log (uses #info). In the Sinatra server, use MyLogger.info result.to_log(params[:query]) if you want to log.
+* hanke: (server) Breaking: app/logging.rb not loaded anymore. You have to require it yourself if you want that.
 * hanke: (server) A missing source is only noticed when it is used (such as in indexing). This makes it possible to set a source at a later time.
 
 h2. Version 3.0.0.pre1
