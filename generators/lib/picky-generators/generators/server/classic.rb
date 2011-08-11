@@ -4,24 +4,24 @@ module Picky
 
     module Server
 
-      # Generates a new Picky Unicorn Server Example.
+      # Generates a new Picky Classic Server Example.
       #
       # Example:
-      #   > picky-generate unicorn_server my_lovely_unicorn
+      #   > picky-generate classic_server my_classic_directory
       #
-      class Unicorn < Picky::Generators::Base
+      class Classic < Picky::Generators::Base
 
         def initialize identifier, name, *args
-          super identifier, name, 'server/unicorn', *args
+          super identifier, name, 'server/classic', *args
         end
 
         #
         #
         def generate
-          exclaim "Setting up Picky Unicorn Server \"#{name}\"."
+          exclaim "Setting up Picky Classic Server \"#{name}\"."
           create_target_directory
           copy_all_files
-          copy_all_files expand_prototype_path('server/shared_unicorn')
+          copy_all_files expand_prototype_path('server/shared')
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""
           exclaim "Next steps:"

@@ -13,12 +13,11 @@ module Picky
       def initialize
         @types = {
           :sinatra_client       => [Client::Sinatra, :sinatra_client_name],
-          :client               => [Client::Sinatra, :client_name],
+          :client               => [Client::Sinatra, :sinatra_client_name],
 
-          :unicorn_server       => [Server::Unicorn, :unicorn_server_name],
-          :empty_unicorn_server => [Server::EmptyUnicorn, :empty_unicorn_server_name],
+          :classic_server       => [Server::Classic, :unicorn_server_name],
           :sinatra_server       => [Server::Sinatra, :sinatra_server_name],
-          :server               => [Server::Sinatra, :server_name]
+          :server               => [Server::Sinatra, :sinatra_server_name]
         }
       end
 

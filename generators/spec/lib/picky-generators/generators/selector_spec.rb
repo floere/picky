@@ -10,7 +10,7 @@ describe Picky::Generators::Selector do
     
     describe "generator_for_class" do
       it "should return me a generator for the given class" do
-        @selector.generator_for_class(Picky::Generators::Server::Unicorn, :identifier, :some_args).should be_kind_of(Picky::Generators::Server::Unicorn)
+        @selector.generator_for_class(Picky::Generators::Server::Classic, :identifier, :some_args).should be_kind_of(Picky::Generators::Server::Classic)
       end
     end
     
@@ -19,7 +19,7 @@ describe Picky::Generators::Selector do
         lambda { @selector.generator_for('sinatra_client', 'some_project') }.should_not raise_error
       end
       it "should not raise if a generator is available" do
-        lambda { @selector.generator_for('unicorn_server', 'some_project') }.should_not raise_error
+        lambda { @selector.generator_for('classic_server', 'some_project') }.should_not raise_error
       end
       it "should not raise if a generator is available" do
         lambda { @selector.generator_for('sinatra_server', 'some_project') }.should_not raise_error

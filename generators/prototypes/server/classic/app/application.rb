@@ -1,11 +1,13 @@
 # encoding: utf-8
 #
+require File.expand_path '../logging', __FILE__
+
 # TODO Adapt the generated example
 #      (a library books finder) to what you need.
 #
 # Questions? Mail me, IRC #picky, the google group, http://github.com/floere/picky/wiki.
 #
-class PickySearch < Picky::Application
+class BookSearch < Picky::Application
 
   # So we don't have to write Picky::
   # in front of everything.

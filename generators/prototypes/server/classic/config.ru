@@ -4,12 +4,6 @@ require 'picky'
 
 # Load your application. This requires the following files in
 #
-#  * lib/initializers/*.rb
-#  * lib/tokenizers/*.rb
-#  * lib/indexers/*.rb
-#  * lib/query/*.rb
-#
-#  * app/logging.rb
 #  * app/application.rb
 #
 # (in that order).
@@ -34,4 +28,4 @@ Picky::Indexes.reload
 #
 # Note: Needs to be the same constant name as in app/application.rb.
 #
-run PickySearch
+run BookSearch

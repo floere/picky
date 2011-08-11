@@ -7,7 +7,7 @@ module Picky
       # Generates a new Picky Sinatra/Unicorn Server Example.
       #
       # Example:
-      #   > picky-generate sinatra_server my_lovely_unicorn
+      #   > picky-generate sinatra_server my_sinatra_directory
       #
       class Sinatra < Picky::Generators::Base
 
@@ -20,7 +20,8 @@ module Picky
         def generate
           exclaim "Setting up Picky Sinatra Server \"#{name}\"."
           create_target_directory
-          copy_all_files expand_prototype_path('server/sinatra')
+          copy_all_files
+          copy_all_files expand_prototype_path('server/shared')
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""
           exclaim "Next steps:"

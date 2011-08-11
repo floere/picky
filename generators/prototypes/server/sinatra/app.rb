@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'picky'
+require File.expand_path '../logging', __FILE__
 
 class BookSearch < Sinatra::Application
 
@@ -38,10 +39,11 @@ class BookSearch < Sinatra::Application
     boost [:title, :author] => +3, [:title] => +1
   end
 
-  # Route /books to the books search.
+  # Route /books to the books search and log when searching.
   #
   get '/books' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
+    AppLogger.info results.to_log(params[:query])
     results.to_json
   end
 

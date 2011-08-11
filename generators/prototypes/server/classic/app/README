@@ -1,0 +1,4 @@
+All your application definitions go here.
+
+/app needs a the file defined by picky:
+  * application.rb - how to handle indexing, queries, routing.

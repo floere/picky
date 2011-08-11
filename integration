@@ -37,9 +37,9 @@ def install_sinatra_server
   sleep 5 # loading
 end
 
-def install_unicorn_server
+def install_classic_server
   puts "Installing the Picky/Unicorn server."
-  system "picky generate unicorn_server sandbox/server"
+  system "picky generate classic_server sandbox/server"
   system "cd sandbox/server; bundle install --local"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec rake start &"
@@ -142,7 +142,7 @@ begin
   kill_server
   delete_server_directory
 
-  install_unicorn_server
+  install_classic_server
   run_search_requests_on_server
   run_search_requests_on_client
   open_client_in_browser
