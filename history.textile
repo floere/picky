@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 3.0.0.pre2
+
+* hanke: (server) Breaking: Index::Memory and Index::Redis do not accept options anymore. Define options in the block or on the resulting instances.
+* hanke: (server) A missing source is only noticed when it is used (such as in indexing). This makes it possible to set a source at a later time.
+
 h2. Version 3.0.0.pre1
 
 * hanke: (server) Note: The key_format is not saved in the index configuration anymore.
