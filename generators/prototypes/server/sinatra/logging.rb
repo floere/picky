@@ -15,10 +15,10 @@ AppLogger = Logger.new File.expand_path('log/search.log', PICKY_ROOT)
 #
 # begin
 #   log_program_name = 'search/query'
-#   Picky.logger    = SyslogLogger.new log_program_name
+#   AppLogger        = SyslogLogger.new log_program_name
 #   puts "Logging on syslog #{log_program_name}."
 # rescue StandardError
 #   puts "Could not connect to the syslog, using the normal log."
 #   require 'logger'
-#   Picky.logger = Logger.new(File.join(PICKY_ROOT, 'log/search.log'))
+#   AppLogger = Logger.new(File.join(PICKY_ROOT, 'log/search.log'))
 # end
