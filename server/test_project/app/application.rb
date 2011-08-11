@@ -1,5 +1,7 @@
 # encoding: utf-8
 #
+require File.expand_path '../logging', __FILE__
+
 class ChangingItem
 
   attr_reader :id, :name

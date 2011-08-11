@@ -37,7 +37,7 @@ module Picky
 
             results = query.search *extracted(params)
 
-            PickyLog.log results.to_log(params[query_key])
+            Picky.logger && Picky.logger.info(results.to_log(params[query_key]))
 
             respond_with results.to_response, content_type
           end

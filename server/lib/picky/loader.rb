@@ -209,10 +209,6 @@ module Picky
       #
       load_relative 'character_substituters/west_european'
 
-      # Logging.
-      #
-      load_relative 'loggers/search'
-
       # Convenience accessors for generators.
       #
       load_relative 'generators/aliases'

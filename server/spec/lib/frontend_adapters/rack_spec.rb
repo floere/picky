@@ -63,7 +63,7 @@ describe Picky::FrontendAdapters::Rack do
   context 'real routes' do
     before(:each) do
       @rack_adapter.reset_routes
-      PickyLog.stub! :log
+      Picky.logger.stub! :log
     end
     it 'should route correctly' do
       env = {}

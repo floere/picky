@@ -1,5 +1,11 @@
 module Picky
 
+  # This is only used in the classic project style.
+  #
+  class << self
+    attr_accessor :logger
+  end
+
   # Require the constants.
   #
   require ::File.expand_path '../picky/constants', __FILE__
