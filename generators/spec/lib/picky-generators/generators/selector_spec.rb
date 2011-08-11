@@ -16,6 +16,9 @@ describe Picky::Generators::Selector do
     
     describe "generator_for" do
       it "should not raise if a generator is available" do
+        lambda { @selector.generator_for('all_in_one', 'some_project') }.should_not raise_error
+      end
+      it "should not raise if a generator is available" do
         lambda { @selector.generator_for('sinatra_client', 'some_project') }.should_not raise_error
       end
       it "should not raise if a generator is available" do

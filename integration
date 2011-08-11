@@ -18,13 +18,23 @@ def server query, match
     fail "#{query} result does not include #{match}"
   end
 end
-def client query, match
+def client query, match, port = 3210
   @tests += 1
-  if `curl -S 'localhost:3210/search/full?query=#{query}&ids=20'`.chomp.include?(match)
+  if `curl -S 'localhost:#{port}/search/full?query=#{query}&ids=20'`.chomp.include?(match)
     puts "Yay, client returned #{match} for #{query}!"
   else
     fail "#{query} result does not include #{match}"
   end
+end
+
+def install_all_in_one
+  puts "Installing the Sinatra/Unicorn client/server."
+  system "picky generate all_in_one sandbox/server"
+  system "cd sandbox/server; bundle install --local"
+  system "cd sandbox/server; bundle exec rake index"
+  system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
+
+  sleep 5 # loading
 end
 
 def install_sinatra_server
@@ -69,24 +79,24 @@ def install_sinatra_client
   sleep 5 # loading
 end
 
-def run_search_requests_on_client
+def run_search_requests_on_client port = 3210
   puts
   puts "Running search requests on the client directly"
-  client "alan", "author"
-  client "ALAN", "title"
-  client "pinchn~", "pynchon"
-  client "sp", "title"
-  client "sp", "author"
-  client "title:lyterature~+2002", "literature"
-  client "alan", "Alan Turing"
+  client "alan", "author", port
+  client "ALAN", "title", port
+  client "pinchn~", "pynchon", port
+  client "sp", "title", port
+  client "sp", "author", port
+  client "title:lyterature~+2002", "literature", port
+  client "alan", "Alan Turing", port
   puts
   puts
 end
 
-def open_client_in_browser
-  system "open -a 'Google Chrome' http://localhost:3210/?q=alan"
+def open_client_in_browser port = 3210
+  system "open -a 'Google Chrome' http://localhost:#{port}/?q=alan"
   sleep 1
-  system "open -a 'Google Chrome' http://localhost:3210/?q=a%2A%20b"
+  system "open -a 'Google Chrome' http://localhost:#{port}/?q=a%2A%20b"
   sleep 5
 end
 
@@ -130,25 +140,42 @@ begin
 
   system "./install"
 
-  install_sinatra_server
-  run_search_requests_on_server
-  install_sinatra_client
-  run_search_requests_on_client
-  open_client_in_browser
+  # All in one.
+  #
+  install_all_in_one
 
-  run_server_integration_tests
-  run_server_speed_tests
+  run_search_requests_on_client 8080 # Since it is just one server.
+  open_client_in_browser 8080
 
   kill_server
   delete_server_directory
 
-  install_classic_server
+  # Sinatra Client.
+  #
+  install_sinatra_client
+
+  # Sinatra Server.
+  #
+  install_sinatra_server
   run_search_requests_on_server
+  run_server_integration_tests
+  run_server_speed_tests
+
   run_search_requests_on_client
   open_client_in_browser
 
+  kill_server
+  delete_server_directory
+
+  # Classic Server.
+  #
+  install_classic_server
+  run_search_requests_on_server
   run_server_integration_tests
   run_server_speed_tests
+
+  run_search_requests_on_client
+  open_client_in_browser
 
   puts
   puts "SUCCESS! #{@tests} tests run without a hitch :)"
