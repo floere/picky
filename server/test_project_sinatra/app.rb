@@ -116,7 +116,8 @@ class BookSearch < Sinatra::Application
       @isbn = isbn
     end
   end
-  isbn_each_index = Indexes::Memory.new :isbn_each, source: [ISBN.new('ABC'), ISBN.new('DEF')] do
+  isbn_each_index = Indexes::Memory.new :isbn_each do
+    source   [ISBN.new('ABC'), ISBN.new('DEF')]
     category :isbn, :qualifiers => [:i, :isbn], :key_format => :to_s
   end
 
@@ -164,7 +165,7 @@ class BookSearch < Sinatra::Application
   # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
   #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
-  csv_test_index = Indexes::Memory.new(:csv_test, result_identifier: 'Books') do
+  csv_test_index = Indexes::Memory.new :csv_test do
     source     Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
 
     category :title,
@@ -179,6 +180,8 @@ class BookSearch < Sinatra::Application
              partial:    Partial::None.new
     category :publisher, qualifiers: [:p, :publisher]
     category :subjects, qualifiers: [:s, :subject]
+
+    result_identifier :Books
   end
 
   indexing_index = Indexes::Memory.new(:special_indexing) do

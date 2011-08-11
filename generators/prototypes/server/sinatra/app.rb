@@ -30,7 +30,7 @@ class BookSearch < Sinatra::Application
 
   # Define a search over the books index.
   #
-  books = Search.new(books_index) do
+  books = Search.new books_index do
     searching removes_characters: /[^a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/,

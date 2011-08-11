@@ -35,8 +35,11 @@ class PickySearch < Picky::Application
     category :year, partial: Partial::None.new
   end
 
-  route %r{\A/books\Z} => Search.new(books_index) do
-    boost [:title, :author] => +3, [:title] => +1
+  books = Search.new books_index do
+    boost [:title, :author] => +3,
+          [:title] => +1
   end
+
+  route %r{\A/books\Z} => books
 
 end

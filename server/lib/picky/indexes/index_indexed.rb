@@ -24,7 +24,7 @@ module Picky
       # TODO Spec.
       #
       def result_identifier result_identifier = nil
-        result_identifier ? define_key_format(result_identifier) : (@result_identifier || @name)
+        result_identifier ? define_result_identifier(result_identifier) : (@result_identifier || @name)
       end
       def define_result_identifier result_identifier
         @result_identifier = result_identifier

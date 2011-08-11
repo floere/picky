@@ -154,21 +154,23 @@ class BookSearch < Picky::Application
     # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
     #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
-    csv_test_index = Picky::Indexes::Memory.new(:csv_test, result_identifier: 'Books') do
-      source     Picky::Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
+    csv_test_index = Picky::Indexes::Memory.new(:csv_test) do
+      source Picky::Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
 
       category :title,
-               qualifiers: [:t, :title, :titre],
-               partial:    Picky::Partial::Substring.new(from: 1),
-               similarity: Picky::Similarity::DoubleMetaphone.new(2)
-      category :author,
-               qualifiers: [:a, :author, :auteur],
-               partial:    Picky::Partial::Substring.new(from: -2)
-      category :year,
-               qualifiers: [:y, :year, :annee],
-               partial:    Picky::Partial::None.new
-      category :publisher, qualifiers: [:p, :publisher]
-      category :subjects, qualifiers: [:s, :subject]
+                qualifiers: [:t, :title, :titre],
+                partial:    Picky::Partial::Substring.new(from: 1),
+                similarity: Picky::Similarity::DoubleMetaphone.new(2)
+      category  :author,
+                qualifiers: [:a, :author, :auteur],
+                partial:    Picky::Partial::Substring.new(from: -2)
+      category  :year,
+                qualifiers: [:y, :year, :annee],
+                partial:    Picky::Partial::None.new
+      category  :publisher, qualifiers: [:p, :publisher]
+      category  :subjects, qualifiers: [:s, :subject]
+
+      result_identifier :Books
     end
 
     indexing_index = Picky::Indexes::Memory.new(:special_indexing) do
