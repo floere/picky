@@ -8,8 +8,6 @@ module Picky
 
       attr_reader :types
 
-      # TODO All-in-one-server.
-      #
       def initialize
         @types = {
           :sinatra_client       => [Client::Sinatra, :sinatra_client_name],
@@ -17,7 +15,9 @@ module Picky
 
           :classic_server       => [Server::Classic, :unicorn_server_name],
           :sinatra_server       => [Server::Sinatra, :sinatra_server_name],
-          :server               => [Server::Sinatra, :sinatra_server_name]
+          :server               => [Server::Sinatra, :sinatra_server_name],
+
+          :all_in_one           => [AllInOne::Sinatra, :"directory_name (use e.g. for Heroku)"]
         }
       end
 

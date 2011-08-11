@@ -1,3 +1,4 @@
+require 'picky/tasks'
 require 'picky-client/tasks'
 
 # Pass in location of your javascript files, default is "javascripts".

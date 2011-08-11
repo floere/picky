@@ -3,12 +3,17 @@ require 'picky'
 require File.expand_path '../book',    __FILE__
 require File.expand_path '../logging', __FILE__
 
+# This app shows how to integrate the Picky server directly
+# inside a web app. However, if you really need performance
+# and easy caching, this is not recommended.
+#
 class BookSearch < Sinatra::Application
 
   # We do this so we don't have to type
   # Picky:: in front of everything.
   #
   include Picky
+
 
   # Server.
   #
@@ -43,8 +48,10 @@ class BookSearch < Sinatra::Application
     boost [:title, :author] => +3, [:title] => +1
   end
 
+
   # Client.
   #
+
   set :static, true
   set :public, File.dirname(__FILE__)
   set :views,  File.expand_path('../views', __FILE__)
@@ -89,7 +96,7 @@ class BookSearch < Sinatra::Application
   #
   get '/search/live' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
-    results.serialize # TODO Rename to_h.
+    results.to_json
   end
 
   # Configure. The configuration info page.
