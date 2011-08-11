@@ -30,6 +30,28 @@ describe Picky::Indexes::Index do
     end
   end
   
+  context 'after_indexing' do
+    context 'with it set' do
+      let(:index) do
+        described_class.new :some_name do
+          after_indexing "some after indexing going on"
+        end
+      end
+      it 'has an after_indexing set' do
+        index.after_indexing.should == "some after indexing going on"
+      end
+    end
+    context 'with it not set' do
+      let(:index) do
+        described_class.new :some_name do
+        end
+      end
+      it 'does not have an after_indexing set' do
+        index.after_indexing.should == nil
+      end
+    end
+  end
+  
   context 'in general' do
     context 'with #each source' do
       let(:index) do

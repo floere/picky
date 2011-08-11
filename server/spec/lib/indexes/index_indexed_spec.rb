@@ -46,6 +46,28 @@ describe Picky::Indexes::Index do
     end
   end
   
+  context 'result_identifier' do
+    context 'with it set' do
+      let(:index) do
+        described_class.new :some_name do
+          result_identifier :some_identifier
+        end
+      end
+      it 'has an after_indexing set' do
+        index.result_identifier.should == :some_identifier
+      end
+    end
+    context 'with it not set' do
+      let(:index) do
+        described_class.new :some_name do
+        end
+      end
+      it 'returns the name' do
+        index.result_identifier.should == :some_name
+      end
+    end
+  end
+  
   context "no categories" do
     it "works" do
       described_class.new :some_name
