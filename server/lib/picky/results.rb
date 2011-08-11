@@ -27,6 +27,8 @@ module Picky
 
     # Returns a hash with the allocations, offset, duration and total.
     #
+    # TODO Rename to_h?
+    #
     def serialize
       { allocations: allocations.to_result,
         offset:      offset,

@@ -11,4 +11,4 @@ Picky::Indexes.reload
 # Rack::Harakiri.after = 1000
 # use Rack::Harakiri
 
-run BookSearch.new
+run BookSearch

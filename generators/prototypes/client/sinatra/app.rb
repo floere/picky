@@ -6,12 +6,12 @@ Bundler.require
 #
 set :static, true
 set :public, File.dirname(__FILE__)
-set :views,  File.expand_path('views', File.dirname(__FILE__))
+set :views,  File.expand_path('../views', __FILE__)
 set :haml,   :format => :html5
 
 # Load the simplified "model".
 #
-require File.expand_path 'book', File.dirname(__FILE__)
+require File.expand_path '../book', __FILE__
 
 # Sets up a search instance to the server.
 #
