@@ -97,6 +97,8 @@ def open_client_in_browser port = 3210
   system "open -a 'Google Chrome' http://localhost:#{port}/?q=alan"
   sleep 1
   system "open -a 'Google Chrome' http://localhost:#{port}/?q=a%2A%20b"
+  sleep 1
+  system "open -a 'Google Chrome' http://localhost:#{port}/configure"
   sleep 5
 end
 
