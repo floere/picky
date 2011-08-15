@@ -65,10 +65,16 @@ class BookSearch < Sinatra::Application
     haml :'/search'
   end
 
+  # Configure. The configuration info page.
+  #
+  get '/configure' do
+    haml :'/configure'
+  end
+
   # Renders the results into the json.
   #
-  # You get the ids from the picky server and then
-  # populate the result with rendered models.
+  # You get the results from the (local) picky server and then
+  # populate the result hash with rendered models.
   #
   get '/search/full' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
@@ -95,12 +101,6 @@ class BookSearch < Sinatra::Application
   get '/search/live' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
     results.to_json
-  end
-
-  # Configure. The configuration info page.
-  #
-  get '/configure' do
-    haml :'/configure'
   end
 
   helpers do

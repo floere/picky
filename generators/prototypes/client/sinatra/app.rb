@@ -27,8 +27,8 @@ end
 
 # Renders the results into the json.
 #
-# You get the ids from the picky server and then
-# populate the result with rendered models.
+# You get the results from the picky server and then
+# populate the result hash with rendered models.
 #
 get '/search/full' do
   results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
