@@ -224,8 +224,10 @@ module Picky
       # * ... all options of #define_category.
       #
       def ranged_category category_name, range, options = {}
-        precision = options[:precision] || 1
+        precision = options[:precision] || 1 # THINK options.delete?
 
+        # Note: :key_format => :to_f ?
+        #
         options = { partial: Partial::None.new }.merge options
 
         define_category category_name, options do |category|
