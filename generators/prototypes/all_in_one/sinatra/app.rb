@@ -72,7 +72,7 @@ class BookSearch < Sinatra::Application
   #
   get '/search/full' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
-    AppLogger.info results.to_log(params[:query])
+    AppLogger.info results
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Book do |book|

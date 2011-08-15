@@ -43,7 +43,7 @@ class BookSearch < Sinatra::Application
   #
   get '/books' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
-    AppLogger.info results.to_log(params[:query])
+    AppLogger.info results
     results.to_json
   end
 
