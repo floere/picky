@@ -14,8 +14,7 @@ module Picky
         # Generates a partial index from the given inverted index.
         #
         def generate_from inverted
-          inverted.inject({}) do |hash, text_ids|
-            text, ids = *text_ids
+          inverted.inject({}) do |hash, (text, ids)|
             weight = weight_for ids.size
             hash[text] ||= weight.round(2) if weight
             hash
