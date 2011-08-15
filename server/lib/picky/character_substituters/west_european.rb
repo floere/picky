@@ -1,11 +1,10 @@
 # encoding: utf-8
 #
-# TODO Should probably be renamed, as it also removes
-# diactritics from japanese characters, like べ to へ.
+# THINK Does it also remove diaritics, like べ to へ?
 #
 module Picky
 
-  module CharacterSubstituters # :nodoc:all
+  module CharacterSubstituters
 
     # Substitutes Umlauts like
     # ä, ö, ü => ae, oe, ue.
@@ -13,30 +12,41 @@ module Picky
     #
     class WestEuropean
 
-      def initialize
+      def initialize # :nodoc:
         @chars = ActiveSupport::Multibyte.proxy_class
       end
 
-      def to_s
-        self.class.name
-      end
-
+      # Substitutes occurrences of certain characters
+      # (like Umlauts) with ASCII representations of them.
+      #
+      # Examples:
+      #   ä -> ae
+      #   Ö -> Oe
+      #   ß -> ss
+      #   ç -> c
+      #
+      # (See the associated spec for all examples)
+      #
       def substitute text
         trans = @chars.new(text).normalize(:kd)
 
-        # substitute special cases
+        # Substitute special cases.
         #
         trans.gsub!('ß', 'ss')
 
-        # substitute umlauts (of A,O,U,a,o,u)
+        # Substitute umlauts (of A,O,U,a,o,u).
         #
         trans.gsub!(/([AOUaou])\314\210/u, '\1e')
 
-        # get rid of ecutes, graves and …
+        # Get rid of ecutes, graves etc.
         #
         trans.unpack('U*').select { |cp|
           cp < 0x0300 || cp > 0x035F
         }.pack('U*')
+      end
+
+      def to_s # :nodoc:
+        self.class.name
       end
 
     end
