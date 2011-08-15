@@ -34,7 +34,7 @@ module Picky
           @combinations.sum &:weight
         end
         def weighted_score weights
-          weights.score @combinations
+          weights.score_for @combinations
         end
 
         # Filters the tokens and identifiers such that only identifiers

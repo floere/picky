@@ -13,19 +13,30 @@ module Picky
     #
     class Combination # :nodoc:all
 
-      attr_reader :token, :bundle, :category_name
+      attr_reader :token,
+                  :category
 
       def initialize token, category
-        @token         = token
-        @category_name = category.name
-        @bundle        = category.bundle_for token
-        @text          = @token.text # don't want to use reset_similar already
+        @token    = token
+        @category = category
       end
 
-      # Note: Required for uniq!
+      # Returns the token's text.
       #
-      def hash
-        [@token.to_s, @bundle].hash
+      def text
+        @text ||= token.text
+      end
+
+      # Returns the category's bundle.
+      #
+      def bundle
+        @bundle ||= category.bundle_for(token)
+      end
+
+      # Returns the category's name.
+      #
+      def category_name
+        @category_name ||= category.name
       end
 
       # Returns the weight of this combination.
@@ -33,7 +44,7 @@ module Picky
       # Note: Caching is most of the time useful.
       #
       def weight
-        @weight ||= @bundle.weight(@text)
+        @weight ||= bundle.weight(text)
       end
 
       # Returns an array of ids for the given text.
@@ -41,19 +52,25 @@ module Picky
       # Note: Caching is most of the time useful.
       #
       def ids
-        @ids ||= @bundle.ids(@text)
+        @ids ||= bundle.ids(text)
       end
 
       # The identifier for this combination.
       #
       def identifier
-        "#{bundle.identifier}:#{@token.identifier}"
+        "#{bundle.identifier}:#{token.identifier}"
       end
 
       # Is the identifier in the given identifiers?
       #
       def in? identifiers
         identifiers.include? identifier
+      end
+
+      # Note: Required for uniq!
+      #
+      def hash
+        [token.to_s, bundle].hash
       end
 
       # Combines the category names with the original names.
@@ -63,7 +80,7 @@ module Picky
       # ]
       #
       def to_result
-        [@category_name, *@token.to_result]
+        [category_name, *token.to_result]
       end
 
       # Example:
