@@ -6,8 +6,13 @@ module Picky
     #
     class Allocations # :nodoc:all
 
-      delegate :each, :inject, :empty?, :size, :to => :@allocations
       attr_reader :total
+
+      delegate :each,
+               :inject,
+               :empty?,
+               :size,
+               :to => :@allocations
 
       def initialize allocations = []
         @allocations = allocations
@@ -20,6 +25,7 @@ module Picky
           allocation.calculate_score weights
         end
       end
+
       # Sort the allocations.
       #
       def sort!
