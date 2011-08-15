@@ -92,8 +92,6 @@ class BookSearch < Sinatra::Application
 
   # Updates the search count while the user is typing.
   #
-  # We don't parse/reencode the returned json string using search_unparsed.
-  #
   get '/search/live' do
     results = books.search params[:query], params[:ids] || 20, params[:offset] || 0
     results.to_json
