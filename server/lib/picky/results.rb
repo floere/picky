@@ -21,6 +21,7 @@ module Picky
       @offset      = offset
       @allocations = allocations
     end
+
     # Create new results and calculate the ids.
     #
     def self.from query, amount, offset, allocations
@@ -29,18 +30,22 @@ module Picky
       results
     end
 
-    # Returns a hash with the allocations, offset, duration and total.
+    # Delegates to allocations.
     #
-    def to_hash
-      { allocations: allocations.to_result,
-        offset:      offset,
-        duration:    duration,
-        total:       total }
+    def ids amount = 20
+      allocations.ids amount
     end
-    # Convert to json format.
+
+    # The total results. Delegates to the allocations.
     #
-    def to_json options = {}
-      to_hash.to_json options
+    def total
+      @total || @total = allocations.total || 0
+    end
+
+    # Duration default is 0.
+    #
+    def duration
+      @duration || 0
     end
 
     # This starts the actual processing.
@@ -52,26 +57,19 @@ module Picky
       allocations.process! amount, offset
     end
 
-    # Duration default is 0.
+    # Returns a hash with the allocations, offset, duration and total.
     #
-    def duration
-      @duration || 0
-    end
-    # The total results. Delegates to the allocations.
-    #
-    # Caches.
-    #
-    def total
-      @total || @total = allocations.total || 0
+    def to_hash
+      { allocations: allocations.to_result,
+        offset:      offset,
+        duration:    duration,
+        total:       total }
     end
 
-    # Convenience methods.
+    # Convert to json format.
     #
-
-    # Delegates to allocations.
-    #
-    def ids amount = 20
-      allocations.ids amount
+    def to_json options = {}
+      to_hash.to_json options
     end
 
     # The first character in the blog designates what type of query it is.
