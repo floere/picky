@@ -27,7 +27,7 @@ describe Picky::Query::Combinations::Base do
   describe "weighted_score" do
     it "uses the weights' score method" do
       weights = stub :weights
-      weights.should_receive(:score).once.with @combinations_ary
+      weights.should_receive(:score_for).once.with @combinations_ary
       
       @combinations.weighted_score weights
     end
