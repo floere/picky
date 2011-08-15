@@ -102,10 +102,17 @@ describe Picky::Search do
     before(:each) do
       @search = described_class.new
     end
-    it "delegates to search_with" do
+    it "delegates to search_with correctly" do
       @search.stub! :tokenized => :tokens
       
-      @search.should_receive(:search_with).once.with :tokens, 20, 0
+      @search.should_receive(:search_with).once.with :tokens, 20, 10, :text
+      
+      @search.search :text, 20, 10
+    end
+    it "delegates to search_with correctly" do
+      @search.stub! :tokenized => :tokens
+      
+      @search.should_receive(:search_with).once.with :tokens, 20, 0, :text
       
       @search.search :text, 20, 0
     end

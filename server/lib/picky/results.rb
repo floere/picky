@@ -8,19 +8,23 @@ module Picky
     # Duration is set externally by the query.
     #
     attr_writer :duration
-    attr_reader :allocations, :offset, :amount
+    attr_reader :allocations,
+                :offset,
+                :amount,
+                :query
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize amount = 0, offset = 0, allocations = Query::Allocations.new
-      @offset      = offset
+    def initialize query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new
       @amount      = amount
+      @query       = query
+      @offset      = offset
       @allocations = allocations
     end
     # Create new results and calculate the ids.
     #
-    def self.from amount, offset, allocations
-      results = new amount, offset, allocations
+    def self.from query, amount, offset, allocations
+      results = new query, amount, offset, allocations
       results.prepare!
       results
     end
@@ -70,19 +74,18 @@ module Picky
       allocations.ids amount
     end
 
-    # Human readable log.
-    #
-    # TODO Should this be to_s? (And it should also hold the original query?)
-    #
-    def to_log query
-      "#{log_type}|#{Time.now.to_s(:db)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
-    end
     # The first character in the blog designates what type of query it is.
     #
     # No calculated ids means: No results.
     #
     def log_type
       amount.zero?? :'.' : :'>'
+    end
+
+    # For logging.
+    #
+    def to_s
+      "#{log_type}|#{Time.now.to_s(:db)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
     end
 
   end
