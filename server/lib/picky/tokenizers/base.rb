@@ -120,7 +120,7 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
 
       # Reject tokens after tokenizing based on the given criteria.
       #
-      # Note: Currently only for indexing.
+      # Note: Currently only for indexing. TODO Put into searching as well.
       #
       def rejects_token_if &condition
         @reject_condition = condition
