@@ -22,22 +22,12 @@ module Picky
       ids
     end
 
-    # Removes all ids of each allocation.
-    #
-    def clear_ids
-      allocations.each { |allocation| allocation[4].clear }
-    end
-
     # Returns the allocations.
     #
     def allocations
-      @allocations || @allocations = self[:allocations]
+      @allocations ||= self[:allocations]
     end
-    # Returns the number of allocations.
-    #
-    def allocations_size
-      @allocations_size || @allocations_size = allocations.size
-    end
+
     # Returns the total of results.
     #
     def total
@@ -104,13 +94,19 @@ module Picky
     #
     def amend_ids_with entries # :nodoc:
       i = 0
-      self.allocations.each do |allocation|
+      allocations.each do |allocation|
         allocation[5] = allocation[4].map do |_|
           e = entries[i]
           i += 1
           e
         end
       end
+    end
+
+    # Removes all ids of each allocation.
+    #
+    def clear_ids
+      allocations.each { |allocation| allocation[4].clear }
     end
 
   end
