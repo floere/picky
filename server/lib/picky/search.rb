@@ -107,7 +107,7 @@ module Picky
     # Note: Internal method, use #search.
     #
     def execute tokens, ids, offset, original_text = nil
-      Results.from ids, offset, sorted_allocations(tokens), original_text
+      Results.from original_text, ids, offset, sorted_allocations(tokens)
     end
 
     # Delegates the tokenizing to the query tokenizer.
