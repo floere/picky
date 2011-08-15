@@ -6,6 +6,8 @@ module Picky
 
         module Location
 
+          # THINK Is this the best way to do this?
+          #
           def self.install_on category, grid, precision = 1
             wrapped_exact = Indexed::Wrappers::Bundle::Location.new category.indexed_exact, grid: grid, precision: precision
 
