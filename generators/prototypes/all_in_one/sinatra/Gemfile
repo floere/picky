@@ -1,8 +1,5 @@
 source :gemcutter
 
-# TODO Perhaps require two separate Gemfiles?
-#
-
 # Gems required by the Picky client.
 #
 gem 'picky-client', '3.0.0.pre6' # '~> 3.0'
@@ -29,6 +26,5 @@ gem 'activerecord',  '~> 3.0', :require => 'active_record'
 gem 'unicorn'
 
 group :test do
-  gem 'picky-client', '3.0.0.pre6'
   gem 'rspec'
 end
