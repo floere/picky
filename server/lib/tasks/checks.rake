@@ -4,7 +4,7 @@ desc 'Checks if index files are small/missing (index, category optional).'
 task :check, [:index, :category] => :application do |_, options|
   index, category = options.index, options.category
 
-  specific = Indexes
+  specific = Picky::Indexes
   specific = specific[index]    if index
   specific = specific[category] if category
   specific.check
