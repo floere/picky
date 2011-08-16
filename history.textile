@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.0.1
+
+* hanke: (server) Fixed & integration tested rake tasks (Thanks rogerbraun!)
+
 h2. Version 3.0.0
 
 * hanke: (client) Breaking: Removed method @Picky::Convenience#allocations_size@. Use @#allocations.size@.
