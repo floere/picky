@@ -45,7 +45,7 @@ GEM
       rack
       raindrops (~> 0.6)
     url_escape (2009.06.24)
-    yajl-ruby (0.8.2)
+    yajl-ruby (0.8.3)
 
 PLATFORMS
   ruby

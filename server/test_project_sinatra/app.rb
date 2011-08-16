@@ -233,16 +233,16 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
-  # japanese_index = Picky::Indexes::Memory.new(:japanese) do
-  #   source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
-  #
-  #   indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
-  #            :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
-  #            :splits_text_on =>    /[\s;]/
-  #
-  #   category :japanese,
-  #            :partial => Picky::Partial::Substring.new(from: 1)
-  # end
+  japanese_index = Picky::Indexes::Memory.new(:japanese) do
+    source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+
+    indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
+             :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
+             :splits_text_on =>    /[\s;]/
+
+    category :japanese,
+             :partial => Picky::Partial::Substring.new(from: 1)
+  end
 
   weights = {
     [:author]         => +6,
@@ -301,10 +301,14 @@ class BookSearch < Sinatra::Application
   get %r{\A/indexing\Z} do
     indexing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  # japanese_search = Search.new japanese_index
-  # get %r{\A/japanese\Z} do
-  #   japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
-  # end
+  japanese_search = Search.new japanese_index do
+    searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
+              stopwords:          /\b(and|the|of|it|in|for)\b/i,
+              splits_text_on:     /[\s\/\-\&]+/
+  end
+  get %r{\A/japanese\Z} do
+    japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
   get %r{\A/all\Z} do
     all_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
