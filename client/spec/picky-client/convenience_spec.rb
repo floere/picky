@@ -147,12 +147,6 @@ describe Picky::Convenience do
     end
   end
 
-  describe 'allocations_size' do
-    it 'should just add up the allocations of both types' do
-      @convenience.allocations_size.should == 3
-    end
-  end
-
   # describe 'render?' do
   #   context 'no ids' do
   #     before(:each) do
