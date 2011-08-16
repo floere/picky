@@ -120,7 +120,7 @@ end
 
 def run_server_rake_tasks
   puts "Now the server rake tasks"
-  system("cd sandbox/server; rake -T")
+  run_server_rake_task '-T'
   run_server_rake_task 'analyze'
   run_server_rake_task 'check'
   run_server_rake_task 'routes'
