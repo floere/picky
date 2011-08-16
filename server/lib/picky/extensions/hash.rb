@@ -12,9 +12,7 @@ class Hash # :nodoc:all
 
   # Dumps binary self to the path given. Minus extension.
   #
-  # TODO Rename dump_marshal.
-  #
-  def dump_marshalled path
+  def dump_marshal path
     File.open(path, 'w:binary') do |out_file|
       Marshal.dump self, out_file
     end

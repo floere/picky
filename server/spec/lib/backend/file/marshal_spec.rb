@@ -8,7 +8,7 @@ describe Picky::Backend::File::Marshal do
     it "delegates to the given hash" do
       hash = stub :hash
       
-      hash.should_receive(:dump_marshalled).once.with "some/cache/path/to/file.dump"
+      hash.should_receive(:dump_marshal).once.with "some/cache/path/to/file.dump"
       
       file.dump hash
     end

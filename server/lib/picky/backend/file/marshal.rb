@@ -21,7 +21,7 @@ module Picky
         # Dumps the index hash in marshal format.
         #
         def dump hash
-          hash.dump_marshalled cache_path
+          hash.dump_marshal cache_path
         end
         # A marshal file does not provide retrieve functionality.
         #

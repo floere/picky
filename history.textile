@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+h2. Version 3.0.0
+
+* hanke: (client) Breaking: Removed method @Picky::Convenience#allocations_size@. Use @#allocations.size@.
+* hanke: (server) Breaking: Removed @Results#to_log@. @Results#to_s@ returns a log worthy string now.
+* See changes in pre versions for complete changelog on 3.0.
+
 h2. Version 3.0.0.pre5
 
 * hanke: (server) Renamed Picky::Result#serialize -> Picky::Result#to_hash.
