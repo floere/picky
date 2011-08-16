@@ -109,6 +109,23 @@ def run_server_integration_tests
   else
     raise "Integration specs failed!"
   end
+  sleep 1
+end
+
+def run_server_rake_task name
+  unless system("cd sandbox/server; rake #{name} --trace")
+    raise "Integration specs failed!"
+  end
+end
+
+def run_server_rake_tasks
+  puts "Now the server rake tasks"
+  system("cd sandbox/server; rake -T")
+  run_server_rake_task 'analyze'
+  run_server_rake_task 'check'
+  run_server_rake_task 'routes'
+  run_server_rake_task 'todo'
+  run_server_rake_task 'try[test]'
 end
 
 def run_server_speed_tests
@@ -145,6 +162,7 @@ begin
   # All in one.
   #
   install_all_in_one
+  run_server_rake_tasks
 
   run_search_requests_on_client 8080 # Since it is just one server.
   open_client_in_browser 8080
@@ -162,6 +180,7 @@ begin
   run_search_requests_on_server
   run_server_integration_tests
   run_server_speed_tests
+  run_server_rake_tasks
 
   run_search_requests_on_client
   open_client_in_browser
@@ -175,6 +194,7 @@ begin
   run_search_requests_on_server
   run_server_integration_tests
   run_server_speed_tests
+  run_server_rake_tasks
 
   run_search_requests_on_client
   open_client_in_browser
