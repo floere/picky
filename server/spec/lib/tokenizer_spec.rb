@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Picky::Tokenizers::Base do
+describe Picky::Tokenizer do
   
   context 'with special instance' do
     let (:tokenizer) { described_class.new rejects_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
@@ -15,14 +15,13 @@ describe Picky::Tokenizers::Base do
     describe 'to_s' do
       it 'spits out the right text' do
         tokenizer.to_s.should == <<-EXPECTED
-Removes characters:        -
-Stopwords:                 -
-Splits text on:            /\\s/
-Removes chars after split: -
-Normalizes words:          -
-Rejects tokens?            Yes, see line 8 in app/application.rb
-Substitutes chars?         -
-Case sensitive?            Yes.
+Removes characters: -
+Stopwords:          -
+Splits text on:     /\\s/
+Normalizes words:   -
+Rejects tokens?     Yes, see line 8 in app/application.rb
+Substitutes chars?  -
+Case sensitive?     Yes.
 EXPECTED
       end
     end
@@ -34,14 +33,13 @@ EXPECTED
         describe 'to_s' do
           it 'spits out the right text' do
             tokenizer.to_s.should == <<-EXPECTED
-Removes characters:        -
-Stopwords:                 -
-Splits text on:            /\\s/
-Removes chars after split: -
-Normalizes words:          -
-Rejects tokens?            -
-Substitutes chars?         -
-Case sensitive?            -
+Removes characters: -
+Stopwords:          -
+Splits text on:     /\\s/
+Normalizes words:   -
+Rejects tokens?     -
+Substitutes chars?  -
+Case sensitive?     -
 EXPECTED
           end
         end
@@ -73,33 +71,6 @@ EXPECTED
         tokenizer.substitutes_characters_with
 
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
-      end
-    end
-
-    describe "removes_characters_after_splitting" do
-      it 'handles broken arguments' do
-        expect { tokenizer.removes_characters_after_splitting("gnorf") }.to raise_error(ArgumentError)
-      end
-      context "without removes_characters_after_splitting called" do
-        it "has remove_after_normalizing_illegals" do
-          expect { tokenizer.remove_after_normalizing_illegals('any') }.to_not raise_error
-        end
-        it 'should define a remove_after_normalizing_illegals normalize_with_patterns does nothing' do
-          unchanging = stub :unchanging
-          
-          tokenizer.remove_after_normalizing_illegals unchanging
-        end
-      end
-      context "with removes_characters_after_splitting called" do
-        before(:each) do
-          tokenizer.removes_characters_after_splitting(/[afo]/)
-        end
-        it "has remove_after_normalizing_illegals" do
-          expect { tokenizer.remove_after_normalizing_illegals('abcdefghijklmnop') }.to_not raise_error
-        end
-        it "removes illegal characters" do
-          tokenizer.remove_after_normalizing_illegals('abcdefghijklmnop').should == 'bcdeghijklmnp'
-        end
       end
     end
 

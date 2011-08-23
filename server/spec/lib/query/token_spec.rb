@@ -5,10 +5,10 @@ describe Picky::Query::Token do
   
   describe '==' do
     it 'is equal if the originals are equal' do
-      described_class.processed('similar~').should == described_class.processed('similar~')
+      described_class.processed('similar~', 'Similar~').should == described_class.processed('similar~', 'Similar~')
     end
     it 'is not equal if the originals are not equal' do
-      described_class.processed('similar~').should_not == described_class.processed('similar')
+      described_class.processed('similar~', 'Similar~').should_not == described_class.processed('similar', 'Similar')
     end
   end
   
@@ -17,7 +17,7 @@ describe Picky::Query::Token do
       @bundle   = stub :bundle, :similar => [:array, :of, :similar]
       @category = stub :category, :bundle_for => @bundle
       
-      @token = described_class.processed 'similar~'
+      @token = described_class.processed 'similar~', 'Similar~'
     end
     it 'returns the right next tokens' do
       next_token = @token.next_similar_token @category
@@ -40,7 +40,7 @@ describe Picky::Query::Token do
         before(:each) do
           @bundle.stub! :similar => [:array, :of, :similar]
 
-          @token = described_class.processed 'similar~'
+          @token = described_class.processed 'similar~', 'Similar'
         end
         it 'should have a certain original text' do
           @token.next_similar @bundle
@@ -54,7 +54,7 @@ describe Picky::Query::Token do
         before(:each) do
           @bundle.stub! :similar => [:array, :of, :similar]
 
-          @token = described_class.processed 'similar~'
+          @token = described_class.processed 'similar~', 'Similar'
         end
         it 'generates all similar' do
           @token.next_similar(@bundle).should == :array
@@ -77,7 +77,7 @@ describe Picky::Query::Token do
         before(:each) do
           @bundle.stub! :similar => [:array, :of, :similar]
 
-          @token = described_class.processed 'nonsimilar'
+          @token = described_class.processed 'nonsimilar', 'Nonsimilar'
         end
         it 'generates all similar' do
           @token.next_similar(@bundle).should == nil
@@ -95,7 +95,7 @@ describe Picky::Query::Token do
     before(:each) do
       @bundle = stub :bundle
       
-      @token = described_class.processed 'flarb~'
+      @token = described_class.processed 'flarb~', 'FLARB~'
     end
     context "with similar" do
       before(:each) do
@@ -177,10 +177,10 @@ describe Picky::Query::Token do
 
   describe 'processed' do
     it 'should return a new token' do
-      described_class.processed('some text').should be_kind_of(described_class)
+      described_class.processed('some text', 'SOME TEXT').should be_kind_of(described_class)
     end
     it 'generates a token' do
-      described_class.processed('some text').class.should == described_class
+      described_class.processed('some text', 'SOME TEXT').class.should == described_class
     end
   end
   
@@ -191,8 +191,6 @@ describe Picky::Query::Token do
     end
     it 'should have an order' do
       token.should_receive(:qualify).once.ordered
-      token.should_receive(:extract_original).once.ordered
-      token.should_receive(:downcase).once.ordered
       token.should_receive(:partialize).once.ordered
       token.should_receive(:similarize).once.ordered
       token.should_receive(:remove_illegals).once.ordered
@@ -205,7 +203,7 @@ describe Picky::Query::Token do
   describe 'partial?' do
     context 'similar, partial' do
       before(:each) do
-        @token = described_class.processed 'similar~'
+        @token = described_class.processed 'similar~', 'Similar~'
         @token.partial = true
       end
       it 'should be false' do
@@ -214,7 +212,7 @@ describe Picky::Query::Token do
     end
     context 'similar, not partial' do
       before(:each) do
-        @token = described_class.processed 'similar~'
+        @token = described_class.processed 'similar~', 'Similar~'
       end
       it 'should be false' do
         @token.partial?.should == false
@@ -222,7 +220,7 @@ describe Picky::Query::Token do
     end
     context 'not similar, partial' do
       before(:each) do
-        @token = described_class.processed 'not similar'
+        @token = described_class.processed 'not similar', 'NOT SIMILAR'
         @token.partial = true
       end
       it 'should be true' do
@@ -231,7 +229,7 @@ describe Picky::Query::Token do
     end
     context 'not similar, not partial' do
       before(:each) do
-        @token = described_class.processed 'not similar'
+        @token = described_class.processed 'not similar', 'NOT SIMILAR'
       end
       it 'should be nil' do
         @token.partial?.should == nil
@@ -241,12 +239,12 @@ describe Picky::Query::Token do
 
   describe 'similar' do
     it 'should not change the original with the text' do
-      token = described_class.processed "bla~"
+      token = described_class.processed "bla~", 'BLA~'
       token.text.should_not == token.original
     end
     def self.it_should_have_similarity text, expected_similarity_value
       it "should have #{ "no" unless expected_similarity_value } similarity for '#{text}'" do
-        described_class.processed(text).similar?.should == expected_similarity_value
+        described_class.processed(text, text.upcase).similar?.should == expected_similarity_value
       end
     end
     it_should_have_similarity 'name:',      nil
@@ -266,7 +264,7 @@ describe Picky::Query::Token do
 
   describe 'special cases' do
     it 'should be blank on ""' do
-      token = described_class.processed '""'
+      token = described_class.processed '""', '""'
 
       token.should be_blank
     end
@@ -274,9 +272,9 @@ describe Picky::Query::Token do
 
   describe "original" do
     it "should keep the original text even when processed" do
-      token = described_class.processed "I'm the original token text."
+      token = described_class.processed "I'm the processed text.", "I'm the original text."
 
-      token.original.should == "I'm the original token text."
+      token.original.should == "I'm the original text."
     end
   end
 

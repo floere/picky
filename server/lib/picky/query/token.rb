@@ -29,7 +29,7 @@ module Picky
       # Note: Use this in the search engine if you need a qualified
       #       and normalized token. I.e. one prepared for a search.
       #
-      def self.processed text, original
+      def self.processed text, original = nil
         new(text, original).process
       end
       def process # TODO Move this into the processed method and let the token have more params?

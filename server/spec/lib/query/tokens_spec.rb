@@ -14,71 +14,20 @@ describe Picky::Query::Tokens do
       
       described_class.should_receive(:new).once.with expected
       
-      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"']
+      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], []
     end
     it 'generates processed tokens from all words' do
       expected = [
-        Picky::Query::Token.processed('this~', false),
-        Picky::Query::Token.processed('is', false),
-        Picky::Query::Token.processed('a', false),
-        Picky::Query::Token.processed('sp:solr', false),
-        Picky::Query::Token.processed('query"', false)
+        Picky::Query::Token.processed('this~'),
+        Picky::Query::Token.processed('is'),
+        Picky::Query::Token.processed('a'),
+        Picky::Query::Token.processed('sp:solr'),
+        Picky::Query::Token.processed('query"')
       ]
       
       described_class.should_receive(:new).once.with expected
       
-      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"']
-    end
-  end
-
-  describe 'reject' do
-    before(:each) do
-      @blank    = stub :blank, :blank? => true
-      @nonblank = stub :nonblank, :blank? => false
-      @tokens = described_class.new [@blank, @nonblank, @blank, @blank, @nonblank]
-    end
-    it 'should not cut it down' do
-      @tokens.reject
-
-      @tokens.instance_variable_get(:@tokens).should == [@nonblank, @nonblank]
-    end
-  end
-  
-  describe 'cap' do
-    context 'one token' do
-      before(:each) do
-        @token = Picky::Query::Token.processed 'Token'
-        @tokens = described_class.new [@token]
-      end
-      it 'does not cut it down' do
-        @tokens.cap 5
-        
-        @tokens.instance_variable_get(:@tokens).should == [@token]
-      end
-      it 'cuts it down' do
-        @tokens.cap 0
-        
-        @tokens.instance_variable_get(:@tokens).should == []
-      end
-    end
-    context 'many tokens' do
-      before(:each) do
-        @first  = Picky::Query::Token.processed 'Hello'
-        @second = Picky::Query::Token.processed 'I'
-        @third  = Picky::Query::Token.processed 'Am'
-        @tokens = described_class.new [
-          @first,
-          @second,
-          @third,
-          Picky::Query::Token.processed('A'),
-          Picky::Query::Token.processed('Token')
-        ]
-      end
-      it 'should cap the number of tokens' do
-        @tokens.cap 3
-        
-        @tokens.instance_variable_get(:@tokens).should == [@first, @second, @third]
-      end
+      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], []
     end
   end
 
@@ -113,8 +62,8 @@ describe Picky::Query::Tokens do
     end
     context 'many tokens' do
       before(:each) do
-        @first  = Picky::Query::Token.processed 'Hello'
-        @last   = Picky::Query::Token.processed 'Token'
+        @first  = Picky::Query::Token.processed 'Hello', 'HELLO'
+        @last   = Picky::Query::Token.processed 'Token', 'TOKEN'
         @tokens = described_class.new [
           @first,
           Picky::Query::Token.processed('I'),
@@ -173,11 +122,11 @@ describe Picky::Query::Tokens do
   describe 'to_s' do
     before(:each) do
       @tokens = described_class.new [
-        Picky::Query::Token.processed('Hello~'),
-        Picky::Query::Token.processed('I~'),
-        Picky::Query::Token.processed('Am'),
-        Picky::Query::Token.processed('A*'),
-        Picky::Query::Token.processed('Token~')
+        Picky::Query::Token.processed('hello~', 'Hello~'),
+        Picky::Query::Token.processed('i~', 'I~'),
+        Picky::Query::Token.processed('am', 'Am'),
+        Picky::Query::Token.processed('a*', 'A*'),
+        Picky::Query::Token.processed('token~', 'Token~')
       ]
     end
     it 'should work correctly' do

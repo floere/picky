@@ -15,7 +15,7 @@ describe Picky::Search do
       tokenizer = stub :tokenizer
       search.stub! :tokenizer => tokenizer
       
-      tokenizer.should_receive(:tokenize).once.with :some_text
+      tokenizer.should_receive(:tokenize).once.with(:some_text).and_return [['some_text'], [:some_original]]
       
       search.tokenized :some_text
     end
@@ -128,13 +128,13 @@ describe Picky::Search do
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
-        tokenizer = stub :tokenizer, :tokenize => :some_tokenized_text
+        tokenizer = stub :tokenizer, :tokenize => [['some_text'], ['some_original']]
         @search = described_class.new @index do
           searching tokenizer
         end
       end
-      it 'should tokenize using the tokenizer' do
-        @search.tokenized('some text').should == :some_tokenized_text
+      it 'should return Tokens' do
+        @search.tokenized('some text').should be_kind_of(Picky::Query::Tokens)
       end
     end
   end

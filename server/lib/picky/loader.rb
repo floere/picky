@@ -153,11 +153,9 @@ module Picky
       load_relative 'query/token'
       load_relative 'query/tokens'
 
-      # Tokenizers types.
+      # Tokenizer.
       #
-      load_relative 'tokenizers/base'
-      load_relative 'tokenizers/index'
-      load_relative 'tokenizers/query'
+      load_relative 'tokenizer'
 
       # Query combinations, qualifiers, weigher.
       #

@@ -31,7 +31,7 @@ describe Picky::Categories do
     end
     describe "similar_possible_for" do
       before(:each) do
-        @token = Picky::Query::Token.processed 'similar~'
+        @token = Picky::Query::Token.processed 'similar~', 'Similar~'
       end
       it "returns possible categories" do
         @categories.similar_possible_for(@token).should == []

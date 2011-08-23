@@ -2,7 +2,7 @@ module Picky
 
   module Tokenizers
 
-    class Location < Base
+    class Location < Picky::Tokenizer # TODO Still needed?
 
       attr_reader :calculation
 

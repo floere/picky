@@ -6,7 +6,7 @@ describe Picky::Query::Combination do
 
   before(:each) do
     @bundle      = stub :bundle, :identifier => :bundle_name
-    @token       = Picky::Query::Token.processed('some_text~')
+    @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
     @category    = stub :category, :bundle_for => @bundle, :name => :some_category_name
 
     @combination = described_class.new @token, @category
@@ -41,7 +41,7 @@ describe Picky::Query::Combination do
   describe 'to_result' do
     context 'functional with qualifier' do
       before(:each) do
-        token = Picky::Tokenizer.new.tokenize('name:Blä~').first
+        token = Picky::Query::Token.processed 'name:blä~', 'Blä~'
 
         @combination = Picky::Query::Combination.new token, @category
       end
