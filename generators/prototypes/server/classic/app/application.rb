@@ -22,11 +22,11 @@ class BookSearch < Picky::Application
 
   # How query text is preprocessed. Move to Search block to make it search specific.
   #
-  searching removes_characters: /[^a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
+  searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+            removes_characters: /[^a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
             stopwords:          /\b(and|the|of|it|in|for)\b/i,
             splits_text_on:     /[\s\/\-\&]+/,
-            maximum_tokens: 5, # Amount of tokens used in a search (5 = default).
-            substitutes_characters_with: CharacterSubstituters::WestEuropean.new # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+            maximum_tokens: 5   # Amount of tokens maximally used in a search.
 
   books_index = Indexes::Memory.new :books do
     source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
