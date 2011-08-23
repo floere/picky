@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 3.1.0
+
+* hanke: (server) Unified tokenizers. Method @#tokenize(text)@ now returns @[ ["token", "token", "token"], ["Original", "Original", "Original"] ]@.
+* hanke: (server) Removed tokenizer option @removes_characters_after_splitting: /soem regexp/@ (without replacement).
+
 h2. Version 3.0.1
 
 * hanke: (server) Fixed & integration tested rake tasks (Thanks rogerbraun!)
