@@ -24,25 +24,20 @@ class BookSearch < Sinatra::Application
 
   extend Picky::Sinatra
 
-  indexing removes_characters:                 /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\.\|]/i,
-           stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-           splits_text_on:                     /[\s\/\-\_\:\"\&\/]/,
-           removes_characters_after_splitting: /[\.]/,
-           normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
-           rejects_token_if:                   lambda { |token| token.blank? || token == :amistad },
-           case_sensitive:                     false,
+  indexing substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
+           removes_characters:          /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\|]/i,
+           stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+           splits_text_on:              /[\s\/\-\_\:\"\&\/]/,
+           normalizes_words:            [[/\$(\w+)/i, '\1 dollars']],
+           rejects_token_if:            lambda { |token| token.blank? || token == 'Amistad' },
+           case_sensitive:              false
 
-           substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
-
-  searching removes_characters:                 /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
-            stopwords:                          /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-            splits_text_on:                     /[\s\/\&\/]/,
-            removes_characters_after_splitting: /\|/,
-            # rejects_token_if:                   lambda { |token| token.blank? || token == :hell }, # Not yet.
-            case_sensitive:                     true,
-
-            maximum_tokens:                     5,
-            substitutes_characters_with:        CharacterSubstituters::WestEuropean.new
+  searching substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
+            removes_characters:          /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
+            stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+            splits_text_on:              /[\s\/\&\/]/,
+            case_sensitive:              true,
+            maximum_tokens:              5
 
   books_index = Indexes::Memory.new :books, result_identifier: 'boooookies' do
     source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'db.yml')

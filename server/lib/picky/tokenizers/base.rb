@@ -15,14 +15,13 @@ module Picky
       def to_s
         reject_condition_location = @reject_condition.to_s[/:(\d+) \(lambda\)/, 1]
         <<-TOKENIZER
-Removes characters:        #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
-Stopwords:                 #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
-Splits text on:            #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
-Removes chars after split: #{@removes_characters_after_splitting_regexp ? "/#{@removes_characters_after_splitting_regexp.source}/" : '-'}
-Normalizes words:          #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
-Rejects tokens?            #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
-Substitutes chars?         #{@substituter ? "Yes, using #{@substituter}." : '-' }
-Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
+Removes characters: #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
+Stopwords:          #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
+Splits text on:     #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
+Normalizes words:   #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
+Rejects tokens?     #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
+Substitutes chars?  #{@substituter ? "Yes, using #{@substituter}." : '-' }
+Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         TOKENIZER
       end
 
@@ -41,6 +40,7 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
       end
       @@non_single_stopword_regexp = /^\b[\w:]+?\b[\.\*\~]?\s?$/
       def remove_non_single_stopwords text
+        return text unless @remove_stopwords_regexp
         return text if text.match @@non_single_stopword_regexp
         remove_stopwords text
       end
@@ -89,21 +89,10 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
           text.gsub!(regex, replace) and break
         end
 
-        remove_after_normalizing_illegals text
         text
       end
-
-      # Illegal after normalizing.
-      #
-      # We only allow regexps (even if string would be okay
-      # too for gsub! - it's too hard to understand)
-      #
-      def removes_characters_after_splitting regexp
-        check_argument_in __method__, Regexp, regexp
-        @removes_characters_after_splitting_regexp = regexp
-      end
-      def remove_after_normalizing_illegals text
-        text.gsub! @removes_characters_after_splitting_regexp, EMPTY_STRING if @removes_characters_after_splitting_regexp
+      def normalize_with_patterns?
+        @normalizes_words_regexp_replaces
       end
 
       # Substitute Characters with this substituter.
@@ -120,8 +109,6 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
 
       # Reject tokens after tokenizing based on the given criteria.
       #
-      # Note: Currently only for indexing. TODO Put into searching as well.
-      #
       def rejects_token_if &condition
         @reject_condition = condition
       end
@@ -136,17 +123,41 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
         !@case_sensitive
       end
 
+      def maximum_tokens amount
+        @maximum_tokens = amount
+      end
+      def cap words
+        words.slice!(@maximum_tokens..-1) if cap?(words)
+      end
+      def cap? words
+        @maximum_tokens && words.size > @maximum_tokens
+      end
+
       # Checks if the right argument type has been given.
       #
       def check_argument_in method, type, argument, &condition
         raise ArgumentError.new "Application##{method} takes a #{type} as argument, not a #{argument.class}." unless type === argument
       end
 
+      attr_reader :substituter
+      alias substituter? substituter
 
-      # Returns a number of tokens, generated from the given text.
+      def initialize options = {}
+        substitutes_characters_with options[:substitutes_characters_with] if options[:substitutes_characters_with]
+        removes_characters options[:removes_characters]                   if options[:removes_characters]
+        stopwords options[:stopwords]                                     if options[:stopwords]
+        splits_text_on options[:splits_text_on]                           || /\s/
+        normalizes_words options[:normalizes_words]                       if options[:normalizes_words]
+        maximum_tokens options[:maximum_tokens]
+        rejects_token_if &(options[:rejects_token_if]                     || :blank?)
+        case_sensitive options[:case_sensitive]                           unless options[:case_sensitive].nil?
+      end
+
+      # Returns a number of tokens, generated from the given text,
+      # based on the parameters given.
       #
-      # Note:
-      #  * preprocess, pretokenize are hooks
+      # Returns:
+      #  [[:token1, :token2], ["Original1", "Original2"]]
       #
       def tokenize text
         text   = preprocess text  # processing the text
@@ -154,25 +165,7 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
         words  = pretokenize text # splitting and preparations for tokenizing
         return empty_tokens if words.empty?
         tokens = tokens_for words # creating tokens / strings
-                 process tokens   # processing tokens / strings
-      end
-
-      attr_reader :substituter
-      alias substituter? substituter
-
-      def initialize options = {}
-        removes_characters options[:removes_characters]                                 if options[:removes_characters]
-        contracts_expressions *options[:contracts_expressions]                          if options[:contracts_expressions]
-        stopwords options[:stopwords]                                                   if options[:stopwords]
-        normalizes_words options[:normalizes_words]                                     if options[:normalizes_words]
-        removes_characters_after_splitting options[:removes_characters_after_splitting] if options[:removes_characters_after_splitting]
-        substitutes_characters_with options[:substitutes_characters_with]               if options[:substitutes_characters_with]
-        case_sensitive options[:case_sensitive]                                         unless options[:case_sensitive].nil?
-
-        # Defaults.
-        #
-        splits_text_on options[:splits_text_on] || /\s/
-        rejects_token_if &(options[:rejects_token_if] || :blank?)
+        [tokens, words]
       end
 
       # Default preprocessing hook.
@@ -193,35 +186,32 @@ Case sensitive?            #{@case_sensitive ? "Yes." : "-"}
         remove_non_single_stopwords text
         text
       end
+
       # Pretokenizing.
       #
       # Does:
-      # 1. Split the text into words.
-      # 2. Normalize each word.
+      #  * Split the text into words.
+      #  * Cap the amount of tokens if maximum_tokens is set.
       #
       def pretokenize text
         words = split text
-        words.collect! do |word|
-          normalize_with_patterns word
-          word
-        end
-      end
-      # Basic postprocessing (overridden in both query/index tokenizers).
-      #
-      def process tokens
-        reject tokens # Reject any tokens that don't meet criteria
-        tokens
+        words.collect! { |word| normalize_with_patterns word } if normalize_with_patterns?
+        reject words
+        cap words if cap?(words)
+        words
       end
 
-      # # Converts words into real tokens.
-      # #
-      # def tokens_for words
-      #   Query::Tokens.new words.collect! { |word| token_for word }
-      # end
-      # Turns non-blank text into symbols.
+      # Downcases.
       #
-      def symbolize text
-        text.blank? ? nil : text.to_sym
+      def tokens_for words
+        words.collect! { |word| word.downcase!; word } if downcase?
+        words
+      end
+
+      # Returns empty tokens.
+      #
+      def empty_tokens
+        [[], []]
       end
 
     end

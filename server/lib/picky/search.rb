@@ -116,7 +116,10 @@ module Picky
     # * text: The text to tokenize.
     #
     def tokenized text
-      tokenizer.tokenize text
+      tokens, originals = tokenizer.tokenize text
+      tokens = Query::Tokens.processed tokens, originals
+      tokens.partialize_last # Set certain tokens as partial.
+      tokens
     end
 
     # Gets sorted allocations for the tokens.

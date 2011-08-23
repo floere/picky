@@ -20,16 +20,15 @@ module Picky
 
       # Creates a new Tokens object from a number of Strings.
       #
-      # Options:
-      #  * downcase: Whether to downcase the passed strings (default is true)
-      #
-      def self.processed words, downcase = true
-        new words.collect! { |word| Token.processed word, downcase }
+      def self.processed words, originals
+        new words.zip(originals).collect! { |word, original| Token.processed word, original }
       end
 
       # Tokenizes each token.
       #
       # Note: Passed tokenizer needs to offer #normalize(text).
+      #
+      # TODO Still needed?
       #
       def tokenize_with tokenizer
         @tokens.each { |token| token.tokenize_with(tokenizer) }
@@ -61,21 +60,6 @@ module Picky
       #
       def partialize_last
         @tokens.last.partial = true unless empty?
-      end
-
-      # Caps the tokens to the maximum.
-      #
-      def cap maximum
-        @tokens.slice!(maximum..-1) if cap?(maximum)
-      end
-      def cap? maximum
-        @tokens.size > maximum
-      end
-
-      # Rejects blank tokens.
-      #
-      def reject
-        @tokens.reject! &:blank?
       end
 
       #

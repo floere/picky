@@ -19,8 +19,9 @@ module Picky
       #
       # Note: Use this if you do not want a normalized token.
       #
-      def initialize text
-        @text = text
+      def initialize text, original = nil
+        @text     = text
+        @original = original
       end
 
       # Returns a qualified and normalized token.
@@ -28,18 +29,22 @@ module Picky
       # Note: Use this in the search engine if you need a qualified
       #       and normalized token. I.e. one prepared for a search.
       #
-      def self.processed text, downcase = true
-        new(text).process downcase
+      def self.processed text, original
+        new(text, original).process
       end
-      def process downcased = true
-        qualify
-        extract_original
-        downcase if downcased
-        partialize
-        similarize
-        remove_illegals
+      def process # TODO Move this into the processed method and let the token have more params?
+        qualify # TODO Should this operate on the original?
+        partialize # TODO Should this operate on the original?
+        similarize # TODO Should this operate on the original?
+        remove_illegals # TODO Remove?
         symbolize
         self
+      end
+
+      #
+      #
+      def symbolize
+        @text = @text.to_sym
       end
 
       # Translates this token's qualifiers into actual categories.
@@ -50,18 +55,6 @@ module Picky
         @user_defined_categories = @qualifiers && @qualifiers.map do |qualifier|
           mapper.map qualifier
         end.compact
-      end
-
-      # Dups the original text.
-      #
-      def extract_original
-        @original = @text.dup
-      end
-
-      # Downcases the text.
-      #
-      def downcase
-        @text.downcase!
       end
 
       # Partial is a conditional setter.
@@ -106,12 +99,6 @@ module Picky
       @@illegals = /["*~]/
       def remove_illegals
         @text.gsub! @@illegals, '' unless @text.blank?
-      end
-
-      #
-      #
-      def symbolize
-        @text = @text.to_sym
       end
 
       # Returns an array of possible combinations.
