@@ -38,7 +38,7 @@ module Picky
 
       instance_eval(&Proc.new) if block_given?
 
-      @tokenizer ||= Tokenizers::Query.default
+      @tokenizer ||= Tokenizer.query_default # THINK Not dynamic. Ok?
       @weights   ||= Query::Weights.new
 
       self
@@ -58,7 +58,7 @@ module Picky
       @tokenizer = if options.respond_to?(:tokenize)
         options
       else
-        options && Tokenizers::Query.new(options)
+        options && Tokenizer.new(options)
       end
     end
 

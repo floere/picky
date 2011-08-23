@@ -144,29 +144,29 @@ module Picky
       # TODO Move to Interface object.
       #
       def querying_removes_characters
-        regexp = Tokenizers::Query.default.instance_variable_get :@removes_characters_regexp
+        regexp = Tokenizer.query_default.instance_variable_get :@removes_characters_regexp
         regexp && regexp.source
       end
       def querying_removes_characters= new_value
-        Tokenizers::Query.default.instance_variable_set(:@removes_characters_regexp, %r{#{new_value}})
+        Tokenizer.query_default.instance_variable_set(:@removes_characters_regexp, %r{#{new_value}})
       end
       def querying_stopwords
-        regexp = Tokenizers::Query.default.instance_variable_get :@remove_stopwords_regexp
+        regexp = Tokenizer.query_default.instance_variable_get :@remove_stopwords_regexp
         regexp && regexp.source
       end
       def querying_stopwords= new_value
-        Tokenizers::Query.default.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
+        Tokenizer.query_default.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
       end
       def querying_splits_text_on
-        splits = Tokenizers::Query.default.instance_variable_get :@splits_text_on
+        splits = Tokenizer.query_default.instance_variable_get :@splits_text_on
         splits && splits.respond_to?(:source) ? splits.source : splits
       end
       def querying_splits_text_on= new_value
-        splits = Tokenizers::Query.default.instance_variable_get :@splits_text_on
+        splits = Tokenizer.query_default.instance_variable_get :@splits_text_on
         if splits.respond_to?(:source)
-          Tokenizers::Query.default.instance_variable_set(:@splits_text_on, %r{#{new_value}})
+          Tokenizer.query_default.instance_variable_set(:@splits_text_on, %r{#{new_value}})
         else
-          Tokenizers::Query.default.instance_variable_set(:@splits_text_on, new_value)
+          Tokenizer.query_default.instance_variable_set(:@splits_text_on, new_value)
         end
       end
 

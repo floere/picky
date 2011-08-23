@@ -163,14 +163,14 @@ module Picky
       # is used for indexing by default.
       #
       def indexing options = {}
-        Tokenizers::Index.default = Tokenizers::Index.new(options)
+        Tokenizer.index_default = Tokenizer.new(options)
       end
 
       # Returns a configured tokenizer that
       # is used for querying by default.
       #
       def searching options = {}
-        Tokenizers::Query.default = Tokenizers::Query.new(options)
+        Tokenizer.query_default = Tokenizer.new(options)
       end
 
       # Routes.
@@ -240,10 +240,10 @@ module Picky
       def to_stats
         <<-APP
   \033[1mIndexing (default)\033[m:
-  #{Tokenizers::Index.default.indented_to_s}
+  #{Tokenizer.index_default.indented_to_s}
 
   \033[1mQuerying (default)\033[m:
-  #{Tokenizers::Query.default.indented_to_s}
+  #{Tokenizer.query_default.indented_to_s}
 
   \033[1mIndexes\033[m:
   #{Indexes.to_s.indented_to_s}

@@ -20,8 +20,8 @@ describe Picky::Application do
           
           route %r{^/books} => Picky::Search.new(books)
         end
-        Picky::Tokenizers::Index.default.tokenize 'some text'
-        Picky::Tokenizers::Query.default.tokenize 'some text'
+        Picky::Tokenizer.index_default.tokenize 'some text'
+        Picky::Tokenizer.query_default.tokenize 'some text'
       }.should_not raise_error
     end
     it "should run ok" do

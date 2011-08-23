@@ -8,6 +8,20 @@ module Picky
     #
     class Base
 
+      def self.index_default= new_default
+        @index_default = new_default
+      end
+      def self.index_default
+        @index_default ||= new
+      end
+
+      def self.query_default= new_default
+        @query_default = new_default
+      end
+      def self.query_default
+        @query_default ||= new
+      end
+
       # TODO Move EMPTY_STRING top level.
       #
       EMPTY_STRING = ''.freeze

@@ -42,7 +42,7 @@ module Picky
         @tokenizer = if options.respond_to?(:tokenize)
           options
         else
-          options && Tokenizers::Index.new(options)
+          options && Tokenizer.new(options)
         end
       end
       alias define_indexing indexing

@@ -41,7 +41,7 @@ describe Picky::Query::Combination do
   describe 'to_result' do
     context 'functional with qualifier' do
       before(:each) do
-        token = Picky::Tokenizers::Query.new.tokenize('name:Blä~').first
+        token = Picky::Tokenizer.new.tokenize('name:Blä~').first
 
         @combination = Picky::Query::Combination.new token, @category
       end

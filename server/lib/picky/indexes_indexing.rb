@@ -42,7 +42,7 @@ module Picky
     #
     #
     def tokenizer
-      Tokenizers::Index.default
+      Tokenizer.index_default
     end
 
   end

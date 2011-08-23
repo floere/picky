@@ -37,7 +37,7 @@ describe Picky::Search do
     context 'no tokenizer predefined' do
       let(:search) { described_class.new }
       it 'returns the default tokenizer' do
-        search.tokenizer.should == Picky::Tokenizers::Query.default
+        search.tokenizer.should == Picky::Tokenizer.query_default
       end
     end
     context 'tokenizer predefined' do

@@ -11,7 +11,7 @@ module Picky
 
             category.class_eval do
               def tokenizer
-                @tokenizer ||= Tokenizers::Index.new
+                @tokenizer ||= Tokenizer.new
               end
               define_method :source do
                 new_source
