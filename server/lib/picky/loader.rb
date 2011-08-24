@@ -239,9 +239,6 @@ module Picky
       #
       load_relative 'search'
       load_relative 'search/index_combinations_type'
-      load_relative 'query'
-      #
-      # load_relative 'query/solr'
 
       # Sources.
       #
