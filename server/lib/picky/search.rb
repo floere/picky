@@ -30,8 +30,9 @@ module Picky
     # It is also possible to define the tokenizer and weights like so.
     # Example:
     #   search = Search.new(index1, index2, index3) do
-    #     searching removes_characters: /[^a-z]/, etc.
-    #     weights [:author, :title] => +3, [:title, :isbn] => +1
+    #     searching removes_characters: /[^a-z]/ # etc.
+    #     weights [:author, :title] => +3,
+    #             [:title, :isbn] => +1
     #   end
     #
     def initialize *index_definitions
