@@ -54,7 +54,7 @@ describe Picky::FrontendAdapters::Rack do
       end
       describe 'to_s' do
         it 'outputs correctly' do
-          @rack_adapter.to_s.should == "Note: Anchored (✓) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n   something => Picky::Search()"
+          @rack_adapter.to_s.should == "Note: Anchored (✓) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n   something => Picky::Search(weights: Picky::Query::Weights({}))"
         end
       end
     end
@@ -63,7 +63,7 @@ describe Picky::FrontendAdapters::Rack do
   context 'real routes' do
     before(:each) do
       @rack_adapter.reset_routes
-      Picky.logger.stub! :log
+      Picky.logger.stub! :info
     end
     it 'should route correctly' do
       env = {}

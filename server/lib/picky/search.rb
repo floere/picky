@@ -194,8 +194,11 @@ module Picky
     #
     def to_s
       s = "#{self.class}("
-      s << @indexes.indexes.map(&:name).join(', ')
-      s << ", weights: #{@weights}"
+      unless @indexes.indexes.empty?
+        s << @indexes.indexes.map(&:name).join(', ')
+        s << ", "
+      end
+      s << "weights: #{@weights}"
       s << ")"
       s
     end

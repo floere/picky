@@ -143,6 +143,14 @@ describe Picky::Search do
     before(:each) do
       @index.stub! :name => :some_index, :each_category => []
     end
+    context 'without indexes' do
+      before(:each) do
+        @search = described_class.new
+      end
+      it 'works correctly' do
+        @search.to_s.should == 'Picky::Search(weights: Picky::Query::Weights({}))'
+      end
+    end
     context 'with weights' do
       before(:each) do
         @search = described_class.new @index do boost [:a, :b] => +3 end
