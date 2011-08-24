@@ -62,15 +62,37 @@ module Picky
       end
     end
 
-    # Example:
+    # Examples:
     #   search = Search.new(books_index, dvd_index, mp3_index) do
     #     boost [:author, :title] => +3,
     #           [:title, :isbn]   => +1
     #   end
     #
+    # or
+    #
+    #   # Explicitly add a random number (0...1) to the weights.
+    #   #
+    #   my_weights = Class.new do
+    #     # Instance only needs to implement
+    #     #   score_for combinations
+    #     # and return a number that is
+    #     # added to the weight.
+    #     #
+    #     def score_for combinations
+    #       rand
+    #     end
+    #   end.new
+    #
+    #   search = Search.new(books_index, dvd_index, mp3_index) do
+    #     boost my_weights
+    #   end
+    #
     def boost weights
-      weights  ||= Query::Weights.new
-      @weights = Hash === weights ? Query::Weights.new(weights) : weights
+      @weights = if weights.respond_to?(:score_for)
+        weights
+      else
+        Query::Weights.new weights
+      end
     end
 
     # This is the main entry point for a query.
@@ -89,7 +111,7 @@ module Picky
 
     # Runs the actual search using Query::Tokens.
     #
-    # Note: Internal method, use #search
+    # Note: Internal method, use #search to search.
     #
     def search_with tokens, ids = 20, offset = 0, original_text = nil
       results = nil
@@ -104,7 +126,7 @@ module Picky
 
     # Execute a search using Query::Tokens.
     #
-    # Note: Internal method, use #search.
+    # Note: Internal method, use #search to search.
     #
     def execute tokens, ids, offset, original_text = nil
       Results.from original_text, ids, offset, sorted_allocations(tokens)
@@ -117,8 +139,8 @@ module Picky
     #
     def tokenized text
       tokens, originals = tokenizer.tokenize text
-      tokens = Query::Tokens.processed tokens, originals
-      tokens.partialize_last # Set certain tokens as partial.
+      tokens = Query::Tokens.processed tokens, originals || tokens
+      tokens.partialize_last # Note: In the standard Picky search, the last token is always partial.
       tokens
     end
 
@@ -140,23 +162,23 @@ module Picky
       Indexes::Memory => Query::Combinations::Memory,
       Indexes::Redis  => Query::Combinations::Redis
     }
-    def combinations_type_for index_definitions_ary
+    def combinations_type_for index_definitions_ary # :nodoc:
       index_types = extract_index_types index_definitions_ary
       !index_types.empty? && @@mapping[*index_types] || Query::Combinations::Memory
     end
-    def extract_index_types index_definitions_ary
+    def extract_index_types index_definitions_ary # :nodoc:
       index_types = index_definitions_ary.map(&:class)
       index_types.uniq!
       check_index_types index_types
       index_types
     end
-    def check_index_types index_types
+    def check_index_types index_types # :nodoc:
       raise_different index_types if index_types.size > 1
     end
     # Currently it isn't possible using Memory and Redis etc.
     # indexes in the same query index group.
     #
-    class DifferentTypesError < StandardError
+    class DifferentTypesError < StandardError # :nodoc:all
       def initialize types
         @types = types
       end
@@ -164,7 +186,7 @@ module Picky
         "Currently it isn't possible to mix #{@types.join(" and ")} Indexes in the same Search instance."
       end
     end
-    def raise_different index_types
+    def raise_different index_types # :nodoc:
       raise DifferentTypesError.new(index_types)
     end
 
@@ -173,7 +195,7 @@ module Picky
     def to_s
       s = "#{self.class}("
       s << @indexes.indexes.map(&:name).join(', ')
-      s << ", weights: #{@weights}" unless @weights.empty?
+      s << ", weights: #{@weights}"
       s << ")"
       s
     end
