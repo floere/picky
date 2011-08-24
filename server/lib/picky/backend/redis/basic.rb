@@ -29,18 +29,19 @@ module Picky
           @backend = ::Redis.new :db => 15
         end
 
-        # Does nothing.
+        # Returns itself.
         #
         def load
-          # Nothing.
+          self
         end
+
         # We do not use Redis to retrieve data.
         #
         def retrieve
           # Nothing.
         end
 
-        # Redis does not backup.
+        # Redis doesn't do backup.
         #
         def backup
           # Nothing.

@@ -116,6 +116,7 @@ module Picky
       load_relative 'backend/redis/basic'
       load_relative 'backend/redis/list_hash'
       load_relative 'backend/redis/string_hash'
+      load_relative 'backend/redis/float_hash'
 
       load_relative 'backend/file/basic'
       load_relative 'backend/file/text'

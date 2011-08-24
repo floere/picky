@@ -23,15 +23,11 @@ module Picky
           backend.del namespace
         end
 
-        # Get a collection.
-        #
-        def collection key
-          raise "Can't retrieve collection for :#{key} from a StringHash. Use Indexes::Redis::ListHash."
-        end
-
         # Get a single value.
         #
-        def member key
+        # Internal API method for the index.
+        #
+        def [] key
           backend.hget namespace, key
         end
 

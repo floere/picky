@@ -16,45 +16,60 @@ module Picky
       def initialize bundle
         @bundle = bundle
       end
-      def identifier
-        bundle.identifier
-      end
 
       # Delegators.
       #
+
+      # Load the indexes.
+      #
+      # Each returns an object responding to [].
+      #
+
+      # returned_object[sym] # => [id, id, id, ...]
+      #
+      def load_inverted
+        inverted.load
+      end
+
+      # returned_object[sym] # => [:similar1, :similar2, ...]
+      #
+      def load_similarity
+        similarity.load
+      end
+
+      # returned_object[sym] # => 1.23 (float)
+      #
+      def load_weights
+        weights.load
+      end
+
+      # returned_object[:option] # => value for option
+      #
+      def load_configuration
+        configuration.load
+      end
 
       # Dumping.
       #
       def dump_inverted inverted_hash
         timed_exclaim %Q{"#{identifier}":   => #{inverted}.}
+
         inverted.dump inverted_hash
       end
       def dump_weights weights_hash
         timed_exclaim %Q{"#{identifier}":   => #{weights}.}
+
         weights.dump weights_hash
       end
       def dump_similarity similarity_hash
         timed_exclaim %Q{"#{identifier}":   => #{similarity}.}
+
         similarity.dump similarity_hash
       end
       def dump_configuration configuration_hash
         timed_exclaim %Q{"#{identifier}":   => #{configuration}.}
-        configuration.dump configuration_hash
-      end
 
-      # Loading.
-      #
-      def load_inverted
-        inverted.load
-      end
-      def load_similarity
-        similarity.load
-      end
-      def load_weights
-        weights.load
-      end
-      def load_configuration
-        configuration.load
+        configuration.dump configuration_hash
       end
 
       # Cache ok?

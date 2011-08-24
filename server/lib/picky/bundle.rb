@@ -39,6 +39,8 @@ module Picky
       @name          = name
       @category      = category
 
+      # TODO Still needed?
+      #
       @inverted      = {}
       @weights       = {}
       @similarity    = {}

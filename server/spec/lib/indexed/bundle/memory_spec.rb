@@ -18,10 +18,10 @@ describe Picky::Indexed::Bundle::Memory do
   
   describe 'clear_index' do
     before(:each) do
-      @bundle.instance_variable_set(:@inverted, :not_empty)
+      @bundle.instance_variable_set :@inverted, { :a => [] }
     end
     it 'has not cleared the inverted index' do
-      @bundle.inverted.should == :not_empty
+      @bundle.inverted.should == { :a => [] }
     end
     it 'clears the inverted index' do
       @bundle.clear_inverted
@@ -31,10 +31,10 @@ describe Picky::Indexed::Bundle::Memory do
   end
   describe 'clear_weights' do
     before(:each) do
-      @bundle.instance_variable_set(:@weights, :not_empty)
+      @bundle.instance_variable_set :@weights, { :a => 1.0 }
     end
     it 'has not cleared the weights' do
-      @bundle.weights.should == :not_empty
+      @bundle.weights.should == { :a => 1.0 }
     end
     it 'clears the weights' do
       @bundle.clear_weights
@@ -44,10 +44,10 @@ describe Picky::Indexed::Bundle::Memory do
   end
   describe 'clear_similarity' do
     before(:each) do
-      @bundle.instance_variable_set(:@similarity, :not_empty)
+      @bundle.instance_variable_set :@similarity, { :a => :aa }
     end
     it 'has not cleared the similarity index' do
-      @bundle.similarity.should == :not_empty
+      @bundle.similarity.should == { :a => :aa }
     end
     it 'clears the similarity index' do
       @bundle.clear_similarity
@@ -57,10 +57,10 @@ describe Picky::Indexed::Bundle::Memory do
   end
   describe 'clear_configuration' do
     before(:each) do
-      @bundle.instance_variable_set(:@configuration, :not_empty)
+      @bundle.instance_variable_set :@configuration, { :a => 'value' }
     end
     it 'has not cleared the similarity index' do
-      @bundle.configuration.should == :not_empty
+      @bundle.configuration.should == { :a => 'value' }
     end
     it 'clears the similarity index' do
       @bundle.clear_configuration

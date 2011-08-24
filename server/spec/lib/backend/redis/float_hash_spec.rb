@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Backend::Redis::StringHash do
+describe Picky::Backend::Redis::FloatHash do
   
   let(:index) { described_class.new :some_namespace }
     
@@ -15,7 +15,7 @@ describe Picky::Backend::Redis::StringHash do
     end
   end
   
-  describe 'member' do
+  describe '[]' do
     before(:each) do
       @backend = stub :backend
       index.stub! :backend => @backend
@@ -26,15 +26,15 @@ describe Picky::Backend::Redis::StringHash do
       index[:some_symbol]
     end
     it 'returns whatever it gets from the backend' do
-      @backend.should_receive(:hget).any_number_of_times.and_return :some_result
+      @backend.should_receive(:hget).any_number_of_times.and_return '1.23'
       
-      index[:anything].should == :some_result
+      index[:anything].should == 1.23
     end
   end
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      index.to_s.should == 'Picky::Backend::Redis::StringHash(some_namespace:*)'
+      index.to_s.should == 'Picky::Backend::Redis::FloatHash(some_namespace:*)'
     end
   end
   

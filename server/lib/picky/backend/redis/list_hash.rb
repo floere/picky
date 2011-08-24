@@ -34,14 +34,10 @@ module Picky
 
         # Get a collection.
         #
-        def collection key
-          backend.zrange "#{namespace}:#{key}", 0, -1
-        end
-
-        # Get a single value.
+        # Internal API method for the index.
         #
-        def member key
-          raise "Can't retrieve single value :#{key} from a Redis ListHash. Use Indexes::Redis::StringHash."
+        def [] key
+          backend.zrange "#{namespace}:#{key}", 0, -1
         end
 
       end
