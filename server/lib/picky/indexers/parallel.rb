@@ -45,7 +45,7 @@ module Picky
           # Is it a good idea that not the tokenizer has control over when he gets the next text?
           #
           combined.each do |category, cache, _, tokenizer|
-            tokens, _ = tokenizer.tokenize object.send(category.from).to_s
+            tokens, _ = tokenizer.tokenize object.send(category.from).to_s # Note: Originals not needed.
             tokens.each do |token_text|
               next unless token_text
               cache << id << comma << token_text << newline

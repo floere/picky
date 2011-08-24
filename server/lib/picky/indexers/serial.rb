@@ -28,7 +28,7 @@ module Picky
             result = []
 
             source.harvest(category) do |indexed_id, text|
-              tokens, _ = tokenizer.tokenize text
+              tokens, _ = tokenizer.tokenize text # Note: Originals not needed.
               tokens.each do |token_text|
                 next unless token_text
                 result << indexed_id << comma << token_text << newline
