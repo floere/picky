@@ -4,7 +4,7 @@ module Picky
 
   module Indexed # :nodoc:all
 
-    #
+    # TODO Replace inheritance by passing in the backend. Before that, unify the backend interface.
     #
     module Bundle
 

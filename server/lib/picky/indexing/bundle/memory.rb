@@ -9,6 +9,8 @@ module Picky
       # The memory version dumps its generated indexes to disk
       # (mostly JSON) to load them into memory on startup.
       #
+      # TODO Replace inheritance by passing in the backend.
+      #
       class Memory < Base
 
         def initialize name, category, *args

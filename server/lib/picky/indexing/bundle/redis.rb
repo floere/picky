@@ -9,6 +9,8 @@ module Picky
       # The Redis version dumps its generated indexes to
       # the Redis backend.
       #
+      # TODO Replace inheritance by passing in the backend.
+      #
       class Redis < Base
 
         def initialize name, category, *args
