@@ -238,6 +238,7 @@ module Picky
       # Search.
       #
       load_relative 'search'
+      load_relative 'search/index_combinations_type'
       load_relative 'query'
       #
       # load_relative 'query/solr'

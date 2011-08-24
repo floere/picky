@@ -18,7 +18,8 @@ module Picky
     include Helpers::Measuring
 
     attr_reader   :indexes
-    attr_accessor :tokenizer, :weights
+    attr_accessor :tokenizer,
+                  :weights
 
     # Takes:
     # * A number of indexes
@@ -99,9 +100,9 @@ module Picky
     # Use this in specs and also for running queries.
     #
     # Parameters:
-    # * text: The search text.
-    # * ids = 20: _optional_ The amount of ids to calculate (with offset).
-    # * offset = 0: _optional_ The offset from which position to return the ids. Useful for pagination.
+    # * text:       The search text.
+    # * ids = 20:   The amount of ids to calculate (with offset).
+    # * offset = 0: The offset from which position to return the ids. Useful for pagination.
     #
     # Note: The Rack adapter calls this method after unravelling the HTTP request.
     #
@@ -135,7 +136,10 @@ module Picky
     # Delegates the tokenizing to the query tokenizer.
     #
     # Parameters:
-    # * text: The text to tokenize.
+    # * text: The string to tokenize.
+    #
+    # Returns:
+    # * A Picky::Query::Tokens instance.
     #
     def tokenized text
       tokens, originals = tokenizer.tokenize text
@@ -148,46 +152,6 @@ module Picky
     #
     def sorted_allocations tokens # :nodoc:
       indexes.prepared_allocations_for tokens, weights
-    end
-
-    # Returns the right combinations strategy for
-    # a number of query indexes.
-    #
-    # Currently it isn't possible using Memory and Redis etc.
-    # indexes in the same query index group.
-    #
-    # Picky will raise a Query::Indexes::DifferentTypesError.
-    #
-    @@mapping = {
-      Indexes::Memory => Query::Combinations::Memory,
-      Indexes::Redis  => Query::Combinations::Redis
-    }
-    def combinations_type_for index_definitions_ary # :nodoc:
-      index_types = extract_index_types index_definitions_ary
-      !index_types.empty? && @@mapping[*index_types] || Query::Combinations::Memory
-    end
-    def extract_index_types index_definitions_ary # :nodoc:
-      index_types = index_definitions_ary.map(&:class)
-      index_types.uniq!
-      check_index_types index_types
-      index_types
-    end
-    def check_index_types index_types # :nodoc:
-      raise_different index_types if index_types.size > 1
-    end
-    # Currently it isn't possible using Memory and Redis etc.
-    # indexes in the same query index group.
-    #
-    class DifferentTypesError < StandardError # :nodoc:all
-      def initialize types
-        @types = types
-      end
-      def to_s
-        "Currently it isn't possible to mix #{@types.join(" and ")} Indexes in the same Search instance."
-      end
-    end
-    def raise_different index_types # :nodoc:
-      raise DifferentTypesError.new(index_types)
     end
 
     # Display some nice information for the user.
