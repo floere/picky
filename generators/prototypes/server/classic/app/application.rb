@@ -28,7 +28,7 @@ class BookSearch < Picky::Application
             splits_text_on:     /[\s\/\-\&]+/,
             maximum_tokens: 5   # Amount of tokens maximally used in a search.
 
-  books_index = Indexes::Memory.new :books do
+  books_index = Index.new :books do
     source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
     category :title,
              similarity: Similarity::DoubleMetaphone.new(3), # Default is no similarity.

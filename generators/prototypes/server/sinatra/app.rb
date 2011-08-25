@@ -11,7 +11,7 @@ class BookSearch < Sinatra::Application
 
   # Define an index.
   #
-  books_index = Indexes::Memory.new :books do
+  books_index = Index.new :books do
     source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
     indexing removes_characters: /[^a-zA-Z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
