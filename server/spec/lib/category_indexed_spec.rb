@@ -31,12 +31,12 @@ describe Picky::Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Memory)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Memory)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
         end
       end
     end
@@ -52,12 +52,12 @@ describe Picky::Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Redis)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle::Redis)
+          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
         end
       end
     end

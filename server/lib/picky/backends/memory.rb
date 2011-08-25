@@ -1,8 +1,8 @@
 module Picky
 
-  module Backend
+  module Backends
 
-    class Files < Base
+    class Memory < Base
 
       def initialize bundle
         super bundle

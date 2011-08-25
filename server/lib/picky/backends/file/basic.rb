@@ -1,6 +1,6 @@
 module Picky
 
-  module Backend
+  module Backends
 
     # Handles all aspects of index files, such as dumping/loading.
     #

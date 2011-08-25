@@ -1,17 +1,39 @@
 require 'spec_helper'
 
-describe Picky::Indexing::Bundle::Redis do
+describe Picky::Indexing::Bundle do
 
   before(:each) do
-    @index       = Picky::Indexes::Memory.new :some_index
-    @category    = Picky::Category.new :some_category, @index
-    
-    @partial     = stub :partial
-    @weights     = stub :weights
-    @similarity  = stub :similarity
+    @index    = Picky::Indexes::Memory.new :some_index
+    @category = Picky::Category.new :some_category, @index
+    @similarity = Picky::Similarity::DoubleMetaphone.new 3
+    @bundle = described_class.new :some_name, @category, Picky::Backends::Memory, :some_weights, :some_partial, @similarity
   end
-  let(:index) { described_class.new :some_name, @category, @weights, @partial, @similarity }
-
+  let(:index) { described_class.new :some_name, @category, Picky::Backends::Memory, @weights, @partial, @similarity }
+  
+  describe 'identifier' do
+    it 'is correct' do
+      @bundle.identifier.should == 'test:some_index:some_category:some_name'
+    end
+  end
+  
+  describe 'similar' do
+    before(:each) do
+      @bundle.similarity = @similarity.generate_from( :dragon => [1,2,3], :dargon => [4,5,6] )
+    end
+    it 'returns the right similars (not itself)' do
+      @bundle.similar(:dragon).should == [:dargon]
+    end
+    it 'returns the right similars' do
+      @bundle.similar(:trkn).should == [:dragon, :dargon]
+    end
+    it 'performs' do
+      performance_of { @bundle.similar(:dragon) }.should < 0.000075
+    end
+    it 'performs' do
+      performance_of { @bundle.similar(:trkn) }.should < 0.00006
+    end
+  end
+  
   describe 'raise_cache_missing' do
     it 'does something' do
       expect {
@@ -27,7 +49,7 @@ describe Picky::Indexing::Bundle::Redis do
       index.warn_cache_small :similarity
     end
   end
-
+  
   describe 'identifier' do
     it 'should return a specific identifier' do
       index.identifier.should == 'test:some_index:some_category:some_name'
@@ -37,7 +59,7 @@ describe Picky::Indexing::Bundle::Redis do
   describe 'initialize_index_for' do
     context 'token not yet assigned' do
       before(:each) do
-        index.stub! :inverted => {}
+        index.stub! :index => {}
       end
       it 'should assign it an empty array' do
         index.initialize_inverted_index_for :some_token
@@ -99,7 +121,7 @@ describe Picky::Indexing::Bundle::Redis do
     end
   end
 
-  describe 'load_from_prepared_index_file' do
+  describe 'load_from_index_file' do
     it 'should call two methods in order' do
       index.should_receive(:load_from_prepared_index_generation_message).once.ordered
       index.should_receive(:clear).once.ordered
@@ -210,10 +232,12 @@ describe Picky::Indexing::Bundle::Redis do
     end
   end
   describe 'warn_if_similarity_small' do
-    let(:backend) { index.backend }
+    before(:each) do
+      @backend = index.backend
+    end
     context "files similarity cache small" do
       before(:each) do
-        backend.stub! :similarity_cache_small? => true
+        @backend.stub! :similarity_cache_small? => true
       end
       it "warns" do
         index.should_receive(:warn_cache_small).once.with :similarity
@@ -223,7 +247,7 @@ describe Picky::Indexing::Bundle::Redis do
     end
     context "files similarity cache not small" do
       before(:each) do
-        backend.stub! :similarity_cache_small? => false
+        @backend.stub! :similarity_cache_small? => false
       end
       it "does not warn" do
         index.should_receive(:warn_cache_small).never
@@ -233,10 +257,12 @@ describe Picky::Indexing::Bundle::Redis do
     end
   end
   describe 'raise_unless_similarity_ok' do
-    let(:backend) { index.backend }
+    before(:each) do
+      @backend = index.backend
+    end
     context "files similarity cache ok" do
       before(:each) do
-        backend.stub! :similarity_cache_ok? => true
+        @backend.stub! :similarity_cache_ok? => true
       end
       it "warns" do
         index.should_receive(:raise_cache_missing).never
@@ -246,7 +272,7 @@ describe Picky::Indexing::Bundle::Redis do
     end
     context "files similarity cache not ok" do
       before(:each) do
-        backend.stub! :similarity_cache_ok? => false
+        @backend.stub! :similarity_cache_ok? => false
       end
       it "does not warn" do
         index.should_receive(:raise_cache_missing).once.with :similarity
@@ -279,5 +305,5 @@ describe Picky::Indexing::Bundle::Redis do
       index.similarity_strategy.should == @similarity
     end
   end
-
+  
 end

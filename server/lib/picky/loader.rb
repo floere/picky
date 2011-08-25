@@ -110,35 +110,28 @@ module Picky
 
       # Index store handling.
       #
-      load_relative 'backend/base'
+      load_relative 'backends/base'
 
-      load_relative 'backend/redis'
-      load_relative 'backend/redis/basic'
-      load_relative 'backend/redis/list_hash'
-      load_relative 'backend/redis/string_hash'
-      load_relative 'backend/redis/float_hash'
+      load_relative 'backends/redis'
+      load_relative 'backends/redis/basic'
+      load_relative 'backends/redis/list_hash'
+      load_relative 'backends/redis/string_hash'
+      load_relative 'backends/redis/float_hash'
 
-      load_relative 'backend/file/basic'
-      load_relative 'backend/file/text'
-      load_relative 'backend/file/marshal'
-      load_relative 'backend/file/json'
-
-      load_relative 'backend/files'
+      load_relative 'backends/file/basic'
+      load_relative 'backends/file/text'
+      load_relative 'backends/file/marshal'
+      load_relative 'backends/file/json'
+      load_relative 'backends/memory'
 
       # Indexing and Indexed things.
       #
       load_relative 'bundle'
 
-      load_relative 'indexing/bundle/base'
-      load_relative 'indexing/bundle/memory'
-      load_relative 'indexing/bundle/redis'
-
+      load_relative 'indexing/bundle'
       load_relative 'indexing/wrappers/category/location'
 
-      load_relative 'indexed/bundle/base'
-      load_relative 'indexed/bundle/memory'
-      load_relative 'indexed/bundle/redis'
-
+      load_relative 'indexed/bundle'
       load_relative 'indexed/wrappers/exact_first'
 
       # Bundle Wrapper

@@ -1,6 +1,6 @@
 module Picky
 
-  module Backend
+  module Backends
 
     class Redis
 

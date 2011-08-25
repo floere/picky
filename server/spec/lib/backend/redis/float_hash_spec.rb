@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Backend::Redis::FloatHash do
+describe Picky::Backends::Redis::FloatHash do
   
   let(:index) { described_class.new :some_namespace }
     
@@ -34,7 +34,7 @@ describe Picky::Backend::Redis::FloatHash do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      index.to_s.should == 'Picky::Backend::Redis::FloatHash(some_namespace:*)'
+      index.to_s.should == 'Picky::Backends::Redis::FloatHash(some_namespace:*)'
     end
   end
   

@@ -6,11 +6,8 @@ module Picky
     #
     class Memory < Index
 
-      def indexing_bundle_class
-        Indexing::Bundle::Memory
-      end
-      def indexed_bundle_class
-        Indexed::Bundle::Memory
+      def backend_class
+        Backends::Memory
       end
 
     end

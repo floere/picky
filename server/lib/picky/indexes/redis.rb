@@ -6,11 +6,8 @@ module Picky
     #
     class Redis < Index
 
-      def indexing_bundle_class
-        Indexing::Bundle::Redis
-      end
-      def indexed_bundle_class
-        Indexed::Bundle::Redis
+      def backend_class
+        Backends::Redis
       end
 
     end

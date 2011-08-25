@@ -35,16 +35,16 @@ module Picky
       partial    = options[:partial]    || Generators::Partial::Default
       similarity = options[:similarity] || Generators::Similarity::Default
 
-      @indexing_exact   = index.indexing_bundle_class.new :exact,   self, weights, Generators::Partial::None.new, similarity, options
-      @indexing_partial = index.indexing_bundle_class.new :partial, self, weights, partial, Generators::Similarity::None.new, options
+      @indexing_exact   = Indexing::Bundle.new  :exact,  self, index.backend_class, weights, Generators::Partial::None.new, similarity, options
+      @indexing_partial = Indexing::Bundle.new :partial, self, index.backend_class, weights, partial, Generators::Similarity::None.new, options
 
       # Indexed.
       #
-      @indexed_exact  = index.indexed_bundle_class.new  :exact, self, similarity
+      @indexed_exact  = Indexed::Bundle.new :exact, self, index.backend_class, similarity
       if partial.use_exact_for_partial?
         @indexed_partial  = @indexed_exact
       else
-        @indexed_partial  = index.indexed_bundle_class.new  :partial, self, similarity
+        @indexed_partial  = Indexed::Bundle.new :partial, self, index.backend_class, similarity
       end
 
       # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
@@ -92,7 +92,7 @@ module Picky
     # Note: If you don't use it with the block, do not forget to close it.
     #
     def prepared_index_file &block
-      @prepared_index_file ||= Backend::File::Text.new prepared_index_path
+      @prepared_index_file ||= Backends::File::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
     # Creates the index directory including all necessary paths above it.

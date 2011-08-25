@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Picky::Indexed::Bundle::Memory do
+describe Picky::Indexed::Bundle do
 
   before(:each) do
     @index        = Picky::Indexes::Memory.new :some_index
     @category     = Picky::Category.new :some_category, @index
     
     @similarity   = stub :similarity
-    @bundle       = described_class.new :some_name, @category, @similarity
+    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory, @similarity
   end
   
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == "Picky::Indexed::Bundle::Memory(test:some_index:some_category:some_name)"
+      @bundle.to_s.should == "Picky::Indexed::Bundle(test:some_index:some_category:some_name)"
     end
   end
   
@@ -156,7 +156,7 @@ describe Picky::Indexed::Bundle::Memory do
       @index    = Picky::Indexes::Memory.new :some_index
       @category = Picky::Category.new :some_category, @index
       
-      @bundle = described_class.new :some_name, @category, :similarity
+      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory, :similarity
     end
     it 'should initialize the index correctly' do
       @bundle.inverted.should == {}

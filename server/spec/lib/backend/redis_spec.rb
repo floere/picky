@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Picky::Backend::Redis do
+describe Picky::Backends::Redis do
 
 end

@@ -128,13 +128,10 @@ module Picky
         instance_eval(&Proc.new) if block_given?
       end
 
-      # Default bundles.
+      # Default backend.
       #
-      def indexing_bundle_class
-        Indexing::Bundle::Memory
-      end
-      def indexed_bundle_class
-        Indexed::Bundle::Memory
+      def backend_class
+        Backends::Memory
       end
 
       # Defines a searchable category on the index.

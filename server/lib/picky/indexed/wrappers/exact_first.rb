@@ -9,7 +9,7 @@ module Picky
       # This index combines an exact and partial index.
       # It serves to order the results such that exact hits are found first.
       #
-      class ExactFirst < Indexed::Bundle::Base
+      class ExactFirst < Indexed::Bundle
 
         delegate :similar,
                  :identifier,
