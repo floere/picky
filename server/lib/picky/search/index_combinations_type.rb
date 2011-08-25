@@ -19,7 +19,7 @@ module Picky
       !backend_types.empty? && @@mapping[*backend_types] || Query::Combinations::Memory
     end
     def extract_backend_types index_definitions_ary # :nodoc:
-      backend_types = index_definitions_ary.map(&:backend_class)
+      backend_types = index_definitions_ary.map(&:backend).map(&:class)
       backend_types.uniq!
       check_backend_types backend_types
       backend_types

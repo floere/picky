@@ -9,7 +9,7 @@ describe Picky::Search do
     @index     = stub :some_index,
                       :internal_indexed => @type,
                       :each_category    => [],
-                      :backend_class    => Picky::Backends::Memory
+                      :backend          => Picky::Backends::Memory.new
   end
   
   describe 'tokenized' do
@@ -57,10 +57,10 @@ describe Picky::Search do
   
   describe 'combinations_type_for' do
     before(:each) do
-      @blorf  = stub :blorf,  :backend_class => nil
-      @blarf  = stub :blarf,  :backend_class => nil
-      @redis  = stub :redis,  :backend_class => Picky::Backends::Redis
-      @memory = stub :memory, :backend_class => Picky::Backends::Memory
+      @blorf  = stub :blorf,  :backend => nil
+      @blarf  = stub :blarf,  :backend => nil
+      @redis  = stub :redis,  :backend => Picky::Backends::Redis.new
+      @memory = stub :memory, :backend => Picky::Backends::Memory.new
     end
     let(:search) { described_class.new }
     it 'returns a specific Combination for a specific input' do

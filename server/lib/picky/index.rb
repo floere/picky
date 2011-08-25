@@ -129,16 +129,15 @@ module Picky
 
     # API method.
     #
-    # Sets the backend used.
-    # Default is @Backends::Memory@.
+    # Sets/returns the backend used.
+    # Default is @Backends::Memory.new@.
     #
-    def backend backend_class
-      @backend_class = backend_class
-    end
-    # Default backend.
-    #
-    def backend_class
-      @backend_class || Backends::Memory
+    def backend backend = nil
+      if backend
+        @backend = backend
+      else
+        @backend || Backends::Memory.new
+      end
     end
 
     # Defines a searchable category on the index.

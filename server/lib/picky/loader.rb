@@ -110,7 +110,7 @@ module Picky
 
       # Index store handling.
       #
-      load_relative 'backends/base'
+      load_relative 'backends/backend'
 
       load_relative 'backends/redis'
       load_relative 'backends/redis/basic'

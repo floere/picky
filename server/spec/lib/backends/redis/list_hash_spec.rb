@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::ListHash do
   
-  let(:index) { described_class.new :some_namespace }
+  let(:index) { described_class.new :some_namespace, :some_backend }
   
   describe '[]' do
     it 'returns whatever comes back from the backend' do

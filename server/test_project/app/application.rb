@@ -181,7 +181,7 @@ class BookSearch < Picky::Application
     end
 
    redis_index = Picky::Index.new(:redis) do
-     backend  Picky::Backends::Redis
+     backend  Picky::Backends::Redis.new
      source   Picky::Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'data/books.csv')
      category :title,
               qualifiers: [:t, :title, :titre],
@@ -212,7 +212,7 @@ class BookSearch < Picky::Application
     end
 
     redis_changing_index = Picky::Index.new(:redis_changing) do
-      backend  Picky::Backends::Redis
+      backend  Picky::Backends::Redis.new
       source [
         ChangingItem.new("1", 'first entry'),
         ChangingItem.new("2", 'second entry'),

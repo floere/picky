@@ -18,15 +18,9 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize namespace
+        def initialize namespace, backend
           @namespace = namespace
-
-          # TODO Turn this inside out such that people can pass in
-          # their own Redis instance.
-          #
-          # TODO Make the :db a real option.
-          #
-          @backend = ::Redis.new :db => 15
+          @backend   = backend
         end
 
         # Returns itself.

@@ -36,8 +36,8 @@ module Picky
       attr_accessor :partial_strategy,
                     :weights_strategy
 
-      def initialize name, category, backend_class, weights_strategy, partial_strategy, similarity_strategy, options = {}
-        super name, category, backend_class, similarity_strategy, options
+      def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
+        super name, category, backend, similarity_strategy, options
 
         @weights_strategy = weights_strategy
         @partial_strategy = partial_strategy

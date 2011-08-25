@@ -6,10 +6,9 @@ describe Picky::Backends::Memory do
     index         = Picky::Index.new :some_index
     category      = Picky::Category.new :some_category, index
     
-    # This is just wrong.
-    #
-    bundle        = Picky::Indexing::Bundle.new :some_bundle, category, described_class, nil, nil, nil
-    @files         = described_class.new bundle
+    @files         = described_class.new
+    bundle        = Picky::Indexing::Bundle.new :some_bundle, category, @files, nil, nil, nil
+    
     
     @index         = @files.inverted
     @weights       = @files.weights
@@ -180,11 +179,13 @@ describe Picky::Backends::Memory do
   
   describe 'to_s' do
     it 'returns the right value' do
-      bundle   = stub :bundle,
-                      :index_path => 'index/path',
-                      :prepared_index_path => 'prepared/index/path'
+      bundle = stub :bundle,
+                    :index_path => 'index/path',
+                    :prepared_index_path => 'prepared/index/path'
       
-      described_class.new(bundle).to_s.should == "Picky::Backends::Memory(Picky::Backends::File::JSON(index/path.json), Picky::Backends::File::JSON(index/path.json), Picky::Backends::File::Marshal(index/path.dump), Picky::Backends::File::JSON(index/path.json))"
+      memory = described_class.new
+      memory.configure_with bundle
+      memory.to_s.should == "Picky::Backends::Memory(Picky::Backends::File::JSON(index/path.json), Picky::Backends::File::JSON(index/path.json), Picky::Backends::File::Marshal(index/path.dump), Picky::Backends::File::JSON(index/path.json))"
     end
   end
 

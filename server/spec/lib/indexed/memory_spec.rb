@@ -7,7 +7,7 @@ describe Picky::Indexed::Bundle do
     @category     = Picky::Category.new :some_category, @index
     
     @similarity   = stub :similarity
-    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory, @similarity
+    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @similarity
   end
   
   describe 'to_s' do
@@ -156,7 +156,7 @@ describe Picky::Indexed::Bundle do
       @index    = Picky::Index.new :some_index
       @category = Picky::Category.new :some_category, @index
       
-      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory, :similarity
+      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :similarity
     end
     it 'should initialize the index correctly' do
       @bundle.inverted.should == {}

@@ -6,9 +6,9 @@ describe Picky::Indexing::Bundle do
     @index    = Picky::Index.new :some_index
     @category = Picky::Category.new :some_category, @index
     @similarity = Picky::Similarity::DoubleMetaphone.new 3
-    @bundle = described_class.new :some_name, @category, Picky::Backends::Memory, :some_weights, :some_partial, @similarity
+    @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :some_weights, :some_partial, @similarity
   end
-  let(:index) { described_class.new :some_name, @category, Picky::Backends::Memory, @weights, @partial, @similarity }
+  let(:index) { described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity }
   
   describe 'identifier' do
     it 'is correct' do

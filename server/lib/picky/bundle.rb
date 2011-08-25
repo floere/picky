@@ -35,13 +35,14 @@ module Picky
     delegate :[], :[]=,        :to => :configuration
     delegate :index_directory, :to => :category
 
-    def initialize name, category, backend_class, similarity_strategy, options = {}
+    def initialize name, category, backend, similarity_strategy, options = {}
       @name          = name
       @category      = category
 
-      # TODO Refactor further.
+      # This allows initialization.
       #
-      @backend = backend_class.new self
+      backend.configure_with self
+      @backend = backend
 
       # Default backend values.
       #

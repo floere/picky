@@ -4,21 +4,20 @@ module Picky
 
     #
     #
-    class Redis < Base
+    class Redis < Backend
 
-      def initialize bundle
-        super bundle
+      attr_reader :actual_backend
 
-        # Refine a few Redis "types".
-        #
-        @inverted      = Redis::ListHash.new   "#{bundle.identifier}:inverted"
-        @weights       = Redis::FloatHash.new  "#{bundle.identifier}:weights"
-        @similarity    = Redis::ListHash.new   "#{bundle.identifier}:similarity"
-        @configuration = Redis::StringHash.new "#{bundle.identifier}:configuration"
+      def initialize options = {}
+        @actual_backend = ::Redis.new :db => (options[:db] || 15)
       end
 
-      def to_s
-        "#{self.class}(#{[@inverted, @weights, @similarity, @configuration].join(', ')})"
+      def configure_with bundle
+        super bundle
+        @inverted      = Redis::ListHash.new   "#{bundle.identifier}:inverted",      actual_backend
+        @weights       = Redis::FloatHash.new  "#{bundle.identifier}:weights",       actual_backend
+        @similarity    = Redis::ListHash.new   "#{bundle.identifier}:similarity",    actual_backend
+        @configuration = Redis::StringHash.new "#{bundle.identifier}:configuration", actual_backend
       end
 
     end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::Basic do
   
-  let(:redis) { described_class.new "some_namespace" }
+  let(:redis) { described_class.new :some_namespace, :some_backend }
 
   describe 'load, retrieve, backup, delete' do
     it 'is nothing they do (at least on the backend)' do

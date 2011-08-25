@@ -2,7 +2,7 @@ module Picky
 
   module Backends
 
-    class Base
+    class Backend
 
       attr_reader :bundle,
                   :inverted,
@@ -13,11 +13,14 @@ module Picky
       delegate :identifier,
                :to => :bundle
 
-      def initialize bundle
+      def configure_with bundle
         @bundle = bundle
       end
 
       # Delegators.
+      #
+
+      # TODO Should the bundle pass in itself into the load methods?
       #
 
       # Load the indexes.
@@ -126,7 +129,7 @@ module Picky
       #
       #
       def to_s
-        "#{self.class}(#{bundle.identifier})"
+        "#{self.class}(#{[inverted, weights, similarity, configuration].join(', ')})"
       end
 
     end

@@ -7,7 +7,7 @@ describe Picky::Indexing::Bundle do
     @category         = Picky::Category.new :some_category, @index
     
     @partial_strategy = Picky::Generators::Partial::Substring.new :from => 1
-    @exact            = described_class.new :some_name, @category, Picky::Backends::Memory, nil, @partial_strategy, nil
+    @exact            = described_class.new :some_name, @category, Picky::Backends::Memory.new, nil, @partial_strategy, nil
   end
 
   def generate_random_keys amount

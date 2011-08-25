@@ -35,16 +35,16 @@ module Picky
       partial    = options[:partial]    || Generators::Partial::Default
       similarity = options[:similarity] || Generators::Similarity::Default
 
-      @indexing_exact   = Indexing::Bundle.new  :exact,  self, index.backend_class, weights, Generators::Partial::None.new, similarity, options
-      @indexing_partial = Indexing::Bundle.new :partial, self, index.backend_class, weights, partial, Generators::Similarity::None.new, options
+      @indexing_exact   = Indexing::Bundle.new  :exact,  self, index.backend, weights, Generators::Partial::None.new, similarity, options
+      @indexing_partial = Indexing::Bundle.new :partial, self, index.backend, weights, partial, Generators::Similarity::None.new, options
 
       # Indexed.
       #
-      @indexed_exact  = Indexed::Bundle.new :exact, self, index.backend_class, similarity
+      @indexed_exact  = Indexed::Bundle.new :exact, self, index.backend, similarity
       if partial.use_exact_for_partial?
         @indexed_partial  = @indexed_exact
       else
-        @indexed_partial  = Indexed::Bundle.new :partial, self, index.backend_class, similarity
+        @indexed_partial  = Indexed::Bundle.new :partial, self, index.backend, similarity
       end
 
       # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
