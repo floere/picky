@@ -220,25 +220,25 @@ module Picky
       # Warns the user if the similarity index is small.
       #
       def warn_if_similarity_small
-        warn_cache_small :similarity if @backend_similarity.cache_small?
+        warn_cache_small :similarity if @backend_similarity.respond_to?(:cache_small?) && !@backend_similarity.cache_small?
       end
       # Alerts the user if the similarity index is not there.
       #
       def raise_unless_similarity_ok
-        raise_cache_missing :similarity unless @backend_similarity.cache_ok?
+        raise_cache_missing :similarity if @backend_similarity.respond_to?(:cache_ok?) && !@backend_similarity.cache_ok?
       end
 
       # Warns the user if the core or weights indexes are small.
       #
       def warn_if_index_small
-        warn_cache_small :inverted if @backend_inverted.cache_small?
-        warn_cache_small :weights  if @backend_weights.cache_small?
+        warn_cache_small :inverted if @backend_inverted.respond_to?(:cache_small?) && @backend_inverted.cache_small?
+        warn_cache_small :weights  if @backend_weights.respond_to?(:cache_small?)  && @backend_weights.cache_small?
       end
       # Alerts the user if the core or weights indexes are not there.
       #
       def raise_unless_index_ok
-        raise_cache_missing :inverted unless @backend_inverted.cache_ok?
-        raise_cache_missing :weights  unless @backend_weights.cache_ok?
+        raise_cache_missing :inverted if @backend_inverted.respond_to?(:cache_ok?) && !@backend_inverted.cache_ok?
+        raise_cache_missing :weights  if @backend_weights.respond_to?(:cache_ok?)  && !@backend_weights.cache_ok?
       end
 
     end

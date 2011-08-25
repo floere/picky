@@ -42,6 +42,8 @@ module Picky
 
       # Extract specific indexes from backend.
       #
+      # TODO Clean up all related.
+      #
       @backend_inverted      = backend.create_inverted      self
       @backend_weights       = backend.create_weights       self
       @backend_similarity    = backend.create_similarity    self
@@ -78,6 +80,33 @@ module Picky
     #
     def index_path type
       ::File.join index_directory, "#{category.name}_#{name}_#{type}"
+    end
+
+    # Copies the indexes to the "backup" directory.
+    #
+    def backup
+      @backend_inverted.backup      if @backend_inverted.respond_to? :backup
+      @backend_weights.backup       if @backend_weights.respond_to? :backup
+      @backend_similarity.backup    if @backend_similarity.respond_to? :backup
+      @backend_configuration.backup if @backend_configuration.respond_to? :backup
+    end
+
+    # Restores the indexes from the "backup" directory.
+    #
+    def restore
+      @backend_inverted.restore       if @backend_inverted.respond_to? :restore
+      @backend_weights.restore        if @backend_weights.respond_to? :restore
+      @backend_similarity.restore     if @backend_similarity.respond_to? :restore
+      @backend_configuration.restore  if @backend_configuration.respond_to? :restore
+    end
+
+    # Delete all index files.
+    #
+    def delete
+      @backend_inverted.delete       if @backend_inverted.respond_to? :delete
+      @backend_weights.delete        if @backend_weights.respond_to? :delete
+      @backend_similarity.delete     if @backend_similarity.respond_to? :delete
+      @backend_configuration.delete  if @backend_configuration.respond_to? :delete
     end
 
     def to_s
