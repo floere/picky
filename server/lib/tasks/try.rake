@@ -11,9 +11,9 @@ task :try, [:text, :index, :category] => :application do |_, options|
   specific = specific[index]    if index
   specific = specific[category] if category
 
-  puts "\"#{text}\" is saved in the #{specific.identifier} index as #{specific.tokenizer.tokenize(text.dup).to_a}"
+  puts "\"#{text}\" is saved in the #{specific.identifier} index as #{specific.tokenizer.tokenize(text.dup).first}"
 
-  puts "\"#{text}\" as a search will be tokenized into #{Picky::Tokenizer.query_default.tokenize(text.dup).to_a.map(&:to_s).map(&:to_sym)}"
+  puts "\"#{text}\" as a search will be tokenized into #{Picky::Tokenizer.query_default.tokenize(text.dup).first}"
   puts
   puts "(category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')"
 end

@@ -45,7 +45,7 @@ module Picky
       # Loads all indexes.
       #
       # Loading loads index objects from the backend.
-      # They should each respond to [].
+      # They should each respond to [] and return something appropriate.
       #
       def load
         load_inverted
@@ -57,22 +57,22 @@ module Picky
       # Loads the core index.
       #
       def load_inverted
-        self.inverted = @backend.load_inverted
+        self.inverted = @backend_inverted.load
       end
       # Loads the weights index.
       #
       def load_weights
-        self.weights = @backend.load_weights
+        self.weights = @backend_weights.load
       end
       # Loads the similarity index.
       #
       def load_similarity
-        self.similarity = @backend.load_similarity
+        self.similarity = @backend_similarity.load
       end
       # Loads the configuration.
       #
       def load_configuration
-        self.configuration = @backend.load_configuration
+        self.configuration = @backend_configuration.load
       end
 
       # Clears all indexes.

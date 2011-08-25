@@ -5,16 +5,16 @@ module Picky
     class Memory < Backend
 
       def create_inverted bundle
-        @inverted ||= File::JSON.new bundle.index_path(:inverted)
+        File::JSON.new bundle.index_path(:inverted)
       end
       def create_weights bundle
-        @weights ||= File::JSON.new bundle.index_path(:weights)
+        File::JSON.new bundle.index_path(:weights)
       end
       def create_similarity bundle
-        @similarity ||= File::Marshal.new bundle.index_path(:similarity)
+        File::Marshal.new bundle.index_path(:similarity)
       end
       def create_configuration bundle
-        @configuration ||= File::JSON.new bundle.index_path(:configuration)
+        File::JSON.new bundle.index_path(:configuration)
       end
 
       # Returns the result ids for the allocation.

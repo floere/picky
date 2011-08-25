@@ -36,6 +36,10 @@ module Picky
       attr_accessor :partial_strategy,
                     :weights_strategy
 
+      # When indexing, clear only clears the inverted index.
+      #
+      delegate :clear, :to => :inverted
+
       def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
         super name, category, backend, similarity_strategy, options
 
@@ -43,6 +47,11 @@ module Picky
         @partial_strategy = partial_strategy
         @key_format       = options[:key_format]
         @prepared         = Backends::File::Text.new category.prepared_index_path
+
+        @inverted      = {}
+        @weights       = {}
+        @similarity    = {}
+        @configuration = {}
       end
 
       # Sets up a piece of the index for the given token.
@@ -151,25 +160,25 @@ module Picky
       #
       def dump_inverted
         # timed_exclaim %Q{"#{identifier}": Dumping inverted index.}
-        backend.dump_inverted self.inverted
+        @backend_inverted.dump self.inverted
       end
       # Dumps the weights index.
       #
       def dump_weights
         # timed_exclaim %Q{"#{identifier}": Dumping index weights.}
-        backend.dump_weights self.weights
+        @backend_weights.dump self.weights
       end
       # Dumps the similarity index.
       #
       def dump_similarity
         # timed_exclaim %Q{"#{identifier}": Dumping similarity index.}
-        backend.dump_similarity self.similarity
+        @backend_similarity.dump self.similarity
       end
       # Dumps the similarity index.
       #
       def dump_configuration
         # timed_exclaim %Q{"#{identifier}": Dumping configuration.}
-        backend.dump_configuration self.configuration
+        @backend_configuration.dump self.configuration
       end
 
       # Alerts the user if an index is missing.
@@ -211,25 +220,25 @@ module Picky
       # Warns the user if the similarity index is small.
       #
       def warn_if_similarity_small
-        warn_cache_small :similarity if backend.similarity_cache_small?
+        warn_cache_small :similarity if @backend_similarity.cache_small?
       end
       # Alerts the user if the similarity index is not there.
       #
       def raise_unless_similarity_ok
-        raise_cache_missing :similarity unless backend.similarity_cache_ok?
+        raise_cache_missing :similarity unless @backend_similarity.cache_ok?
       end
 
       # Warns the user if the core or weights indexes are small.
       #
       def warn_if_index_small
-        warn_cache_small :inverted if backend.inverted_cache_small?
-        warn_cache_small :weights  if backend.weights_cache_small?
+        warn_cache_small :inverted if @backend_inverted.cache_small?
+        warn_cache_small :weights  if @backend_weights.cache_small?
       end
       # Alerts the user if the core or weights indexes are not there.
       #
       def raise_unless_index_ok
-        raise_cache_missing :inverted unless backend.inverted_cache_ok?
-        raise_cache_missing :weights  unless backend.weights_cache_ok?
+        raise_cache_missing :inverted unless @backend_inverted.cache_ok?
+        raise_cache_missing :weights  unless @backend_weights.cache_ok?
       end
 
     end

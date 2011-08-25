@@ -6,24 +6,23 @@ module Picky
     #
     class Redis < Backend
 
-      attr_reader :actual_backend
+      attr_reader :client
 
       def initialize options = {}
-        db = options[:db] || 15
-        @actual_backend = ::Redis.new :db => db
+        @client = options[:client] || ::Redis.new(:db => (options[:db] || 15))
       end
 
       def create_inverted bundle
-        @inverted ||= Redis::ListHash.new "#{bundle.identifier}:inverted", actual_backend
+        Redis::ListHash.new "#{bundle.identifier}:inverted", client
       end
       def create_weights bundle
-        @weights ||= Redis::FloatHash.new "#{bundle.identifier}:weights", actual_backend
+        Redis::FloatHash.new "#{bundle.identifier}:weights", client
       end
       def create_similarity bundle
-        @similarity ||= Redis::ListHash.new "#{bundle.identifier}:similarity", actual_backend
+        Redis::ListHash.new "#{bundle.identifier}:similarity", client
       end
       def create_configuration bundle
-        @configuration ||= Redis::StringHash.new "#{bundle.identifier}:configuration", actual_backend
+        Redis::StringHash.new "#{bundle.identifier}:configuration", client
       end
 
       # Returns the result ids for the allocation.
@@ -45,17 +44,17 @@ module Picky
 
         # Intersect and store.
         #
-        actual_backend.zinterstore result_id, identifiers
+        client.zinterstore result_id, identifiers
 
         # Get the stored result.
         #
-        results = actual_backend.zrange result_id, offset, (offset + amount)
+        results = client.zrange result_id, offset, (offset + amount)
 
         # Delete the stored result as it was only for temporary purposes.
         #
         # Note: I could also not delete it, but that would not be clean at all.
         #
-        actual_backend.del result_id
+        client.del result_id
 
         results
       end

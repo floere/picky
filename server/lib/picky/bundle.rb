@@ -23,7 +23,8 @@ module Picky
   class Bundle
 
     attr_reader :name,
-                :category
+                :category,
+                :backend
 
     attr_accessor :inverted,
                   :weights,
@@ -31,26 +32,20 @@ module Picky
                   :configuration,
                   :similarity_strategy
 
-    delegate :clear,           :to => :inverted
     delegate :[], :[]=,        :to => :configuration
     delegate :index_directory, :to => :category
 
     def initialize name, category, backend, similarity_strategy, options = {}
-      @name     = name
-      @category = category
-      @backend  = backend
-      @backend.configure self
-
-      # Default backend values.
-      #
-      # TODO Use a default (memory) backend and load instantly.
-      #
-      @inverted      = {}
-      @weights       = {}
-      @similarity    = {}
-      @configuration = {}
-
+      @name                = name
+      @category            = category
       @similarity_strategy = similarity_strategy
+
+      # Extract specific indexes from backend.
+      #
+      @backend_inverted      = backend.create_inverted      self
+      @backend_weights       = backend.create_weights       self
+      @backend_similarity    = backend.create_similarity    self
+      @backend_configuration = backend.create_configuration self
     end
     def identifier
       "#{category.identifier}:#{name}"
