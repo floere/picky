@@ -36,7 +36,7 @@ module Picky
     #   end
     #
     def initialize *index_definitions
-      @indexes = Query::Indexes.new *index_definitions, combinations_type_for(index_definitions)
+      @indexes = Query::Indexes.new *index_definitions
 
       instance_eval(&Proc.new) if block_given?
 

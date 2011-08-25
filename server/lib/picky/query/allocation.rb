@@ -7,13 +7,18 @@ module Picky
     #
     class Allocation # :nodoc:all
 
-      attr_reader :count, :ids, :score, :combinations, :result_identifier
+      attr_reader :count,
+                  :ids,
+                  :score,
+                  :combinations,
+                  :result_identifier
 
       #
       #
-      def initialize combinations, result_identifier
+      def initialize index, combinations
         @combinations      = combinations
-        @result_identifier = result_identifier
+        @result_identifier = index.result_identifier # TODO Make cleverer.
+        @backend           = index.backend           # TODO Make cleverer.
       end
 
       def hash
@@ -30,10 +35,10 @@ module Picky
         @score ||= @combinations.calculate_score(weights)
       end
 
-      # Asks the combinations for the (intersected) ids.
+      # Asks the backend for the (intersected) ids.
       #
       def calculate_ids amount, offset
-        @combinations.ids amount, offset # Calculate as many ids as are necessary.
+        @backend.ids combinations, amount, offset
       end
 
       # This starts the searching process.

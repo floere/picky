@@ -154,9 +154,7 @@ module Picky
       # Query combinations, qualifiers, weigher.
       #
       load_relative 'query/combination'
-      load_relative 'query/combinations/base'
-      load_relative 'query/combinations/memory'
-      load_relative 'query/combinations/redis'
+      load_relative 'query/combinations'
 
       load_relative 'query/allocation'
       load_relative 'query/allocations'
@@ -166,10 +164,7 @@ module Picky
       load_relative 'query/weights'
 
       load_relative 'query/indexes'
-
-      # Configuration.
-      #
-      # load_internals 'configuration/index'
+      load_relative 'query/indexes_check'
 
       # Adapters.
       #
@@ -230,7 +225,6 @@ module Picky
       # Search.
       #
       load_relative 'search'
-      load_relative 'search/index_combinations_type'
 
       # Sources.
       #

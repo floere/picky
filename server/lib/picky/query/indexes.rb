@@ -20,10 +20,11 @@ module Picky
       # Its job is to generate all possible combinations.
       # Note: We cannot mix memory and redis indexes just yet.
       #
-      def initialize *indexes, combinations_type
-        @indexes           = indexes
-        @combinations_type = combinations_type
-        @mapper            = Query::QualifierCategoryMapper.new
+      def initialize *indexes
+        IndexesCheck.check_backend_types indexes
+
+        @indexes = indexes
+        @mapper  = Query::QualifierCategoryMapper.new
         map_categories
       end
       def map_categories
@@ -81,12 +82,12 @@ module Picky
 
         # Generate all possible combinations.
         #
-        expanded_combinations = expand_combinations_from possible_combinations
+        all_possible_combinations = expand_combinations_from possible_combinations
 
         # Add the wrapped possible allocations to the ones we already have.
         #
-        expanded_combinations.map! do |expanded_combination|
-          Allocation.new @combinations_type.new(expanded_combination), index.result_identifier # TODO Do not extract result_identifier.
+        all_possible_combinations.map! do |expanded_combinations|
+          Allocation.new index, Query::Combinations.new(expanded_combinations)
         end
       end
 
