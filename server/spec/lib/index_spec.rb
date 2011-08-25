@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Picky::Indexes::Index do
+describe Picky::Index do
   
   let(:some_source) { stub :source, :harvest => nil, :inspect => 'some_source' }
   

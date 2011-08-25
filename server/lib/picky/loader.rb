@@ -219,11 +219,9 @@ module Picky
       load_relative 'indexes_indexed'
       load_relative 'indexes_indexing'
 
-      load_relative 'indexes/index'
-      load_relative 'indexes/index_indexed'
-      load_relative 'indexes/index_indexing'
-      load_relative 'indexes/memory'
-      load_relative 'indexes/redis'
+      load_relative 'index'
+      load_relative 'index_indexed'
+      load_relative 'index_indexing'
 
       # Results.
       #

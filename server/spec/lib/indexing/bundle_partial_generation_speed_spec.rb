@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Indexing::Bundle do
 
   before(:each) do
-    @index            = Picky::Indexes::Memory.new :some_index
+    @index            = Picky::Index.new :some_index
     @category         = Picky::Category.new :some_category, @index
     
     @partial_strategy = Picky::Generators::Partial::Substring.new :from => 1

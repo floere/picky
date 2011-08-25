@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Indexed::Bundle do
 
   before(:each) do
-    @index        = Picky::Indexes::Memory.new :some_index
+    @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
     
     @similarity   = stub :similarity
@@ -153,7 +153,7 @@ describe Picky::Indexed::Bundle do
   
   describe 'initialization' do
     before(:each) do
-      @index    = Picky::Indexes::Memory.new :some_index
+      @index    = Picky::Index.new :some_index
       @category = Picky::Category.new :some_category, @index
       
       @bundle = described_class.new :some_name, @category, Picky::Backends::Memory, :similarity

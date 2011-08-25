@@ -15,7 +15,7 @@ require File.expand_path '../../../lib/picky', __FILE__
 
 require File.expand_path '../model', __FILE__
 
-texts = Picky::Indexes::Memory.new :texts do
+texts = Picky::Index.new :texts do
   source   { Model.all }
   category :text,
            partial: Picky::Partial::Substring.new(from: 1),

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Category do
 
   before(:each) do
-    @index = Picky::Indexes::Index.new :some_index do
+    @index = Picky::Index.new :some_index do
       source []
     end
     @partial_strategy    = stub :partial, :use_exact_for_partial? => false
@@ -42,7 +42,7 @@ describe Picky::Category do
     end
     context 'indexed_bundle_class defined differently' do
       before(:each) do
-        index = Picky::Indexes::Redis.new(:some_index_name) do
+        index = Picky::Index.new(:some_index_name) do
           source []
         end
         @category = described_class.new :some_name, index

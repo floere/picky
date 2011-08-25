@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Backends::Memory do
 
   before(:each) do
-    index         = Picky::Indexes::Memory.new :some_index
+    index         = Picky::Index.new :some_index
     category      = Picky::Category.new :some_category, index
     
     # This is just wrong.

@@ -39,7 +39,7 @@ class BookSearch < Sinatra::Application
             case_sensitive:              true,
             maximum_tokens:              5
 
-  books_index = Indexes::Memory.new :books, result_identifier: 'boooookies' do
+  books_index = Index.new :books, result_identifier: 'boooookies' do
     source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'db.yml')
     category :id
     category :title,
@@ -52,7 +52,7 @@ class BookSearch < Sinatra::Application
 
   class Book < ActiveRecord::Base; end
   Book.establish_connection YAML.load(File.open('db.yml'))
-  book_each_index = Indexes::Memory.new :book_each do
+  book_each_index = Index.new :book_each do
     key_format :to_s
     source     Book.order('title ASC')
     category   :id
@@ -64,7 +64,7 @@ class BookSearch < Sinatra::Application
     category   :year, qualifiers: [:y, :year, :annee]
   end
 
-  isbn_index = Indexes::Memory.new :isbn do
+  isbn_index = Index.new :isbn do
     source   Sources::DB.new("SELECT id, isbn FROM books", :file => 'db.yml')
     category :isbn, :qualifiers => [:i, :isbn]
   end
@@ -87,7 +87,7 @@ class BookSearch < Sinatra::Application
 
   end
 
-  rss_index = Indexes::Memory.new :rss do
+  rss_index = Index.new :rss do
     source     EachRSSItemProxy.new
     key_format :to_s
 
@@ -97,7 +97,7 @@ class BookSearch < Sinatra::Application
 
   # Breaking example to test the nice error message.
   #
-  # breaking = Indexes::Memory.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'db.yml') do
+  # breaking = Index.new :isbn, Sources::DB.new("SELECT id, isbn FROM books", :file => 'db.yml') do
   #   category :isbn, :qualifiers => [:i, :isbn]
   # end
 
@@ -111,25 +111,25 @@ class BookSearch < Sinatra::Application
       @isbn = isbn
     end
   end
-  isbn_each_index = Indexes::Memory.new :isbn_each do
+  isbn_each_index = Index.new :isbn_each do
     source   [ISBN.new('ABC'), ISBN.new('DEF')]
     category :isbn, :qualifiers => [:i, :isbn], :key_format => :to_s
   end
 
-  mgeo_index = Indexes::Memory.new :memory_geo do
+  mgeo_index = Index.new :memory_geo do
     source          Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     category        :location
     ranged_category :north1, 0.008, precision: 3, from: :north
     ranged_category :east1,  0.008, precision: 3, from: :east
   end
 
-  real_geo_index = Indexes::Memory.new :real_geo do
+  real_geo_index = Index.new :real_geo do
     source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
     category       :location, partial: Partial::Substring.new(from: 1)
     geo_categories :north, :east, 1, precision: 3
   end
 
-  iphone_locations = Indexes::Memory.new :iphone do
+  iphone_locations = Index.new :iphone do
     source Sources::CSV.new(
       :mcc,
       :mnc,
@@ -150,17 +150,17 @@ class BookSearch < Sinatra::Application
     geo_categories  :latitude, :longitude, 25, precision: 3
   end
 
-  Indexes::Memory.new :underscore_regression do
+  Index.new :underscore_regression do
     source         Sources::CSV.new(:location, file: 'data/ch.csv')
     category       :some_place, :from => :location
   end
 
-  # rgeo_index = Indexes::Redis.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+  # rgeo_index = Index.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
   # rgeo_index.define_category :location
   # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
   #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
-  csv_test_index = Indexes::Memory.new :csv_test do
+  csv_test_index = Index.new :csv_test do
     source     Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
 
     category :title,
@@ -179,7 +179,7 @@ class BookSearch < Sinatra::Application
     result_identifier :Books
   end
 
-  indexing_index = Indexes::Memory.new(:special_indexing) do
+  indexing_index = Index.new(:special_indexing) do
     source   Sources::CSV.new(:title, file: 'data/books.csv')
     indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
              splits_text_on:     /[\s\/\-\"\&\/]/
@@ -189,8 +189,9 @@ class BookSearch < Sinatra::Application
              similarity: Similarity::DoubleMetaphone.new(2)
   end
 
-  redis_index = Indexes::Redis.new(:redis) do
-  source   Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'data/books.csv')
+  redis_index = Index.new(:redis) do
+    backend  Backends::Redis
+    source   Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'data/books.csv')
     category :title,
              qualifiers: [:t, :title, :titre],
              partial:    Partial::Substring.new(from: 1),
@@ -205,12 +206,12 @@ class BookSearch < Sinatra::Application
     category :subjects,  qualifiers: [:s, :subject]
   end
 
-  sym_keys_index = Indexes::Memory.new :symbol_keys do
+  sym_keys_index = Index.new :symbol_keys do
     source   Sources::CSV.new(:text, file: "data/#{PICKY_ENVIRONMENT}/symbol_keys.csv", key_format: 'strip')
     category :text, partial: Partial::Substring.new(from: 1)
   end
 
-  memory_changing_index = Indexes::Memory.new(:memory_changing) do
+  memory_changing_index = Index.new(:memory_changing) do
     source [
       ChangingItem.new("1", 'first entry'),
       ChangingItem.new("2", 'second entry'),
@@ -219,7 +220,8 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
-  redis_changing_index = Indexes::Redis.new(:redis_changing) do
+  redis_changing_index = Index.new(:redis_changing) do
+    backend Backends::Redis
     source [
       ChangingItem.new("1", 'first entry'),
       ChangingItem.new("2", 'second entry'),
@@ -228,7 +230,7 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
-  japanese_index = Picky::Indexes::Memory.new(:japanese) do
+  japanese_index = Picky::Index.new(:japanese) do
     source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
 
     indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,

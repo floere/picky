@@ -22,7 +22,7 @@ describe Picky::Categories do
   
   context "with real categories" do
     before(:each) do
-      @index1 = Picky::Indexes::Memory.new :name
+      @index1 = Picky::Index.new :name
       
       @categories = described_class.new
       @categories << Picky::Category.new(:category1, @index1)
@@ -65,7 +65,7 @@ describe Picky::Categories do
   
   context 'without options' do
     before(:each) do
-      @index1 = Picky::Indexes::Memory.new :some_index
+      @index1 = Picky::Index.new :some_index
       
       @category1 = Picky::Category.new :category1, @index1
       @category2 = Picky::Category.new :category2, @index1

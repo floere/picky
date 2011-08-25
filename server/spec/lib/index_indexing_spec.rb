@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Indexes::Index do
+describe Picky::Index do
   
   describe 'tokenizer' do
     context 'with tokenizer' do

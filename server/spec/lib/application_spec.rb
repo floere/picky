@@ -8,7 +8,7 @@ describe Picky::Application do
     it "should run ok" do
       lambda {
         class MinimalTestApplication < described_class
-          books = Picky::Indexes::Memory.new :books do
+          books = Picky::Index.new :books do
                   source Picky::Sources::DB.new(
                     'SELECT id, title FROM books',
                     :file => 'app/db.yml'
@@ -44,7 +44,7 @@ describe Picky::Application do
                     substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
                     maximum_tokens: 5
           
-          books_index = Picky::Indexes::Memory.new :books do
+          books_index = Picky::Index.new :books do
             source Picky::Sources::DB.new(
               'SELECT id, title, author, isbn13 as isbn FROM books',
               :file => 'app/db.yml'
@@ -58,7 +58,7 @@ describe Picky::Application do
           books_index.define_category :isbn,
                                       partial: Picky::Partial::None.new # Partially searching on an ISBN makes not much sense.
           
-          geo_index = Picky::Indexes::Memory.new :geo do
+          geo_index = Picky::Index.new :geo do
             source          Picky::Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
             indexing        removes_characters: /[^a-z]/
             category        :location,

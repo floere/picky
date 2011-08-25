@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Indexing::Bundle do
 
   before(:each) do
-    @index    = Picky::Indexes::Memory.new :some_index
+    @index    = Picky::Index.new :some_index
     @category = Picky::Category.new :some_category, @index
     @similarity = Picky::Similarity::DoubleMetaphone.new 3
     @bundle = described_class.new :some_name, @category, Picky::Backends::Memory, :some_weights, :some_partial, @similarity

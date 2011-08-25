@@ -15,14 +15,14 @@ module Picky
   # will generate an example <tt>project_name/app/application.rb</tt> file for you
   # with some example code inside.
   #
-  # == Indexes::Memory.new(name)
+  # == Index.new(name)
   #
-  # Next, define where your data comes from, creating an <tt>Index</tt>. You use the <tt>Indexes::Memory.new</tt> method for that:
-  #   my_index = Indexes::Memory.new :some_index_name
+  # Next, define where your data comes from, creating an <tt>Index</tt>. You use the <tt>Index.new</tt> method for that:
+  #   my_index = Index.new :some_index_name
   # You give the index a name (or identifier), and a source (see Sources), where its data comes from. Let's do that:
   #   class MyGreatSearch < Application
   #
-  #     books = Indexes::Memory.new :books do
+  #     books = Index.new :books do
   #       source Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
   #     end
   #
@@ -31,7 +31,7 @@ module Picky
   #
   # That on itself won't do much good.
   #
-  # Note that a Redis index is also available: Indexes::Redis.new.
+  # Note that a Redis index is also available: Index.new.
   #
   # == category(identifier, options = {})
   #
@@ -43,7 +43,7 @@ module Picky
   # Let's go ahead and define a category:
   #   class MyGreatSearch < Application
   #
-  #     books = Indexes::Memory.new :books do
+  #     books = Index.new :books do
   #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
   #       category :title
   #     end
@@ -70,7 +70,7 @@ module Picky
   # In full glory:
   #   class MyGreatSearch < Application
   #
-  #     books = Indexes::Memory.new :books do
+  #     books = Index.new :books do
   #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
   #       category :title
   #     end
@@ -134,7 +134,7 @@ module Picky
   #               substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
   #               maximum_tokens: 4
   #
-  #     books = Indexes::Memory.new :books do
+  #     books = Index.new :books do
   #       source   Sources::CSV.new(:title, :author, :isbn, file:'app/library.csv')
   #       category :title,
   #                qualifiers: [:t, :title, :titre],

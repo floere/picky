@@ -11,21 +11,21 @@ module Picky
     # Picky will raise a Query::Indexes::DifferentTypesError.
     #
     @@mapping = {
-      Indexes::Memory => Query::Combinations::Memory,
-      Indexes::Redis  => Query::Combinations::Redis
+      Backends::Memory => Query::Combinations::Memory,
+      Backends::Redis  => Query::Combinations::Redis
     }
     def combinations_type_for index_definitions_ary # :nodoc:
-      index_types = extract_index_types index_definitions_ary
-      !index_types.empty? && @@mapping[*index_types] || Query::Combinations::Memory
+      backend_types = extract_backend_types index_definitions_ary
+      !backend_types.empty? && @@mapping[*backend_types] || Query::Combinations::Memory
     end
-    def extract_index_types index_definitions_ary # :nodoc:
-      index_types = index_definitions_ary.map(&:class)
-      index_types.uniq!
-      check_index_types index_types
-      index_types
+    def extract_backend_types index_definitions_ary # :nodoc:
+      backend_types = index_definitions_ary.map(&:backend_class)
+      backend_types.uniq!
+      check_backend_types backend_types
+      backend_types
     end
-    def check_index_types index_types # :nodoc:
-      raise_different index_types if index_types.size > 1
+    def check_backend_types backend_types # :nodoc:
+      raise_different backend_types if backend_types.size > 1
     end
     # Currently it isn't possible using Memory and Redis etc.
     # indexes in the same query index group.
@@ -35,11 +35,11 @@ module Picky
         @types = types
       end
       def to_s
-        "Currently it isn't possible to mix #{@types.join(" and ")} Indexes in the same Search instance."
+        "Currently it isn't possible to mix Indexes with backends #{@types.join(" and ")} in the same Search instance."
       end
     end
-    def raise_different index_types # :nodoc:
-      raise DifferentTypesError.new(index_types)
+    def raise_different backend_types # :nodoc:
+      raise DifferentTypesError.new(backend_types)
     end
 
   end

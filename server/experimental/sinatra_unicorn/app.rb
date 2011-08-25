@@ -22,7 +22,7 @@ class UnicornApp < Sinatra::Application
 
   indexing splits_text_on: /[\s\t]/
 
-  texts = Picky::Indexes::Memory.new :texts do
+  texts = Picky::Index.new :texts do
     source   Model.all
     category :text,
              partial: Picky::Partial::Substring.new(from: 1),
