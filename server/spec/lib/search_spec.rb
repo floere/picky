@@ -55,40 +55,6 @@ describe Picky::Search do
     
   end
   
-  describe 'combinations_type_for' do
-    before(:each) do
-      @blorf  = stub :blorf,  :backend => nil
-      @blarf  = stub :blarf,  :backend => nil
-      @redis  = stub :redis,  :backend => Picky::Backends::Redis.new
-      @memory = stub :memory, :backend => Picky::Backends::Memory.new
-    end
-    let(:search) { described_class.new }
-    it 'returns a specific Combination for a specific input' do
-      some_source = stub(:source, :harvest => nil)
-      search.combinations_type_for([
-        Picky::Index.new(:gu) do
-          source some_source
-        end]
-      ).should == Picky::Query::Combinations::Memory
-    end
-    it 'just works on the same types' do
-      search.combinations_type_for([@blorf, @blarf]).should == Picky::Query::Combinations::Memory
-    end
-    it 'just uses standard combinations' do
-      search.combinations_type_for([@blorf]).should == Picky::Query::Combinations::Memory
-    end
-    it 'raises on multiple types' do
-      expect do
-        search.combinations_type_for [@redis, @memory]
-      end.to raise_error(Picky::Search::DifferentTypesError)
-    end
-    it 'raises with the right message on multiple types' do
-      expect do
-        search.combinations_type_for [@redis, @memory]
-      end.to raise_error("Currently it isn't possible to mix Indexes with backends Picky::Backends::Redis and Picky::Backends::Memory in the same Search instance.")
-    end
-  end
-  
   describe "weights handling" do
     it "creates a default weight when no weights are given" do
       search = described_class.new

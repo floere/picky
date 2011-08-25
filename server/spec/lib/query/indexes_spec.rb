@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe Picky::Query::Indexes do
-
+  
+  before(:each) do
+    Picky::Query::IndexesCheck.stub! :check_backend_types
+  end
+  
   3.times do |i|
     n       = i + 1
     name    = :"index#{n}"

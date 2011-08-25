@@ -9,15 +9,21 @@ module Picky
       attr_reader :actual_backend
 
       def initialize options = {}
-        @actual_backend = ::Redis.new :db => (options[:db] || 15)
+        db = options[:db] || 15
+        @actual_backend = ::Redis.new :db => db
       end
 
-      def configure_with bundle
-        super bundle
-        @inverted      = Redis::ListHash.new   "#{bundle.identifier}:inverted",      actual_backend
-        @weights       = Redis::FloatHash.new  "#{bundle.identifier}:weights",       actual_backend
-        @similarity    = Redis::ListHash.new   "#{bundle.identifier}:similarity",    actual_backend
-        @configuration = Redis::StringHash.new "#{bundle.identifier}:configuration", actual_backend
+      def create_inverted bundle
+        @inverted ||= Redis::ListHash.new "#{bundle.identifier}:inverted", actual_backend
+      end
+      def create_weights bundle
+        @weights ||= Redis::FloatHash.new "#{bundle.identifier}:weights", actual_backend
+      end
+      def create_similarity bundle
+        @similarity ||= Redis::ListHash.new "#{bundle.identifier}:similarity", actual_backend
+      end
+      def create_configuration bundle
+        @configuration ||= Redis::StringHash.new "#{bundle.identifier}:configuration", actual_backend
       end
 
       # Returns the result ids for the allocation.

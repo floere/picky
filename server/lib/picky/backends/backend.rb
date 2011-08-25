@@ -4,24 +4,17 @@ module Picky
 
     class Backend
 
-      attr_reader :bundle,
-                  :inverted,
+      attr_reader :inverted,
                   :weights,
                   :similarity,
                   :configuration
 
-      delegate :identifier,
-               :to => :bundle
-
-      def configure_with bundle
-        @bundle = bundle
+      def configure bundle
+        create_inverted      bundle
+        create_weights       bundle
+        create_similarity    bundle
+        create_configuration bundle
       end
-
-      # Delegators.
-      #
-
-      # TODO Should the bundle pass in itself into the load methods?
-      #
 
       # Load the indexes.
       #
@@ -34,16 +27,16 @@ module Picky
         inverted.load
       end
 
-      # returned_object[sym] # => [:similar1, :similar2, ...]
-      #
-      def load_similarity
-        similarity.load
-      end
-
       # returned_object[sym] # => 1.23 (float)
       #
       def load_weights
         weights.load
+      end
+
+      # returned_object[sym] # => [:similar1, :similar2, ...]
+      #
+      def load_similarity
+        similarity.load
       end
 
       # returned_object[:option] # => value for option
@@ -55,22 +48,22 @@ module Picky
       # Dumping.
       #
       def dump_inverted inverted_hash
-        timed_exclaim %Q{"#{identifier}":   => #{inverted}.}
+        # timed_exclaim %Q{"#{identifier}":   => #{inverted}.}
 
         inverted.dump inverted_hash
       end
       def dump_weights weights_hash
-        timed_exclaim %Q{"#{identifier}":   => #{weights}.}
+        # timed_exclaim %Q{"#{identifier}":   => #{weights}.}
 
         weights.dump weights_hash
       end
       def dump_similarity similarity_hash
-        timed_exclaim %Q{"#{identifier}":   => #{similarity}.}
+        # timed_exclaim %Q{"#{identifier}":   => #{similarity}.}
 
         similarity.dump similarity_hash
       end
       def dump_configuration configuration_hash
-        timed_exclaim %Q{"#{identifier}":   => #{configuration}.}
+        # timed_exclaim %Q{"#{identifier}":   => #{configuration}.}
 
         configuration.dump configuration_hash
       end
