@@ -14,7 +14,8 @@ module Picky
     #
     class Javascripts
 
-      define_method :initialize do |target = 'javascripts'|
+      define_method :initialize do |*args|
+        target = args.shift || 'javascripts'
         desc "Copy the latest client javascripts to '#{target}' (Give target dir to Picky::Tasks::Javascripts.new to change)."
         task :javascripts do
           target_dir = ::File.expand_path target, Dir.pwd
