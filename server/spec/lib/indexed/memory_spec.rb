@@ -159,16 +159,16 @@ describe Picky::Indexed::Bundle do
       @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :similarity
     end
     it 'should initialize the index correctly' do
-      @bundle.inverted.should == {}
+      @bundle.backend_inverted.should be_kind_of(Picky::Backends::File::JSON)
     end
     it 'should initialize the weights index correctly' do
-      @bundle.weights.should == {}
+      @bundle.backend_weights.should be_kind_of(Picky::Backends::File::JSON)
     end
     it 'should initialize the similarity index correctly' do
-      @bundle.similarity.should == {}
+      @bundle.backend_similarity.should be_kind_of(Picky::Backends::File::Marshal)
     end
     it 'should initialize the configuration correctly' do
-      @bundle.configuration.should == {}
+      @bundle.backend_configuration.should be_kind_of(Picky::Backends::File::JSON)
     end
     it 'should initialize the similarity strategy correctly' do
       @bundle.similarity_strategy.should == :similarity
