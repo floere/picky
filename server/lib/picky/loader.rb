@@ -249,6 +249,10 @@ module Picky
       # Load tools. Load in specific case?
       #
       load_relative 'cores'
+
+      # Load migration notices.
+      #
+      load_relative 'migrations/from_30_to_31'
     end
 
     # Loads the framework.

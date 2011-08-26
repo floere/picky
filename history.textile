@@ -2,8 +2,10 @@ h2. Upcoming Version
 
 h2. Version 3.1.0
 
-* hanke: (server) Unified tokenizers. Method @#tokenize(text)@ now returns @[ ["token", "token", "token"], ["Original", "Original", "Original"] ]@.
-* hanke: (server) Removed tokenizer option @removes_characters_after_splitting: /soem regexp/@ (without replacement).
+* hanke: (server) Exchangeable backends. New index definition: @Indexes::Memory@ and @Indexes::Redis@ are now unified in @Index@. So use @index = Picky::Index.new(name)@ from now on. (See next point)
+* hanke: (server) A new option has been added to the index, @backend@. It takes a backend instance, making the backend exchangeable. The default is the memory backend, which you do not need to set. If you want a Redis backend, use as follows: @index = Index.new(name) { backend Picky::Backends::Redis.new }@. If you want to explicitly set the memory backend: @index = Index.new(name) { backend Picky::Backends::Memory.new }@.
+* hanke: (server) Unified tokenizers. Method @#tokenize(text)@ now returns @[ ["token", "token", "token"], ["Original", "Original", "Original"] ]@. So your own tokenizer only needs to adhere to this interface and can be passed to the index/search using the @indexing@/@searching@ method.
+* hanke: (server) Removed tokenizer option @removes_characters_after_splitting: /some regexp/@ (without replacement).
 
 h2. Version 3.0.1
 
