@@ -15,7 +15,7 @@ module Picky
             i = 0
             values.each do |value|
               i += 1
-              backend.zadd redis_key, i, value
+              client.zadd redis_key, i, value
             end
           end
         end
@@ -27,8 +27,8 @@ module Picky
         #
         def clear
           redis_key = "#{namespace}:*"
-          backend.keys(redis_key).each do |key|
-            backend.del key
+          client.keys(redis_key).each do |key|
+            client.del key
           end
         end
 
@@ -37,7 +37,7 @@ module Picky
         # Internal API method for the index.
         #
         def [] key
-          backend.zrange "#{namespace}:#{key}", 0, -1
+          client.zrange "#{namespace}:#{key}", 0, -1
         end
 
       end

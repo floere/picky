@@ -2,22 +2,17 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::ListHash do
   
-  let(:index) { described_class.new :some_namespace, :some_backend }
+  let(:client) { stub :client }
+  let(:index) { described_class.new client, :some_namespace }
   
   describe '[]' do
     it 'returns whatever comes back from the backend' do
-      backend = stub :backend
-      index.should_receive(:backend).and_return backend
-      
-      backend.stub! :zrange => :some_lrange_result
+      client.stub! :zrange => :some_lrange_result
       
       index[:anything].should == :some_lrange_result
     end
     it 'calls the right method on the backend' do
-      backend = stub :backend
-      index.should_receive(:backend).and_return backend
-      
-      backend.should_receive(:zrange).once.with "some_namespace:some_sym", 0, -1
+      client.should_receive(:zrange).once.with "some_namespace:some_sym", 0, -1
       
       index[:some_sym]
     end

@@ -13,16 +13,16 @@ module Picky
       end
 
       def create_inverted bundle
-        Redis::ListHash.new "#{bundle.identifier}:inverted", client
+        Redis::ListHash.new client, "#{bundle.identifier}:inverted"
       end
       def create_weights bundle
-        Redis::FloatHash.new "#{bundle.identifier}:weights", client
+        Redis::FloatHash.new client, "#{bundle.identifier}:weights"
       end
       def create_similarity bundle
-        Redis::ListHash.new "#{bundle.identifier}:similarity", client
+        Redis::ListHash.new client, "#{bundle.identifier}:similarity"
       end
       def create_configuration bundle
-        Redis::StringHash.new "#{bundle.identifier}:configuration", client
+        Redis::StringHash.new client, "#{bundle.identifier}:configuration"
       end
 
       # Returns the result ids for the allocation.

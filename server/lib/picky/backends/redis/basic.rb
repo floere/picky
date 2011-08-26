@@ -13,14 +13,14 @@ module Picky
       #
       class Basic
 
-        attr_reader :namespace, :backend
+        attr_reader :client, :namespace
 
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize namespace, backend
+        def initialize client, namespace
+          @client    = client
           @namespace = namespace
-          @backend   = backend
         end
 
         # Returns itself.
@@ -74,7 +74,7 @@ module Picky
         #       DBSIZE KEYPATTERN, we are stuck with this.
         #
         def size
-          backend.dbsize
+          client.dbsize
         end
 
         #

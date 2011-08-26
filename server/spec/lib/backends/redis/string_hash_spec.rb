@@ -2,32 +2,28 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::StringHash do
   
-  let(:redis_backend) { stub :redis_backend }
-  let(:backend) { described_class.new :some_namespace, redis_backend }
+  let(:client) { stub :client }
+  let(:backend) { described_class.new client, :some_namespace }
     
   describe 'dump' do
     it 'dumps correctly' do
-      redis_backend.should_receive(:del).once.ordered.with  :some_namespace
-      redis_backend.should_receive(:hset).once.ordered.with :some_namespace, :a, 1
-      redis_backend.should_receive(:hset).once.ordered.with :some_namespace, :b, 2
-      redis_backend.should_receive(:hset).once.ordered.with :some_namespace, :c, 3
+      client.should_receive(:del).once.ordered.with  :some_namespace
+      client.should_receive(:hset).once.ordered.with :some_namespace, :a, 1
+      client.should_receive(:hset).once.ordered.with :some_namespace, :b, 2
+      client.should_receive(:hset).once.ordered.with :some_namespace, :c, 3
       
       backend.dump a: 1, b: 2, c: 3
     end
   end
   
   describe 'member' do
-    before(:each) do
-      @actual_backend = stub :actual_backend
-      backend.stub! :backend => @actual_backend
-    end
     it 'delegates to the backend' do
-      @actual_backend.should_receive(:hget).once.with :some_namespace, :some_symbol
+      client.should_receive(:hget).once.with :some_namespace, :some_symbol
       
       backend[:some_symbol]
     end
     it 'returns whatever it gets from the backend' do
-      @actual_backend.should_receive(:hget).any_number_of_times.and_return :some_result
+      client.should_receive(:hget).any_number_of_times.and_return :some_result
       
       backend[:anything].should == :some_result
     end

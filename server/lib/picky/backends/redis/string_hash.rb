@@ -13,14 +13,14 @@ module Picky
         def dump hash
           clear
           hash.each_pair do |key, value|
-            backend.hset namespace, key, value
+            client.hset namespace, key, value
           end
         end
 
         # Clears the hash.
         #
         def clear
-          backend.del namespace
+          client.del namespace
         end
 
         # Get a single value.
@@ -28,7 +28,7 @@ module Picky
         # Internal API method for the index.
         #
         def [] key
-          backend.hget namespace, key
+          client.hget namespace, key
         end
 
       end

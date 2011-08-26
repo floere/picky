@@ -2,34 +2,35 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::Basic do
   
-  let(:redis) { described_class.new :some_namespace, :some_backend }
+  let(:client) { stub :client }
+  let(:index) { described_class.new client, :some_namespace }
 
   describe 'load, retrieve, backup, delete' do
     it 'is nothing they do (at least on the backend)' do
-      redis.should_receive(:backend).never
+      index.should_receive(:client).never
       
-      redis.load
-      redis.retrieve
-      redis.backup
-      redis.delete
+      index.load
+      index.retrieve
+      index.backup
+      index.delete
     end
   end
   
   describe 'cache_small?' do
     context 'size 0' do
       before(:each) do
-        redis.stub! :size => 0
+        index.stub! :size => 0
       end
       it 'is small' do
-        redis.cache_small?.should == true
+        index.cache_small?.should == true
       end
     end
     context 'size 1' do
       before(:each) do
-        redis.stub! :size => 1
+        index.stub! :size => 1
       end
       it 'is not small' do
-        redis.cache_small?.should == false
+        index.cache_small?.should == false
       end
     end
   end
@@ -37,36 +38,33 @@ describe Picky::Backends::Redis::Basic do
   describe 'cache_ok?' do
     context 'size 0' do
       before(:each) do
-        redis.stub! :size => 0
+        index.stub! :size => 0
       end
       it 'is not ok' do
-        redis.cache_ok?.should == false
+        index.cache_ok?.should == false
       end
     end
     context 'size 1' do
       before(:each) do
-        redis.stub! :size => 1
+        index.stub! :size => 1
       end
       it 'is ok' do
-        redis.cache_ok?.should == true
+        index.cache_ok?.should == true
       end
     end
   end
   
   describe "size" do
     it 'delegates to the backend' do
-      backend = stub :backend
-      redis.stub! :backend => backend
+      client.should_receive(:dbsize).once.with
       
-      backend.should_receive(:dbsize).once.with
-      
-      redis.size
+      index.size
     end
   end
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      redis.to_s.should == 'Picky::Backends::Redis::Basic(some_namespace:*)'
+      index.to_s.should == 'Picky::Backends::Redis::Basic(some_namespace:*)'
     end
   end
   
