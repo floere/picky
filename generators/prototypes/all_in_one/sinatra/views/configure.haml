@@ -147,14 +147,15 @@
         The view is even easier. Just add the line
         %code
           %pre
-            \= Picky::Helper.cached_interface
+            :preserve
+              = Picky::Helper.cached_interface
         if you use just one language, or
         %code
           %pre
             :preserve
-              \= Picky::Helper.interface :button     => 'search',
-                                         :no_results => 'No results!',
-                                         :more       => 'more'
+              = Picky::Helper.interface :button     => 'search',
+                                        :no_results => 'No results!',
+                                        :more       => 'more'
         if you use multiple languages.
         (You'd use the options
         %code
