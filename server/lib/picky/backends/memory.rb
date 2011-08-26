@@ -5,16 +5,16 @@ module Picky
     class Memory < Backend
 
       def create_inverted bundle
-        File::JSON.new bundle.index_path(:inverted)
+        JSON.new bundle.index_path(:inverted)
       end
       def create_weights bundle
-        File::JSON.new bundle.index_path(:weights)
+        JSON.new bundle.index_path(:weights)
       end
       def create_similarity bundle
-        File::Marshal.new bundle.index_path(:similarity)
+        Marshal.new bundle.index_path(:similarity)
       end
       def create_configuration bundle
-        File::JSON.new bundle.index_path(:configuration)
+        JSON.new bundle.index_path(:configuration)
       end
 
       # Returns the result ids for the allocation.
@@ -31,6 +31,8 @@ module Picky
       #       We cannot use the information to speed up the algorithm, unfortunately.
       #
       def ids combinations, _, _
+        # TODO Move out.
+        #
         return [] if combinations.empty?
 
         # Get the ids for each combination.

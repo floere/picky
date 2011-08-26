@@ -92,7 +92,7 @@ module Picky
     # Note: If you don't use it with the block, do not forget to close it.
     #
     def prepared_index_file &block
-      @prepared_index_file ||= Backends::File::Text.new prepared_index_path
+      @prepared_index_file ||= Backends::Memory::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
     # Creates the index directory including all necessary paths above it.

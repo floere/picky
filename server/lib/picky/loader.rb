@@ -114,15 +114,19 @@ module Picky
 
       load_relative 'backends/redis'
       load_relative 'backends/redis/basic'
-      load_relative 'backends/redis/list_hash'
-      load_relative 'backends/redis/string_hash'
-      load_relative 'backends/redis/float_hash'
+      load_relative 'backends/redis/list'
+      load_relative 'backends/redis/string'
+      load_relative 'backends/redis/float'
 
-      load_relative 'backends/file/basic'
-      load_relative 'backends/file/text'
-      load_relative 'backends/file/marshal'
-      load_relative 'backends/file/json'
       load_relative 'backends/memory'
+      load_relative 'backends/memory/basic'
+      load_relative 'backends/memory/text'
+      load_relative 'backends/memory/marshal'
+      load_relative 'backends/memory/json'
+
+      load_relative 'backends/file'
+      load_relative 'backends/file/basic'
+      load_relative 'backends/file/json'
 
       # Indexing and Indexed things.
       #

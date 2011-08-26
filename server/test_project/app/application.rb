@@ -221,6 +221,16 @@ class BookSearch < Picky::Application
       category :name
     end
 
+    file_index = Picky::Index.new(:file) do
+      backend  Picky::Backends::File.new
+      source [
+        ChangingItem.new("1", 'first entry'),
+        ChangingItem.new("2", 'second entry'),
+        ChangingItem.new("3", 'third entry')
+      ]
+      category :name
+    end
+
     japanese_index = Picky::Index.new(:japanese) do
       source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
 
@@ -251,7 +261,8 @@ class BookSearch < Picky::Application
           %r{\A/geo\Z}             => Picky::Search.new(real_geo_index),
           %r{\A/simple_geo\Z}      => Picky::Search.new(mgeo_index),
           %r{\A/iphone\Z}          => Picky::Search.new(iphone_locations),
-          %r{\A/indexing\Z}        => Picky::Search.new(indexing_index)
+          %r{\A/indexing\Z}        => Picky::Search.new(indexing_index),
+          %r{\A/file\Z}            => Picky::Search.new(file_index)
     japanese_search = Picky::Search.new(japanese_index) do
       searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
                 stopwords:          /\b(and|the|of|it|in|for)\b/i,

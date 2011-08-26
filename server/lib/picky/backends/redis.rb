@@ -13,16 +13,16 @@ module Picky
       end
 
       def create_inverted bundle
-        Redis::ListHash.new client, "#{bundle.identifier}:inverted"
+        List.new client, "#{bundle.identifier}:inverted"
       end
       def create_weights bundle
-        Redis::FloatHash.new client, "#{bundle.identifier}:weights"
+        Float.new client, "#{bundle.identifier}:weights"
       end
       def create_similarity bundle
-        Redis::ListHash.new client, "#{bundle.identifier}:similarity"
+        List.new client, "#{bundle.identifier}:similarity"
       end
       def create_configuration bundle
-        Redis::StringHash.new client, "#{bundle.identifier}:configuration"
+        String.new client, "#{bundle.identifier}:configuration"
       end
 
       # Returns the result ids for the allocation.
@@ -34,6 +34,8 @@ module Picky
       # Note: We use the amount and offset hints to speed Redis up.
       #
       def ids combinations, amount, offset
+        # TODO Move out.
+        #
         return [] if combinations.empty?
 
         identifiers = combinations.inject([]) do |identifiers, combination|

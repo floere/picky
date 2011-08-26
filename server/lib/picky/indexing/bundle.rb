@@ -46,7 +46,7 @@ module Picky
         @weights_strategy = weights_strategy
         @partial_strategy = partial_strategy
         @key_format       = options[:key_format]
-        @prepared         = Backends::File::Text.new category.prepared_index_path
+        @prepared         = Backends::Memory::Text.new category.prepared_index_path
 
         @inverted      = {}
         @weights       = {}
