@@ -31,7 +31,7 @@ MESSAGE
     class Redis
 
       def initialize(*)
-        raise <<-RAISE
+        raise <<-MESSAGE
 
 The Picky::Indexes::Redis is not available anymore and has been replaced by Picky::Index.
 (with the addition of a "backend" option)
@@ -51,7 +51,7 @@ use
 
 Thanks and sorry for the inconvenience!
 
-RAISE
+MESSAGE
       end
 
     end
