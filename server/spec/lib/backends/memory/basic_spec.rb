@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Picky::Backends::File::Basic do
+describe Picky::Backends::Memory::Basic do
   
   let(:file) { described_class.new 'some/cache/path/to/file' }
   
   describe 'backup_file_path_of' do
     it 'returns a backup path relative to the path' do
-      file.backup_file_path_of('some/path/to/some.index').should == 'some/path/to/backup/some.index'
+      file.backup_file_path_of('some/path/to/some.memory.index').should == 'some/path/to/backup/some.memory.index'
     end
   end
   
@@ -18,7 +18,7 @@ describe Picky::Backends::File::Basic do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'Picky::Backends::File::Basic(some/cache/path/to/file.index)'
+      file.to_s.should == 'Picky::Backends::Memory::Basic(some/cache/path/to/file.memory.index)'
     end
   end
   

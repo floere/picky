@@ -84,8 +84,11 @@ module Picky
     #  * partial index
     #  * similarity index
     #
-    def index_path type
-      ::File.join index_directory, "#{category.name}_#{name}_#{type}"
+    # Returns just the part without subindex type,
+    # if none given.
+    #
+    def index_path type = nil
+      ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
     end
 
     # Copies the indexes to the "backup" directory.

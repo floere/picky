@@ -5,7 +5,7 @@ describe Picky::Query::Allocation do
   before(:each) do
     @backend      = stub :backend
     @index        = stub :index, :result_identifier => :some_result_identifier, :backend => @backend
-    @combinations = stub :combinations
+    @combinations = stub :combinations, :empty? => false
     @allocation   = described_class.new @index, @combinations
   end
   
@@ -132,7 +132,7 @@ describe Picky::Query::Allocation do
   describe 'to_result' do
     context 'with few combinations' do
       before(:each) do
-        @allocation = described_class.new @index, stub(:combinations, :to_result => [:some_result])
+        @allocation = described_class.new @index, stub(:combinations, :empty? => false, :to_result => [:some_result])
         @allocation.instance_variable_set :@score, :some_score
       end
       context 'with ids' do
@@ -147,7 +147,9 @@ describe Picky::Query::Allocation do
     end
     context 'with results' do
       before(:each) do
-        combinations = stub :combinations, :to_result => [:some_result1, :some_result2]
+        combinations = stub :combinations,
+                            :empty? => false,
+                            :to_result => [:some_result1, :some_result2]
         @allocation = described_class.new @index, combinations
         @allocation.instance_variable_set :@score, :some_score
       end
@@ -163,7 +165,7 @@ describe Picky::Query::Allocation do
     end
     context 'without results' do
       before(:each) do
-        @allocation = described_class.new @index, stub(:combinations, :to_result => [])
+        @allocation = described_class.new @index, stub(:combinations, :empty? => true)
         @allocation.instance_variable_set :@score, :some_score
       end
       it 'should return nil' do
@@ -178,7 +180,7 @@ describe Picky::Query::Allocation do
 
   describe 'to_json' do
     before(:each) do
-      @allocation = described_class.new @index, stub(:combination, :to_result => [:some_result1, :some_result2])
+      @allocation = described_class.new @index, stub(:combination, :empty? => false, :to_result => [:some_result1, :some_result2])
       @allocation.instance_variable_set :@score, :some_score
     end
     it 'should output the correct json string' do

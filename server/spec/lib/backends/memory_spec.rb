@@ -10,10 +10,10 @@ describe Picky::Backends::Memory do
   
   describe 'create_...' do
     [
-      [:inverted,      Picky::Backends::File::JSON],
-      [:weights,       Picky::Backends::File::JSON],
-      [:similarity,    Picky::Backends::File::Marshal],
-      [:configuration, Picky::Backends::File::JSON]
+      [:inverted,      Picky::Backends::Memory::JSON],
+      [:weights,       Picky::Backends::Memory::JSON],
+      [:similarity,    Picky::Backends::Memory::Marshal],
+      [:configuration, Picky::Backends::Memory::JSON]
     ].each do |type, kind|
       it "creates and returns a(n) #{type} index" do
         @backend.send(:"create_#{type}",

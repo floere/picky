@@ -117,7 +117,7 @@ describe Picky::Indexed::Bundle do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
         
         @bundle.load_inverted
       end
@@ -126,7 +126,7 @@ describe Picky::Indexed::Bundle do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
         
         @bundle.load_weights
       end
@@ -135,7 +135,7 @@ describe Picky::Indexed::Bundle do
       it "uses the right file" do
         Marshal.stub! :load
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_similarity.dump', 'r:binary'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
         
         @bundle.load_similarity
       end
@@ -144,7 +144,7 @@ describe Picky::Indexed::Bundle do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
         
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.json', 'r'
+        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'
         
         @bundle.load_configuration
       end
@@ -159,16 +159,16 @@ describe Picky::Indexed::Bundle do
       @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :similarity
     end
     it 'should initialize the index correctly' do
-      @bundle.backend_inverted.should be_kind_of(Picky::Backends::File::JSON)
+      @bundle.backend_inverted.should be_kind_of(Picky::Backends::Memory::JSON)
     end
     it 'should initialize the weights index correctly' do
-      @bundle.backend_weights.should be_kind_of(Picky::Backends::File::JSON)
+      @bundle.backend_weights.should be_kind_of(Picky::Backends::Memory::JSON)
     end
     it 'should initialize the similarity index correctly' do
-      @bundle.backend_similarity.should be_kind_of(Picky::Backends::File::Marshal)
+      @bundle.backend_similarity.should be_kind_of(Picky::Backends::Memory::Marshal)
     end
     it 'should initialize the configuration correctly' do
-      @bundle.backend_configuration.should be_kind_of(Picky::Backends::File::JSON)
+      @bundle.backend_configuration.should be_kind_of(Picky::Backends::Memory::JSON)
     end
     it 'should initialize the similarity strategy correctly' do
       @bundle.similarity_strategy.should == :similarity

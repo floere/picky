@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Backends::File::JSON do
+describe Picky::Backends::Memory::JSON do
   
   let(:file) { described_class.new 'some/cache/path/to/file' }
   
@@ -8,7 +8,7 @@ describe Picky::Backends::File::JSON do
     it "delegates to the given hash" do
       hash = stub :hash
       
-      hash.should_receive(:dump_json).once.with "some/cache/path/to/file.json"
+      hash.should_receive(:dump_json).once.with "some/cache/path/to/file.memory.json"
       
       file.dump hash
     end
@@ -24,7 +24,7 @@ describe Picky::Backends::File::JSON do
   
   describe 'to_s' do
     it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'Picky::Backends::File::JSON(some/cache/path/to/file.json)'
+      file.to_s.should == 'Picky::Backends::Memory::JSON(some/cache/path/to/file.memory.json)'
     end
   end
   

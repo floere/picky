@@ -10,10 +10,10 @@ describe Picky::Backends::Redis do
   
   describe 'create_...' do
     [
-      [:inverted,      Picky::Backends::Redis::ListHash],
-      [:weights,       Picky::Backends::Redis::FloatHash],
-      [:similarity,    Picky::Backends::Redis::ListHash],
-      [:configuration, Picky::Backends::Redis::StringHash]
+      [:inverted,      Picky::Backends::Redis::List],
+      [:weights,       Picky::Backends::Redis::Float],
+      [:similarity,    Picky::Backends::Redis::List],
+      [:configuration, Picky::Backends::Redis::String]
     ].each do |type, kind|
       it "creates and returns a(n) #{type} index" do
         @backend.send(:"create_#{type}",
