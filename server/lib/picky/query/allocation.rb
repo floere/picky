@@ -38,6 +38,7 @@ module Picky
       # Asks the backend for the (intersected) ids.
       #
       def calculate_ids amount, offset
+        return [] if combinations.empty?
         @backend.ids combinations, amount, offset
       end
 

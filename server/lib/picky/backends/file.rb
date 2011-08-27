@@ -2,7 +2,13 @@ module Picky
 
   module Backends
 
-    class Memory < Backend
+    # Naive implementation of a file-based index.
+    # In-Memory Hash with length, offset:
+    #   { :bla => [20, 312] }
+    # That map to positions the File, encoded in JSON?:
+    #   ...[1,2,3,21,7,4,13,15]...
+    #
+    class File < Backend
 
       def create_inverted bundle
         JSON.new bundle.index_path(:inverted)
@@ -11,24 +17,17 @@ module Picky
         JSON.new bundle.index_path(:weights)
       end
       def create_similarity bundle
-        Marshal.new bundle.index_path(:similarity)
+        JSON.new bundle.index_path(:similarity)
       end
       def create_configuration bundle
         JSON.new bundle.index_path(:configuration)
       end
 
-      # Returns the result ids for the allocation.
+      # Currently, the loaded ids are intersected using
+      # the fast C-based intersection.
       #
-      # Sorts the ids by size and & through them in the following order (sizes):
-      # 0. [100_000, 400, 30, 2]
-      # 1. [2, 30, 400, 100_000]
-      # 2. (100_000 & (400 & (30 & 2))) # => result
-      #
-      # Note: Uses a C-optimized intersection routine (in performant.c)
-      #       for speed and memory efficiency.
-      #
-      # Note: In the memory based version we ignore the amount and offset hints.
-      #       We cannot use the information to speed up the algorithm, unfortunately.
+      # However, if we could come up with a clever way
+      # to do this faster, it would be most welcome.
       #
       def ids combinations, _, _
         # Get the ids for each combination.

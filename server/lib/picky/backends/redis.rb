@@ -34,10 +34,6 @@ module Picky
       # Note: We use the amount and offset hints to speed Redis up.
       #
       def ids combinations, amount, offset
-        # TODO Move out.
-        #
-        return [] if combinations.empty?
-
         identifiers = combinations.inject([]) do |identifiers, combination|
           identifiers << "#{combination.identifier}"
         end

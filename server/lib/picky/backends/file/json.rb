@@ -10,12 +10,6 @@ module Picky
 
         attr_accessor :mapping
 
-        # Uses the extension "json".
-        #
-        def extension
-          :json
-        end
-
         #
         #
         # 1. Gets the length and offset for the key.
@@ -23,7 +17,7 @@ module Picky
         #
         def [] key
           length, offset = mapping[key]
-          return [] unless length
+          return unless length
           result = Yajl::Parser.parse IO.read(cache_path, length, offset)
           result
         end
@@ -67,6 +61,12 @@ module Picky
         #
         def retrieve
           raise "Can't retrieve from JSON file. Use text file."
+        end
+
+        # Uses the extension "json".
+        #
+        def extension
+          :json
         end
 
       end

@@ -13,7 +13,9 @@ module Picky
 
       attr_reader :combinations
 
-      delegate :empty?, :inject, :to => :@combinations
+      delegate :empty?,
+               :inject,
+               :to => :@combinations
 
       def initialize combinations = []
         @combinations = combinations
