@@ -8,9 +8,13 @@ module Picky
       #
       class JSON < Basic
 
+        # The in-memory mapping hash, mapping
+        # a Symbol key to [length, offset] of
+        # the JSON data in the file.
+        #
         attr_accessor :mapping
 
-        #
+        # See lib/picky/backends/file.rb for what this should return.
         #
         # 1. Gets the length and offset for the key.
         # 2. Extracts and decodes the object from the file.
@@ -23,6 +27,10 @@ module Picky
         end
 
         # Clears the currently loaded index.
+        #
+        # Note: This only clears the in-memory mapping,
+        #       but this is enough for the index to not exist
+        #       anymore, at least to the application.
         #
         def clear
           self.mapping.clear

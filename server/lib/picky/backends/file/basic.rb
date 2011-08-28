@@ -13,10 +13,8 @@ module Picky
       #
       class Basic
 
-        # This file's location.
-        #
-        attr_reader :cache_path,
-                    :mapping_file
+        attr_reader :cache_path,  # This index file's location.
+                    :mapping_file # The index file's mapping file (loaded into memory for quick access).
 
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
