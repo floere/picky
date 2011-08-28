@@ -13,25 +13,25 @@ module Picky
       end
 
       # Returns an object that responds to:
-      #   [:token] => [id, id, id, id, id] # (an array of ids)
+      #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
         List.new client, "#{bundle.identifier}:inverted"
       end
       # Returns an object that responds to:
-      #   [:token] => 1.23 # (a weight)
+      #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
         Float.new client, "#{bundle.identifier}:weights"
       end
       # Returns an object that responds to:
-      #   [:encoded] => [:original, :original] # (an array of original symbols this similarity encoded thing maps to)
+      #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
         List.new client, "#{bundle.identifier}:similarity"
       end
       # Returns an object that responds to:
-      #   [:key] => value # (a value for this config key)
+      #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
         String.new client, "#{bundle.identifier}:configuration"
