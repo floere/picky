@@ -22,7 +22,7 @@ class BookSearch < Sinatra::Application
   #
   books_index = Index.new :books do
     source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
-    indexing removes_characters: /[^a-zA-Z0-9\s\/\-\_\:\"\&\.]/i,
+    indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
              splits_text_on:     /[\s\/\-\_\:\"\&\/]/
     category :title,
@@ -42,7 +42,7 @@ class BookSearch < Sinatra::Application
   #
   books = Search.new books_index do
     searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
-              removes_characters: /[^a-zA-Z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
+              removes_characters: /[^a-z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/
 
