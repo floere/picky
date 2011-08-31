@@ -35,6 +35,8 @@ module Picky
     # For integration testing – indexes for the tests
     # without forking and shouting ;)
     #
+    # TODO Rename to #index_without_forking, or just #index.
+    #
     def index_for_tests
       indexes.each(&:index)
     end
