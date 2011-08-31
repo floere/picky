@@ -23,6 +23,13 @@ module Picky
       ary_or_generator = ary_or_generator.sort_by { rand } if options[:randomly]
       generator        = ary_or_generator.each
 
+      # Don't fork if there's just one element.
+      #
+      if generator.inject(0) { |total, element| total + 1 } == 1
+        yield generator.next
+        return
+      end
+
       # Get the maximum number of processors.
       #
       max                  = max_processors options
