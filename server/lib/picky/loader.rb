@@ -83,6 +83,7 @@ module Picky
       load_relative 'generators/partial/strategy'
       load_relative 'generators/partial/none'
       load_relative 'generators/partial/substring'
+      load_relative 'generators/partial/infix'
       load_relative 'generators/partial/default'
 
       # Weight index generation strategies.
