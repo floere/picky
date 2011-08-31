@@ -26,6 +26,8 @@ class Symbol # :nodoc:all
     max_length = size + max_length + 1 if max_length < 0
     max_length = size if size < max_length
     max_length = 1 if max_length < 1
+
+    min_length = size + min_length + 1 if min_length < 0
     min_length = 1 if min_length < 1
 
     this_many = size - max_length + 1
