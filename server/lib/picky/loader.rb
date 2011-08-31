@@ -111,6 +111,7 @@ module Picky
 
       # Index store handling.
       #
+      load_relative 'backends/helpers/file'
       load_relative 'backends/backend'
 
       load_relative 'backends/redis'

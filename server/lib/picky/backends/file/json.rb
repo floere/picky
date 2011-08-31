@@ -77,6 +77,50 @@ module Picky
           :json
         end
 
+        # Will copy the index file to a location that
+        # is in a directory named "backup" right under
+        # the directory the index file is in.
+        #
+        def backup
+          mapping_file.backup
+
+          prepare_backup backup_directory(cache_path)
+          FileUtils.cp cache_path, target, verbose: true
+        end
+
+        # Copies the file from its backup location back
+        # to the original location.
+        #
+        def restore
+          mapping_file.restore
+
+          FileUtils.cp backup_file_path_of(cache_path), cache_path, verbose: true
+        end
+
+        # Deletes the file.
+        #
+        def delete
+          mapping_file.delete
+
+          `rm -Rf #{cache_path}`
+        end
+
+        # Is this cache file suspiciously small?
+        # (less than 8 Bytes of size)
+        #
+        def cache_small?
+          size_of(cache_path) < 8
+        end
+
+        # Is the cache ok? (existing and larger than
+        # zero Bytes in size)
+        #
+        # A small cache is still ok.
+        #
+        def cache_ok?
+          size_of(cache_path) > 0
+        end
+
       end
 
     end

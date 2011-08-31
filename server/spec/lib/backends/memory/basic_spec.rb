@@ -12,7 +12,7 @@ describe Picky::Backends::Memory::Basic do
   
   describe 'backup_directory' do
     it "returns the cache path's backup path" do
-      file.backup_directory.should == 'some/cache/path/to/backup'
+      file.backup_directory('some/cache/path/to/file').should == 'some/cache/path/to/backup'
     end
   end
   

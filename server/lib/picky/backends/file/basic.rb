@@ -13,6 +13,8 @@ module Picky
       #
       class Basic
 
+        include Helpers::File
+
         attr_reader :cache_path,  # This index file's location.
                     :mapping_file # The index file's mapping file (loaded into memory for quick access).
 
