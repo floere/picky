@@ -49,8 +49,8 @@ module Picky
         # * from: 4 # => [:hell]
         #
         def initialize options = {}
-          from     = options[:from] || 1
-          to = options[:to] || -1
+          from = options[:from] || 1
+          to   = options[:to]   || -1
           @generator = SubstringGenerator.new from, to
         end
 
