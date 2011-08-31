@@ -3,7 +3,7 @@ var PickyController = function(config) {
   var view = new PickyView(this, config);
   
   var backends         = config.backends;
-  var beforeCallback   = config.before || function(params, query) {  };
+  var beforeCallback   = config.before || function(query, params) {  };
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
@@ -41,7 +41,7 @@ var PickyController = function(config) {
   var liveSearch = function(query, possibleParams) {
     var params = possibleParams || {};
     
-    params = beforeCallback(params) || params;
+    query = beforeCallback(query, params) || query;
     
     search('live', query, liveSearchCallback, params);
   };
@@ -77,7 +77,7 @@ var PickyController = function(config) {
       window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
     }
       
-    params = beforeCallback(params, query) || params;
+    query = beforeCallback(query, params) || query;
     
     search('full', query, fullSearchCallback, params);
   };
