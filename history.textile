@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.1.2
+
+* hanke: (generated client) The @before@ Javascript callback option given to the @PickyClient@ has changed signature and how it is called. Old was @before(params, query)@, and the returned params changed the params. This did not allow changing the @query@ in the callback. New is @before(query, params)@ and the returned @query@ replaces the query given as parameter. This allows changing the query before sending it off. The params can be changed as well, using @params['option'] = value;@.
+
 h2. Version 3.1.1
 
 * hanke: (server) @rake index@ does not fork anymore if there's just one index to be indexed.
