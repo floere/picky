@@ -9,8 +9,163 @@ describe Symbol do
     before(:each) do
       @token = (((0..9).to_a)*10).to_s.to_sym
     end
-    it "should be fast" do
+    it "is fast" do
       performance_of { @token.each_subtoken { |subtoken| } }.should < 0.00065
+    end
+    it 'is fast enough' do
+      performance_of { @token.each_intoken { |intoken| } }.should < 0.025 # TODO Slow!
+    end
+  end
+  
+  describe 'each_intoken' do
+    context 'normal symbol' do
+      before(:each) do
+        @sym = :picky
+      end
+      context 'no params' do
+        it "yields the right elements" do
+          result = []
+          @sym.each_intoken do |subtoken|
+            result << subtoken
+          end
+          result.should == [:picky, :pick, :icky, :pic, :ick, :cky, :pi, :ic, :ck, :ky, :p, :i, :c, :k, :y]
+        end
+      end
+      context 'with min_length == 0' do
+        it "yields the right elements" do
+          result = []
+          @sym.each_intoken(0) do |subtoken|
+            result << subtoken
+          end
+          result.should == [:picky, :pick, :icky, :pic, :ick, :cky, :pi, :ic, :ck, :ky, :p, :i, :c, :k, :y]
+        end
+        context 'max_length == 0' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(0, 0) do |subtoken|
+              result << subtoken
+            end
+            result.should == [:p, :i, :c, :k, :y]
+          end
+        end
+        context 'max_length == 1' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(0, 1) do |subtoken|
+              result << subtoken
+            end
+            result.should == [:p, :i, :c, :k, :y]
+          end
+        end
+        context 'max_length == 2' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(0, 2) do |subtoken|
+              result << subtoken
+            end
+            result.should == [:pi, :ic, :ck, :ky, :p, :i, :c, :k, :y]
+          end
+        end
+        context 'max_length == 10' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(0, 10) do |subtoken|
+              result << subtoken
+            end
+            result.should == [:picky, :pick, :icky, :pic, :ick, :cky, :pi, :ic, :ck, :ky, :p, :i, :c, :k, :y]
+          end
+        end
+      end
+      context 'with min_length == sym.size' do
+        it "yields the right elements" do
+          result = []
+          @sym.each_intoken(@sym.size) do |subtoken|
+            result << subtoken
+          end
+          result.should == [:picky]
+        end
+        context 'max_length == 0' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size, 0) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+        context 'max_length == 1' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size, 1) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+        context 'max_length == 2' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size, 2) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+        context 'max_length == 10' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size, 10) do |subtoken|
+              result << subtoken
+            end
+            result.should == [:picky]
+          end
+        end
+      end
+      context 'with min_length > sym.size' do
+        it "yields the right elements" do
+          result = []
+          @sym.each_intoken(@sym.size+1) do |subtoken|
+            result << subtoken
+          end
+          result.should == []
+        end
+        context 'max_length == 0' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size+1, 0) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+        context 'max_length == 1' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size+1, 1) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+        context 'max_length == 2' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size+1, 2) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+        context 'max_length == 10' do
+          it 'yields the right elements' do
+            result = []
+            @sym.each_intoken(@sym.size+1, 10) do |subtoken|
+              result << subtoken
+            end
+            result.should == []
+          end
+        end
+      end
     end
   end
   
