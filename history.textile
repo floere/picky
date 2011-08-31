@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h3. Version 3.1.3
+
+* hanke: (server) Added @#ignore@ option to @Search@ definition block. Calling @ignore :name@ will ignore tokens in allocations that are mapped to the name category. Example: You search for "David Hasselhoff". If Picky maps this to allocations @[ [:first_name, name], [:first_name, :movie_title] ]@, only @[ [:first_name], [:first_name, :movie_title] ]@ will survive. The @Hasselhoff - name@ match will simply be ignored.
+
 h2. Version 3.1.2
 
 * hanke: (generated client) The @before@ Javascript callback option given to the @PickyClient@ has changed signature and how it is called. Old was @before(params, query)@, and the returned params changed the params. This did not allow changing the @query@ in the callback. New is @before(query, params)@ and the returned @query@ replaces the query given as parameter. This allows changing the query before sending it off. The params can be changed as well, using @params['option'] = value;@.
