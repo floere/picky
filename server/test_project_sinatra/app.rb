@@ -230,6 +230,17 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
+  file_index = Picky::Index.new(:file) do
+    backend  Picky::Backends::File.new
+    source [
+      ChangingItem.new("1", 'first entry'),
+      ChangingItem.new("2", 'second entry'),
+      ChangingItem.new("3", 'third entry')
+    ]
+    category :name,
+             partial: Picky::Partial::Infix.new(min: -3)
+  end
+
   japanese_index = Picky::Index.new(:japanese) do
     source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
 
@@ -297,6 +308,10 @@ class BookSearch < Sinatra::Application
   indexing_search = Search.new indexing_index
   get %r{\A/indexing\Z} do
     indexing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
+  file_search = Search.new file_index
+  get %r{\A/file\Z} do
+    file_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   japanese_search = Search.new japanese_index do
     searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.

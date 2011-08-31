@@ -245,6 +245,10 @@ describe BookSearch do
   it { file.search("entry").ids.should == [1,2,3] }
   it { file.search("entry first").ids.should == [1] }
   
+  # Infix partial.
+  #
+  it { file.search("ntr* rst*").ids.should == [1] }
+  
   # Japanese characters (UTF-8).
   #
   it { japanese.search("日本語").ids.should == [1] }

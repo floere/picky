@@ -228,7 +228,8 @@ class BookSearch < Picky::Application
         ChangingItem.new("2", 'second entry'),
         ChangingItem.new("3", 'third entry')
       ]
-      category :name
+      category :name,
+               partial: Picky::Partial::Infix.new(min: -3)
     end
 
     japanese_index = Picky::Index.new(:japanese) do

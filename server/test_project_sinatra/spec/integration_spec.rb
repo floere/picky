@@ -20,6 +20,7 @@ describe BookSearch do
   let(:indexing)        { Picky::TestClient.new(described_class, :path => '/indexing')        }
   let(:memory_changing) { Picky::TestClient.new(described_class, :path => '/memory_changing') }
   let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
+  let(:file)            { Picky::TestClient.new(described_class, :path => '/file')            }
   let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')        }
 
   it 'can generate a single index category without failing' do
@@ -237,6 +238,16 @@ describe BookSearch do
   it { csv.search("history fergus").ids.should == [4, 4] }
   it { csv.search("HISTORY FERGUS").ids.should == [] }
   it { csv.search("history AND OR fergus").ids.should == [4, 4] }
+  
+  # File based.
+  #
+  it { file.search("first").ids.should == [1] }
+  it { file.search("entry").ids.should == [1,2,3] }
+  it { file.search("entry first").ids.should == [1] }
+  
+  # Infix partial.
+  #
+  it { file.search("ntr* rst*").ids.should == [1] }
   
   # Japanese characters (UTF-8).
   #
