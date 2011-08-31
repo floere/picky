@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+h2. Version 3.1.1
+
+* hanke: (server) @rake index@ does not fork anymore if there's just one index to be indexed.
+* hanke: (server) Experimental @Picky::Partial::Infix@ partial generator. Use to find all possible substrings inside words. Options are @min@, @max@, both take negative and/or positive values. Negative values indicate length up to length - X. E.g. @min: 3, max: -1 # :hello => [:hello, :hell, :ello, :hel, :ell, :llo]@
+* hanke: (server) Experimental @Picky::Backends::File@ file backend. Use in index definition block as follows: @backend Picky::Backends::File.new@. Use if you don't want Picky to use as much memory. Performance penalty applies.
+
 h2. Version 3.1.0
 
 * hanke: (server) Exchangeable backends. New index definition: @Indexes::Memory@ and @Indexes::Redis@ are now unified in @Index@. So use @index = Picky::Index.new(name)@ from now on. (See next point)
