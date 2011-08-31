@@ -73,6 +73,7 @@ describe Picky::Application do
           
           buks_search = Picky::Search.new(books_index) do
             searching removes_characters: /[buks]/
+            ignore    :author
           end
           route %r{^/buks} => buks_search
         end

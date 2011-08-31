@@ -38,19 +38,12 @@ module Picky
         @allocations = @allocations.shift amount
       end
 
-      # Keeps combinations.
-      #
-      # Only those passed in remain.
-      #
-      def keep identifiers = []
-        @allocations.each { |allocation| allocation.keep identifiers } unless identifiers.empty?
-      end
       # Removes combinations.
       #
       # Only those passed in are removed.
       #
-      def remove identifiers = []
-        @allocations.each { |allocation| allocation.remove identifiers } unless identifiers.empty?
+      def remove categories = []
+        @allocations.each { |allocation| allocation.remove categories } unless categories.empty?
       end
 
       # Returns the top amount ids.

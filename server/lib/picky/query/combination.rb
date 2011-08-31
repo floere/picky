@@ -61,12 +61,6 @@ module Picky
         "#{bundle.identifier}:#{token.identifier}"
       end
 
-      # Is the identifier in the given identifiers?
-      #
-      def in? identifiers
-        identifiers.include? identifier
-      end
-
       # Note: Required for uniq!
       #
       def hash

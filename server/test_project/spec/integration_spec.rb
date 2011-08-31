@@ -260,6 +260,10 @@ describe BookSearch do
   #
   it { japanese.search("日").ids.should == [1] }
   
+  # Search#ignore option.
+  #
+  it { book_each.search("alan history").ids.should == ["259", "307"] } # Ignores History or Alan in title.
+  
   # Database index reloading.
   #
   it 'can handle changing data with a Memory backend with a non-each DB source' do

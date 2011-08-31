@@ -26,18 +26,6 @@ describe Picky::Query::Combination do
     end
   end
 
-  describe 'in?' do
-    before(:each) do
-      @combination.stub! :identifier => :some_identifier
-    end
-    it 'should check if the given identifiers include the identifier' do
-      @combination.in?([:some_other_identifier, :some_identifier, :some_other_identifier]).should == true
-    end
-    it 'should check if the given identifiers include the identifier' do
-      @combination.in?([:some_other_identifier, :some_other_identifier]).should == false
-    end
-  end
-
   describe 'to_result' do
     context 'functional with qualifier' do
       before(:each) do

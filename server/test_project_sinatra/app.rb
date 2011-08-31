@@ -265,7 +265,10 @@ class BookSearch < Sinatra::Application
   get %r{\A/books\Z} do
     books_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  book_each_search = Search.new book_each_index do boost weights end
+  book_each_search = Search.new book_each_index do
+                       boost weights
+                       ignore :title
+                     end
   get %r{\A/book_each\Z} do
     book_each_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end

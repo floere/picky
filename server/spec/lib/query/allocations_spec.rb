@@ -31,39 +31,13 @@ describe Picky::Query::Allocations do
         @allocations.remove
       end
     end
-    context 'identifiers not empty' do
+    context 'categories not empty' do
       it 'should remove each' do
-        @allocation1.should_receive(:remove).once.with :some_identifier
-        @allocation2.should_receive(:remove).once.with :some_identifier
-        @allocation3.should_receive(:remove).once.with :some_identifier
+        @allocation1.should_receive(:remove).once.with :some_category
+        @allocation2.should_receive(:remove).once.with :some_category
+        @allocation3.should_receive(:remove).once.with :some_category
 
-        @allocations.remove :some_identifier
-      end
-    end
-  end
-
-  describe 'keep' do
-    before(:each) do
-      @allocation1 = stub :allocation1
-      @allocation2 = stub :allocation2
-      @allocation3 = stub :allocation3
-      @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
-    end
-    context 'identifiers empty' do
-      it 'should do nothing' do
-        @allocation1.should_receive(:keep).never
-        @allocation2.should_receive(:keep).never
-
-        @allocations.keep
-      end
-    end
-    context 'identifiers not empty' do
-      it 'should filter each' do
-        @allocation1.should_receive(:keep).once.with :some_identifier
-        @allocation2.should_receive(:keep).once.with :some_identifier
-        @allocation3.should_receive(:keep).once.with :some_identifier
-
-        @allocations.keep :some_identifier
+        @allocations.remove :some_category
       end
     end
   end

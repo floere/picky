@@ -80,27 +80,14 @@ describe Picky::Query::Combinations do
   
   describe 'remove' do
     before(:each) do
-      @combination1 = stub :combination1, :in? => false
-      @combination2 = stub :combination2, :in? => true
-      @combination3 = stub :combination3, :in? => true
+      @combination1 = stub :combination1, :category => :other
+      @combination2 = stub :combination2, :category => :to_remove
+      @combination3 = stub :combination3, :category => :to_remove
 
       @combinations = described_class.new [@combination1, @combination2, @combination3]
     end
     it 'should remove the combinations' do
-      @combinations.remove([:any]).should == [@combination1]
-    end
-  end
-
-  describe 'keep' do
-    before(:each) do
-      @combination1 = stub :combination1, :in? => false
-      @combination2 = stub :combination2, :in? => true
-      @combination3 = stub :combination3, :in? => true
-
-      @combinations = described_class.new [@combination1, @combination2, @combination3]
-    end
-    it 'should filter the combinations' do
-      @combinations.keep([:any]).should == [@combination2, @combination3]
+      @combinations.remove([:to_remove]).should == [@combination1]
     end
   end
 

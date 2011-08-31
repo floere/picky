@@ -21,11 +21,13 @@ module Picky
     attr_accessor :tokenizer,
                   :weights
 
+    delegate :ignore,
+             :to => :indexes
+
     # Takes:
     # * A number of indexes
     #
-    # TODO Add identifiers_to_remove (rename) and reduce_allocations_to_amount (rename).
-    # TODO categories_to_remove ?
+    # TODO Add reduce_allocations_to_amount (rename).
     #
     # It is also possible to define the tokenizer and weights like so.
     # Example:

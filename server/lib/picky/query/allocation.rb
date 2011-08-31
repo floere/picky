@@ -52,13 +52,8 @@ module Picky
 
       #
       #
-      def keep identifiers = [] # categories
-        @combinations.keep identifiers
-      end
-      #
-      #
-      def remove identifiers = [] # categories
-        @combinations.remove identifiers
+      def remove categories = []
+        @combinations.remove categories
       end
 
       # Sort highest score first.

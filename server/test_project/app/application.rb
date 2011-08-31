@@ -252,7 +252,10 @@ class BookSearch < Picky::Application
     route %r{\A/admin\Z}           => Picky::LiveParameters.new
 
     route %r{\A/books\Z}           => (Picky::Search.new(books_index, isbn_index) do boost weights end),
-          %r{\A/book_each\Z}       => (Picky::Search.new(book_each_index) do boost weights end),
+          %r{\A/book_each\Z}       => (Picky::Search.new(book_each_index) do
+                                         boost weights
+                                         ignore :title
+                                       end),
           %r{\A/redis\Z}           => (Picky::Search.new(redis_index) do boost weights end),
           %r{\A/memory_changing\Z} => Picky::Search.new(memory_changing_index),
           %r{\A/redis_changing\Z}  => Picky::Search.new(redis_changing_index),

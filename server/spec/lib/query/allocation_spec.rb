@@ -43,17 +43,9 @@ describe Picky::Query::Allocation do
   
   describe 'remove' do
     it 'should delegate to the combinations' do
-      @combinations.should_receive(:remove).once.with [:some_identifiers]
+      @combinations.should_receive(:remove).once.with [:some_categories]
       
-      @allocation.remove [:some_identifiers]
-    end
-  end
-  
-  describe 'keep' do
-    it 'should delegate to the combinations' do
-      @combinations.should_receive(:keep).once.with [:some_identifiers]
-      
-      @allocation.keep [:some_identifiers]
+      @allocation.remove [:some_categories]
     end
   end
   

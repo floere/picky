@@ -13,7 +13,8 @@ module Picky
     #
     class Indexes
 
-      attr_reader :indexes
+      attr_reader :indexes,
+                  :ignored_categories
 
       # Creates a new Query::Indexes.
       #
@@ -24,15 +25,31 @@ module Picky
         IndexesCheck.check_backend_types indexes
 
         @indexes = indexes
-        @mapper  = Query::QualifierCategoryMapper.new
+
         map_categories
       end
       def map_categories
+        @mapper = Query::QualifierCategoryMapper.new
         @indexes.each do |index|
           index.each_category do |category|
             @mapper.add category
           end
         end
+      end
+
+      # Ignore the categories with these qualifiers.
+      #
+      # Example:
+      #   search = Search.new(index1, index2, index3) do
+      #     ignore :name, :first_name
+      #   end
+      #
+      # Cleans up / optimizes after being called.
+      #
+      def ignore *qualifiers
+        @ignored_categories ||= []
+        @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
+        @ignored_categories.uniq!
       end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
@@ -57,9 +74,9 @@ module Picky
         #
         # allocations.reduce_to some_amount
 
-        # Remove identifiers from allocations.
+        # Remove categories from allocations.
         #
-        # allocations.remove some_array_of_identifiers_to_remove
+        allocations.remove ignored_categories if ignored_categories
 
         allocations
       end

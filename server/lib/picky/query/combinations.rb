@@ -37,26 +37,15 @@ module Picky
         weights.score_for @combinations
       end
 
-      # Filters the tokens and identifiers such that only identifiers
-      # that are passed in, remain, including their tokens.
+      # Filters the tokens and categories such that categories
+      # that are passed in, are removed.
       #
       # Note: This method is not totally independent of the calculate_ids one.
       #       Since identifiers are only nullified, we need to not include the
       #       ids that have an associated identifier that is nil.
       #
-      def keep identifiers = []
-        @combinations.reject! { |combination| !combination.in?(identifiers) }
-      end
-
-      # Filters the tokens and identifiers such that identifiers
-      # that are passed in, are removed, including their tokens.
-      #
-      # Note: This method is not totally independent of the calculate_ids one.
-      #       Since identifiers are only nullified, we need to not include the
-      #       ids that have an associated identifier that is nil.
-      #
-      def remove identifiers = []
-        @combinations.reject! { |combination| combination.in?(identifiers) }
+      def remove categories = []
+        @combinations.reject! { |combination| categories.include?(combination.category) }
       end
 
       #
