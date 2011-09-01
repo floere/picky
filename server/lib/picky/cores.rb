@@ -26,7 +26,9 @@ module Picky
       # Don't fork if there's just one element.
       #
       if generator.inject(0) { |total, element| total + 1 } == 1
-        yield generator.next
+        generator.each do |element|
+          yield element # THINK yield generator.next results in trouble. Why?
+        end
         return
       end
 
