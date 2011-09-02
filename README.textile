@@ -13,7 +13,7 @@ h1. System Requirements
 * "Ruby 1.9":http://www.ruby-lang.org/en/downloads/
 * "Bundler Gem":http://gembundler.com/
 
-I recommend "RVM":http://rvm.beginrescueend.com/ for installing and managing Ruby versions.
+for installing and managing Ruby versions, there are two projects:  "rbenv":http://github.com/sstephenson/rbenv and "RVM":http://rvm.beginrescueend.com/.
 
 h1. Installation
 
