@@ -2,8 +2,6 @@ module Picky
 
   class Categories
 
-    attr_reader :ignore_unassigned_tokens
-
     each_delegate :load_from_cache,
                   :analyze,
                   :to => :categories
@@ -56,20 +54,13 @@ module Picky
     # Returns possible Combinations for the token.
     #
     # Note: The preselected_categories param is an optimization.
-    #
     # Note: Returns [] if no categories matched (will produce no result).
-    #       Returns nil if this token needs to be removed from the query.
-    #       (Also none of the categories matched, but the ignore unassigned
-    #       tokens option is true)
     #
     def possible_for token, preselected_categories = nil
       possible = (preselected_categories || possible_categories(token)).inject([]) do |combinations, category|
         combination = category.combination_for token
         combination ? combinations << combination : combinations
       end
-      # This is an optimization to mark tokens that are ignored.
-      #
-      return if ignore_unassigned_tokens && possible.empty?
       possible
     end
 

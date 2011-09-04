@@ -15,23 +15,8 @@ module Picky
 
     # A list of indexed categories.
     #
-    # Options:
-    #  * ignore_unassigned_tokens: Ignore the given token if it cannot be matched to a category.
-    #                              The default behaviour is that if a token does not match to
-    #                              any category, the query will not return anything (since a
-    #                              single token cannot be matched). If you set this option to
-    #                              true, any token that cannot be matched to a category will be
-    #                              simply ignored.
-    #                              Use this if only a few matched words are important, like for
-    #                              example of the query "Jonathan Myers 86455 Las Cucarachas"
-    #                              you only want to match the zipcode, to have the search engine
-    #                              display advertisements on the side for the zipcode.
-    #                              Nifty! :)
-    #
     def initialize options = {}
       clear_categories
-
-      @ignore_unassigned_tokens = options[:ignore_unassigned_tokens] || false
     end
 
     # Clears both the array of categories and the hash of categories.

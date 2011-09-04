@@ -1,24 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Categories do
-  context 'with option ignore_unassigned_tokens' do
-    context 'ignore_unassigned_tokens true' do
-      before(:each) do
-        @categories = described_class.new ignore_unassigned_tokens: true
-      end
-      it 'should return the right value' do
-        @categories.ignore_unassigned_tokens.should == true
-      end
-    end
-    context 'ignore_unassigned_tokens false' do
-      before(:each) do
-        @categories = described_class.new ignore_unassigned_tokens: false
-      end
-      it 'should return the right value' do
-        @categories.ignore_unassigned_tokens.should == false
-      end
-    end
-  end
   
   context "with real categories" do
     before(:each) do

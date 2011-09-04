@@ -252,6 +252,10 @@ class BookSearch < Picky::Application
     route %r{\A/admin\Z}           => Picky::LiveParameters.new
 
     route %r{\A/books\Z}           => (Picky::Search.new(books_index, isbn_index) do boost weights end),
+          %r{\A/books_ignoring\Z}  => (Picky::Search.new(books_index, isbn_index) do
+                                         boost weights
+                                         ignore_unassigned_tokens true
+                                      end),
           %r{\A/book_each\Z}       => (Picky::Search.new(book_each_index) do
                                          boost weights
                                          ignore :title

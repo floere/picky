@@ -11,6 +11,7 @@ describe BookSearch do
   end
 
   let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
+  let(:books_ignoring)  { Picky::TestClient.new(described_class, :path => '/books_ignoring')  }
   let(:book_each)       { Picky::TestClient.new(described_class, :path => '/book_each')       }
   let(:csv)             { Picky::TestClient.new(described_class, :path => '/csv')             }
   let(:redis)           { Picky::TestClient.new(described_class, :path => '/redis')           }
@@ -118,6 +119,11 @@ describe BookSearch do
   #
   it { csv.search('soledad human').ids.should == [72] }
   it { csv.search('first three minutes weinberg').ids.should == [1] }
+
+  # Standard tests with ignoring unassigned.
+  #
+  it { books_ignoring.search('soledad human quack').ids.should == [72] }
+  it { books_ignoring.search('first quack three quack minutes weinberg quack').ids.should == [1] }
 
   # "Symbol" keys.
   #

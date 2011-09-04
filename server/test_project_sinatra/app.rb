@@ -39,7 +39,7 @@ class BookSearch < Sinatra::Application
             case_sensitive:              true,
             maximum_tokens:              5
 
-  books_index = Index.new :books, result_identifier: 'boooookies' do
+  books_index = Index.new :books do
     source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'db.yml')
     category :id
     category :title,
@@ -48,6 +48,8 @@ class BookSearch < Sinatra::Application
              similarity: Similarity::DoubleMetaphone.new(2)
     category :author, partial: Partial::Substring.new(:from => -2)
     category :year, qualifiers: [:y, :year, :annee]
+
+    result_identifier 'boooookies'
   end
 
   class Book < ActiveRecord::Base; end
@@ -258,12 +260,19 @@ class BookSearch < Sinatra::Application
     [:author, :year]  => +2
   }
 
-  # This looks horrible – but usually you have it only once.
+  # This looks horrible – but usually you have it only once or twice.
   # It's flexible.
   #
   books_search = Search.new books_index, isbn_index do boost weights end
   get %r{\A/books\Z} do
     books_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
+  books_ignoring_search = Search.new books_index, isbn_index do
+                             boost weights
+                             ignore_unassigned_tokens true
+                          end
+  get %r{\A/books_ignoring\Z} do
+    books_ignoring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   book_each_search = Search.new book_each_index do
                        boost weights

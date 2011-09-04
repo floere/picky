@@ -44,6 +44,7 @@ module Picky
 
       @tokenizer ||= Tokenizer.query_default # THINK Not dynamic. Ok?
       @weights   ||= Query::Weights.new
+      @ignore_unassigned = false if @ignore_unassigned.nil?
 
       self
     end
@@ -99,6 +100,33 @@ module Picky
       end
     end
 
+    # Ignore the given token if it cannot be matched to a category.
+    # The default behaviour is that if a token does not match to
+    # any category, the query will not return anything (since a
+    # single token cannot be matched). If you set this option to
+    # true, any token that cannot be matched to a category will be
+    # simply ignored.
+    #
+    # Use this if only a few matched words are important, like for
+    # example of the query "Jonathan Myers 86455 Las Cucarachas"
+    # you only want to match the zipcode, to have the search engine
+    # display advertisements on the side for the zipcode.
+    #
+    # False by default.
+    #
+    # Example:
+    #   search = Search.new(books_index, dvd_index, mp3_index) do
+    #     ignore_unassigned_tokens true
+    #   end
+    #
+    # With this set to true, if in "Peter Flunder", "Flunder"
+    # couldn't be assigned to any category, it will simply be
+    # ignored. This is done for each categorization.
+    #
+    def ignore_unassigned_tokens value
+      @ignore_unassigned = value
+    end
+
     # This is the main entry point for a query.
     # Use this in specs and also for running queries.
     #
@@ -146,7 +174,7 @@ module Picky
     #
     def tokenized text
       tokens, originals = tokenizer.tokenize text
-      tokens = Query::Tokens.processed tokens, originals || tokens
+      tokens = Query::Tokens.processed tokens, originals || tokens, @ignore_unassigned
       tokens.partialize_last # Note: In the standard Picky search, the last token is always partial.
       tokens
     end

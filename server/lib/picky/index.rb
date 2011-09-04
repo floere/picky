@@ -98,7 +98,7 @@ module Picky
     # === Parameters
     # * name: A name that will be used for the index directory and in the Picky front end.
     #
-    # === Options (all are used in the block, see examples)
+    # === Options (all are used in the block - not passed as a Hash, see examples)
     # * source: Where the data comes from, e.g. Sources::CSV.new(...). Optional, can be defined in the block using #source.
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
@@ -113,12 +113,9 @@ module Picky
     #     result_identifier :my_special_results
     #   end
     #
-    def initialize name, options = {}
-      @name              = name.to_sym
-
-      # TODO Move ignore_unassigned_tokens to query, somehow. Then, remove options.
-      #
-      @categories = Categories.new ignore_unassigned_tokens: (options[:ignore_unassigned_tokens] || false)
+    def initialize name
+      @name       = name.to_sym
+      @categories = Categories.new
 
       # Centralized registry.
       #

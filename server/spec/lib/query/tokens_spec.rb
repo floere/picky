@@ -2,6 +2,53 @@ require 'spec_helper'
 
 describe Picky::Query::Tokens do
   
+  context 'with ignore_unassigned_tokens true' do
+    it 'generates processed tokens from all words' do
+      expected = [
+        Picky::Query::Token.processed('this~'),
+        Picky::Query::Token.processed('is'),
+        Picky::Query::Token.processed('a'),
+        Picky::Query::Token.processed('sp:solr'),
+        Picky::Query::Token.processed('query"')
+      ]
+      
+      described_class.should_receive(:new).once.with expected, true
+      
+      described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], [], true
+    end
+    
+    describe 'possible_combinations_in' do
+      before(:each) do
+        @token1 = stub :token1
+        @token2 = stub :token2
+        @token3 = stub :token3
+
+        @tokens = described_class.new [@token1, @token2, @token3], true
+      end
+      it 'should work correctly' do
+        @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
+        @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination21]
+        @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+
+        @tokens.possible_combinations_in(:some_index).should == [
+          [:combination11, :combination12],
+          [:combination21],
+          [:combination31, :combination32, :combination33]
+        ]
+      end
+      it 'should work correctly' do
+        @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
+        @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return []
+        @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+
+        @tokens.possible_combinations_in(:some_index).should == [
+          [:combination11, :combination12],
+          [:combination31, :combination32, :combination33]
+        ]
+      end
+    end
+  end
+  
   describe '.processed' do
     it 'generates processed tokens from all words' do
       expected = [
@@ -12,7 +59,7 @@ describe Picky::Query::Tokens do
         Picky::Query::Token.processed('query"')
       ]
       
-      described_class.should_receive(:new).once.with expected
+      described_class.should_receive(:new).once.with expected, false
       
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], []
     end
@@ -25,7 +72,7 @@ describe Picky::Query::Tokens do
         Picky::Query::Token.processed('query"')
       ]
       
-      described_class.should_receive(:new).once.with expected
+      described_class.should_receive(:new).once.with expected, false
       
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], []
     end
@@ -114,6 +161,7 @@ describe Picky::Query::Tokens do
 
       @tokens.possible_combinations_in(:some_index).should == [
         [:combination11, :combination12],
+        nil,
         [:combination31, :combination32, :combination33]
       ]
     end
