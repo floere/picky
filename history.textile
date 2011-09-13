@@ -1,5 +1,7 @@
 h2. Upcoming Version
 
+* hanke: (server) Number of cores for OS Lion correctly reported.
+
 h2. Version 3.1.5
 
 * hanke: (server) New Search block option: @ignore_unassigned_tokens(truey/falsy)@. Default is false. If true, will ignore tokens that cannot be assigned to any category. If you search for example for @"Picky Garblegarblegarble"@, and @"Garblegarblegarble"@ isn't in any index, then it will return result _as if_ @"Garblegarblegarble"@ hadn't been there. In this case, it will just return something like searchengine:"picky".
