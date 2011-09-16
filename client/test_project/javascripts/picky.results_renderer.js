@@ -87,46 +87,27 @@ var PickyResultsRenderer = function(addination, config) {
       header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>'; // searchEngine.focus();
     }
     
-    // TODO Parametrize!
-    // var names = '';
-    // var firstEntryName = $(allocation.entries[0]).find('.name').html();
-    // var lastEntryName = $(allocation.entries[allocation.entries.length-1]).find('.name').html();
-    // if(firstEntryName == lastEntryName) {
-    //   var firstEntryFirstName = $(allocation.entries[0]).find('.first_name').html();
-    //   var lastEntryFirstName = $(allocation.entries[allocation.entries.length-1]).find('.first_name').html();
-    //   names = '<div class="names">' + firstEntryName + ', ' + firstEntryFirstName + ' ' + t('common.to') + ' ' + lastEntryFirstName + '</div>';
-    // }
-    // else {
-    //   names = '<div class="names">' + firstEntryName + ' ' + t('common.to') + ' ' + lastEntryName + '</div>';
-    // }
-    
-    // var rangeStart = data.offset + 1;
-    // var rangeEnd = data.offset + allocation.entries.length;
-    // var rangeText = (rangeStart == rangeEnd) ? rangeStart : rangeStart + '-' + rangeEnd;
-    // var range = '<div class="range">' + rangeText + ' ' + t('common.of') + ' ' + data.total + '</div>';
-    
-    // if (data.total > 20) { // TODO Make settable.
-    //   // header_html += '<div class="clear"></div>'; // TODO
-    //   // header_html += names; // TODO
-    //   // header_html += range; // TODO
-    // }
-    
-    // // For smooth addination scrolling. Don't ask.
-    //
-    // header_html += '<div class="clear"></div></div>';
-    
     return header_html;
   };
   
   // Render results with the data.
   //
   this.render = function(data) {
-    var results = $('#picky div.results'); // TODO Extract, also from view.
+    // TODO Extract, also from view.
+    //
+    var results = $('#picky div.results');
     data.allocations.each(function(i, allocation) {
-      results.append(renderHeader(data, allocation)) // TODO header.render(data);
-             .append(allocation.entries.join(''))
-             .append(addination.render(data));
-      results.children('li').wrapAll(allocationWrapper);
+      // Only render if there is something to render.
+      // TODO Move into methods.
+      //
+      if (allocation.entries.length > 0) {
+        // TODO header.render(data);
+        //
+        results.append(renderHeader(data, allocation))
+               .append(allocation.entries.join(''));
+        results.children('li').wrapAll(allocationWrapper);
+      }
     });
+    results.append(addination.render(data));
   };
 };

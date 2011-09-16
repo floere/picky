@@ -1,5 +1,8 @@
 h2. Upcoming Version
 
+h2. Version 3.1.6
+
+* hanke: (client) Javascripts fixed. Get the new minified version here: "https://github.com/floere/picky/tree/master/client/javascripts":https://github.com/floere/picky/tree/master/client/javascripts.
 * hanke: (server) Number of cores for OS Lion correctly reported.
 
 h2. Version 3.1.5
