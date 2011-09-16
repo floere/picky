@@ -119,18 +119,23 @@ var PickyView = function(picky_controller, config) {
     showClearButton();
   };
   
-  var scrollToLastHeader = function() {
-    $("body").animate({scrollTop: $("#picky div.results div.header:last").position().top - 12}, 500);
+  var scrollTo = function(position) {
+    $("body").animate({scrollTop: position - 12}, 500);
   };
   
   var appendResults = function(data) {
+    var position = $("#picky div.results div.addination:last").position().top;
+    
     addination.remove(); // TODO Where should this be?
     resultsRenderer.render(data);
-    scrollToLastHeader();
+    
+    scrollTo(position);
   };
   
   var updateResultCounter = function(total) {
-    resultCounter.text(total); // ((total > 999) ? '999+' : total); // TODO Decide on this.
+    // ((total > 999) ? '999+' : total); // TODO Decide on this.
+    //
+    resultCounter.text(total);
     flashResultCounter(total);
   };
   
