@@ -45,7 +45,7 @@ module Picky
         # Ramp it up to num processors.
         #
         while currently_processing < max
-          currently_processing = currently_processing + 1
+          currently_processing += 1
 
           # Get the next thing to work on.
           #
@@ -70,7 +70,7 @@ module Picky
         rescue Errno::ECHILD => e
           break # Stop looping.
         ensure
-          currently_processing = currently_processing - 1
+          currently_processing -= 1
         end
       end
     end
