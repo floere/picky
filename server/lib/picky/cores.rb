@@ -21,7 +21,8 @@ module Picky
       raise "Block argument needed when running Cores.forked" unless block_given?
 
       # Note: Not using a generator because Enumerator#each
-      # is exhibiting problems in some Rubies.
+      # is exhibiting problems in some Rubies on some OSs
+      # (see e.g. http://redmine.ruby-lang.org/issues/5003).
       #
       elements = elements.dup
       elements = elements.sort_by { rand } if options[:randomly]
