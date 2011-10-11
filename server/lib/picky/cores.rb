@@ -16,7 +16,7 @@ module Picky
     # Options include:
     #  * max: Maximum # of processors to use. Default is all it can get.
     #
-    def self.forked ary_or_generator, options = {}
+    def self.forked ary_or_generator, options = {}, &block
       return if ary_or_generator.empty?
       raise "Block argument needed when running Cores.forked" unless block_given?
 
@@ -25,9 +25,11 @@ module Picky
 
       # Don't fork if there's just one element.
       #
+      # TODO Remove. This is ugly.
+      #
       if generator.inject(0) { |total, element| total + 1 } == 1
         generator.each do |element|
-          yield element # THINK yield generator.next results in trouble. Why?
+          block.call element # THINK yield generator.next results in trouble. Why?
         end
         return
       end
@@ -43,32 +45,45 @@ module Picky
         # Ramp it up to num processors.
         #
         while currently_processing < max
-
           currently_processing = currently_processing + 1
 
-          element = nil
-          begin
-            element = generator.next
-          rescue StopIteration => si
-            break
-          end
+          # Get the next thing to work on.
+          #
+          element = next_from generator
+
+          # If there is none, stop getting more.
+          #
           break unless element
 
+          # Fork and yield.
+          #
           Process.fork do
-            sleep 0.01*currently_processing
-            yield element
+            sleep 0.05*currently_processing
+            block.call element
           end
-
         end
 
+        # Block and wait for any child to finish.
+        #
         begin
-          Process.wait 0 # Block and wait for any child to finish.
+          Process.wait 0
         rescue Errno::ECHILD => e
-          break
+          break # Stop looping.
         ensure
           currently_processing = currently_processing - 1
         end
       end
+    end
+
+    # Returns nil if there is no next element or if an error occurred.
+    #
+    def self.next_from generator
+      generator.next
+    rescue StopIteration => si
+      nil
+    rescue StandardError => se
+      puts se
+      nil
     end
 
     # Return the number of maximum usable processors.
