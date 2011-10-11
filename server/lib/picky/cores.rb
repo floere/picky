@@ -36,9 +36,8 @@ module Picky
 
       # Get the maximum number of processors.
       #
-      max                  = max_processors options
-      has_next             = true
-      currently_processing = 0
+      max        = max_processors options
+      processing = 0
 
       #
       #
@@ -46,27 +45,20 @@ module Picky
         # Ramp it up to num processors or the amount
         # of available things to work on.
         #
-        while has_next && currently_processing < max
-          # Get the next thing to work on.
-          #
-          element = next_from generator
-
-          # If there is none, stop getting more.
-          #
-          unless element
-            has_next = false
-            break
-          end
-
-          currently_processing += 1
+        while (element = next_from(generator)) && processing < max
+          processing += 1
 
           # Fork and yield.
           #
           Process.fork do
-            sleep 0.05*currently_processing
+            sleep 0.05*processing
             block.call element
           end
         end
+
+        # Nothing is processing, thus do not wait.
+        #
+        break if processing.zero?
 
         # Block and wait for any child to finish.
         #
@@ -75,7 +67,7 @@ module Picky
         rescue Errno::ECHILD => e
           break
         ensure
-          currently_processing -= 1
+          processing -= 1
         end
       end
     end
@@ -84,7 +76,7 @@ module Picky
     #
     def self.next_from generator
       generator.next
-    rescue StopIteration => si
+    rescue StopIteration
       nil
     rescue StandardError => se
       puts se
