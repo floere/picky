@@ -37,23 +37,28 @@ module Picky
       # Get the maximum number of processors.
       #
       max                  = max_processors options
+      has_next             = true
       currently_processing = 0
 
       #
       #
       loop do
-        # Ramp it up to num processors.
+        # Ramp it up to num processors or the amount
+        # of available things to work on.
         #
-        while currently_processing < max
-          currently_processing += 1
-
+        while has_next && currently_processing < max
           # Get the next thing to work on.
           #
           element = next_from generator
 
           # If there is none, stop getting more.
           #
-          break unless element
+          unless element
+            has_next = false
+            break
+          end
+
+          currently_processing += 1
 
           # Fork and yield.
           #
@@ -68,7 +73,7 @@ module Picky
         begin
           Process.wait 0
         rescue Errno::ECHILD => e
-          break # Stop looping.
+          break
         ensure
           currently_processing -= 1
         end
