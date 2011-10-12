@@ -1,8 +1,12 @@
 h2. Upcoming Version
 
+h2. Version 3.1.9
+
+* hanke: (server) Rewrite of "rake index" – Picky will only fork processes if there is the capability to fork (i.e. not Windows), or if there are more than one processor available.
+
 h2. Version 3.1.8
 
-* hanke: (server) Possible solution to "Issue 32":http://github.com/floere/picky/issues/32. The issue is possibly related to http://redmine.ruby-lang.org/issues/5003. *Please take note when updating to this version: This version forks even with a single index (Sorry, Windows users – please notify me)!*
+* hanke: (server) Possible solution to "Issue 32":http://github.com/floere/picky/issues/32. The issue is possibly related to http://redmine.ruby-lang.org/issues/5003. (Windows users, please use the next version, 3.1.9)
 
 h2. Version 3.1.7
 
