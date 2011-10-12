@@ -4,43 +4,102 @@ require 'spec_helper'
 describe Picky::Cores do
   
   describe ".forked" do
-    before(:each) do
-      Process.should_receive(:fork).any_number_of_times.and_yield
+    context 'without forking' do
+      before(:each) do
+        Picky::Cores.stub! :platform => 'x86_64-windows12345'
+      end
+      it 'should not fork' do
+        Process.should_receive(:fork).never
+        
+        described_class.forked([1,2]) do |element|
+          
+        end
+      end
+      it 'should yield the two elements' do
+        result = []
+        
+        described_class.forked([1,2]) do |element|
+          result << element
+        end
+        
+        result.should == [1,2]
+      end
+      it 'should yield the two elements' do
+        result = []
+        
+        described_class.forked([1,2], randomly: true) do |element|
+          result << element
+        end
+        
+        # This test remains like this because I
+        # like the stupidity of it.
+        #
+        if result == [1,2]
+          result.should == [1,2]
+        else
+          result.should == [2,1]
+        end
+      end
     end
-    context "with array" do
-      context "with block" do
-        it "runs ok" do
-          described_class.forked([1, 2]) do |e|
+    context 'with forking' do
+      before(:each) do
+        Process.should_receive(:fork).any_number_of_times.and_yield
+      end
+      context "with array" do
+        context "with block" do
+          it "runs ok" do
+            # TODO Problematic test. Should not raise the first time.
+            #
+            Process.should_receive(:wait).once.and_raise Errno::ECHILD.new
             
+            described_class.forked([1, 2]) do |e|
+
+            end
           end
-        end
-        it "yields the elements" do
-          result = []
-          described_class.forked([1, 2]) do |e|
-            result << e
-          end
-          result.should == [1, 2]
-        end
-      end
-      context "without block" do
-        it "fails" do
-          lambda {
-            described_class.forked [1, 2]
-          }.should raise_error("Block argument needed when running Cores.forked")
-        end
-      end
-    end
-    context "with empty array" do
-      context "with block" do
-        it "runs ok" do
-          described_class.forked([]) do
+          it "yields the elements" do
+            result = []
             
+            described_class.forked([1, 2]) do |e|
+              result << e
+            end
+            
+            result.should == [1, 2]
+          end
+          it 'should not fork with amount option' do
+            Process.should_receive(:fork).never
+
+            described_class.forked([1,2], amount: 1) do |element|
+
+            end
+          end
+          it 'should not fork with max == 1 option' do
+            Process.should_receive(:fork).never
+
+            described_class.forked([1,2], max: 1) do |element|
+
+            end
+          end
+        end
+        context "without block" do
+          it "fails" do
+            lambda {
+              described_class.forked [1, 2]
+            }.should raise_error("Block argument needed when running Cores.forked")
           end
         end
       end
-      context "without block" do
-        it "runs ok" do
-          described_class.forked []
+      context "with empty array" do
+        context "with block" do
+          it "runs ok" do
+            described_class.forked([]) do
+
+            end
+          end
+        end
+        context "without block" do
+          it "runs ok" do
+            described_class.forked []
+          end
         end
       end
     end

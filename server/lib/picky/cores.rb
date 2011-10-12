@@ -29,39 +29,51 @@ module Picky
 
       # Get the maximum number of processors.
       #
-      max        = max_processors options
-      processing = 0
+      max = max_processors options
 
-      loop do
-        while processing < max
-          # Get the next element
-          #
-          element = elements.shift
-          break unless element
-          processing += 1
+      # Do not fork if there is just one processor,
+      # or as in Windows, just a single instance that
+      # can do work.
+      #
+      if max == 1
+        elements.each &block
+      else
+        processing = 0
 
-          # Fork and yield.
-          #
-          Process.fork do
-            sleep 0.05*processing
-            block.call element
+        loop do
+          while processing < max
+            # Get the next element
+            #
+            element = elements.shift
+            break unless element
+            processing += 1
+
+            # Fork and yield.
+            #
+            Process.fork do
+              sleep 0.05*processing
+              block.call element
+            end
           end
-        end
 
-        # Block and wait for any child to finish.
-        #
-        begin
-          Process.wait 0
-        rescue Errno::ECHILD => e
-          break
-        ensure
-          processing -= 1
+          # Block and wait for any child to finish.
+          #
+          begin
+            Process.wait 0
+          rescue Errno::ECHILD => e
+            break
+          ensure
+            processing -= 1
+          end
         end
       end
 
     end
 
     # Return the number of maximum usable processors.
+    #
+    # Options
+    #   max: The maximum amount of cores used.
     #
     def self.max_processors options = {}
       options[:amount] || [number_of_cores, (options[:max] || Infinity)].min
