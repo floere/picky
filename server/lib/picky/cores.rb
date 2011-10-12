@@ -6,15 +6,17 @@ module Picky
   #
   class Cores # :nodoc:all
 
-    # Pass it an ary or generator.
+    # Pass it an ary.
     #
-    #   generator = (1..10).each
-    #   forked generator, :max => 5 do |element|
+    #   ary = (1..10).to_a
+    #   forked ary, :max => 5 do |element|
     #
     #   end
     #
     # Options include:
     #  * max: Maximum # of processors to use. Default is all it can get.
+    #  * amount: An exactly defined amount of processors to use.
+    #  * randomly: Whether to use random order or not.
     #
     def self.forked elements, options = {}, &block
       return if elements.empty?
@@ -31,13 +33,9 @@ module Picky
       #
       max = max_processors options
 
-      # Do not fork if there is just one processor,
-      # or as in Windows, just a single instance that
-      # can do work.
+      # Decide whether to use forking.
       #
-      if max == 1
-        elements.each &block
-      else
+      if fork?(max)
         processing = 0
 
         loop do
@@ -66,8 +64,18 @@ module Picky
             processing -= 1
           end
         end
+      else
+        elements.each &block
       end
 
+    end
+
+    # Do not fork if there is just one processor,
+    # or as in Windows, if there isn't the
+    # possibility of forking.
+    #
+    def self.fork? max_processors
+      max_processors > 1 && Process.respond_to?(:fork)
     end
 
     # Return the number of maximum usable processors.

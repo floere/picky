@@ -4,9 +4,9 @@ require 'spec_helper'
 describe Picky::Cores do
   
   describe ".forked" do
-    context 'without forking' do
+    context 'without fork' do
       before(:each) do
-        Picky::Cores.stub! :platform => 'x86_64-windows12345'
+        Picky::Cores.stub! :fork? => false
       end
       it 'should not fork' do
         Process.should_receive(:fork).never
@@ -43,12 +43,13 @@ describe Picky::Cores do
     end
     context 'with forking' do
       before(:each) do
+        Picky::Cores.stub! :fork? => true
         Process.should_receive(:fork).any_number_of_times.and_yield
       end
       context "with array" do
         context "with block" do
           it "runs ok" do
-            # TODO Problematic test. Should not raise the first time.
+            # TODO Problematic test. Should not raise the first time
             #
             Process.should_receive(:wait).once.and_raise Errno::ECHILD.new
             
@@ -101,6 +102,23 @@ describe Picky::Cores do
             described_class.forked []
           end
         end
+      end
+    end
+  end
+  
+  describe 'fork?' do
+    context 'with forking capabilities' do
+      before(:all) do
+        # Process.should_receive(:respond_to?).any_number_of_times.with(:fork).and_return true
+      end
+      it 'returns false' do
+        Picky::Cores.fork?(0).should == false
+      end
+      it 'returns false' do
+        Picky::Cores.fork?(1).should == false
+      end
+      it 'returns true' do
+        Picky::Cores.fork?(2).should == true
       end
     end
   end
