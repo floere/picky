@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky@gmail.com'
 
-  s.homepage = 'http://floere.github.com/picky'
+  s.homepage = 'http://florianhanke.com/picky'
   s.rubyforge_project = 'http://rubyforge.org/projects/picky'
 
   s.description = 'Fast Ruby semantic text search engine with comfortable single field interface.'
