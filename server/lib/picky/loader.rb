@@ -138,6 +138,7 @@ module Picky
       load_relative 'indexing/wrappers/category/location'
 
       load_relative 'indexed/bundle'
+      load_relative 'indexed/bundle_realtime'
       load_relative 'indexed/wrappers/exact_first'
 
       # Bundle Wrapper
@@ -211,10 +212,12 @@ module Picky
       load_relative 'category'
       load_relative 'category_indexed'
       load_relative 'category_indexing'
+      load_relative 'category_realtime'
 
       load_relative 'categories'
       load_relative 'categories_indexed'
       load_relative 'categories_indexing'
+      load_relative 'categories_realtime'
 
       load_relative 'indexes'
       load_relative 'indexes_indexed'
@@ -223,6 +226,7 @@ module Picky
       load_relative 'index'
       load_relative 'index_indexed'
       load_relative 'index_indexing'
+      load_relative 'index_realtime'
 
       # Results.
       #
