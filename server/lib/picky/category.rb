@@ -40,11 +40,11 @@ module Picky
 
       # Indexed.
       #
-      @indexed_exact  = Indexed::Bundle.new :exact, self, index.backend, similarity
+      @indexed_exact  = Indexed::Bundle.new :exact, self, index.backend, weights, similarity
       if partial.use_exact_for_partial?
         @indexed_partial  = @indexed_exact
       else
-        @indexed_partial  = Indexed::Bundle.new :partial, self, index.backend, similarity
+        @indexed_partial  = Indexed::Bundle.new :partial, self, index.backend, weights, similarity
       end
 
       # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]

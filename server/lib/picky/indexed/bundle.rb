@@ -18,11 +18,25 @@ module Picky
     #
     class Bundle < Picky::Bundle
 
+      attr_reader :realtime_mapping
+
+      def initialize name, category, backend, weights_strategy, similarity_strategy, options = {}
+        super name, category, backend, weights_strategy, similarity_strategy, options
+
+        @inverted      = @backend_inverted.default
+        @weights       = @backend_weights.default
+        @similarity    = @backend_similarity.default
+        @configuration = @backend_configuration.default
+
+        @realtime_mapping = {} # id -> ary of syms.  TODO Always instantiate?
+      end
+
       # Get the ids for the given symbol.
       #
       # Returns a (potentially empty) array of ids.
       #
       def ids sym
+        p [:@inverted, @inverted]
         @inverted[sym] || []
       end
 

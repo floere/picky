@@ -18,7 +18,7 @@ describe "Runtime Indexing" do
     # TODO It must work without this! Or does it?
     #
     index.reload
-    index.add Book.new(1, "Title1", "Author1")
+    index.add Book.new(1, "Title", "Author")
   end
   
   it 'finds the first entry' do
@@ -61,7 +61,7 @@ describe "Runtime Indexing" do
   it 'handles more complex cases' do
     books.search("New").ids.should == []
     
-    index.add Book.new(2, "Title2", "Author2")
+    index.add Book.new(2, "Title New", "Author New")
     
     books.search("title:New").ids.should == [2]
   end

@@ -16,6 +16,12 @@ module Picky
           :txt
         end
 
+        # The initial content before loading.
+        #
+        def default
+          raise "Can't have a default content from text file. Use JSON or Marshal."
+        end
+
         # Text files are used exclusively for
         # prepared data files.
         #
