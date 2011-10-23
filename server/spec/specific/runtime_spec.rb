@@ -15,9 +15,6 @@ describe "Runtime Indexing" do
   let(:books) { Picky::Search.new index }
   
   before(:each) do
-    # TODO It must work without this! Or does it?
-    #
-    index.reload
     index.add Book.new(1, "Title", "Author")
   end
   
