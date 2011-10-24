@@ -16,9 +16,12 @@ module Picky
           ids = @inverted[sym]
           ids.delete id
 
+          encoded = self.similarity_strategy.encoded sym
+
           if ids.empty?
-            @inverted.delete sym
-            @weights.delete  sym
+            @inverted.delete   sym
+            @weights.delete    sym
+            @similarity.delete encoded # Since no element uses this sym anymore, we can delete the similarity for it.
           else
             @weights[sym] = self.weights_strategy.weight_for ids.size
           end
@@ -35,6 +38,8 @@ module Picky
         syms = @realtime_mapping[id]
         syms = (@realtime_mapping[id] = []) unless syms # TODO Nicefy.
 
+        # Inverted.
+        #
         ids = if syms.include? sym
           ids = @inverted[sym]
           ids.delete  id # Move id
@@ -45,7 +50,21 @@ module Picky
           inverted.unshift id
         end
 
+        # Weights.
+        #
         @weights[sym] = self.weights_strategy.weight_for ids.size
+
+        # Similarity.
+        #
+        if encoded = self.similarity_strategy.encoded(sym)
+          similarity = @similarity[encoded] ||= []
+          if similarity.include? sym
+            similarity.delete sym  # Not completely correct, as others will also be affected, but meh.
+            similarity.unshift sym #
+          else
+            similarity.unshift sym
+          end
+        end
       end
 
     end

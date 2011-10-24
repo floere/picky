@@ -19,7 +19,7 @@ module Picky
         text = text.to_sym
         indexed_exact.add id, text
 
-        # TODO Beautify.
+        # TODO Refactor.
         #
         indexed_partial.partial_strategy.each_partial text do |partial_text|
           indexed_partial.add id, partial_text

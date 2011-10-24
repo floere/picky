@@ -8,7 +8,7 @@ describe Picky::Indexed::Bundle do
     
     @weights      = Picky::Generators::Weights::Default
     @partial      = Picky::Generators::Partial::Default
-    @similarity   = stub :similarity
+    @similarity   = Picky::Generators::Similarity::DoubleMetaphone.new 3
     @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity
   end
   
@@ -21,6 +21,9 @@ describe Picky::Indexed::Bundle do
   it 'is by default empty' do
     @bundle.inverted.should == {}
   end
+  it 'is by default empty' do
+    @bundle.similarity.should == {}
+  end
   
   describe 'combined' do
     it 'works correctly' do
@@ -29,7 +32,8 @@ describe Picky::Indexed::Bundle do
       
       @bundle.realtime_mapping.should == { 1 => [:title], 2 => [:title] }
       @bundle.inverted.should == { :title => [2,1] }
-      @bundle.weights.should  == { :title => 0.6931471805599453 }
+      @bundle.weights.should == { :title => 0.6931471805599453 }
+      @bundle.similarity.should == { :TTL => [:title] }
     end
     it 'works correctly' do
       @bundle.add 1, :title
@@ -38,8 +42,9 @@ describe Picky::Indexed::Bundle do
       @bundle.remove 2
       
       @bundle.realtime_mapping.should == {}
-      @bundle.weights.should  == {}
+      @bundle.weights.should == {}
       @bundle.inverted.should == {}
+      @bundle.similarity.should == {}
     end
     it 'works correctly' do
       @bundle.add 1, :title
@@ -48,8 +53,9 @@ describe Picky::Indexed::Bundle do
       @bundle.remove 1
       
       @bundle.realtime_mapping.should == {}
-      @bundle.weights.should  == {}
+      @bundle.weights.should == {}
       @bundle.inverted.should == {}
+      @bundle.similarity.should == {}
     end
     it 'works correctly' do
       @bundle.add 1, :title
@@ -58,8 +64,9 @@ describe Picky::Indexed::Bundle do
       @bundle.remove 1
       
       @bundle.realtime_mapping.should == { 2 => [:thing] }
-      @bundle.weights.should  == { :thing => 0.0 }
+      @bundle.weights.should == { :thing => 0.0 }
       @bundle.inverted.should == { :thing => [2] }
+      @bundle.similarity.should == { :"0NK" => [:thing] }
     end
     it 'works correctly' do
       @bundle.add 1, :title
@@ -68,6 +75,7 @@ describe Picky::Indexed::Bundle do
       @bundle.realtime_mapping.should == { 1 => [:title] }
       @bundle.weights.should  == { :title => 0.0 }
       @bundle.inverted.should == { :title => [1] }
+      @bundle.similarity.should  == { :TTL => [:title] }
     end
     it 'works correctly' do
       @bundle.add 1, :title
@@ -77,6 +85,7 @@ describe Picky::Indexed::Bundle do
       @bundle.realtime_mapping.should == {}
       @bundle.weights.should  == {}
       @bundle.inverted.should == {}
+      @bundle.similarity.should == {}
     end
   end
   
@@ -97,8 +106,9 @@ describe Picky::Indexed::Bundle do
     it 'works correctly' do
       @bundle.add 1, :title
       
-      @bundle.weights.should  == { :title => 0.0 }
+      @bundle.weights.should == { :title => 0.0 }
       @bundle.inverted.should == { :title => [1] }
+      @bundle.similarity.should == { :TTL => [:title] }
     end
   end
   
