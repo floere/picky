@@ -30,6 +30,12 @@ module Picky
           @mapping_file = Memory::JSON.new "#{cache_path}.file_mapping.#{extension}"
         end
 
+        # The initial content before loading.
+        #
+        def default
+          nil
+        end
+
         # The default extension for index files is "index".
         #
         def extension

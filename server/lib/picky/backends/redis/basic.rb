@@ -23,6 +23,12 @@ module Picky
           @namespace = namespace
         end
 
+        # The initial content before loading.
+        #
+        def default
+          nil
+        end
+
         # Returns itself.
         #
         def load
