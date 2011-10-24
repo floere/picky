@@ -16,6 +16,12 @@ describe Picky::Backends::Redis::Basic do
     end
   end
   
+  describe 'initial' do
+    it 'is correct' do
+      index.initial.class.should == described_class
+    end
+  end
+  
   describe 'cache_small?' do
     context 'size 0' do
       before(:each) do

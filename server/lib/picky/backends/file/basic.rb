@@ -32,6 +32,9 @@ module Picky
 
         # The initial content before loading.
         #
+        # Note: We could also load the mapping file
+        #       as in #load.
+        #
         def initial
           nil
         end

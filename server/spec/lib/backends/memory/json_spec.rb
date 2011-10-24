@@ -2,29 +2,43 @@ require 'spec_helper'
 
 describe Picky::Backends::Memory::JSON do
   
-  let(:file) { described_class.new 'some/cache/path/to/file' }
-  
-  describe "dump" do
-    it "delegates to the given hash" do
-      hash = stub :hash
-      
-      hash.should_receive(:dump_json).once.with "some/cache/path/to/file.memory.json"
-      
-      file.dump hash
+  context 'hash-based indexes' do
+    let(:json) { described_class.new 'some/cache/path/to/file' }
+
+    describe 'extension' do
+      it 'is correct' do
+        json.extension.should == :json
+      end
     end
-  end
-  
-  describe "retrieve" do
-    it "raises" do
-      lambda do
-        file.retrieve
-      end.should raise_error("Can't retrieve from JSON file. Use text file.")
+
+    describe 'initial' do
+      it 'is correct' do
+        json.initial.should == {}
+      end
     end
-  end
-  
-  describe 'to_s' do
-    it 'returns the cache path with the default file extension' do
-      file.to_s.should == 'Picky::Backends::Memory::JSON(some/cache/path/to/file.memory.json)'
+
+    describe "dump" do
+      it "delegates to the given hash" do
+        hash = stub :hash
+
+        hash.should_receive(:dump_json).once.with "some/cache/path/to/file.memory.json"
+
+        json.dump hash
+      end
+    end
+
+    describe "retrieve" do
+      it "raises" do
+        lambda do
+          json.retrieve
+        end.should raise_error("Can't retrieve from JSON file. Use text file.")
+      end
+    end
+
+    describe 'to_s' do
+      it 'returns the cache path with the default file extension' do
+        json.to_s.should == 'Picky::Backends::Memory::JSON(some/cache/path/to/file.memory.json)'
+      end
     end
   end
   

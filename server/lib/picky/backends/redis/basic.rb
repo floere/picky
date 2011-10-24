@@ -25,8 +25,11 @@ module Picky
 
         # The initial content before loading.
         #
+        # Note: As Redis indexes needn't be loaded per se,
+        #       this just returns the same thing as #load.
+        #
         def initial
-          nil
+          self
         end
 
         # Returns itself.
