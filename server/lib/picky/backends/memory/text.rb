@@ -18,8 +18,8 @@ module Picky
 
         # The initial content before loading.
         #
-        def default
-          raise "Can't have a default content from text file. Use JSON or Marshal."
+        def initial
+          raise "Can't have an initial content from text file. Use JSON or Marshal."
         end
 
         # Text files are used exclusively for

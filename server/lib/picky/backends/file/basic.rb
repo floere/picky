@@ -32,7 +32,7 @@ module Picky
 
         # The initial content before loading.
         #
-        def default
+        def initial
           nil
         end
 

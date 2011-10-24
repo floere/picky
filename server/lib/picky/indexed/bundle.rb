@@ -23,10 +23,10 @@ module Picky
       def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
         super name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options
 
-        @inverted      = @backend_inverted.default
-        @weights       = @backend_weights.default
-        @similarity    = @backend_similarity.default
-        @configuration = @backend_configuration.default
+        @inverted      = @backend_inverted.initial
+        @weights       = @backend_weights.initial
+        @similarity    = @backend_similarity.initial
+        @configuration = @backend_configuration.initial
 
         @realtime_mapping = {} # id -> ary of syms.  TODO Always instantiate?
       end
