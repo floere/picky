@@ -19,48 +19,47 @@ describe "Runtime Indexing" do
   end
   
   it 'finds the first entry' do
-    books.search("Title").ids.should == [1]
+    books.search('Title"').ids.should == [1]
   end
   
   it 'allows removing something' do
     index.remove 1
   end
   it 'is not findable anymore after removing' do
-    books.search("Title").ids.should == [1]
+    books.search('Title"').ids.should == [1]
     
     index.remove 1
     
-    books.search("Title").ids.should == []
+    books.search('Title"').ids.should == []
   end
   
   it 'allows adding something' do
     index.add Book.new(2, "Title2", "Author2")
   end
   it 'is findable after adding' do
-    books.search("New").ids.should == []
+    books.search('Title"').ids.should == [1]
     
     index.add Book.new(2, "Title New", "Author New")
     
-    books.search("New").ids.should == [2,1]
+    books.search('Title"').ids.should == [2,1]
   end
   
   it 'allows replacing something' do
     index.replace Book.new(1, "Title New", "Author New")
   end
   it 'is findable after replacing' do
-    books.search("New").ids.should == []
+    books.search('New"').ids.should == []
     
     index.replace Book.new(1, "Title New", "Author New")
     
-    books.search("New").ids.should == [1]
+    books.search('New"').ids.should == [1, 1]
   end
-  
   it 'handles more complex cases' do
-    books.search("New").ids.should == []
+    books.search('New"').ids.should == []
     
-    index.add Book.new(2, "Title New", "Author New")
+    index.replace Book.new(1, "Title New", "Author New")
     
-    books.search("title:New").ids.should == [2]
+    books.search('title:New"').ids.should == [1]
   end
   
 end

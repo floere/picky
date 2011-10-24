@@ -24,7 +24,26 @@ describe Picky::Indexed::Bundle do
   describe 'combined' do
     it 'works correctly' do
       @bundle.add 1, :title
+      @bundle.add 2, :title
+      
+      @bundle.realtime_mapping.should == { 1 => [:title], 2 => [:title] }
+      @bundle.inverted.should == { :title => [2,1] }
+      @bundle.weights.should  == { :title => 0.6931471805599453 }
+    end
+    it 'works correctly' do
+      @bundle.add 1, :title
+      @bundle.add 2, :title
+      @bundle.remove 1
+      @bundle.remove 2
+      
+      @bundle.realtime_mapping.should == {}
+      @bundle.weights.should  == {}
+      @bundle.inverted.should == {}
+    end
+    it 'works correctly' do
+      @bundle.add 1, :title
       @bundle.add 1, :other
+      @bundle.add 1, :whatever
       @bundle.remove 1
       
       @bundle.realtime_mapping.should == {}
@@ -40,6 +59,23 @@ describe Picky::Indexed::Bundle do
       @bundle.realtime_mapping.should == { 2 => [:thing] }
       @bundle.weights.should  == { :thing => 0.0 }
       @bundle.inverted.should == { :thing => [2] }
+    end
+    it 'works correctly' do
+      @bundle.add 1, :title
+      @bundle.add 1, :title
+      
+      @bundle.realtime_mapping.should == { 1 => [:title] }
+      @bundle.weights.should  == { :title => 0.0 }
+      @bundle.inverted.should == { :title => [1] }
+    end
+    it 'works correctly' do
+      @bundle.add 1, :title
+      @bundle.remove 1
+      @bundle.remove 1
+      
+      @bundle.realtime_mapping.should == {}
+      @bundle.weights.should  == {}
+      @bundle.inverted.should == {}
     end
   end
   

@@ -24,8 +24,6 @@ module Picky
           end
         end
 
-        p [:@inverted_in_remove, @inverted]
-
         @realtime_mapping.delete id
       end
 
@@ -35,16 +33,21 @@ module Picky
         ary = @inverted[sym]
 
         syms = @realtime_mapping[id]
-        syms = @realtime_mapping[id] = [] unless syms # TODO Nicefy.
+        syms = (@realtime_mapping[id] = []) unless syms # TODO Nicefy.
 
         ids = if syms.include? sym
           ids = @inverted[sym]
+
+          # Move id to front.
+          #
           ids.delete  id
           ids.unshift id
         else
           syms << sym
-          @inverted[sym] = [id]
+          inverted = @inverted[sym] ||= []
+          inverted.unshift id
         end
+
         @weights[sym] = self.weights_strategy.weight_for ids.size
       end
 

@@ -36,7 +36,6 @@ module Picky
       # Returns a (potentially empty) array of ids.
       #
       def ids sym
-        p [:@inverted, @inverted]
         @inverted[sym] || []
       end
 
