@@ -5,9 +5,15 @@ describe Picky::Bundle do
   before(:each) do
     @index    = Picky::Index.new :some_index
     @category = Picky::Category.new :some_category, @index
-    @similarity = Picky::Similarity::DoubleMetaphone.new 3
   end
-  let(:bundle) { described_class.new :some_name, @category, Picky::Backends::Memory.new, Picky::Generators::Weights::Default, @similarity }
+  let(:bundle) do
+    described_class.new :some_name,
+                        @category,
+                        Picky::Backends::Memory.new,
+                        Picky::Generators::Weights::Default,
+                        Picky::Generators::Partial::Default,
+                        Picky::Generators::Similarity::DoubleMetaphone.new(3)
+  end
   
   describe 'identifier' do
     it 'is correct' do

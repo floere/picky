@@ -7,8 +7,9 @@ describe Picky::Indexed::Bundle do
     @category     = Picky::Category.new :some_category, @index
     
     @weights      = stub :weights
+    @partial      = stub :partial
     @similarity   = stub :similarity
-    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @similarity
+    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity
   end
   
   describe 'to_s' do
@@ -157,7 +158,7 @@ describe Picky::Indexed::Bundle do
       @index    = Picky::Index.new :some_index
       @category = Picky::Category.new :some_category, @index
       
-      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :weights, :similarity
+      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :weights, :partial, :similarity
     end
     it 'should initialize the index correctly' do
       @bundle.backend_inverted.should be_kind_of(Picky::Backends::Memory::JSON)
