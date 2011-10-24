@@ -21,7 +21,9 @@ module Picky
           if ids.empty?
             @inverted.delete   sym
             @weights.delete    sym
-            @similarity.delete encoded # Since no element uses this sym anymore, we can delete the similarity for it.
+            # Since no element uses this sym anymore, we can delete the similarity for it.
+            # TODO Not really. Since multiple syms can point to the same encoded.
+            @similarity.delete encoded
           else
             @weights[sym] = self.weights_strategy.weight_for ids.size
           end
