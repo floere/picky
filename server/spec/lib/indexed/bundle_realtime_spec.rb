@@ -6,9 +6,10 @@ describe Picky::Indexed::Bundle do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
     
-    @similarity   = stub :similarity
     @weights      = Picky::Generators::Weights::Default
-    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @similarity
+    @partial      = Picky::Generators::Partial::Default
+    @similarity   = stub :similarity
+    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity
   end
   
   it 'is by default empty' do

@@ -4,7 +4,7 @@ module Picky
 
     class Bundle < Picky::Bundle
 
-      # TODO
+      # Removes the given id from the indexes.
       #
       def remove id
         # Is it anywhere?
@@ -37,11 +37,8 @@ module Picky
 
         ids = if syms.include? sym
           ids = @inverted[sym]
-
-          # Move id to front.
-          #
-          ids.delete  id
-          ids.unshift id
+          ids.delete  id # Move id
+          ids.unshift id # to front
         else
           syms << sym
           inverted = @inverted[sym] ||= []

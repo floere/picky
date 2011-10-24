@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 3.1.10
+
+* hanke: (server) This release holds an *experimental* release of realtime indexing for 3.2: An index now supports @#add(object_responding_to_id_and_categories)@, @#remove(id_of_added_object)@, @#replace(object_responding_to_id_and_categories)@. Replace is simply remove+add. Replacing a non-existent object behaves like an add. I suggest using solely @replace@. Notes: Only works in single-process, single-threaded servers. Does not persist. Only yet works when starting from an empty index, e.g. @source []@.
+* Please only use realtime indexing for experimental purposes.
+
 h2. Version 3.1.9
 
 * hanke: (server) Rewrite of "rake index" – Picky will only fork processes if there is the capability to fork (i.e. not Windows), or if there are more than one processor available.

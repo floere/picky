@@ -62,6 +62,15 @@ describe "Realtime Indexing" do
 
       books.search('title:Ne').ids.should == [1]
     end
+    it 'handles more complex cases' do
+      index.remove 1
+      
+      books.search('Titl').ids.should == []
+      
+      index.replace Book.new(1, "Title New", "Author New")
+
+      books.search('title:Ne').ids.should == [1]
+    end
   end
   
   context 'non-partial' do
@@ -107,6 +116,15 @@ describe "Realtime Indexing" do
       index.replace Book.new(1, "Title New", "Author New")
 
       books.search('title:Ne').ids.should == [1]
+    end
+    it 'handles more complex cases' do
+      index.remove 1
+      
+      books.search('Title"').ids.should == []
+      
+      index.replace Book.new(1, "Title New", "Author New")
+
+      books.search('title:New"').ids.should == [1]
     end
   end
   
