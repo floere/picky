@@ -35,6 +35,12 @@ module Picky
           @max = options[:max] || -1
         end
 
+        # Yields each generated partial.
+        #
+        def each_partial token, &block
+          token.each_intoken min, max, &block
+        end
+
         # Generates a partial index from the given inverted index.
         #
         def generate_from inverted
@@ -64,25 +70,23 @@ module Picky
           result
         end
 
-        private
-
-          # To each shortened token of :test
-          # :test, :tes, :te, :t
-          # add all ids of :test
-          #
-          # "token" here means just text.
-          #
-          # THINK Could be improved by appending the aforegoing ids?
-          #
-          def generate_for token, inverted, result
-            token.each_intoken(min, max) do |intoken|
-              if result[intoken]
-                result[intoken] += inverted[token] # unique
-              else
-                result[intoken] = inverted[token].dup
-              end
+        # To each shortened token of :test
+        # :test, :tes, :te, :t
+        # add all ids of :test
+        #
+        # "token" here means just text.
+        #
+        # THINK Could be improved by appending the aforegoing ids?
+        #
+        def generate_for token, inverted, result
+          each_partial token do |intoken|
+            if result[intoken]
+              result[intoken] += inverted[token] # unique
+            else
+              result[intoken] = inverted[token].dup
             end
           end
+        end
 
       end
 

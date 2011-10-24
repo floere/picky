@@ -8,7 +8,7 @@ module Picky
     #
     def remove id
       indexed_exact.remove id
-      # indexed_partial.remove id
+      indexed_partial.remove id
     end
 
     # TODO
@@ -18,7 +18,12 @@ module Picky
         next unless text
         text = text.to_sym
         indexed_exact.add id, text
-        # indexed_partial.add id, texts...
+
+        # TODO Beautify.
+        #
+        indexed_partial.partial_strategy.each_partial text do |partial_text|
+          indexed_partial.add id, partial_text
+        end
       end
     end
 

@@ -66,6 +66,12 @@ module Picky
           @generator.to
         end
 
+        # Yields each generated partial.
+        #
+        def each_partial token, &block
+          @generator.each_subtoken token, &block
+        end
+
         # Generates a partial index from the given inverted index.
         #
         def generate_from inverted
@@ -95,25 +101,23 @@ module Picky
           result
         end
 
-        private
-
-          # To each shortened token of :test
-          # :test, :tes, :te, :t
-          # add all ids of :test
-          #
-          # "token" here means just text.
-          #
-          # THINK Could be improved by appending the aforegoing ids?
-          #
-          def generate_for token, inverted, result
-            @generator.each_subtoken(token) do |subtoken|
-              if result[subtoken]
-                result[subtoken] += inverted[token] # unique
-              else
-                result[subtoken] = inverted[token].dup
-              end
+        # To each shortened token of :test
+        # :test, :tes, :te, :t
+        # add all ids of :test
+        #
+        # "token" here means just text.
+        #
+        # THINK Could be improved by appending the aforegoing ids?
+        #
+        def generate_for token, inverted, result
+          each_partial token do |subtoken|
+            if result[subtoken]
+              result[subtoken] += inverted[token] # unique
+            else
+              result[subtoken] = inverted[token].dup
             end
           end
+        end
 
       end
 

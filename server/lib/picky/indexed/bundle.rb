@@ -20,8 +20,8 @@ module Picky
 
       attr_reader :realtime_mapping
 
-      def initialize name, category, backend, weights_strategy, similarity_strategy, options = {}
-        super name, category, backend, weights_strategy, similarity_strategy, options
+      def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
+        super name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options
 
         @inverted      = @backend_inverted.default
         @weights       = @backend_weights.default

@@ -37,15 +37,17 @@ module Picky
                   :backend_configuration,
 
                   :weights_strategy,
+                  :partial_strategy,
                   :similarity_strategy
 
     delegate :[], :[]=,        :to => :configuration
     delegate :index_directory, :to => :category
 
-    def initialize name, category, backend, weights_strategy, similarity_strategy, options = {}
+    def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
       @name                = name
       @category            = category
       @weights_strategy    = weights_strategy
+      @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
 
       # Extract specific indexes from backend.

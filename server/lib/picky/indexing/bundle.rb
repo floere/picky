@@ -33,16 +33,13 @@ module Picky
       attr_reader :backend,
                   :prepared
 
-      attr_accessor :partial_strategy
-
       # When indexing, clear only clears the inverted index.
       #
       delegate :clear, :to => :inverted
 
       def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
-        super name, category, backend, weights_strategy, similarity_strategy, options
+        super name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options
 
-        @partial_strategy = partial_strategy
         @key_format       = options[:key_format]
         @prepared         = Backends::Memory::Text.new category.prepared_index_path
 

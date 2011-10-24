@@ -8,6 +8,12 @@ module Picky
       #
       class None < Strategy
 
+        # Yields each generated partial.
+        #
+        def each_partial token
+          # yields nothing
+        end
+
         # Returns an empty index.
         #
         def generate_from index
