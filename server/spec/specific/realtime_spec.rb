@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Runtime Indexing" do
+describe "Realtime Indexing" do
   
   class Book
     attr_reader :id, :title, :author
