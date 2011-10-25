@@ -32,6 +32,13 @@ module Picky
           :index
         end
 
+        # The empty index that is used for putting the index
+        # together before it is dumped into the files.
+        #
+        def empty
+          {}
+        end
+
         # Will copy the index file to a location that
         # is in a directory named "backup" right under
         # the directory the index file is in.

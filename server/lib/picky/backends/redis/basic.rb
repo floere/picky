@@ -38,6 +38,13 @@ module Picky
           self
         end
 
+        # The empty index that is used for putting the index
+        # together.
+        #
+        def empty
+          {}
+        end
+
         # We do not use Redis to retrieve data.
         #
         def retrieve

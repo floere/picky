@@ -43,10 +43,10 @@ module Picky
         @key_format       = options[:key_format]
         @prepared         = Backends::Memory::Text.new category.prepared_index_path
 
-        @inverted      = {}
-        @weights       = {}
-        @similarity    = {}
-        @configuration = {}
+        @inverted      = @backend_inverted.empty
+        @weights       = @backend_weights.empty
+        @similarity    = @backend_similarity.empty
+        @configuration = @backend_configuration.empty
       end
 
       # Sets up a piece of the index for the given token.

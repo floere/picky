@@ -16,6 +16,12 @@ describe Picky::Backends::Redis::Basic do
     end
   end
   
+  describe 'empty' do
+    it 'returns the container that is used for indexing' do
+      index.empty.should == {}
+    end
+  end
+  
   describe 'initial' do
     it 'is correct' do
       index.initial.class.should == described_class
