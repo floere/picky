@@ -4,16 +4,33 @@ module Picky
   #
   class Category
 
-    # TODO
+    # Removes an indexed object with the
+    # given id.
     #
     def remove id
       indexed_exact.remove id
       indexed_partial.remove id
     end
 
+    # Adds and indexes this category of the
+    # given object.
+    #
+    def add object
+      tokens, _ = tokenizer.tokenize object.send(from).to_s
+      add_tokenized object.id, tokens
+    end
+
     # TODO
     #
-    def add id, tokens
+    def replace object
+      remove object.id
+      add object
+    end
+
+    # For the given id, adds the list of
+    # strings to the index for the given id.
+    #
+    def add_tokenized id, tokens
       tokens.each do |text|
         next unless text
         text = text.to_sym

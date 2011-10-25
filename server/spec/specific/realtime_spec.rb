@@ -12,7 +12,7 @@ describe "Realtime Indexing" do
   end
   
   let(:index) do
-    Picky::Index.new(:test) do
+    Picky::Index.new(:books) do
       source []
       category :title
       category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
@@ -22,6 +22,39 @@ describe "Realtime Indexing" do
   
   before(:each) do
     index.add Book.new(1, "Title", "Author")
+  end
+  
+  context 'single category updating' do
+    it 'finds the first entry' do
+      books.search('title:Titl').ids.should == [1]
+    end
+    
+    it 'allows removing a single category and leaving the others alone' do
+      index[:title].remove 1
+      
+      books.search('Title').ids.should == []
+      books.search('Author').ids.should == [1]
+    end
+    
+    it 'allows adding a single category and leaving the others alone' do
+      index[:title].add Book.new(2, "Newtitle", "Newauthor")
+      
+      books.search('Title').ids.should == [1]
+      books.search('Newtitle').ids.should == [2]
+      
+      books.search('Author').ids.should == [1]
+      books.search('Newauthor').ids.should == []
+    end
+    
+    it 'allows replacing a single category and leaving the others alone' do
+      index[:title].replace Book.new(1, "Replaced", "Notindexed")
+      
+      books.search('Title').ids.should == []
+      books.search('Replaced').ids.should == [1]
+      
+      books.search('Notindexed').ids.should == []
+      books.search('Author').ids.should == [1]
+    end
   end
   
   context 'with partial' do
