@@ -1,7 +1,5 @@
 module Picky
 
-  # TODO
-  #
   class Category
 
     # Removes an indexed object with the
@@ -20,7 +18,8 @@ module Picky
       add_tokenized object.id, tokens
     end
 
-    # TODO
+    # Removes the object's id, and then
+    # adds it again.
     #
     def replace object
       remove object.id
@@ -36,7 +35,7 @@ module Picky
         text = text.to_sym
         indexed_exact.add id, text
 
-        # TODO Refactor.
+        # TODO Refactor. Push into indexed_partial?
         #
         indexed_partial.partial_strategy.each_partial text do |partial_text|
           indexed_partial.add id, partial_text
