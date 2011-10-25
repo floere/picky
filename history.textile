@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.1.12
+
+* hanke: (server) Runtime indexing (@remove@, @add@, @replace@) now possible on a single category. Please use e.g. @index[:category_name].add some_object_with_id_and_category_name_method@.
+
 h2. Version 3.1.11
 
 * hanke: (server) See last release. This release adds support for similarity searches on a realtime index.
