@@ -9,7 +9,10 @@ module Picky
       attr_reader :client
 
       def initialize options = {}
+        require 'redis'
         @client = options[:client] || ::Redis.new(:db => (options[:db] || 15))
+      rescue LoadError => e
+        warn_gem_missing 'redis', 'the Redis client'
       end
 
       # Returns an object that on #initial, #load returns an object that responds to:

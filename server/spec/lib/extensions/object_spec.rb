@@ -24,7 +24,7 @@ describe Object do
 
     describe 'warn_gem_missing' do
       it 'should warn right' do
-        object.should_receive(:warn).once.with "gnorf gem missing!\nTo use gnarble gnarf, you need to:\n  1. Add the following line to Gemfile:\n     gem 'gnorf'\n  2. Then, run:\n     bundle update\n"
+        object.should_receive(:warn).once.with "gnorf gem missing!\nTo use gnarble gnarf, you need to:\n  1. Add the following line to Gemfile:\n     gem 'gnorf'\n     or\n     require 'gnorf'\n     for example on top of your app.rb/application.rb\n  2. Then, run:\n     bundle update\n"
 
         object.warn_gem_missing 'gnorf', 'gnarble gnarf'
       end

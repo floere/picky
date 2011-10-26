@@ -19,7 +19,7 @@ describe Picky::Sources::Delicious do
           @source.should_receive(:require).any_number_of_times.and_raise LoadError
         end
         it "warns & exits" do
-          @source.should_receive(:warn).once.with "www-delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n  2. Then, run:\n     bundle update\n"
+          @source.should_receive(:warn).once.with "www-delicious gem missing!\nTo use the delicious source, you need to:\n  1. Add the following line to Gemfile:\n     gem 'www-delicious'\n     or\n     require 'www-delicious'\n     for example on top of your app.rb/application.rb\n  2. Then, run:\n     bundle update\n"
           @source.should_receive(:exit).once.with 1
           
           @source.check_gem

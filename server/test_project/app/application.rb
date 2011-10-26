@@ -1,5 +1,6 @@
 # encoding: utf-8
 #
+require 'redis'
 require File.expand_path '../logging', __FILE__
 
 class ChangingItem
