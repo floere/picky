@@ -4,7 +4,19 @@
 
 # Use ./integration REMOTE to use remote gem sources.
 #
-local_or_remote = ARGV.include?('REMOTE') ? 'remote' : 'local'
+@remote = ARGV.include? 'REMOTE'
+
+def remote?
+  @remote
+end
+
+def bundle_options
+  @remote ? '' : '--local'
+end
+
+def gem_options
+  @remote ? '--remote' : '--local'
+end
 
 def each_type
   yield :full, 20
@@ -34,31 +46,31 @@ end
 def install_all_in_one
   puts "Installing the Sinatra/Unicorn client/server."
   system "picky generate all_in_one sandbox/server"
-  system "cd sandbox/server; bundle install --#{local_or_remote}"
+  system "cd sandbox/server; bundle install #{bundle_options}"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
 
-  sleep 5 # loading
+  sleep 8 # loading
 end
 
 def install_sinatra_server
   puts "Installing the Sinatra/Unicorn server."
   system "picky generate sinatra_server sandbox/server"
-  system "cd sandbox/server; bundle install --#{local_or_remote}"
+  system "cd sandbox/server; bundle install #{bundle_options}"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
 
-  sleep 5 # loading
+  sleep 8 # loading
 end
 
 def install_classic_server
   puts "Installing the Picky/Unicorn server."
   system "picky generate classic_server sandbox/server"
-  system "cd sandbox/server; bundle install --#{local_or_remote}"
+  system "cd sandbox/server; bundle install #{bundle_options}"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec rake start &"
 
-  sleep 5 # loading
+  sleep 8 # loading
 end
 
 def run_search_requests_on_server
@@ -77,7 +89,7 @@ end
 def install_sinatra_client
   puts "Installing the client."
   system "picky generate sinatra_client sandbox/client"
-  system "cd sandbox/client; bundle install --#{local_or_remote}"
+  system "cd sandbox/client; bundle install #{bundle_options}"
   system "cd sandbox/client; unicorn -p 3210 &"
 
   sleep 5 # loading
@@ -141,11 +153,13 @@ def run_server_speed_tests
 end
 
 def kill_server
-  system "killall 'unicorn master -c unicorn.rb'"
+  puts "Killing server (if there)"
+  system "ps ax | grep 'unicorn -c unicorn.rb' | awk '{print $1}'| xargs kill"
 end
 
 def kill_client
-  system "killall 'unicorn master -p 3210'"
+  puts "Killing client (if there)"
+  system "ps ax | grep 'unicorn -p 3210' | awk '{print $1}'| xargs kill"
 end
 
 def delete_server_directory
@@ -161,7 +175,11 @@ end
 begin
   puts "Please run using Ruby 1.9" if RUBY_VERSION < '1.9.0'
 
-  system "./install #{ 'REMOTE' if local_or_remote == 'remote' }"
+  system "gem install bundler #{ gem_options }"
+  system "gem install unicorn #{ gem_options }"
+  system "gem install rspec #{ gem_options }"
+
+  system "./install #{ 'REMOTE' if remote? }"
 
   # All in one.
   #
@@ -206,6 +224,9 @@ begin
   puts
   puts "SUCCESS! #{@tests} tests run without a hitch :)"
   puts
+rescue Exception => e
+  puts e.message
+  puts e.backtrace
 ensure
   puts "Press enter to kill (Break and have mercy with Ctrl-C)"
   gets
