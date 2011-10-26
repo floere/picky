@@ -25,4 +25,18 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'picky-client', Picky::VERSION
+
+  s.add_runtime_dependency 'rack'
+  s.add_runtime_dependency 'rack_fast_escape'
+  s.add_runtime_dependency 'text'
+  s.add_runtime_dependency 'yajl-ruby'
+  s.add_runtime_dependency 'activesupport', '~> 3.0'
+  s.add_runtime_dependency 'activerecord', '~> 3.0'
+
+  # Optional dependencies, but they still need to be here.
+  #
+  s.add_runtime_dependency 'unicorn'
+  s.add_runtime_dependency 'sinatra'
+  s.add_runtime_dependency 'redis'
+  s.add_runtime_dependency 'mysql'
 end

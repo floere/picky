@@ -6,13 +6,18 @@ module Picky
     attr_accessor :logger
   end
 
+  # External libraries.
+  #
+  require 'rack'
+  require 'rack_fast_escape'
+  require 'text'
+  require 'yajl'
+  require 'active_support/core_ext'
+  require 'active_record'
+
   # Require the constants.
   #
   require ::File.expand_path '../picky/constants', __FILE__
-
-  # Library bundling.
-  #
-  require ::File.expand_path '../picky/bundling', __FILE__
 
   # Loader which handles framework and app loading.
   #

@@ -10,6 +10,8 @@ def remote?
   @remote
 end
 
+puts "Using remote gems etc." if remote?
+
 def bundle_options
   @remote ? '' : '--local'
 end
@@ -44,7 +46,7 @@ def client query, match, port = 3210
 end
 
 def install_all_in_one
-  puts "Installing the Sinatra/Unicorn client/server."
+  puts "Installing the Sinatra/Unicorn all_in_one client/server."
   system "picky generate all_in_one sandbox/server"
   system "cd sandbox/server; bundle install #{bundle_options}"
   system "cd sandbox/server; bundle exec rake index"
@@ -54,11 +56,12 @@ def install_all_in_one
 end
 
 def install_sinatra_server
+  # Note: Not using bundler anymore.
+  #
   puts "Installing the Sinatra/Unicorn server."
   system "picky generate sinatra_server sandbox/server"
-  system "cd sandbox/server; bundle install #{bundle_options}"
-  system "cd sandbox/server; bundle exec rake index"
-  system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
+  system "cd sandbox/server; rake index"
+  system "cd sandbox/server; unicorn -c unicorn.rb &"
 
   sleep 8 # loading
 end
@@ -118,9 +121,9 @@ def open_client_in_browser port = 3210
   sleep 5
 end
 
-def run_server_integration_tests
+def run_server_integration_tests with_bundle_exec = true
   puts "Now the server integration specs"
-  if system('cd sandbox/server; bundle exec rake spec')
+  if system("cd sandbox/server; #{ 'bundle exec' if with_bundle_exec } rake spec")
     puts "Yay! Integration specs ran through!"
   else
     raise "Integration specs failed!"
@@ -154,12 +157,12 @@ end
 
 def kill_server
   puts "Killing server (if there)"
-  system "ps ax | grep 'unicorn -c unicorn.rb' | awk '{print $1}'| xargs kill"
+  system "ps ax | grep 'unicorn -c unicorn.rb' | awk '{print $1}' | xargs kill"
 end
 
 def kill_client
   puts "Killing client (if there)"
-  system "ps ax | grep 'unicorn -p 3210' | awk '{print $1}'| xargs kill"
+  system "ps ax | grep 'unicorn -p 3210' | awk '{print $1}' | xargs kill"
 end
 
 def delete_server_directory
@@ -175,16 +178,19 @@ end
 begin
   puts "Please run using Ruby 1.9" if RUBY_VERSION < '1.9.0'
 
-  system "gem install bundler #{ gem_options }"
-  system "gem install unicorn #{ gem_options }"
-  system "gem install rspec #{ gem_options }"
+  kill_server
+  kill_client
 
   system "./install #{ 'REMOTE' if remote? }"
 
   # All in one.
   #
+  puts "\nALL IN ONE SERVER\n"
+
   install_all_in_one
   run_server_rake_tasks
+
+  puts "\nALL IN ONE CLIENT\n"
 
   run_search_requests_on_client 8080 # Since it is just one server.
   open_client_in_browser 8080
@@ -194,13 +200,17 @@ begin
 
   # Sinatra Client.
   #
+  puts "\nSINATRA CLIENT\n"
+
   install_sinatra_client
 
   # Sinatra Server.
   #
+  puts "\nSINATRA SERVER\n"
+
   install_sinatra_server
   run_search_requests_on_server
-  run_server_integration_tests
+  run_server_integration_tests false
   run_server_speed_tests
   run_server_rake_tasks
 
@@ -212,6 +222,8 @@ begin
 
   # Classic Server.
   #
+  puts "\nCLASSIC SERVER\n"
+
   install_classic_server
   run_search_requests_on_server
   run_server_integration_tests

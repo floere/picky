@@ -23,7 +23,7 @@ describe Picky::Generators::Client::Sinatra do
   
   describe "generate" do
     it "should do things in order" do
-      @sinatra.should_receive(:exclaim).once.ordered # Initial explanation
+      @sinatra.should_receive(:exclaim).twice.ordered # Initial explanation
       @sinatra.should_receive(:create_target_directory).once.ordered
       @sinatra.should_receive(:copy_all_files).once.ordered
       @sinatra.should_receive(:exclaim).at_least(7).times.ordered # Some user steps to do

@@ -1,7 +1,7 @@
 module Picky
 
   module Generators
-  
+
     module Client
 
       # Generates a new Picky Sinatra Client Example.
@@ -10,11 +10,11 @@ module Picky
       #   > picky-generate sinatra_client my_lovely_sinatra
       #
       class Sinatra < Picky::Generators::Base
-  
+
         def initialize identifier, name, *args
           super identifier, name, 'client/sinatra', *args
         end
-  
+
         #
         #
         def generate
@@ -24,16 +24,17 @@ module Picky
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""
           exclaim "Next steps:"
-          exclaim "cd #{name}"
-          exclaim "bundle install"
-          exclaim "unicorn -p 3000 # (optional) Or use your favorite web server."
+          exclaim "1. cd #{name}"
+          exclaim "2. bundle install"
+          exclaim "3. unicorn -p 3000 # (optional) Or use your favorite web server."
+          exclaim "4. open http://localhost:3000"
           exclaim ""
         end
-  
+
       end
-    
+
     end
-  
+
   end
-  
+
 end

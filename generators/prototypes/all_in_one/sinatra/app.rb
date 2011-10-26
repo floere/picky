@@ -1,5 +1,9 @@
 require 'sinatra/base'
+require 'i18n'
+require 'haml'
 require 'picky'
+require 'picky-client'
+
 require File.expand_path '../book',    __FILE__
 require File.expand_path '../logging', __FILE__
 
