@@ -84,7 +84,21 @@ h3. The client
 
 Go to "http://localhost:3000/configure":http://localhost:3000/configure and the page will show you how to configure your app server.
 
-h2. Need help?
+h1. Working on Picky
+
+h2. Installing all gems
+
+<pre><code>./install REMOTE</code></pre>
+
+h2. Running integration specs
+
+<pre><code>./integration REMOTE</code></pre>
+
+h2. Running other specs
+
+<pre><code>./specs</code></pre>
+
+h1. Help?
 
 Right here. I'm happy to help! If something doesn't work, send/gist me your application.rb and I'll look into it.
 
