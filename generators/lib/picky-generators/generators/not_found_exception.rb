@@ -1,7 +1,7 @@
 module Picky
-  
+
   module Generators
-    
+
     # Thrown when no generator for the command
     #   picky <command> <options>
     # is found.
@@ -13,7 +13,7 @@ module Picky
       end
 
       def usage
-        "\n\nUsage:\n" +
+        "\nUsage:\n" +
         "  picky-generate <project_type> [params]\n" +
         ?\n
       end
@@ -29,7 +29,7 @@ module Picky
       end
 
     end
-    
+
   end
-  
+
 end
