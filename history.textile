@@ -1,5 +1,20 @@
 h2. Upcoming Version
 
+h2. Version 3.2.0
+
+* hanke: (server) Removed bundler specific code from Picky. You need to decide yourself if you want it. Opens the possibility to just run Picky in a script to try ideas etc.
+* hanke: (generators) The generated Sinatra server does not use bundler anymore. Classic servers still need it. You can add it back in by adding the following code in @app.rb@, right after @require 'picky'@:
+
+    begin
+      require 'bundler'
+    rescue LoadError => e
+      require 'rubygems'
+      require 'bundler'
+    end
+    Bundler.setup PICKY_ENVIRONMENT
+    Bundler.require
+
+
 h2. Version 3.1.13
 
 * hanke: (generators) @picky generate@ will not display the error backtrace part anymore.
