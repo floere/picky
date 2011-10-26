@@ -2,6 +2,10 @@
 #
 @tests = 0
 
+# Use ./integration REMOTE to use remote gem sources.
+#
+local_or_remote = ARGV.include?('REMOTE') ? 'remote' : 'local'
+
 def each_type
   yield :full, 20
   yield :live, 0
@@ -30,7 +34,7 @@ end
 def install_all_in_one
   puts "Installing the Sinatra/Unicorn client/server."
   system "picky generate all_in_one sandbox/server"
-  system "cd sandbox/server; bundle install --local"
+  system "cd sandbox/server; bundle install --#{local_or_remote}"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
 
@@ -40,7 +44,7 @@ end
 def install_sinatra_server
   puts "Installing the Sinatra/Unicorn server."
   system "picky generate sinatra_server sandbox/server"
-  system "cd sandbox/server; bundle install --local"
+  system "cd sandbox/server; bundle install --#{local_or_remote}"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
 
@@ -50,7 +54,7 @@ end
 def install_classic_server
   puts "Installing the Picky/Unicorn server."
   system "picky generate classic_server sandbox/server"
-  system "cd sandbox/server; bundle install --local"
+  system "cd sandbox/server; bundle install --#{local_or_remote}"
   system "cd sandbox/server; bundle exec rake index"
   system "cd sandbox/server; bundle exec rake start &"
 
@@ -73,7 +77,7 @@ end
 def install_sinatra_client
   puts "Installing the client."
   system "picky generate sinatra_client sandbox/client"
-  system "cd sandbox/client; bundle install --local"
+  system "cd sandbox/client; bundle install --#{local_or_remote}"
   system "cd sandbox/client; unicorn -p 3210 &"
 
   sleep 5 # loading
@@ -157,7 +161,7 @@ end
 begin
   puts "Please run using Ruby 1.9" if RUBY_VERSION < '1.9.0'
 
-  system "./install"
+  system "./install #{ 'REMOTE' if local_or_remote == 'remote' }"
 
   # All in one.
   #

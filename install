@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 #
 
+# Use ./install REMOTE to use remote gem sources.
+#
+local_or_remote = ARGV.include?('REMOTE') ? 'remote' : 'local'
+
 require File.expand_path '../version', __FILE__
 
 puts "Installing all gems."
-system "cd server; gem build picky.gemspec; gem install picky-*.gem --local --no-rdoc --no-ri; rm picky-*.gem"
-system "cd client; gem build picky-client.gemspec; gem install picky-client-*.gem --local --no-rdoc --no-ri; rm picky-client-*.gem"
-system "cd statistics; gem build picky-statistics.gemspec; gem install picky-statistics-*.gem --local --no-rdoc --no-ri; rm picky-statistics-*.gem"
-system "cd generators; gem build picky-generators.gemspec; gem install picky-generators-*.gem --local --no-rdoc --no-ri; rm picky-generators-*.gem"
-system "cd live; gem build picky-live.gemspec; gem install picky-live-*.gem --local --no-rdoc --no-ri; rm picky-live-*.gem"
+system "cd server; gem build picky.gemspec; gem install picky-*.gem --#{local_or_remote} --no-rdoc --no-ri; rm picky-*.gem"
+system "cd client; gem build picky-client.gemspec; gem install picky-client-*.gem --#{local_or_remote} --no-rdoc --no-ri; rm picky-client-*.gem"
+system "cd statistics; gem build picky-statistics.gemspec; gem install picky-statistics-*.gem --#{local_or_remote} --no-rdoc --no-ri; rm picky-statistics-*.gem"
+system "cd generators; gem build picky-generators.gemspec; gem install picky-generators-*.gem --#{local_or_remote} --no-rdoc --no-ri; rm picky-generators-*.gem"
+system "cd live; gem build picky-live.gemspec; gem install picky-live-*.gem --#{local_or_remote} --no-rdoc --no-ri; rm picky-live-*.gem"
