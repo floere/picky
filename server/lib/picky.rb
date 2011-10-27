@@ -13,7 +13,6 @@ module Picky
   require 'text'
   require 'yajl'
   require 'active_support/core_ext'
-  require 'active_record'
 
   # Require the constants.
   #

@@ -33,9 +33,20 @@ module Picky
       @@traversal_id = :__picky_id
 
       def initialize select_statement, options = { file: 'app/db.yml' }
+        check_gem
+
         @select_statement = select_statement
         @database         = create_database_adapter
         @options          = options
+      end
+
+      # Tries to require the active_record gem.
+      #
+      def check_gem # :nodoc:
+        require 'active_record'
+      rescue LoadError
+        warn_gem_missing 'active_record', 'the (ActiveRecord) DB source'
+        exit 1
       end
 
       def to_s
