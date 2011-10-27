@@ -31,7 +31,7 @@ module Picky
     # Returns the total of results.
     #
     def total
-      @total || @total = self[:total]
+      @total ||= self[:total]
     end
 
     # Populates the ids with (rendered) model instances.
