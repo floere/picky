@@ -11,7 +11,7 @@ describe Picky::CLI do
   describe '.mapping' do
     it 'returns the right mapping' do
       Picky::CLI.mapping.should == {
-        :generate => [Picky::CLI::Generate, :"{sinatra_client,unicorn_server,empty_unicorn_server}", :app_directory_name],
+        :generate => [Picky::CLI::Generate, :"{client,server,sinatra_client,unicorn_server,all_in_one}", :app_directory_name],
         :help     => [Picky::CLI::Help],
         :live     => [Picky::CLI::Live, "host:port/path (default: localhost:8080/admin)", "port (default: 4568)"],
         :search   => [Picky::CLI::Search, :url_or_path, 'amount of ids (default 20)'],
@@ -31,7 +31,7 @@ describe Picky::CLI do
       it 'calls help correctly' do
         Kernel.should_receive(:puts).once.with <<-HELP
 Possible commands:
-  picky generate {sinatra_client,unicorn_server,empty_unicorn_server} app_directory_name
+  picky generate {client,server,sinatra_client,unicorn_server,all_in_one} app_directory_name
   picky help 
   picky live [host:port/path (default: localhost:8080/admin)] [port (default: 4568)]
   picky search url_or_path [amount of ids (default 20)]
@@ -51,7 +51,7 @@ HELP
         cli.executor_class_for.should == [Picky::CLI::Help]
       end
       it 'returns Generator for generate' do
-        cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{sinatra_client,unicorn_server,empty_unicorn_server}', :"app_directory_name"]
+        cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{client,server,sinatra_client,unicorn_server,all_in_one}', :"app_directory_name"]
       end
       it 'returns Help for help' do
         cli.executor_class_for(:help).should == [Picky::CLI::Help]
