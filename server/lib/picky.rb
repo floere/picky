@@ -1,11 +1,5 @@
 module Picky
 
-  # This is only used in the classic project style.
-  #
-  class << self
-    attr_accessor :logger
-  end
-
   # External libraries.
   #
   require 'rack'
@@ -30,5 +24,11 @@ module Picky
   # Check if delegators need to be installed.
   #
   require ::File.expand_path '../picky/sinatra', __FILE__
+
+  # This is only used in the classic project style.
+  #
+  class << self
+    attr_accessor :logger
+  end
 
 end
