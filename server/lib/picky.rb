@@ -2,11 +2,11 @@ module Picky
 
   # External libraries.
   #
-  require 'rack'
-  require 'rack_fast_escape'
-  require 'text'
-  require 'yajl'
   require 'active_support/core_ext'
+  require 'text'
+  require 'yajl' # TODO Maybe replace by multi_json.
+  require 'rack' # TODO Remove.
+  require 'rack_fast_escape' # TODO Remove.
 
   # Require the constants.
   #
