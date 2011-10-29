@@ -14,25 +14,29 @@ module Picky
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
-        inverted || JSON.new(bundle.index_path(:inverted))
+        extract_lambda_or(inverted, bundle) ||
+        JSON.new(bundle.index_path(:inverted))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
-        weights || JSON.new(bundle.index_path(:weights))
+        extract_lambda_or(weights, bundle) ||
+        JSON.new(bundle.index_path(:weights))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
-        similarity || JSON.new(bundle.index_path(:similarity))
+        extract_lambda_or(similarity, bundle) ||
+        JSON.new(bundle.index_path(:similarity))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
-        configuration || JSON.new(bundle.index_path(:configuration))
+        extract_lambda_or(configuration, bundle) ||
+        JSON.new(bundle.index_path(:configuration))
       end
 
       # Currently, the loaded ids are intersected using

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Backends::Memory::Basic do
+describe Picky::Backends::File::Basic do
   
   context 'without options' do
     let(:basic) { described_class.new 'some/cache/path/to/file' }
@@ -13,7 +13,7 @@ describe Picky::Backends::Memory::Basic do
     
     describe 'initial' do
       it 'returns the container that is used for indexing' do
-        basic.initial.should == {}
+        basic.initial.should == nil
       end
     end
 
@@ -31,7 +31,7 @@ describe Picky::Backends::Memory::Basic do
   
     describe 'to_s' do
       it 'returns the cache path with the default file extension' do
-        basic.to_s.should == 'Picky::Backends::Memory::Basic(some/cache/path/to/file.memory.index)'
+        basic.to_s.should == 'Picky::Backends::File::Basic(some/cache/path/to/file.file.index,some/cache/path/to/file.file_mapping.index.memory.json)'
       end
     end
   end

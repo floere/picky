@@ -43,7 +43,7 @@ module Picky
         # together before it is saved into the files.
         #
         def empty
-          @empty && @empty.dup || {}
+          @empty && @empty.clone || {}
         end
 
         # The initial content before loading.
@@ -52,7 +52,7 @@ module Picky
         #       as in #load.
         #
         def initial
-          @initial && @initial.dup || nil
+          @initial && @initial.clone || nil
         end
 
         # Will copy the index file to a location that
@@ -97,6 +97,12 @@ module Picky
         #
         def cache_ok?
           size_of(cache_path) > 0
+        end
+
+        #
+        #
+        def to_s
+          "#{self.class}(#{cache_path},#{mapping_file.cache_path})"
         end
 
       end

@@ -27,6 +27,32 @@ describe Picky::Backends::Redis do
       end
     end
   end
+  
+  context 'with lambda options' do
+    before(:each) do
+      @backend = described_class.new inverted:      ->(client, bundle){ Picky::Backends::Redis::Float.new(client, bundle.identifier(:inverted)) },
+                                     weights:       ->(client, bundle){ Picky::Backends::Redis::String.new(client, bundle.identifier(:weights)) },
+                                     similarity:    ->(client, bundle){ Picky::Backends::Redis::Float.new(client, bundle.identifier(:similarity)) },
+                                     configuration: ->(client, bundle){ Picky::Backends::Redis::List.new(client, bundle.identifier(:configuration)) }
+
+      @backend.stub! :timed_exclaim
+    end
+  
+    describe 'create_...' do
+      [
+        [:inverted,      Picky::Backends::Redis::Float],
+        [:weights,       Picky::Backends::Redis::String],
+        [:similarity,    Picky::Backends::Redis::Float],
+        [:configuration, Picky::Backends::Redis::List]
+      ].each do |type, kind|
+        it "creates and returns a(n) #{type} index" do
+          to_a_able_stub = Object.new
+          to_a_able_stub.stub! :identifier => "some_identifier:#{type}"
+          @backend.send(:"create_#{type}", to_a_able_stub).should be_kind_of(kind)
+        end
+      end
+    end
+  end
 
   context 'without options' do
     before(:each) do

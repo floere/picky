@@ -38,13 +38,13 @@ module Picky
         # together before it is dumped into the files.
         #
         def empty
-          @empty && @empty.dup || {}
+          @empty && @empty.clone || {}
         end
 
         # The initial content before loading from file.
         #
         def initial
-          @initial && @initial.dup || {}
+          @initial && @initial.clone || {}
         end
 
         # Will copy the index file to a location that

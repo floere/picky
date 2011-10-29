@@ -30,7 +30,7 @@ module Picky
         # together.
         #
         def empty
-          @empty && @empty.dup || {}
+          @empty && @empty.clone || {}
         end
 
         # The initial content before loading.
@@ -39,7 +39,7 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.dup || self
+          @initial && @initial.clone || self
         end
 
         # Returns itself.

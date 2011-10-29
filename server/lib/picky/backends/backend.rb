@@ -16,6 +16,10 @@ module Picky
         @configuration = options[:configuration]
       end
 
+      def extract_lambda_or thing, *args
+        thing && (thing.respond_to?(:call) && thing.call(*args) || thing)
+      end
+
       #
       #
       def to_s
