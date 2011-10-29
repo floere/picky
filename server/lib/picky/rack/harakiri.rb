@@ -17,7 +17,9 @@ module Picky
 
       # Set the amount of requests before the Unicorn commits Harakiri.
       #
-      cattr_accessor :after
+      class << self
+        attr_accessor :after
+      end
 
       def initialize app
         @app = app

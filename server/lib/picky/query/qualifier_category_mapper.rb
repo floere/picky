@@ -31,7 +31,7 @@ module Picky
       # Returns nil if it is not allowed, the normalized qualifier if it is.
       #
       def map qualifier
-        return nil if qualifier.blank?
+        return nil if qualifier.empty?
 
         @mapping[qualifier.to_sym]
       end
