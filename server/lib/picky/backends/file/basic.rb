@@ -21,13 +21,16 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_path
+        def initialize cache_path, options = {}
           @cache_path = "#{cache_path}.file.#{extension}"
 
           # This is the mapping file with the in-memory hash for the
           # file position/offset mappings.
           #
           @mapping_file = Memory::JSON.new "#{cache_path}.file_mapping.#{extension}"
+
+          @empty   = options[:empty]
+          @initial = options[:initial]
         end
 
         # The default extension for index files is "index".
@@ -36,20 +39,20 @@ module Picky
           :index
         end
 
+        # The empty index that is used for putting the index
+        # together before it is saved into the files.
+        #
+        def empty
+          @empty && @empty.dup || {}
+        end
+
         # The initial content before loading.
         #
         # Note: We could also load the mapping file
         #       as in #load.
         #
         def initial
-          nil
-        end
-
-        # The empty index that is used for putting the index
-        # together before it is saved into the files.
-        #
-        def empty
-          {}
+          @initial && @initial.dup || nil
         end
 
         # Will copy the index file to a location that

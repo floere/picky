@@ -4,6 +4,18 @@ module Picky
 
     class Backend
 
+      attr_reader :inverted,
+                  :weights,
+                  :similarity,
+                  :configuration
+
+      def initialize options = {}
+        @inverted      = options[:inverted]
+        @weights       = options[:weights]
+        @similarity    = options[:similarity]
+        @configuration = options[:configuration]
+      end
+
       #
       #
       def to_s

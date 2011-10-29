@@ -14,12 +14,6 @@ module Picky
           :json
         end
 
-        # The initial content before loading.
-        #
-        def initial
-          {}
-        end
-
         # Loads the index hash from json format.
         #
         def load

@@ -14,12 +14,6 @@ module Picky
           :dump
         end
 
-        # The initial content before loading.
-        #
-        def initial
-          {}
-        end
-
         # Loads the index hash from marshal format.
         #
         def load

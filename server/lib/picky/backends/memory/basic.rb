@@ -22,8 +22,10 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_path
+        def initialize cache_path, options = {}
           @cache_path = "#{cache_path}.memory.#{extension}"
+          @empty      = options[:empty]
+          @initial    = options[:initial]
         end
 
         # The default extension for index files is "index".
@@ -36,7 +38,13 @@ module Picky
         # together before it is dumped into the files.
         #
         def empty
-          {}
+          @empty && @empty.dup || {}
+        end
+
+        # The initial content before loading from file.
+        #
+        def initial
+          @initial && @initial.dup || {}
         end
 
         # Will copy the index file to a location that

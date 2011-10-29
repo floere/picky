@@ -18,9 +18,19 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize client, namespace
+        def initialize client, namespace, options = {}
           @client    = client
           @namespace = namespace
+
+          @empty     = options[:empty]
+          @initial   = options[:initial]
+        end
+
+        # The empty index that is used for putting the index
+        # together.
+        #
+        def empty
+          @empty && @empty.dup || {}
         end
 
         # The initial content before loading.
@@ -29,20 +39,13 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          self
+          @initial && @initial.dup || self
         end
 
         # Returns itself.
         #
         def load
           self
-        end
-
-        # The empty index that is used for putting the index
-        # together.
-        #
-        def empty
-          {}
         end
 
         # We do not use Redis to retrieve data.
