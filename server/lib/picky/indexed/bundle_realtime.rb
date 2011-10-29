@@ -48,8 +48,8 @@ module Picky
           ids.unshift id # to front
         else
           syms << sym
-          inverted = @inverted[sym] ||= []
-          inverted.unshift id
+          ids = @inverted[sym] ||= []
+          ids.unshift id
         end
 
         # Weights.
