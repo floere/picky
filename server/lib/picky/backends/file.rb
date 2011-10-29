@@ -14,7 +14,7 @@ module Picky
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
-        inverted JSON.new(bundle.index_path(:inverted))
+        inverted || JSON.new(bundle.index_path(:inverted))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
