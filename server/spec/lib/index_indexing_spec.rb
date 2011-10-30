@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Picky::Index do
-  
+
   describe 'tokenizer' do
     context 'with tokenizer' do
       let(:tokenizer) { stub :tokenizer, :tokenize => '' }
@@ -29,7 +29,7 @@ describe Picky::Index do
       end
     end
   end
-  
+
   context 'after_indexing' do
     context 'with it set' do
       let(:index) do
@@ -51,7 +51,7 @@ describe Picky::Index do
       end
     end
   end
-  
+
   context 'in general' do
     context 'with #each source' do
       let(:index) do
@@ -77,24 +77,20 @@ describe Picky::Index do
       end
 
       it 'does things in order' do
-        category = stub :category        
-        index.stub! :categories => [
-          category,
-          category,
-          category
-        ]
+        categories = stub :categories
+        index.stub! :categories => categories
 
-        category.should_receive(:index).exactly(3).times
+        categories.should_receive(:index).once
 
         index.index
       end
     end
   end
-  
+
   context "with categories" do
     before(:each) do
       the_source = []
-      
+
       @index = described_class.new :some_name do
         source the_source
       end
@@ -109,7 +105,7 @@ describe Picky::Index do
     describe 'define_source' do
       it 'can be set with this method' do
         source = stub :source, :each => [].each
-        
+
         @index.define_source source
 
         @index.source.should == source
@@ -138,7 +134,7 @@ describe Picky::Index do
       end
     end
   end
-  
+
   context "no categories" do
     it "works" do
       described_class.new :some_name do
@@ -146,5 +142,5 @@ describe Picky::Index do
       end
     end
   end
-  
+
 end

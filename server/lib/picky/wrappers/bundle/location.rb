@@ -29,10 +29,14 @@ module Picky
             # Load first the bundle, then extract the config.
             #
             bundle.load
-            # THINK Can I move the to_f to the backend?
-            #
             minimum = bundle[:location_minimum] && bundle[:location_minimum].to_f || raise("Configuration :location_minimum for #{bundle.identifier} missing. Did you run rake index already?")
             @calculation.minimum = minimum
+          end
+
+          # Do not generate a partial.
+          #
+          def generate_partial_from unimportant
+            # Nothing.
           end
 
         end

@@ -6,7 +6,7 @@ module Picky
 
         # THINK Is this the best way to do this?
         #
-        def self.install_on category, grid, precision = 1
+        def self.wrap category, grid, precision = 1
           wrapped_exact = Wrappers::Bundle::Location.new category.exact, grid: grid, precision: precision
           new_source    = Wrappers::Sources::Location.new category.source, grid, precision
 
@@ -24,7 +24,6 @@ module Picky
               new_source
             end
           end
-
         end
 
       end

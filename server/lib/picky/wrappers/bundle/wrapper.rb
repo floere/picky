@@ -10,32 +10,14 @@ module Picky
       #
       class Wrapper
 
+        include IndexingDelegator
+        include IndexedDelegator
+
         attr_reader :bundle
 
         def initialize bundle
           @bundle = bundle
         end
-
-        delegate :[],
-                 :[]=,
-                 :analyze,
-                 :clear,
-                 :configuration,
-                 :dump,
-                 :empty,
-                 :empty_configuration,
-                 :load,
-                 :generate_caches_from_memory,
-                 :generate_caches_from_source,
-                 :generate_partial_from,
-                 :identifier,
-                 :ids,
-                 :inverted,
-                 :similarity,
-                 :size,
-                 :weight,
-                 :weights,
-                 :to => :@bundle
 
       end
 

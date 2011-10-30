@@ -123,7 +123,6 @@ describe Picky::Bundle do
   describe 'load_from_index_file' do
     it 'should call two methods in order' do
       bundle.should_receive(:load_from_prepared_index_generation_message).once.ordered
-      bundle.should_receive(:empty).once.ordered
       bundle.should_receive(:retrieve).once.ordered
 
       bundle.load_from_prepared_index_file

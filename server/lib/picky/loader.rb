@@ -143,9 +143,11 @@ module Picky
       load_relative 'wrappers/category/location'
       load_relative 'wrappers/category/exact_first'
 
+      load_relative 'wrappers/bundle/delegators'
       load_relative 'wrappers/bundle/wrapper'
       load_relative 'wrappers/bundle/calculation'
       load_relative 'wrappers/bundle/location'
+      load_relative 'wrappers/bundle/exact_partial'
 
       load_relative 'wrappers/sources/base'
       load_relative 'wrappers/sources/location'

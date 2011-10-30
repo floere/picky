@@ -42,7 +42,7 @@ module Picky
 
       @exact = Bundle.new :exact, self, index.backend, weights, no_partial, similarity, options
       if partial.use_exact_for_partial?
-        @partial = @exact
+        @partial = Wrappers::Bundle::ExactPartial.new @exact
       else
         @partial = Bundle.new :partial, self, index.backend, weights, partial, no_similarity, options
       end
