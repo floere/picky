@@ -4,8 +4,8 @@ module Picky
   #
   class Category
 
-    attr_reader :indexing_exact,
-                :indexing_partial
+    attr_reader :exact,
+                :partial
 
     # Prepares and caches this category.
     #
@@ -48,13 +48,13 @@ module Picky
     # Generate the cache data.
     #
     def generate_caches_from_source
-      indexing_exact.generate_caches_from_source
+      exact.generate_caches_from_source
     end
     def generate_partial
-      indexing_partial.generate_partial_from indexing_exact.inverted
+      partial.generate_partial_from exact.inverted
     end
     def generate_caches_from_memory
-      indexing_partial.generate_caches_from_memory
+      partial.generate_caches_from_memory
     end
 
     # Return an appropriate source.
@@ -107,16 +107,16 @@ module Picky
     #
     def check
       timed_exclaim "Checking #{identifier}."
-      indexing_exact.raise_unless_cache_exists
-      indexing_partial.raise_unless_cache_exists
+      exact.raise_unless_cache_exists
+      partial.raise_unless_cache_exists
     end
 
     # Deletes the caches.
     #
     def clear
       timed_exclaim "Deleting #{identifier}."
-      indexing_exact.delete
-      indexing_partial.delete
+      exact.delete
+      partial.delete
     end
 
     # Backup the caches.
@@ -124,8 +124,8 @@ module Picky
     #
     def backup
       timed_exclaim "Backing up #{identifier}."
-      indexing_exact.backup
-      indexing_partial.backup
+      exact.backup
+      partial.backup
     end
 
     # Restore the caches.
@@ -133,8 +133,8 @@ module Picky
     #
     def restore
       timed_exclaim "Restoring #{identifier}."
-      indexing_exact.restore
-      indexing_partial.restore
+      exact.restore
+      partial.restore
     end
 
   end

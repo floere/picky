@@ -9,8 +9,8 @@ describe Picky::Category do
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }
 
   context "unit specs" do
-    let(:exact) { category.indexing_exact }
-    let(:partial) { category.indexing_partial }
+    let(:exact) { category.exact }
+    let(:partial) { category.partial }
 
     describe 'backup' do
       it 'delegates to both bundles' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Indexing::Bundle do
+describe Picky::Bundle do
 
   before(:each) do
     @index    = Picky::Index.new :some_index
@@ -8,13 +8,13 @@ describe Picky::Indexing::Bundle do
     @similarity = Picky::Similarity::DoubleMetaphone.new 3
   end
   let(:bundle) { described_class.new :some_name, @category, Picky::Backends::Memory.new, :some_weights, :some_partial, @similarity }
-  
+
   describe 'identifier' do
     it 'is correct' do
       bundle.identifier.should == 'test:some_index:some_category:some_name'
     end
   end
-  
+
   describe 'similar' do
     before(:each) do
       bundle.similarity = @similarity.generate_from( :dragon => [1,2,3], :dargon => [4,5,6] )
@@ -32,7 +32,7 @@ describe Picky::Indexing::Bundle do
       performance_of { bundle.similar(:trkn) }.should < 0.00006
     end
   end
-  
+
   describe 'raise_cache_missing' do
     it 'does something' do
       expect {
@@ -40,21 +40,21 @@ describe Picky::Indexing::Bundle do
       }.to raise_error("Error: The similarity cache for test:some_index:some_category:some_name is missing.")
     end
   end
-  
+
   describe 'warn_cache_small' do
     it 'warns the user' do
       bundle.should_receive(:warn).once.with "Warning: similarity cache for test:some_index:some_category:some_name smaller than 16 bytes."
-      
+
       bundle.warn_cache_small :similarity
     end
   end
-  
+
   describe 'identifier' do
     it 'should return a specific identifier' do
       bundle.identifier.should == 'test:some_index:some_category:some_name'
     end
   end
-  
+
   describe 'initialize_index_for' do
     context 'token not yet assigned' do
       before(:each) do
@@ -77,13 +77,13 @@ describe Picky::Indexing::Bundle do
       end
     end
   end
-  
+
   describe 'retrieve' do
     before(:each) do
       prepared = stub :prepared
       prepared.should_receive(:retrieve).once.and_yield '  1234', :some_token
       bundle.stub! :prepared => prepared
-      
+
       @ary = stub :ary
       inverted = stub :inverted, :[] => @ary
       bundle.stub! :inverted => inverted
@@ -94,7 +94,7 @@ describe Picky::Indexing::Bundle do
       end
       it 'should call the other methods correctly' do
         @ary.should_receive(:<<).once.with 1234
-        
+
         bundle.retrieve
       end
     end
@@ -104,7 +104,7 @@ describe Picky::Indexing::Bundle do
       end
       it 'should call the other methods correctly' do
         @ary.should_receive(:<<).once.with '1234'
-        
+
         bundle.retrieve
       end
     end
@@ -114,7 +114,7 @@ describe Picky::Indexing::Bundle do
       end
       it 'should call the other methods correctly' do
         @ary.should_receive(:<<).once.with 1234
-        
+
         bundle.retrieve
       end
     end
@@ -123,7 +123,7 @@ describe Picky::Indexing::Bundle do
   describe 'load_from_index_file' do
     it 'should call two methods in order' do
       bundle.should_receive(:load_from_prepared_index_generation_message).once.ordered
-      bundle.should_receive(:clear).once.ordered
+      bundle.should_receive(:empty).once.ordered
       bundle.should_receive(:retrieve).once.ordered
 
       bundle.load_from_prepared_index_file
@@ -156,16 +156,16 @@ describe Picky::Indexing::Bundle do
       bundle.generate_caches_from_source
     end
   end
-  
+
   describe 'dump' do
     it 'should trigger dumps' do
       bundle.stub! :timed_exclaim
-      
+
       bundle.should_receive(:dump_inverted).once.with
       bundle.should_receive(:dump_weights).once.with
       bundle.should_receive(:dump_similarity).once.with
       bundle.should_receive(:dump_configuration).once.with
-      
+
       bundle.dump
     end
   end
@@ -174,7 +174,7 @@ describe Picky::Indexing::Bundle do
     it "calls methods in order" do
       bundle.should_receive(:raise_unless_index_exists).once.ordered
       bundle.should_receive(:raise_unless_similarity_exists).once.ordered
-      
+
       bundle.raise_unless_cache_exists
     end
   end
@@ -187,7 +187,7 @@ describe Picky::Indexing::Bundle do
       it "calls the methods in order" do
         bundle.should_receive(:warn_if_index_small).once.ordered
         bundle.should_receive(:raise_unless_index_ok).once.ordered
-        
+
         bundle.raise_unless_index_exists
       end
     end
@@ -199,7 +199,7 @@ describe Picky::Indexing::Bundle do
       it "calls nothing" do
         bundle.should_receive(:warn_if_index_small).never
         bundle.should_receive(:raise_unless_index_ok).never
-        
+
         bundle.raise_unless_index_exists
       end
     end
@@ -213,7 +213,7 @@ describe Picky::Indexing::Bundle do
       it "calls the methods in order" do
         bundle.should_receive(:warn_if_similarity_small).once.ordered
         bundle.should_receive(:raise_unless_similarity_ok).once.ordered
-        
+
         bundle.raise_unless_similarity_exists
       end
     end
@@ -225,7 +225,7 @@ describe Picky::Indexing::Bundle do
       it "calls nothing" do
         bundle.should_receive(:warn_if_similarity_small).never
         bundle.should_receive(:raise_unless_similarity_ok).never
-        
+
         bundle.raise_unless_similarity_exists
       end
     end
@@ -237,7 +237,7 @@ describe Picky::Indexing::Bundle do
       end
       it "warns" do
         bundle.should_receive(:warn_cache_small).once.with :similarity
-        
+
         bundle.warn_if_similarity_small
       end
     end
@@ -247,7 +247,7 @@ describe Picky::Indexing::Bundle do
       end
       it "does not warn" do
         bundle.should_receive(:warn_cache_small).never
-        
+
         bundle.warn_if_similarity_small
       end
     end
@@ -259,7 +259,7 @@ describe Picky::Indexing::Bundle do
       end
       it "warns" do
         bundle.should_receive(:raise_cache_missing).never
-        
+
         bundle.raise_unless_similarity_ok
       end
     end
@@ -269,12 +269,12 @@ describe Picky::Indexing::Bundle do
       end
       it "does not warn" do
         bundle.should_receive(:raise_cache_missing).once.with :similarity
-        
+
         bundle.raise_unless_similarity_ok
       end
     end
   end
-  
+
   describe 'initialization' do
     it 'should initialize the index correctly' do
       bundle.inverted.should == {}
@@ -298,5 +298,5 @@ describe Picky::Indexing::Bundle do
       bundle.similarity_strategy.should == @similarity
     end
   end
-  
+
 end

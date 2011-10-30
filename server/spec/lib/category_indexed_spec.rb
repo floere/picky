@@ -9,18 +9,18 @@ describe Picky::Category do
     @partial_strategy    = stub :partial, :use_exact_for_partial? => false
     @weights_strategy    = stub :weights
     @similarity_strategy = stub :similarity
-    
+
     @exact   = stub :exact, :dump => nil
     @partial = stub :partial, :dump => nil
-    
+
     @category = described_class.new :some_name, @index, :partial    => @partial_strategy,
                                                         :weights    => @weights_strategy,
                                                         :similarity => @similarity_strategy,
                                                         :qualifiers => [:q, :qualifier]
-    
+
     @category.stub! :exclaim
   end
-  
+
   describe 'partial' do
     context 'default' do
       before(:each) do
@@ -31,12 +31,12 @@ describe Picky::Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
+          @category.partial.should be_kind_of(Picky::Bundle)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
+          @category.partial.should be_kind_of(Picky::Bundle)
         end
       end
     end
@@ -52,17 +52,17 @@ describe Picky::Category do
           @partial_strategy.stub! :use_exact_for_partial? => true
         end
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
+          @category.partial.should be_kind_of(Picky::Bundle)
         end
       end
       context 'with a partial strategy that uses the partial index (default)' do
         it 'returns the partial index' do
-          @category.indexed_partial.should be_kind_of(Picky::Indexed::Bundle)
+          @category.partial.should be_kind_of(Picky::Bundle)
         end
       end
     end
   end
-  
+
   describe 'weight' do
     before(:each) do
       @token = stub :token, :text => :some_text
@@ -139,11 +139,11 @@ describe Picky::Category do
       end
     end
   end
-  
+
   context 'stubbed exact/partial' do
     before(:each) do
-      @category.stub! :indexed_exact => (@exact = stub :exact)
-      @category.stub! :indexed_partial => (@partial = stub :partial)
+      @category.stub! :exact => (@exact = stub :exact)
+      @category.stub! :partial => (@partial = stub :partial)
     end
     describe 'bundle_for' do
       it 'should return the right bundle' do

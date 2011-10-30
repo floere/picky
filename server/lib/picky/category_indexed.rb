@@ -4,15 +4,12 @@ module Picky
   #
   class Category
 
-    attr_reader :indexed_exact,
-                :indexed_partial
-
     # Loads the index from cache.
     #
     def load_from_cache
       timed_exclaim %Q{"#{identifier}": Loading index from cache.}
-      indexed_exact.load
-      indexed_partial.load
+      exact.load
+      partial.load
     end
     alias reload load_from_cache
 
@@ -31,7 +28,7 @@ module Picky
     # Returns the right index bundle for this token.
     #
     def bundle_for token
-      token.partial? ? indexed_partial : indexed_exact
+      token.partial? ? partial : exact
     end
 
     # Returns a combination for the token,

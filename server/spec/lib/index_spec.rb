@@ -32,21 +32,6 @@ describe Picky::Index do
     end
   end
 
-  describe "dump" do
-    it "works" do
-      Thing = Struct.new :id, :name
-
-      index = described_class.new :dump_test do
-        category :name
-      end
-
-      index.replace Thing.new(1, 'Picky')
-      index.replace Thing.new(2, 'Parslet')
-
-      index.dump
-    end
-  end
-
   context 'unit' do
     let(:api) do
       the_source = some_source

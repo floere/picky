@@ -27,6 +27,21 @@ describe BookSearch do
   let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
   let(:partial)         { Picky::TestClient.new(described_class, :path => '/partial')         }
 
+  describe "dump" do
+    it "simply works" do
+      Thing = Struct.new :id, :name
+
+      index = described_class.new :dump_test do
+        category :name
+      end
+
+      index.replace Thing.new(1, 'Picky')
+      index.replace Thing.new(2, 'Parslet')
+
+      index.dump
+    end
+  end
+
   it 'can generate a single index category without failing' do
     book_each_index = Picky::Indexes[:book_each][:title]
     book_each_index.prepare

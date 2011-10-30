@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Picky::Indexing::Bundle do
+describe Picky::Bundle do
 
   before(:each) do
     @index            = Picky::Index.new :some_index
     @category         = Picky::Category.new :some_category, @index
-    
+
     @partial_strategy = Picky::Generators::Partial::Substring.new :from => 1
     @exact            = described_class.new :some_name, @category, Picky::Backends::Memory.new, nil, @partial_strategy, nil
   end

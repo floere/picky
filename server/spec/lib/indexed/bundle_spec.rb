@@ -1,23 +1,23 @@
 require 'spec_helper'
 
-describe Picky::Indexed::Bundle do
+describe Picky::Bundle do
 
   before(:each) do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
-    
+
     @weights      = stub :weights
     @partial      = stub :partial
     @similarity   = stub :similarity
     @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity
   end
-  
+
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == "Picky::Indexed::Bundle(test:some_index:some_category:some_name)"
+      @bundle.to_s.should == "Picky::Bundle(test:some_index:some_category:some_name)"
     end
   end
-  
+
   describe 'clear_index' do
     before(:each) do
       @bundle.instance_variable_set :@inverted, { :a => [] }
@@ -27,7 +27,7 @@ describe Picky::Indexed::Bundle do
     end
     it 'clears the inverted index' do
       @bundle.clear_inverted
-      
+
       @bundle.inverted.should be_empty
     end
   end
@@ -40,7 +40,7 @@ describe Picky::Indexed::Bundle do
     end
     it 'clears the weights' do
       @bundle.clear_weights
-      
+
       @bundle.weights.should be_empty
     end
   end
@@ -53,7 +53,7 @@ describe Picky::Indexed::Bundle do
     end
     it 'clears the similarity index' do
       @bundle.clear_similarity
-      
+
       @bundle.similarity.should be_empty
     end
   end
@@ -66,7 +66,7 @@ describe Picky::Indexed::Bundle do
     end
     it 'clears the similarity index' do
       @bundle.clear_configuration
-      
+
       @bundle.configuration.should be_empty
     end
   end
@@ -100,14 +100,14 @@ describe Picky::Indexed::Bundle do
       @bundle.weight(:existing).should == :specific
     end
   end
-  
+
   describe 'load' do
     it 'should trigger loads' do
       @bundle.should_receive(:load_inverted).once.with
       @bundle.should_receive(:load_weights).once.with
       @bundle.should_receive(:load_similarity).once.with
       @bundle.should_receive(:load_configuration).once.with
-      
+
       @bundle.load
     end
   end
@@ -118,46 +118,46 @@ describe Picky::Indexed::Bundle do
     describe "load_index" do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
-        
+
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
-        
+
         @bundle.load_inverted
       end
     end
     describe "load_weights" do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
-        
+
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
-        
+
         @bundle.load_weights
       end
     end
     describe "load_similarity" do
       it "uses the right file" do
         Marshal.stub! :load
-        
+
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
-        
+
         @bundle.load_similarity
       end
     end
     describe "load_configuration" do
       it "uses the right file" do
         Yajl::Parser.stub! :parse
-        
+
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'
-        
+
         @bundle.load_configuration
       end
     end
   end
-  
+
   describe 'initialization' do
     before(:each) do
       @index    = Picky::Index.new :some_index
       @category = Picky::Category.new :some_category, @index
-      
+
       @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :weights, :partial, :similarity
     end
     it 'should initialize the index correctly' do

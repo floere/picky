@@ -47,6 +47,11 @@ module Picky
       @name     = name
       @category = category
 
+      # TODO Tidy up a bit.
+      #
+      @key_format = options[:key_format]
+      @prepared   = Backends::Memory::Text.new category.prepared_index_path
+
       @weights_strategy    = weights_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
@@ -59,6 +64,15 @@ module Picky
       @backend_weights       = backend.create_weights       self
       @backend_similarity    = backend.create_similarity    self
       @backend_configuration = backend.create_configuration self
+
+      # Initial indexes.
+      #
+      @inverted      = @backend_inverted.initial
+      @weights       = @backend_weights.initial
+      @similarity    = @backend_similarity.initial
+      @configuration = @backend_configuration.initial
+
+      @realtime_mapping = {} # id -> ary of syms.  TODO Always instantiate?
     end
     def identifier
       "#{category.identifier}:#{name}"

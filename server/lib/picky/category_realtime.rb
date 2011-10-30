@@ -6,8 +6,8 @@ module Picky
     # given id.
     #
     def remove id
-      indexed_exact.remove id
-      indexed_partial.remove id
+      exact.remove id
+      partial.remove id
     end
 
     # Adds and indexes this category of the
@@ -33,13 +33,8 @@ module Picky
       tokens.each do |text|
         next unless text
         text = text.to_sym
-        indexed_exact.add id, text
-
-        # TODO Refactor. Push into indexed_partial?
-        #
-        indexed_partial.partial_strategy.each_partial text do |partial_text|
-          indexed_partial.add id, partial_text
-        end
+        exact.add id, text
+        partial.add_partialized id, text
       end
     end
 

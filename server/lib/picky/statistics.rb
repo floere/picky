@@ -34,8 +34,8 @@ module Picky
         @indexes << <<-ANALYSIS
   #{"#{category.index_name}".indented_to_s}\n
   #{"#{category.name}".indented_to_s(4)}\n
-  #{"exact\n#{Analyzer.new.analyze(category.indexed_exact).indented_to_s}".indented_to_s(6)}\n
-  #{"partial\n#{Analyzer.new.analyze(category.indexed_partial).indented_to_s}".indented_to_s(6)}
+  #{"exact\n#{Analyzer.new.analyze(category.exact).indented_to_s}".indented_to_s(6)}\n
+  #{"partial\n#{Analyzer.new.analyze(category.partial).indented_to_s}".indented_to_s(6)}
   ANALYSIS
       end
     end

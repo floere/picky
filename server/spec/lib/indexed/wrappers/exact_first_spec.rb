@@ -1,52 +1,52 @@
 require 'spec_helper'
 
-describe Picky::Indexed::Wrappers::ExactFirst do
-  
+describe Picky::Wrappers::ExactFirst do
+
   before(:each) do
     @exact    = stub :exact
     @partial  = stub :partial
-    @category = stub :category, :indexed_exact => @exact, :indexed_partial => @partial
-    
+    @category = stub :category, :exact => @exact, :partial => @partial
+
     @wrapper  = described_class.new @category
   end
-  
+
   describe "self.wrap" do
     context "index" do
       it "wraps each category" do
         index = Picky::Index.new :some_index
         index.define_category :some_category
-        
-        Picky::Indexed::Wrappers::ExactFirst.wrap index
-        
+
+        Picky::Wrappers::ExactFirst.wrap index
+
         index.categories.categories.each do |category|
-          category.should be_kind_of(Picky::Indexed::Wrappers::ExactFirst)
+          category.should be_kind_of(Picky::Wrappers::ExactFirst)
         end
       end
       it "returns the index" do
         index = Picky::Index.new :some_index
         index.define_category :some_category
-        
+
         described_class.wrap(index).should == index
       end
     end
     context "category" do
       it "wraps each category" do
-        category = stub :category, :indexed_exact => :exact, :indexed_partial => :partial
-        
+        category = stub :category, :exact => :exact, :partial => :partial
+
         described_class.wrap(category).should be_kind_of(described_class)
       end
     end
   end
-  
+
   describe 'ids' do
     it "uses first the exact, then the partial ids" do
       @exact.stub!   :ids => [1,4,5,6]
       @partial.stub! :ids => [2,3,7]
-      
+
       @wrapper.ids(:anything).should == [1,4,5,6,2,3,7]
     end
   end
-  
+
   describe 'weight' do
     context "exact with weight" do
       before(:each) do
@@ -91,5 +91,5 @@ describe Picky::Indexed::Wrappers::ExactFirst do
       end
     end
   end
-  
+
 end

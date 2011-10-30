@@ -2,7 +2,7 @@ module Picky
 
   class Category
 
-    attr_reader :name
+    attr_reader :name, :exact, :partial
 
     # Mandatory params:
     #  * name: Category name to use as identifier and file names.
@@ -37,24 +37,15 @@ module Picky
 
       no_partial    = Generators::Partial::None.new
       no_similarity = Generators::Similarity::None.new
-      
+
       # TODO Combine indexing and indexed!
       #
-
-      @indexing_exact   = Indexing::Bundle.new  :exact,  self, index.backend, weights, no_partial, similarity, options
-      @indexing_partial = Indexing::Bundle.new :partial, self, index.backend, weights, partial, no_similarity, options
-
-      # Indexed.
-      #
-      @indexed_exact  = Indexed::Bundle.new :exact, self, index.backend, weights, no_partial, similarity
+      @exact = Bundle.new :exact, self, index.backend, weights, no_partial, similarity, options
       if partial.use_exact_for_partial?
-        @indexed_partial  = @indexed_exact
+        @partial = @exact
       else
-        @indexed_partial  = Indexed::Bundle.new :partial, self, index.backend, weights, partial, no_similarity
+        @partial = Bundle.new :partial, self, index.backend, weights, partial, no_similarity, options
       end
-
-      # @exact   = exact_lambda.call(@exact, @partial)   if exact_lambda   = options[:exact_lambda]
-      # @partial = partial_lambda.call(@exact, @partial) if partial_lambda = options[:partial_lambda]
     end
 
     # Indexes and reloads the category.
@@ -65,8 +56,8 @@ module Picky
     end
 
     def dump
-      indexing_exact.dump
-      indexing_partial.dump
+      exact.dump
+      partial.dump
     end
 
     # Index name.

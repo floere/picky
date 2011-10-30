@@ -43,7 +43,7 @@ module Picky
 
         # TODO Move to the right place.
         #
-        category.indexing_exact[:location_minimum] = minimum
+        category.exact[:location_minimum] = minimum
       end
 
     end

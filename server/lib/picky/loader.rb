@@ -134,12 +134,12 @@ module Picky
       # Indexing and Indexed things.
       #
       load_relative 'bundle'
+      load_relative 'bundle_indexing'
+      load_relative 'bundle_indexed'
+      load_relative 'bundle_realtime'
 
-      load_relative 'indexing/bundle'
       load_relative 'indexing/wrappers/category/location'
 
-      load_relative 'indexed/bundle'
-      load_relative 'indexed/bundle_realtime'
       load_relative 'indexed/wrappers/exact_first'
 
       # Bundle Wrapper

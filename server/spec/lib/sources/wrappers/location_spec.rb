@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Picky::Sources::Wrappers::Location do
-  
+
   context "with backend" do
     before(:each) do
       @source   = stub :source
@@ -20,20 +20,20 @@ describe Picky::Sources::Wrappers::Location do
         @wrapper.calculation.precision.should == 1
       end
       it "delegates harvest" do
-        @category.stub! :indexing_exact => {}
-        
+        @category.stub! :exact => {}
+
         @source.should_receive(:harvest).once.with @category
-        
+
         @wrapper.harvest @category
       end
       it "delegates take_snapshot" do
         @source.should_receive(:take_snapshot).once.with()
-        
+
         @wrapper.take_snapshot
       end
       it "delegates connect_backend" do
         @source.should_receive(:connect_backend).once.with()
-        
+
         @wrapper.connect_backend
       end
     end
@@ -51,5 +51,5 @@ describe Picky::Sources::Wrappers::Location do
       lambda { described_class.new }.should raise_error(ArgumentError)
     end
   end
-  
+
 end
