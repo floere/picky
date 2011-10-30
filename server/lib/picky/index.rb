@@ -90,6 +90,7 @@ module Picky
                 :categories
 
     delegate :[],
+             :dump,
              :each_category,
              :to => :categories
 

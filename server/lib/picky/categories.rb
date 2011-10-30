@@ -10,6 +10,7 @@ module Picky
              :to => :categories
 
     each_delegate :reindex,
+                  :dump,
                   :each_category,
                   :to => :categories
 

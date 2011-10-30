@@ -42,7 +42,7 @@ module Picky
       generate_caches_from_source
       generate_partial
       generate_caches_from_memory
-      dump_caches
+      dump
       timed_exclaim %Q{"#{identifier}": Caching finished.}
     end
     # Generate the cache data.
@@ -56,7 +56,7 @@ module Picky
     def generate_caches_from_memory
       indexing_partial.generate_caches_from_memory
     end
-    def dump_caches
+    def dump
       indexing_exact.dump
       indexing_partial.dump
     end

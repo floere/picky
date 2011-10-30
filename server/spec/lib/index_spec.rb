@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe Picky::Index do
-  
+
   let(:some_source) { stub :source, :harvest => nil, :inspect => 'some_source' }
-  
+
   context 'initializer' do
     it 'works' do
       the_source = some_source
@@ -22,16 +22,29 @@ describe Picky::Index do
     end
     it 'registers with the indexes' do
       @api = described_class.allocate
-      
+
       Picky::Indexes.should_receive(:register).once.with @api
-      
+
       the_source = some_source
       @api.send :initialize, :some_index_name do
         source the_source
       end
     end
   end
-  
+
+  describe "dump" do
+    Thing = Struct.new :id, :name
+
+    index = described_class.new :dump_test do
+      category :name
+    end
+
+    index.replace Thing.new(1, 'Picky')
+    index.replace Thing.new(2, 'Parslet')
+
+    index.dump
+  end
+
   context 'unit' do
     let(:api) do
       the_source = some_source
@@ -39,12 +52,12 @@ describe Picky::Index do
         source the_source
       end
     end
-    
+
     describe 'geo_categories' do
       it 'delegates correctly' do
         api.should_receive(:ranged_category).once.with :some_lat, 0.00898312, from: :some_lat_from
         api.should_receive(:ranged_category).once.with :some_lng, 0.01796624, from: :some_lng_from
-        
+
         api.geo_categories :some_lat, :some_lng, 1, :lat_from => :some_lat_from, :lng_from => :some_lng_from
       end
     end
@@ -82,5 +95,5 @@ describe Picky::Index do
       end
     end
   end
-  
+
 end
