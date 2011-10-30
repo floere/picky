@@ -254,6 +254,44 @@ class BookSearch < Sinatra::Application
              :partial => Picky::Partial::Substring.new(from: 1)
   end
 
+  BackendModel = Struct.new :id, :name
+
+  # To test the interface definition.
+  #
+  class InternalBackendInterfaceTester
+
+    def initialize
+      @hash = {}
+    end
+
+    def [] key
+      @hash[key]
+    end
+
+    def []= key, value
+      @hash[key] = value
+    end
+
+  end
+
+  backends_index = Picky::Index.new(:backends) do
+    source  [
+      BackendModel.new(1, "Memory"),
+      BackendModel.new(2, "Redis")
+    ]
+    backend Picky::Backends::Memory.new(
+              inverted: ->(bundle) do
+                Picky::Backends::Memory::JSON.new(bundle.index_path(:inverted))
+              end,
+              weights: Picky::Backends::Memory::JSON.new(
+                PICKY_ROOT + "/index/#{PICKY_ENVIRONMENT}/funky_weights_path",
+                empty: InternalBackendInterfaceTester.new,
+                initial: InternalBackendInterfaceTester.new
+              )
+            )
+    category :name
+  end
+
   weights = {
     [:author]         => +6,
     [:title, :author] => +5,
@@ -332,6 +370,12 @@ class BookSearch < Sinatra::Application
   end
   get %r{\A/japanese\Z} do
     japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
+  backends_search = Search.new backends_index do
+    searching case_sensitive: false
+  end
+  get %r{\A/backends\Z} do
+    backends_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
   get %r{\A/all\Z} do
