@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+h2. Version 3.2.1
+
+* hanke: (server) ActiveRecord is not loaded anymore by default, as only few users use the Picky db source (if you do, Picky will try to require it).
+* hanke: (server) Exchangeable backends (please see blog post for an explanation).
+* hanke: (project) RSpec 1 has been updated to RSpec 2.
+
 h2. Version 3.2.0
 
 * hanke: (server) Removed bundler specific code from Picky. You can now decide yourself if you want it. Opens the possibility to just run Picky in a script to try ideas etc. (see example gist: "https://gist.github.com/1315618":https://gist.github.com/1315618)
