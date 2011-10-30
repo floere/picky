@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.3.1
+
+* hanke: (server) Fix for @Partial::None@, introduced in 3.3.0.
+
 h2. Version 3.3.0
 
 * hanke: (server) ActiveRecord is not loaded anymore by default, as only few users use the Picky db source (if you do, Picky will try to require it and tell you if it can't).
