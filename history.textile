@@ -1,6 +1,6 @@
 h2. Upcoming Version
 
-h2. Version 3.2.1
+h2. Version 3.3.0
 
 * hanke: (server) ActiveRecord is not loaded anymore by default, as only few users use the Picky db source (if you do, Picky will try to require it and tell you if it can't).
 * hanke: (server) It is now possible to explicitly dump an index, using @index.dump@. This is useful with realtime indexes.
