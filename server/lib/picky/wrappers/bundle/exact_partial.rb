@@ -14,6 +14,7 @@ module Picky
 
         attr_reader :bundle
 
+        include Delegator
         include IndexedDelegator
 
         def initialize bundle

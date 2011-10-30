@@ -4,36 +4,60 @@ module Picky
 
     module Bundle
 
+      module Delegator
+
+        delegate :inverted,
+                 :weights,
+                 :similarity,
+                 :configuration,
+
+                 :backup,
+                 :restore,
+                 :delete,
+
+                 :raise_unless_cache_exists,
+                 :raise_unless_index_exists,
+                 :raise_unless_similarity_exists,
+
+                 :similar,
+
+                 :to => :bundle
+
+      end
+
       module IndexingDelegator
 
         delegate :[]=,
                  :analyze,
-                 :clear,
-                 :configuration,
                  :dump,
                  :empty,
                  :empty_configuration,
-                 :load,
                  :generate_caches_from_memory,
                  :generate_caches_from_source,
                  :generate_partial_from,
-                 :inverted,
                  :retrieve,
-                 :similarity,
                  :size,
-                 :weights,
                  :to => :bundle
 
       end
 
       module IndexedDelegator
 
-        delegate :identifier,
+        delegate :[],
+                 :clear,
+                 :clear_inverted,
+                 :clear_weights,
+                 :clear_similarity,
+                 :clear_configuration,
+                 :identifier,
                  :ids,
+                 :load,
+                 :load_inverted,
+                 :load_weights,
+                 :load_similarity,
+                 :load_configuration,
                  :name,
-                 :similar,
                  :weight,
-                 :[],
                  :to => :bundle
 
       end

@@ -10,6 +10,7 @@ module Picky
       #
       class Wrapper
 
+        include Delegator
         include IndexingDelegator
         include IndexedDelegator
 
