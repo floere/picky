@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Sources::Wrappers::Location do
+describe Picky::Wrappers::Sources::Location do
 
   context "with backend" do
     before(:each) do

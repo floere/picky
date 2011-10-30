@@ -39,11 +39,16 @@ module Picky
     # Generates all caches for this category.
     #
     def cache
+      empty
       generate_caches_from_source
       generate_partial
       generate_caches_from_memory
       dump
       timed_exclaim %Q{"#{identifier}": Caching finished.}
+    end
+    def empty
+      exact.empty
+      partial.empty
     end
     # Generate the cache data.
     #

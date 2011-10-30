@@ -138,17 +138,17 @@ module Picky
       load_relative 'bundle_indexed'
       load_relative 'bundle_realtime'
 
-      load_relative 'indexing/wrappers/category/location'
-
-      load_relative 'indexed/wrappers/exact_first'
-
-      # Bundle Wrapper
+      # Wrappers.
       #
-      load_relative 'indexed/wrappers/bundle/wrapper'
-      load_relative 'indexed/wrappers/bundle/calculation'
-      load_relative 'indexed/wrappers/bundle/location'
+      load_relative 'wrappers/category/location'
+      load_relative 'wrappers/category/exact_first'
 
-      load_relative 'indexed/wrappers/category/location'
+      load_relative 'wrappers/bundle/wrapper'
+      load_relative 'wrappers/bundle/calculation'
+      load_relative 'wrappers/bundle/location'
+
+      load_relative 'wrappers/sources/base'
+      load_relative 'wrappers/sources/location'
 
       # Tokens.
       #
@@ -245,9 +245,6 @@ module Picky
       load_relative 'sources/delicious'
       load_relative 'sources/couch'
       load_relative 'sources/mongo'
-
-      load_relative 'sources/wrappers/base'
-      load_relative 'sources/wrappers/location'
 
       # Interfaces
       #

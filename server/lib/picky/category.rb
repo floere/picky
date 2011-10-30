@@ -2,7 +2,9 @@ module Picky
 
   class Category
 
-    attr_reader :name, :exact, :partial
+    attr_reader :name,
+                :exact,
+                :partial
 
     # Mandatory params:
     #  * name: Category name to use as identifier and file names.

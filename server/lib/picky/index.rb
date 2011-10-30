@@ -232,8 +232,7 @@ module Picky
       options = { partial: Partial::None.new }.merge options
 
       define_category category_name, options do |category|
-        Indexing::Wrappers::Category::Location.install_on category, range, precision
-        Indexed::Wrappers::Category::Location.install_on category, range, precision
+        Wrappers::Category::Location.install_on category, range, precision
       end
     end
     alias define_ranged_category ranged_category

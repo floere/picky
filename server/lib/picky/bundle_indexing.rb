@@ -72,11 +72,16 @@ module Picky
       generate_similarity
     end
 
-    # "Empties" the index by getting a new empty
+    # "Empties" the index(es) by getting a new empty
     # internal backend instance.
     #
+    # TODO Only one needed?
+    #
     def empty
-      @inverted = @backend_inverted.empty
+      @inverted      = @backend_inverted.empty
+      @weights       = @backend_weights.empty
+      @similarity    = @backend_similarity.empty
+      @configuration = @backend_configuration.empty
     end
 
     # Load the data from the db.

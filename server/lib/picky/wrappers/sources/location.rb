@@ -1,8 +1,8 @@
 module Picky
 
-  module Sources
+  module Wrappers
 
-    module Wrappers
+    module Sources
 
       # Should this actually just be a tokenizer?
       #

@@ -1,6 +1,5 @@
 module Picky
 
-  module Indexed
     module Wrappers
 
       module Bundle
@@ -40,7 +39,6 @@ module Picky
 
       end
 
-    end
   end
 
 end

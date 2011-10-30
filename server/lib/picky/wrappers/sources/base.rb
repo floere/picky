@@ -1,12 +1,12 @@
 module Picky
 
-  module Sources
+  module Wrappers
 
     # Source wrappers can be used to rewrite data before it goes into the index.
     #
     # For example if you want to normalize data.
     #
-    module Wrappers # :nodoc:all
+    module Sources # :nodoc:all
 
       class Base
 
@@ -20,7 +20,11 @@ module Picky
 
         # Default is delegation for all methods
         #
-        delegate :harvest, :connect_backend, :take_snapshot, :key_format, :to => :source
+        delegate :harvest,
+                 :connect_backend,
+                 :take_snapshot,
+                 :key_format,
+                 :to => :source
 
       end
 
