@@ -44,6 +44,7 @@ module Picky
       module IndexedDelegator
 
         delegate :[],
+                 :add_partialized,
                  :clear,
                  :clear_inverted,
                  :clear_weights,
@@ -57,6 +58,7 @@ module Picky
                  :load_similarity,
                  :load_configuration,
                  :name,
+                 :remove,
                  :weight,
                  :to => :bundle
 
