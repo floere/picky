@@ -25,6 +25,7 @@ describe BookSearch do
   let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')        }
   let(:backends)        { Picky::TestClient.new(described_class, :path => '/backends')        }
   let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
+  let(:partial)         { Picky::TestClient.new(described_class, :path => '/partial')         }
 
   it 'can generate a single index category without failing' do
     book_each_index = Picky::Indexes[:book_each][:title]
@@ -275,6 +276,31 @@ describe BookSearch do
   # Different tokenizer.
   #
   it { nonstring.search("moo zap").ids.should == [2] }
+
+  # Partial options.
+  #
+  it { partial.search("substring:oct").ids.should == [] }
+  it { partial.search("substring:octo").ids.should == [] }
+  it { partial.search("substring:octop").ids.should == [1] }
+  it { partial.search("substring:octopu").ids.should == [1] }
+  it { partial.search("substring:octopus").ids.should == [1] }
+  it { partial.search("substring:octopuss").ids.should == [] }
+  it { partial.search("substring:octopussy").ids.should == [] }
+
+  it { partial.search("postfix:oct").ids.should == [] }
+  it { partial.search("postfix:octo").ids.should == [] }
+  it { partial.search("postfix:octop").ids.should == [1] }
+  it { partial.search("postfix:octopu").ids.should == [1] }
+  it { partial.search("postfix:octopus").ids.should == [1] }
+  it { partial.search("postfix:octopuss").ids.should == [1] }
+  it { partial.search("postfix:octopussy").ids.should == [1] }
+
+  it { partial.search("infix:c").ids.should == [1,2] }
+  it { partial.search("infix:br").ids.should == [2] }
+  it { partial.search("infix:cad").ids.should == [2] }
+
+  it { partial.search("none:octopussy").ids.should == [1] }
+  it { partial.search("none:abracadabra").ids.should == [2] }
 
   # Search#ignore option.
   #

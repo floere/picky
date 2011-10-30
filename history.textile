@@ -6,6 +6,7 @@ h2. Version 3.2.1
 * hanke: (server) Added a new partial option, @Postfix@, with an option, @from@. With @from: -4@ and a word like @octopus@, will generate partials @[:octopus, :octopu, :octop, :octo]@ (until -4).
 New default option is @Postfix.new(from: -3)@, not @Substring.new(from: -3, to: -1)@ anymore. The two options are identical in function.
 * hanke: (server) Only Picky's tokenizers call @to_s@ on data anymore. This means that you can write tokenizers that work on whatever kind of object you like. The Picky standard tokenizers themselves ensure that they get to work with a string.
+* hanke: (server) Fix for @Substring@ partialization, when negative @from@ and @to@ options are used at the same time.
 * hanke: (server) Exchangeable backends (please see blog post for an explanation).
 * hanke: (project) RSpec 1 has been updated to RSpec 2.
 

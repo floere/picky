@@ -19,7 +19,7 @@ class Symbol # :nodoc:all
 
   # :keys.each_intoken         # => yields each of [:keys, :key, :eys, :ke, :ey, :ys, :k, :e, :y, :s]
   # :keys.each_intoken(2)      # => yields each of [:keys, :key, :eys, :ke, :ey, :ys]
-  # :keys.each_intoken(2, 3)   # => yields each of [:keys, :key, :eys]
+  # :keys.each_intoken(2, 3)   # => yields each of [:key, :eys, :ke, :ey, :ys]
   # :keys.each_intoken(10, 12) # => yields nothing (min larger than sym)
   #
   def each_intoken min_length = 1, max_length = -1

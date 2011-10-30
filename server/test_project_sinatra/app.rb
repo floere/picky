@@ -311,6 +311,20 @@ class BookSearch < Sinatra::Application
     category :nonstring
   end
 
+  PartialItem = Struct.new :id, :substring, :postfix, :infix, :none
+  partial_index = Picky::Index.new(:partial) do
+    source do
+      [
+        PartialItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
+        PartialItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
+      ]
+    end
+    category :substring, partial: Picky::Partial::Substring.new(from: -5, to: -3)
+    category :postfix, partial: Picky::Partial::Postfix.new(from: -5)
+    category :infix, partial: Picky::Partial::Infix.new
+    category :none, partial: Picky::Partial::None.new
+  end
+
   weights = {
     [:author]         => +6,
     [:title, :author] => +5,
@@ -399,6 +413,10 @@ class BookSearch < Sinatra::Application
   nonstring_search = Search.new nonstring_data_index
   get %r{\A/nonstring\Z} do
     nonstring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
+  partial_search = Search.new partial_index
+  get %r{\A/partial\Z} do
+    partial_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
   get %r{\A/all\Z} do

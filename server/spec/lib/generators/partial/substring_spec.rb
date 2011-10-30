@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Picky::Generators::Partial::Substring do
-  
+
   context 'default from' do
     let(:generator) { described_class.new }
-    
+
     describe 'use_exact_for_partial?' do
       it 'returns false' do
         described_class.new.use_exact_for_partial?.should == false
@@ -24,7 +24,7 @@ describe Picky::Generators::Partial::Substring do
           flor:    [1],
           flo:     [1],
           fl:   [1, 2],
-          f:    [1, 2], 
+          f:    [1, 2],
           flavia:  [2],
           flavi:   [2],
           flav:    [2],
@@ -180,6 +180,31 @@ describe Picky::Generators::Partial::Substring do
         end
       end
     end
+    context 'to set, negative from' do
+      before(:each) do
+        @generator = described_class.new from: -3, to: -2
+      end
+      describe 'to' do
+        it 'should return the right value' do
+          @generator.to.should == -2
+        end
+      end
+      describe 'from' do
+        it 'should return the right value' do
+          @generator.from.should == -3
+        end
+      end
+      describe 'generate_from' do
+        it 'should generate the right index' do
+          @generator.generate_from( :florian => [1], :flavia => [2] ).should == {
+            :floria => [1],
+            :flori => [1],
+            :flavi => [2],
+            :flav => [2]
+          }
+        end
+      end
+    end
   end
-  
+
 end

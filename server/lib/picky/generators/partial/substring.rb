@@ -18,8 +18,14 @@ module Picky
               token.each_subtoken @from, &block
             end
           else
-            def each_subtoken token, &block
-              token[0..@to].intern.each_subtoken @from, &block
+            if @from < 0 && @to < 0
+              def each_subtoken token, &block
+                token[0..@to].intern.each_subtoken @from - @to - 1, &block
+              end
+            else
+              def each_subtoken token, &block
+                token[0..@to].intern.each_subtoken @from, &block
+              end
             end
           end
 
