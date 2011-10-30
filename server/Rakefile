@@ -1,6 +1,6 @@
 require 'rake'
 
-task :default => :spec
+task :default => :rspec
 
 all_rake_files = File.expand_path '../tasks/*.rake', __FILE__
 

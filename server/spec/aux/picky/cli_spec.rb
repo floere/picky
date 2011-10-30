@@ -72,11 +72,11 @@ HELP
   end
   
   describe Picky::CLI::Live do
-    let(:executor) { described_class.new }
+    let(:executor) { Picky::CLI::Live.new }
   end
   
   describe Picky::CLI::Base do
-    let(:executor) { described_class.new }
+    let(:executor) { Picky::CLI::Base.new }
     describe 'usage' do
       it 'calls puts with an usage' do
         executor.should_receive(:puts).once.with "Usage:\n  picky some_name param1 [param2]"

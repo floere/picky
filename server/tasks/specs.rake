@@ -1,15 +1,10 @@
 # Specs.
 #
-require 'spec'
-require 'spec/rake/spectask'
+require 'rspec'
+require 'rspec/core/rake_task'
 
-spec_root = File.expand_path '../../spec', __FILE__
-
-desc "Run specs."
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_opts = ['--options', "\"#{File.join(spec_root, 'spec.opts')}\""]
-  t.spec_files = FileList[File.join(spec_root, '**', '*_spec.rb')]
-end
+desc "Run specs"
+RSpec::Core::RakeTask.new :rspec
 
 task :simplecov do
   ENV['COV'] = 'yes'
@@ -18,5 +13,5 @@ end
 desc "Run specs with coverage."
 task :cov do
   Rake::Task['simplecov'].invoke
-  Rake::Task['spec'].invoke
+  Rake::Task['rspec'].invoke
 end

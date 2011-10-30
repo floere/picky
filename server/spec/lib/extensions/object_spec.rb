@@ -33,26 +33,26 @@ describe Object do
   
   describe 'indented_to_s' do
     describe String do
-      let(:object) { described_class.new("Hello\nTest") }
+      let(:string) { String.new("Hello\nTest") }
       
       it 'indents a default amount' do
-        object.indented_to_s.should == "  Hello\n  Test"
+        string.indented_to_s.should == "  Hello\n  Test"
       end
       it 'indents twice' do
-        object.indented_to_s.indented_to_s.should == "    Hello\n    Test"
+        string.indented_to_s.indented_to_s.should == "    Hello\n    Test"
       end
       it 'indents correctly' do
-        object.indented_to_s(3).should == "   Hello\n   Test"
+        string.indented_to_s(3).should == "   Hello\n   Test"
       end
     end
     describe Array do
-      let(:object) { described_class.new(["Hello", "Test"]) }
+      let(:array) { Array.new(["Hello", "Test"]) }
       
       it 'indents a default amount' do
-        object.indented_to_s.should == "  Hello\n  Test"
+        array.indented_to_s.should == "  Hello\n  Test"
       end
       it 'indents twice' do
-        object.indented_to_s.indented_to_s.should == "    Hello\n    Test"
+        array.indented_to_s.indented_to_s.should == "    Hello\n    Test"
       end
     end
   end

@@ -12,9 +12,9 @@ describe Picky::Generators::WeightsGenerator do
 
       result = generator.generate
 
-      result[:c].should be_close 2.3, 0.011
-      result[:d].should be_close 4.6, 0.011
-      result[:e].should be_close 6.9, 0.011
+      result[:c].should be_within(0.011).of(2.3)
+      result[:d].should be_within(0.011).of(4.6)
+      result[:e].should be_within(0.011).of(6.9)
     end
   end
 

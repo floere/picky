@@ -125,8 +125,8 @@ describe Picky::Cores do
   
   describe 'number_of_cores' do
     before(:each) do
-      @linux  = mock :linux,  :null_object => true
-      @darwin = mock :darwin, :null_object => true
+      @linux  = mock(:linux).as_null_object
+      @darwin = mock(:darwin).as_null_object
       described_class.stub! :os_to_core_mapping => {
         'linux'  => @linux,
         'darwin' => @darwin

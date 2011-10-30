@@ -3,20 +3,16 @@ source :gemcutter
 # Gems required by Picky.
 #
 gem 'rake'
-gem 'bundler',          '>=0.9.26'
-gem 'activerecord',     '2.3.8',   :require => 'active_record'
-gem 'rack',             '~> 1.2.1'
-gem 'rack-mount',       '~> 0.6.9'
-gem 'yajl-ruby',                   :require => 'yajl'
-gem 'text',             '~> 0.2.0'
-gem 'rack_fast_escape', '2009.06.24'
-gem 'redis'
+gem 'rack'
+gem 'yajl-ruby', :require => 'yajl'
+gem 'text'
+gem 'rack_fast_escape'
 
 group :test do
   # Needed for testing itself.
   #
-  gem 'rspec',     '~> 1.3.0'
-  gem 'simplecov', '>= 0.3.5', :require => false # Will install simplecov-html as a dependency
+  gem 'rspec'
+  gem 'simplecov', :require => false # Will install simplecov-html as a dependency
 
   # Needed to test optional data sources etc.
   #
@@ -25,4 +21,8 @@ group :test do
   gem 'uuidtools'
   gem 'highline'
   gem 'picky-client'
+  gem 'activerecord'
+  gem 'redis'
+
+  gem 'rack-mount'
 end
