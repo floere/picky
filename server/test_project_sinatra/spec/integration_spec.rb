@@ -24,6 +24,7 @@ describe BookSearch do
   let(:file)            { Picky::TestClient.new(described_class, :path => '/file')            }
   let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')        }
   let(:backends)        { Picky::TestClient.new(described_class, :path => '/backends')        }
+  let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
 
   it 'can generate a single index category without failing' do
     book_each_index = Picky::Indexes[:book_each][:title]
@@ -270,6 +271,10 @@ describe BookSearch do
   # Different backends.
   #
   it { backends.search("Memor").ids.should == [1] }
+
+  # Different tokenizer.
+  #
+  it { nonstring.search("moo zap").ids.should == [2] }
 
   # Search#ignore option.
   #

@@ -102,7 +102,7 @@ module Picky
     # * source: Where the data comes from, e.g. Sources::CSV.new(...). Optional, can be defined in the block using #source.
     # * result_identifier: Use if you'd like a different identifier/name in the results than the name of the index.
     # * after_indexing: As of this writing only used in the db source. Executes the given after_indexing as SQL after the indexing process.
-    # * tokenizer: Call and pass either a tokenizer (responds to #tokenize) or the options for a tokenizer..
+    # * indexing: Call and pass either a tokenizer (responds to #tokenize) or the options for a tokenizer..
     # * key_format: Call and pass in a format method for the ids (default is #to_i).
     #
     # Example:

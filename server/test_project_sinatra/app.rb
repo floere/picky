@@ -292,6 +292,25 @@ class BookSearch < Sinatra::Application
     category :name
   end
 
+  # This checks that we can use a funky customized tokenizer.
+  #
+  NonStringDataSource = Struct.new :id, :nonstring
+  class NonStringTokenizer < Picky::Tokenizer
+    def tokenize nonstring
+      [nonstring.map(&:to_sym)]
+    end
+  end
+  nonstring_data_index = Picky::Index.new(:nonstring) do
+    source {
+      [
+        NonStringDataSource.new(1, ['gaga', :blabla, 'haha']),
+        NonStringDataSource.new(2, [:meow, 'moo', :bang, 'zap'])
+      ]
+    }
+    indexing NonStringTokenizer.new
+    category :nonstring
+  end
+
   weights = {
     [:author]         => +6,
     [:title, :author] => +5,
@@ -376,6 +395,10 @@ class BookSearch < Sinatra::Application
   end
   get %r{\A/backends\Z} do
     backends_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
+  nonstring_search = Search.new nonstring_data_index
+  get %r{\A/nonstring\Z} do
+    nonstring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
   get %r{\A/all\Z} do

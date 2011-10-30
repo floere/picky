@@ -14,7 +14,7 @@ module Picky
     # given object.
     #
     def add object
-      tokens, _ = tokenizer.tokenize object.send(from).to_s
+      tokens, _ = tokenizer.tokenize object.send(from)
       add_tokenized object.id, tokens
     end
 

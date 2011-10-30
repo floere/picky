@@ -172,7 +172,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #  [[:token1, :token2], ["Original1", "Original2"]]
     #
     def tokenize text
-      text   = preprocess text  # processing the text
+      text   = preprocess text.to_s # processing the text
       return empty_tokens if text.blank?
       words  = pretokenize text # splitting and preparations for tokenizing
       return empty_tokens if words.empty?
