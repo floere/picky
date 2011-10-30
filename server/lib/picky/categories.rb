@@ -9,9 +9,12 @@ module Picky
              :map,
              :to => :categories
 
-    each_delegate :reindex,
+    each_delegate :cache,
                   :dump,
                   :each_category,
+                  :empty,
+                  :index,
+                  :reindex,
                   :to => :categories
 
     # A list of indexed categories.

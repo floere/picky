@@ -75,12 +75,14 @@ module Picky
     # "Empties" the index(es) by getting a new empty
     # internal backend instance.
     #
-    # TODO Only one needed?
-    #
     def empty
-      @inverted      = @backend_inverted.empty
-      @weights       = @backend_weights.empty
-      @similarity    = @backend_similarity.empty
+      empty_inverted
+      empty_configuration
+    end
+    def empty_inverted
+      @inverted = @backend_inverted.empty
+    end
+    def empty_configuration
       @configuration = @backend_configuration.empty
     end
 
@@ -88,7 +90,6 @@ module Picky
     #
     def load_from_prepared_index_file
       load_from_prepared_index_generation_message
-      empty
       retrieve
     end
     def load_from_prepared_index_generation_message
@@ -103,7 +104,8 @@ module Picky
     # TODO Move this out to the category?
     #
     def retrieve
-      format = category.key_format || :to_i # Optimization.
+      format = key_format || :to_i
+      empty_inverted
       prepared.retrieve do |id, token|
         initialize_inverted_index_for token
         self.inverted[token] << id.send(format)

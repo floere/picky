@@ -163,7 +163,7 @@ class BookSearch < Sinatra::Application
   #           .define_map_location(:east1,  1, precision: 3, from: :east)
 
   csv_test_index = Index.new :csv_test do
-    source     Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
+    source   Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
 
     category :title,
              qualifiers: [:t, :title, :titre],

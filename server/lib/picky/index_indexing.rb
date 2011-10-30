@@ -27,7 +27,7 @@ module Picky
         index_in_parallel
       else
         with_data_snapshot do
-          categories.each &:index
+          categories.index
         end
       end
     end
@@ -73,9 +73,10 @@ module Picky
     # Only use where the category does have a #each source defined.
     #
     def index_in_parallel
+      categories.empty
       indexer = Indexers::Parallel.new self
       indexer.index categories
-      categories.each &:cache
+      categories.cache
     end
 
     # Returns the installed tokenizer or the default.

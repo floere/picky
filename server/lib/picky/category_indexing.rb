@@ -19,9 +19,14 @@ module Picky
     # Indexes, creates the "prepared_..." file.
     #
     def prepare
+      empty
       with_data_snapshot do
         indexer.index [self]
       end
+    end
+    def empty
+      exact.empty
+      partial.empty_configuration
     end
 
     # Take a data snapshot if the source offers it.
@@ -39,16 +44,11 @@ module Picky
     # Generates all caches for this category.
     #
     def cache
-      empty
       generate_caches_from_source
       generate_partial
       generate_caches_from_memory
       dump
       timed_exclaim %Q{"#{identifier}": Caching finished.}
-    end
-    def empty
-      exact.empty
-      partial.empty
     end
     # Generate the cache data.
     #

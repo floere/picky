@@ -31,7 +31,7 @@ describe BookSearch do
     it "simply works" do
       Thing = Struct.new :id, :name
 
-      index = described_class.new :dump_test do
+      index = Picky::Index.new :dump_test do
         category :name
       end
 

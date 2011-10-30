@@ -40,8 +40,6 @@ module Picky
       no_partial    = Generators::Partial::None.new
       no_similarity = Generators::Similarity::None.new
 
-      # TODO Combine indexing and indexed!
-      #
       @exact = Bundle.new :exact, self, index.backend, weights, no_partial, similarity, options
       if partial.use_exact_for_partial?
         @partial = @exact

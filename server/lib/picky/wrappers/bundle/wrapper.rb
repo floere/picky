@@ -23,6 +23,7 @@ module Picky
                  :configuration,
                  :dump,
                  :empty,
+                 :empty_configuration,
                  :load,
                  :generate_caches_from_memory,
                  :generate_caches_from_source,
