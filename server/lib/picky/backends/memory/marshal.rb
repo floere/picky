@@ -23,6 +23,7 @@ module Picky
         # Dumps the index hash in marshal format.
         #
         def dump hash
+          create_directory cache_path
           hash.dump_marshal cache_path
         end
 

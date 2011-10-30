@@ -8,6 +8,12 @@ module Picky
       #
       module File
 
+        # Creates all necessary directories.
+        #
+        def create_directory path
+          FileUtils.mkdir_p ::File.dirname(path)
+        end
+
         # The backup directory of this file.
         # Equal to the file's dirname plus /backup
         #

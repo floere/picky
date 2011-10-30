@@ -1,22 +1,22 @@
 require 'spec_helper'
 
 describe Picky::Category do
-  
+
   before(:each) do
     @index  = Picky::Index.new :some_index
     @source = stub :some_given_source, :key_format => nil
   end
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }
-  
+
   context "unit specs" do
     let(:exact) { category.indexing_exact }
     let(:partial) { category.indexing_partial }
-    
+
     describe 'backup' do
       it 'delegates to both bundles' do
         exact.should_receive(:backup).once.with()
         partial.should_receive(:backup).once.with()
-        
+
         category.backup
       end
     end
@@ -24,7 +24,7 @@ describe Picky::Category do
       it 'delegates to both bundles' do
         exact.should_receive(:restore).once.with()
         partial.should_receive(:restore).once.with()
-        
+
         category.restore
       end
     end
@@ -32,7 +32,7 @@ describe Picky::Category do
       it 'delegates to both bundles' do
         exact.should_receive(:raise_unless_cache_exists).once.with()
         partial.should_receive(:raise_unless_cache_exists).once.with()
-        
+
         category.check
       end
     end
@@ -40,12 +40,12 @@ describe Picky::Category do
       it 'delegates to both bundles' do
         exact.should_receive(:delete).once.with()
         partial.should_receive(:delete).once.with()
-        
+
         category.clear
       end
     end
-    
-    describe 'dump_caches' do
+
+    describe 'dump' do
       before(:each) do
         exact.stub! :dump
         partial.stub! :dump
@@ -53,23 +53,23 @@ describe Picky::Category do
       it 'should dump the exact index' do
         exact.should_receive(:dump).once.with
 
-        category.dump_caches
+        category.dump
       end
       it 'should dump the partial index' do
         partial.should_receive(:dump).once.with
 
-        category.dump_caches
+        category.dump
       end
     end
-    
+
     describe 'generate_caches_from_memory' do
       it 'should delegate to partial' do
         partial.should_receive(:generate_caches_from_memory).once.with
-        
+
         category.generate_caches_from_memory
       end
     end
-    
+
     describe 'generate_partial' do
       it 'should return whatever the partial generation returns' do
         exact.stub! :index
@@ -99,13 +99,13 @@ describe Picky::Category do
         category.should_receive(:generate_caches_from_source).once.with().ordered
         category.should_receive(:generate_partial).once.with().ordered
         category.should_receive(:generate_caches_from_memory).once.with().ordered
-        category.should_receive(:dump_caches).once.with().ordered
+        category.should_receive(:dump).once.with().ordered
         category.should_receive(:timed_exclaim).once.ordered
-        
+
         category.cache
       end
     end
-    
+
     describe 'key_format' do
       context 'source has key_format' do
         before(:each) do
@@ -142,7 +142,7 @@ describe Picky::Category do
         end
       end
     end
-    
+
     describe 'source' do
       context 'with explicit source' do
         let(:category) { described_class.new(:some_category, @index, :source => :category_source) }
@@ -157,7 +157,7 @@ describe Picky::Category do
         end
       end
     end
-    
+
     describe "index" do
       before(:each) do
         @indexer = stub :indexer, :index => nil
@@ -165,7 +165,7 @@ describe Picky::Category do
       end
       it "tells the indexer to index" do
         @indexer.should_receive(:index).once.with [category]
-        
+
         category.prepare
       end
     end
@@ -177,5 +177,5 @@ describe Picky::Category do
       end
     end
   end
-  
+
 end

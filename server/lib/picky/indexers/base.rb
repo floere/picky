@@ -20,16 +20,8 @@ module Picky
       #
       def index categories
         start_indexing_message
-        prepare categories
         process categories
         finish_indexing_message
-      end
-
-      # By default, an indexer
-      #  * prepares the index directories.
-      #
-      def prepare categories
-        categories.each &:prepare_index_directory
       end
 
     end

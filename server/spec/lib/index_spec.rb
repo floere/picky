@@ -33,16 +33,18 @@ describe Picky::Index do
   end
 
   describe "dump" do
-    Thing = Struct.new :id, :name
+    it "works" do
+      Thing = Struct.new :id, :name
 
-    index = described_class.new :dump_test do
-      category :name
+      index = described_class.new :dump_test do
+        category :name
+      end
+
+      index.replace Thing.new(1, 'Picky')
+      index.replace Thing.new(2, 'Parslet')
+
+      index.dump
     end
-
-    index.replace Thing.new(1, 'Picky')
-    index.replace Thing.new(2, 'Parslet')
-
-    index.dump
   end
 
   context 'unit' do

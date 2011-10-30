@@ -98,17 +98,10 @@ module Picky
       @prepared_index_file ||= Backends::Memory::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
-    # Creates the index directory including all necessary paths above it.
-    #
-    # Note: Interface method called by any indexers.
-    #
-    def prepare_index_directory
-      FileUtils.mkdir_p index_directory
-    end
 
     # The index directory for this category.
     #
-    # TODO Push down into files?
+    # TODO Push down into files? Yes.
     #
     def index_directory
       @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"

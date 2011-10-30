@@ -23,6 +23,7 @@ module Picky
         # Dumps the index hash in json format.
         #
         def dump hash
+          create_directory cache_path
           hash.dump_json cache_path
         end
 
