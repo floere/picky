@@ -3,6 +3,7 @@ h2. Upcoming Version
 h2. Version 3.2.1
 
 * hanke: (server) ActiveRecord is not loaded anymore by default, as only few users use the Picky db source (if you do, Picky will try to require it and tell you if it can't).
+* hanke: (server) It is now possible to explicitly dump an index, using @index.dump@. This is useful with realtime indexes.
 * hanke: (server) Added a new partial option, @Postfix@, with an option, @from@. With @from: -4@ and a word like @octopus@, will generate partials @[:octopus, :octopu, :octop, :octo]@ (until -4).
 New default option is @Postfix.new(from: -3)@, not @Substring.new(from: -3, to: -1)@ anymore. The two options are identical in function.
 * hanke: (server) Only Picky's tokenizers call @to_s@ on data anymore. This means that you can write tokenizers that work on whatever kind of object you like. The Picky standard tokenizers themselves ensure that they get to work with a string.
