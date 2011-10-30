@@ -2,7 +2,7 @@ module Picky
 
   module Generators
     module Partial
-      Default = Substring.new from: -3, to: -1
+      Default = Postfix.new from: -3
     end
   end
 
