@@ -37,6 +37,9 @@ module Picky
 
       no_partial    = Generators::Partial::None.new
       no_similarity = Generators::Similarity::None.new
+      
+      # TODO Combine indexing and indexed!
+      #
 
       @indexing_exact   = Indexing::Bundle.new  :exact,  self, index.backend, weights, no_partial, similarity, options
       @indexing_partial = Indexing::Bundle.new :partial, self, index.backend, weights, partial, no_similarity, options
@@ -59,6 +62,11 @@ module Picky
     def reindex
       index
       reload
+    end
+
+    def dump
+      indexing_exact.dump
+      indexing_partial.dump
     end
 
     # Index name.

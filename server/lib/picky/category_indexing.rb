@@ -56,10 +56,6 @@ module Picky
     def generate_caches_from_memory
       indexing_partial.generate_caches_from_memory
     end
-    def dump
-      indexing_exact.dump
-      indexing_partial.dump
-    end
 
     # Return an appropriate source.
     #
