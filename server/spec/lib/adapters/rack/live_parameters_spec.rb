@@ -3,10 +3,10 @@
 require 'spec_helper'
 
 describe Picky::Adapters::Rack::LiveParameters do
-  
+
   let(:live_parameters) { stub :live_parameters }
   let(:adapter) { described_class.new live_parameters }
-  
+
   describe 'to_app' do
     it 'works' do
       lambda { adapter.to_app }.should_not raise_error
@@ -16,11 +16,11 @@ describe Picky::Adapters::Rack::LiveParameters do
     end
     it 'returned lambda should call parameters on the live parameters' do
       env = { 'rack.input' => 'some input' }
-      
-      live_parameters.should_receive(:parameters).once.with({})
-      
+
+      live_parameters.should_receive(:parameters).once.with({}).and_return Hash.new
+
       adapter.to_app.call env
     end
   end
-  
+
 end
