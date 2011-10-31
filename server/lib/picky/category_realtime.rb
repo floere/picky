@@ -32,7 +32,7 @@ module Picky
     def add_tokenized id, tokens
       tokens.each do |text|
         next unless text
-        text = text.to_sym
+        text = text.to_sym # TODO to_sym
         exact.add id, text
         partial.add_partialized id, text
       end
