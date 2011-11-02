@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Wrappers::ExactFirst do
+describe Picky::Wrappers::Category::ExactFirst do
 
   before(:each) do
     @exact    = stub :exact
@@ -16,10 +16,10 @@ describe Picky::Wrappers::ExactFirst do
         index = Picky::Index.new :some_index
         index.define_category :some_category
 
-        Picky::Wrappers::ExactFirst.wrap index
+        described_class.wrap index
 
         index.categories.categories.each do |category|
-          category.should be_kind_of(Picky::Wrappers::ExactFirst)
+          category.should be_kind_of(described_class)
         end
       end
       it "returns the index" do
