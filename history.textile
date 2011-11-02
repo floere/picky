@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 3.3.2
+
+* hanke: (server) Internal interface for generators changed. The generators are now used directly, e.g.: @Picky::Generators::Partial::Substring.new(from: 1).generate_from inverted_index_hash@. No change on your part is necessary if you didn't use @Picky::Generators::{Partial,Weights,Similarity}Generator@.
+* hanke: (server) Experimental exchangeable backend change: @Redis now passes bundle, client into the lambda, instead of client, bundle@. E.g. @inverted: ->(bundle, client) { Picky::Backends::Redis::List.new(client, "#{bundle.identifier}:inverted") }@
+
 h2. Version 3.3.1
 
 * hanke: (server) Fix for @Partial::None@, introduced in 3.3.0.
@@ -12,7 +17,7 @@ h2. Version 3.3.0
 New default option is @Postfix.new(from: -3)@, not @Substring.new(from: -3, to: -1)@ anymore. The two options are identical in function.
 * hanke: (server) Only Picky's tokenizers call @to_s@ on data anymore. This means that you can write tokenizers that work on whatever kind of object you like. The Picky standard tokenizers themselves ensure that they get to work with a string.
 * hanke: (server) Fix for @Substring@ partialization, when negative @from@ and @to@ options are used at the same time.
-* hanke: (server) Exchangeable backends (please see blog post for an explanation).
+* hanke: (server) Experimental exchangeable backends.
 * hanke: (project) RSpec 1 has been updated to RSpec 2.
 
 h2. Version 3.2.0
