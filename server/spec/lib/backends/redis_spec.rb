@@ -11,7 +11,7 @@ describe Picky::Backends::Redis do
 
       @backend.stub! :timed_exclaim
     end
-  
+
     describe 'create_...' do
       [
         [:inverted,      Picky::Backends::Redis::Float],
@@ -27,17 +27,17 @@ describe Picky::Backends::Redis do
       end
     end
   end
-  
+
   context 'with lambda options' do
     before(:each) do
-      @backend = described_class.new inverted:      ->(client, bundle){ Picky::Backends::Redis::Float.new(client, bundle.identifier(:inverted)) },
-                                     weights:       ->(client, bundle){ Picky::Backends::Redis::String.new(client, bundle.identifier(:weights)) },
-                                     similarity:    ->(client, bundle){ Picky::Backends::Redis::Float.new(client, bundle.identifier(:similarity)) },
-                                     configuration: ->(client, bundle){ Picky::Backends::Redis::List.new(client, bundle.identifier(:configuration)) }
+      @backend = described_class.new inverted:      ->(bundle, client){ Picky::Backends::Redis::Float.new(client, bundle.identifier(:inverted)) },
+                                     weights:       ->(bundle, client){ Picky::Backends::Redis::String.new(client, bundle.identifier(:weights)) },
+                                     similarity:    ->(bundle, client){ Picky::Backends::Redis::Float.new(client, bundle.identifier(:similarity)) },
+                                     configuration: ->(bundle, client){ Picky::Backends::Redis::List.new(client, bundle.identifier(:configuration)) }
 
       @backend.stub! :timed_exclaim
     end
-  
+
     describe 'create_...' do
       [
         [:inverted,      Picky::Backends::Redis::Float],
@@ -60,7 +60,7 @@ describe Picky::Backends::Redis do
 
       @backend.stub! :timed_exclaim
     end
-  
+
     describe 'create_...' do
       [
         [:inverted,      Picky::Backends::Redis::List],
@@ -89,42 +89,42 @@ describe Picky::Backends::Redis do
     #     @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a
     #     @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
     #     @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
-    # 
+    #
     #     @backend.ids(@combinations, :any, :thing).should == (1..10).to_a
     #   end
     #   it "should intersect symbol_keys correctly" do
     #     @combination1.should_receive(:ids).once.with.and_return (:'00001'..:'10000').to_a
     #     @combination2.should_receive(:ids).once.with.and_return (:'00001'..:'00100').to_a
     #     @combination3.should_receive(:ids).once.with.and_return (:'00001'..:'00010').to_a
-    # 
+    #
     #     @backend.ids(@combinations, :any, :thing).should == (:'00001'..:'0010').to_a
     #   end
     #   it "should intersect correctly when intermediate intersect result is empty" do
     #     @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a
     #     @combination2.should_receive(:ids).once.with.and_return (11..100).to_a
     #     @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
-    # 
+    #
     #     @backend.ids(@combinations, :any, :thing).should == []
     #   end
     #   it "should be fast" do
     #     @combination1.should_receive(:ids).once.with.and_return (1..100_000).to_a
     #     @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
     #     @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
-    # 
+    #
     #     performance_of { @backend.ids(@combinations, :any, :thing) }.should < 0.004
     #   end
     #   it "should be fast" do
     #     @combination1.should_receive(:ids).once.with.and_return (1..1000).to_a
     #     @combination2.should_receive(:ids).once.with.and_return (1..100).to_a
     #     @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
-    # 
+    #
     #     performance_of { @backend.ids(@combinations, :any, :thing) }.should < 0.00015
     #   end
     #   it "should be fast" do
     #     @combination1.should_receive(:ids).once.with.and_return (1..1000).to_a
     #     @combination2.should_receive(:ids).once.with.and_return (901..1000).to_a
     #     @combination3.should_receive(:ids).once.with.and_return (1..10).to_a
-    # 
+    #
     #     performance_of { @backend.ids(@combinations, :any, :thing) }.should < 0.0001
     #   end
     # end

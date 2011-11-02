@@ -21,28 +21,28 @@ module Picky
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
-        extract_lambda_or(inverted, client, bundle) ||
+        extract_lambda_or(inverted, bundle, client) ||
         List.new(client, "#{bundle.identifier}:inverted")
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
-        extract_lambda_or(weights, client, bundle) ||
+        extract_lambda_or(weights, bundle, client) ||
         Float.new(client, "#{bundle.identifier}:weights")
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
-        extract_lambda_or(similarity, client, bundle) ||
+        extract_lambda_or(similarity, bundle, client) ||
         List.new(client, "#{bundle.identifier}:similarity")
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
-        extract_lambda_or(configuration, client, bundle) ||
+        extract_lambda_or(configuration, bundle, client) ||
         String.new(client, "#{bundle.identifier}:configuration")
       end
 
