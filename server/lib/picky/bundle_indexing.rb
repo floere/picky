@@ -112,13 +112,6 @@ module Picky
       end
     end
 
-    # Generates a new index (writes its index) using the
-    # partial caching strategy of this bundle.
-    #
-    def generate_partial
-      generator = Generators::PartialGenerator.new self.inverted
-      self.inverted = generator.generate self.partial_strategy
-    end
     # Generate a partial index from the given exact inverted index.
     #
     def generate_partial_from exact_inverted_index
@@ -127,19 +120,24 @@ module Picky
       self.generate_partial
       self
     end
+
+    # Generates a new index (writes its index) using the
+    # partial caching strategy of this bundle.
+    #
+    def generate_partial
+      self.inverted = partial_strategy.generate_from self.inverted
+    end
     # Generates a new weights index (writes its index) using the
     # given weight caching strategy.
     #
     def generate_weights
-      generator = Generators::WeightsGenerator.new self.inverted
-      self.weights = generator.generate self.weights_strategy
+      self.weights = weights_strategy.generate_from self.inverted
     end
     # Generates a new similarity index (writes its index) using the
     # given similarity caching strategy.
     #
     def generate_similarity
-      generator = Generators::SimilarityGenerator.new self.inverted
-      self.similarity = generator.generate self.similarity_strategy
+      self.similarity = similarity_strategy.generate_from self.inverted
     end
 
     # Saves the indexes in a dump file.

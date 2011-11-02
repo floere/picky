@@ -103,13 +103,6 @@ module Picky
       load_relative 'generators/similarity/soundex'
       load_relative 'generators/similarity/default'
 
-      # Index generators.
-      #
-      load_relative 'generators/base'
-      load_relative 'generators/partial_generator'
-      load_relative 'generators/weights_generator'
-      load_relative 'generators/similarity_generator'
-
       # Index store handling.
       #
       load_relative 'backends/helpers/file'
