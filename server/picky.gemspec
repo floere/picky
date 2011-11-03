@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.extensions << 'lib/picky/ext/ruby19/extconf.rb'
 
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'picky-client', Picky::VERSION
+  s.add_development_dependency 'picky-client', "~> #{Picky::VERSION}"
 
   s.add_runtime_dependency 'rack'
   s.add_runtime_dependency 'rack_fast_escape'

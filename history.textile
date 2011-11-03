@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.3.3
+
+* hanke: (server) Fixing "issue 38":https://github.com/floere/picky/issues/38. Possibly caused by "a problem described here":http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yak.html.
+
 h2. Version 3.3.2
 
 * hanke: (server) Internal interface for generators changed. The generators are now used directly, e.g.: @Picky::Generators::Partial::Substring.new(from: 1).generate_from inverted_index_hash@. No change on your part is necessary if you didn't use @Picky::Generators::{Partial,Weights,Similarity}Generator@.

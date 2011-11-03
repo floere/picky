@@ -21,6 +21,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.add_development_dependency 'rspec'
 
-  s.add_dependency('picky',        "~> #{Picky::VERSION}")
-  s.add_dependency('picky-client', "~> #{Picky::VERSION}")
+  s.add_dependency 'picky',        "~> #{Picky::VERSION}"
+  s.add_dependency 'picky-client', "~> #{Picky::VERSION}"
 end
