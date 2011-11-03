@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 #
 
+remote = ARGV.include? 'REMOTE'
+
 require File.expand_path '../version', __FILE__
 
 puts "Running all specs."
-system "cd live;       bundle exec rake"
-system "cd generators; bundle exec rake"
-system "cd statistics; bundle exec rake"
-system "cd client;     bundle exec rake"
-system "cd server;     bundle exec rake; cd test_project; bundle exec rake"
-system "cd server;     bundle exec rake; cd test_project_sinatra; rake"
+system "cd live;       #{ 'bundle update' if remote }; bundle exec rake"
+system "cd generators; #{ 'bundle update' if remote }; bundle exec rake"
+system "cd statistics; #{ 'bundle update' if remote }; bundle exec rake"
+system "cd client;     #{ 'bundle update' if remote }; bundle exec rake"
+system "cd server;     #{ 'bundle update' if remote }; bundle exec rake"
+system "cd server/test_project; #{ 'bundle update' if remote }; bundle exec rake"
+system "cd server/test_project_sinatra; #{ 'bundle update' if remote }; rake"
