@@ -12,7 +12,7 @@ describe Picky::Convenience do
       :duration => 0.12345
     }.extend Picky::Convenience
   end
-  
+
   describe "entries" do
     context "default" do
       context "without block" do
@@ -75,7 +75,7 @@ describe Picky::Convenience do
       end
     end
   end
-  
+
   describe "populate_with" do
     before(:each) do
       @results = {
@@ -87,7 +87,7 @@ describe Picky::Convenience do
            :duration => 0.123,
            :count => 1234
          }.extend Picky::Convenience
-      
+
       class ARClass
         attr_reader :id
         def initialize id
@@ -109,8 +109,16 @@ describe Picky::Convenience do
       @results.populate_with(ARClass) { |ar_instance| ar_instance.id.to_s }
       @results.entries.should == (1..20).map { |id| id.to_s } # "rendering" using to_s
     end
+    it "removes the ids by default" do
+      @results.populate_with(ARClass) { |ar_instance| ar_instance.id.to_s }
+      @results.ids.should be_empty
+    end
+    it "keeps the ids with the right option" do
+      @results.populate_with(ARClass, :keep_ids => true) { |ar_instance| ar_instance.id.to_s }
+      @results.ids.should_not be_empty
+    end
   end
-  
+
   describe 'replace_ids_with' do
     before(:each) do
       @results = {

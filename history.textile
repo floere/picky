@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.3.4
+
+* hanke: (client) Method @populate_with@ gets the added option of @keep_ids@. Set to true if you don't want the ids to be removed from the (result) hash.
+
 h2. Version 3.3.3
 
 * hanke: (server) Fixing "issue 38":https://github.com/floere/picky/issues/38. Possibly caused by "a problem described here":http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yak.html.
