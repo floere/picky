@@ -41,17 +41,18 @@ module Picky
     #
     # If you don't pass it a block, it will just use the AR results.
     #
+    # Note: Usually, after this the ids are not needed anymore.
+    #       Use #clear_ids to remove them.
+    #
     # === Parameters
     # * model_class: The model to use for the results. Will call #find on the given class.
     #
     # === Options
     # * up_to: Amount of results to populate. All of them by default.
-    # * keep_ids: By default, this method removes the ids from the results. Set this to true to keep the ids.
     # * The rest of the options are directly passed through to the ModelClass.find(ids, options) method. Default is {}.
     #
     def populate_with model_class, options = {}, &block
       the_ids  = ids options.delete(:up_to)
-      keep_ids = options.delete :keep_ids
 
       objects = model_class.find the_ids, options
 
@@ -69,7 +70,6 @@ module Picky
       objects.collect! &block if block_given?
 
       amend_ids_with objects
-      clear_ids unless keep_ids
 
       objects
     end

@@ -109,12 +109,8 @@ describe Picky::Convenience do
       @results.populate_with(ARClass) { |ar_instance| ar_instance.id.to_s }
       @results.entries.should == (1..20).map { |id| id.to_s } # "rendering" using to_s
     end
-    it "removes the ids by default" do
+    it "keeps the ids by default" do
       @results.populate_with(ARClass) { |ar_instance| ar_instance.id.to_s }
-      @results.ids.should be_empty
-    end
-    it "keeps the ids with the right option" do
-      @results.populate_with(ARClass, :keep_ids => true) { |ar_instance| ar_instance.id.to_s }
       @results.ids.should_not be_empty
     end
   end
