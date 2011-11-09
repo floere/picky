@@ -46,6 +46,40 @@ module Picky
         String.new(client, "#{bundle.identifier}:configuration")
       end
 
+      # Does the Redis version already include
+      # scripting support?
+      #
+      def redis_with_scripting?
+        at_least_version redis_version, [2, 6, 0]
+      end
+
+      # Compares two versions each in an array [major, minor, patch]
+      # format and returns true if the first version is higher
+      # or the same as the second one. False if not.
+      #
+      # Note: Destructive.
+      #
+      def at_least_version major_minor_patch, should_be
+        3.times { return false if major_minor_patch.shift < should_be.shift }
+        true
+      end
+
+      # Returns an array describing the
+      # current Redis version.
+      #
+      # Note: This method assumes that clients answer
+      #       to #info with a hash (string/symbol keys)
+      #       detailing the infos.
+      #
+      # Example:
+      #   backend.redis_version # => [2, 4, 1]
+      #
+      def redis_version
+        infos          = client.info
+        version_string = infos['redis_version'] || infos[:redis_version]
+        version_string.split('.').map &:to_i
+      end
+
       # Returns the result ids for the allocation.
       #
       # Developers wanting to program fast intersection
@@ -54,29 +88,53 @@ module Picky
       #
       # Note: We use the amount and offset hints to speed Redis up.
       #
-      def ids combinations, amount, offset
-        identifiers = combinations.inject([]) do |identifiers, combination|
-          identifiers << "#{combination.identifier}"
-        end
+#       def ids combinations, amount, offset
+#         if redis_with_scripting?
+#           @@script = <<-SCRIPT
+# redis.call('zinterstore', KEYS[1], ARGV[1]);
+# local result = redis.call('zrange', KEYS[1], ARGV[2], ARGV[3])
+# redis.call('del', KEYS[1])
+# return result
+# SCRIPT
+#           # Scripting version of #ids.
+#           #
+#           def ids combinations, amount, offset
+#             identifiers = combinations.inject([]) do |identifiers, combination|
+#               identifiers << "#{combination.identifier}"
+#             end
+#
+#             # Assume it's using EVALSHA.
+#             #
+#             client.eval @@script, generate_intermediate_result_id, identifiers, offset, (offset + amount)
+#           end
+#         else
+          # Non-Scripting version of #ids.
+          #
+          def ids combinations, amount, offset
+            identifiers = combinations.inject([]) do |identifiers, combination|
+              identifiers << "#{combination.identifier}"
+            end
 
-        result_id = generate_intermediate_result_id
+            result_id = generate_intermediate_result_id
 
-        # Intersect and store.
-        #
-        client.zinterstore result_id, identifiers
+            # Intersect and store.
+            #
+            client.zinterstore result_id, identifiers
 
-        # Get the stored result.
-        #
-        results = client.zrange result_id, offset, (offset + amount)
+            # Get the stored result.
+            #
+            results = client.zrange result_id, offset, (offset + amount)
 
-        # Delete the stored result as it was only for temporary purposes.
-        #
-        # Note: I could also not delete it, but that would not be clean at all.
-        #
-        client.del result_id
+            # Delete the stored result as it was only for temporary purposes.
+            #
+            # Note: I could also not delete it, but that would not be clean at all.
+            #
+            client.del result_id
 
-        results
-      end
+            results
+          end
+        # end
+      # end
 
       # Generate a multiple host/process safe result id.
       #
