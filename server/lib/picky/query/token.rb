@@ -37,7 +37,7 @@ module Picky
         partialize # TODO Should this operate on the original?
         similarize # TODO Should this operate on the original?
         remove_illegals # TODO Remove?
-        symbolize
+        symbolize # TODO to_sym
         self
       end
 
