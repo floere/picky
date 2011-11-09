@@ -20,11 +20,13 @@ module Picky
           else
             if @from < 0 && @to < 0
               def each_subtoken token, &block
-                token[0..@to].intern.each_subtoken @from - @to - 1, &block # TODO to_sym
+                token.each_subtoken @from - @to - 1, (0..@to) &block
+                # token[0..@to].intern.each_subtoken @from - @to - 1, &block # TODO to_sym
               end
             else
               def each_subtoken token, &block
-                token[0..@to].intern.each_subtoken @from, &block # TODO to_sym
+                token.each_subtoken @from, (0..@to), &block
+                # token[0..@to].intern.each_subtoken @from, &block # TODO to_sym
               end
             end
           end

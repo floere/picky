@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Symbol do
-  
+
   context 'performance' do
     include Picky::Helpers::Measuring
     before(:each) do
@@ -16,7 +16,7 @@ describe Symbol do
       performance_of { @token.each_intoken { |intoken| } }.should < 0.025 # TODO Slow!
     end
   end
-  
+
   describe 'each_intoken' do
     context 'normal symbol' do
       before(:each) do
@@ -249,7 +249,7 @@ describe Symbol do
       end
     end
   end
-  
+
   describe "each_subtoken" do
     context 'normal symbol' do
       before(:each) do
@@ -471,6 +471,22 @@ describe Symbol do
         end
       end
     end
+    context "with range param" do
+      it "returns a subtoken array from a clipped original" do
+        result = []
+        :reinke.each_subtoken 2, (0..3) do |subtoken|
+          result << subtoken
+        end
+        result.should == [:rein, :rei, :re]
+      end
+      it "returns a subtoken array from a clipped original" do
+        result = []
+        :reinke.each_subtoken 2, (1..-2) do |subtoken|
+          result << subtoken
+        end
+        result.should == [:eink, :ein, :ei]
+      end
+    end
   end
-  
+
 end
