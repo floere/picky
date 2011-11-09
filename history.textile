@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.4.1
+
+* hanke: (server) Intermittent service release to test internal String-based indexes.
+
 h2. Version 3.4.0
 
 * hanke: (client) Method @populate_with@ keeps the ids by default. Use @clear_ids@ on the results if you want to remove them.
