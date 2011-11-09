@@ -56,6 +56,7 @@ module Picky
       load_relative 'extensions/object'
       load_relative 'extensions/array'
       load_relative 'extensions/symbol'
+      load_relative 'extensions/string'
       load_relative 'extensions/module'
       load_relative 'extensions/class'
       load_relative 'extensions/hash'
