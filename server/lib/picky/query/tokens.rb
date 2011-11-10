@@ -61,6 +61,12 @@ module Picky
         end
       end
 
+      # Symbolizes each of the tokens.
+      #
+      def symbolize
+        @tokens.each &:symbolize!
+      end
+
       # Makes the last of the tokens partial.
       #
       def partialize_last

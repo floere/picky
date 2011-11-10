@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Picky::Query::Token do
-  
+
   describe '==' do
     it 'is equal if the originals are equal' do
       described_class.processed('similar~', 'Similar~').should == described_class.processed('similar~', 'Similar~')
@@ -11,12 +11,12 @@ describe Picky::Query::Token do
       described_class.processed('similar~', 'Similar~').should_not == described_class.processed('similar', 'Similar')
     end
   end
-  
+
   describe 'next_similar_token' do
     before(:each) do
       @bundle   = stub :bundle, :similar => [:array, :of, :similar]
       @category = stub :category, :bundle_for => @bundle
-      
+
       @token = described_class.processed 'similar~', 'Similar~'
     end
     it 'returns the right next tokens' do
@@ -30,7 +30,7 @@ describe Picky::Query::Token do
       next_token.should == nil
     end
   end
-  
+
   describe 'next_similar' do
     before(:each) do
       @bundle = stub :bundle
@@ -44,7 +44,7 @@ describe Picky::Query::Token do
         end
         it 'should have a certain original text' do
           @token.next_similar @bundle
-          
+
           @token.original.should == :array
         end
       end
@@ -67,7 +67,7 @@ describe Picky::Query::Token do
           @token.next_similar @bundle
           @token.next_similar @bundle
           @token.next_similar @bundle
-          
+
           @token.text.should == :similar
         end
       end
@@ -84,17 +84,17 @@ describe Picky::Query::Token do
         end
         it 'should have a certain text' do
           @token.next_similar @bundle
-          
-          @token.text.should == :nonsimilar
+
+          @token.text.should == 'nonsimilar'
         end
       end
     end
   end
-  
+
   describe "generate_similarity_for" do
     before(:each) do
       @bundle = stub :bundle
-      
+
       @token = described_class.processed 'flarb~', 'FLARB~'
     end
     context "with similar" do
@@ -114,7 +114,7 @@ describe Picky::Query::Token do
       end
     end
   end
-  
+
   # describe 'to_solr' do
   #   def self.it_should_solr text, expected_result
   #     it "should solrify into #{expected_result} from #{text}" do
@@ -133,7 +133,7 @@ describe Picky::Query::Token do
   #   it_should_solr 'searchengi',   'searchengi~0.89'
   #   it_should_solr 'searchengin',  'searchengin~0.9'
   #   it_should_solr 'searchengine', 'searchengine~0.9'
-  # 
+  #
   #   it_should_solr 'spec:tex',     'specific:tex'
   #   it_should_solr 'with:text',    'text~0.74'
   #   it_should_solr 'name:',        'name~0.74'
@@ -183,7 +183,7 @@ describe Picky::Query::Token do
       described_class.processed('some text', 'SOME TEXT').class.should == described_class
     end
   end
-  
+
   describe 'process' do
     let(:token) { described_class.new 'any_text' }
     it 'returns itself' do
@@ -194,9 +194,22 @@ describe Picky::Query::Token do
       token.should_receive(:partialize).once.ordered
       token.should_receive(:similarize).once.ordered
       token.should_receive(:remove_illegals).once.ordered
-      token.should_receive(:symbolize).once.ordered
 
       token.process
+    end
+  end
+
+  describe 'symbolize!' do
+    before(:each) do
+      @token = described_class.processed 'string', 'String'
+    end
+    it 'is not symbolized' do
+      @token.text.should == 'string'
+    end
+    it 'can be symbolized' do
+      @token.symbolize!
+
+      @token.text.should == :string
     end
   end
 
@@ -365,7 +378,7 @@ describe Picky::Query::Token do
       end
       it 'should not set partial' do
         @token.instance_variable_set :@partial, false
-        
+
         @token.partial = true
 
         @token.instance_variable_get(:@partial).should be_false
@@ -400,20 +413,20 @@ describe Picky::Query::Token do
     it 'should remove *' do
       token = described_class.processed 'text*'
 
-      token.text.should == :text
+      token.text.should == 'text'
     end
     it 'should remove ~' do
       token = described_class.processed 'text~'
 
-      token.text.should == :text
+      token.text.should == 'text'
     end
     it 'should remove "' do
       token = described_class.processed 'text"'
 
-      token.text.should == :text
+      token.text.should == 'text'
     end
     it "should pass on a processed text" do
-      described_class.processed('text').text.should == :text
+      described_class.processed('text').text.should == 'text'
     end
   end
 

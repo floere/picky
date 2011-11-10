@@ -175,6 +175,7 @@ module Picky
     def tokenized text
       tokens, originals = tokenizer.tokenize text
       tokens = Query::Tokens.processed tokens, originals || tokens, @ignore_unassigned
+      tokens.symbolize
       tokens.partialize_last # Note: In the standard Picky search, the last token is always partial.
       tokens
     end

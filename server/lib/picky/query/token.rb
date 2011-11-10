@@ -37,13 +37,12 @@ module Picky
         partialize # TODO Should this operate on the original?
         similarize # TODO Should this operate on the original?
         remove_illegals # TODO Remove?
-        symbolize # TODO to_sym
         self
       end
 
       #
       #
-      def symbolize
+      def symbolize!
         @text = @text.to_sym
       end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Picky::Query::Tokens do
-  
+
   context 'with ignore_unassigned_tokens true' do
     it 'generates processed tokens from all words' do
       expected = [
@@ -11,12 +11,12 @@ describe Picky::Query::Tokens do
         Picky::Query::Token.processed('sp:solr'),
         Picky::Query::Token.processed('query"')
       ]
-      
+
       described_class.should_receive(:new).once.with expected, true
-      
+
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], [], true
     end
-    
+
     describe 'possible_combinations_in' do
       before(:each) do
         @token1 = stub :token1
@@ -48,7 +48,7 @@ describe Picky::Query::Tokens do
       end
     end
   end
-  
+
   describe '.processed' do
     it 'generates processed tokens from all words' do
       expected = [
@@ -58,9 +58,9 @@ describe Picky::Query::Tokens do
         Picky::Query::Token.processed('sp:solr'),
         Picky::Query::Token.processed('query"')
       ]
-      
+
       described_class.should_receive(:new).once.with expected, false
-      
+
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], []
     end
     it 'generates processed tokens from all words' do
@@ -71,10 +71,23 @@ describe Picky::Query::Tokens do
         Picky::Query::Token.processed('sp:solr'),
         Picky::Query::Token.processed('query"')
       ]
-      
+
       described_class.should_receive(:new).once.with expected, false
-      
+
       described_class.processed ['this~', 'is', 'a', 'sp:solr', 'query"'], []
+    end
+  end
+
+  describe 'symbolize' do
+    let(:tokens) { described_class.processed ['a*', 'b'], ['A*', 'B'] }
+
+    it 'has non symbolized tokens' do
+      tokens.map(&:text).should == ['a', 'b']
+    end
+    it 'symbolizes all tokens' do
+      tokens.symbolize
+
+      tokens.map(&:text).should == [:a, :b]
     end
   end
 
@@ -140,7 +153,7 @@ describe Picky::Query::Tokens do
       @token1 = stub :token1
       @token2 = stub :token2
       @token3 = stub :token3
-      
+
       @tokens = described_class.new [@token1, @token2, @token3]
     end
     it 'should work correctly' do
