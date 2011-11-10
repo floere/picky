@@ -119,7 +119,7 @@ module Picky
       id, last_id = nil, nil
       prepared.retrieve do |id, token|
         initialize_inverted_index_for token
-        self.inverted[token] << id.send(format)
+        self.inverted[token.to_sym] << id.send(format) # TODO to_sym
       end
       self.inverted.values.each &:uniq!
     end

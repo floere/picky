@@ -41,7 +41,7 @@ module Picky
         # * id,data\n
         # * id,data\n
         #
-        # Yields an id string and a symbol token.
+        # Yields an id string and a token.
         #
         def retrieve
           id    = nil
@@ -49,7 +49,7 @@ module Picky
           ::File.open(cache_path, 'r:utf-8') do |file|
             file.each_line do |line|
               id, token = line.split ?,, 2
-              yield id, (token.chomp! || token).to_sym # TODO to_sym
+              yield id, (token.chomp! || token)
             end
           end
         end
