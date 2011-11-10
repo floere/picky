@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.4.2
+
+* hanke: (server) Fixed a bug where ids occurred multiple times for an indexed token in the same index bundle (thanks M. Below for finding the bug). This did not impact on the search results, just the stored index files.
+
 h2. Version 3.4.1
 
 * hanke: (server) Intermittent service release to test internal String-based indexes.
