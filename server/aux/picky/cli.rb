@@ -14,7 +14,7 @@ module Picky
       executor.execute selector, args, params
     end
     def executor_class_for selector = nil
-      selector && @@mapping[selector.to_sym] || [Help]
+      selector && @@mapping[selector.intern] || [Help]
     end
 
     class Base

@@ -40,7 +40,7 @@ module Picky
     # Find a given category in the categories.
     #
     def [] category_name
-      category_name = category_name.to_sym
+      category_name = category_name.intern
       category_hash[category_name] || raise_not_found(category_name)
     end
     def raise_not_found category_name

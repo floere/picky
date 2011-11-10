@@ -61,7 +61,7 @@ module Picky
     # Extracts an index, given its identifier.
     #
     def [] identifier
-      index_name = identifier.to_sym
+      index_name = identifier.intern
       index_mapping[index_name] || raise_not_found(index_name)
     end
 

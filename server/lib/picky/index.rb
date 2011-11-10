@@ -115,7 +115,7 @@ module Picky
     #   end
     #
     def initialize name
-      @name       = name.to_sym
+      @name       = name.intern
       @categories = Categories.new
 
       # Centralized registry.
@@ -152,7 +152,7 @@ module Picky
     # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: define_category(:similar_title, :from => :title).
     #
     def category category_name, options = {}
-      new_category = Category.new category_name.to_sym, self, options
+      new_category = Category.new category_name.intern, self, options
       categories << new_category
 
       new_category = yield new_category if block_given?

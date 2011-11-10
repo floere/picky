@@ -20,7 +20,7 @@ module Picky
         #
         def encoded sym
           codes = Text::Metaphone.double_metaphone sym.to_s
-          codes.first.to_sym unless codes.empty?
+          codes.first.intern unless codes.empty?
         end
 
       end

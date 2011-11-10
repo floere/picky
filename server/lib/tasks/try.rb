@@ -7,8 +7,8 @@ module Picky
     def initialize text, index = nil, category = nil
       @text = text
       @specific = Picky::Indexes
-      @specific = @specific[index.to_sym]    if index
-      @specific = @specific[category.to_sym] if category
+      @specific = @specific[index.intern]    if index
+      @specific = @specific[category.intern] if category
     end
 
     def saved

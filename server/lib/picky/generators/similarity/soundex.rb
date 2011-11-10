@@ -20,7 +20,7 @@ module Picky
         #
         def encoded sym
           code = Text::Soundex.soundex sym.to_s
-          code.to_sym if code
+          code.intern if code
         end
 
       end

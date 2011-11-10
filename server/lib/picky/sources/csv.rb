@@ -42,7 +42,7 @@ module Picky
         @file_name   = @csv_options.delete(:file) || raise_no_file_given(category_names)
 
         key_format   = options.delete :key_format
-        @key_format  = key_format && key_format.to_sym || :to_i
+        @key_format  = key_format && key_format.intern || :to_i
       end
 
       def to_s
