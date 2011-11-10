@@ -109,6 +109,7 @@ module Picky
       prepared.retrieve do |id, token|
         initialize_inverted_index_for token
         self.inverted[token] << id.send(format)
+        self.inverted[token].uniq!
       end
     end
 

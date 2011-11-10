@@ -84,9 +84,20 @@ describe Picky::Bundle do
       prepared.should_receive(:retrieve).once.and_yield '  1234', :some_token
       bundle.stub! :prepared => prepared
 
-      @ary = stub :ary
-      inverted = stub :inverted, :[] => @ary
-      bundle.stub! :inverted => inverted
+      @ary = [1,1,1,2,3,3]
+      @inverted = stub :inverted, :[] => @ary
+      bundle.stub! :inverted => @inverted
+    end
+    context 'uniqueness' do
+      before(:each) do
+        @category.stub! :key_format => :to_i
+        @inverted = { :test => @ary }
+      end
+      it 'is correct' do
+        bundle.retrieve
+
+        bundle.inverted[:test].should == [1,2,3,1234]
+      end
     end
     context 'id key format' do
       before(:each) do
