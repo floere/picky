@@ -80,11 +80,19 @@ describe Picky::Bundle do
 
   describe 'retrieve' do
     before(:each) do
+      @ary = []
+
       prepared = stub :prepared
-      prepared.should_receive(:retrieve).once.and_yield '  1234', :some_token
+      prepared.should_receive(:retrieve).once.and_yield(' 1',     :some_token)
+                                             .and_yield('1 ',     :some_token)
+                                             .and_yield('1',      :some_token)
+                                             .and_yield('    2',  :some_token)
+                                             .and_yield('3',      :some_token)
+                                             .and_yield('  3  ',  :some_token)
+                                             .and_yield('  1234', :some_token)
+
       bundle.stub! :prepared => prepared
 
-      @ary = [1,1,1,2,3,3]
       @inverted = stub :inverted, :[] => @ary
       bundle.stub! :inverted => @inverted
     end
@@ -104,7 +112,10 @@ describe Picky::Bundle do
         @category.stub! :key_format => :to_i
       end
       it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).once.with 1234
+        @ary.should_receive(:<<).once.ordered.with 1
+        @ary.should_receive(:<<).once.ordered.with 2
+        @ary.should_receive(:<<).once.ordered.with 3
+        @ary.should_receive(:<<).once.ordered.with 1234
 
         bundle.retrieve
       end
@@ -114,7 +125,10 @@ describe Picky::Bundle do
         @category.stub! :key_format => :strip
       end
       it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).once.with '1234'
+        @ary.should_receive(:<<).once.ordered.with '1'
+        @ary.should_receive(:<<).once.ordered.with '2'
+        @ary.should_receive(:<<).once.ordered.with '3'
+        @ary.should_receive(:<<).once.ordered.with '1234'
 
         bundle.retrieve
       end
@@ -124,7 +138,10 @@ describe Picky::Bundle do
         @category.stub! :key_format => nil
       end
       it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).once.with 1234
+        @ary.should_receive(:<<).once.ordered.with 1
+        @ary.should_receive(:<<).once.ordered.with 2
+        @ary.should_receive(:<<).once.ordered.with 3
+        @ary.should_receive(:<<).once.ordered.with 1234
 
         bundle.retrieve
       end

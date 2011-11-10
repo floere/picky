@@ -103,14 +103,25 @@ module Picky
     #
     # TODO Move this out to the category?
     #
+    # Note: The clean way to do this would be to
+    #       self.inverted.values.each &:uniq!
+    #
+    # Note 2:
+    #   initialize_inverted_index_for token
+    #   id = id.send(format)
+    #   next if last_id == id
+    #   self.inverted[token] << id
+    #   last_id = id
+    #
     def retrieve
       format = key_format || :to_i
       empty_inverted
+      id, last_id = nil, nil
       prepared.retrieve do |id, token|
         initialize_inverted_index_for token
         self.inverted[token] << id.send(format)
-        self.inverted[token].uniq!
       end
+      self.inverted.values.each &:uniq!
     end
 
     # Generate a partial index from the given exact inverted index.
