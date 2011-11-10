@@ -93,18 +93,16 @@ describe Picky::Bundle do
 
       bundle.stub! :prepared => prepared
 
-      @inverted = stub :inverted, :[] => @ary
-      bundle.stub! :inverted => @inverted
+      bundle.stub! :inverted => { :some_token => @ary }
     end
     context 'uniqueness' do
       before(:each) do
         @category.stub! :key_format => :to_i
-        @inverted = { :test => @ary }
       end
       it 'is correct' do
         bundle.retrieve
 
-        bundle.inverted[:test].should == [1,2,3,1234]
+        bundle.inverted[:some_token].should == [1,2,3,1234]
       end
     end
     context 'id key format' do
@@ -112,9 +110,9 @@ describe Picky::Bundle do
         @category.stub! :key_format => :to_i
       end
       it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).once.ordered.with 1
+        @ary.should_receive(:<<).exactly(3).times.ordered.with 1
         @ary.should_receive(:<<).once.ordered.with 2
-        @ary.should_receive(:<<).once.ordered.with 3
+        @ary.should_receive(:<<).exactly(2).times.ordered.with 3
         @ary.should_receive(:<<).once.ordered.with 1234
 
         bundle.retrieve
@@ -125,9 +123,9 @@ describe Picky::Bundle do
         @category.stub! :key_format => :strip
       end
       it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).once.ordered.with '1'
+        @ary.should_receive(:<<).exactly(3).times.ordered.with '1'
         @ary.should_receive(:<<).once.ordered.with '2'
-        @ary.should_receive(:<<).once.ordered.with '3'
+        @ary.should_receive(:<<).exactly(2).times.ordered.with '3'
         @ary.should_receive(:<<).once.ordered.with '1234'
 
         bundle.retrieve
@@ -138,9 +136,9 @@ describe Picky::Bundle do
         @category.stub! :key_format => nil
       end
       it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).once.ordered.with 1
+        @ary.should_receive(:<<).exactly(3).times.ordered.with 1
         @ary.should_receive(:<<).once.ordered.with 2
-        @ary.should_receive(:<<).once.ordered.with 3
+        @ary.should_receive(:<<).exactly(2).times.ordered.with 3
         @ary.should_receive(:<<).once.ordered.with 1234
 
         bundle.retrieve

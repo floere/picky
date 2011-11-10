@@ -11,15 +11,15 @@ describe Picky::Query::Combination do
 
     @combination = described_class.new @token, @category
   end
-  
+
   describe "to_s" do
     it "shows the combination's info" do
       @token.stub! :to_result => :token_result
-      
+
       @combination.to_s.should == 'bundle_name some_category_name:token_result'
     end
   end
-  
+
   describe 'hash' do
     it 'should hash the token and the bundle' do
       @combination.hash.should == [@token.to_s, @bundle].hash
@@ -34,7 +34,7 @@ describe Picky::Query::Combination do
         @combination = Picky::Query::Combination.new token, @category
       end
       it 'should return a correct result' do
-        @combination.to_result.should == [:some_category_name, 'Blä~', :blä] # Note: Characters not substituted. That's ok.
+        @combination.to_result.should == [:some_category_name, 'Blä~', 'blä'] # Note: Characters not substituted. That's ok.
       end
     end
     it 'should return a correct result' do
@@ -52,7 +52,7 @@ describe Picky::Query::Combination do
 
   describe 'ids' do
     it 'should call ids with the text on bundle' do
-      @bundle.should_receive(:ids).once.with :some_text
+      @bundle.should_receive(:ids).once.with 'some_text'
 
       @combination.ids
     end
@@ -68,7 +68,7 @@ describe Picky::Query::Combination do
 
   describe 'weight' do
     it 'should call weight with the text on bundle' do
-      @bundle.should_receive(:weight).once.with :some_text
+      @bundle.should_receive(:weight).once.with 'some_text'
 
       @combination.weight
     end
