@@ -4,8 +4,7 @@ describe Picky::Calculations::Location do
 
   context 'with precision 1' do
     before(:each) do
-      @calculation = described_class.new 1.5, 1
-      @calculation.anchor = 42.7
+      @calculation = described_class.new 1.5, 42.7, 1
     end
     describe 'calculated_range' do
       it 'returns the right range' do
@@ -36,8 +35,7 @@ describe Picky::Calculations::Location do
 
   context 'with precision 3' do
     before(:each) do
-      @calculation = described_class.new 1.5, 3
-      @calculation.anchor = 42.7
+      @calculation = described_class.new 1.5, 42.7, 3
     end
     describe 'calculate' do
       it 'sets the anchor close value to the minimum minus user grid' do

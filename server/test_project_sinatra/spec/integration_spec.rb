@@ -216,11 +216,11 @@ describe BookSearch do
 
   # Range based area search. Memory.
   #
-  it { simple_geo.search("north1:47.41 east1:8.55").ids.should == [1481, 5014, 5015, 5016, 5017, 10576, 10717, 17777, 17999] }
+  it { simple_geo.search("north1:47.41 east1:8.55").ids.should == [1481, 5014, 5015, 5016, 10576, 10717, 17777, 17999] }
 
   # Geo based area search.
   #
-  it { geo.search("north:47.41 east:8.55").ids.should == [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5018, 5059, 9110, 10347, 10576, 10879, 17777, 19781] }
+  it { geo.search("north:47.41 east:8.55").ids.should == [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5059, 9110, 10347, 10576, 10717, 10879, 17777, 17955, 18038] }
 
   # Redis.
   #

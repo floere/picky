@@ -16,10 +16,11 @@ module Picky
                   :grid
 
       def initialize user_grid, anchor = 0.0, precision = nil
-        @user_grid = user_grid
-        @anchor    = anchor
-        @precision = precision || 1
-        @grid      = @user_grid / (@precision + 0.5)
+        @user_grid  = user_grid
+        @precision  = precision || 1
+        @grid       = @user_grid / (@precision + 0.5)
+
+        self.anchor = anchor
       end
 
       def anchor= value

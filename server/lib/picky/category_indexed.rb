@@ -8,6 +8,7 @@ module Picky
     #
     def load_from_cache
       timed_exclaim %Q{"#{identifier}": Loading index from cache.}
+      clear_realtime_mapping
       exact.load
       partial.load
     end

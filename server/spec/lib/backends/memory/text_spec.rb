@@ -45,7 +45,7 @@ describe Picky::Backends::Memory::Text do
       end
     end
     it "is fast" do
-      performance_of { text.retrieve { |id, token| } }.should < 0.00005
+      performance_of { text.retrieve { |id, token| } }.should < 0.00006
     end
   end
 

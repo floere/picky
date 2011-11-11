@@ -157,7 +157,7 @@ describe Picky::Generators::Partial::Infix do
           end
         end
         it "should be fast" do
-          performance_of { @generator.generate_from(@index) }.should < 0.06
+          performance_of { @generator.generate_from(@index) }.should < 0.07
         end
       end
       describe "a bigger example with almost identical symbols" do
@@ -169,7 +169,7 @@ describe Picky::Generators::Partial::Infix do
           end
         end
         it "should be fast" do
-          performance_of { @generator.generate_from(@index) }.should < 0.06
+          performance_of { @generator.generate_from(@index) }.should < 0.07
         end
       end
     end
