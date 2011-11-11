@@ -227,7 +227,7 @@ module Picky
     #
     def ranged_category category_name, range, options = {}
       precision = options.delete(:precision) || 1
-      anchor    = options.delete(:anchor) || 0.0
+      anchor    = options.delete(:anchor)    || 0.0
 
       # Note: :key_format => :to_f ?
       #
