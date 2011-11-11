@@ -50,7 +50,7 @@ module Picky
       empty
       retrieve
       dump
-      clear_realtime_mapping
+      # clear_realtime_mapping # TODO To call or not to call, that is the question.
     end
 
     # Retrieves the prepared index data into the indexes and
@@ -59,27 +59,6 @@ module Picky
     def retrieve
       prepared.retrieve { |id, token| add_tokenized_token id, token, :<< }
     end
-
-    # # Generates all caches for this category.
-    # #
-    # def cache
-    #   generate_caches_from_source
-    #   generate_partial
-    #   generate_caches_from_memory
-    #   dump
-    #   timed_exclaim %Q{"#{identifier}": Caching finished.}
-    # end
-    # # Generate the cache data.
-    # #
-    # def generate_caches_from_source
-    #   exact.generate_caches_from_source
-    # end
-    # def generate_partial
-    #   partial.generate_partial_from exact.inverted
-    # end
-    # def generate_caches_from_memory
-    #   partial.generate_caches_from_memory
-    # end
 
     # Return an appropriate source.
     #

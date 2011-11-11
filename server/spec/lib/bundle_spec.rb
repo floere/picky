@@ -14,13 +14,13 @@ describe Picky::Bundle do
                         Picky::Generators::Partial::Default,
                         Picky::Generators::Similarity::DoubleMetaphone.new(3)
   end
-  
+
   describe 'identifier' do
     it 'is correct' do
-      bundle.identifier.should == 'test:some_index:some_category:some_name'
+      bundle.identifier.should == 'some_index:some_category:some_name'
     end
   end
-  
+
   describe 'index_path' do
     it 'is correct' do
       bundle.index_path(:some_type).should == 'spec/test_directory/index/test/some_index/some_category_some_name_some_type'
@@ -29,5 +29,5 @@ describe Picky::Bundle do
       bundle.index_path.should == 'spec/test_directory/index/test/some_index/some_category_some_name'
     end
   end
-  
+
 end

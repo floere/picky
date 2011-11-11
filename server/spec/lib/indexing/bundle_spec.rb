@@ -11,7 +11,7 @@ describe Picky::Bundle do
 
   describe 'identifier' do
     it 'is correct' do
-      bundle.identifier.should == 'test:some_index:some_category:some_name'
+      bundle.identifier.should == 'some_index:some_category:some_name'
     end
   end
 
@@ -37,13 +37,13 @@ describe Picky::Bundle do
     it 'does something' do
       expect {
         bundle.raise_cache_missing :similarity
-      }.to raise_error("Error: The similarity cache for test:some_index:some_category:some_name is missing.")
+      }.to raise_error("Error: The similarity cache for some_index:some_category:some_name is missing.")
     end
   end
 
   describe 'warn_cache_small' do
     it 'warns the user' do
-      bundle.should_receive(:warn).once.with "Warning: similarity cache for test:some_index:some_category:some_name smaller than 16 bytes."
+      bundle.should_receive(:warn).once.with "Warning: similarity cache for some_index:some_category:some_name smaller than 16 bytes."
 
       bundle.warn_cache_small :similarity
     end
@@ -51,134 +51,7 @@ describe Picky::Bundle do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      bundle.identifier.should == 'test:some_index:some_category:some_name'
-    end
-  end
-
-  describe 'initialize_index_for' do
-    context 'token not yet assigned' do
-      before(:each) do
-        bundle.stub! :index => {}
-      end
-      it 'should assign it an empty array' do
-        bundle.initialize_inverted_index_for :some_token
-
-        bundle.inverted[:some_token].should == []
-      end
-    end
-    context 'token already assigned' do
-      before(:each) do
-        bundle.stub! :index => { :some_token => :already_assigned }
-      end
-      it 'should not assign it anymore' do
-        bundle.initialize_inverted_index_for :some_token
-
-        bundle.index[:some_token].should == :already_assigned
-      end
-    end
-  end
-
-  describe 'retrieve' do
-    before(:each) do
-      @ary = []
-
-      prepared = stub :prepared
-      prepared.should_receive(:retrieve).once.and_yield(' 1',     :some_token)
-                                             .and_yield('1 ',     :some_token)
-                                             .and_yield('1',      :some_token)
-                                             .and_yield('    2',  :some_token)
-                                             .and_yield('3',      :some_token)
-                                             .and_yield('  3  ',  :some_token)
-                                             .and_yield('  1234', :some_token)
-
-      bundle.stub! :prepared => prepared
-
-      bundle.stub! :inverted => { :some_token => @ary }
-    end
-    context 'uniqueness' do
-      before(:each) do
-        @category.stub! :key_format => :to_i
-      end
-      it 'is correct' do
-        bundle.retrieve
-
-        bundle.inverted[:some_token].should == [1,2,3,1234]
-      end
-    end
-    context 'id key format' do
-      before(:each) do
-        @category.stub! :key_format => :to_i
-      end
-      it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).exactly(3).times.ordered.with 1
-        @ary.should_receive(:<<).once.ordered.with 2
-        @ary.should_receive(:<<).exactly(2).times.ordered.with 3
-        @ary.should_receive(:<<).once.ordered.with 1234
-
-        bundle.retrieve
-      end
-    end
-    context 'other key format' do
-      before(:each) do
-        @category.stub! :key_format => :strip
-      end
-      it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).exactly(3).times.ordered.with '1'
-        @ary.should_receive(:<<).once.ordered.with '2'
-        @ary.should_receive(:<<).exactly(2).times.ordered.with '3'
-        @ary.should_receive(:<<).once.ordered.with '1234'
-
-        bundle.retrieve
-      end
-    end
-    context 'no key format - default' do
-      before(:each) do
-        @category.stub! :key_format => nil
-      end
-      it 'should call the other methods correctly' do
-        @ary.should_receive(:<<).exactly(3).times.ordered.with 1
-        @ary.should_receive(:<<).once.ordered.with 2
-        @ary.should_receive(:<<).exactly(2).times.ordered.with 3
-        @ary.should_receive(:<<).once.ordered.with 1234
-
-        bundle.retrieve
-      end
-    end
-  end
-
-  describe 'load_from_index_file' do
-    it 'should call two methods in order' do
-      bundle.should_receive(:load_from_prepared_index_generation_message).once.ordered
-      bundle.should_receive(:retrieve).once.ordered
-
-      bundle.load_from_prepared_index_file
-    end
-  end
-
-  describe 'generate_derived' do
-    it 'should call two methods in order' do
-      bundle.should_receive(:generate_weights).once.ordered
-      bundle.should_receive(:generate_similarity).once.ordered
-
-      bundle.generate_derived
-    end
-  end
-
-  describe 'generate_caches_from_memory' do
-    it 'should call two methods in order' do
-      bundle.should_receive(:cache_from_memory_generation_message).once.ordered
-      bundle.should_receive(:generate_derived).once.ordered
-
-      bundle.generate_caches_from_memory
-    end
-  end
-
-  describe 'generate_caches_from_source' do
-    it 'should call two methods in order' do
-      bundle.should_receive(:load_from_prepared_index_file).once.ordered
-      bundle.should_receive(:generate_caches_from_memory).once.ordered
-
-      bundle.generate_caches_from_source
+      bundle.identifier.should == 'some_index:some_category:some_name'
     end
   end
 

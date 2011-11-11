@@ -62,47 +62,34 @@ describe Picky::Category do
       end
     end
 
-    describe 'generate_caches_from_memory' do
-      it 'should delegate to partial' do
-        partial.should_receive(:generate_caches_from_memory).once.with
-
-        category.generate_caches_from_memory
-      end
-    end
-
-    describe 'generate_partial' do
-      it 'should return whatever the partial generation returns' do
-        exact.stub! :index
-        partial.stub! :generate_partial_from => :generation_returns
-
-        category.generate_partial
-      end
-      it 'should use the exact index to generate the partial index' do
-        exact_index = stub :exact_index
-        exact.stub! :inverted => exact_index
-        partial.should_receive(:generate_partial_from).once.with(exact_index)
-
-        category.generate_partial
-      end
-    end
-
-    describe 'generate_caches_from_source' do
-      it 'should delegate to exact' do
-        exact.should_receive(:generate_caches_from_source).once.with
-
-        category.generate_caches_from_source
-      end
-    end
-
     describe 'cache' do
       it 'should call multiple methods in order' do
-        category.should_receive(:generate_caches_from_source).once.with().ordered
-        category.should_receive(:generate_partial).once.with().ordered
-        category.should_receive(:generate_caches_from_memory).once.with().ordered
+        category.should_receive(:empty).once.with().ordered
+        category.should_receive(:retrieve).once.with().ordered
         category.should_receive(:dump).once.with().ordered
-        category.should_receive(:timed_exclaim).once.ordered
 
         category.cache
+      end
+    end
+
+    describe 'retrieve' do
+      it 'call the right thing' do
+        prepared = stub :prepared
+        prepared.should_receive(:retrieve).any_number_of_times
+                                          .and_yield(1, :some_token)
+                                          .and_yield(2, :some_token)
+                                          .and_yield(3, :some_token)
+                                          .and_yield(4, :some_token)
+                                          .and_yield(5, :some_token)
+        category.stub! :prepared => prepared
+
+        category.should_receive(:add_tokenized_token).once.with(1, :some_token, :<<)
+        category.should_receive(:add_tokenized_token).once.with(2, :some_token, :<<)
+        category.should_receive(:add_tokenized_token).once.with(3, :some_token, :<<)
+        category.should_receive(:add_tokenized_token).once.with(4, :some_token, :<<)
+        category.should_receive(:add_tokenized_token).once.with(5, :some_token, :<<)
+
+        category.retrieve
       end
     end
 

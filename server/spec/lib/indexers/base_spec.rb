@@ -20,10 +20,8 @@ describe Picky::Indexers::Base do
   end
 
   describe 'index' do
-    it 'messages, then processed' do
-      indexer.should_receive(:start_indexing_message).once.with.ordered
-      indexer.should_receive(:process).once.with(:categories).ordered
-      indexer.should_receive(:finish_indexing_message).once.with.ordered
+    it 'processes' do
+      indexer.should_receive(:process).once.with :categories
 
       indexer.index :categories
     end

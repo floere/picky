@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Picky::Backends::Memory::Text do
-  
+
   let(:text) { described_class.new "some_cache_path" }
-  
+
   describe 'extension' do
     it 'is correct' do
       text.extension.should == :txt
@@ -17,7 +17,7 @@ describe Picky::Backends::Memory::Text do
       }.to raise_error("Can't have an initial content from text file. Use JSON or Marshal.")
     end
   end
-  
+
   describe "load" do
     it "raises" do
       lambda do
@@ -41,12 +41,12 @@ describe Picky::Backends::Memory::Text do
     it "yields split lines and returns the id and token text" do
       text.retrieve do |id, token|
         id.should    == '123456'
-        token.should == :some_nice_token
+        token.should == 'some_nice_token'
       end
     end
     it "is fast" do
       performance_of { text.retrieve { |id, token| } }.should < 0.00005
     end
   end
-  
+
 end

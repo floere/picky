@@ -14,7 +14,7 @@ describe Picky::Bundle do
 
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == "Picky::Bundle(test:some_index:some_category:some_name)"
+      @bundle.to_s.should == "Picky::Bundle(some_index:some_category:some_name)"
     end
   end
 
@@ -73,7 +73,7 @@ describe Picky::Bundle do
 
   describe 'identifier' do
     it 'should return a specific identifier' do
-      @bundle.identifier.should == 'test:some_index:some_category:some_name'
+      @bundle.identifier.should == 'some_index:some_category:some_name'
     end
   end
 
