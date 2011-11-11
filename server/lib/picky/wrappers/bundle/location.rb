@@ -20,20 +20,22 @@ module Picky
 
           #
           #
-          def add id, sym_or_string, where = :unshift
-            bundle.add id, calculate(sym_or_string.to_s.to_f), where
+          def calculate float
+            @calculation.calculate float
+          end
+
+          # Recalculates the added location.
+          #
+          def add id, location, where = :unshift
+            @calculation.calculated_range(location.to_s.to_f).each do |new_location|
+              bundle.add id, new_location.to_s, where
+            end
           end
 
           # Do not generate a partial.
           #
           def add_partialized does_not, matter, at_all
             # Nothing
-          end
-
-          #
-          #
-          def calculate float
-            @calculation.calculate float
           end
 
           # Save the config, then dump normally.
