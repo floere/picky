@@ -24,16 +24,16 @@ module Picky
           float
         end
 
+        # TODO Symbols.
         #
-        #
-        def ids float_as_sym
-          @bundle.ids calculate(float_as_sym.to_s.to_f).to_s.to_sym
+        def ids float_str
+          @bundle.ids calculate(float_str.to_f).to_s
         end
 
+        # TODO Symbols.
         #
-        #
-        def weight float_as_sym
-          @bundle.weight calculate(float_as_sym.to_s.to_f).to_s.to_sym
+        def weight float_str
+          @bundle.weight calculate(float_str.to_f).to_s
         end
 
       end

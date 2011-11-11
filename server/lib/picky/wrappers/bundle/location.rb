@@ -42,6 +42,7 @@ module Picky
           #
           def dump
             bundle[:location_anchor] = @calculation.anchor
+
             bundle.dump
           end
 
@@ -49,8 +50,10 @@ module Picky
           #
           def load
             bundle.load
-            anchor = bundle[:location_anchor] && bundle[:location_anchor].to_f || raise("Configuration :location_anchor for #{bundle.identifier} missing. Did you run rake index already?")
-            @calculation.anchor = anchor
+
+            # TODO Symbols (of the location_anchor!!!).
+            #
+            @calculation.anchor = bundle['location_anchor'] && bundle['location_anchor'].to_f || raise("Configuration 'location_anchor' for #{bundle.identifier} missing. Did you run rake index already?")
           end
 
         end

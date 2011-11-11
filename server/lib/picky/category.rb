@@ -21,6 +21,7 @@ module Picky
     #  * weights: Query::Weights.new( [:category1, :category2] => +2, ... )
     #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
     #  * key_format: What this category's keys are formatted with (default is :to_i)
+    #  * use_symbols: Whether to use symbols internally instead of strings.
     #
     def initialize name, index, options = {}
       @name  = name
@@ -32,6 +33,7 @@ module Picky
       @from       = options[:from]
       @tokenizer  = options[:tokenizer]
       @key_format = options[:key_format]
+      # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
       @qualifiers = extract_qualifiers_from options
 
       weights    = options[:weights]    || Generators::Weights::Default

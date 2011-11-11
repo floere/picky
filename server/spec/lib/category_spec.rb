@@ -17,6 +17,8 @@ describe Picky::Category do
     category.exact.similarity_strategy.should == Picky::Generators::Similarity::Default
 
     category.partial.similarity_strategy.should be_kind_of(Picky::Generators::Similarity::None)
+
+    category.instance_variable_get(:@symbols).should == nil
   end
 
 end

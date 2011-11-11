@@ -160,6 +160,7 @@ describe Picky::Category do
 
     describe 'load_from_cache' do
       it 'should call two methods' do
+        @category.should_receive(:clear_realtime_mapping).once
         @exact.should_receive(:load).once
         @partial.should_receive(:load).once
 

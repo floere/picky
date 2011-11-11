@@ -138,6 +138,21 @@ module Picky
       end
     end
 
+    # TODO Symbols.
+    #
+    # # API method.
+    # #
+    # # Tells Picky to use Symbols internally.
+    # #
+    # def use_symbols
+    #   @symbols = true
+    # end
+    # def use_symbols?
+    #   @symbols
+    # end
+
+    # API method.
+    #
     # Defines a searchable category on the index.
     #
     # === Parameters

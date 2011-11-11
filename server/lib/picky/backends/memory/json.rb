@@ -17,7 +17,7 @@ module Picky
         # Loads the index hash from json format.
         #
         def load
-          Yajl::Parser.parse ::File.open(cache_path, 'r'), symbolize_keys: true # TODO to_sym
+          Yajl::Parser.parse ::File.open(cache_path, 'r') # , symbolize_keys: true # TODO Symbols.
         end
 
         # Dumps the index hash in json format.

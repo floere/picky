@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+h2. Version 3.5.0
+
+* hanke: (server) Internally, tokens are held as strings. This helps dealing with memory issues when using realtime indexes. (However you can tell Picky to use Symbols, like in the olden days)
+* hanke: (server) Index option @use_symbols@ to tell Picky to use Symbols for indexes internally. Can be called on the index options level and on a category level.
+* hanke: (server) Complete internal rewrite of how indexing is handled.
+
 h2. Version 3.4.3
 
 * hanke: (server) Performance fix for problem introduced in 3.4.3.
