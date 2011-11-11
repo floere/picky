@@ -4,7 +4,8 @@ module Picky
 
     attr_reader :name,
                 :exact,
-                :partial
+                :partial,
+                :prepared
 
     # Mandatory params:
     #  * name: Category name to use as identifier and file names.
@@ -46,6 +47,8 @@ module Picky
       else
         @partial = Bundle.new :partial, self, index.backend, weights, partial, no_similarity, options
       end
+
+      @prepared = Backends::Memory::Text.new prepared_index_path
     end
 
     # Indexes and reloads the category.
@@ -58,6 +61,7 @@ module Picky
     def dump
       exact.dump
       partial.dump
+      timed_exclaim %Q{"#{identifier}": Generated -> #{index_directory.gsub("#{PICKY_ROOT}/", '')}.}
     end
 
     # Index name.

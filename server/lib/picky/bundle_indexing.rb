@@ -28,135 +28,38 @@ module Picky
   #
   class Bundle
 
-    attr_reader :backend,
-                :prepared
+    attr_reader :backend
 
     # When indexing, clear only clears the inverted index.
     #
-    delegate :clear, :to => :inverted
-
-    # Sets up a piece of the index for the given token.
-    #
-    def initialize_inverted_index_for token
-      self.inverted[token] ||= []
-    end
-
-    # Generation
-    #
-
-    # This method
-    # * Loads the base index from the "prepared..." file.
-    # * Generates derived indexes.
-    # * Dumps all the indexes into files.
-    #
-    def generate_caches_from_source
-      load_from_prepared_index_file
-      generate_caches_from_memory
-    end
-    # Generates derived indexes from the index and dumps.
-    #
-    # Note: assumes that there is something in the index
-    #
-    def generate_caches_from_memory
-      cache_from_memory_generation_message
-      generate_derived
-    end
-    def cache_from_memory_generation_message
-      timed_exclaim %Q{"#{identifier}": Caching from intermediate in-memory index.}
-    end
-
-    # Generates the weights and similarity from the main index.
-    #
-    def generate_derived
-      generate_weights
-      generate_similarity
-    end
+    delegate :clear,
+             :to => :inverted
 
     # "Empties" the index(es) by getting a new empty
     # internal backend instance.
     #
     def empty
       empty_inverted
+      empty_weights
+      empty_similarity
       empty_configuration
     end
     def empty_inverted
       @inverted = @backend_inverted.empty
     end
+    def empty_weights
+      @weights = @backend_weights.empty
+    end
+    def empty_similarity
+      @similarity = @backend_similarity.empty
+    end
     def empty_configuration
       @configuration = @backend_configuration.empty
-    end
-
-    # Load the data from the db.
-    #
-    def load_from_prepared_index_file
-      load_from_prepared_index_generation_message
-      retrieve
-    end
-    def load_from_prepared_index_generation_message
-      timed_exclaim %Q{"#{identifier}": Loading prepared data into memory.}
-    end
-    # Retrieves the prepared index data into the index.
-    #
-    # This is in preparation for generating
-    # derived indexes (like weights, similarity)
-    # and later dumping the optimized index.
-    #
-    # TODO Move this out to the category?
-    #
-    # Note: The clean way to do this would be to
-    #       self.inverted.values.each &:uniq!
-    #
-    # Note 2:
-    #   initialize_inverted_index_for token
-    #   id = id.send(format)
-    #   next if last_id == id
-    #   self.inverted[token] << id
-    #   last_id = id
-    #
-    def retrieve
-      format = key_format || :to_i
-      empty_inverted
-      id, last_id = nil, nil
-      prepared.retrieve do |id, token|
-        token = token.to_sym
-        initialize_inverted_index_for token
-        self.inverted[token] << id.send(format) # TODO to_sym
-      end
-      self.inverted.values.each &:uniq!
-    end
-
-    # Generate a partial index from the given exact inverted index.
-    #
-    def generate_partial_from exact_inverted_index
-      timed_exclaim %Q{"#{identifier}": Generating partial index for index.}
-      self.inverted = exact_inverted_index
-      self.generate_partial
-      self
-    end
-
-    # Generates a new index (writes its index) using the
-    # partial caching strategy of this bundle.
-    #
-    def generate_partial
-      self.inverted = partial_strategy.generate_from self.inverted
-    end
-    # Generates a new weights index (writes its index) using the
-    # given weight caching strategy.
-    #
-    def generate_weights
-      self.weights = weights_strategy.generate_from self.inverted
-    end
-    # Generates a new similarity index (writes its index) using the
-    # given similarity caching strategy.
-    #
-    def generate_similarity
-      self.similarity = similarity_strategy.generate_from self.inverted
     end
 
     # Saves the indexes in a dump file.
     #
     def dump
-      timed_exclaim %Q{"#{identifier}": Dumping data.}
       dump_inverted
       dump_similarity
       dump_weights

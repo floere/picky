@@ -18,22 +18,22 @@ module Picky
         # API.
         #
         # By default, a calculation does not
-        # recalculate anything.
+        # calculate anything.
         #
-        def recalculate float
+        def calculate float
           float
         end
 
         #
         #
         def ids float_as_sym
-          @bundle.ids recalculate(float_as_sym.to_s.to_f).to_s.to_sym
+          @bundle.ids calculate(float_as_sym.to_s.to_f).to_s.to_sym
         end
 
         #
         #
         def weight float_as_sym
-          @bundle.weight recalculate(float_as_sym.to_s.to_f).to_s.to_sym
+          @bundle.weight calculate(float_as_sym.to_s.to_f).to_s.to_sym
         end
 
       end

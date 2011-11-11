@@ -312,7 +312,7 @@ INDEX
     # Identifier used for technical output.
     #
     def identifier
-      "#{PICKY_ENVIRONMENT}:#{name}"
+      name
     end
 
     #

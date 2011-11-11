@@ -8,21 +8,26 @@ module Picky
         #
         def self.wrap category, grid, precision = 1
           wrapped_exact = Wrappers::Bundle::Location.new category.exact, grid: grid, precision: precision
-          new_source    = Wrappers::Sources::Location.new category.source, grid, precision
 
           category.class_eval do
+
+            # Uses a basic tokenizer.
+            #
+            def tokenizer
+              @tokenizer ||= Tokenizer.new
+            end
+
+            # Both use the exact index.
+            #
+            # TODO Necessary to wrap?
+            #
             define_method :exact do
               wrapped_exact
             end
             define_method :partial do
               wrapped_exact
             end
-            def tokenizer
-              @tokenizer ||= Tokenizer.new
-            end
-            define_method :source do
-              new_source
-            end
+
           end
         end
 

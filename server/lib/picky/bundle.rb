@@ -50,7 +50,6 @@ module Picky
       # TODO Tidy up a bit.
       #
       @key_format = options[:key_format]
-      @prepared   = Backends::Memory::Text.new category.prepared_index_path
 
       @weights_strategy    = weights_strategy
       @partial_strategy    = partial_strategy

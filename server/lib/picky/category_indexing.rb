@@ -24,9 +24,12 @@ module Picky
         indexer.index [self]
       end
     end
+
+    # Empty all the indexes.
+    #
     def empty
       exact.empty
-      partial.empty_configuration
+      partial.empty
     end
 
     # Take a data snapshot if the source offers it.
@@ -44,23 +47,39 @@ module Picky
     # Generates all caches for this category.
     #
     def cache
-      generate_caches_from_source
-      generate_partial
-      generate_caches_from_memory
+      empty
+      retrieve
       dump
-      timed_exclaim %Q{"#{identifier}": Caching finished.}
+      clear_realtime_mapping
     end
-    # Generate the cache data.
+
+    # Retrieves the prepared index data into the indexes and
+    # generates the necessary derived indexes.
     #
-    def generate_caches_from_source
-      exact.generate_caches_from_source
+    def retrieve
+      prepared.retrieve { |id, token| add_tokenized_token id, token, :<< }
     end
-    def generate_partial
-      partial.generate_partial_from exact.inverted
-    end
-    def generate_caches_from_memory
-      partial.generate_caches_from_memory
-    end
+
+    # # Generates all caches for this category.
+    # #
+    # def cache
+    #   generate_caches_from_source
+    #   generate_partial
+    #   generate_caches_from_memory
+    #   dump
+    #   timed_exclaim %Q{"#{identifier}": Caching finished.}
+    # end
+    # # Generate the cache data.
+    # #
+    # def generate_caches_from_source
+    #   exact.generate_caches_from_source
+    # end
+    # def generate_partial
+    #   partial.generate_partial_from exact.inverted
+    # end
+    # def generate_caches_from_memory
+    #   partial.generate_caches_from_memory
+    # end
 
     # Return an appropriate source.
     #
@@ -80,12 +99,14 @@ module Picky
 
     # Return the key format.
     #
-    # If the source has no key format, and
-    # none is defined on this category, ask
+    # If no key_format is defined on the category
+    # and the source has no key format, ask
     # the index for one.
     #
+    # Default is to_i.
+    #
     def key_format
-      source.respond_to?(:key_format) && source.key_format || @key_format || @index.key_format
+      @key_format ||= source.respond_to?(:key_format) && source.key_format || @index.key_format || :to_i
     end
 
     # Where the data is taken from.

@@ -11,37 +11,40 @@ module Picky
     #
     class Location
 
-      attr_reader :minimum, :precision, :grid
+      attr_reader :anchor,
+                  :precision,
+                  :grid
 
-      def initialize user_grid, precision = nil
+      def initialize user_grid, anchor = 0.0, precision = nil
         @user_grid = user_grid
+        @anchor    = anchor
         @precision = precision || 1
         @grid      = @user_grid / (@precision + 0.5)
       end
 
-      def minimum= minimum
+      def anchor= value
         # Add a margin of 1 user grid.
         #
-        minimum -= @user_grid
+        value -= @user_grid
 
         # Add plus 1 grid so that the index key never falls on 0.
         # Why? to_i maps by default to 0.
         #
-        minimum -= @grid
+        value -= @grid
 
-        @minimum = minimum
+        @anchor = value
       end
 
       #
       #
       def add_margin length
-        @minimum -= length
+        @anchor -= length
       end
 
       #
       #
-      def recalculated_range location
-        range recalculate(location)
+      def calculated_range location
+        range calculate(location)
       end
       #
       #
@@ -50,8 +53,8 @@ module Picky
       end
       #
       #
-      def recalculate location
-        ((location - @minimum) / @grid).floor
+      def calculate location
+        ((location - @anchor) / @grid).floor
       end
 
     end

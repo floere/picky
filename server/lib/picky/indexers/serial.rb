@@ -36,22 +36,13 @@ module Picky
               file.write(result.join) && result.clear if result.size > 100_000
             end
 
-            timed_exclaim %Q{"#{@index_or_category.identifier}":   => #{file.path}.}
+            yield file
 
             file.write result.join
           end
 
         end
 
-      end
-
-      #
-      #
-      def start_indexing_message # :nodoc:
-        timed_exclaim %Q{"#{@index_or_category.identifier}": Starting serial data preparation.}
-      end
-      def finish_indexing_message # :nodoc:
-        timed_exclaim %Q{"#{@index_or_category.identifier}": Finished serial data preparation.}
       end
 
     end

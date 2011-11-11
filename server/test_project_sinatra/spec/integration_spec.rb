@@ -54,8 +54,8 @@ describe BookSearch do
 
   it 'has correctly structured in-detail results' do
     csv.search('alan').allocations.should == [
-      ["Books", 6.6899999999999995, 2, [["author", "alan", "alan"]], [259, 307]],
-      ["Books", 0.0,                1, [["title",  "alan", "alan"]], [449]]
+      ["Books", 6.693147180559945, 2, [["author", "alan", "alan"]], [259, 307]],
+      ["Books", 0.0,               1, [["title",  "alan", "alan"]], [449]]
     ]
   end
 

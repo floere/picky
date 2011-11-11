@@ -32,7 +32,9 @@ module Picky
 
     # Returns a reference to the array where the id has been added.
     #
-    def add id, sym
+    # TODO Rename sym.
+    #
+    def add id, sym, where = :unshift
       ary = @inverted[sym]
 
       syms = @realtime_mapping[id]
@@ -42,12 +44,12 @@ module Picky
       #
       ids = if syms.include? sym
         ids = @inverted[sym]
-        ids.delete  id # Move id
-        ids.unshift id # to front
+        ids.delete  id
+        ids.send where, id
       else
         syms << sym
         ids = @inverted[sym] ||= []
-        ids.unshift id
+        ids.send where, id
       end
 
       # Weights.
@@ -60,19 +62,25 @@ module Picky
         similarity = @similarity[encoded] ||= []
         if similarity.include? sym
           similarity.delete sym  # Not completely correct, as others will also be affected, but meh.
-          similarity.unshift sym #
+          similarity.send where, sym #
         else
-          similarity.unshift sym
+          similarity.send where, sym
         end
       end
     end
 
     # Partializes the text and then adds each.
     #
-    def add_partialized id, text
+    def add_partialized id, text, where = :unshift
       self.partial_strategy.each_partial text do |partial_text|
-        add id, partial_text
+        add id, partial_text, where
       end
+    end
+
+    # Clears the realtime mapping.
+    #
+    def clear_realtime_mapping
+      @realtime_mapping.clear
     end
 
   end

@@ -23,7 +23,7 @@ module Picky
 
         def clear; end
         def dump; end
-        def empty_configuration; end
+        def empty; end
         def generate_caches_from_memory; end
         def generate_partial_from arg; end
         def index; end

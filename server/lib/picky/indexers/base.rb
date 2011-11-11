@@ -19,9 +19,13 @@ module Picky
       # Starts the indexing process.
       #
       def index categories
-        start_indexing_message
-        process categories
-        finish_indexing_message
+        process categories do |file|
+          notify_finished file
+        end
+      end
+
+      def notify_finished file
+        timed_exclaim %Q{"#{@index_or_category.identifier}": Tokenized -> #{file.path.gsub("#{PICKY_ROOT}/", '')}.}
       end
 
     end

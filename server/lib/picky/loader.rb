@@ -143,8 +143,8 @@ module Picky
       load_relative 'wrappers/bundle/location'
       load_relative 'wrappers/bundle/exact_partial'
 
-      load_relative 'wrappers/sources/base'
-      load_relative 'wrappers/sources/location'
+      # load_relative 'wrappers/sources/base'
+      # load_relative 'wrappers/sources/location'
 
       # Tokens.
       #
@@ -187,10 +187,6 @@ module Picky
       # Load harakiri.
       #
       load_relative 'rack/harakiri'
-
-      # Errors.
-      #
-      load_relative 'no_source_specified_exception'
 
       # Load analyzer.
       #

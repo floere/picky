@@ -93,7 +93,7 @@ module Picky
     #
     def source some_source = nil, &block
       some_source ||= block
-      some_source ? define_source(some_source) : (@source && extract_source || raise_no_source)
+      some_source ? define_source(some_source) : (@source && extract_source || warn_no_source)
     end
     # Extract the actual source if it is wrapped in a time
     # capsule, i.e. a block/lambda.
@@ -107,20 +107,8 @@ module Picky
       check_source source
       @source = source
     end
-    def raise_no_source
-      raise NoSourceSpecifiedException.new(<<-NO_SOURCE
-
-
-No source given for index #{name}. An index needs a source.
-Example:
-Index.new(:with_source) do
-  source   Sources::CSV.new(:title, file: 'data/books.csv')
-  category :title
-  category :author
-end
-
-      NO_SOURCE
-)
+    def warn_no_source
+      warn "No source given for index #{name}."
     end
     def check_source source # :nodoc:
       raise ArgumentError.new(<<-SOURCE

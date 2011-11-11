@@ -6,7 +6,10 @@ module Picky
 
       module Delegator
 
-        delegate :inverted,
+        delegate :add,
+                 :clear_realtime_mapping,
+
+                 :inverted,
                  :weights,
                  :similarity,
                  :configuration,

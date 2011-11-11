@@ -60,7 +60,7 @@ module Picky
         end
         flush combined
         combined.each do |_, _, file, _|
-          timed_exclaim %Q{"#{@index_or_category.identifier}":   => #{file.path}.}
+          yield file
           file.close
         end
       end
@@ -71,15 +71,6 @@ module Picky
         combined.each do |_, cache, file, _|
           file.write(cache.join) && cache.clear
         end
-      end
-
-      #
-      #
-      def start_indexing_message # :nodoc:
-        timed_exclaim %Q{"#{@index_or_category.identifier}": Starting parallel data preparation.}
-      end
-      def finish_indexing_message # :nodoc:
-        timed_exclaim %Q{"#{@index_or_category.identifier}": Finished parallel data preparation.}
       end
 
     end

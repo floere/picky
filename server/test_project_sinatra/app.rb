@@ -272,6 +272,10 @@ class BookSearch < Sinatra::Application
       @hash[key] = value
     end
 
+    def dump_json hash
+
+    end
+
   end
 
   backends_index = Picky::Index.new(:backends) do

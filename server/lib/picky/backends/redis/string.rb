@@ -31,6 +31,12 @@ module Picky
           client.hget namespace, key
         end
 
+        # Set a single value
+        #
+        def []= key, value
+          client.hset namespace, key, value
+        end
+
       end
 
     end
