@@ -222,17 +222,19 @@ module Picky
     #
     # === Options
     # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
+    # * anchor: Where to anchor the geo grid.
     # * ... all options of #define_category.
     #
     def ranged_category category_name, range, options = {}
-      precision = options[:precision] || 1 # THINK options.delete?
+      precision = options.delete(:precision) || 1
+      anchor    = options.delete(:anchor) || 0.0
 
       # Note: :key_format => :to_f ?
       #
       options = { partial: Partial::None.new }.merge options
 
       define_category category_name, options do |category|
-        Wrappers::Category::Location.wrap category, range, precision
+        Wrappers::Category::Location.wrap category, range, precision, anchor
       end
     end
     alias define_ranged_category ranged_category

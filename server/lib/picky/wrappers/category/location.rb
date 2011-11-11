@@ -6,8 +6,8 @@ module Picky
 
         # THINK Is this the best way to do this?
         #
-        def self.wrap category, grid, precision = 1
-          wrapped_exact = Wrappers::Bundle::Location.new category.exact, grid: grid, precision: precision
+        def self.wrap category, grid, precision = 1, anchor = 0.0
+          wrapped_exact = Wrappers::Bundle::Location.new category.exact, grid: grid, precision: precision, anchor: anchor
 
           category.class_eval do
 
