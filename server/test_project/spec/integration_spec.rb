@@ -23,24 +23,24 @@ describe BookSearch do
   let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
   let(:file)            { Picky::TestClient.new(described_class, :path => '/file')            }
   let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')        }
-  
+
   it 'can generate a single index category without failing' do
     book_each_index = Picky::Indexes[:book_each][:title]
     book_each_index.prepare
     book_each_index.cache
   end
-  
+
   it 'is has the right amount of results' do
     csv.search('alan').total.should == 3
   end
 
   it 'has correctly structured in-detail results' do
     csv.search('alan').allocations.should == [
-      ["Books", 6.6899999999999995, 2, [["author", "alan", "alan"]], [259, 307]],
-      ["Books", 0.0,                1, [["title",  "alan", "alan"]], [449]]
+      ["Books", 6.693147180559945, 2, [["author", "alan", "alan"]], [259, 307]],
+      ["Books", 0.0,               1, [["title",  "alan", "alan"]], [449]]
     ]
   end
-  
+
   # Multicategory search.
   #
   it 'has the right categories' do
@@ -66,10 +66,10 @@ describe BookSearch do
     Picky::Indexes.reload
     csv.search('soledad human').ids.should == [72]
   end
-  
+
   it 'can handle changing data with a Memory backend' do
     memory_changing.search('entry').ids.should == [1, 2, 3]
-    
+
     new_source = [
       # ChangingItem.new("1", 'first entry'), # Removed.
       ChangingItem.new("2", 'second entry'),
@@ -79,13 +79,13 @@ describe BookSearch do
     Picky::Indexes[:memory_changing].source new_source
     Picky::Indexes[:memory_changing].index
     Picky::Indexes[:memory_changing].reload
-    
+
     memory_changing.search('entry').ids.should == [2, 3, 4]
   end
-  
+
   it 'can handle changing data with a Redis backend' do
     redis_changing.search('entry').ids.should == ["1", "2", "3"]
-    
+
     new_source = [
       # ChangingItem.new("1", 'first entry'), # Removed.
       ChangingItem.new("2", 'second entry'),
@@ -95,7 +95,7 @@ describe BookSearch do
     Picky::Indexes[:redis_changing].source new_source
     Picky::Indexes[:redis_changing].index
     Picky::Indexes[:redis_changing].reload
-    
+
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end
 
@@ -198,11 +198,11 @@ describe BookSearch do
 
   # Range based area search. Memory.
   #
-  it { simple_geo.search("north1:47.41 east1:8.55").ids.should == [1413, 10346, 10661, 10746, 10861] }
+  it { simple_geo.search("north1:47.41 east1:8.55").ids.should == [1481, 5014, 5015, 5016, 10576, 10717, 17777, 17999] }
 
   # Geo based area search.
   #
-  it { geo.search("north:47.41 east:8.55").ids.should == [1413, 5015, 9168, 10346, 10661, 10746, 10768, 10861] }
+  it { geo.search("north:47.41 east:8.55").ids.should == [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5059, 9110, 10347, 10576, 10717, 10879, 17777, 17955, 18038] }
 
   # Redis.
   #
@@ -217,7 +217,7 @@ describe BookSearch do
   #
   it { csv.search('t:religion').ids.should == csv.search('title:religion').ids }
   it { csv.search('title:religion').ids.should_not == csv.search('subject:religion').ids }
-  
+
   # Wrong categorization.
   #
   # From 2.5.0 on, Picky does not remove wrong categories anymore. Wrong categories return zero results.
@@ -244,17 +244,17 @@ describe BookSearch do
   it { csv.search("history fergus").ids.should == [4, 4] }
   it { csv.search("HISTORY FERGUS").ids.should == [] }
   it { csv.search("history AND OR fergus").ids.should == [4, 4] }
-  
+
   # File based.
   #
   it { file.search("first").ids.should == [1] }
   it { file.search("entry").ids.should == [1,2,3] }
   it { file.search("entry first").ids.should == [1] }
-  
+
   # Infix partial.
   #
   it { file.search("ntr* rst*").ids.should == [1] }
-  
+
   # Japanese characters (UTF-8).
   #
   it { japanese.search("日本語").ids.should == [1] }
@@ -265,16 +265,16 @@ describe BookSearch do
   # Partial.
   #
   it { japanese.search("日").ids.should == [1] }
-  
+
   # Search#ignore option.
   #
   it { book_each.search("alan history").ids.should == ["259", "307"] } # Ignores History or Alan in title.
-  
+
   # Database index reloading.
   #
   it 'can handle changing data with a Memory backend with a non-each DB source' do
     # books.search('1977').ids.should == [86, 394]
-    
+
     # Some webapp adds a book.
     #
     BookSearch::Book.establish_connection YAML.load(File.open('app/db.yml'))
@@ -283,22 +283,22 @@ describe BookSearch do
                                           isbn:   "1231231231231",
                                           year:   1977
     expected_id = added_book.id
-    
+
     Picky::Indexes[:books].index
     Picky::Indexes[:books].reload
-    
+
     # We can destroy the book now as it has been indexed.
     #
     added_book.destroy
-    
+
     books.search('1977').ids.should == [86, 394, expected_id]
   end
-  
+
   # Database index reloading.
   #
   it 'can handle changing data with a Memory backend with an each DB source' do
     book_each.search('1977').ids.should == ["86", "394"]
-    
+
     # Some webapp adds a book.
     #
     BookSearch::Book.establish_connection YAML.load(File.open('app/db.yml'))
@@ -307,14 +307,14 @@ describe BookSearch do
                                           isbn:   "1231231231231",
                                           year:   1977
     expected_id = added_book.id
-    
+
     Picky::Indexes[:book_each].index
     Picky::Indexes[:book_each].reload
-    
+
     # We can destroy the book now as it has been indexed.
     #
     added_book.destroy
-    
+
     book_each.search('1977').ids.should == ["86", "394", expected_id.to_s]
   end
 
