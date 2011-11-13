@@ -26,6 +26,9 @@ module Picky
         end
 
         def dump(internal)
+
+          puts "Writing #{cache_path}"
+
           create_directory cache_path
 
           @db = SQLite3::Database.new(cache_path)
@@ -40,11 +43,14 @@ module Picky
             );
           SQL
 
+          @db.execute <<-SQL
+            create index key_idx on key_value (key);
+          SQL
+
           @db.execute("BEGIN;")
 
           internal.each do |key, value|
             encoded_value = Yajl::Encoder.encode(value)
-            puts encoded_value
             @db.execute("insert into key_value values (?,?)", key.to_s, encoded_value)
           end
 
