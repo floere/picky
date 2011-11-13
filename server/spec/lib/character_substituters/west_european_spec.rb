@@ -3,41 +3,39 @@
 require 'spec_helper'
 
 describe Picky::CharacterSubstituters::WestEuropean do
-  
-  before(:all) do
-    @substituter = described_class.new.tap { |s| s.substitute '' }
-  end
+
+  let(:substituter) { described_class.new.tap { |s| s.substitute '' } }
 
   # A bit of metaprogramming to help with the myriads of its.
   #
   def self.it_should_substitute special_character, normal_character
     it "should substitute #{special_character} with #{normal_character}" do
-      @substituter.substitute(special_character).should == normal_character
+      substituter.substitute(special_character).should == normal_character
     end
   end
-  def self.it_should_not_substitute special_character 
+  def self.it_should_not_substitute special_character
     it "should not substitute #{special_character}" do
-      @substituter.substitute(special_character).should == special_character
+      substituter.substitute(special_character).should == special_character
     end
   end
-  
+
   # Speed spec at the top since the order of the describes made the
   # speed spec trip. And not on mushrooms either.
   #
   describe "speed" do
     it "is fast" do
-      result = performance_of { @substituter.substitute('ä') }
+      result = performance_of { substituter.substitute('ä') }
       result.should < 0.00009
     end
     it "is fast" do
-      result = performance_of { @substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
+      result = performance_of { substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
       result.should < 0.00015
     end
   end
-  
+
   describe 'to_s' do
     it 'outputs correctly' do
-      @substituter.to_s.should == 'Picky::CharacterSubstituters::WestEuropean'
+      substituter.to_s.should == 'Picky::CharacterSubstituters::WestEuropean'
     end
   end
 
@@ -108,7 +106,7 @@ describe Picky::CharacterSubstituters::WestEuropean do
     it_should_substitute 'å', 'a'
     it_should_substitute 'Å', 'A'
   end
-  
+
   describe "diacritic" do
     it_should_substitute 'ñ', 'n'
   end

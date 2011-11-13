@@ -9,8 +9,9 @@ module Picky
       attr_reader :total
 
       delegate :each,
-               :inject,
                :empty?,
+               :first,
+               :inject,
                :size,
                :to => :@allocations
 

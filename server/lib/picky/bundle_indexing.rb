@@ -35,28 +35,6 @@ module Picky
     delegate :clear,
              :to => :inverted
 
-    # "Empties" the index(es) by getting a new empty
-    # internal backend instance.
-    #
-    def empty
-      empty_inverted
-      empty_weights
-      empty_similarity
-      empty_configuration
-    end
-    def empty_inverted
-      @inverted = @backend_inverted.empty
-    end
-    def empty_weights
-      @weights = @backend_weights.empty
-    end
-    def empty_similarity
-      @similarity = @backend_similarity.empty
-    end
-    def empty_configuration
-      @configuration = @backend_configuration.empty
-    end
-
     # Saves the indexes in a dump file.
     #
     def dump

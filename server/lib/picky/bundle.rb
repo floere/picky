@@ -66,8 +66,11 @@ module Picky
 
       # Initial indexes.
       #
+      # Note that if the weights strategy doesn't need to be saved,
+      # the strategy itself pretends to be an index.
+      #
       @inverted      = @backend_inverted.initial
-      @weights       = @backend_weights.initial
+      @weights       = @weights_strategy.saved?? @backend_weights.initial : @weights_strategy
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
 
@@ -75,6 +78,28 @@ module Picky
     end
     def identifier
       "#{category.identifier}:#{name}"
+    end
+
+    # "Empties" the index(es) by getting a new empty
+    # internal backend instance.
+    #
+    def empty
+      empty_inverted
+      empty_weights
+      empty_similarity
+      empty_configuration
+    end
+    def empty_inverted
+      @inverted = @backend_inverted.empty
+    end
+    def empty_weights
+      @weights = @weights_strategy.saved?? @backend_weights.empty : @weights_strategy
+    end
+    def empty_similarity
+      @similarity = @backend_similarity.empty
+    end
+    def empty_configuration
+      @configuration = @backend_configuration.empty
     end
 
     # Get a list of similar texts.

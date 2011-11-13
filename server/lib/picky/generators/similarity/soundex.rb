@@ -14,12 +14,12 @@ module Picky
       #
       class Soundex < Phonetic
 
-        # Encodes the given symbol.
+        # Encodes the given string/symbol.
         #
         # Returns a symbol.
         #
-        def encoded sym
-          code = Text::Soundex.soundex sym.to_s
+        def encoded str_or_sym
+          code = Text::Soundex.soundex str_or_sym.to_s
           code.intern if code
         end
 

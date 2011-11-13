@@ -91,6 +91,9 @@ module Picky
       # Weight index generation strategies.
       #
       load_relative 'generators/weights/strategy'
+      load_relative 'generators/weights/runtime'
+      load_relative 'generators/weights/dynamic'
+      load_relative 'generators/weights/constant'
       load_relative 'generators/weights/logarithmic'
       load_relative 'generators/weights/default'
 
@@ -142,9 +145,6 @@ module Picky
       load_relative 'wrappers/bundle/calculation'
       load_relative 'wrappers/bundle/location'
       load_relative 'wrappers/bundle/exact_partial'
-
-      # load_relative 'wrappers/sources/base'
-      # load_relative 'wrappers/sources/location'
 
       # Tokens.
       #

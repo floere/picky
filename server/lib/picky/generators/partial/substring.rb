@@ -78,53 +78,6 @@ module Picky
           @generator.each_subtoken token, &block
         end
 
-        # Generates a partial index from the given inverted index.
-        #
-        def generate_from inverted
-          result = {}
-
-          # Generate for each key token the subtokens.
-          #
-          i = 0
-          j = 0
-          inverted.each_key do |token|
-            i += 1
-            if i == 5000
-              j += 1
-              timed_exclaim %Q{#{"%8i" % (i*j)} generated (current token: "#{token}").}
-              i = 0
-            end
-            generate_for token, inverted, result
-          end
-
-          # Remove duplicate ids.
-          #
-          # THINK If it is unique for a subtoken, it is
-          #       unique for all derived longer tokens.
-          #
-          result.each_value &:uniq!
-
-          result
-        end
-
-        # To each shortened token of :test
-        # :test, :tes, :te, :t
-        # add all ids of :test
-        #
-        # "token" here means just text.
-        #
-        # THINK Could be improved by appending the aforegoing ids?
-        #
-        def generate_for token, inverted, result
-          each_partial token do |subtoken|
-            if result[subtoken]
-              result[subtoken] += inverted[token] # unique
-            else
-              result[subtoken] = inverted[token].dup
-            end
-          end
-        end
-
       end
 
     end

@@ -11,16 +11,6 @@ module Picky
       #
       class Logarithmic < Strategy
 
-        # Generates a partial index from the given inverted index.
-        #
-        def generate_from inverted
-          inverted.inject({}) do |hash, (text, ids)|
-            weight = weight_for ids.size
-            hash[text] ||= weight.round(2) if weight
-            hash
-          end
-        end
-
         # Sets the weight value.
         #
         # If the size is 0 or one, we would get -Infinity or 0.0.

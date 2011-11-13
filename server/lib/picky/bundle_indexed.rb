@@ -22,24 +22,24 @@ module Picky
     #
     # Returns a (potentially empty) array of ids.
     #
-    def ids sym
-      @inverted[sym] || []
+    def ids sym_or_string
+      @inverted[sym_or_string] || []
     end
 
     # Get a weight for the given symbol.
     #
     # Returns a number, or nil.
     #
-    def weight sym
-      @weights[sym]
+    def weight sym_or_string
+      @weights[sym_or_string]
     end
 
     # Get settings for this bundle.
     #
     # Returns an object.
     #
-    def [] sym
-      @configuration[sym]
+    def [] sym_or_string
+      @configuration[sym_or_string]
     end
 
     # Loads all indexes.
