@@ -1,8 +1,12 @@
 h2. Upcoming Version
 
+h2. Version 3.5.3
+
+* hanke: (server) Fix for using dynamic weights and then deleting something from it.
+
 h2. Version 3.5.2
 
-* hanke: (server) Changed the way the internal backend is dumped to json or marshalled. 
+* hanke: (server) Changed the way the internal backend is dumped to json or marshalled.
 
 h2. Version 3.5.1
 
