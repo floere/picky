@@ -62,7 +62,9 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      self.weights = @backend_weights.load
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      self.weights = @backend_weights.load if @weights_strategy.saved?
     end
     # Loads the similarity index.
     #
@@ -92,7 +94,9 @@ module Picky
     # Clears the weights index.
     #
     def clear_weights
-      weights.clear
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      weights.clear if @weights_strategy.saved?
     end
     # Clears the similarity index.
     #

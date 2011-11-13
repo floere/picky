@@ -329,6 +329,22 @@ class BookSearch < Sinatra::Application
     category :none, partial: Picky::Partial::None.new
   end
 
+  # This just tests indexing.
+  #
+  WeightsItem = Struct.new :id, :logarithmic, :constant_default, :constant, :dynamic
+  Picky::Index.new(:weights) do
+    source do
+      [
+        WeightsItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
+        WeightsItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
+      ]
+    end
+    category :logarithmic,      weights: Picky::Weights::Logarithmic.new
+    category :constant_default, weights: Picky::Weights::Constant.new
+    category :constant,         weights: Picky::Weights::Constant.new(3.14)
+    category :dynamic,          weights: Picky::Weights::Dynamic.new { |token| token.size }
+  end
+
   weights = {
     [:author]         => +6,
     [:title, :author] => +5,

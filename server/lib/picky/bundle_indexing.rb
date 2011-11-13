@@ -46,22 +46,24 @@ module Picky
     # Dumps the core index.
     #
     def dump_inverted
-      @backend_inverted.dump self.inverted
+      @backend_inverted.dump @inverted
     end
     # Dumps the weights index.
     #
     def dump_weights
-      @backend_weights.dump self.weights
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      @backend_weights.dump @weights if @weights_strategy.saved?
     end
     # Dumps the similarity index.
     #
     def dump_similarity
-      @backend_similarity.dump self.similarity
+      @backend_similarity.dump @similarity
     end
     # Dumps the similarity index.
     #
     def dump_configuration
-      @backend_configuration.dump self.configuration
+      @backend_configuration.dump @configuration
     end
 
   end

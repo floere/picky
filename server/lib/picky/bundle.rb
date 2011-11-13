@@ -93,6 +93,8 @@ module Picky
       @inverted = @backend_inverted.empty
     end
     def empty_weights
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
       @weights = @weights_strategy.saved?? @backend_weights.empty : @weights_strategy
     end
     def empty_similarity
@@ -138,7 +140,9 @@ module Picky
     #
     def backup
       @backend_inverted.backup      if @backend_inverted.respond_to? :backup
-      @backend_weights.backup       if @backend_weights.respond_to? :backup
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      @backend_weights.backup       if @backend_weights.respond_to? :backup && @weights_strategy.saved?
       @backend_similarity.backup    if @backend_similarity.respond_to? :backup
       @backend_configuration.backup if @backend_configuration.respond_to? :backup
     end
@@ -147,7 +151,9 @@ module Picky
     #
     def restore
       @backend_inverted.restore       if @backend_inverted.respond_to? :restore
-      @backend_weights.restore        if @backend_weights.respond_to? :restore
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      @backend_weights.restore        if @backend_weights.respond_to? :restore && @weights_strategy.saved?
       @backend_similarity.restore     if @backend_similarity.respond_to? :restore
       @backend_configuration.restore  if @backend_configuration.respond_to? :restore
     end
@@ -156,7 +162,9 @@ module Picky
     #
     def delete
       @backend_inverted.delete       if @backend_inverted.respond_to? :delete
-      @backend_weights.delete        if @backend_weights.respond_to? :delete
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      @backend_weights.delete        if @backend_weights.respond_to? :delete && @weights_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
     end
