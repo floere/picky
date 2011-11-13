@@ -19,15 +19,17 @@ describe "Dynamic weights" do
       require 'ostruct'
 
       thing = OpenStruct.new id: 1, text1: "ohai", text2: "hello", text3: "world", text4: "kthxbye"
+      other = OpenStruct.new id: 2, text1: "",     text2: "",      text3: "",      text4: "kthxbye"
 
       index.add thing
+      index.add other
 
       try = Picky::Search.new index
 
-      try.search("text1:ohai").allocations.first.score.should  == 0.0
-      try.search("text2:hello").allocations.first.score.should == 3.14
-      try.search("text3:world").allocations.first.score.should == 5
-      try.search("text4:kthxbye").allocations.first.score.should == 0
+      try.search("text1:ohai").allocations.first.score.should    == 0.0
+      try.search("text2:hello").allocations.first.score.should   == 3.14
+      try.search("text3:world").allocations.first.score.should   == 5
+      try.search("text4:kthxbye").allocations.first.score.should == 0.6931471805599453
     end
   end
 
