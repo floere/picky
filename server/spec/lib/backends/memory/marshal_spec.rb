@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Picky::Backends::Memory::Marshal do
-  
+
   context 'hash-based indexes' do
     let(:marshal) { described_class.new 'some/cache/path/to/file' }
-  
+
     describe 'extension' do
       it 'is correct' do
         marshal.extension.should == :dump
@@ -16,17 +16,17 @@ describe Picky::Backends::Memory::Marshal do
         marshal.initial.should == {}
       end
     end
-    
+
     describe "dump" do
       it "delegates to the given hash" do
         hash = stub :hash
-      
-        hash.should_receive(:dump_marshal).once.with "some/cache/path/to/file.memory.dump"
-      
+
+        marshal.should_receive(:dump_marshal).once.with hash
+
         marshal.dump hash
       end
     end
-  
+
     describe "retrieve" do
       it "raises" do
         lambda do
@@ -34,12 +34,12 @@ describe Picky::Backends::Memory::Marshal do
         end.should raise_error("Can't retrieve from marshalled file. Use text file.")
       end
     end
-  
+
     describe 'to_s' do
       it 'returns the cache path with the default file extension' do
         marshal.to_s.should == 'Picky::Backends::Memory::Marshal(some/cache/path/to/file.memory.dump)'
       end
     end
   end
-  
+
 end
