@@ -272,8 +272,11 @@ class BookSearch < Sinatra::Application
       @hash[key] = value
     end
 
-    def dump_json hash
-
+    # We need to implement this as we use it
+    # in a Memory::JSON backend.
+    #
+    def to_json
+      @hash.to_json
     end
 
   end
@@ -327,6 +330,22 @@ class BookSearch < Sinatra::Application
     category :postfix, partial: Picky::Partial::Postfix.new(from: -5)
     category :infix, partial: Picky::Partial::Infix.new
     category :none, partial: Picky::Partial::None.new
+  end
+
+  # This just tests indexing.
+  #
+  WeightsItem = Struct.new :id, :logarithmic, :constant_default, :constant, :dynamic
+  Picky::Index.new(:weights) do
+    source do
+      [
+        WeightsItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
+        WeightsItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
+      ]
+    end
+    category :logarithmic,      weights: Picky::Weights::Logarithmic.new
+    category :constant_default, weights: Picky::Weights::Constant.new
+    category :constant,         weights: Picky::Weights::Constant.new(3.14)
+    category :dynamic,          weights: Picky::Weights::Dynamic.new { |token| token.size }
   end
 
   weights = {

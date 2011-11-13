@@ -6,9 +6,9 @@ describe Picky::Bundle do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
 
-    @weights      = stub :weights
-    @partial      = stub :partial
-    @similarity   = stub :similarity
+    @weights      = stub :weights, :saved? => true
+    @partial      = stub :partial, :saved? => true
+    @similarity   = stub :similarity, :saved? => true
     @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity
   end
 
@@ -158,7 +158,9 @@ describe Picky::Bundle do
       @index    = Picky::Index.new :some_index
       @category = Picky::Category.new :some_category, @index
 
-      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, :weights, :partial, :similarity
+      @weights = stub :weights, :saved? => true
+      @partial = stub :partial, :saved? => true
+      @bundle = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, :similarity
     end
     it 'should initialize the index correctly' do
       @bundle.backend_inverted.should be_kind_of(Picky::Backends::Memory::JSON)

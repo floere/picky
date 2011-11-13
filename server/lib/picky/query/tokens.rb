@@ -27,16 +27,6 @@ module Picky
         new words.zip(originals).collect! { |word, original| Token.processed word, original }, ignore_unassigned
       end
 
-      # Tokenizes each token.
-      #
-      # Note: Passed tokenizer needs to offer #normalize(text).
-      #
-      # TODO Still needed?
-      #
-      def tokenize_with tokenizer
-        @tokens.each { |token| token.tokenize_with(tokenizer) }
-      end
-
       # Generates an array in the form of
       # [
       #  [combination],                           # of token 1

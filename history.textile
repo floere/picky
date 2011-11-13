@@ -1,5 +1,22 @@
 h2. Upcoming Version
 
+h2. Version 3.5.4
+
+* hanke: (server) Fix for using @Rack::Harakiri@ in an example project. (Ok, time for bed)
+
+h2. Version 3.5.3
+
+* hanke: (server) Fix for using dynamic weights and then deleting something from it.
+
+h2. Version 3.5.2
+
+* hanke: (server) Changed the way the internal backend is dumped to json or marshalled.
+
+h2. Version 3.5.1
+
+* hanke: (server) BREAKING @generate_from@ methods have been removed from all generators as they are not used anymore.
+* hanke: (server) Added the option of having dynamic weights calculation. Use this if you don't need weights based on the amount of indexed ids per token. This does not generate an index in the backend (Redis or file), but calculates the weight at runtime. Examples: Always return the default 0.0, @category :text, weights: Picky::Weights::Constant.new@ or always return 3.14, @category :text1, weights: Picky::Weights::Constant.new(3.14)@ or calculate a weight at runtime, based on the size of the str_or_sym we are looking for, @category :text1, weights: Picky::Weights::Dynamic.new { |str_or_sym| str_or_sym.size }@. We recommend using search boosts to boost specific category combinations.
+
 h2. Version 3.5.0
 
 * hanke: (server) Internally, tokens are held as strings. This helps dealing with memory issues when using realtime indexes. This might make Picky's memory usage a bit higher that before. However, when using realtime indexes, the memory usage will be much improved.

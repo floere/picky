@@ -22,24 +22,24 @@ module Picky
     #
     # Returns a (potentially empty) array of ids.
     #
-    def ids sym
-      @inverted[sym] || []
+    def ids sym_or_string
+      @inverted[sym_or_string] || []
     end
 
     # Get a weight for the given symbol.
     #
     # Returns a number, or nil.
     #
-    def weight sym
-      @weights[sym]
+    def weight sym_or_string
+      @weights[sym_or_string]
     end
 
     # Get settings for this bundle.
     #
     # Returns an object.
     #
-    def [] sym
-      @configuration[sym]
+    def [] sym_or_string
+      @configuration[sym_or_string]
     end
 
     # Loads all indexes.
@@ -62,12 +62,14 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      self.weights = @backend_weights.load
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      self.weights = @backend_weights.load if @weights_strategy.saved?
     end
     # Loads the similarity index.
     #
     def load_similarity
-      self.similarity = @backend_similarity.load
+      self.similarity = @backend_similarity.load if @similarity_strategy.saved?
     end
     # Loads the configuration.
     #

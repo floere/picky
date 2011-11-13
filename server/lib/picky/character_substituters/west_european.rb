@@ -28,21 +28,21 @@ module Picky
       # (See the associated spec for all examples)
       #
       def substitute text
-        trans = @chars.new(text).normalize(:kd)
+        trans = @chars.new(text).normalize :kd
 
         # Substitute special cases.
         #
-        trans.gsub!('ß', 'ss')
+        trans.gsub! 'ß', 'ss'
 
         # Substitute umlauts (of A,O,U,a,o,u).
         #
-        trans.gsub!(/([AOUaou])\314\210/u, '\1e')
+        trans.gsub! /([AOUaou])\314\210/u, '\1e'
 
         # Get rid of ecutes, graves etc.
         #
         trans.unpack('U*').select { |cp|
           cp < 0x0300 || cp > 0x035F
-        }.pack('U*')
+        }.pack 'U*'
       end
 
       def to_s # :nodoc:

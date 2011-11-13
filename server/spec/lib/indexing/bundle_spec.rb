@@ -5,9 +5,10 @@ describe Picky::Bundle do
   before(:each) do
     @index    = Picky::Index.new :some_index
     @category = Picky::Category.new :some_category, @index
+    @weights    = Picky::Weights::Logarithmic.new
     @similarity = Picky::Similarity::DoubleMetaphone.new 3
   end
-  let(:bundle) { described_class.new :some_name, @category, Picky::Backends::Memory.new, :some_weights, :some_partial, @similarity }
+  let(:bundle) { described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, :some_partial, @similarity }
 
   describe 'identifier' do
     it 'is correct' do
@@ -17,13 +18,14 @@ describe Picky::Bundle do
 
   describe 'similar' do
     before(:each) do
-      bundle.similarity = @similarity.generate_from( :dragon => [1,2,3], :dargon => [4,5,6] )
+      bundle.add_similarity :dragon
+      bundle.add_similarity :dargon
     end
     it 'returns the right similars (not itself)' do
       bundle.similar(:dragon).should == [:dargon]
     end
     it 'returns the right similars' do
-      bundle.similar(:trkn).should == [:dragon, :dargon]
+      bundle.similar(:trkn).should == [:dargon, :dragon]
     end
     it 'performs' do
       performance_of { bundle.similar(:dragon) }.should < 0.000075

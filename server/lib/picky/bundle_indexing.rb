@@ -35,28 +35,6 @@ module Picky
     delegate :clear,
              :to => :inverted
 
-    # "Empties" the index(es) by getting a new empty
-    # internal backend instance.
-    #
-    def empty
-      empty_inverted
-      empty_weights
-      empty_similarity
-      empty_configuration
-    end
-    def empty_inverted
-      @inverted = @backend_inverted.empty
-    end
-    def empty_weights
-      @weights = @backend_weights.empty
-    end
-    def empty_similarity
-      @similarity = @backend_similarity.empty
-    end
-    def empty_configuration
-      @configuration = @backend_configuration.empty
-    end
-
     # Saves the indexes in a dump file.
     #
     def dump
@@ -68,22 +46,24 @@ module Picky
     # Dumps the core index.
     #
     def dump_inverted
-      @backend_inverted.dump self.inverted
+      @backend_inverted.dump @inverted
     end
     # Dumps the weights index.
     #
     def dump_weights
-      @backend_weights.dump self.weights
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods? Or only the internal index ones?
+      #
+      @backend_weights.dump @weights if @weights_strategy.saved?
     end
     # Dumps the similarity index.
     #
     def dump_similarity
-      @backend_similarity.dump self.similarity
+      @backend_similarity.dump @similarity if @similarity_strategy.saved?
     end
-    # Dumps the similarity index.
+    # Dumps the configuration.
     #
     def dump_configuration
-      @backend_configuration.dump self.configuration
+      @backend_configuration.dump @configuration
     end
 
   end

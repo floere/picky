@@ -14,12 +14,12 @@ module Picky
       #
       class Metaphone < Phonetic
 
-        # Encodes the given symbol.
+        # Encodes the given string/symbol.
         #
         # Returns a symbol.
         #
-        def encoded sym
-          code = Text::Metaphone.metaphone sym.to_s
+        def encoded str_or_sym
+          code = Text::Metaphone.metaphone str_or_sym.to_s
           code.intern if code
         end
 

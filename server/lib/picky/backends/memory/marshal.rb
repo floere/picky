@@ -20,11 +20,19 @@ module Picky
           ::Marshal.load ::File.open(cache_path, 'r:binary')
         end
 
-        # Dumps the index hash in marshal format.
+        # Dumps the index internal backend in marshal format.
         #
-        def dump hash
+        def dump internal
           create_directory cache_path
-          hash.dump_marshal cache_path
+          dump_marshal internal
+        end
+
+        # Dumps binary self to the path given. Minus extension.
+        #
+        def dump_marshal internal
+          ::File.open(cache_path, 'w:binary') do |out_file|
+            ::Marshal.dump internal, out_file
+          end
         end
 
         # A marshal file does not provide retrieve functionality.

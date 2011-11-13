@@ -21,9 +21,21 @@ describe Picky::Indexers::Base do
 
   describe 'index' do
     it 'processes' do
-      indexer.should_receive(:process).once.with :categories
+      categories = stub :categories, :empty => nil, :cache => nil
 
-      indexer.index :categories
+      indexer.should_receive(:process).once.with categories
+
+      indexer.index categories
+    end
+    it 'calls the right methods on the categories' do
+      indexer.stub! :process
+
+      categories = stub :categories
+
+      categories.should_receive(:empty).once.ordered
+      categories.should_receive(:cache).once.ordered
+
+      indexer.index categories
     end
   end
 

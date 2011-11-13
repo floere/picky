@@ -19,9 +19,10 @@ module Picky
     # Indexes, creates the "prepared_..." file.
     #
     def prepare
-      empty
+      categories = Categories.new
+      categories << self
       with_data_snapshot do
-        indexer.index [self]
+        indexer.index categories
       end
     end
 
@@ -65,12 +66,10 @@ module Picky
     # If we have no explicit source, we'll check the index for one.
     #
     def source
-      (@source && extract_source) || @index.source
+      extract_source || @index.source
     end
     # Extract the actual source if it is wrapped in a time
     # capsule, i.e. a block/lambda.
-    #
-    # TODO Extract into module.
     #
     def extract_source
       @source = @source.respond_to?(:call) ? @source.call : @source

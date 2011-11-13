@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Picky::Backends::Memory::JSON do
-  
+
   context 'hash-based indexes' do
     let(:json) { described_class.new 'some/cache/path/to/file' }
 
@@ -21,7 +21,7 @@ describe Picky::Backends::Memory::JSON do
       it "delegates to the given hash" do
         hash = stub :hash
 
-        hash.should_receive(:dump_json).once.with "some/cache/path/to/file.memory.json"
+        json.should_receive(:dump_json).once.with hash
 
         json.dump hash
       end
@@ -41,5 +41,5 @@ describe Picky::Backends::Memory::JSON do
       end
     end
   end
-  
+
 end

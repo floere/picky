@@ -73,10 +73,8 @@ module Picky
     # Only use where the category does have a #each source defined.
     #
     def index_in_parallel
-      categories.empty
       indexer = Indexers::Parallel.new self
       indexer.index categories
-      categories.cache
     end
 
     # Returns the installed tokenizer or the default.
