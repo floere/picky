@@ -58,9 +58,9 @@ module Picky
     # Dumps the similarity index.
     #
     def dump_similarity
-      @backend_similarity.dump @similarity
+      @backend_similarity.dump @similarity if @similarity_strategy.saved?
     end
-    # Dumps the similarity index.
+    # Dumps the configuration.
     #
     def dump_configuration
       @backend_configuration.dump @configuration

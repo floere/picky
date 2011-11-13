@@ -69,7 +69,7 @@ module Picky
     # Loads the similarity index.
     #
     def load_similarity
-      self.similarity = @backend_similarity.load
+      self.similarity = @backend_similarity.load if @similarity_strategy.saved?
     end
     # Loads the configuration.
     #

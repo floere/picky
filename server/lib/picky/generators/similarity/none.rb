@@ -14,12 +14,6 @@ module Picky
           nil
         end
 
-        # Returns an empty index.
-        #
-        def generate_from index
-          {}
-        end
-
         # Returns if this strategy's generated file is saved.
         #
         def saved?
