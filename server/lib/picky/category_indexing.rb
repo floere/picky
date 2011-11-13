@@ -19,9 +19,10 @@ module Picky
     # Indexes, creates the "prepared_..." file.
     #
     def prepare
-      empty
+      categories = Categories.new
+      categories << self
       with_data_snapshot do
-        indexer.index [self]
+        indexer.index categories
       end
     end
 

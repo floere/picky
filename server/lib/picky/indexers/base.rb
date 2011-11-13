@@ -19,9 +19,11 @@ module Picky
       # Starts the indexing process.
       #
       def index categories
+        categories.empty
         process categories do |file|
           notify_finished file
         end
+        categories.cache
       end
 
       def notify_finished file
