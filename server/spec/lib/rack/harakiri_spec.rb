@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
 
-describe Picky::Rack::Harakiri do
+describe Rack::Harakiri do
   before(:each) do
     @app = stub :app
     Process.stub! :kill # not taking any chances
@@ -16,24 +16,24 @@ describe Picky::Rack::Harakiri do
     describe 'harakiri?' do
       it "should be true after 50 harakiri calls" do
         50.times { @ronin.harakiri }
-        
+
         @ronin.harakiri?.should == true
       end
       it "should not be true after just 49 harakiri calls" do
         49.times { @ronin.harakiri }
-        
+
         @ronin.harakiri?.should == false
       end
     end
     describe "harakiri" do
       it "should kill the process after 50 harakiri calls" do
         Process.should_receive(:kill).once
-        
+
         50.times { @ronin.harakiri }
       end
       it "should not kill the process after 49 harakiri calls" do
         Process.should_receive(:kill).never
-        
+
         49.times { @ronin.harakiri }
       end
     end
@@ -44,12 +44,12 @@ describe Picky::Rack::Harakiri do
       end
       it "calls harakiri" do
         @ronin.should_receive(:harakiri).once.with
-        
+
         @ronin.call :env
       end
       it "calls the app" do
         @app.should_receive(:call).once.with :env
-        
+
         @ronin.call :env
       end
     end
@@ -66,5 +66,5 @@ describe Picky::Rack::Harakiri do
       @ronin.instance_variable_get(:@quit_after_requests).should == 100
     end
   end
-  
+
 end
