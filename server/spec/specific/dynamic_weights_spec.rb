@@ -2,9 +2,9 @@
 #
 require 'spec_helper'
 
-describe "Dynamic weights" do
+describe "Weights" do
 
-  # This quickly tests the dynamic weights.
+  # This tests the weights option.
   #
   context 'various cases' do
     it 'stopwords destroy ids (final: id reference on attribute)' do
@@ -30,6 +30,14 @@ describe "Dynamic weights" do
       try.search("text2:hello").allocations.first.score.should   == 3.14
       try.search("text3:world").allocations.first.score.should   == 5
       try.search("text4:kthxbye").allocations.first.score.should == 0.6931471805599453
+
+      try_with_boosts = Picky::Search.new index do
+        boost [:text1] => +7.65,
+              [:text2] => +1.86
+      end
+
+      try_with_boosts.search("text1:ohai").allocations.first.score.should  == 7.65
+      try_with_boosts.search("text2:hello").allocations.first.score.should == 5.00
     end
   end
 
