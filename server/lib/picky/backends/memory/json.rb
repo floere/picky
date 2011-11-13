@@ -20,11 +20,19 @@ module Picky
           Yajl::Parser.parse ::File.open(cache_path, 'r') # , symbolize_keys: true # TODO Symbols.
         end
 
-        # Dumps the index hash in json format.
+        # Dumps the index internal backend in json format.
         #
-        def dump hash
+        def dump internal
           create_directory cache_path
-          hash.dump_json cache_path
+          dump_json internal
+        end
+
+        #
+        #
+        def dump_json internal
+          ::File.open(cache_path, 'w') do |out_file|
+            Yajl::Encoder.encode internal, out_file
+          end
         end
 
         # A json file does not provide retrieve functionality.

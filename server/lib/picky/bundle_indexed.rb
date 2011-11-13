@@ -94,9 +94,7 @@ module Picky
     # Clears the weights index.
     #
     def clear_weights
-      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
-      #
-      weights.clear if @weights_strategy.saved?
+      weights.clear
     end
     # Clears the similarity index.
     #

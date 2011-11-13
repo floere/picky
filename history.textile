@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.5.2
+
+* hanke: (server) Changed the way the internal backend is dumped to json or marshalled. 
+
 h2. Version 3.5.1
 
 * hanke: (server) BREAKING @generate_from@ methods have been removed from all generators as they are not used anymore.

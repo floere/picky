@@ -272,8 +272,11 @@ class BookSearch < Sinatra::Application
       @hash[key] = value
     end
 
-    def dump_json hash
-
+    # We need to implement this as we use it
+    # in a Memory::JSON backend.
+    #
+    def to_json
+      @hash.to_json
     end
 
   end

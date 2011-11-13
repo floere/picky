@@ -51,7 +51,7 @@ module Picky
     # Dumps the weights index.
     #
     def dump_weights
-      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      # TODO THINK about this. Perhaps the strategies should implement the backend methods? Or only the internal index ones?
       #
       @backend_weights.dump @weights if @weights_strategy.saved?
     end

@@ -22,6 +22,18 @@ module Picky
           false
         end
 
+        # Nothing needs to be deleted from it.
+        #
+        def delete _
+
+        end
+
+        # It does not need to be cleared.
+        #
+        def clear
+
+        end
+
         # Returns nil.
         #
         def weight_for _
