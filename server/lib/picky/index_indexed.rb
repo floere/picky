@@ -4,13 +4,15 @@ module Picky
   #
   class Index
 
-    delegate :load_from_cache,
+    delegate :load,
              :analyze,
              :reindex,
              :possible_combinations,
              :to => :categories
 
-    alias reload load_from_cache
+    # TODO Remove in 4.0.
+    #
+    alias reload load
 
     # Define how the results of this index are identified.
     # (Shown in the client, for example)

@@ -7,7 +7,7 @@ describe BookSearch do
 
   before(:all) do
     Picky::Indexes.index_for_tests
-    Picky::Indexes.reload
+    Picky::Indexes.load
   end
 
   let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
@@ -81,7 +81,7 @@ describe BookSearch do
   it 'finds the same after reloading' do
     csv.search('soledad human').ids.should == [72]
     puts "Reloading the Indexes."
-    Picky::Indexes.reload
+    Picky::Indexes.load
     csv.search('soledad human').ids.should == [72]
   end
 
@@ -96,7 +96,7 @@ describe BookSearch do
     ]
     Picky::Indexes[:memory_changing].source new_source
     Picky::Indexes[:memory_changing].index
-    Picky::Indexes[:memory_changing].reload
+    Picky::Indexes[:memory_changing].load
 
     memory_changing.search('entry').ids.should == [2, 3, 4]
   end
@@ -112,7 +112,7 @@ describe BookSearch do
     ]
     Picky::Indexes[:redis_changing].source new_source
     Picky::Indexes[:redis_changing].index
-    Picky::Indexes[:redis_changing].reload
+    Picky::Indexes[:redis_changing].load
 
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
   end
@@ -336,7 +336,7 @@ describe BookSearch do
     expected_id = added_book.id
 
     Picky::Indexes[:books].index
-    Picky::Indexes[:books].reload
+    Picky::Indexes[:books].load
 
     # We can destroy the book now as it has been indexed.
     #
@@ -360,7 +360,7 @@ describe BookSearch do
     expected_id = added_book.id
 
     Picky::Indexes[:book_each].index
-    Picky::Indexes[:book_each].reload
+    Picky::Indexes[:book_each].load
 
     # We can destroy the book now as it has been indexed.
     #

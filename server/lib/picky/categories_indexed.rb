@@ -2,7 +2,7 @@ module Picky
 
   class Categories
 
-    each_delegate :load_from_cache,
+    each_delegate :load,
                   :analyze,
                   :to => :categories
 

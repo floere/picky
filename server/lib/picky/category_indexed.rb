@@ -6,13 +6,15 @@ module Picky
 
     # Loads the index from cache.
     #
-    def load_from_cache
+    def load
       timed_exclaim %Q{"#{identifier}": Loading index from cache.}
       clear_realtime_mapping
       exact.load
       partial.load
     end
-    alias reload load_from_cache
+    # TODO Remove in 4.0.
+    #
+    alias reload load
 
     # Gets the weight for this token's text.
     #

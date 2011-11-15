@@ -12,7 +12,7 @@ Picky::Loader.load_application
 
 # Load the indexes into the memory.
 #
-Picky::Indexes.reload
+Picky::Indexes.load
 
 # TODO Decide if you want to use the Unicorn killing trick. (Good with large data sets)
 #

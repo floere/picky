@@ -4,17 +4,18 @@ module Picky
   #
   class Indexes
 
-    instance_delegate :load_from_cache,
-                      :reload,
+    instance_delegate :load,
                       :analyze
 
-    each_delegate :load_from_cache,
+    each_delegate :load,
+                  :reload,
                   :to => :indexes
 
-    # Reloads all indexes, one after another,
-    # in the order they were added.
+    # TODO Remove in 4.0.
     #
-    alias reload load_from_cache
+    def self.reload
+      self.instance.reload
+    end
 
   end
 

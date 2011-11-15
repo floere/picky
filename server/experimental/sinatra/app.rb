@@ -25,7 +25,7 @@ end
 # Index and load on startup.
 #
 texts.index
-texts.reload
+texts.load
 
 # Reindex on USR1 signal.
 #

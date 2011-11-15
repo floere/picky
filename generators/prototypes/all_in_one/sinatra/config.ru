@@ -2,7 +2,7 @@ require File.expand_path '../app', __FILE__
 
 # Load all indexes.
 #
-Picky::Indexes.reload
+Picky::Indexes.load
 
 # Use Harakiri middleware to kill unicorn child after X requests.
 #
