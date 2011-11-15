@@ -6,11 +6,12 @@
 DROP TABLE IF EXISTS books;
 
 CREATE TABLE books (
-  id     integer      not null,
-  title  varchar(100) not null,
-  author varchar(100) not null,
-  isbn   varchar(10)  not null,
-  year   decimal(4)   not null
+  id     integer      NOT NULL AUTO_INCREMENT,
+  title  varchar(100) NOT NULL,
+  author varchar(100) NOT NULL,
+  isbn   varchar(10)  NOT NULL,
+  year   decimal(4)   NOT NULL,
+  PRIMARY KEY (id)
 );
 
 LOAD DATA INFILE '/Users/admin/temp/picky/server/test_project/data/books.csv'
