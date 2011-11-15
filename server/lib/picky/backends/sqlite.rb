@@ -2,101 +2,43 @@ module Picky
 
   module Backends
 
-    class Sqlite3 < Backend
+    class Sqlite < Backend
 
-      require "sqlite3"
+      def initialize options = {}
+        super options
 
-      class DB
-
-        include Helpers::File
-        attr_reader :cache_path
-
-        def initialize(cache_path, options = {})
-          @cache_path = cache_path + ".sqlite3"
-          @empty      = options[:empty]
-          @initial    = options[:initial]
-        end
-
-        def initial
-          @initial && @initial.clone || {}
-        end
-
-        def empty
-          @empty && empty.clone || {}
-        end
-
-        def dump(internal)
-
-          puts "Writing #{cache_path}"
-
-          create_directory cache_path
-
-          @db = SQLite3::Database.new(cache_path)
-          @db.execute <<-SQL
-            drop table if exists key_value;
-          SQL
-
-          @db.execute <<-SQL
-            create table key_value (
-              key varchar(255),
-              value text
-            );
-          SQL
-
-          @db.execute <<-SQL
-            create index key_idx on key_value (key);
-          SQL
-
-          @db.execute("BEGIN;")
-
-          internal.each do |key, value|
-            encoded_value = Yajl::Encoder.encode(value)
-            @db.execute("insert into key_value values (?,?)", key.to_s, encoded_value)
-          end
-
-          @db.execute("COMMIT;")
-        end
-
-        def load 
-          @db = SQLite3::Database.new(cache_path)
-          self
-        end
-
-        def [](key)
-
-          res = @db.execute "select value from key_value where key = ? limit 1;", key.to_s
-          return nil if res.empty?
-
-          Yajl::Parser.parse(res.first.first || "")
-        end
+        require 'sqlite3'
+      rescue LoadError => e
+        warn_gem_missing 'sqlite3', 'SQLite bindings'
       end
+
 
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
-        #extract_lambda_or(inverted, bundle) ||
+        extract_lambda_or(inverted, bundle) ||
         DB.new(bundle.index_path(:inverted))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
-        #extract_lambda_or(weights, bundle) ||
+        extract_lambda_or(weights, bundle) ||
         DB.new(bundle.index_path(:weights))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
-        #extract_lambda_or(similarity, bundle) ||
+        extract_lambda_or(similarity, bundle) ||
         DB.new(bundle.index_path(:similarity))
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
-        #extract_lambda_or(configuration, bundle) ||
+        extract_lambda_or(configuration, bundle) ||
         DB.new(bundle.index_path(:configuration))
       end
 
