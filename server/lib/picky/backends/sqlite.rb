@@ -12,7 +12,6 @@ module Picky
         warn_gem_missing 'sqlite3', 'SQLite bindings'
       end
 
-
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
