@@ -8,7 +8,7 @@ Picky::Indexes.reload
 #
 # See http://vimeo.com/12614970 for more info.
 #
-# Picky::Rack::Harakiri.after = 1000
-# use Picky::Rack::Harakiri
+# Rack::Harakiri.after = 1000
+# use Rack::Harakiri
 
 run BookSearch.new

@@ -24,7 +24,7 @@ module Picky
           float
         end
 
-        # TODO Symbols.
+        # TODO Symbols. Use a block here?
         #
         def ids float_str
           @bundle.ids calculate(float_str.to_f).to_s

@@ -52,6 +52,7 @@ module Picky
             bundle.load
 
             # TODO Symbols (of the location_anchor!!!).
+            #      It should always be a Symbol.
             #
             @calculation.anchor = bundle['location_anchor'] && bundle['location_anchor'].to_f || raise("Configuration 'location_anchor' for #{bundle.identifier} missing. Did you run rake index already?")
           end
