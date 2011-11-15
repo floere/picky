@@ -107,38 +107,12 @@ module Picky
       @tokenizer || @index.tokenizer
     end
 
-    # Checks the caches for existence.
-    #
-    def check
-      timed_exclaim "Checking #{identifier}."
-      exact.raise_unless_cache_exists
-      partial.raise_unless_cache_exists
-    end
-
     # Deletes the caches.
     #
     def clear
       timed_exclaim "Deleting #{identifier}."
       exact.delete
       partial.delete
-    end
-
-    # Backup the caches.
-    # (Revert with restore_caches)
-    #
-    def backup
-      timed_exclaim "Backing up #{identifier}."
-      exact.backup
-      partial.backup
-    end
-
-    # Restore the caches.
-    # (Revert with backup_caches)
-    #
-    def restore
-      timed_exclaim "Restoring #{identifier}."
-      exact.restore
-      partial.restore
     end
 
   end

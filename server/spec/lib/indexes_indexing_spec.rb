@@ -23,7 +23,7 @@ describe Picky::Indexes do
       it 'takes a snapshot, then indexes and caches each' do
         @index1.should_receive(:index).once.with.ordered
         @index2.should_receive(:index).once.with.ordered
-      
+
         indexes.index_for_tests
       end
     end
@@ -35,7 +35,7 @@ describe Picky::Indexes do
     describe 'clear_indexes' do
       it 'clears the indexes' do
         indexes.clear_indexes
-      
+
         indexes.indexes.should == []
       end
     end
@@ -49,10 +49,7 @@ describe Picky::Indexes do
         end
       end
     end
-    it_delegates_each :check
     it_delegates_each :clear
-    it_delegates_each :backup
-    it_delegates_each :restore
   end
-  
+
 end

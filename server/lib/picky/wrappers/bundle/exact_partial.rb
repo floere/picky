@@ -10,22 +10,13 @@ module Picky
       # bundle such that a partial index will not
       # be dumped or generated.
       #
-      class ExactPartial
+      class ExactPartial < Wrapper
 
-        attr_reader :bundle
-
-        include Delegator
-        include IndexedDelegator
-
-        def initialize bundle
-          @bundle = bundle
-        end
-
+        # Ignore these.
+        #
         def clear; end
         def dump; end
         def empty; end
-        def generate_caches_from_memory; end
-        def generate_partial_from arg; end
         def index; end
         def load; end
 

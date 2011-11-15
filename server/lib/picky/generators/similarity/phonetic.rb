@@ -23,16 +23,6 @@ module Picky
           @amount = amount
         end
 
-        # # Generates an index for the given index (in exact index style).
-        # #
-        # # In the following form:
-        # # [:meier, :mueller, :peter, :pater] => { MR: [:meier], MLR: [:mueller], PTR: [:peter, :pater] }
-        # #
-        # def generate_from inverted
-        #   hash = hashify inverted.keys
-        #   sort hash
-        # end
-
         protected
 
           # Sorts the index values in place.

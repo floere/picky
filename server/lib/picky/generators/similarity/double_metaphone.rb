@@ -19,8 +19,7 @@ module Picky
         # Returns a symbol.
         #
         def encoded str_or_sym
-          codes = Text::Metaphone.double_metaphone str_or_sym.to_s
-          codes.first.intern unless codes.empty?
+          str_or_sym.double_metaphone
         end
 
       end

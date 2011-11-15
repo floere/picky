@@ -2,6 +2,26 @@
 #
 class String # :nodoc:all
 
+  # Returns a _single_ double metaphone code
+  # for this string.
+  #
+  def double_metaphone
+    codes = Text::Metaphone.double_metaphone self
+    codes.first unless codes.empty?
+  end
+
+  # Returns a metaphone code for this string.
+  #
+  def metaphone
+    Text::Metaphone.metaphone self
+  end
+
+  # Returns a soundex code for this string.
+  #
+  def soundex
+    Text::Soundex.soundex self
+  end
+
   # 'keys'.each_subtoken    # => yields each of ['keys', 'key', 'ke', 'k']
   # 'keys'.each_subtoken(2) # => yields each of ['keys', 'key', 'ke']
   #

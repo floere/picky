@@ -2,6 +2,28 @@
 #
 class Symbol # :nodoc:all
 
+  # Returns a _single_ double metaphone code
+  # for this symbol.
+  #
+  def double_metaphone
+    codes = Text::Metaphone.double_metaphone self
+    codes.first.intern unless codes.empty?
+  end
+
+  # Returns a metaphone code for this symbol.
+  #
+  def metaphone
+    code = Text::Metaphone.metaphone self.to_s
+    code.intern if code
+  end
+
+  # Returns a soundex code for this symbol.
+  #
+  def soundex
+    code = Text::Soundex.soundex self.to_s
+    code.intern if code
+  end
+
   # :keys.each_subtoken    # => yields each of [:keys, :key, :ke, :k]
   # :keys.each_subtoken(2) # => yields each of [:keys, :key, :ke]
   #

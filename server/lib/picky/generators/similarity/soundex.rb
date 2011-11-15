@@ -19,8 +19,7 @@ module Picky
         # Returns a symbol.
         #
         def encoded str_or_sym
-          code = Text::Soundex.soundex str_or_sym.to_s
-          code.intern if code
+          str_or_sym.soundex
         end
 
       end

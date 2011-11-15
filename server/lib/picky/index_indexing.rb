@@ -4,15 +4,10 @@ module Picky
   #
   class Index
 
-    attr_reader :bundle_class
-
     # Delegators for indexing.
     #
     delegate :cache,
-             :check,
              :clear,
-             :backup,
-             :restore,
              :to => :categories
 
     # Calling index on an index will call index

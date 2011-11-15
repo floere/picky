@@ -11,7 +11,7 @@ describe Picky::Indexes do
       indexes.indexes.should == []
     end
   end
-  
+
   describe 'methods' do
     let(:indexes) { described_class.new }
     before(:each) do
@@ -39,23 +39,29 @@ describe Picky::Indexes do
     describe 'clear' do
       it 'clears the indexes' do
         indexes.clear_indexes
-        
+
         indexes.indexes.should == []
       end
       it 'clears the mapping' do
         indexes.clear_indexes
-        
+
         indexes.index_mapping.should == {}
       end
     end
     describe 'reload' do
-      it 'calls load_from_cache on each in order' do
-        @index1.should_receive(:load_from_cache).once.with.ordered
-        @index2.should_receive(:load_from_cache).once.with.ordered
+      it 'calls load on each in order' do
+        @index1.should_receive(:reload).once.with.ordered
+        @index2.should_receive(:reload).once.with.ordered
 
         indexes.reload
       end
+      it 'is aliased' do
+        @index1.should_receive(:load).once.with.ordered
+        @index2.should_receive(:load).once.with.ordered
+
+        indexes.load
+      end
     end
   end
-  
+
 end

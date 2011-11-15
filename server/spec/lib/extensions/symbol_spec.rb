@@ -17,6 +17,22 @@ describe Symbol do
     end
   end
 
+  describe 'double_metaphone' do
+    it 'returns the right code' do
+      :hello.double_metaphone.should == :HL
+    end
+  end
+  describe 'metaphone' do
+    it 'returns the right code' do
+      :hello.metaphone.should == :HL
+    end
+  end
+  describe 'soundex' do
+    it 'returns the right code' do
+      :hello.soundex.should == :H400
+    end
+  end
+
   describe 'each_intoken' do
     context 'normal symbol' do
       before(:each) do

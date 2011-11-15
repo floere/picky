@@ -32,7 +32,7 @@ class UnicornApp < Sinatra::Application
   # Index and load on startup.
   #
   texts.index
-  texts.reload
+  texts.load
 
   # Index and load on USR1 signal.
   #

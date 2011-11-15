@@ -136,28 +136,6 @@ module Picky
       ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
     end
 
-    # Copies the indexes to the "backup" directory.
-    #
-    def backup
-      @backend_inverted.backup      if @backend_inverted.respond_to? :backup
-      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
-      #
-      @backend_weights.backup       if @backend_weights.respond_to? :backup && @weights_strategy.saved?
-      @backend_similarity.backup    if @backend_similarity.respond_to? :backup
-      @backend_configuration.backup if @backend_configuration.respond_to? :backup
-    end
-
-    # Restores the indexes from the "backup" directory.
-    #
-    def restore
-      @backend_inverted.restore       if @backend_inverted.respond_to? :restore
-      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
-      #
-      @backend_weights.restore        if @backend_weights.respond_to? :restore && @weights_strategy.saved?
-      @backend_similarity.restore     if @backend_similarity.respond_to? :restore
-      @backend_configuration.restore  if @backend_configuration.respond_to? :restore
-    end
-
     # Delete all index files.
     #
     def delete
@@ -167,66 +145,6 @@ module Picky
       @backend_weights.delete        if @backend_weights.respond_to? :delete && @weights_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
-    end
-
-    # Alerts the user if an index is missing.
-    #
-    def raise_unless_cache_exists
-      raise_unless_index_exists
-      raise_unless_similarity_exists
-    end
-    # Alerts the user if one of the necessary indexes
-    # (core, weights) is missing.
-    #
-    def raise_unless_index_exists
-      if partial_strategy.saved?
-        warn_if_index_small
-        raise_unless_index_ok
-      end
-    end
-    # Alerts the user if the similarity
-    # index is missing (given that it's used).
-    #
-    def raise_unless_similarity_exists
-      if similarity_strategy.saved?
-        warn_if_similarity_small
-        raise_unless_similarity_ok
-      end
-    end
-
-    # Outputs a warning for the given cache.
-    #
-    def warn_cache_small what
-      warn "Warning: #{what} cache for #{identifier} smaller than 16 bytes."
-    end
-    # Raises an appropriate error message for the given cache.
-    #
-    def raise_cache_missing what
-      raise "Error: The #{what} cache for #{identifier} is missing."
-    end
-
-    # Warns the user if the similarity index is small.
-    #
-    def warn_if_similarity_small
-      warn_cache_small :similarity if backend_similarity.respond_to?(:cache_small?) && backend_similarity.cache_small?
-    end
-    # Alerts the user if the similarity index is not there.
-    #
-    def raise_unless_similarity_ok
-      raise_cache_missing :similarity if backend_similarity.respond_to?(:cache_ok?) && !backend_similarity.cache_ok?
-    end
-
-    # Warns the user if the core or weights indexes are small.
-    #
-    def warn_if_index_small
-      warn_cache_small :inverted if backend_inverted.respond_to?(:cache_small?) && backend_inverted.cache_small?
-      warn_cache_small :weights  if backend_weights.respond_to?(:cache_small?)  && backend_weights.cache_small?
-    end
-    # Alerts the user if the core or weights indexes are not there.
-    #
-    def raise_unless_index_ok
-      raise_cache_missing :inverted if backend_inverted.respond_to?(:cache_ok?) && !backend_inverted.cache_ok?
-      raise_cache_missing :weights  if backend_weights.respond_to?(:cache_ok?)  && !backend_weights.cache_ok?
     end
 
     def to_s

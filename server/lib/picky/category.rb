@@ -53,11 +53,11 @@ module Picky
       @prepared = Backends::Memory::Text.new prepared_index_path
     end
 
-    # Indexes and reloads the category.
+    # Indexes and loads the category.
     #
     def reindex
       index
-      reload
+      load
     end
 
     def dump

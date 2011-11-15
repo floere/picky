@@ -11,6 +11,7 @@ gem 'rack_fast_escape'
 group :test do
   # Needed for testing itself.
   #
+  gem 'rspec'
   gem 'rspec-core'
   gem 'simplecov', :require => false # Will install simplecov-html as a dependency
 
