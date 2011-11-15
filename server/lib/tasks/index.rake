@@ -12,13 +12,9 @@ end
 
 namespace :index do
 
-  # Advanced usage.
-  #
-  # desc "Takes a snapshot, indexes, and caches in random order."
   task :randomly => :application do
     Picky::Indexes.index true
   end
-  # desc "Takes a snapshot, indexes, and caches in order given."
   task :ordered => :application do
     Picky::Indexes.index false
   end
