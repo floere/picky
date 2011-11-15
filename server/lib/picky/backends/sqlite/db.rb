@@ -23,12 +23,7 @@ module Picky
           @empty && empty.clone || {}
         end
 
-        def dump(internal)
-
-          puts "Writing #{cache_path}"
-
-          create_directory cache_path
-
+        def dump_sqlite(internal)
           @db = SQLite3::Database.new(cache_path)
           @db.execute <<-SQL
             drop table if exists key_value;
@@ -55,20 +50,31 @@ module Picky
           @db.execute("COMMIT;")
         end
 
+        def dump(internal)
+          create_directory cache_path
+          dump_sqlite internal
+        end
+
         def load 
           @db = SQLite3::Database.new(cache_path)
           self
         end
 
         def [](key)
-
           res = @db.execute "select value from key_value where key = ? limit 1;", key.to_s
           return nil if res.empty?
 
           Yajl::Parser.parse(res.first.first || "")
         end
+
+        def to_s
+          "#{self.class}(#{cache_path})"
+        end
+
       end
       
     end
+
   end
+
 end
