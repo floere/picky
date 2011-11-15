@@ -39,4 +39,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'sinatra'
   s.add_runtime_dependency 'redis'
   s.add_runtime_dependency 'mysql'
+  s.add_runtime_depencency 'sqlite3'
 end
