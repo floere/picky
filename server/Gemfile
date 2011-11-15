@@ -24,6 +24,7 @@ group :test do
   gem 'picky-client'
   gem 'activerecord'
   gem 'redis'
+  gem 'sqlite3'
 
   gem 'rack-mount'
 end
