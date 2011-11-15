@@ -5,17 +5,11 @@ module Picky
   class Indexes
 
     instance_delegate :index,
-                      :check,
                       :clear,
-                      :backup,
-                      :restore,
                       :index_for_tests,
                       :tokenizer
 
-    each_delegate :check,
-                  :clear,
-                  :backup,
-                  :restore,
+    each_delegate :clear,
                   :to => :indexes
 
     # Runs the indexers in parallel (prepare + cache).

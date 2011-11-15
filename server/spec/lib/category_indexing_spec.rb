@@ -12,30 +12,6 @@ describe Picky::Category do
     let(:exact) { category.exact }
     let(:partial) { category.partial }
 
-    describe 'backup' do
-      it 'delegates to both bundles' do
-        exact.should_receive(:backup).once.with()
-        partial.should_receive(:backup).once.with()
-
-        category.backup
-      end
-    end
-    describe 'restore' do
-      it 'delegates to both bundles' do
-        exact.should_receive(:restore).once.with()
-        partial.should_receive(:restore).once.with()
-
-        category.restore
-      end
-    end
-    describe 'check' do
-      it 'delegates to both bundles' do
-        exact.should_receive(:raise_unless_cache_exists).once.with()
-        partial.should_receive(:raise_unless_cache_exists).once.with()
-
-        category.check
-      end
-    end
     describe 'clear' do
       it 'delegates to both bundles' do
         exact.should_receive(:delete).once.with()

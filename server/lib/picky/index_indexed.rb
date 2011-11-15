@@ -4,8 +4,6 @@ module Picky
   #
   class Index
 
-    attr_reader :combinator
-
     delegate :load_from_cache,
              :analyze,
              :reindex,

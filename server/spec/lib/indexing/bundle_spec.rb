@@ -35,22 +35,6 @@ describe Picky::Bundle do
     end
   end
 
-  describe 'raise_cache_missing' do
-    it 'does something' do
-      expect {
-        bundle.raise_cache_missing :similarity
-      }.to raise_error("Error: The similarity cache for some_index:some_category:some_name is missing.")
-    end
-  end
-
-  describe 'warn_cache_small' do
-    it 'warns the user' do
-      bundle.should_receive(:warn).once.with "Warning: similarity cache for some_index:some_category:some_name smaller than 16 bytes."
-
-      bundle.warn_cache_small :similarity
-    end
-  end
-
   describe 'identifier' do
     it 'should return a specific identifier' do
       bundle.identifier.should == 'some_index:some_category:some_name'
@@ -70,110 +54,7 @@ describe Picky::Bundle do
     end
   end
 
-  describe 'raise_unless_cache_exists' do
-    it "calls methods in order" do
-      bundle.should_receive(:raise_unless_index_exists).once.ordered
-      bundle.should_receive(:raise_unless_similarity_exists).once.ordered
 
-      bundle.raise_unless_cache_exists
-    end
-  end
-  describe 'raise_unless_index_exists' do
-    context 'partial strategy saved' do
-      before(:each) do
-        strategy = stub :strategy, :saved? => true
-        bundle.stub! :partial_strategy => strategy
-      end
-      it "calls the methods in order" do
-        bundle.should_receive(:warn_if_index_small).once.ordered
-        bundle.should_receive(:raise_unless_index_ok).once.ordered
-
-        bundle.raise_unless_index_exists
-      end
-    end
-    context 'partial strategy not saved' do
-      before(:each) do
-        strategy = stub :strategy, :saved? => false
-        bundle.stub! :partial_strategy => strategy
-      end
-      it "calls nothing" do
-        bundle.should_receive(:warn_if_index_small).never
-        bundle.should_receive(:raise_unless_index_ok).never
-
-        bundle.raise_unless_index_exists
-      end
-    end
-  end
-  describe 'raise_unless_similarity_exists' do
-    context 'similarity strategy saved' do
-      before(:each) do
-        strategy = stub :strategy, :saved? => true
-        bundle.stub! :similarity_strategy => strategy
-      end
-      it "calls the methods in order" do
-        bundle.should_receive(:warn_if_similarity_small).once.ordered
-        bundle.should_receive(:raise_unless_similarity_ok).once.ordered
-
-        bundle.raise_unless_similarity_exists
-      end
-    end
-    context 'similarity strategy not saved' do
-      before(:each) do
-        strategy = stub :strategy, :saved? => false
-        bundle.stub! :similarity_strategy => strategy
-      end
-      it "calls nothing" do
-        bundle.should_receive(:warn_if_similarity_small).never
-        bundle.should_receive(:raise_unless_similarity_ok).never
-
-        bundle.raise_unless_similarity_exists
-      end
-    end
-  end
-  describe 'warn_if_similarity_small' do
-    context "files similarity cache small" do
-      before(:each) do
-        bundle.stub! :backend_similarity => stub(:backend_similarity, :cache_small? => true)
-      end
-      it "warns" do
-        bundle.should_receive(:warn_cache_small).once.with :similarity
-
-        bundle.warn_if_similarity_small
-      end
-    end
-    context "files similarity cache not small" do
-      before(:each) do
-        bundle.stub! :backend_similarity => stub(:backend_similarity, :cache_small? => false)
-      end
-      it "does not warn" do
-        bundle.should_receive(:warn_cache_small).never
-
-        bundle.warn_if_similarity_small
-      end
-    end
-  end
-  describe 'raise_unless_similarity_ok' do
-    context "files similarity cache ok" do
-      before(:each) do
-        bundle.stub! :backend_similarity => stub(:backend_similarity, :cache_ok? => true)
-      end
-      it "warns" do
-        bundle.should_receive(:raise_cache_missing).never
-
-        bundle.raise_unless_similarity_ok
-      end
-    end
-    context "files similarity cache not ok" do
-      before(:each) do
-        bundle.stub! :backend_similarity => stub(:backend_similarity, :cache_ok? => false)
-      end
-      it "does not warn" do
-        bundle.should_receive(:raise_cache_missing).once.with :similarity
-
-        bundle.raise_unless_similarity_ok
-      end
-    end
-  end
 
   describe 'initialization' do
     it 'should initialize the index correctly' do
@@ -188,12 +69,12 @@ describe Picky::Bundle do
     it 'should initialize the configuration correctly' do
       bundle.configuration.should == {}
     end
-    # it 'should initialize the partial strategy correctly' do
-    #   bundle.partial_strategy.should == @partial
-    # end
-    # it 'should initialize the weights strategy correctly' do
-    #   bundle.weights_strategy.should == @weights
-    # end
+    it 'should initialize the partial strategy correctly' do
+      bundle.partial_strategy.should == :some_partial
+    end
+    it 'should initialize the weights strategy correctly' do
+      bundle.weights_strategy.should == @weights
+    end
     it 'should initialize the similarity strategy correctly' do
       bundle.similarity_strategy.should == @similarity
     end
