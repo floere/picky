@@ -348,6 +348,19 @@ class BookSearch < Sinatra::Application
     category :dynamic,          weights: Picky::Weights::Dynamic.new { |token| token.size }
   end
 
+  SqliteItem = Struct.new :id, :first_name, :last_name
+  sqlite_index = Picky::Index.new :sqlite do
+    backend Backends::Sqlite.new
+    source do
+      [
+        SqliteItem.new(1, "hello", "sqlite"),
+        SqliteItem.new(2, "bingo", "bongo")
+      ]
+    end
+    category :first_name
+    category :last_name
+  end
+
   weights = {
     [:author]         => +6,
     [:title, :author] => +5,
@@ -440,6 +453,10 @@ class BookSearch < Sinatra::Application
   partial_search = Search.new partial_index
   get %r{\A/partial\Z} do
     partial_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+  end
+  sqlite_search = Search.new sqlite_index
+  get %r{\A/sqlite\Z} do
+    sqlite_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
   get %r{\A/all\Z} do

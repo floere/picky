@@ -26,6 +26,7 @@ describe BookSearch do
   let(:backends)        { Picky::TestClient.new(described_class, :path => '/backends')        }
   let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
   let(:partial)         { Picky::TestClient.new(described_class, :path => '/partial')         }
+  let(:sqlite)          { Picky::TestClient.new(described_class, :path => '/sqlite')          }
 
   describe "dump" do
     it "simply works" do
@@ -320,6 +321,10 @@ describe BookSearch do
   # Search#ignore option.
   #
   it { book_each.search("alan history").ids.should == ["259", "307"] } # Ignores History or Alan in title.
+
+  # SQLite backend.
+  #
+  it { sqlite.search("hello sqlite").ids.should == [1] }
 
   # Database index reloading.
   #

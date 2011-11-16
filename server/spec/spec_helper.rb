@@ -11,7 +11,6 @@ end
 #
 ENV['PICKY_ENV'] = 'test'
 require File.expand_path '../../lib/picky', __FILE__
-# require 'rspec'
 
 # Set some spec preconditions.
 #
