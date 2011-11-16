@@ -21,11 +21,11 @@ module Picky
         end
 
         def empty
-          @empty && empty.clone || {}
+          @empty && @empty.clone || {}
         end
 
         def dump_sqlite internal
-          @db = SQLite3::Database.new cache_path
+          @db ||= SQLite3::Database.new cache_path
 
           # TODO Does it make a difference if these
           #      statements are given as one to the
@@ -66,7 +66,7 @@ module Picky
         end
 
         def load
-          @db = SQLite3::Database.new cache_path
+          @db ||= SQLite3::Database.new cache_path
           self
         end
 
