@@ -16,11 +16,11 @@ module Picky
              :to => :indexes
 
     each_delegate :reindex,
-                  :each_category,
                   :to => :indexes
 
-    def initialize
+    def initialize *indexes
       clear_indexes
+      indexes.each { |index| register index }
     end
 
     # Return the Indexes instance.

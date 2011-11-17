@@ -209,20 +209,24 @@ module Picky
       load_relative 'category_indexed'
       load_relative 'category_indexing'
       load_relative 'category_realtime'
+      load_relative 'category_convenience'
 
       load_relative 'categories'
       load_relative 'categories_indexed'
       load_relative 'categories_indexing'
       load_relative 'categories_realtime'
+      load_relative 'categories_convenience'
 
       load_relative 'indexes'
       load_relative 'indexes_indexed'
       load_relative 'indexes_indexing'
+      load_relative 'indexes_convenience'
 
       load_relative 'index'
       load_relative 'index_indexed'
       load_relative 'index_indexing'
       load_relative 'index_realtime'
+      load_relative 'index_convenience'
 
       # Results.
       #

@@ -91,7 +91,8 @@ module Picky
 
     delegate :[],
              :dump,
-             :each_category,
+             :each,
+             :inject,
              :to => :categories
 
     # Create a new index with a given source.

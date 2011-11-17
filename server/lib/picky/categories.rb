@@ -11,9 +11,10 @@ module Picky
 
     each_delegate :cache,
                   :dump,
-                  :each_category,
+                  :each,
                   :empty,
                   :index,
+                  :inject,
                   :reindex,
                   :reset_backend,
                   :to => :categories
