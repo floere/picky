@@ -38,7 +38,7 @@ class IndexGenerator
   # Queries for these will be generated later.
   #
   def each &block
-    characters = ('a'..'c').to_a
+    characters = ['a', 'b'] # ('a'..'c').to_a
     size = characters.size
     current = []
 
@@ -112,8 +112,7 @@ class PerformanceSearch < Sinatra::Application
   #           case_sensitive:              true,
   #           maximum_tokens:              5
 
-  definition = ->() do
-    category :id
+  definition = Proc.new do
     category :text
   end
 
@@ -122,15 +121,18 @@ class PerformanceSearch < Sinatra::Application
   s   = Index.new :s,   &definition
   m   = Index.new :m,   &definition
   l   = Index.new :l,   &definition
+  xl  = Index.new :xl,  &definition
 
   xxs.source { generate[10] }
   xs.source  { generate[100] }
   s.source   { generate[1_000] }
   m.source   { generate[10_000] }
   l.source   { generate[100_000] }
-  xxs.source { generate[1_000_000] }
+  xl.source  { generate[1_000_000] }
 
-  [xxs, xs, s, m, l].each do |data|
+  puts "Running tests"
+
+  Indexes.each do |data|
 
     data.index
 
