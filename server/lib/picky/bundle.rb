@@ -142,7 +142,7 @@ module Picky
       @backend_inverted.delete       if @backend_inverted.respond_to? :delete
       # TODO THINK about this. Perhaps the strategies should implement the backend methods?
       #
-      @backend_weights.delete        if @backend_weights.respond_to? :delete && @weights_strategy.saved?
+      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weights_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
     end
