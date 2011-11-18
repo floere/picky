@@ -6,6 +6,7 @@ module Picky
     # given id.
     #
     def remove id
+      id = id.send key_format
       exact.remove id
       partial.remove id
     end
@@ -38,6 +39,7 @@ module Picky
     def add_tokenized_token id, text, where = :unshift
       return unless text
       id = id.send key_format # TODO Speed this up!
+
       # text = text.to_sym if @symbols # TODO Symbols.
       exact.add id, text, where
       partial.add_partialized id, text, where

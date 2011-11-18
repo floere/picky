@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Picky::Sources::Couch do
-  
+
   describe 'key_format' do
     context 'default' do
       let(:source) { described_class.new(:a, :b, url: 'bla') }
       it 'is correct' do
-        source.key_format.should == :to_sym
+        source.key_format.should == :to_s
       end
     end
     context 'non-default' do
@@ -16,14 +16,14 @@ describe Picky::Sources::Couch do
       end
     end
   end
-  
+
   describe 'to_s' do
     let(:source) { described_class.new(:a, :b, :url => 'bla') }
     it 'is correct' do
       source.to_s.should == 'Picky::Sources::Couch'
     end
   end
-  
+
   describe 'special keys' do
     context 'uuid keys' do
       context "with database" do
@@ -36,7 +36,7 @@ describe Picky::Sources::Couch do
           it "yields the right data" do
             category = stub :b, :from => :b
             @source.harvest category do |id, token|
-              id.should    eql('550e8400-e29b-41d4-a716-446655440000') 
+              id.should    eql('550e8400-e29b-41d4-a716-446655440000')
               token.should eql('b data')
             end.should have(1).item
           end
@@ -62,7 +62,7 @@ describe Picky::Sources::Couch do
           it "yields the right data" do
             category = stub :b, :from => :b
             @source.harvest category do |id, token|
-              id.should    eql('123') 
+              id.should    eql('123')
               token.should eql('b data')
             end.should have(1).item
           end
@@ -78,7 +78,7 @@ describe Picky::Sources::Couch do
       end
     end
   end
-  
+
   context 'default keys' do
     context "without database" do
       it "should fail correctly" do
@@ -96,7 +96,7 @@ describe Picky::Sources::Couch do
         it "yields the right data" do
           category = stub :b, :from => :b
           @source.harvest category do |id, token|
-            id.should    eql('7f') 
+            id.should    eql('7f')
             token.should eql('b data')
           end.should have(1).item
         end

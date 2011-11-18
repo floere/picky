@@ -37,7 +37,7 @@ module Picky
 
   		  @db         = RestClient::Resource.new options.delete(:url), options
   			@database   = options.delete(:db)
-  		  @key_format = options[:key_format] && options[:key_format].intern || :to_sym
+  		  @key_format = options[:key_format] && options[:key_format].intern || :to_s
   		end
 
       # Tries to require the rest_client gem.

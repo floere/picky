@@ -42,7 +42,7 @@ module Picky
       #
       ids = if str_or_syms.include? str_or_sym
         ids = @inverted[str_or_sym]
-        ids.delete  id
+        ids.delete id
         ids.send where, id
       else
         str_or_syms << str_or_sym

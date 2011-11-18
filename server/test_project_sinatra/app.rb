@@ -153,8 +153,8 @@ class BookSearch < Sinatra::Application
   end
 
   Index.new :underscore_regression do
-    source         Sources::CSV.new(:location, file: 'data/ch.csv')
-    category       :some_place, :from => :location
+    source   Sources::CSV.new(:location, file: 'data/ch.csv')
+    category :some_place, :from => :location
   end
 
   # rgeo_index = Index.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')

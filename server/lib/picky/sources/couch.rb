@@ -32,7 +32,7 @@ module Picky
         @db = RestClient::Resource.new options.delete(:url), options
 
         key_format   = options.delete :key_format
-        @key_format  = key_format && key_format.intern || :to_sym
+        @key_format  = key_format && key_format.intern || :to_s
       end
 
       def to_s
