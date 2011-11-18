@@ -67,7 +67,7 @@ class QueryGenerator
 
   def prepare
     generator = IndexGenerator.new complexity do
-      rand(3) + 2
+      rand(3) + 1
     end
 
     amount.times do
@@ -89,52 +89,62 @@ class QueryGenerator
 
 end
 
-class PerformanceSearch < Sinatra::Application
+include Picky
+# extend Picky::Sinatra
 
-  include Picky
-  extend Picky::Sinatra
+generate = ->(amount) { IndexGenerator.new amount }
+queries  = ->(complexity, amount = 1_000) { QueryGenerator.new complexity, amount }
 
-  generate = ->(amount) { IndexGenerator.new amount }
-  queries  = ->(complexity, amount = 1_000) { QueryGenerator.new complexity, amount }
+# indexing substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
+#          removes_characters:          /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\|]/i,
+#          stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+#          splits_text_on:              /[\s\/\-\_\:\"\&\/]/,
+#          normalizes_words:            [[/\$(\w+)/i, '\1 dollars']],
+#          rejects_token_if:            lambda { |token| token.blank? || token == 'Amistad' },
+#          case_sensitive:              false
+#
+# searching substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
+#           removes_characters:          /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
+#           stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
+#           splits_text_on:              /[\s\/\&\/]/,
+#           case_sensitive:              true,
+#           maximum_tokens:              5
 
-  # indexing substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
-  #          removes_characters:          /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\|]/i,
-  #          stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-  #          splits_text_on:              /[\s\/\-\_\:\"\&\/]/,
-  #          normalizes_words:            [[/\$(\w+)/i, '\1 dollars']],
-  #          rejects_token_if:            lambda { |token| token.blank? || token == 'Amistad' },
-  #          case_sensitive:              false
-  #
-  # searching substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
-  #           removes_characters:          /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
-  #           stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-  #           splits_text_on:              /[\s\/\&\/]/,
-  #           case_sensitive:              true,
-  #           maximum_tokens:              5
+backends = [
+  Backends::File.new,
+  Backends::Redis.new,
+  Backends::Memory.new,
+]
 
-  definition = Proc.new do
-    category :text
-  end
+definition = Proc.new do
+  category :text
+end
 
-  xxs = Index.new :xxs, &definition
-  xs  = Index.new :xs,  &definition
-  s   = Index.new :s,   &definition
-  m   = Index.new :m,   &definition
-  l   = Index.new :l,   &definition
-  xl  = Index.new :xl,  &definition
+xxs = Index.new :xxs, &definition
+xxs.source { generate[10] }
+xs  = Index.new :xs,  &definition
+xs.source  { generate[100] }
+s   = Index.new :s,   &definition
+s.source   { generate[1_000] }
+m   = Index.new :m,   &definition
+m.source   { generate[10_000] }
+l   = Index.new :l,   &definition
+l.source   { generate[100_000] }
+# xl  = Index.new :xl,  &definition
+# xl.source  { generate[1_000_000] }
 
-  xxs.source { generate[10] }
-  xs.source  { generate[100] }
-  s.source   { generate[1_000] }
-  m.source   { generate[10_000] }
-  l.source   { generate[100_000] }
-  xl.source  { generate[1_000_000] }
+puts "Running tests"
 
-  puts "Running tests"
+Indexes.each do |data|
 
-  Indexes.each do |data|
+  data.backend Backends::Memory.new
+  data.prepare
 
-    data.index
+  backends.each do |backend|
+
+    data.backend backend
+    data.load
+    data.cache
 
     [queries[1], queries[2], queries[3]].each do |queries|
 
@@ -150,11 +160,11 @@ class PerformanceSearch < Sinatra::Application
 
       end
 
-      puts "Duration of index with source #{data.source} with queries #{queries} is: #{duration}"
+      puts "#{duration} (#{backend}, #{data.source}, #{queries})"
 
     end
 
-    data.clear
+    # data.clear
 
   end
 

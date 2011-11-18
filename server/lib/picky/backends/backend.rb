@@ -23,7 +23,7 @@ module Picky
       #
       #
       def to_s
-        "#{self.class}(#{[inverted, weights, similarity, configuration].join(', ')})"
+        self.class.name
       end
 
     end

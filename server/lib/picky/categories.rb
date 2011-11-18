@@ -15,6 +15,7 @@ module Picky
                   :empty,
                   :index,
                   :reindex,
+                  :reset_backend,
                   :to => :categories
 
     # A list of indexed categories.

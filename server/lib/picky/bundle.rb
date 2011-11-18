@@ -55,6 +55,19 @@ module Picky
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
 
+      reset_backend backend
+    end
+    def identifier
+      "#{category.identifier}:#{name}"
+    end
+
+    # Resets the backend with the given one instantly.
+    #
+    # TODO Redesign such that the backend is only
+    #      generated lazily.
+    #      And reset using backend = nil.
+    #
+    def reset_backend backend
       # Extract specific indexes from backend.
       #
       # TODO Clean up all related.
@@ -74,10 +87,7 @@ module Picky
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
 
-      @realtime_mapping = {} # id -> ary of syms.  TODO Always instantiate?
-    end
-    def identifier
-      "#{category.identifier}:#{name}"
+      @realtime_mapping = {} # id -> ary of syms.  TODO Always instantiate? d
     end
 
     # "Empties" the index(es) by getting a new empty

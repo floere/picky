@@ -132,10 +132,14 @@ module Picky
     #
     def backend backend = nil
       if backend
-        @backend = backend
+        @backend = reset_backend backend
       else
-        @backend || Backends::Memory.new
+        @backend ||= Backends::Memory.new
       end
+    end
+    def reset_backend backend
+      categories.reset_backend backend
+      backend
     end
 
     # TODO Symbols.

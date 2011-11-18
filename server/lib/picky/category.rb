@@ -35,6 +35,7 @@ module Picky
       @key_format = options[:key_format]
       # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
       @qualifiers = extract_qualifiers_from options
+      # TODO backend option!
 
       weights    = options[:weights]    || Generators::Weights::Default
       partial    = options[:partial]    || Generators::Partial::Default
@@ -60,10 +61,23 @@ module Picky
       load
     end
 
+    # Dumps both bundles.
+    #
     def dump
       exact.dump
       partial.dump
       timed_exclaim %Q{"#{identifier}": Generated -> #{index_directory.gsub("#{PICKY_ROOT}/", '')}.}
+    end
+
+    # Resets backends in both bundles.
+    #
+    # This will only set the backend
+    #
+    def reset_backend backend
+      unless @backend
+        exact.reset_backend backend
+        partial.reset_backend backend
+      end
     end
 
     # Index name.

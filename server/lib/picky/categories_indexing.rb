@@ -4,6 +4,7 @@ module Picky
 
     each_delegate :cache,
                   :clear,
+                  :prepare,
                   :to => :categories
 
   end

@@ -8,6 +8,7 @@ module Picky
     #
     delegate :cache,
              :clear,
+             :prepare,
              :to => :categories
 
     # Calling index on an index will call index
