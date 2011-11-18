@@ -143,7 +143,6 @@ Indexes.each do |data|
   backends.each do |backend|
 
     data.backend backend
-    data.load
     data.cache
 
     [queries[1], queries[2], queries[3]].each do |queries|
