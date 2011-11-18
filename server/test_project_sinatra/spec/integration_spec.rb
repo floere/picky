@@ -100,6 +100,10 @@ describe BookSearch do
     Picky::Indexes[:memory_changing].load
 
     memory_changing.search('entry').ids.should == [2, 3, 4]
+
+    Picky::Indexes[:memory_changing].remove 3
+
+    memory_changing.search('entry').ids.should == [2, 4]
   end
 
   it 'can handle changing data with a Redis backend' do
@@ -116,6 +120,10 @@ describe BookSearch do
     Picky::Indexes[:redis_changing].load
 
     redis_changing.search('entry').ids.should == ["2", "3", "4"]
+
+    Picky::Indexes[:redis_changing].remove "3"
+
+    redis_changing.search('entry').ids.should == ["2", "4"]
   end
 
   # Breakage. As reported by Jason.
