@@ -137,6 +137,9 @@ module Picky
         @backend ||= Backends::Memory.new
       end
     end
+    # TODO Rewrite such that reset_backend just sets the
+    #      lazily evaluated backend to nil.
+    #
     def reset_backend backend
       categories.reset_backend backend
       backend
