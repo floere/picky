@@ -141,7 +141,6 @@ def run_server_rake_tasks
   puts "Now the server rake tasks"
   run_server_rake_task '-T'
   run_server_rake_task 'analyze'
-  run_server_rake_task 'check'
   run_server_rake_task 'routes'
   run_server_rake_task 'todo'
   run_server_rake_task 'try[test]'
