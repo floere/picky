@@ -2,11 +2,14 @@ h2. Upcoming Version
 
 h2. Version 3.6.0
 
+This release includes BREAKING changes. See below.
+
 * hanke: This version tries to reduce maintenance complexity and prepare for 4.0.
-* hanke: (server) BREAKING Rename any occurrences of @Indexes.reload@, @Indexes#reload@, @Index#reload@, @Category#reload@ with an equivalent @load@ method.
+* hanke: (server) BREAKING In your code, rename any occurrences of @Indexes.reload@, @Indexes#reload@, @Index#reload@, @Category#reload@ with an equivalent @load@ method.
 * hanke: (server) Renamed @load_from_cache@ with @load@ on @Indexes@, @Index@, @Category@.
-* hanke: (server) Removed @rake check@ and related methods with no replacement.
-* hanke: (server) Removed @Index#backup@, @Index#restore@ and related methods on @Category@ etc. with no replacements.
+* hanke: (server) Removed @rake check@ and related methods with no replacement. Please tell us if you miss it.
+* hanke: (server) Removed @Index#backup@, @Index#restore@ and related methods on @Category@ etc. with no replacements. Please tell us if you miss them.
+* hanke: (server) Fix for the problem that @#remove(id)@ didn't remove when a different key_format than the standard one was defined (Thanks niko!).
 
 h2. Version 3.5.4
 
@@ -22,7 +25,7 @@ h2. Version 3.5.2
 
 h2. Version 3.5.1
 
-* hanke: (server) BREAKING @generate_from@ methods have been removed from all generators as they are not used anymore.
+* hanke: (server) @generate_from@ methods have been removed from all generators as they are not used anymore.
 * hanke: (server) Added the option of having dynamic weights calculation. Use this if you don't need weights based on the amount of indexed ids per token. This does not generate an index in the backend (Redis or file), but calculates the weight at runtime. Examples: Always return the default 0.0, @category :text, weights: Picky::Weights::Constant.new@ or always return 3.14, @category :text1, weights: Picky::Weights::Constant.new(3.14)@ or calculate a weight at runtime, based on the size of the str_or_sym we are looking for, @category :text1, weights: Picky::Weights::Dynamic.new { |str_or_sym| str_or_sym.size }@. We recommend using search boosts to boost specific category combinations.
 
 h2. Version 3.5.0
@@ -71,6 +74,8 @@ New default option is @Postfix.new(from: -3)@, not @Substring.new(from: -3, to: 
 * hanke: (project) RSpec 1 has been updated to RSpec 2.
 
 h2. Version 3.2.0
+
+This release includes BREAKING changes. See below.
 
 * hanke: (server) Removed bundler specific code from Picky. You can now decide yourself if you want it. Opens the possibility to just run Picky in a script to try ideas etc. (see example gist: "https://gist.github.com/1315618":https://gist.github.com/1315618)
 * hanke: (generators) The generated Sinatra server does not use bundler anymore. Classic servers (might) still need it. You can add it back in by adding the following code in @app.rb@, right after @require 'picky'@:
@@ -143,6 +148,8 @@ h2. Version 3.1.1
 
 h2. Version 3.1.0
 
+This release includes BREAKING changes. See below.
+
 * hanke: (server) Exchangeable backends. New index definition: @Indexes::Memory@ and @Indexes::Redis@ are now unified in @Index@. So use @index = Picky::Index.new(name)@ from now on. (See next point)
 * hanke: (server) A new option has been added to the index, @backend@. It takes a backend instance, making the backend exchangeable. The default is the memory backend, which you do not need to set. If you want a Redis backend, use as follows: @index = Index.new(name) { backend Picky::Backends::Redis.new }@. If you want to explicitly set the memory backend: @index = Index.new(name) { backend Picky::Backends::Memory.new }@.
 * hanke: (server) Unified tokenizers. Method @#tokenize(text)@ now returns @[ ["token", "token", "token"], ["Original", "Original", "Original"] ]@. So your own tokenizer only needs to adhere to this interface and can be passed to the index/search using the @indexing@/@searching@ method.
@@ -154,8 +161,10 @@ h2. Version 3.0.1
 
 h2. Version 3.0.0
 
-* hanke: (client) Breaking: Removed method @Picky::Convenience#allocations_size@. Use @#allocations.size@.
-* hanke: (server) Breaking: Removed @Results#to_log@. @Results#to_s@ returns a log worthy string now.
+This release includes BREAKING changes. See below. (Here we start with this style of BREAKING notation)
+
+* hanke: (client) BREAKING Removed method @Picky::Convenience#allocations_size@. Use @#allocations.size@.
+* hanke: (server) BREAKING Removed @Results#to_log@. @Results#to_s@ returns a log worthy string now.
 * See changes in pre versions for complete changelog on 3.0.
 
 h2. Version 3.0.0.pre5
