@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.1
+
+* hanke: (server) Removed sqlite3 from gemspec to enable Heroku compatibility. Please add it in your Gemfile if you need it or simply install the gem separately.
+
 h2. Version 3.6.0
 
 This release includes BREAKING changes. See below.

@@ -39,5 +39,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'sinatra'
   s.add_runtime_dependency 'redis'
   s.add_runtime_dependency 'mysql'
-  s.add_runtime_dependency 'sqlite3'
+
+  # Note: sqlite removed since Heroku does not support it.
+  #       If someone wants to use it, please say so in a Gemfile.
+  #
+  # s.add_runtime_dependency 'sqlite3'
 end
