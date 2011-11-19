@@ -9,7 +9,6 @@ describe Picky::Bundle do
   let(:bundle) do
     described_class.new :some_name,
                         @category,
-                        Picky::Backends::Memory.new,
                         Picky::Generators::Weights::Default,
                         Picky::Generators::Partial::Default,
                         Picky::Generators::Similarity::DoubleMetaphone.new(3)

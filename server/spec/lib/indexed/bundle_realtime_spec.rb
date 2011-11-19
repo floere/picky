@@ -9,7 +9,7 @@ describe Picky::Bundle do
     @weights      = Picky::Generators::Weights::Default
     @partial      = Picky::Generators::Partial::Default
     @similarity   = Picky::Generators::Similarity::DoubleMetaphone.new 3
-    @bundle       = described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, @partial, @similarity
+    @bundle       = described_class.new :some_name, @category, @weights, @partial, @similarity
   end
 
   it 'is by default empty' do

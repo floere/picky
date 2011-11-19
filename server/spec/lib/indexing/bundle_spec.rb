@@ -8,7 +8,7 @@ describe Picky::Bundle do
     @weights    = Picky::Weights::Logarithmic.new
     @similarity = Picky::Similarity::DoubleMetaphone.new 3
   end
-  let(:bundle) { described_class.new :some_name, @category, Picky::Backends::Memory.new, @weights, :some_partial, @similarity }
+  let(:bundle) { described_class.new :some_name, @category, @weights, :some_partial, @similarity }
 
   describe 'identifier' do
     it 'is correct' do
