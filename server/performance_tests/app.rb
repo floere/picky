@@ -29,7 +29,7 @@ class IndexGenerator
 
   Thing = Struct.new :id, :text
 
-  # The generating block.
+  # Generation.
   #
   # This generates an amount of
   # words consisting of the characters
@@ -37,18 +37,32 @@ class IndexGenerator
   #
   # Queries for these will be generated later.
   #
-  def each &block
+  def prepare
+    @buffer = []
+
     characters = ['a', 'b'] # ('a'..'c').to_a
     size = characters.size
     current = []
 
-    amount.times do |i|
-      current.clear
-      length[].times do
-        current << characters[rand(size)]
+    (amount/10).times do |i|
+      # 10 words per id.
+      #
+      10.times do
+        current.clear
+        length[].times do
+          current << characters[rand(size)]
+        end
+        @buffer << Thing.new(i, current.join)
       end
-      yield Thing.new(i, current.join)
     end
+  end
+
+  def each &block
+    @buffer.each &block
+  end
+
+  def cycle
+    @buffer.cycle
   end
 
   def to_s
@@ -61,19 +75,16 @@ class QueryGenerator
 
   attr_reader :complexity, :amount, :queries
 
-  def initialize complexity, amount = 1_000
+  def initialize complexity, amount = 1_000, queries
     @complexity, @amount, @queries = complexity, amount, []
   end
 
-  def prepare
-    generator = IndexGenerator.new complexity do
-      rand(3) + 1
-    end
-
+  def prepare generator
+    generator = generator.cycle
     amount.times do
       query = []
-      generator.each do |thing|
-        query << thing.text
+      complexity.times do
+        query << generator.next.text
       end
       @queries << query.join(' ')
     end
@@ -91,9 +102,6 @@ end
 
 include Picky
 # extend Picky::Sinatra
-
-generate = ->(amount) { IndexGenerator.new amount }
-queries  = ->(complexity, amount = 1_000) { QueryGenerator.new complexity, amount }
 
 # indexing substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
 #          removes_characters:          /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\|]/i,
@@ -120,6 +128,13 @@ definition = Proc.new do
   category :text
 end
 
+generate = ->(amount) do
+  IndexGenerator.new(amount)
+end
+queries  = ->(complexity, amount = 1_000) do
+  QueryGenerator.new complexity, amount
+end
+
 xxs = Index.new :xxs, &definition
 xxs.source { generate[10] }
 xs  = Index.new :xs,  &definition
@@ -130,14 +145,14 @@ m   = Index.new :m,   &definition
 m.source   { generate[10_000] }
 l   = Index.new :l,   &definition
 l.source   { generate[100_000] }
-# xl  = Index.new :xl,  &definition
-# xl.source  { generate[1_000_000] }
+xl  = Index.new :xl,  &definition
+xl.source  { generate[1_000_000] }
 
 puts "Running tests"
 
 Indexes.each do |data|
 
-  data.backend Backends::Memory.new
+  data.source.prepare
   data.prepare
 
   backends.each do |backend|
@@ -149,7 +164,7 @@ Indexes.each do |data|
 
       run = Search.new data
 
-      queries.prepare
+      queries.prepare data.source
 
       duration = performance_of do
 
