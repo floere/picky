@@ -2,7 +2,7 @@ module Picky
 
   module Backends
 
-    class Sqlite
+    class SQLite
 
       class DB
 

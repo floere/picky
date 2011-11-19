@@ -2,7 +2,7 @@ module Picky
 
   module Backends
 
-    class Sqlite < Backend
+    class SQLite < Backend
 
       def initialize options = {}
         super options

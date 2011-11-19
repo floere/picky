@@ -348,13 +348,13 @@ class BookSearch < Sinatra::Application
     category :dynamic,          weights: Picky::Weights::Dynamic.new { |token| token.size }
   end
 
-  SqliteItem = Struct.new :id, :first_name, :last_name
+  SQLiteItem = Struct.new :id, :first_name, :last_name
   sqlite_index = Picky::Index.new :sqlite do
-    backend Backends::Sqlite.new
+    backend Backends::SQLite.new
     source do
       [
-        SqliteItem.new(1, "hello", "sqlite"),
-        SqliteItem.new(2, "bingo", "bongo")
+        SQLiteItem.new(1, "hello", "sqlite"),
+        SQLiteItem.new(2, "bingo", "bongo")
       ]
     end
     category :first_name

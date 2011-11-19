@@ -2,7 +2,7 @@ require 'spec_helper'
 
 require 'sqlite3'
 
-describe Picky::Backends::Sqlite::DB do
+describe Picky::Backends::SQLite::DB do
 
   context 'hash-based indexes' do
     let(:db) { described_class.new 'some/cache/path/to/file' }
@@ -72,7 +72,7 @@ describe Picky::Backends::Sqlite::DB do
 
     describe 'to_s' do
       it 'returns the cache path with the default file extension' do
-        db.to_s.should == 'Picky::Backends::Sqlite::DB(some/cache/path/to/file.sqlite3)'
+        db.to_s.should == 'Picky::Backends::SQLite::DB(some/cache/path/to/file.sqlite3)'
       end
     end
   end
