@@ -18,7 +18,7 @@ describe Picky::Generators::Weights::Logarithmic do
       logarithmic.weight_for(1).should == 0
     end
     it 'is log(x) for x' do
-      logarithmic.weight_for(1234).should == Math.log(1234)
+      logarithmic.weight_for(1234).should == Math.log(1234).round(3)
     end
   end
 

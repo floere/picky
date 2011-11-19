@@ -32,7 +32,7 @@ describe Picky::Bundle do
 
       @bundle.realtime_mapping.should == { 1 => [:title], 2 => [:title] }
       @bundle.inverted.should == { :title => [2,1] }
-      @bundle.weights.should == { :title => 0.6931471805599453 }
+      @bundle.weights.should == { :title => 0.693 }
       @bundle.similarity.should == { :TTL => [:title] }
     end
     it 'works correctly' do

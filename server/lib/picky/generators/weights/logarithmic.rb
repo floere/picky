@@ -20,7 +20,7 @@ module Picky
         #
         def weight_for amount
           return 0 if amount < 1
-          Math.log amount
+          Math.log(amount).round 3
         end
 
       end

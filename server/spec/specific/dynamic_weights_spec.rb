@@ -28,7 +28,7 @@ describe "Weights" do
     try.search("text1:ohai").allocations.first.score.should    == 0.0
     try.search("text2:hello").allocations.first.score.should   == 3.14
     try.search("text3:world").allocations.first.score.should   == 5
-    try.search("text4:kthxbye").allocations.first.score.should == 0.6931471805599453
+    try.search("text4:kthxbye").allocations.first.score.should == 0.693
 
     try_with_boosts = Picky::Search.new index do
       boost [:text1] => +7.65,
