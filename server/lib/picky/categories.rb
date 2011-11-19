@@ -11,7 +11,6 @@ module Picky
 
     each_delegate :cache,
                   :dump,
-                  :each,
                   :empty,
                   :index,
                   :inject,
