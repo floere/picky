@@ -33,9 +33,11 @@ module Picky
       @source     = options[:source]
       @from       = options[:from]
       @tokenizer  = options[:tokenizer]
-      @key_format = options[:key_format]
+
+      @key_format = options.delete :key_format
+      @backend    = options.delete :backend
+
       @qualifiers = extract_qualifiers_from options
-      @backend    = options[:backend]
 
       # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
 
@@ -46,11 +48,11 @@ module Picky
       no_partial    = Generators::Partial::None.new
       no_similarity = Generators::Similarity::None.new
 
-      @exact = Bundle.new :exact, self, index.backend, weights, no_partial, similarity, options
+      @exact = Bundle.new :exact, self, weights, no_partial, similarity, options
       if partial.use_exact_for_partial?
         @partial = Wrappers::Bundle::ExactPartial.new @exact
       else
-        @partial = Bundle.new :partial, self, index.backend, weights, partial, no_similarity, options
+        @partial = Bundle.new :partial, self, weights, partial, no_similarity, options
       end
 
       @prepared = Backends::Memory::Text.new prepared_index_path

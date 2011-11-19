@@ -28,8 +28,6 @@ module Picky
   #
   class Bundle
 
-    attr_reader :backend
-
     # When indexing, clear only clears the inverted index.
     #
     delegate :clear,

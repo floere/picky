@@ -135,6 +135,7 @@ module Picky
     def backend backend = nil
       if backend
         @backend = backend
+        reset_backend
       else
         @backend ||= Backends::Memory.new
       end

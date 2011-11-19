@@ -42,14 +42,14 @@ module Picky
     delegate :[], :[]=,        :to => :configuration
     delegate :index_directory, :to => :category
 
-    def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
+    def initialize name, category, weights_strategy, partial_strategy, similarity_strategy, options = {}
       @name     = name
       @category = category
-      @backend  = backend
 
       # TODO Tidy up a bit.
       #
-      @key_format = options[:key_format]
+      @key_format = options.delete :key_format
+      @backend    = options.delete :backend
 
       @weights_strategy    = weights_strategy
       @partial_strategy    = partial_strategy
