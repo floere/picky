@@ -93,6 +93,7 @@ module Picky
              :dump,
              :each,
              :inject,
+             :reset_backend,
              :to => :categories
 
     # Create a new index with a given source.
@@ -133,17 +134,10 @@ module Picky
     #
     def backend backend = nil
       if backend
-        @backend = reset_backend backend
+        @backend = backend
       else
         @backend ||= Backends::Memory.new
       end
-    end
-    # TODO Rewrite such that reset_backend just sets the
-    #      lazily evaluated backend to nil.
-    #
-    def reset_backend backend
-      categories.reset_backend backend
-      backend
     end
 
     # TODO Symbols.

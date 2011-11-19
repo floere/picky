@@ -23,8 +23,7 @@ module Picky
   class Bundle
 
     attr_reader :name,
-                :category,
-                :backend
+                :category
 
     attr_accessor :inverted,
                   :weights,
@@ -46,6 +45,7 @@ module Picky
     def initialize name, category, backend, weights_strategy, partial_strategy, similarity_strategy, options = {}
       @name     = name
       @category = category
+      @backend  = backend
 
       # TODO Tidy up a bit.
       #
@@ -55,19 +55,22 @@ module Picky
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
 
-      reset_backend backend
+      reset_backend
     end
     def identifier
       "#{category.identifier}:#{name}"
     end
 
-    # Resets the backend with the given one instantly.
+    # If no specific backend has been set,
+    # uses the category's backend.
     #
-    # TODO Redesign such that the backend is only
-    #      generated lazily.
-    #      And reset using backend = nil.
+    def backend
+      @backend || category.backend
+    end
+
+    # Initializes all necessary indexes from the backend.
     #
-    def reset_backend backend
+    def reset_backend
       # Extract specific indexes from backend.
       #
       # TODO Clean up all related.

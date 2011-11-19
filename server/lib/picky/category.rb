@@ -5,7 +5,8 @@ module Picky
     attr_reader :name,
                 :exact,
                 :partial,
-                :prepared
+                :prepared,
+                :backend
 
     # Mandatory params:
     #  * name: Category name to use as identifier and file names.
@@ -33,9 +34,10 @@ module Picky
       @from       = options[:from]
       @tokenizer  = options[:tokenizer]
       @key_format = options[:key_format]
-      # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
       @qualifiers = extract_qualifiers_from options
-      # TODO backend option!
+      @backend    = options[:backend]
+
+      # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
 
       weights    = options[:weights]    || Generators::Weights::Default
       partial    = options[:partial]    || Generators::Partial::Default
@@ -69,15 +71,18 @@ module Picky
       timed_exclaim %Q{"#{identifier}": Generated -> #{index_directory.gsub("#{PICKY_ROOT}/", '')}.}
     end
 
+    # Returns the backend.
+    #
+    # If no specific backend has been defined for this
+    #
+    def backend
+      @backend || @index.backend
+    end
     # Resets backends in both bundles.
     #
-    # This will only set the backend
-    #
-    def reset_backend backend
-      unless @backend
-        exact.reset_backend backend
-        partial.reset_backend backend
-      end
+    def reset_backend
+      exact.reset_backend
+      partial.reset_backend
     end
 
     # Index name.
