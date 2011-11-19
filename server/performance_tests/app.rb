@@ -4,6 +4,14 @@
 require 'sinatra/base'
 require File.expand_path '../../lib/picky', __FILE__
 
+class Object
+
+  def timed_exclaim _
+
+  end
+
+end
+
 def performance_of
   if block_given?
     code = Proc.new
@@ -27,7 +35,7 @@ class IndexGenerator
     @length = length || ->() { rand(6) + 3 }
   end
 
-  Thing = Struct.new :id, :text
+  Thing = Struct.new :id, :text1, :text2, :text3
 
   # Generation.
   #
@@ -40,20 +48,23 @@ class IndexGenerator
   def prepare
     @buffer = []
 
-    characters = ['a', 'b'] # ('a'..'c').to_a
+    characters = ['a', 'b', 'c', 'd'] # ('a'..'c').to_a
     size = characters.size
-    current = []
 
-    (amount/10).times do |i|
-      # 10 words per id.
+    amount.times do |i|
+      # 10*3 words per id.
       #
-      10.times do
-        current.clear
-        length[].times do
-          current << characters[rand(size)]
+      # 10.times do
+        args = []
+        3.times do
+          current = []
+          length[].times do
+            current << characters[rand(size)]
+          end
+          args << current.join
         end
-        @buffer << Thing.new(i, current.join)
-      end
+        @buffer << Thing.new(i, *args)
+      # end
     end
   end
 
@@ -75,7 +86,7 @@ class QueryGenerator
 
   attr_reader :complexity, :amount, :queries
 
-  def initialize complexity, amount = 1_000, queries
+  def initialize complexity, amount
     @complexity, @amount, @queries = complexity, amount, []
   end
 
@@ -83,9 +94,9 @@ class QueryGenerator
     generator = generator.cycle
     amount.times do
       query = []
-      complexity.times do
-        query << generator.next.text
-      end
+      query << generator.next.text1
+      query << generator.next.text2 if complexity > 1
+      query << generator.next.text3 if complexity > 2
       @queries << query.join(' ')
     end
   end
@@ -119,19 +130,22 @@ include Picky
 #           maximum_tokens:              5
 
 backends = [
-  Backends::File.new,
-  Backends::Redis.new,
   Backends::Memory.new,
+  Backends::File.new,
+  Backends::SQLite.new,
+  Backends::Redis.new,
 ]
 
 definition = Proc.new do
-  category :text
+  category :text1
+  category :text2
+  category :text3
 end
 
 generate = ->(amount) do
   IndexGenerator.new(amount)
 end
-queries  = ->(complexity, amount = 1_000) do
+queries  = ->(complexity, amount) do
   QueryGenerator.new complexity, amount
 end
 
@@ -145,22 +159,33 @@ m   = Index.new :m,   &definition
 m.source   { generate[10_000] }
 l   = Index.new :l,   &definition
 l.source   { generate[100_000] }
-xl  = Index.new :xl,  &definition
-xl.source  { generate[1_000_000] }
+# xl  = Index.new :xl,  &definition
+# xl.source  { generate[1_000_000] }
 
 puts "Running tests"
 
-Indexes.each do |data|
+backends.each do |backend|
 
-  data.source.prepare
-  data.prepare
+  puts
+  puts backend.class
 
-  backends.each do |backend|
+  Indexes.each do |data|
+
+    if backend == backends.first
+      data.source.prepare
+      data.prepare
+    end
 
     data.backend backend
+    data.clear
     data.cache
+    data.load
 
-    [queries[1], queries[2], queries[3]].each do |queries|
+    amount = 100
+
+    results = ["%7d" % data.source.amount]
+
+    [queries[1, amount], queries[2, amount], queries[3, amount]].each do |queries|
 
       run = Search.new data
 
@@ -169,14 +194,17 @@ Indexes.each do |data|
       duration = performance_of do
 
         queries.each do |query|
+          # p query
           run.search query
         end
 
       end
 
-      puts "#{duration} (#{backend}, #{data.source}, #{queries})"
+      results << ("%2.4f" % duration)
 
     end
+
+    puts results.join(', ')
 
     # data.clear
 
