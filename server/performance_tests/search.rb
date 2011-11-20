@@ -94,9 +94,9 @@ class QueryGenerator
     generator = generator.cycle
     amount.times do
       query = []
-      query << generator.next.text1
-      query << generator.next.text2 if complexity > 1
-      query << generator.next.text3 if complexity > 2
+      query << generator.next.text1[0..-(rand(3)+1)]
+      query << generator.next.text2[0..-(rand(3)+1)] if complexity > 1
+      query << generator.next.text3[0..-(rand(3)+1)] if complexity > 2
       @queries << query.join(' ')
     end
   end
@@ -112,22 +112,6 @@ class QueryGenerator
 end
 
 include Picky
-# extend Picky::Sinatra
-
-# indexing substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
-#          removes_characters:          /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\|]/i,
-#          stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-#          splits_text_on:              /[\s\/\-\_\:\"\&\/]/,
-#          normalizes_words:            [[/\$(\w+)/i, '\1 dollars']],
-#          rejects_token_if:            lambda { |token| token.blank? || token == 'Amistad' },
-#          case_sensitive:              false
-#
-# searching substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
-#           removes_characters:          /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
-#           stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-#           splits_text_on:              /[\s\/\&\/]/,
-#           case_sensitive:              true,
-#           maximum_tokens:              5
 
 backends = [
   Backends::Memory.new,
@@ -159,8 +143,8 @@ m   = Index.new :m,   &definition
 m.source   { generate[10_000] }
 l   = Index.new :l,   &definition
 l.source   { generate[100_000] }
-# xl  = Index.new :xl,  &definition
-# xl.source  { generate[1_000_000] }
+xl  = Index.new :xl,  &definition
+xl.source  { generate[1_000_000] }
 
 puts "Running tests"
 
