@@ -35,7 +35,7 @@ class IndexGenerator
     @length = length || ->() { rand(6) + 3 }
   end
 
-  Thing = Struct.new :id, :text1, :text2, :text3
+  Thing = Struct.new :id, :text1, :text2, :text3, :text4
 
   # Generation.
   #
@@ -56,7 +56,7 @@ class IndexGenerator
       #
       # 10.times do
         args = []
-        3.times do
+        4.times do
           current = []
           length[].times do
             current << characters[rand(size)]
@@ -94,9 +94,9 @@ class QueryGenerator
     generator = generator.cycle
     amount.times do
       query = []
-      query << generator.next.text1[0..-(rand(3)+1)]
-      query << generator.next.text2[0..-(rand(3)+1)] if complexity > 1
-      query << generator.next.text3[0..-(rand(3)+1)] if complexity > 2
+      complexity.times do |i|
+        query << generator.next.send(:"text#{i+1}")[0..-(rand(3)+1)]
+      end
       @queries << query.join(' ')
     end
   end
@@ -124,6 +124,7 @@ definition = Proc.new do
   category :text1
   category :text2
   category :text3
+  category :text4
 end
 
 generate = ->(amount) do
@@ -143,8 +144,8 @@ m   = Index.new :m,   &definition
 m.source   { generate[10_000] }
 l   = Index.new :l,   &definition
 l.source   { generate[100_000] }
-xl  = Index.new :xl,  &definition
-xl.source  { generate[1_000_000] }
+# xl  = Index.new :xl,  &definition
+# xl.source  { generate[1_000_000] }
 
 puts "Running tests"
 
@@ -169,7 +170,7 @@ backends.each do |backend|
 
     results = ["%7d" % data.source.amount]
 
-    [queries[1, amount], queries[2, amount], queries[3, amount]].each do |queries|
+    [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
 
       run = Search.new data
 
