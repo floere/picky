@@ -3,6 +3,9 @@ h2. Upcoming Version
 h2. Version 3.6.2
 
 * hanke: (client) Fixed Javascript. See "https://github.com/floere/picky/issues/47":https://github.com/floere/picky/issues/47.
+* hanke: (server) Weights now only saved up to the third position after the decimal point.
+* hanke: (server) SQLite backend has been renamed from @Sqlite@ to @SQLite@.
+* hanke: (server) Backends can be switched dynamically (use @index.backend = new_backend@). Used for performance tests.
 
 h2. Version 3.6.1
 
