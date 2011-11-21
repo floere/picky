@@ -88,26 +88,28 @@ module Picky
       #
       # Note: We use the amount and offset hints to speed Redis up.
       #
-#       def ids combinations, amount, offset
-#         if redis_with_scripting?
-#           @@script = <<-SCRIPT
-# redis.call('zinterstore', KEYS[1], ARGV[1]);
-# local result = redis.call('zrange', KEYS[1], ARGV[2], ARGV[3])
-# redis.call('del', KEYS[1])
-# return result
-# SCRIPT
-#           # Scripting version of #ids.
-#           #
-#           def ids combinations, amount, offset
-#             identifiers = combinations.inject([]) do |identifiers, combination|
-#               identifiers << "#{combination.identifier}"
-#             end
-#
-#             # Assume it's using EVALSHA.
-#             #
-#             client.eval @@script, generate_intermediate_result_id, identifiers, offset, (offset + amount)
-#           end
-#         else
+      def ids combinations, amount, offset
+        if redis_with_scripting?
+          @@script = <<-SCRIPT
+redis.call('zinterstore', KEYS[1], ARGV);
+local results = redis.call('zrange', KEYS[1], tonumber(KEYS[2]), tonumber(KEYS[3]));
+redis.call('del', KEYS[1]);
+return results;
+SCRIPT
+          # Scripting version of #ids.
+          #
+          def ids combinations, amount, offset
+            identifiers = combinations.inject([]) do |identifiers, combination|
+              identifiers << "#{combination.identifier}"
+            end
+
+            # Assume it's using EVALSHA.
+            #
+            # TODO It's not.
+            #
+            client.eval @@script, 3, generate_intermediate_result_id, offset, (offset + amount), *identifiers
+          end
+        else
           # Non-Scripting version of #ids.
           #
           def ids combinations, amount, offset
@@ -133,8 +135,12 @@ module Picky
 
             results
           end
-        # end
-      # end
+        end
+
+        # Call the newly installed version.
+        #
+        ids combinations, amount, offset
+      end
 
       # Generate a multiple host/process safe result id.
       #
