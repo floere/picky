@@ -114,6 +114,7 @@ end
 include Picky
 
 backends = [
+  Backends::Redis.new,
   Backends::Memory.new,
   Backends::File.new,
   Backends::SQLite.new,
@@ -168,7 +169,7 @@ backends.each do |backend|
 
     amount = 100
 
-    results = ["%7d" % data.source.amount]
+    print "%7d" % data.source.amount
 
     [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
 
@@ -185,13 +186,12 @@ backends.each do |backend|
 
       end
 
-      results << ("%2.4f" % duration)
+      print ", "
+      print "%2.4f" % duration
 
     end
 
-    puts results.join(', ')
-
-    # data.clear
+    puts
 
   end
 
