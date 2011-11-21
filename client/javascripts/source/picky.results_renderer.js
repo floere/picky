@@ -53,6 +53,11 @@ var PickyResultsRenderer = function(addination, config) {
       var token    = part[1];
       
       if (lastCategory == '' || category == lastCategory) {
+        // Remove categorization (including commas)
+        // before the token.
+        //
+        token = token.replace(/[\w,]+:(.+)/, "$1");
+        
         tokenAccumulator.push(token);
         lastCategory = category;
         
