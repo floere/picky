@@ -177,10 +177,14 @@ backends.each do |backend|
 
       queries.prepare data.source
 
+      # Quick sanity check.
+      #
+      # results = run.search(queries.each { |query| p query; break query }).ids
+      # p(results) && fail if results.empty?
+
       duration = performance_of do
 
         queries.each do |query|
-          # p query
           run.search query
         end
 

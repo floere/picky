@@ -50,7 +50,8 @@ module Picky
       # scripting support?
       #
       def redis_with_scripting?
-        at_least_version redis_version, [2, 6, 0]
+        false
+        # at_least_version redis_version, [2, 6, 0]
       end
 
       # Compares two versions each in an array [major, minor, patch]
@@ -89,13 +90,14 @@ module Picky
       # Note: We use the amount and offset hints to speed Redis up.
       #
       def ids combinations, amount, offset
+        # Just checked once on the first call.
+        #
         if redis_with_scripting?
-          @@script = <<-SCRIPT
-redis.call('zinterstore', KEYS[1], ARGV);
-local results = redis.call('zrange', KEYS[1], tonumber(KEYS[2]), tonumber(KEYS[3]));
-redis.call('del', KEYS[1]);
-return results;
-SCRIPT
+          @@script = "local intersected = redis.call('zinterstore', ARGV[1], unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
+
+          require 'digest/sha1'
+          @@sent_once = nil
+
           # Scripting version of #ids.
           #
           def ids combinations, amount, offset
@@ -105,9 +107,24 @@ SCRIPT
 
             # Assume it's using EVALSHA.
             #
-            # TODO It's not.
-            #
-            client.eval @@script, 3, generate_intermediate_result_id, offset, (offset + amount), *identifiers
+            begin
+              client.evalsha @@sent_once,
+                             identifiers.size,
+                             *identifiers,
+                             generate_intermediate_result_id,
+                             offset,
+                             (offset + amount)
+            rescue RuntimeError => e
+              # Make the server have a SHA-1 for the script.
+              #
+              @@sent_once = Digest::SHA1.hexdigest @@script
+              client.eval @@script,
+                          identifiers.size,
+                          *identifiers,
+                          generate_intermediate_result_id,
+                          offset,
+                          (offset + amount)
+            end
           end
         else
           # Non-Scripting version of #ids.
@@ -121,7 +138,14 @@ SCRIPT
 
             # Intersect and store.
             #
-            client.zinterstore result_id, identifiers
+            intersected = client.zinterstore result_id, identifiers
+
+            # Return clean and early if there has been no intersection.
+            #
+            if intersected.zero?
+              client.del result_id
+              return []
+            end
 
             # Get the stored result.
             #
@@ -129,7 +153,8 @@ SCRIPT
 
             # Delete the stored result as it was only for temporary purposes.
             #
-            # Note: I could also not delete it, but that would not be clean at all.
+            # Note: I could also not delete it, but that
+            #       would not be clean at all.
             #
             client.del result_id
 
