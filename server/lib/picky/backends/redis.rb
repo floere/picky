@@ -50,8 +50,7 @@ module Picky
       # scripting support?
       #
       def redis_with_scripting?
-        false
-        # at_least_version redis_version, [2, 6, 0]
+        at_least_version redis_version, [2, 6, 0]
       end
 
       # Compares two versions each in an array [major, minor, patch]
@@ -93,7 +92,7 @@ module Picky
         # Just checked once on the first call.
         #
         if redis_with_scripting?
-          @@script = "local intersected = redis.call('zinterstore', ARGV[1], unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
+          @@script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
 
           require 'digest/sha1'
           @@sent_once = nil
