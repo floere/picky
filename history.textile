@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.4
+
+* hanke: (server) Removed active record, unicorn, sinatra, redis, mysql dependencies from picky.gemspec.
+
 h2. Version 3.6.3
 
 * hanke: (server) From Redis 2.6.0 on, Picky will be around 65% faster with Redis as a backend.

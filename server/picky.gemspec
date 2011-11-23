@@ -31,17 +31,17 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'text'
   s.add_runtime_dependency 'yajl-ruby'
   s.add_runtime_dependency 'activesupport', '~> 3.0'
-  s.add_runtime_dependency 'activerecord', '~> 3.0'
 
-  # Optional dependencies, but they still need to be here.
+  # Optional dependencies.
   #
-  s.add_runtime_dependency 'unicorn'
-  s.add_runtime_dependency 'sinatra'
-  s.add_runtime_dependency 'redis'
-  s.add_runtime_dependency 'mysql'
-
-  # Note: sqlite removed since Heroku does not support it.
-  #       If someone wants to use it, please say so in a Gemfile.
+  # Note: Commented to make installing Picky
+  #       less error prone. Picky will tell the
+  #       users to install the gems if they need it.
   #
+  # s.add_runtime_dependency 'activerecord', '~> 3.0'
+  # s.add_runtime_dependency 'unicorn'
+  # s.add_runtime_dependency 'sinatra'
+  # s.add_runtime_dependency 'redis'
+  # s.add_runtime_dependency 'mysql'
   # s.add_runtime_dependency 'sqlite3'
 end
