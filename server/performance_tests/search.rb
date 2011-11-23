@@ -114,7 +114,6 @@ end
 include Picky
 
 backends = [
-  Backends::Redis.new,
   Backends::Memory.new,
   Backends::File.new,
   Backends::SQLite.new,
