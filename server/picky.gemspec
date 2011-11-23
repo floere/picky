@@ -32,6 +32,11 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'yajl-ruby'
   s.add_runtime_dependency 'activesupport', '~> 3.0'
 
+  # Note: Move to optional soon.
+  #
+  s.add_runtime_dependency 'unicorn'
+  s.add_runtime_dependency 'sinatra'
+
   # Optional dependencies.
   #
   # Note: Commented to make installing Picky
@@ -39,8 +44,6 @@ Gem::Specification.new do |s|
   #       users to install the gems if they need it.
   #
   # s.add_runtime_dependency 'activerecord', '~> 3.0'
-  # s.add_runtime_dependency 'unicorn'
-  # s.add_runtime_dependency 'sinatra'
   # s.add_runtime_dependency 'redis'
   # s.add_runtime_dependency 'mysql'
   # s.add_runtime_dependency 'sqlite3'
