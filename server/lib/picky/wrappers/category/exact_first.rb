@@ -11,21 +11,24 @@ module Picky
       #
       class ExactFirst
 
-        delegate :similar,
+        delegate :add,
+                 :qualifiers,
+                 :exact,
+                 :partial,
+                 :replace,
+
                  :identifier,
                  :name,
-                 :to => :@exact
-        delegate :index,
+
+                 :index,
                  :category,
-                 :weight,
-                 :generate_partial_from,
-                 :generate_caches_from_memory,
-                 :generate_derived,
                  :dump,
                  :load,
-                 :to => :@partial
+
+                 :to => :@category
 
         def initialize category
+          @category = category
           @exact   = category.exact
           @partial = category.partial
         end
@@ -39,15 +42,36 @@ module Picky
           end
         end
         def self.wrap_each_of categories
-          categories.categories.collect! { |category| new(category) }
+          actual_categories = categories.categories
+          categories.clear_categories
+
+          actual_categories.each do |category|
+            categories << new(category)
+          end
         end
 
-        def ids text
-          @exact.ids(text) + @partial.ids(text)
+        def ids token
+          text = token.text
+          if token.partial?
+            @exact.ids(text) | @partial.ids(text)
+          else
+            @exact.ids text
+          end
         end
 
-        def weight text
-          [@exact.weight(text) || 0, @partial.weight(text) || 0].max
+        def weight token
+          text = token.text
+          if token.partial?
+            [@exact.weight(text), @partial.weight(text)].compact.max
+          else
+            @exact.weight text
+          end
+        end
+
+        # TODO Refactor! (Subclass Picky::Category?)
+        #
+        def combination_for token
+          weight(token) && Query::Combination.new(token, self)
         end
 
       end

@@ -7,7 +7,9 @@ describe Picky::Query::Combination do
   before(:each) do
     @bundle      = stub :bundle, :identifier => :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
-    @category    = stub :category, :bundle_for => @bundle, :name => :some_category_name
+    @category    = stub :category,
+                        :name => :some_category_name,
+                        :identifier => 'some_category_identifier'
 
     @combination = described_class.new @token, @category
   end
@@ -16,13 +18,13 @@ describe Picky::Query::Combination do
     it "shows the combination's info" do
       @token.stub! :to_result => :token_result
 
-      @combination.to_s.should == 'bundle_name some_category_name:token_result'
+      @combination.to_s.should == 'some_category_identifier some_category_name:token_result'
     end
   end
 
   describe 'hash' do
     it 'should hash the token and the bundle' do
-      @combination.hash.should == [@token.to_s, @bundle].hash
+      @combination.hash.should == [@token.to_s, @category].hash
     end
   end
 
@@ -46,21 +48,21 @@ describe Picky::Query::Combination do
 
   describe 'identifier' do
     it 'should get the category name from the bundle' do
-      @combination.identifier.should == "bundle_name:similarity:some_text"
+      @combination.identifier.should == "some_category_identifier:similarity:some_text"
     end
   end
 
   describe 'ids' do
     it 'should call ids with the text on bundle' do
-      @bundle.should_receive(:ids).once.with 'some_text'
+      @category.should_receive(:ids).once.with @token
 
       @combination.ids
     end
     it 'should not call it twice, but cache' do
-      @bundle.stub! :ids => :some_ids
+      @category.stub! :ids => :some_ids
       @combination.ids
 
-      @bundle.should_receive(:ids).never
+      @category.should_receive(:ids).never
 
       @combination.ids.should == :some_ids
     end
@@ -68,15 +70,15 @@ describe Picky::Query::Combination do
 
   describe 'weight' do
     it 'should call weight with the text on bundle' do
-      @bundle.should_receive(:weight).once.with 'some_text'
+      @category.should_receive(:weight).once.with @token
 
       @combination.weight
     end
     it 'should not call it twice, but cache' do
-      @bundle.stub! :weight => :some_weight
+      @category.stub! :weight => :some_weight
       @combination.weight
 
-      @bundle.should_receive(:weight).never
+      @category.should_receive(:weight).never
 
       @combination.weight.should == :some_weight
     end

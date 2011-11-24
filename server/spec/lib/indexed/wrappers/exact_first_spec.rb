@@ -43,21 +43,30 @@ describe Picky::Wrappers::Category::ExactFirst do
       @exact.stub!   :ids => [1,4,5,6]
       @partial.stub! :ids => [2,3,7]
 
-      @wrapper.ids(:anything).should == [1,4,5,6,2,3,7]
+      @wrapper.ids(stub(:token, :text => :anything, :partial? => true)).should == [1,4,5,6,2,3,7]
+    end
+    it "uses only the exact ids" do
+      @exact.stub!   :ids => [1,4,5,6]
+      @partial.stub! :ids => [2,3,7]
+
+      @wrapper.ids(stub(:token, :text => :anything, :partial? => false)).should == [1,4,5,6]
     end
   end
 
   describe 'weight' do
     context "exact with weight" do
       before(:each) do
-        @exact.stub! :weight => 1.23
+        @exact.stub! :weight => 0.12
       end
       context "partial with weight" do
         before(:each) do
-          @partial.stub! :weight => 0.12
+          @partial.stub! :weight => 1.23
         end
         it "uses the higher weight" do
-          @wrapper.weight(:anything).should == 1.23
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => true)).should == 1.23
+        end
+        it "uses the exact weight" do
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => false)).should == 0.12
         end
       end
       context "partial without weight" do
@@ -65,7 +74,10 @@ describe Picky::Wrappers::Category::ExactFirst do
           @partial.stub! :weight => nil
         end
         it "uses the exact weight" do
-          @wrapper.weight(:anything).should == 1.23
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => true)).should == 0.12
+        end
+        it "uses the exact weight" do
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => false)).should == 0.12
         end
       end
     end
@@ -78,15 +90,21 @@ describe Picky::Wrappers::Category::ExactFirst do
           @partial.stub! :weight => 0.12
         end
         it "uses the partial weight" do
-          @wrapper.weight(:anything).should == 0.12
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => true)).should == 0.12
+        end
+        it "uses the exact weight" do
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => false)).should == nil
         end
       end
       context "partial without weight" do
         before(:each) do
           @partial.stub! :weight => nil
         end
-        it "is zero" do
-          @wrapper.weight(:anything).should == 0
+        it "is nil" do
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => true)).should == nil
+        end
+        it "is nil" do
+          @wrapper.weight(stub(:token, :text => :anything, :partial? => false)).should == nil
         end
       end
     end

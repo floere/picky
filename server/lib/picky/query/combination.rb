@@ -21,18 +21,6 @@ module Picky
         @category = category
       end
 
-      # Returns the token's text.
-      #
-      def text
-        @text ||= token.text
-      end
-
-      # Returns the category's bundle.
-      #
-      def bundle
-        @bundle ||= category.bundle_for(token)
-      end
-
       # Returns the category's name.
       #
       def category_name
@@ -44,7 +32,7 @@ module Picky
       # Note: Caching is most of the time useful.
       #
       def weight
-        @weight ||= bundle.weight(text)
+        @weight ||= category.weight(token)
       end
 
       # Returns an array of ids for the given text.
@@ -52,19 +40,21 @@ module Picky
       # Note: Caching is most of the time useful.
       #
       def ids
-        @ids ||= bundle.ids(text)
+        @ids ||= category.ids(token)
       end
 
       # The identifier for this combination.
       #
       def identifier
-        "#{bundle.identifier}:#{token.identifier}"
+        "#{category.identifier}:#{token.identifier}"
       end
 
       # Note: Required for uniq!
       #
+      # TODO Ok with category or is the bundle needed?
+      #
       def hash
-        [token.to_s, bundle].hash
+        [token.to_s, category].hash
       end
 
       # Combines the category names with the original names.
@@ -81,7 +71,7 @@ module Picky
       #  "exact title:Peter*:peter"
       #
       def to_s
-        "#{bundle.identifier} #{to_result.join(':')}"
+        "#{category.identifier} #{to_result.join(':')}"
       end
 
     end

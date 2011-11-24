@@ -49,7 +49,7 @@ module Picky
     end
 
     def to_s
-      categories.join(', ')
+      "#{self.class}(#{categories.join(', ')})"
     end
 
   end
