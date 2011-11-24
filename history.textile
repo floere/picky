@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.6
+
+* hanke: (server) Fix and regression spec for a Redis backend bug introduced in 3.6.5.
+
 h2. Version 3.6.5
 
 * hanke: (server) Exact-first wrapper for experimental purposes.

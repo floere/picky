@@ -46,7 +46,7 @@ module Picky
       # The identifier for this combination.
       #
       def identifier
-        "#{category.identifier}:#{token.identifier}"
+        "#{category.bundle_for(token).identifier}:#{token.identifier}"
       end
 
       # Note: Required for uniq!
@@ -71,7 +71,7 @@ module Picky
       #  "exact title:Peter*:peter"
       #
       def to_s
-        "#{category.identifier} #{to_result.join(':')}"
+        "#{category.bundle_for(token).identifier} #{to_result.join(':')}"
       end
 
     end

@@ -8,6 +8,7 @@ describe Picky::Query::Combination do
     @bundle      = stub :bundle, :identifier => :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
     @category    = stub :category,
+                        :bundle_for => @bundle,
                         :name => :some_category_name,
                         :identifier => 'some_category_identifier'
 
@@ -18,7 +19,7 @@ describe Picky::Query::Combination do
     it "shows the combination's info" do
       @token.stub! :to_result => :token_result
 
-      @combination.to_s.should == 'some_category_identifier some_category_name:token_result'
+      @combination.to_s.should == 'bundle_name some_category_name:token_result'
     end
   end
 
@@ -48,7 +49,7 @@ describe Picky::Query::Combination do
 
   describe 'identifier' do
     it 'should get the category name from the bundle' do
-      @combination.identifier.should == "some_category_identifier:similarity:some_text"
+      @combination.identifier.should == "bundle_name:similarity:some_text"
     end
   end
 
