@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.7
+
+* hanke: (server) Experimental #build_realtime_mapping method to rebuild the realtime mapping helper after a dump/load.
+
 h2. Version 3.6.6
 
 * hanke: (server) Fix and regression spec for a Redis backend bug introduced in 3.6.5.
