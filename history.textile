@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.5
+
+* hanke: (server) Exact-first wrapper for experimental purposes.
+
 h2. Version 3.6.4
 
 * hanke: (server) Removed active record, redis, mysql dependencies from picky.gemspec.
