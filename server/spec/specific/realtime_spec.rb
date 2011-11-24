@@ -33,6 +33,7 @@ describe "Realtime Indexing" do
 
         index.dump
         index.load
+        index.build_realtime_mapping
 
         index.replace Book.new(2, "Blah New", "Author New")
 

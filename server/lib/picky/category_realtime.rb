@@ -52,6 +52,13 @@ module Picky
       partial.clear_realtime_mapping
     end
 
+    # Builds the realtime mapping.
+    #
+    def build_realtime_mapping
+      exact.build_realtime_mapping
+      partial.build_realtime_mapping
+    end
+
   end
 
 end

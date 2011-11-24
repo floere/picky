@@ -93,6 +93,23 @@ module Picky
       @realtime_mapping.clear
     end
 
+    # Builds the realtime mapping.
+    #
+    # Note: Experimental feature.
+    #
+    # TODO Subset of #add. Rewrite.
+    #
+    def build_realtime_mapping
+      clear_realtime_mapping
+      @inverted.each_pair do |str_or_sym, ids|
+        ids.each do |id|
+          str_or_syms = @realtime_mapping[id]
+          str_or_syms = (@realtime_mapping[id] = []) unless str_or_syms # TODO Nicefy.
+          @realtime_mapping[id] << str_or_sym unless str_or_syms.include? str_or_sym
+        end
+      end
+    end
+
   end
 
 end
