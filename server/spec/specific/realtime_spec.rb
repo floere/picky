@@ -25,6 +25,21 @@ describe "Realtime Indexing" do
       index.add Book.new(1, "Title", "Author")
     end
 
+    context 'dumping and loading' do
+      it "doesn't find books anymore after dumping and reloading and updating" do
+        index.replace Book.new(2, "Title New", "Author New")
+
+        books.search("title").ids.should == [2, 1]
+
+        index.dump
+        index.load
+
+        index.replace Book.new(2, "Blah New", "Author New")
+
+        books.search("title").ids.should == [1]
+      end
+    end
+
     context 'single category updating' do
       it 'finds the first entry' do
         books.search('title:Titl').ids.should == [1]
