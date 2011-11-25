@@ -5,7 +5,7 @@ require 'spec_helper'
 # Describes a Picky index that uses the SQLite backend
 # for data storage.
 #
-describe "SQLite" do
+describe Picky::Backends::SQLite do
 
   class Book
     attr_reader :id, :title, :author
@@ -71,7 +71,7 @@ describe "SQLite" do
 
   context 'default backend (dump needed)' do
     before(:each) do
-      data.backend Picky::Backends::SQLite.new
+      data.backend described_class.new
 
       data.add Book.new(1, 'title', 'author')
     end
@@ -80,7 +80,7 @@ describe "SQLite" do
 
   context 'immediately indexing backend (no dump needed)' do
     before(:each) do
-      data.backend Picky::Backends::SQLite.new(self_indexed: true)
+      data.backend described_class.new(self_indexed: true)
       data.clear
       data.add Book.new(1, 'title', 'author')
     end

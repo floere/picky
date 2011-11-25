@@ -37,7 +37,7 @@ module Picky
         end
 
         def clear
-          db.execute 'delete from key_value' if @self_indexed
+          db.execute 'delete from key_value'
         end
 
         def delete key
