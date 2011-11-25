@@ -16,8 +16,6 @@ module Picky
   #
   class Bundle
 
-    attr_reader :realtime_mapping
-
     # Get the ids for the given symbol.
     #
     # Returns a (potentially empty) array of ids.
@@ -52,6 +50,7 @@ module Picky
       load_weights
       load_similarity
       load_configuration
+      load_realtime
     end
 
     # Loads the core index.
@@ -76,6 +75,11 @@ module Picky
     def load_configuration
       self.configuration = @backend_configuration.load
     end
+    # Loads the realtime mapping.
+    #
+    def load_realtime
+      self.realtime = @backend_realtime.load
+    end
 
     # Clears all indexes.
     #
@@ -84,6 +88,7 @@ module Picky
       clear_weights
       clear_similarity
       clear_configuration
+      clear_realtime
     end
 
     # Clears the core index.
@@ -105,6 +110,11 @@ module Picky
     #
     def clear_configuration
       configuration.clear
+    end
+    # Clears the realtime mapping.
+    #
+    def clear_realtime
+      realtime.clear
     end
 
   end

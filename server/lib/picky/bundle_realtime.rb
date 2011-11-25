@@ -7,7 +7,7 @@ module Picky
     def remove id
       # Is it anywhere?
       #
-      syms = @realtime_mapping[id]
+      syms = @realtime[id]
       return unless syms
 
       syms.each do |sym|
@@ -25,14 +25,14 @@ module Picky
         end
       end
 
-      @realtime_mapping.delete id
+      @realtime.delete id
     end
 
     # Returns a reference to the array where the id has been added.
     #
     def add id, str_or_sym, where = :unshift
-      str_or_syms = @realtime_mapping[id]
-      str_or_syms = (@realtime_mapping[id] = []) unless str_or_syms # TODO Nicefy.
+      str_or_syms = @realtime[id]
+      str_or_syms = (@realtime[id] = []) unless str_or_syms # TODO Nicefy.
 
       # Inverted.
       #
@@ -83,25 +83,19 @@ module Picky
       end
     end
 
-    # Clears the realtime mapping.
-    #
-    def clear_realtime_mapping
-      @realtime_mapping.clear
-    end
-
     # Builds the realtime mapping.
     #
     # Note: Experimental feature.
     #
     # TODO Subset of #add. Rewrite.
     #
-    def build_realtime_mapping
-      clear_realtime_mapping
+    def build_realtime
+      clear_realtime
       @inverted.each_pair do |str_or_sym, ids|
         ids.each do |id|
-          str_or_syms = @realtime_mapping[id]
-          str_or_syms = (@realtime_mapping[id] = []) unless str_or_syms # TODO Nicefy.
-          @realtime_mapping[id] << str_or_sym unless str_or_syms.include? str_or_sym
+          str_or_syms = @realtime[id]
+          str_or_syms = (@realtime[id] = []) unless str_or_syms # TODO Nicefy.
+          @realtime[id] << str_or_sym unless str_or_syms.include? str_or_sym
         end
       end
     end

@@ -29,6 +29,7 @@ module Picky
                   :weights,
                   :similarity,
                   :configuration,
+                  :realtime,
 
                   :backend_inverted,
                   :backend_weights,
@@ -73,12 +74,11 @@ module Picky
     def reset_backend
       # Extract specific indexes from backend.
       #
-      # TODO Clean up all related.
-      #
       @backend_inverted      = backend.create_inverted      self
       @backend_weights       = backend.create_weights       self
       @backend_similarity    = backend.create_similarity    self
       @backend_configuration = backend.create_configuration self
+      @backend_realtime      = backend.create_realtime      self
 
       # Initial indexes.
       #
@@ -89,8 +89,7 @@ module Picky
       @weights       = @weights_strategy.saved?? @backend_weights.initial : @weights_strategy
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
-
-      @realtime_mapping = {} # id -> ary of syms.  TODO Always instantiate? d
+      @realtime      = @backend_realtime.initial
     end
 
     # "Empties" the index(es) by getting a new empty
@@ -101,6 +100,7 @@ module Picky
       empty_weights
       empty_similarity
       empty_configuration
+      empty_realtime
     end
     def empty_inverted
       @inverted = @backend_inverted.empty
@@ -115,6 +115,9 @@ module Picky
     end
     def empty_configuration
       @configuration = @backend_configuration.empty
+    end
+    def empty_realtime
+      @realtime = @backend_realtime.empty
     end
 
     # Get a list of similar texts.
@@ -158,6 +161,7 @@ module Picky
       @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weights_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
+      @backend_realtime.delete  if @backend_realtime.respond_to? :delete
     end
 
     def to_s

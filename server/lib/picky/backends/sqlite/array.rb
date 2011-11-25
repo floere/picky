@@ -49,6 +49,11 @@ module Picky
             super value
             db[key] = self
           end
+
+          def delete value
+            value = super value
+            db[key] = self if value
+          end
         end
 
       end

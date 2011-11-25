@@ -28,11 +28,6 @@ module Picky
   #
   class Bundle
 
-    # When indexing, clear only clears the inverted index.
-    #
-    delegate :clear,
-             :to => :inverted
-
     # Saves the indexes in a dump file.
     #
     def dump
@@ -40,6 +35,7 @@ module Picky
       dump_similarity
       dump_weights
       dump_configuration
+      dump_realtime
     end
     # Dumps the core index.
     #
@@ -62,6 +58,11 @@ module Picky
     #
     def dump_configuration
       @backend_configuration.dump @configuration
+    end
+    # Dumps the realtime.
+    #
+    def dump_realtime
+      @backend_realtime.dump @realtime
     end
 
   end
