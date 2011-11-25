@@ -129,7 +129,9 @@ module Picky
       load_relative 'backends/file/json'
 
       load_relative 'backends/sqlite'
-      load_relative 'backends/sqlite/db'
+      load_relative 'backends/sqlite/basic'
+      load_relative 'backends/sqlite/array'
+      load_relative 'backends/sqlite/value'
 
       # Indexing and Indexed things.
       #

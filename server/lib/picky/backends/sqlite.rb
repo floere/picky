@@ -19,28 +19,28 @@ module Picky
       #
       def create_inverted bundle
         extract_lambda_or(inverted, bundle) ||
-        DB.new(bundle.index_path(:inverted), self_indexed: self_indexed)
+        Array.new(bundle.index_path(:inverted), self_indexed: self_indexed)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
         extract_lambda_or(weights, bundle) ||
-        DB.new(bundle.index_path(:weights), self_indexed: self_indexed)
+        Value.new(bundle.index_path(:weights), self_indexed: self_indexed)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
         extract_lambda_or(similarity, bundle) ||
-        DB.new(bundle.index_path(:similarity), self_indexed: self_indexed)
+        Array.new(bundle.index_path(:similarity), self_indexed: self_indexed)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
         extract_lambda_or(configuration, bundle) ||
-        DB.new(bundle.index_path(:configuration), self_indexed: self_indexed)
+        Value.new(bundle.index_path(:configuration), self_indexed: self_indexed)
       end
 
       # Returns the result ids for the allocation.

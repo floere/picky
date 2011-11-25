@@ -1,23 +1,25 @@
 require 'spec_helper'
 
+require 'sqlite3'
+
 describe Picky::Backends::SQLite do
 
   context 'with options' do
     before(:each) do
-      @backend = described_class.new inverted:      Picky::Backends::SQLite::DB.new(:unimportant),
-                                     weights:       Picky::Backends::SQLite::DB.new(:unimportant),
-                                     similarity:    Picky::Backends::SQLite::DB.new(:unimportant),
-                                     configuration: Picky::Backends::SQLite::DB.new(:unimportant)
+      @backend = described_class.new inverted:      Picky::Backends::SQLite::Value.new(:unimportant),
+                                     weights:       Picky::Backends::SQLite::Array.new(:unimportant),
+                                     similarity:    Picky::Backends::SQLite::Value.new(:unimportant),
+                                     configuration: Picky::Backends::SQLite::Array.new(:unimportant)
 
       @backend.stub! :timed_exclaim
     end
 
     describe 'create_...' do
       [
-        [:inverted,      Picky::Backends::SQLite::DB],
-        [:weights,       Picky::Backends::SQLite::DB],
-        [:similarity,    Picky::Backends::SQLite::DB],
-        [:configuration, Picky::Backends::SQLite::DB]
+        [:inverted,      Picky::Backends::SQLite::Value],
+        [:weights,       Picky::Backends::SQLite::Array],
+        [:similarity,    Picky::Backends::SQLite::Value],
+        [:configuration, Picky::Backends::SQLite::Array]
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
@@ -30,20 +32,20 @@ describe Picky::Backends::SQLite do
 
   context 'with lambda options' do
     before(:each) do
-      @backend = described_class.new inverted:      ->(bundle){ Picky::Backends::SQLite::DB.new(bundle.index_path(:inverted)) },
-                                     weights:       ->(bundle){ Picky::Backends::SQLite::DB.new(bundle.index_path(:weights)) },
-                                     similarity:    ->(bundle){ Picky::Backends::SQLite::DB.new(bundle.index_path(:similarity)) },
-                                     configuration: ->(bundle){ Picky::Backends::SQLite::DB.new(bundle.index_path(:configuration)) }
+      @backend = described_class.new inverted:      ->(bundle){ Picky::Backends::SQLite::Value.new(bundle.index_path(:inverted)) },
+                                     weights:       ->(bundle){ Picky::Backends::SQLite::Array.new(bundle.index_path(:weights)) },
+                                     similarity:    ->(bundle){ Picky::Backends::SQLite::Value.new(bundle.index_path(:similarity)) },
+                                     configuration: ->(bundle){ Picky::Backends::SQLite::Array.new(bundle.index_path(:configuration)) }
 
       @backend.stub! :timed_exclaim
     end
 
     describe 'create_...' do
       [
-        [:inverted,      Picky::Backends::SQLite::DB],
-        [:weights,       Picky::Backends::SQLite::DB],
-        [:similarity,    Picky::Backends::SQLite::DB],
-        [:configuration, Picky::Backends::SQLite::DB]
+        [:inverted,      Picky::Backends::SQLite::Value],
+        [:weights,       Picky::Backends::SQLite::Array],
+        [:similarity,    Picky::Backends::SQLite::Value],
+        [:configuration, Picky::Backends::SQLite::Array]
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           to_a_able_stub = Object.new
@@ -63,10 +65,10 @@ describe Picky::Backends::SQLite do
 
     describe 'create_...' do
       [
-        [:inverted,      Picky::Backends::SQLite::DB],
-        [:weights,       Picky::Backends::SQLite::DB],
-        [:similarity,    Picky::Backends::SQLite::DB],
-        [:configuration, Picky::Backends::SQLite::DB]
+        [:inverted,      Picky::Backends::SQLite::Array],
+        [:weights,       Picky::Backends::SQLite::Value],
+        [:similarity,    Picky::Backends::SQLite::Array],
+        [:configuration, Picky::Backends::SQLite::Value]
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",

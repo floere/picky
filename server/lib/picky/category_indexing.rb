@@ -107,12 +107,15 @@ module Picky
       @tokenizer || @index.tokenizer
     end
 
-    # Deletes the caches.
+    # Clears the caches.
+    #
+    # TODO Think about the semantics of clear.
+    #      Is a delete even needed or is it clear+dump?
     #
     def clear
-      timed_exclaim "Deleting #{identifier}."
-      exact.delete
-      partial.delete
+      timed_exclaim "Clearing #{identifier}."
+      exact.clear
+      partial.clear
     end
 
   end

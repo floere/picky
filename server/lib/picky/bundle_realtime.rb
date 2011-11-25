@@ -14,14 +14,12 @@ module Picky
         ids = @inverted[sym]
         ids.delete id
 
-        encoded = self.similarity_strategy.encoded sym
-
         if ids.empty?
-          @inverted.delete   sym
-          @weights.delete    sym
+          @inverted.delete sym
+          @weights.delete  sym
           # Since no element uses this sym anymore, we can delete the similarity for it.
           # TODO Not really. Since multiple syms can point to the same encoded.
-          @similarity.delete encoded
+          @similarity.delete self.similarity_strategy.encoded(sym)
         else
           @weights[sym] = self.weights_strategy.weight_for ids.size
         end
@@ -44,7 +42,7 @@ module Picky
         ids.send where, id
       else
         str_or_syms << str_or_sym
-        ids = @inverted[str_or_sym] ||= (@inverted[str_or_sym] = []) # ensures that we get an extended Array
+        ids = @inverted[str_or_sym] || (@inverted[str_or_sym] = []) # ensures that we get an extended Array
         ids.send where, id
       end
 
@@ -67,7 +65,7 @@ module Picky
     #
     def add_similarity str_or_sym, where = :unshift
       if encoded = self.similarity_strategy.encoded(str_or_sym)
-        similarity = @similarity[encoded] ||= (@similarity[encoded] = []) # ensures that we get an extended Array
+        similarity = @similarity[encoded] || (@similarity[encoded] = []) # ensures that we get an extended Array
         if similarity.include? str_or_sym
           similarity.delete str_or_sym  # Not completely correct, as others will also be affected, but meh.
           similarity.send where, str_or_sym #

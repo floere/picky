@@ -14,8 +14,8 @@ describe Picky::Category do
 
     describe 'clear' do
       it 'delegates to both bundles' do
-        exact.should_receive(:delete).once.with()
-        partial.should_receive(:delete).once.with()
+        exact.should_receive(:clear).once.with()
+        partial.should_receive(:clear).once.with()
 
         category.clear
       end
