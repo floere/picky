@@ -18,7 +18,7 @@ module Picky
       def initialize index, combinations
         @combinations      = combinations
         @result_identifier = index.result_identifier # TODO Make cleverer.
-        @backend           = index.backend           # TODO Make cleverer.
+        @backend           = index.backend           # TODO Make cleverer. Use inverted?
       end
 
       def hash

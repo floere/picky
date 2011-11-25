@@ -13,7 +13,7 @@ describe Picky::Bundle do
   end
 
   it 'is by default empty' do
-    @bundle.realtime_mapping.should == {}
+    @bundle.realtime.should == {}
   end
   it 'is by default empty' do
     @bundle.weights.should == {}
@@ -30,7 +30,7 @@ describe Picky::Bundle do
       @bundle.add 1, :title
       @bundle.add 2, :title
 
-      @bundle.realtime_mapping.should == { 1 => [:title], 2 => [:title] }
+      @bundle.realtime.should == { 1 => [:title], 2 => [:title] }
       @bundle.inverted.should == { :title => [2,1] }
       @bundle.weights.should == { :title => 0.693 }
       @bundle.similarity.should == { :TTL => [:title] }
@@ -41,7 +41,7 @@ describe Picky::Bundle do
       @bundle.remove 1
       @bundle.remove 2
 
-      @bundle.realtime_mapping.should == {}
+      @bundle.realtime.should == {}
       @bundle.weights.should == {}
       @bundle.inverted.should == {}
       @bundle.similarity.should == {}
@@ -52,7 +52,7 @@ describe Picky::Bundle do
       @bundle.add 1, :whatever
       @bundle.remove 1
 
-      @bundle.realtime_mapping.should == {}
+      @bundle.realtime.should == {}
       @bundle.weights.should == {}
       @bundle.inverted.should == {}
       @bundle.similarity.should == {}
@@ -63,7 +63,7 @@ describe Picky::Bundle do
       @bundle.add 1, :other
       @bundle.remove 1
 
-      @bundle.realtime_mapping.should == { 2 => [:thing] }
+      @bundle.realtime.should == { 2 => [:thing] }
       @bundle.weights.should == { :thing => 0.0 }
       @bundle.inverted.should == { :thing => [2] }
       @bundle.similarity.should == { :"0NK" => [:thing] }
@@ -72,7 +72,7 @@ describe Picky::Bundle do
       @bundle.add 1, :title
       @bundle.add 1, :title
 
-      @bundle.realtime_mapping.should == { 1 => [:title] }
+      @bundle.realtime.should == { 1 => [:title] }
       @bundle.weights.should  == { :title => 0.0 }
       @bundle.inverted.should == { :title => [1] }
       @bundle.similarity.should  == { :TTL => [:title] }
@@ -82,7 +82,7 @@ describe Picky::Bundle do
       @bundle.remove 1
       @bundle.remove 1
 
-      @bundle.realtime_mapping.should == {}
+      @bundle.realtime.should == {}
       @bundle.weights.should  == {}
       @bundle.inverted.should == {}
       @bundle.similarity.should == {}
@@ -93,15 +93,15 @@ describe Picky::Bundle do
     it 'works correctly' do
       @bundle.add 1, :title
 
-      @bundle.realtime_mapping.should == { 1 => [:title] }
+      @bundle.realtime.should == { 1 => [:title] }
 
       @bundle.add 2, :other
 
-      @bundle.realtime_mapping.should == { 1 => [:title], 2 => [:other] }
+      @bundle.realtime.should == { 1 => [:title], 2 => [:other] }
 
       @bundle.add 1, :thing
 
-      @bundle.realtime_mapping.should == { 1 => [:title, :thing], 2 => [:other] }
+      @bundle.realtime.should == { 1 => [:title, :thing], 2 => [:other] }
     end
     it 'works correctly' do
       @bundle.add 1, :title

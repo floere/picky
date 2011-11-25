@@ -132,7 +132,7 @@ module Picky
       #       (We avoid a StopIteration exception. Which of both is less evil?)
       #
       def generate_similarity_for bundle
-        bundle.similar(@text).dup || []
+        bundle.similar(@text) || []
       end
 
       # Splits text into a qualifier and text.

@@ -127,7 +127,10 @@ module Picky
     def similar text
       code = similarity_strategy.encoded text
       similar_codes = code && @similarity[code]
-      similar_codes.delete text if similar_codes
+      if similar_codes
+        similar_codes = similar_codes.dup # TODO
+        similar_codes.delete text
+      end
       similar_codes || []
     end
 

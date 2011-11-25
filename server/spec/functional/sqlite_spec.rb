@@ -50,6 +50,16 @@ describe Picky::Backends::SQLite do
 
       books.search('title').ids.should == [2]
     end
+    it 'handles removing with three entries' do
+      data.add Book.new(2, 'title', 'author')
+      data.add Book.new(3, 'title', 'author')
+
+      books.search('title').ids.should == [3, 2, 1]
+
+      data.remove 1
+
+      books.search('title').ids.should == [3, 2]
+    end
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
 

@@ -6,6 +6,18 @@ module Picky
 
       class String < Basic
 
+        # Clears the hash.
+        #
+        def clear
+          client.del namespace
+        end
+
+        # Deletes the single value.
+        #
+        def delete key
+          client.hdel namespace, key
+        end
+
         # Writes the hash into Redis.
         #
         # Note: We could use multi, but it did not help.
@@ -17,12 +29,6 @@ module Picky
               client.hset namespace, key, value
             end
           end
-        end
-
-        # Clears the hash.
-        #
-        def clear
-          client.del namespace
         end
 
         # Get a single value.
@@ -37,12 +43,6 @@ module Picky
         #
         def []= key, value
           client.hset namespace, key, value
-        end
-
-        # Deletes the single value.
-        #
-        def delete key
-          p [:DELETE_VALUE]
         end
 
       end

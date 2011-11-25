@@ -46,6 +46,13 @@ module Picky
         extract_lambda_or(configuration, bundle, client) ||
           String.new(client, "#{bundle.identifier}:configuration", immediate: immediate)
       end
+      # Returns an object that on #initial, #load returns an object that responds to:
+      #   [id] # => [:sym1, :sym2]
+      #
+      def create_realtime bundle
+        extract_lambda_or(similarity, bundle) ||
+          List.new(client, "#{bundle.identifier}:realtime", immediate: immediate)
+      end
 
       # Does the Redis version already include
       # scripting support?
@@ -88,6 +95,9 @@ module Picky
       # backend implementations.
       #
       # Note: We use the amount and offset hints to speed Redis up.
+      #
+      # TODO What if it hasn't been dumped?
+      #      Move this method to the actual backends?
       #
       def ids combinations, amount, offset
         # Just checked once on the first call.

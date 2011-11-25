@@ -43,16 +43,21 @@ module Picky
           def << value
             super value
             db[key] = self
+            self
           end
 
           def unshift value
             super value
             db[key] = self
+            self
           end
 
           def delete value
             value = super value
-            db[key] = self if value
+            if value
+              db[key] = self
+              value
+            end
           end
         end
 

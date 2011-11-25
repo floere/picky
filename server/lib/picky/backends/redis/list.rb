@@ -6,6 +6,24 @@ module Picky
 
       class List < Basic
 
+        # Clear the index for this list.
+        #
+        # Note: Perhaps we can use a server only command.
+        #       This is not the optimal way to do it.
+        #
+        def clear
+          redis_key = "#{namespace}:*"
+          client.keys(redis_key).each do |key|
+            client.del key
+          end
+        end
+
+        # Deletes the list for the key.
+        #
+        def delete key
+          client.del key
+        end
+
         # Writes the hash into Redis.
         #
         def dump hash
@@ -19,18 +37,6 @@ module Picky
                 client.zadd redis_key, i, value
               end
             end
-          end
-        end
-
-        # Clear the index for this list.
-        #
-        # Note: Perhaps we can use a server only command.
-        #       This is not the optimal way to do it.
-        #
-        def clear
-          redis_key = "#{namespace}:*"
-          client.keys(redis_key).each do |key|
-            client.del key
           end
         end
 
@@ -53,6 +59,7 @@ module Picky
             i += 1
             client.zadd redis_key, i, value
           end
+          self[key] # TODO Performance?
         end
 
         def realtime_extend array, key
@@ -63,21 +70,28 @@ module Picky
 
         module Realtime
           attr_accessor :db, :key
+
+          # TODO Current implementation does not keep order.
+          #
           def << value
             super value
-            db[key] = self
+            db.client.zadd "#{db.namespace}:#{key}", 0, value
+            db[key]
           end
 
+          # TODO Current implementation does not keep order.
+          #
           def unshift value
             super value
-            db[key] = self
+            db.client.zadd "#{db.namespace}:#{key}", 0, value
+            db[key]
           end
-        end
 
-        # Deletes the list.
-        #
-        def delete key
-          p [:DELETE_LIST]
+          def delete value
+            result = super value
+            db.client.zrem "#{db.namespace}:#{key}", value # TODO if super(value) ?
+            result
+          end
         end
 
       end
