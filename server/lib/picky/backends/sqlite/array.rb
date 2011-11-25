@@ -27,6 +27,10 @@ module Picky
           decoded
         end
 
+        def delete key
+          # TODO
+        end
+
         def realtime_extend(array, key)
           array.extend Realtime
           array.db = self
@@ -35,6 +39,7 @@ module Picky
 
         module Realtime
           attr_accessor :db, :key
+
           def << value
             super value
             db[key] = self

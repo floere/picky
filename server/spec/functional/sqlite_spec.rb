@@ -42,7 +42,7 @@ describe Picky::Backends::SQLite do
       books.search('title').ids.should == []
     end
     it 'handles removing with more than one entry' do
-      data.add Book.new(2, 'newtitle', 'newauthor')
+      data.add Book.new(2, 'title', 'author')
 
       books.search('title').ids.should == [2, 1]
 

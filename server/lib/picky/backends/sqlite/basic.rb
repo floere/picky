@@ -40,10 +40,6 @@ module Picky
           db.execute 'delete from key_value'
         end
 
-        def delete key
-          db.execute "delete from key_value where key = (?)", key.to_s
-        end
-
         def lazily_initialize_client
           @db ||= SQLite3::Database.new cache_path
         end

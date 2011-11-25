@@ -25,6 +25,10 @@ module Picky
           Yajl::Parser.parse res.first.first
         end
 
+        def delete key
+          db.execute "delete from key_value where key = (?)", key.to_s
+        end
+
       end
 
     end
