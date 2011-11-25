@@ -8,11 +8,15 @@ module Picky
       #
       class JSON < Basic
 
+        attr_writer :mapping
+
         # The in-memory mapping hash, mapping
         # a Symbol key to [length, offset] of
         # the JSON data in the file.
         #
-        attr_accessor :mapping
+        def mapping
+          @mapping || raise("The File index/category needs to be loaded first.")
+        end
 
         # See lib/picky/backends/file.rb for what this should return.
         #

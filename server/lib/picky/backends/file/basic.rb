@@ -52,7 +52,7 @@ module Picky
         #       as in #load.
         #
         def initial
-          @initial && @initial.clone || nil
+          @initial && @initial.clone || {}
         end
 
         # Deletes the file.

@@ -1,16 +1,10 @@
 # encoding: utf-8
 #
-
+require 'csv'
 require 'sinatra/base'
 require File.expand_path '../../lib/picky', __FILE__
 
-class Object
-
-  def timed_exclaim _
-
-  end
-
-end
+class Object; def timed_exclaim(_); end end
 
 def performance_of
   if block_given?
@@ -26,89 +20,28 @@ def performance_of
   end
 end
 
-class IndexGenerator
+class Source
 
-  attr_reader :amount, :length
+  attr_reader :amount
 
-  def initialize amount, &length
+  def initialize amount
     @amount = amount
-    @length = length || ->() { rand(6) + 3 }
   end
 
   Thing = Struct.new :id, :text1, :text2, :text3, :text4
 
-  # Generation.
-  #
-  # This generates an amount of
-  # words consisting of the characters
-  # a-e. Of sizes 3-9.
-  #
-  # Queries for these will be generated later.
-  #
-  def prepare
-    @buffer = []
-
-    characters = ['a', 'b', 'c', 'd'] # ('a'..'c').to_a
-    size = characters.size
-
-    amount.times do |i|
-      # 10*3 words per id.
-      #
-      # 10.times do
-        args = []
-        4.times do
-          current = []
-          length[].times do
-            current << characters[rand(size)]
-          end
-          args << current.join
-        end
-        @buffer << Thing.new(i, *args)
-      # end
-    end
-  end
-
   def each &block
-    @buffer.each &block
-  end
-
-  def cycle
-    @buffer.cycle
-  end
-
-  def to_s
-    "#{self.class}(amount: #{amount})"
+    i = 0
+    CSV.open('data.csv').each do |args|
+      block.call Thing.new(*args)
+      break if (i+=1) == @amount
+    end
   end
 
 end
 
-class QueryGenerator
-
-  attr_reader :complexity, :amount, :queries
-
-  def initialize complexity, amount
-    @complexity, @amount, @queries = complexity, amount, []
-  end
-
-  def prepare generator
-    generator = generator.cycle
-    amount.times do
-      query = []
-      complexity.times do |i|
-        query << generator.next.send(:"text#{i+1}")[0..-(rand(3)+1)]
-      end
-      @queries << query.join(' ')
-    end
-  end
-
-  def each &block
-    queries.each &block
-  end
-
-  def to_s
-    "#{self.class}(complexity: #{complexity}, amount: #{amount})"
-  end
-
+with = ->(amount) do
+  Source.new amount
 end
 
 include Picky
@@ -127,37 +60,63 @@ definition = Proc.new do
   category :text4
 end
 
-generate = ->(amount) do
-  IndexGenerator.new(amount)
+class Searches
+
+  def initialize complexity, amount
+    @complexity, @amount = complexity, amount
+  end
+
+  def each &block
+    @buffer.each &block
+  end
+
+  def prepare
+    @buffer = []
+
+    i = 0
+    CSV.open('data.csv').each do |args|
+      _, *args = args
+      args = args + [args.first]
+      query = []
+      (@complexity-1).times do
+        query << args.shift
+      end
+      query << args.shift[1..-(rand(3)+1)]
+      @buffer << query.join(' ')
+      break if (i+=1) == @amount
+    end
+  end
+
 end
+
 queries  = ->(complexity, amount) do
-  QueryGenerator.new complexity, amount
+  Searches.new complexity, amount
 end
 
 xxs = Index.new :xxs, &definition
-xxs.source { generate[10] }
+xxs.source { with[10] }
 xs  = Index.new :xs,  &definition
-xs.source  { generate[100] }
+xs.source  { with[100] }
 s   = Index.new :s,   &definition
-s.source   { generate[1_000] }
+s.source   { with[1_000] }
 m   = Index.new :m,   &definition
-m.source   { generate[10_000] }
-l   = Index.new :l,   &definition
-l.source   { generate[100_000] }
+m.source   { with[10_000] }
+# l   = Index.new :l,   &definition
+# l.source   { with[100_000] }
 # xl  = Index.new :xl,  &definition
-# xl.source  { generate[1_000_000] }
+# xl.source  { with[1_000_000] }
 
 puts "Running tests"
 
 backends.each do |backend|
 
   puts
+  puts "All measurements in ms!"
   puts backend.class
 
   Indexes.each do |data|
 
     if backend == backends.first
-      data.source.prepare
       data.prepare
     end
 
@@ -166,15 +125,15 @@ backends.each do |backend|
     data.cache
     data.load
 
-    amount = 100
+    amount = 50
 
     print "%7d" % data.source.amount
 
     [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
 
-      run = Search.new data
+      queries.prepare
 
-      queries.prepare data.source
+      run = Search.new data
 
       # Quick sanity check.
       #
@@ -190,7 +149,7 @@ backends.each do |backend|
       end
 
       print ", "
-      print "%2.4f" % duration
+      print "%2.4f" % (duration*1000/amount)
 
     end
 
