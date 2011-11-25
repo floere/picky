@@ -2,11 +2,9 @@
 #
 require 'spec_helper'
 
-describe "Weights" do
+describe "exact first" do
 
-  # This tests the weights option.
-  #
-  it 'can handle dynamic weights' do
+  it 'returns exact results first' do
     index = Picky::Index.new :exact_first do
       source { [] }
       category :text, partial: Picky::Partial::Substring.new(from: 1)
