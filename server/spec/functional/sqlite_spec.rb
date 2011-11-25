@@ -72,6 +72,7 @@ describe Picky::Backends::SQLite do
   context 'default backend (dump needed)' do
     before(:each) do
       data.backend described_class.new
+      data.clear
 
       data.add Book.new(1, 'title', 'author')
     end
@@ -82,6 +83,7 @@ describe Picky::Backends::SQLite do
     before(:each) do
       data.backend described_class.new(self_indexed: true)
       data.clear
+
       data.add Book.new(1, 'title', 'author')
     end
     instance_eval &its
