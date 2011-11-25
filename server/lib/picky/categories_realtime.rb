@@ -5,7 +5,7 @@ module Picky
     each_delegate :remove,
                   :add,
                   :replace,
-                  :clear_realtime_mapping,
+                  :clear_realtime,
                   :build_realtime_mapping,
                   :to => :categories
 

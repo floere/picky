@@ -160,7 +160,7 @@ describe Picky::Category do
 
     describe 'load' do
       it 'should call two methods' do
-        @category.should_receive(:clear_realtime_mapping).once
+        @category.should_receive(:clear_realtime).once
         @exact.should_receive(:load).once
         @partial.should_receive(:load).once
 

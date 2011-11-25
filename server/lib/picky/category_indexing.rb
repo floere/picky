@@ -51,7 +51,7 @@ module Picky
       empty
       retrieve
       dump
-      clear_realtime_mapping # TODO To call or not to call, that is the question.
+      clear_realtime # TODO To call or not to call, that is the question.
     end
 
     # Retrieves the prepared index data into the indexes and

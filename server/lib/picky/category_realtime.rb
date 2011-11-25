@@ -47,7 +47,7 @@ module Picky
 
     # Clears the realtime mapping.
     #
-    def clear_realtime_mapping
+    def clear_realtime
       exact.clear_realtime
       partial.clear_realtime
     end

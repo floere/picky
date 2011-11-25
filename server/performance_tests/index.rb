@@ -61,42 +61,54 @@ backends = [
   Backends::Redis.new(immediate: true),
 ]
 
+constant_weight = Picky::Weights::Constant.new
+no_partial      = Picky::Partial::None.new
+full_partial    = Picky::Partial::Postfix.new from: 1
+double_meta     = Picky::Similarity::DoubleMetaphone.new 3
+
 definitions = []
 
 definitions << [Proc.new do
-  category :text1, weights: Picky::Weights::Constant.new, partial: Picky::Partial::None.new
-  category :text2, weights: Picky::Weights::Constant.new, partial: Picky::Partial::None.new
-  category :text3, weights: Picky::Weights::Constant.new, partial: Picky::Partial::None.new
-  category :text4, weights: Picky::Weights::Constant.new, partial: Picky::Partial::None.new
-end, :no_weights_no_partial]
+  category :text1, weights: constant_weight, partial: no_partial
+  category :text2, weights: constant_weight, partial: no_partial
+  category :text3, weights: constant_weight, partial: no_partial
+  category :text4, weights: constant_weight, partial: no_partial
+end, :no_weights_no_partial_default_similarity]
 
 definitions << [Proc.new do
-  category :text1, weights: Picky::Weights::Constant.new
-  category :text2, weights: Picky::Weights::Constant.new
-  category :text3, weights: Picky::Weights::Constant.new
-  category :text4, weights: Picky::Weights::Constant.new
-end, :no_weights]
+  category :text1, weights: constant_weight
+  category :text2, weights: constant_weight
+  category :text3, weights: constant_weight
+  category :text4, weights: constant_weight
+end, :no_weights_default_partial_default_similarity]
 
 definitions << [Proc.new do
   category :text1
   category :text2
   category :text3
   category :text4
-end, :default]
+end, :default_weights_default_partial_default_similarity]
 
 definitions << [Proc.new do
-  category :text1, partial: Picky::Partial::Postfix.new(from: 1)
-  category :text2, partial: Picky::Partial::Postfix.new(from: 1)
-  category :text3, partial: Picky::Partial::Postfix.new(from: 1)
-  category :text4, partial: Picky::Partial::Postfix.new(from: 1)
-end, :full_partial]
+  category :text1, partial: full_partial
+  category :text2, partial: full_partial
+  category :text3, partial: full_partial
+  category :text4, partial: full_partial
+end, :default_weights_full_partial_no_similarity]
 
 definitions << [Proc.new do
-  category :text1, similarity: Picky::Similarity::DoubleMetaphone.new(3)
-  category :text2, similarity: Picky::Similarity::DoubleMetaphone.new(3)
-  category :text3, similarity: Picky::Similarity::DoubleMetaphone.new(3)
-  category :text4, similarity: Picky::Similarity::DoubleMetaphone.new(3)
-end, :double_metaphone]
+  category :text1, similarity: double_meta
+  category :text2, similarity: double_meta
+  category :text3, similarity: double_meta
+  category :text4, similarity: double_meta
+end, :default_weights_default_partial_double_metaphone_similarity]
+
+definitions << [Proc.new do
+  category :text1, partial: full_partial, similarity: double_meta
+  category :text2, partial: full_partial, similarity: double_meta
+  category :text3, partial: full_partial, similarity: double_meta
+  category :text4, partial: full_partial, similarity: double_meta
+end, :default_weights_full_partial_double_metaphone_similarity]
 
 puts
 puts "All measurements in indexed per second!"
@@ -104,7 +116,7 @@ puts "All measurements in indexed per second!"
 definitions.each do |definition, description|
 
   data = Index.new :m, &definition
-  data.source { with[100] }
+  data.source { with[200] }
 
   puts
   puts
