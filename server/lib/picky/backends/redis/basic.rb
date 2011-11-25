@@ -24,13 +24,14 @@ module Picky
 
           @empty     = options[:empty]
           @initial   = options[:initial]
+          @immediate = options[:immediate]
         end
 
         # The empty index that is used for putting the index
         # together.
         #
         def empty
-          @empty && @empty.clone || {}
+          @empty && @empty.clone || (@immediate ? self : {})
         end
 
         # The initial content before loading.
@@ -39,7 +40,7 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.clone || self
+          @initial && @initial.clone || (@immediate ? self : {})
         end
 
         # Returns itself.
@@ -52,15 +53,6 @@ module Picky
         #
         def retrieve
           # Nothing.
-        end
-
-        # Deletes the Redis index namespace.
-        #
-        def delete
-          # Not implemented here.
-          # Note: backend.flushdb might be the way to go,
-          #       but since we cannot delete by key pattern,
-          #       we don't do anything.
         end
 
         #

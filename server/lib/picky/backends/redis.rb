@@ -6,13 +6,14 @@ module Picky
     #
     class Redis < Backend
 
-      attr_reader :client
+      attr_reader :client, :immediate
 
       def initialize options = {}
         super options
 
         require 'redis'
-        @client = options[:client] || ::Redis.new(:db => (options[:db] || 15))
+        @client    = options[:client] || ::Redis.new(:db => (options[:db] || 15))
+        @immediate = options[:immediate]
       rescue LoadError => e
         warn_gem_missing 'redis', 'the Redis client'
       end
@@ -22,28 +23,28 @@ module Picky
       #
       def create_inverted bundle
         extract_lambda_or(inverted, bundle, client) ||
-          List.new(client, "#{bundle.identifier}:inverted")
+          List.new(client, "#{bundle.identifier}:inverted", immediate: immediate)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
         extract_lambda_or(weights, bundle, client) ||
-          Float.new(client, "#{bundle.identifier}:weights")
+          Float.new(client, "#{bundle.identifier}:weights", immediate: immediate)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
         extract_lambda_or(similarity, bundle, client) ||
-          List.new(client, "#{bundle.identifier}:similarity")
+          List.new(client, "#{bundle.identifier}:similarity", immediate: immediate)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
         extract_lambda_or(configuration, bundle, client) ||
-          String.new(client, "#{bundle.identifier}:configuration")
+          String.new(client, "#{bundle.identifier}:configuration", immediate: immediate)
       end
 
       # Does the Redis version already include

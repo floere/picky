@@ -11,9 +11,11 @@ module Picky
         # Note: We could use multi, but it did not help.
         #
         def dump hash
-          clear
-          hash.each_pair do |key, value|
-            client.hset namespace, key, value
+          unless @immediate
+            clear
+            hash.each_pair do |key, value|
+              client.hset namespace, key, value
+            end
           end
         end
 
@@ -35,6 +37,12 @@ module Picky
         #
         def []= key, value
           client.hset namespace, key, value
+        end
+
+        # Deletes the single value.
+        #
+        def delete key
+          p [:DELETE_VALUE]
         end
 
       end
