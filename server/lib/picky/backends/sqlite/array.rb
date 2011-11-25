@@ -28,7 +28,7 @@ module Picky
         end
 
         def delete key
-          # TODO
+          db.execute "delete from key_value where key = (?)", key.to_s
         end
 
         def realtime_extend(array, key)
