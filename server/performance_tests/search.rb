@@ -46,20 +46,6 @@ end
 
 include Picky
 
-backends = [
-  Backends::Memory.new,
-  Backends::File.new,
-  Backends::SQLite.new,
-  Backends::Redis.new,
-]
-
-definition = Proc.new do
-  category :text1
-  category :text2
-  category :text3
-  category :text4
-end
-
 class Searches
 
   def initialize complexity, amount
@@ -81,7 +67,7 @@ class Searches
       (@complexity-1).times do
         query << args.shift
       end
-      query << args.shift[1..-(rand(3)+1)]
+      query << args.shift
       @buffer << query.join(' ')
       break if (i+=1) == @amount
     end
@@ -93,67 +79,100 @@ queries  = ->(complexity, amount) do
   Searches.new complexity, amount
 end
 
-xxs = Index.new :xxs, &definition
-xxs.source { with[10] }
-xs  = Index.new :xs,  &definition
-xs.source  { with[100] }
-s   = Index.new :s,   &definition
-s.source   { with[1_000] }
-m   = Index.new :m,   &definition
-m.source   { with[10_000] }
-# l   = Index.new :l,   &definition
-# l.source   { with[100_000] }
-# xl  = Index.new :xl,  &definition
-# xl.source  { with[1_000_000] }
+backends = [
+  Backends::Memory.new,
+  Backends::File.new,
+  Backends::SQLite.new,
+  Backends::Redis.new,
+]
 
-puts "Running tests"
+definitions = []
 
-backends.each do |backend|
+definitions << [Proc.new do
+  category :text1
+  category :text2
+  category :text3
+  category :text4
+end, :normal]
+
+definitions << [Proc.new do
+  category :text1, weights: Picky::Partial::Postfix.new(from: 1)
+  category :text2, weights: Picky::Partial::Postfix.new(from: 1)
+  category :text3, weights: Picky::Partial::Postfix.new(from: 1)
+  category :text4, weights: Picky::Partial::Postfix.new(from: 1)
+end, :full_partial]
+
+definitions << [Proc.new do
+  category :text1, weights: Picky::Weights::Constant.new
+  category :text2, weights: Picky::Weights::Constant.new
+  category :text3, weights: Picky::Weights::Constant.new
+  category :text4, weights: Picky::Weights::Constant.new
+end, :no_weights]
+
+definitions.each do |definition, description|
+
+  xxs = Index.new :xxs, &definition
+  xxs.source { with[10] }
+  xs  = Index.new :xs,  &definition
+  xs.source  { with[100] }
+  s   = Index.new :s,   &definition
+  s.source   { with[1_000] }
+  m   = Index.new :m,   &definition
+  m.source   { with[10_000] }
+  # l   = Index.new :l,   &definition
+  # l.source   { with[100_000] }
+  # xl  = Index.new :xl,  &definition
+  # xl.source  { with[1_000_000] }
 
   puts
-  puts "All measurements in ms!"
-  puts backend.class
+  puts
+  puts "Running tests with definition #{description}."
 
-  Indexes.each do |data|
+  backends.each do |backend|
 
-    if backend == backends.first
-      data.prepare
-    end
+    puts
+    puts "All measurements in ms!"
+    puts backend.class
 
-    data.backend backend
-    data.clear
-    data.cache
-    data.load
+    Indexes.each do |data|
 
-    amount = 50
+      data.prepare if backend == backends.first
 
-    print "%7d" % data.source.amount
+      data.backend backend
+      data.clear
+      data.cache
+      data.load
 
-    [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
+      amount = 50
 
-      queries.prepare
+      print "%7d" % data.source.amount
 
-      run = Search.new data
+      [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
 
-      # Quick sanity check.
-      #
-      # results = run.search(queries.each { |query| p query; break query }).ids
-      # p(results) && fail if results.empty?
+        queries.prepare
 
-      duration = performance_of do
+        run = Search.new data
 
-        queries.each do |query|
-          run.search query
+        # Quick sanity check.
+        #
+        # fail if run.search(queries.each { |query| p query; break query }).ids.empty?
+
+        duration = performance_of do
+
+          queries.each do |query|
+            run.search query
+          end
+
         end
+
+        print ", "
+        print "%2.4f" % (duration*1000/amount)
 
       end
 
-      print ", "
-      print "%2.4f" % (duration*1000/amount)
+      puts
 
     end
-
-    puts
 
   end
 

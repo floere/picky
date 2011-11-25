@@ -7,7 +7,6 @@ module Picky
       module Delegator
 
         delegate :add,
-                 :clear_realtime_mapping,
 
                  :inverted,
                  :weights,
@@ -17,6 +16,8 @@ module Picky
                  :backup,
                  :restore,
                  :delete,
+
+                 :reset_backend,
 
                  :raise_unless_cache_exists,
                  :raise_unless_index_exists,
@@ -53,6 +54,7 @@ module Picky
                  :clear_weights,
                  :clear_similarity,
                  :clear_configuration,
+                 :clear_realtime,
                  :identifier,
                  :ids,
                  :load,
