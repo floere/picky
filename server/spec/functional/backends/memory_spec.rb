@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-# Describes a Picky index that uses the SQLite backend
+# Describes a Picky index that uses the Memory backend
 # for data storage.
 #
 describe Picky::Backends::Memory do

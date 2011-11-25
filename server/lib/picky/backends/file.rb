@@ -38,6 +38,13 @@ module Picky
         extract_lambda_or(configuration, bundle) ||
           JSON.new(bundle.index_path(:configuration))
       end
+      # Returns an object that on #initial, #load returns an object that responds to:
+      #   [id] # => [:sym1, :sym2]
+      #
+      def create_realtime bundle
+        extract_lambda_or(similarity, bundle) ||
+          JSON.new(bundle.index_path(:realtime))
+      end
 
       # Currently, the loaded ids are intersected using
       # the fast C-based intersection.
