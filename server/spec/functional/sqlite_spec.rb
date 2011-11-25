@@ -17,7 +17,7 @@ describe "SQLite" do
   let(:data) do
     Picky::Index.new(:books) do
       source []
-      category :title
+      category :title, partial: Picky::Partial::Postfix.new(from: 1)
       category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
     end
   end
@@ -26,6 +26,15 @@ describe "SQLite" do
   its = ->(*) do
     it 'searching for it' do
       books.search('title').ids.should == [1]
+    end
+    it 'searching for it using multiple words' do
+      books.search('title author').ids.should == [1]
+    end
+    it 'searching for it using partial' do
+      books.search('tit').ids.should == [1]
+    end
+    it 'searching for it using similarity' do
+      books.search('aothor~').ids.should == [1]
     end
     it 'handles removing' do
       data.remove 1
