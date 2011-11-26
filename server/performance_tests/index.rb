@@ -49,7 +49,7 @@ include Picky
 
 backends = [
   ["immediate Redis", Backends::Redis.new(immediate: true), 100],
-  # ["immediate SQLite", Backends::SQLite.new(self_indexed: true), 100],
+  ["immediate SQLite", Backends::SQLite.new(self_indexed: true), 100],
   ["standard Redis", Backends::Redis.new, 200],
   ["standard SQLite", Backends::SQLite.new, 200],
   ["standard File", Backends::File.new, 300],

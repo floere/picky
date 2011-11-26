@@ -212,7 +212,7 @@ definitions.each do |definition, description|
       print " %6d " % symbols.sum
       print "Symbols  "
       print "("
-      print symbols.map { |s| "%6d" % s }.join(', ')
+      print symbols.map { |s| "%4d" % s }.join(', ')
       print ")"
       puts
 
