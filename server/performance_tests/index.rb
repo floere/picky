@@ -52,13 +52,12 @@ end
 include Picky
 
 backends = [
-  # Backends::Redis.new(immediate: true),
-  Backends::Memory.new,
-  Backends::File.new,
-  Backends::SQLite.new,
-  Backends::SQLite.new(self_indexed: true),
-  Backends::Redis.new,
-  Backends::Redis.new(immediate: true),
+  ["immediate Redis", Backends::Redis.new(immediate: true)],
+  ["immediate SQLite", Backends::SQLite.new(self_indexed: true)],
+  ["standard Redis", Backends::Redis.new],
+  ["standard SQLite", Backends::SQLite.new],
+  ["standard File", Backends::File.new],
+  ["standard Memory", Backends::Memory.new],
 ]
 
 constant_weight = Picky::Weights::Constant.new
@@ -113,23 +112,22 @@ end, :default_weights_full_partial_double_metaphone_similarity]
 puts
 puts "All measurements in indexed per second!"
 
-definitions.each do |definition, description|
-
-  data = Index.new :m, &definition
-  data.source { with[200] }
+backends.each do |backend_description, backend|
 
   puts
   puts
-  puts "Running tests with definition #{description}."
+  puts "Running tests with #{backend_description}:"
 
-  backends.each do |backend|
+  definitions.each do |definition, description|
 
+    data = Index.new :m, &definition
+    data.source { with[200] }
     data.source.prepare
 
     data.prepare if backend == backends.first
     data.backend backend
 
-    print "%25s" % backend.class.name
+    print "%65s" % description
     print ": "
 
     duration = performance_of do
@@ -138,6 +136,8 @@ definitions.each do |definition, description|
 
     print "%6.0f" % (data.source.amount/duration)
     puts
+
+    data.clear
 
   end
 
