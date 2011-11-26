@@ -49,7 +49,7 @@ include Picky
 
 backends = [
   ["immediate Redis", Backends::Redis.new(immediate: true), 100],
-  ["immediate SQLite", Backends::SQLite.new(self_indexed: true), 100],
+  # ["immediate SQLite", Backends::SQLite.new(self_indexed: true), 100],
   ["standard Redis", Backends::Redis.new, 200],
   ["standard SQLite", Backends::SQLite.new, 200],
   ["standard File", Backends::File.new, 300],
@@ -111,6 +111,25 @@ puts "All measurements in processed per second!"
 source = Source.new 500
 source.prepare
 
+ram = ->() do
+  # Demeter is rotating in his grave :D
+  #
+  `ps u`.split("\n").select { |line| line.include? __FILE__ }.first.split(/\s+/)[5].to_i
+end
+string = ->() do
+  i = 0
+  ObjectSpace.each_object(String) do |s|
+    # puts s
+    i += 1
+  end
+  i
+end
+
+GC.enable
+initial_ram = ram.call
+initial_strings = string.call
+initial_symbols = Symbol.all_symbols.size
+
 backends.each do |backend_description, backend, amount|
 
   puts
@@ -120,10 +139,13 @@ backends.each do |backend_description, backend, amount|
 
   definitions.each do |definition, description|
 
+    GC.start
+
     print "%65s" % description
     print ": "
 
     Indexes.clear_indexes
+
     data = Index.new :m, &definition
     data.source []
     data.backend backend
@@ -133,15 +155,28 @@ backends.each do |backend_description, backend, amount|
         data.add thing # direct
       end
     end
+    strings = string.call
+    symbols = Symbol.all_symbols.size
+
+    current_ram = ram.call - initial_ram
+
+    print "%7.0f" % (amount / add_duration)
+    print " | "
+
     dump_duration = performance_of do
       data.dump
     end
 
-    print "%7.0f" % (amount / add_duration)
-    print " | "
     print "%7.0f" % (amount / dump_duration)
     print " | "
     print "%7.0f" % (amount / (add_duration + dump_duration))
+    print "   "
+    print "%5d" % (current_ram / 1_024)
+    print "M  "
+    print "%6d" % (strings - initial_strings)
+    print " Strings  "
+    print "%6d" % (symbols - initial_symbols)
+    print " Symbols  "
     puts
 
     data.clear
