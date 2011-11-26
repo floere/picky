@@ -124,22 +124,20 @@ string = ->() do
   end
   i
 end
-
+runs = ->() do
+  GC::Profiler.result.match(/\d+/)[0].to_i
+end
 GC.enable
-initial_ram = ram.call
-initial_strings = string.call
-initial_symbols = Symbol.all_symbols.size
+GC::Profiler.enable
 
 backends.each do |backend_description, backend, amount|
 
   puts
   puts
   print "Running tests with #{backend_description} with #{"%5d" % amount} indexed:"
-  puts  "           add/index |    dump |   total"
+  puts  "           add/index |    dump |   total      RAM/string/symbols per indexed"
 
   definitions.each do |definition, description|
-
-    GC.start
 
     print "%65s" % description
     print ": "
@@ -150,15 +148,22 @@ backends.each do |backend_description, backend, amount|
     data.source []
     data.backend backend
 
+    GC.start
+    initial_ram = ram.call
+    initial_strings = string.call
+    initial_symbols = Symbol.all_symbols.size
+
+    last_gc = runs.call
+
     add_duration = performance_of do
       source.each(amount) do |thing|
         data.add thing # direct
       end
     end
-    strings = string.call
-    symbols = Symbol.all_symbols.size
 
     current_ram = ram.call - initial_ram
+    strings = string.call
+    symbols = Symbol.all_symbols.size
 
     print "%7.0f" % (amount / add_duration)
     print " | "
@@ -171,12 +176,14 @@ backends.each do |backend_description, backend, amount|
     print " | "
     print "%7.0f" % (amount / (add_duration + dump_duration))
     print "   "
-    print "%5d" % (current_ram / 1_024)
-    print "M  "
-    print "%6d" % (strings - initial_strings)
+    print "%5d" % (current_ram / amount)
+    print "K  "
+    print "%6.1f" % ((strings - initial_strings) / amount.to_f)
     print " Strings  "
-    print "%6d" % (symbols - initial_symbols)
+    print "%6.1f" % ((symbols - initial_symbols) / amount.to_f)
     print " Symbols  "
+    print "GC extra: "
+    print "%2d" % (runs.call - last_gc)
     puts
 
     data.clear
