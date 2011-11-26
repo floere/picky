@@ -109,6 +109,21 @@ definitions << [Proc.new do
   category :text4, weights: Picky::Weights::Constant.new
 end, :no_weights]
 
+ram = ->() do
+  # Demeter is rotating in his grave :D
+  #
+  `ps u`.split("\n").select { |line| line.include? __FILE__ }.first.split(/\s+/)[5].to_i
+end
+string = ->() do
+  i = 0
+  ObjectSpace.each_object(String) do |s|
+    # puts s
+    i += 1
+  end
+  i
+end
+GC.enable
+
 definitions.each do |definition, description|
 
   xxs = Index.new :xxs, &definition
@@ -147,6 +162,10 @@ definitions.each do |definition, description|
 
       print "%7d" % data.source.amount
 
+      rams = []
+      strings = []
+      symbols = []
+
       [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
 
         queries.prepare
@@ -157,6 +176,11 @@ definitions.each do |definition, description|
         #
         # fail if run.search(queries.each { |query| p query; break query }).ids.empty?
 
+        GC.start
+        initial_ram = ram.call
+        initial_strings = string.call
+        initial_symbols = Symbol.all_symbols.size
+
         duration = performance_of do
 
           queries.each do |query|
@@ -165,11 +189,31 @@ definitions.each do |definition, description|
 
         end
 
+        rams << (ram.call - initial_ram)
+        strings << (string.call - initial_strings)
+        symbols << (Symbol.all_symbols.size - initial_symbols)
+
         print ", "
         print "%2.4f" % (duration*1000/amount)
 
       end
 
+      print "   "
+      print "%5d" % rams.sum
+      print "K "
+      print "("
+      print rams.map { |s| "%6d" % s }.join(', ')
+      print ")"
+      print "  %6d " % strings.sum
+      print "Strings "
+      print "("
+      print strings.map { |s| "%6d" % s }.join(', ')
+      print ")"
+      print " %6d " % symbols.sum
+      print "Symbols  "
+      print "("
+      print symbols.map { |s| "%6d" % s }.join(', ')
+      print ")"
       puts
 
     end
