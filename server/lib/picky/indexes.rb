@@ -33,6 +33,7 @@ module Picky
     end
 
     instance_delegate :clear,
+                      :clear_indexes,
                       :register,
                       :reindex,
                       :[],

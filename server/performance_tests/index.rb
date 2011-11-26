@@ -39,25 +39,21 @@ class Source
     end
   end
 
-  def each &block
-    @buffer.each &block
+  def each up_to = nil, &block
+    @buffer[0..(up_to || amount)].each &block
   end
 
-end
-
-with = ->(amount) do
-  Source.new amount
 end
 
 include Picky
 
 backends = [
-  ["immediate Redis", Backends::Redis.new(immediate: true)],
-  ["immediate SQLite", Backends::SQLite.new(self_indexed: true)],
-  ["standard Redis", Backends::Redis.new],
-  ["standard SQLite", Backends::SQLite.new],
-  ["standard File", Backends::File.new],
-  ["standard Memory", Backends::Memory.new],
+  ["immediate Redis", Backends::Redis.new(immediate: true), 100],
+  ["immediate SQLite", Backends::SQLite.new(self_indexed: true), 100],
+  ["standard Redis", Backends::Redis.new, 200],
+  ["standard SQLite", Backends::SQLite.new, 200],
+  ["standard File", Backends::File.new, 300],
+  ["standard Memory", Backends::Memory.new, 500],
 ]
 
 constant_weight = Picky::Weights::Constant.new
@@ -110,31 +106,42 @@ definitions << [Proc.new do
 end, :default_weights_full_partial_double_metaphone_similarity]
 
 puts
-puts "All measurements in indexed per second!"
+puts "All measurements in processed per second!"
 
-backends.each do |backend_description, backend|
+source = Source.new 500
+source.prepare
+
+backends.each do |backend_description, backend, amount|
 
   puts
   puts
-  puts "Running tests with #{backend_description}:"
+  print "Running tests with #{backend_description} with #{"%5d" % amount} indexed:"
+  puts  "           add/index |    dump |   total"
 
   definitions.each do |definition, description|
-
-    data = Index.new :m, &definition
-    data.source { with[200] }
-    data.source.prepare
-
-    data.prepare if backend == backends.first
-    data.backend backend
 
     print "%65s" % description
     print ": "
 
-    duration = performance_of do
-      data.cache
+    Indexes.clear_indexes
+    data = Index.new :m, &definition
+    data.source []
+    data.backend backend
+
+    add_duration = performance_of do
+      source.each(amount) do |thing|
+        data.add thing # direct
+      end
+    end
+    dump_duration = performance_of do
+      data.dump
     end
 
-    print "%6.0f" % (data.source.amount/duration)
+    print "%7.0f" % (amount / add_duration)
+    print " | "
+    print "%7.0f" % (amount / dump_duration)
+    print " | "
+    print "%7.0f" % (amount / (add_duration + dump_duration))
     puts
 
     data.clear
