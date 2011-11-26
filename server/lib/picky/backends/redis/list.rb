@@ -29,14 +29,16 @@ module Picky
         def dump hash
           unless @immediate
             clear
-            hash.each_pair do |key, values|
-              redis_key = "#{namespace}:#{key}"
-              i = 0
-              values.each do |value|
-                i += 1
-                client.zadd redis_key, i, value
+            # client.pipelined do
+              hash.each_pair do |key, values|
+                redis_key = "#{namespace}:#{key}"
+                i = 0
+                values.each do |value|
+                  i += 1
+                  client.zadd redis_key, i, value
+                end
               end
-            end
+            # end
           end
         end
 
@@ -45,7 +47,7 @@ module Picky
         # Internal API method for the index.
         #
         def [] key
-          list = client.zrange "#{namespace}:#{key}", 0, -1
+          list = client.zrange "#{namespace}:#{key}", :'0', :'-1'
           realtime_extend list, key
           list
         end
@@ -75,7 +77,7 @@ module Picky
           #
           def << value
             super value
-            db.client.zadd "#{db.namespace}:#{key}", 0, value
+            db.client.zadd "#{db.namespace}:#{key}", :'0', value
             db[key]
           end
 
@@ -83,7 +85,7 @@ module Picky
           #
           def unshift value
             super value
-            db.client.zadd "#{db.namespace}:#{key}", 0, value
+            db.client.zadd "#{db.namespace}:#{key}", :'0', value
             db[key]
           end
 
