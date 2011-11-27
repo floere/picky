@@ -4,11 +4,9 @@ module Picky
   #
   class Index
 
-    # TODO Rake troubles?
-    #
-    delegate :remove,
-             :add,
-             :replace,
+    delegate :remove,  # aka delete.
+             :add,     # aka insert.
+             :replace, # aka insert or update.
              :clear_realtime,
              :build_realtime_mapping,
              :to => :categories

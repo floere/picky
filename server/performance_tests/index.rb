@@ -106,6 +106,7 @@ definitions << [Proc.new do
 end, :default_weights_full_partial_double_metaphone_similarity]
 
 puts
+puts
 puts "All measurements in processed per second!"
 
 source = Source.new 500
@@ -132,7 +133,6 @@ GC::Profiler.enable
 
 backends.each do |backend_description, backend, amount|
 
-  puts
   puts
   print "Running tests with #{backend_description} with #{"%5d" % amount} indexed:"
   puts  "           add/index |    dump |   total      RAM/string/symbols per indexed"
