@@ -13,7 +13,7 @@ describe Picky::Backends::File::Basic do
 
     describe 'initial' do
       it 'returns the container that is used for indexing' do
-        basic.initial.should == nil
+        basic.initial.should == {}
       end
     end
 
