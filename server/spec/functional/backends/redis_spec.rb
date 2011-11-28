@@ -47,7 +47,7 @@ describe Picky::Backends::Redis do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1'] # TODO Should be ['2', '1']
+      books.search('title').ids.should == ['2', '1']
 
       data.remove '1'
 

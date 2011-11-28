@@ -5,7 +5,9 @@ describe Picky::Backends::Redis::DirectlyManipulable do
   let(:client) { stub :client }
   let(:backend) { stub :backend, client: client, namespace: 'some:namespace' }
   let(:list) do
-    described_class.make backend, [1,2], 'some:key'
+    list = [1,2]
+    described_class.make backend, list, 'some:key'
+    list
   end
 
   context 'stubbed backend' do

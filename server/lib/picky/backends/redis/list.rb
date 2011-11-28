@@ -49,6 +49,7 @@ module Picky
         def [] key
           list = client.zrange "#{namespace}:#{key}", :'0', :'-1'
           DirectlyManipulable.make self, list, key
+          list
         end
 
         # Set a single list.

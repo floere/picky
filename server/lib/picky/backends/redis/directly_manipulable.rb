@@ -12,22 +12,23 @@ module Picky
           list.extend DirectlyManipulable
           list.backend = backend
           list.key     = key
-          list
         end
 
-        # TODO Current implementation does not keep order.
+        # TODO Current implementation does not really keep order.
         #
+        @@append_index = 0
         def << value
           super value
-          backend.client.zadd "#{backend.namespace}:#{key}", :'0', value
+          backend.client.zadd "#{backend.namespace}:#{key}", (@@append_index+=1), value
           backend[key]
         end
 
-        # TODO Current implementation does not keep order.
+        # TODO Current implementation does not really keep order.
         #
+        @@unshift_index = 0
         def unshift value
           super value
-          backend.client.zadd "#{backend.namespace}:#{key}", :'0', value
+          backend.client.zadd "#{backend.namespace}:#{key}", (@@unshift_index-=1), value
           backend[key]
         end
 

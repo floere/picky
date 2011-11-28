@@ -12,7 +12,6 @@ module Picky
           array.extend DirectlyManipulable
           array.backend = backend
           array.key     = key
-          array
         end
 
         def << value

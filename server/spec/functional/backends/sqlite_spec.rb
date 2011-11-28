@@ -50,6 +50,17 @@ describe Picky::Backends::SQLite do
 
       books.search('title').ids.should == [2]
     end
+    it 'handles clearing' do
+      data.clear
+
+      books.search('title').ids.should == []
+    end
+    it 'handles dumping and loading' do
+      data.dump
+      data.load
+
+      books.search('title').ids.should == [1]
+    end
     it 'handles removing with three entries' do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
@@ -66,17 +77,6 @@ describe Picky::Backends::SQLite do
       books.search('title').ids.should == []
       books.search('toitle').ids.should == [1]
     end
-    it 'handles clearing' do
-      data.clear
-
-      books.search('title').ids.should == []
-    end
-    it 'handles dumping and loading' do
-      data.dump
-      data.load
-
-      books.search('title').ids.should == [1]
-    end
   end
 
   context 'default backend (dump needed)' do
@@ -86,6 +86,7 @@ describe Picky::Backends::SQLite do
 
       data.add Book.new(1, 'title', 'author')
     end
+
     instance_eval &its
   end
 
@@ -96,6 +97,7 @@ describe Picky::Backends::SQLite do
 
       data.add Book.new(1, 'title', 'author')
     end
+
     instance_eval &its
   end
 
