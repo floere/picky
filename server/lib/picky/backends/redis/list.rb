@@ -48,8 +48,7 @@ module Picky
         #
         def [] key
           list = client.zrange "#{namespace}:#{key}", :'0', :'-1'
-          realtime_extend list, key
-          list
+          DirectlyManipulable.make list, key
         end
 
         # Set a single list.
@@ -62,38 +61,6 @@ module Picky
             client.zadd redis_key, i, value
           end
           self[key] # TODO Performance?
-        end
-
-        def realtime_extend array, key
-          array.extend Realtime
-          array.db = self
-          array.key = key
-        end
-
-        module Realtime
-          attr_accessor :db, :key
-
-          # TODO Current implementation does not keep order.
-          #
-          def << value
-            super value
-            db.client.zadd "#{db.namespace}:#{key}", :'0', value
-            db[key]
-          end
-
-          # TODO Current implementation does not keep order.
-          #
-          def unshift value
-            super value
-            db.client.zadd "#{db.namespace}:#{key}", :'0', value
-            db[key]
-          end
-
-          def delete value
-            result = super value
-            db.client.zrem "#{db.namespace}:#{key}", value # TODO if super(value) ?
-            result
-          end
         end
 
       end

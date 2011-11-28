@@ -112,12 +112,6 @@ module Picky
       load_relative 'backends/helpers/file'
       load_relative 'backends/backend'
 
-      load_relative 'backends/redis'
-      load_relative 'backends/redis/basic'
-      load_relative 'backends/redis/list'
-      load_relative 'backends/redis/string'
-      load_relative 'backends/redis/float'
-
       load_relative 'backends/memory'
       load_relative 'backends/memory/basic'
       load_relative 'backends/memory/text'
@@ -128,7 +122,15 @@ module Picky
       load_relative 'backends/file/basic'
       load_relative 'backends/file/json'
 
+      load_relative 'backends/redis'
+      load_relative 'backends/redis/directly_manipulable'
+      load_relative 'backends/redis/basic'
+      load_relative 'backends/redis/list'
+      load_relative 'backends/redis/string'
+      load_relative 'backends/redis/float'
+
       load_relative 'backends/sqlite'
+      load_relative 'backends/sqlite/directly_manipulable'
       load_relative 'backends/sqlite/basic'
       load_relative 'backends/sqlite/array'
       load_relative 'backends/sqlite/value'
