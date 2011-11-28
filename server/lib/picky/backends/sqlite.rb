@@ -3,6 +3,7 @@ module Picky
   module Backends
 
     class SQLite < Backend
+
       attr_reader :self_indexed
 
       def initialize options = {}
