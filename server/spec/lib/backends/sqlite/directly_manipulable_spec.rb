@@ -5,7 +5,7 @@ describe Picky::Backends::SQLite::DirectlyManipulable do
   let(:client) { stub :client }
   let(:backend) { stub :backend, client: client, namespace: 'some:namespace' }
   let(:list) do
-    described_class.make [1,2], backend, 'some:key'
+    described_class.make backend, [1,2], 'some:key'
   end
 
   context 'stubbed backend' do

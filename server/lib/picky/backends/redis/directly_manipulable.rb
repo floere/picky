@@ -8,7 +8,7 @@ module Picky
 
         attr_accessor :backend, :key
 
-        def self.make list, backend, key
+        def self.make backend, list, key
           list.extend DirectlyManipulable
           list.backend = backend
           list.key     = key
