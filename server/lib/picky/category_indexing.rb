@@ -113,7 +113,6 @@ module Picky
     #      Is a delete even needed or is it clear+dump?
     #
     def clear
-      timed_exclaim "Clearing #{identifier}."
       exact.clear
       partial.clear
     end
