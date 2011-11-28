@@ -1,5 +1,8 @@
 h2. Upcoming Version
 
+* hanke: (server) Backends rewritten to support realtime indexes (SQLite, Redis). Memory already supported it (needs call to @Index#build_realtime_mapping@ after loading if dumped+loaded). File backend will not support realtime index in the near future.
+* hanke: (server) Method to build the realtime index, explicitly: @Index#build_realtime_mapping@.
+
 h2. Version 3.6.7
 
 * hanke: (server) Experimental #build_realtime_mapping method to rebuild the realtime mapping helper after a dump/load.
