@@ -15,12 +15,16 @@ describe Picky::Backends::Redis::DirectlyManipulable do
       backend.stub! :[]
     end
     it 'calls the right client method' do
-      client.should_receive(:zadd).once.with "some:namespace:some:key", :'0', 3
+      num = described_class.class_variable_get(:@@append_index)
+
+      client.should_receive(:zadd).once.with "some:namespace:some:key", num+1, 3
 
       list << 3
     end
     it 'calls the right client method' do
-      client.should_receive(:zadd).once.with "some:namespace:some:key", :'0', 3
+      num = described_class.class_variable_get(:@@unshift_index)
+
+      client.should_receive(:zadd).once.with "some:namespace:some:key", num-1, 3
 
       list.unshift 3
     end
