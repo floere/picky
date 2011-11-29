@@ -49,6 +49,8 @@ module Picky
       self
     end
 
+    # Defines tokenizer options or the tokenizer itself.
+    #
     # Examples:
     #   search = Search.new(index1, index2, index3) do
     #     searching removes_characters: /[^a-z]/,
@@ -65,6 +67,17 @@ module Picky
       else
         options && Tokenizer.new(options)
       end
+    end
+
+    # Sets the max amount of allocations to calculate.
+    #
+    # Examples:
+    #   search = Search.new(index1, index2, index3) do
+    #     max_allocations 10
+    #   end
+    #
+    def max_allocations amount
+      amount ? @max_allocations = amount : @max_allocations
     end
 
     # Examples:
@@ -161,7 +174,7 @@ module Picky
     # Note: Internal method, use #search to search.
     #
     def execute tokens, ids, offset, original_text = nil
-      Results.from original_text, ids, offset, sorted_allocations(tokens)
+      Results.from original_text, ids, offset, sorted_allocations(tokens, @max_allocations)
     end
 
     # Delegates the tokenizing to the query tokenizer.
@@ -182,19 +195,18 @@ module Picky
 
     # Gets sorted allocations for the tokens.
     #
-    def sorted_allocations tokens # :nodoc:
-      indexes.prepared_allocations_for tokens, weights
+    def sorted_allocations tokens, amount = nil # :nodoc:
+      indexes.prepared_allocations_for tokens, weights, amount
     end
 
     # Display some nice information for the user.
     #
     def to_s
       s = "#{self.class}("
-      unless @indexes.indexes.empty?
-        s << @indexes.indexes.map(&:name).join(', ')
-        s << ", "
-      end
-      s << "weights: #{@weights}"
+      ary = []
+      ary << @indexes.indexes.map(&:name).join(', ') unless @indexes.indexes.empty?
+      ary << "weights: #{@weights}" if @weights
+      s << ary.join(', ')
       s << ")"
       s
     end

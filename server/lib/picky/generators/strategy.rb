@@ -13,6 +13,10 @@ module Picky
         true
       end
 
+      def to_s
+        self.class
+      end
+
     end
 
   end

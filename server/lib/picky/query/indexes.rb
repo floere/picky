@@ -54,7 +54,7 @@ module Picky
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #
-      def prepared_allocations_for tokens, weights = {}
+      def prepared_allocations_for tokens, weights = {}, amount = nil
         allocations = allocations_for tokens
 
         # Remove double allocations.
@@ -72,7 +72,7 @@ module Picky
 
         # Reduce the amount of allocations.
         #
-        # allocations.reduce_to some_amount
+        allocations.reduce_to amount if amount
 
         # Remove categories from allocations.
         #
