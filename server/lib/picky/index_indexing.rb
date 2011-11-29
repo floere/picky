@@ -87,7 +87,7 @@ module Picky
     #
     def source some_source = nil, &block
       some_source ||= block
-      some_source ? define_source(some_source) : (@source && extract_source || warn_no_source)
+      some_source ? define_source(some_source) : (@source && extract_source)
     end
     # Extract the actual source if it is wrapped in a time
     # capsule, i.e. a block/lambda.
@@ -100,9 +100,6 @@ module Picky
     def define_source source
       check_source source
       @source = source
-    end
-    def warn_no_source
-      warn "No source given for index #{name}."
     end
     def check_source source # :nodoc:
       raise ArgumentError.new(<<-SOURCE

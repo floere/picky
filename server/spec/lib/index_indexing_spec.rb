@@ -97,13 +97,6 @@ describe Picky::Index do
       @index.define_category :some_category_name1
       @index.define_category :some_category_name2
     end
-    describe "warn_no_source" do
-      it "should warn" do
-        @index.should_receive(:warn).once.with "No source given for index some_name."
-
-        @index.warn_no_source
-      end
-    end
     describe 'define_source' do
       it 'can be set with this method' do
         source = stub :source, :each => [].each

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Indexers::Base do
 
-  let(:some_index_or_category) { stub :some_index_or_category, :name => 'some index or category' }
+  let(:some_index_or_category) { stub :some_index_or_category, :name => 'some_index_or_category' }
   let(:indexer) { described_class.new some_index_or_category }
 
   describe 'index_or_category' do
@@ -17,9 +17,21 @@ describe Picky::Indexers::Base do
 
       indexer.source
     end
+    it 'raises when none is there' do
+      some_index_or_category.should_receive(:source).any_number_of_times.and_return
+
+      indexer.stub! :process
+
+      expect {
+        indexer.index []
+      }.to raise_error("Trying to index without a source for some_index_or_category.")
+    end
   end
 
   describe 'index' do
+    before(:each) do
+      some_index_or_category.should_receive(:source).any_number_of_times.and_return :some_source
+    end
     it 'processes' do
       categories = stub :categories, :empty => nil, :cache => nil
 

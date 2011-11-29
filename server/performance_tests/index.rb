@@ -145,7 +145,6 @@ backends.each do |backend_description, backend, amount|
     Indexes.clear_indexes
 
     data = Index.new :m, &definition
-    data.source []
     data.backend backend
 
     GC.start
