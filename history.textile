@@ -1,7 +1,12 @@
 h2. Upcoming Version
 
 * hanke: (server) Backends rewritten to support realtime indexes (SQLite, Redis). Memory already supported it (needs call to @Index#build_realtime_mapping@ after loading if dumped+loaded). File backend will not support realtime index in the near future.
-* hanke: (server) Method to build the realtime index, explicitly: @Index#build_realtime_mapping@.
+* hanke: (server) Experimental, use at your own peril: Method to build the realtime index, explicitly: @Index#build_realtime_mapping@.
+
+h2. Version 3.6.8
+
+* hanke: (server) BREAKING Renamed the undocumented @Search#maximum_tokens(integer)@ to @Search#max_words(integer)@. Restricts the amoun
+* hanke: (server) Added @Search#max_allocations(integer)@ to restrict number of allocations that are actually calculated (to avoid combinatorial and UI explosions).
 * hanke: (server) Added @<<@ and @unshift@ on @Index@ and @Category@. The @unshift@ method behaves like the @add@ method when called without a second parameter. Use like @index << Thing.new(1, 'some text', 'some other text')@.
 * hanke: (server) Existence of a source is only checked when really needed. Will fail hard if there is none, with a (hopefully) useful error message.
 
