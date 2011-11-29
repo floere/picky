@@ -93,15 +93,15 @@ describe Picky::Backends::Redis do
     instance_eval &its
   end
 
-  # context 'immediately indexing backend (no dump needed)' do
-  #   before(:each) do
-  #     data.backend Picky::Backends::Redis.new(immediate: true)
-  #     data.clear
-  #
-  #     data.add Book.new(1, 'title', 'author')
-  #   end
-  #
-  #   instance_eval &its
-  # end
+  context 'immediately indexing backend (no dump needed)' do
+    before(:each) do
+      data.backend Picky::Backends::Redis.new(immediate: true)
+      data.clear
+
+      data.add Book.new(1, 'title', 'author')
+    end
+
+    instance_eval &its
+  end
 
 end

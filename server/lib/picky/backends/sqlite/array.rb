@@ -7,8 +7,8 @@ module Picky
       class Array < Basic
 
         def []= key, array
-          if array.empty?
-            db.execute 'insert or replace into key_value (key, value) values (?,?)', key.to_s, Yajl::Encoder.encode(array)
+          unless array.empty?
+            db.execute 'replace into key_value (key, value) values (?,?)', key.to_s, Yajl::Encoder.encode(array)
           end
 
           DirectlyManipulable.make self, array, key
@@ -18,7 +18,7 @@ module Picky
         def [] key
           res = db.execute "select value from key_value where key = ? limit 1;", key.to_s
 
-          return res unless res
+          return nil unless res
 
           array = res.empty? ? [] : Yajl::Parser.parse(res.first.first)
           DirectlyManipulable.make self, array, key
