@@ -101,6 +101,10 @@ module Picky
       #      Move this method to the actual backends?
       #
       def ids combinations, amount, offset
+        # TODO FIXME This is actually not correct:
+        #            A dumped/loaded Redis backend should use
+        #            the Redis backend calculation method.
+        #
         if immediate
           # Just checked once on the first call.
           #
