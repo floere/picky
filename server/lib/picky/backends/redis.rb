@@ -6,7 +6,8 @@ module Picky
     #
     class Redis < Backend
 
-      attr_reader :client, :immediate
+      attr_reader :client,
+                  :immediate
 
       def initialize options = {}
         super options
@@ -100,75 +101,99 @@ module Picky
       #      Move this method to the actual backends?
       #
       def ids combinations, amount, offset
-        # Just checked once on the first call.
-        #
-        if redis_with_scripting?
-          @@script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
-
-          require 'digest/sha1'
-          @@sent_once = nil
-
-          # Scripting version of #ids.
+        if immediate
+          # Just checked once on the first call.
           #
-          def ids combinations, amount, offset
-            identifiers = combinations.inject([]) do |identifiers, combination|
-              identifiers << "#{combination.identifier}"
-            end
+          if redis_with_scripting?
+            @@script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
 
-            # Assume it's using EVALSHA.
+            require 'digest/sha1'
+            @@sent_once = nil
+
+            # Scripting version of #ids.
             #
-            begin
-              client.evalsha @@sent_once,
-                             identifiers.size,
-                             *identifiers,
-                             generate_intermediate_result_id,
-                             offset,
-                             (offset + amount)
-            rescue RuntimeError => e
-              # Make the server have a SHA-1 for the script.
-              #
-              @@sent_once = Digest::SHA1.hexdigest @@script
-              client.eval @@script,
-                          identifiers.size,
-                          *identifiers,
-                          generate_intermediate_result_id,
-                          offset,
-                          (offset + amount)
+            class << self
+              def ids combinations, amount, offset
+                identifiers = combinations.inject([]) do |identifiers, combination|
+                  identifiers << "#{combination.identifier}"
+                end
+
+                # Assume it's using EVALSHA.
+                #
+                begin
+                  client.evalsha @@sent_once,
+                                 identifiers.size,
+                                 *identifiers,
+                                 generate_intermediate_result_id,
+                                 offset,
+                                 (offset + amount)
+                rescue RuntimeError => e
+                  # Make the server have a SHA-1 for the script.
+                  #
+                  @@sent_once = Digest::SHA1.hexdigest @@script
+                  client.eval @@script,
+                              identifiers.size,
+                              *identifiers,
+                              generate_intermediate_result_id,
+                              offset,
+                              (offset + amount)
+                end
+              end
+            end
+          else
+            # Non-Scripting version of #ids.
+            #
+            class << self
+              def ids combinations, amount, offset
+                identifiers = combinations.inject([]) do |identifiers, combination|
+                  identifiers << "#{combination.identifier}"
+                end
+
+                result_id = generate_intermediate_result_id
+
+                # Intersect and store.
+                #
+                intersected = client.zinterstore result_id, identifiers
+
+                # Return clean and early if there has been no intersection.
+                #
+                if intersected.zero?
+                  client.del result_id
+                  return []
+                end
+
+                # Get the stored result.
+                #
+                results = client.zrange result_id, offset, (offset + amount)
+
+                # Delete the stored result as it was only for temporary purposes.
+                #
+                # Note: I could also not delete it, but that
+                #       would not be clean at all.
+                #
+                client.del result_id
+
+                results
+              end
             end
           end
         else
-          # Non-Scripting version of #ids.
+          # TODO Refactor!
           #
-          def ids combinations, amount, offset
-            identifiers = combinations.inject([]) do |identifiers, combination|
-              identifiers << "#{combination.identifier}"
+          class << self
+            def ids combinations, _, _
+              # Get the ids for each combination.
+              #
+              id_arrays = combinations.inject([]) do |total, combination|
+                total << combination.ids
+              end
+
+              # Call the optimized C algorithm.
+              #
+              # Note: It orders the passed arrays by size.
+              #
+              Performant::Array.memory_efficient_intersect id_arrays
             end
-
-            result_id = generate_intermediate_result_id
-
-            # Intersect and store.
-            #
-            intersected = client.zinterstore result_id, identifiers
-
-            # Return clean and early if there has been no intersection.
-            #
-            if intersected.zero?
-              client.del result_id
-              return []
-            end
-
-            # Get the stored result.
-            #
-            results = client.zrange result_id, offset, (offset + amount)
-
-            # Delete the stored result as it was only for temporary purposes.
-            #
-            # Note: I could also not delete it, but that
-            #       would not be clean at all.
-            #
-            client.del result_id
-
-            results
           end
         end
 
