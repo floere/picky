@@ -76,7 +76,7 @@ module Picky
     #     max_allocations 10
     #   end
     #
-    def max_allocations amount
+    def max_allocations amount = nil
       amount ? @max_allocations = amount : @max_allocations
     end
 
