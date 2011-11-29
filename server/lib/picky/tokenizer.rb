@@ -135,14 +135,14 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       !@case_sensitive
     end
 
-    def maximum_tokens amount
-      @maximum_tokens = amount
+    def max_words amount
+      @max_words = amount
     end
     def cap words
-      words.slice!(@maximum_tokens..-1) if cap?(words)
+      words.slice!(@max_words..-1) if cap?(words)
     end
     def cap? words
-      @maximum_tokens && words.size > @maximum_tokens
+      @max_words && words.size > @max_words
     end
 
     # Checks if the right argument type has been given.
@@ -160,7 +160,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       stopwords options[:stopwords]                                     if options[:stopwords]
       splits_text_on options[:splits_text_on]                           || /\s/
       normalizes_words options[:normalizes_words]                       if options[:normalizes_words]
-      maximum_tokens options[:maximum_tokens]
+      max_words options[:max_words]
       rejects_token_if &(options[:rejects_token_if]                     || :blank?)
       case_sensitive options[:case_sensitive]                           unless options[:case_sensitive].nil?
     end
@@ -203,7 +203,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     # Does:
     #  * Split the text into words.
-    #  * Cap the amount of tokens if maximum_tokens is set.
+    #  * Cap the amount of tokens if max_words is set.
     #
     def pretokenize text
       words = split text
