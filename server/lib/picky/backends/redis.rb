@@ -195,7 +195,7 @@ module Picky
       # Use the host and pid (generated lazily in child processes) for the result.
       #
       def generate_intermediate_result_id
-        :"#{host}:#{pid}:picky:result"
+        @intermediate_result_id ||= "#{host}:#{pid}:picky:result"
       end
 
     end

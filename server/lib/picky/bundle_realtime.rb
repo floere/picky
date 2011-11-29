@@ -31,8 +31,7 @@ module Picky
     # Returns a reference to the array where the id has been added.
     #
     def add id, str_or_sym, where = :unshift
-      str_or_syms = @realtime[id]
-      str_or_syms = (@realtime[id] = []) unless str_or_syms # TODO Nicefy.
+      str_or_syms = @realtime[id] || (@realtime[id] = [])
 
       # Inverted.
       #
@@ -69,12 +68,11 @@ module Picky
     def add_similarity str_or_sym, where = :unshift
       if encoded = self.similarity_strategy.encoded(str_or_sym)
         similarity = @similarity[encoded] || (@similarity[encoded] = []) # Ensures that we get an extended Array
-        if similarity.include? str_or_sym
-          similarity.delete str_or_sym  # Not completely correct, as others will also be affected, but meh.
-          similarity.send where, str_or_sym #
-        else
-          similarity.send where, str_or_sym
-        end
+
+        # Not completely correct, as others will also be affected, but meh.
+        #
+        similarity.delete str_or_sym if similarity.include? str_or_sym
+        similarity.send where, str_or_sym
       end
     end
 

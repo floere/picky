@@ -27,6 +27,18 @@ module Picky
       add object, where
     end
 
+    # Add at the end.
+    #
+    def << thing
+      add thing, __method__
+    end
+
+    # Add at the beginning.
+    #
+    def unshift thing
+      add thing, __method__
+    end
+
     # For the given id, adds the list of
     # strings to the index for the given id.
     #
