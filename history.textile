@@ -5,9 +5,9 @@ h2. Upcoming Version
 
 h2. Version 3.6.8
 
-* hanke: (server) BREAKING Renamed the undocumented @Search#maximum_tokens(integer)@ to @Search#max_words(integer)@. Restricts the amoun
+* hanke: (server) BREAKING Renamed the undocumented @Tokenizer#maximum_tokens(integer)@ to @Tokenizer#max_words(integer)@. Restricts the amount of words that the tokenizer lets through to the core search engine.
 * hanke: (server) Added @Search#max_allocations(integer)@ to restrict number of allocations that are actually calculated (to avoid combinatorial and UI explosions).
-* hanke: (server) Added @<<@ and @unshift@ on @Index@ and @Category@. The @unshift@ method behaves like the @add@ method when called without a second parameter. Use like @index << Thing.new(1, 'some text', 'some other text')@.
+* hanke: (server) Added @<<@ and @unshift@ on @Index@ and @Category@. The @unshift@ method behaves like the @add@ method when that one is called without a second parameter. Use like @index << Thing.new(1, 'some text', 'some other text')@.
 * hanke: (server) Existence of a source is only checked when really needed. Will fail hard if there is none, with a (hopefully) useful error message.
 
 h2. Version 3.6.7
