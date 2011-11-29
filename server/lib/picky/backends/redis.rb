@@ -104,6 +104,7 @@ module Picky
         # TODO FIXME This is actually not correct:
         #            A dumped/loaded Redis backend should use
         #            the Redis backend calculation method.
+        #            So loaded? would be more appropriate.
         #
         if immediate
           # Just checked once on the first call.
