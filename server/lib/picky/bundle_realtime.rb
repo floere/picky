@@ -7,21 +7,21 @@ module Picky
     def remove id
       # Is it anywhere?
       #
-      syms = @realtime[id]
-      return unless syms
+      str_or_syms = @realtime[id]
+      return unless str_or_syms
 
-      syms.each do |sym|
-        ids = @inverted[sym]
+      str_or_syms.each do |str_or_sym|
+        ids = @inverted[str_or_sym]
         ids.delete id
 
         if ids.empty?
-          @inverted.delete sym
-          @weights.delete  sym
+          @inverted.delete str_or_sym
+          @weights.delete  str_or_sym
           # Since no element uses this sym anymore, we can delete the similarity for it.
           # TODO Not really. Since multiple syms can point to the same encoded.
-          @similarity.delete self.similarity_strategy.encoded(sym)
+          @similarity.delete self.similarity_strategy.encoded(str_or_sym)
         else
-          @weights[sym] = self.weights_strategy.weight_for ids.size
+          @weights[str_or_sym] = self.weights_strategy.weight_for ids.size
         end
       end
 
