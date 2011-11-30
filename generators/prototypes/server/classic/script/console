@@ -2,4 +2,4 @@
 # encoding: utf-8
 #
 require 'picky/console'
-Picky::Console.start *ARGV
+Picky::Console.start

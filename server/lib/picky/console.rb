@@ -7,7 +7,7 @@ module Picky
   #
   class Console
 
-    def self.start *args
+    def self.start args = ARGV
       irb = 'irb'
 
       require 'optparse'
