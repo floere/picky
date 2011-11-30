@@ -54,7 +54,7 @@ module Picky
       # TODO Ok with category or is the bundle needed?
       #
       def hash
-        [token.to_s, category].hash
+        [token, category].hash
       end
 
       # Combines the category names with the original names.
