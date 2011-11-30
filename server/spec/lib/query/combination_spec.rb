@@ -27,6 +27,18 @@ describe Picky::Query::Combination do
     it 'should hash the token and the bundle' do
       @combination.hash.should == [@token, @category].hash
     end
+    it 'should distinguish two combinations sufficiently' do
+      category1 = stub :category,
+                       :identifier => 'some_category_identifier1'
+
+      category2 = stub :category,
+                       :identifier => 'some_category_identifier2'
+
+      combination1 = described_class.new @token, category1
+      combination2 = described_class.new @token, category2
+
+      combination1.hash.should_not == combination2.hash
+    end
   end
 
   describe 'to_result' do

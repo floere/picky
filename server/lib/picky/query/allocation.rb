@@ -8,7 +8,6 @@ module Picky
     class Allocation # :nodoc:all
 
       attr_reader :count,
-                  :ids,
                   :score,
                   :combinations,
                   :result_identifier
@@ -40,6 +39,12 @@ module Picky
       def calculate_ids amount, offset
         return [] if combinations.empty?
         @backend.ids combinations, amount, offset
+      end
+
+      # Ids return by default [].
+      #
+      def ids
+        @ids ||= []
       end
 
       # This starts the searching process.

@@ -86,6 +86,34 @@ describe Picky::Query::Allocations do
       @allocation3 = stub :allocation3, :process! => [], :count => 2 #, ids: [8, 9]
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
+    describe 'lazy evaluation' do
+      context 'small amount' do
+        before(:each) do
+          @amount = 3
+          @offset = 1
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(3,1).and_return [1, 2, 3]
+          @allocation2.should_receive(:process!).never
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, true
+        end
+      end
+      context 'larger amount' do
+        before(:each) do
+          @amount = 1
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(1,0).and_return [1]
+          @allocation2.should_receive(:process!).never
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, true
+        end
+      end
+    end
     describe 'amount spanning 3 allocations' do
       before(:each) do
         @amount = 6

@@ -72,7 +72,9 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      def process! amount, offset = 0
+      # TODO Lazy evaluation (only calculate as much as is necessary).
+      #
+      def process! amount, offset = 0, lazy = nil
         @total = 0
         current_offset = 0
         @allocations.each do |allocation|
@@ -84,6 +86,7 @@ module Picky
             amount = amount - ids.size # we need less results from the following allocation
             offset = 0                 # we have already passed the offset
           end
+          break if lazy && offset <= 0 # See above.
         end
       end
 
