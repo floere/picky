@@ -156,27 +156,35 @@ module Picky
 
                 result_id = generate_intermediate_result_id
 
-                # Intersect and store.
+                # Little optimization.
                 #
-                intersected = client.zinterstore result_id, identifiers
+                # TODO Include in the scripting version as well.
+                #
+                if identifiers.size > 1
+                  # Intersect and store.
+                  #
+                  intersected = client.zinterstore result_id, identifiers
 
-                # Return clean and early if there has been no intersection.
-                #
-                if intersected.zero?
+                  # Return clean and early if there has been no intersection.
+                  #
+                  if intersected.zero?
+                    client.del result_id
+                    return []
+                  end
+
+                  # Get the stored result.
+                  #
+                  results = client.zrange result_id, offset, (offset + amount)
+
+                  # Delete the stored result as it was only for temporary purposes.
+                  #
+                  # Note: I could also not delete it, but that
+                  #       would not be clean at all.
+                  #
                   client.del result_id
-                  return []
+                else
+                  results = client.zrange identifiers.first, offset, (offset + amount)
                 end
-
-                # Get the stored result.
-                #
-                results = client.zrange result_id, offset, (offset + amount)
-
-                # Delete the stored result as it was only for temporary purposes.
-                #
-                # Note: I could also not delete it, but that
-                #       would not be clean at all.
-                #
-                client.del result_id
 
                 results
               end

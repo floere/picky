@@ -127,11 +127,13 @@ module Picky
     def similar text
       code = similarity_strategy.encoded text
       similar_codes = code && @similarity[code]
-      if similar_codes
-        similar_codes = similar_codes.dup # TODO
+      if similar_codes.blank?
+        [] # Return a simple array.
+      else
+        similar_codes = similar_codes.dup
         similar_codes.delete text
+        similar_codes
       end
-      similar_codes || []
     end
 
     # If a key format is set, use it, else delegate to the category.

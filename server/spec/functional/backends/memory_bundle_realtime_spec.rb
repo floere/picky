@@ -17,16 +17,16 @@ describe Picky::Bundle do
                                         backend: Picky::Backends::Memory.new
   end
 
-  it 'is by default an SQLite Array' do
+  it 'is by default a Hash' do
     @bundle.realtime.should be_kind_of(Hash)
   end
-  it 'is by default an SQLite Array' do
+  it 'is by default a Hash' do
     @bundle.inverted.should be_kind_of(Hash)
   end
-  it 'is by default an SQLite Value' do
+  it 'is by default a Hash' do
     @bundle.weights.should be_kind_of(Hash)
   end
-  it 'is by default an SQLite Array' do
+  it 'is by default a Hash' do
     @bundle.similarity.should be_kind_of(Hash)
   end
 

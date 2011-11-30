@@ -10,6 +10,18 @@ describe Picky::Backends::Redis::DirectlyManipulable do
     list
   end
 
+  context 'problem cases' do
+    it 'does not dup its special abilities' do
+      list = [1,2]
+      described_class.make backend, list, 'some:key'
+      dupped_list = list.dup
+
+      client.should_receive(:zadd).never
+
+      dupped_list << 1
+    end
+  end
+
   context 'stubbed backend' do
     before(:each) do
       backend.stub! :[]

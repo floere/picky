@@ -54,6 +54,12 @@ module Picky
         @combinations.map &:to_result
       end
 
+      #
+      #
+      def to_s
+        @combinations.to_s
+      end
+
     end
 
   end

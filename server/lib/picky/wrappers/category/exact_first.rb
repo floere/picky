@@ -25,6 +25,9 @@ module Picky
                  :dump,
                  :load,
 
+                 :bundle_for,
+                 :build_realtime_mapping,
+
                  :to => :@category
 
         def initialize category

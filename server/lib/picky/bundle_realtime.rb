@@ -8,7 +8,8 @@ module Picky
       # Is it anywhere?
       #
       str_or_syms = @realtime[id]
-      return unless str_or_syms
+
+      return if str_or_syms.blank?
 
       str_or_syms.each do |str_or_sym|
         ids = @inverted[str_or_sym]
@@ -17,8 +18,10 @@ module Picky
         if ids.empty?
           @inverted.delete str_or_sym
           @weights.delete  str_or_sym
+
           # Since no element uses this sym anymore, we can delete the similarity for it.
           # TODO Not really. Since multiple syms can point to the same encoded.
+          #
           @similarity.delete self.similarity_strategy.encoded(str_or_sym)
         else
           @weights[str_or_sym] = self.weights_strategy.weight_for ids.size
@@ -31,7 +34,7 @@ module Picky
     # Returns a reference to the array where the id has been added.
     #
     def add id, str_or_sym, where = :unshift
-      str_or_syms = @realtime[id] || (@realtime[id] = [])
+      str_or_syms = @realtime[id] ||= []
 
       # Inverted.
       #
@@ -46,7 +49,7 @@ module Picky
 
         # TODO Introduce a new method?
         #
-        ids = @inverted[str_or_sym] || (@inverted[str_or_sym] = []) # Ensures that we get an extended Array
+        ids = @inverted[str_or_sym] ||= []
         ids.send where, id
       end
 
@@ -69,12 +72,12 @@ module Picky
     #
     def add_similarity str_or_sym, where = :unshift
       if encoded = self.similarity_strategy.encoded(str_or_sym)
-        similarity = @similarity[encoded] || (@similarity[encoded] = []) # Ensures that we get an extended Array
+        similars = @similarity[encoded] ||= []
 
         # Not completely correct, as others will also be affected, but meh.
         #
-        similarity.delete str_or_sym if similarity.include? str_or_sym
-        similarity.send where, str_or_sym
+        similars.delete str_or_sym if similars.include? str_or_sym
+        similars.send where, str_or_sym
       end
     end
 
@@ -96,8 +99,7 @@ module Picky
       clear_realtime
       @inverted.each_pair do |str_or_sym, ids|
         ids.each do |id|
-          str_or_syms = @realtime[id]
-          str_or_syms = (@realtime[id] = []) unless str_or_syms # TODO Nicefy.
+          str_or_syms = @realtime[id] ||= []
           @realtime[id] << str_or_sym unless str_or_syms.include? str_or_sym
         end
       end

@@ -25,9 +25,7 @@ module Picky
           res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1",
                            key.to_s
 
-          return nil unless res
-
-          array = res.empty? ? [] : Yajl::Parser.parse(res.first.first)
+          array = res.blank? ? [] : Yajl::Parser.parse(res.first.first)
           DirectlyManipulable.make self, array, key
           array
         end

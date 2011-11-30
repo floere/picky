@@ -19,7 +19,7 @@ describe Picky::Query::Combination do
     it "shows the combination's info" do
       @token.stub! :to_result => :token_result
 
-      @combination.to_s.should == 'bundle_name some_category_name:token_result'
+      @combination.to_s.should == 'bundle_name(some_category_name:token_result)'
     end
   end
 
@@ -49,7 +49,7 @@ describe Picky::Query::Combination do
 
   describe 'identifier' do
     it 'should get the category name from the bundle' do
-      @combination.identifier.should == "bundle_name:similarity:some_text"
+      @combination.identifier.should == "bundle_name:inverted:some_text"
     end
   end
 
