@@ -3,6 +3,10 @@ h2. Upcoming Version
 * hanke: (server) Backends rewritten to support realtime indexes (SQLite, Redis). Memory already supported it (needs call to @Index#build_realtime_mapping@ after loading if dumped+loaded). File backend will not support realtime index in the near future.
 * hanke: (server) Experimental, use at your own peril: Method to build the realtime index, explicitly: @Index#build_realtime_mapping@.
 
+h2. Version 3.6.9
+
+* hanke: (generators) The generated client will now use the raw JS file from Github (http://github.com/floere/picky/issues/46).
+
 h2. Version 3.6.8
 
 * hanke: (server) BREAKING Renamed the undocumented @Tokenizer#maximum_tokens(integer)@ to @Tokenizer#max_words(integer)@. Restricts the amount of words that the tokenizer lets through to the core search engine.
