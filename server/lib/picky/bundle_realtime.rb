@@ -40,6 +40,8 @@ module Picky
         ids.delete id
         ids.send where, id
       else
+        # Update the realtime index.
+        #
         str_or_syms << str_or_sym
 
         # TODO Introduce a new method?

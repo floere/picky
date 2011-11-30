@@ -20,7 +20,7 @@ module Picky
         end
 
         def initial
-          @initial && @initial.clone || (@self_indexed ? self : {})
+          @initial && @initial.clone || (@self_indexed ? self.reset_db : {})
         end
 
         def empty
@@ -62,13 +62,20 @@ module Picky
           create_directory cache_path
           lazily_initialize_client
 
-          # TODO Could this be replaced by a truncate statement?
-          #
-          db.execute 'drop table if exists key_value;'
-          db.execute 'create table key_value (key varchar(255), value text);'
-          db.execute 'create index key_idx on key_value (key);'
+          truncate_db
 
           self
+        end
+
+        def truncate_db
+          # TODO Could this be replaced by a truncate statement?
+          #
+          drop_table
+          create_table
+        end
+
+        def drop_table
+          db.execute 'drop table if exists key_value;'
         end
 
         def asynchronous

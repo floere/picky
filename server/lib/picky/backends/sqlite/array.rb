@@ -6,9 +6,15 @@ module Picky
 
       class Array < Basic
 
+        def create_table
+          db.execute 'create table key_value (key varchar(255), value text);'
+        end
+
         def []= key, array
           unless array.empty?
-            db.execute 'replace into key_value (key, value) values (?,?)', key.to_s, Yajl::Encoder.encode(array)
+            db.execute 'INSERT OR REPLACE INTO key_value (key,value) VALUES (?,?)',
+                       key.to_s,
+                       Yajl::Encoder.encode(array)
           end
 
           DirectlyManipulable.make self, array, key
@@ -16,7 +22,8 @@ module Picky
         end
 
         def [] key
-          res = db.execute "select value from key_value where key = ? limit 1;", key.to_s
+          res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1",
+                           key.to_s
 
           return nil unless res
 
@@ -26,7 +33,7 @@ module Picky
         end
 
         def delete key
-          db.execute "delete from key_value where key = (?)", key.to_s
+          db.execute "DELETE FROM key_value WHERE key = (?)", key.to_s
         end
 
       end

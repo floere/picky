@@ -20,7 +20,7 @@ module Picky
       #
       def create_inverted bundle
         extract_lambda_or(inverted, bundle) ||
-          Array.new(bundle.index_path(:inverted), self_indexed: self_indexed)
+          StringKeyArray.new(bundle.index_path(:inverted), self_indexed: self_indexed)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
@@ -34,7 +34,7 @@ module Picky
       #
       def create_similarity bundle
         extract_lambda_or(similarity, bundle) ||
-          Array.new(bundle.index_path(:similarity), self_indexed: self_indexed)
+          StringKeyArray.new(bundle.index_path(:similarity), self_indexed: self_indexed)
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
@@ -48,7 +48,7 @@ module Picky
       #
       def create_realtime bundle
         extract_lambda_or(similarity, bundle) ||
-          Array.new(bundle.index_path(:realtime), self_indexed: self_indexed)
+          IntegerKeyArray.new(bundle.index_path(:realtime), self_indexed: self_indexed)
       end
 
       # Returns the result ids for the allocation.

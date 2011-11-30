@@ -134,6 +134,8 @@ module Picky
       load_relative 'backends/sqlite/basic'
       load_relative 'backends/sqlite/array'
       load_relative 'backends/sqlite/value'
+      load_relative 'backends/sqlite/string_key_array'
+      load_relative 'backends/sqlite/integer_key_array'
 
       # Indexing and Indexed things.
       #

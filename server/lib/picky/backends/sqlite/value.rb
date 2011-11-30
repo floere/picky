@@ -6,8 +6,12 @@ module Picky
 
       class Value < Basic
 
+        def create_table
+          db.execute 'create table key_value (key varchar(255) PRIMARY KEY, value text);'
+        end
+
         def []= key, value
-          db.execute 'insert or replace into key_value (key, value) values (?,?)',
+          db.execute 'INSERT OR REPLACE INTO key_value (key, value) VALUES (?,?)',
                      key.to_s,
                      Yajl::Encoder.encode(value)
 
@@ -15,14 +19,14 @@ module Picky
         end
 
         def [] key
-          res = db.execute "select value from key_value where key = ? limit 1;", key.to_s
+          res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1;", key.to_s
           return nil if res.empty?
 
           Yajl::Parser.parse res.first.first
         end
 
         def delete key
-          db.execute "delete from key_value where key = (?)", key.to_s
+          db.execute "DELETE FROM key_value WHERE key = (?)", key.to_s
         end
 
       end
