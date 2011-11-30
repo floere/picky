@@ -128,6 +128,10 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       tokens.reject! &@reject_condition
     end
 
+    # Case sensitivity.
+    #
+    # Note: If false, simply downcases the data/query.
+    #
     def case_sensitive case_sensitive
       @case_sensitive = case_sensitive
     end
@@ -135,6 +139,9 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       !@case_sensitive
     end
 
+    # The maximum amount of words
+    # to pass into the search engine.
+    #
     def max_words amount
       @max_words = amount
     end
