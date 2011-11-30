@@ -11,8 +11,8 @@ describe Picky::Bundle do
   let(:bundle) { described_class.new :some_name, @category, @weights, :some_partial, @similarity }
 
   describe 'identifier' do
-    it 'is correct' do
-      bundle.identifier.should == 'some_index:some_category:some_name'
+    it 'should return a specific identifier' do
+      bundle.identifier.should == :'some_index:some_category:some_name'
     end
   end
 
@@ -32,12 +32,6 @@ describe Picky::Bundle do
     end
     it 'performs' do
       performance_of { bundle.similar(:trkn) }.should < 0.00006
-    end
-  end
-
-  describe 'identifier' do
-    it 'should return a specific identifier' do
-      bundle.identifier.should == 'some_index:some_category:some_name'
     end
   end
 

@@ -136,7 +136,7 @@ module Picky
     # Identifier for technical output.
     #
     def identifier
-      "#{@index.identifier}:#{name}"
+      :"#{@index.identifier}:#{name}"
     end
 
     #

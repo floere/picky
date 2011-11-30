@@ -16,7 +16,7 @@ describe Picky::Bundle do
 
   describe 'identifier' do
     it 'is correct' do
-      bundle.identifier.should == 'some_index:some_category:some_name'
+      bundle.identifier.should == :'some_index:some_category:some_name'
     end
   end
 

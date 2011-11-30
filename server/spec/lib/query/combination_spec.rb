@@ -25,7 +25,7 @@ describe Picky::Query::Combination do
 
   describe 'hash' do
     it 'should hash the token and the bundle' do
-      @combination.hash.should == [@token.to_s, @category].hash
+      @combination.hash.should == [@token, @category].hash
     end
   end
 
