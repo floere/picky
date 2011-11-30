@@ -79,7 +79,7 @@ module Picky
         current_offset = 0
         @allocations.each do |allocation|
           ids = allocation.process! amount, offset
-          @total = @total + allocation.count # the total mixed in
+          @total = @total + allocation.count # The total mixed in. TODO Needed here? Move to better location.
           if ids.empty?
             offset = offset - allocation.count unless offset.zero?
           else
