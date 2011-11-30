@@ -58,7 +58,7 @@ describe 'Search#max_allocations' do
 
     performance_of do
       try_again.search('hello world')
-    end.should < (threshold*7/9)
+    end.should < (threshold*2/3)
   end
 
 end
