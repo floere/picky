@@ -144,6 +144,11 @@ string = ->() do
 end
 GC.enable
 
+runs = ->() do
+  GC::Profiler.result.match(/\d+/)[0].to_i
+end
+GC::Profiler.enable
+
 definitions.each do |definition, description|
 
   xxs = Index.new :xxs, &definition
@@ -185,6 +190,7 @@ definitions.each do |definition, description|
       rams = []
       strings = []
       symbols = []
+      gc_runs = []
 
       [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
 
@@ -201,6 +207,8 @@ definitions.each do |definition, description|
         initial_strings = string.call
         initial_symbols = Symbol.all_symbols.size
 
+        last_gc = runs.call
+
         duration = performance_of do
 
           # compare_strings do
@@ -216,6 +224,7 @@ definitions.each do |definition, description|
         rams << (ram.call - initial_ram)
         strings << (string.call - initial_strings)
         symbols << (Symbol.all_symbols.size - initial_symbols)
+        gc_runs << (runs.call - last_gc)
 
         print ", "
         print "%2.4f" % (duration*1000/amount)
@@ -238,6 +247,7 @@ definitions.each do |definition, description|
       print "("
       print symbols.map { |s| "%2.1f" % (s/amount.to_f) }.join(', ')
       print ")"
+      print " %2d" % gc_runs.sum
       puts
 
     end
