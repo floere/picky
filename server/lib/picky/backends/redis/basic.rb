@@ -31,7 +31,7 @@ module Picky
         # together.
         #
         def empty
-          @empty && @empty.clone || (@immediate ? self : {})
+          @empty && @empty.clone || (@immediate ? self.reset : {})
         end
 
         # The initial content before loading.
@@ -40,7 +40,7 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.clone || (@immediate ? self : {})
+          @initial && @initial.clone || (@immediate ? self.reset : {})
         end
 
         # Returns itself.
@@ -53,6 +53,13 @@ module Picky
         #
         def retrieve
           # Nothing.
+        end
+
+        # Clears the whole namespace.
+        #
+        def reset
+          clear
+          self
         end
 
         #

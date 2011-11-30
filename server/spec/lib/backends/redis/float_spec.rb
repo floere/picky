@@ -27,6 +27,11 @@ describe Picky::Backends::Redis::Float do
 
       backend['anything'].should == 1.23
     end
+    it 'returns whatever it gets from the backend' do
+      client.should_receive(:hget).any_number_of_times.and_return nil
+
+      backend['anything'].should == nil
+    end
   end
 
   describe 'to_s' do

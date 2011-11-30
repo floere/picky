@@ -20,11 +20,11 @@ module Picky
         end
 
         def initial
-          @initial && @initial.clone || (@self_indexed ? self.reset_db : {})
+          @initial && @initial.clone || (@self_indexed ? self.reset : {})
         end
 
         def empty
-          @empty && @empty.clone || (@self_indexed ? self.reset_db.asynchronous : {})
+          @empty && @empty.clone || (@self_indexed ? self.reset.asynchronous : {})
         end
 
         def dump internal
@@ -45,7 +45,7 @@ module Picky
         end
 
         def dump_sqlite internal
-          reset_db
+          reset
 
           transaction do
             # Note: Internal structures need to
@@ -58,7 +58,7 @@ module Picky
           end
         end
 
-        def reset_db
+        def reset
           create_directory cache_path
           lazily_initialize_client
 

@@ -125,98 +125,100 @@ describe Picky::Bundle do
     end
   end
 
-  context 'symbols' do
-    describe 'combined' do
-      it 'works correctly' do
-        @bundle.add 1, :title
-        @bundle.add 2, :title
-
-        @bundle.realtime[1].should == [:title]
-        @bundle.realtime[2].should == [:title]
-        @bundle.inverted[:title].should == [2,1]
-        @bundle.weights[:title].should == 0.693
-        @bundle.similarity[:TTL].should == [:title]
-      end
-      it 'works correctly' do
-        @bundle.add 1, :title
-        @bundle.add 2, :title
-        @bundle.remove 1
-        @bundle.remove 2
-
-        @bundle.realtime[1].should == []
-        @bundle.realtime[2].should == []
-        @bundle.inverted[:title].should == []
-        @bundle.weights[:title].should == nil
-        @bundle.similarity[:TTL].should == []
-      end
-      it 'works correctly' do
-        @bundle.add 1, :title
-        @bundle.add 1, :other
-        @bundle.add 1, :whatever
-        @bundle.remove 1
-
-        @bundle.realtime[1].should == []
-        @bundle.inverted[:title].should == []
-        @bundle.weights[:title].should == nil
-        @bundle.similarity[:TTL].should == []
-      end
-      it 'works correctly' do
-        @bundle.add 1, :title
-        @bundle.add 2, :thing
-        @bundle.add 1, :other
-        @bundle.remove 1
-
-        @bundle.realtime[1].should == []
-        @bundle.realtime[2].should == [:thing]
-        @bundle.inverted[:thing].should == [2]
-        @bundle.weights[:thing].should == 0.0
-        @bundle.similarity[:'0NK'].should == [:thing]
-      end
-      it 'works correctly' do
-        @bundle.add 1, :title
-        @bundle.add 1, :title
-
-        @bundle.realtime[1].should == [:title]
-        @bundle.inverted[:title].should == [1]
-        @bundle.weights[:title].should == 0.0
-        @bundle.similarity[:'TTL'].should == [:title]
-      end
-      it 'works correctly' do
-        @bundle.add 1, :title
-        @bundle.remove 1
-        @bundle.remove 1
-
-        @bundle.realtime[1].should == []
-        @bundle.inverted[:title].should == []
-        @bundle.weights[:title].should == nil
-        @bundle.similarity[:TTL].should == []
-      end
-    end
-
-    describe 'add' do
-      it 'works correctly' do
-        @bundle.add 1, :title
-
-        @bundle.realtime[1].should == [:title]
-
-        @bundle.add 2, :other
-
-        @bundle.realtime[1].should == [:title]
-        @bundle.realtime[2].should == [:other]
-
-        @bundle.add 1, :thing
-
-        @bundle.realtime[1].should == [:title, :thing]
-        @bundle.realtime[2].should == [:other]
-      end
-      it 'works correctly' do
-        @bundle.add 1, :title
-
-        @bundle.weights[:title].should == 0.0
-        @bundle.inverted[:title].should == [1]
-        @bundle.similarity[:TTL].should == [:title]
-      end
-    end
-  end
+  # TODO Add symbols.
+  #
+  # context 'symbols' do
+  #   describe 'combined' do
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #       @bundle.add 2, :title
+  #
+  #       @bundle.realtime[1].should == [:title]
+  #       @bundle.realtime[2].should == [:title]
+  #       @bundle.inverted[:title].should == [2,1]
+  #       @bundle.weights[:title].should == 0.693
+  #       @bundle.similarity[:TTL].should == [:title]
+  #     end
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #       @bundle.add 2, :title
+  #       @bundle.remove 1
+  #       @bundle.remove 2
+  #
+  #       @bundle.realtime[1].should == []
+  #       @bundle.realtime[2].should == []
+  #       @bundle.inverted[:title].should == []
+  #       @bundle.weights[:title].should == nil
+  #       @bundle.similarity[:TTL].should == []
+  #     end
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #       @bundle.add 1, :other
+  #       @bundle.add 1, :whatever
+  #       @bundle.remove 1
+  #
+  #       @bundle.realtime[1].should == []
+  #       @bundle.inverted[:title].should == []
+  #       @bundle.weights[:title].should == nil
+  #       @bundle.similarity[:TTL].should == []
+  #     end
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #       @bundle.add 2, :thing
+  #       @bundle.add 1, :other
+  #       @bundle.remove 1
+  #
+  #       @bundle.realtime[1].should == []
+  #       @bundle.realtime[2].should == [:thing]
+  #       @bundle.inverted[:thing].should == [2]
+  #       @bundle.weights[:thing].should == 0.0
+  #       @bundle.similarity[:'0NK'].should == [:thing]
+  #     end
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #       @bundle.add 1, :title
+  #
+  #       @bundle.realtime[1].should == [:title]
+  #       @bundle.inverted[:title].should == [1]
+  #       @bundle.weights[:title].should == 0.0
+  #       @bundle.similarity[:'TTL'].should == [:title]
+  #     end
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #       @bundle.remove 1
+  #       @bundle.remove 1
+  #
+  #       @bundle.realtime[1].should == []
+  #       @bundle.inverted[:title].should == []
+  #       @bundle.weights[:title].should == nil
+  #       @bundle.similarity[:TTL].should == []
+  #     end
+  #   end
+  #
+  #   describe 'add' do
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #
+  #       @bundle.realtime[1].should == [:title]
+  #
+  #       @bundle.add 2, :other
+  #
+  #       @bundle.realtime[1].should == [:title]
+  #       @bundle.realtime[2].should == [:other]
+  #
+  #       @bundle.add 1, :thing
+  #
+  #       @bundle.realtime[1].should == [:title, :thing]
+  #       @bundle.realtime[2].should == [:other]
+  #     end
+  #     it 'works correctly' do
+  #       @bundle.add 1, :title
+  #
+  #       @bundle.weights[:title].should == 0.0
+  #       @bundle.inverted[:title].should == [1]
+  #       @bundle.similarity[:TTL].should == [:title]
+  #     end
+  #   end
+  # end
 
 end

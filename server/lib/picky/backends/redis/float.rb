@@ -13,8 +13,12 @@ module Picky
         # Note: Works like the StringHash method, but
         # returns a float corresponding to that string.
         #
+        # Note: nil.to_f returns 0.0. That's why the
+        #       code below looks a bit funny.
+        #
         def [] key
-          super.to_f
+          float = super
+          float && float.to_f
         end
 
       end

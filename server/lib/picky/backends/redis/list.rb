@@ -21,7 +21,7 @@ module Picky
         # Deletes the list for the key.
         #
         def delete key
-          client.del key
+          client.del "#{namespace}:#{key}"
         end
 
         # Writes the hash into Redis.
@@ -61,6 +61,7 @@ module Picky
             i += 1
             client.zadd redis_key, i, value
           end
+
           self[key] # TODO Performance?
         end
 
