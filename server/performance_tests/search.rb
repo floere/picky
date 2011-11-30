@@ -6,6 +6,24 @@ require File.expand_path '../../lib/picky', __FILE__
 
 class Object; def timed_exclaim(_); end end
 
+def compare_strings
+
+  s1 = []
+  ObjectSpace.each_object(String) do |s|
+    s1 << s
+  end
+
+  yield
+
+  s2 = []
+  ObjectSpace.each_object(String) do |s|
+    s2 << s
+  end
+
+  p s2 - s1
+
+end
+
 def performance_of
   if block_given?
     code = Proc.new
@@ -84,6 +102,8 @@ backends = [
   Backends::File.new,
   Backends::SQLite.new,
   Backends::Redis.new,
+  Backends::SQLite.new(self_indexed: true),
+  Backends::Redis.new(immediate: true),
 ]
 
 definitions = []
@@ -146,7 +166,7 @@ definitions.each do |definition, description|
   backends.each do |backend|
 
     puts
-    puts "All measurements in ms!"
+    puts "All measurements in ms! (Strings/Symbols per search request)"
     puts backend.class
 
     Indexes.each do |data|
@@ -183,9 +203,13 @@ definitions.each do |definition, description|
 
         duration = performance_of do
 
-          queries.each do |query|
-            run.search query
-          end
+          # compare_strings do
+
+            queries.each do |query|
+              run.search query
+            end
+
+          # end
 
         end
 
@@ -204,15 +228,15 @@ definitions.each do |definition, description|
       print "("
       print rams.map { |s| "%6d" % s }.join(', ')
       print ")"
-      print "  %6d " % strings.sum
+      print "  %6d " % (strings.sum/amount.to_f)
       print "Strings "
       print "("
-      print strings.map { |s| "%6d" % s }.join(', ')
+      print strings.map { |s| "%4.1f" % (s/amount.to_f) }.join(', ')
       print ")"
-      print " %6d " % symbols.sum
+      print " %6d " % (symbols.sum/amount.to_f)
       print "Symbols  "
       print "("
-      print symbols.map { |s| "%4d" % s }.join(', ')
+      print symbols.map { |s| "%2.1f" % (s/amount.to_f) }.join(', ')
       print ")"
       puts
 
