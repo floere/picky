@@ -94,10 +94,10 @@ describe Picky::Query::Allocations do
         end
         it 'should call the process! method right' do
           @allocation1.should_receive(:process!).once.with(3,1).and_return [1, 2, 3]
-          @allocation2.should_receive(:process!).never
+          @allocation2.should_receive(:process!).once.with(0,0).and_return [] # TODO Actually ok?
           @allocation3.should_receive(:process!).never
 
-          @allocations.process! @amount, @offset, true
+          @allocations.process! @amount, @offset, 0
         end
       end
       context 'larger amount' do
@@ -107,10 +107,10 @@ describe Picky::Query::Allocations do
         end
         it 'should call the process! method right' do
           @allocation1.should_receive(:process!).once.with(1,0).and_return [1]
-          @allocation2.should_receive(:process!).never
+          @allocation2.should_receive(:process!).once.with(0,0).and_return [] # TODO Actually ok?
           @allocation3.should_receive(:process!).never
 
-          @allocations.process! @amount, @offset, true
+          @allocations.process! @amount, @offset, 0
         end
       end
     end
