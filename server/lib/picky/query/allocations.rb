@@ -72,7 +72,6 @@ module Picky
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
       def process! amount, offset = 0, terminate_early = nil
-        current_offset = 0
         each do |allocation|
           ids = allocation.process! amount, offset
           if ids.empty?
@@ -82,7 +81,7 @@ module Picky
             offset = 0                 # we have already passed the offset
           end
           if terminate_early
-            break if terminate_early < 0 && offset <= 0
+            break if terminate_early <= 0 && amount <= 0
             terminate_early -= 1
           end
         end

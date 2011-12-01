@@ -81,20 +81,20 @@ describe Picky::Query::Allocations do
 
   describe 'process!' do
     before(:each) do
-      @allocation1 = stub :allocation1, :process! => [], :count => 4 #, ids: [1, 2, 3, 4]
-      @allocation2 = stub :allocation2, :process! => [], :count => 3 #, ids: [5, 6, 7]
-      @allocation3 = stub :allocation3, :process! => [], :count => 2 #, ids: [8, 9]
+      @allocation1 = stub :allocation1, :count => 4 #, ids: [1, 2, 3, 4]
+      @allocation2 = stub :allocation2, :count => 3 #, ids: [5, 6, 7]
+      @allocation3 = stub :allocation3, :count => 2 #, ids: [8, 9]
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     describe 'lazy evaluation' do
       context 'small amount' do
         before(:each) do
-          @amount = 3
+          @amount = 5
           @offset = 1
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(3,1).and_return [1, 2, 3]
-          @allocation2.should_receive(:process!).once.with(0,0).and_return [] # TODO Actually ok?
+          @allocation1.should_receive(:process!).once.with(5,1).and_return [2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(2,0).and_return [5, 6]
           @allocation3.should_receive(:process!).never
 
           @allocations.process! @amount, @offset, 0
@@ -107,10 +107,101 @@ describe Picky::Query::Allocations do
         end
         it 'should call the process! method right' do
           @allocation1.should_receive(:process!).once.with(1,0).and_return [1]
-          @allocation2.should_receive(:process!).once.with(0,0).and_return [] # TODO Actually ok?
+          @allocation2.should_receive(:process!).never
           @allocation3.should_receive(:process!).never
 
           @allocations.process! @amount, @offset, 0
+        end
+      end
+      context 'small amount and early 1' do
+        before(:each) do
+          @amount = 5
+          @offset = 1
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(5,1).and_return [2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(2,0).and_return [5, 6]
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, 1
+        end
+      end
+      context 'larger amount and early 1' do
+        before(:each) do
+          @amount = 1
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(1,0).and_return [1]
+          @allocation2.should_receive(:process!).once.with(0,0).and_return []
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, 1
+        end
+      end
+      context 'larger amount and early 0' do
+        before(:each) do
+          @amount = 4
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(4,0).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).never
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, 0
+        end
+      end
+      context 'larger amount and early 1' do
+        before(:each) do
+          @amount = 4
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(4,0).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(0,0).and_return []
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, 1
+        end
+      end
+      context 'larger amount and early 0' do
+        before(:each) do
+          @amount = 5
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(5,0).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(1,0).and_return [5]
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, 0
+        end
+      end
+      context 'larger amount and early 1' do
+        before(:each) do
+          @amount = 5
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(5,0).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(1,0).and_return [5]
+          @allocation3.should_receive(:process!).never
+
+          @allocations.process! @amount, @offset, 1
+        end
+      end
+      context 'larger amount and early 1' do
+        before(:each) do
+          @amount = 8
+          @offset = 0
+        end
+        it 'should call the process! method right' do
+          @allocation1.should_receive(:process!).once.with(8,0).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(4,0).and_return [5, 6, 7]
+          @allocation3.should_receive(:process!).once.with(1,0).and_return [8]
+
+          @allocations.process! @amount, @offset, 1
         end
       end
     end
@@ -162,7 +253,8 @@ describe Picky::Query::Allocations do
         end
         it 'should return certain ids' do
           @allocation1.should_receive(:process!).once.with(3,0).and_return [1,2,3]
-          @allocation2.should_receive(:process!).once.with(0,0)
+          @allocation2.should_receive(:process!).once.with(0,0).and_return []
+          @allocation3.should_receive(:process!).once.with(0,0).and_return []
 
           @allocations.process! @amount, @offset
         end
@@ -174,6 +266,7 @@ describe Picky::Query::Allocations do
         it 'should return certain ids' do
           @allocation1.should_receive(:process!).once.with(3,3).and_return [4]
           @allocation2.should_receive(:process!).once.with(2,0).and_return [5,6]
+          @allocation3.should_receive(:process!).once.with(0,0).and_return []
 
           @allocations.process! @amount, @offset
         end

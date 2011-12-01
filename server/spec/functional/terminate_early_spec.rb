@@ -23,6 +23,9 @@ describe 'Search#terminate_early' do
     try = Picky::Search.new index
     try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5]
 
+    try = Picky::Search.new index
+    try.search('hello', 30).ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1]
+
     try = Picky::Search.new index do
       terminate_early
     end
@@ -37,21 +40,33 @@ describe 'Search#terminate_early' do
       terminate_early with_extra_allocations: 0
     end
     try.search('hello', 9).ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4]
+    try.search('hello', 9, 4).ids.should ==          [2, 1, 6, 5, 4, 3, 2, 1, 6]
+    try.search('hello', 9, 7).ids.should ==                   [5, 4, 3, 2, 1, 6, 5, 4, 3]
+    try.search('hello', 9, 10).ids.should ==                           [2, 1, 6, 5, 4, 3, 2, 1, 6]
+    try.search('hello', 9, 13).ids.should ==                                    [5, 4, 3, 2, 1, 6, 5, 4, 3]
+    try.search('hello', 9, 16).ids.should ==                                             [2, 1, 6, 5, 4, 3, 2, 1]
+    try.search('hello', 9, 19).ids.should ==                                                      [5, 4, 3, 2, 1]
+    try.search('hello', 9, 22).ids.should ==                                                               [2, 1]
+    try.search('hello', 9, 25).ids.should ==                                                                     []
 
     try = Picky::Search.new index do
       terminate_early 0
     end
-    try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1]
+    try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5]
 
     try = Picky::Search.new index do
       terminate_early with_extra_allocations: 0
     end
-    try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1]
+    try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5]
 
     try = Picky::Search.new index do
       terminate_early 2
     end
     try.search('hello', 13).ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6]
+    try.search('hello', 13, 4).ids.should ==          [2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2]
+    try.search('hello', 13, 8).ids.should ==                      [4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4]
+    try.search('hello', 13, 12).ids.should ==                                 [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1]
+    try.search('hello', 13, 16).ids.should ==                                             [2, 1, 6, 5, 4, 3, 2, 1]
 
     try = Picky::Search.new index do
       terminate_early with_extra_allocations: 2

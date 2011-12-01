@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.14
+
+* hanke: (server) Fix for terminate_early with offsets in 3.6.12 (thanks niko!).
+
 h2. Version 3.6.13
 
 * hanke: (server) Fix for exact first matching (thanks geelen!).
