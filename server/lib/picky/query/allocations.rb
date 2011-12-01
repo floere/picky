@@ -11,6 +11,7 @@ module Picky
                :first,
                :inject,
                :size,
+               :map,
                :to => :@allocations
 
       def initialize allocations = []

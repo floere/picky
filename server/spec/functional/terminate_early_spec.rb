@@ -85,6 +85,12 @@ describe 'Search#terminate_early' do
     try.search('hello', 13, 12).to_hash[:allocations].size.should == 4
     try.search('hello', 13, 16).to_hash[:allocations].size.should == 4
 
+    try.search('hello', 13).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 13, 4).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 13, 8).allocations.map(&:count).should == [6, 6, 6, 6]
+    try.search('hello', 13, 12).allocations.map(&:count).should == [6, 6, 6, 6]
+    try.search('hello', 13, 16).allocations.map(&:count).should == [6, 6, 6, 6]
+
     try = Picky::Search.new index do
       terminate_early with_extra_allocations: 2
     end
@@ -111,6 +117,14 @@ describe 'Search#terminate_early' do
     try.search('hello', 1, 16).to_hash[:allocations].size.should == 3
     try.search('hello', 1, 20).to_hash[:allocations].size.should == 4
     try.search('hello', 1, 24).to_hash[:allocations].size.should == 4
+
+    try.search('hello', 1).allocations.map(&:count).should == [6, 6, nil, nil]
+    try.search('hello', 1, 4).allocations.map(&:count).should == [6, 6, nil, nil]
+    try.search('hello', 1, 8).allocations.map(&:count).should == [6, 6, nil, nil]
+    try.search('hello', 1, 12).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 1, 16).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 1, 20).allocations.map(&:count).should == [6, 6, 6, 6]
+    try.search('hello', 1, 24).allocations.map(&:count).should == [6, 6, 6, 6]
 
     GC.start
 
