@@ -63,18 +63,55 @@ describe 'Search#terminate_early' do
     end
     try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5]
 
-    slow = performance_of do
-      try.search 'hello'
-    end
+    GC.start
 
-    try = Picky::Search.new index do
+    try_slow = Picky::Search.new index
+    slow = performance_of do
+      try_slow.search 'hello'
+    end
+    try_fast = Picky::Search.new index do
       terminate_early
     end
     fast = performance_of do
-      try.search 'hello'
+      try_fast.search 'hello'
     end
-    
-    (slow/fast).should
+    (slow/fast).should >= 1.1
+
+    try_slow = Picky::Search.new index
+    slow = performance_of do
+      try_slow.search 'hello hello'
+    end
+    try_fast = Picky::Search.new index do
+      terminate_early
+    end
+    fast = performance_of do
+      try_fast.search 'hello hello'
+    end
+    (slow/fast).should >= 1.4
+
+    try_slow = Picky::Search.new index
+    slow = performance_of do
+      try_slow.search 'hello hello hello'
+    end
+    try_fast = Picky::Search.new index do
+      terminate_early
+    end
+    fast = performance_of do
+      try_fast.search 'hello hello hello'
+    end
+    (slow/fast).should >= 1.8
+
+    try_slow = Picky::Search.new index
+    slow = performance_of do
+      try_slow.search 'hello hello hello hello'
+    end
+    try_fast = Picky::Search.new index do
+      terminate_early
+    end
+    fast = performance_of do
+      try_fast.search 'hello hello hello hello'
+    end
+    (slow/fast).should >= 2.0
   end
 
 end
