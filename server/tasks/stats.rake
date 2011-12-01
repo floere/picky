@@ -2,7 +2,7 @@
 #
 desc "Pedestrian CLOC statistics."
 task :stats do
-  %w|lib spec test_project|.each do |dir|
+  %w|lib spec test_project test_project_sinatra|.each do |dir|
     original_dir = dir
     dir = "#{dir}/*.rb"
     dirs = 5.times.inject([dir]) do |dirs, _|

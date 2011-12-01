@@ -103,12 +103,6 @@ module Picky
         @allocations
       end
 
-      # Simply inspects the internal allocations.
-      #
-      def to_s
-        @allocations.inspect
-      end
-
       # Allocations for results are in the form:
       # [
       #   allocation1.to_result,
@@ -118,6 +112,12 @@ module Picky
       #
       def to_result
         @allocations.map(&:to_result).compact
+      end
+
+      # Simply inspects the internal allocations.
+      #
+      def to_s
+        to_result.inspect
       end
 
     end

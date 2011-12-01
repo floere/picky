@@ -70,7 +70,7 @@ module Picky
       # Transform the allocation into result form.
       #
       def to_result
-        [self.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count > 0
+        [self.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count && self.count > 0
       end
 
       # Json representation of this allocation.

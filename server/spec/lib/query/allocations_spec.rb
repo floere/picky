@@ -362,12 +362,12 @@ describe Picky::Query::Allocations do
 
   describe "to_s" do
     before(:each) do
-      @internal_allocations = mock :internal_allocations
-      @allocations = described_class.new @internal_allocations
+      @allocation           = stub :allocation, :to_result => :some_result
+      @no_result_allocation = stub :no_results, :to_result => nil
+      @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
     end
     it "should delegate to the internal allocations array" do
-      @internal_allocations.should_receive(:inspect).once
-      @allocations.to_s
+      @allocations.to_s.should == "[:some_result, :some_result]"
     end
   end
 

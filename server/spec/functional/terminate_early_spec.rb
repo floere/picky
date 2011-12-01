@@ -49,6 +49,17 @@ describe 'Search#terminate_early' do
     try.search('hello', 9, 22).ids.should ==                                                               [2, 1]
     try.search('hello', 9, 25).ids.should ==                                                                     []
 
+    try.search('hello', 9).to_hash[:allocations].size.should == 2
+    try.search('hello', 9, 4).to_hash[:allocations].size.should == 3
+    try.search('hello', 9, 7).to_hash[:allocations].size.should == 3
+    try.search('hello', 9, 10).to_hash[:allocations].size.should == 4
+    try.search('hello', 9, 13).to_hash[:allocations].size.should == 4
+    try.search('hello', 9, 16).to_hash[:allocations].size.should == 4
+    try.search('hello', 9, 19).to_hash[:allocations].size.should == 4
+    try.search('hello', 9, 22).to_hash[:allocations].size.should == 4
+    try.search('hello', 9, 25).to_hash[:allocations].size.should == 4
+
+
     try = Picky::Search.new index do
       terminate_early 0
     end
@@ -68,6 +79,12 @@ describe 'Search#terminate_early' do
     try.search('hello', 13, 12).ids.should ==                                 [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1]
     try.search('hello', 13, 16).ids.should ==                                             [2, 1, 6, 5, 4, 3, 2, 1]
 
+    try.search('hello', 13).to_hash[:allocations].size.should == 3
+    try.search('hello', 13, 4).to_hash[:allocations].size.should == 3
+    try.search('hello', 13, 8).to_hash[:allocations].size.should == 4
+    try.search('hello', 13, 12).to_hash[:allocations].size.should == 4
+    try.search('hello', 13, 16).to_hash[:allocations].size.should == 4
+
     try = Picky::Search.new index do
       terminate_early with_extra_allocations: 2
     end
@@ -77,6 +94,23 @@ describe 'Search#terminate_early' do
       terminate_early with_extra_allocations: 1234
     end
     try.search('hello').ids.should == [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 6, 5]
+
+    try = Picky::Search.new index do
+      terminate_early 1
+    end
+    try.search('hello', 1).ids.should == [6]
+    try.search('hello', 1, 4).ids.should ==          [2]
+    try.search('hello', 1, 8).ids.should ==                      [4]
+    try.search('hello', 1, 12).ids.should ==                                 [6]
+    try.search('hello', 1, 16).ids.should ==                                             [2]
+
+    try.search('hello', 1).to_hash[:allocations].size.should == 2
+    try.search('hello', 1, 4).to_hash[:allocations].size.should == 2
+    try.search('hello', 1, 8).to_hash[:allocations].size.should == 2
+    try.search('hello', 1, 12).to_hash[:allocations].size.should == 3
+    try.search('hello', 1, 16).to_hash[:allocations].size.should == 3
+    try.search('hello', 1, 20).to_hash[:allocations].size.should == 4
+    try.search('hello', 1, 24).to_hash[:allocations].size.should == 4
 
     GC.start
 
