@@ -80,6 +80,37 @@ module Picky
       amount ? @max_allocations = amount : @max_allocations
     end
 
+    # Tells Picky to terminate calculating ids if it has enough ids.
+    # (So, early)
+    #
+    # Important note: Do not use this for the live search!
+    #                 (As Picky needs to calculate the total)
+    #
+    # Note: When using the Picky interface, do not terminate too
+    #       early as this will kill off the allocation selections.
+    #       A value of
+    #         early_terminate 5
+    #       is probably a good idea to show the user 5 extra
+    #       beyond the needed ones.
+    #
+    # Examples:
+    #   # Terminate if you have enough ids.
+    #   #
+    #   search = Search.new(index1, index2, index3) do
+    #     terminate_early
+    #   end
+    #
+    #   # After calculating enough ids,
+    #   # calculate 5 extra allocations for the interface.
+    #   #
+    #   search = Search.new(index1, index2, index3) do
+    #     terminate_early 5
+    #   end
+    #
+    def terminate_early extra_allocations = 0
+      @extra_allocations = extra_allocations.respond_to?(:to_hash) ? extra_allocations[:with_extra_allocations] : extra_allocations
+    end
+
     # Examples:
     #   search = Search.new(books_index, dvd_index, mp3_index) do
     #     boost [:author, :title] => +3,
@@ -174,7 +205,7 @@ module Picky
     # Note: Internal method, use #search to search.
     #
     def execute tokens, ids, offset, original_text = nil
-      Results.from original_text, ids, offset, sorted_allocations(tokens, @max_allocations)
+      Results.from original_text, ids, offset, sorted_allocations(tokens, @max_allocations), @extra_allocations
     end
 
     # Delegates the tokenizing to the query tokenizer.

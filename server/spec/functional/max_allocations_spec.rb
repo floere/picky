@@ -38,7 +38,7 @@ describe 'Search#max_allocations' do
       category :text4
     end
 
-    thing = Struct.new(:id, :text1, :text2, :text3, :text4)
+    thing = Struct.new :id, :text1, :text2, :text3, :text4
     index.add thing.new(1, 'hello world', 'hello world', 'hello world', 'hello world')
     index.add thing.new(2, 'hello world', 'hello world', 'hello world', 'hello world')
     index.add thing.new(3, 'hello world', 'hello world', 'hello world', 'hello world')
@@ -49,7 +49,7 @@ describe 'Search#max_allocations' do
     try = Picky::Search.new index
 
     threshold = performance_of do
-      try.search('hello world')
+      try.search 'hello world'
     end
 
     try_again = Picky::Search.new index do
@@ -57,7 +57,7 @@ describe 'Search#max_allocations' do
     end
 
     performance_of do
-      try_again.search('hello world')
+      try_again.search 'hello world'
     end.should < (threshold*2/3)
   end
 

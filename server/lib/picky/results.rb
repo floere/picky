@@ -24,9 +24,9 @@ module Picky
 
     # Create new results and calculate the ids.
     #
-    def self.from query, amount, offset, allocations
+    def self.from query, amount, offset, allocations, extra_allocations = nil
       results = new query, amount, offset, allocations
-      results.prepare!
+      results.prepare! extra_allocations
       results
     end
 
@@ -53,8 +53,8 @@ module Picky
     # Without this, the allocations are not processed,
     # and no ids are calculated.
     #
-    def prepare!
-      allocations.process! amount, offset
+    def prepare! extra_allocations = nil
+      allocations.process! amount, offset, extra_allocations
     end
 
     # Returns a hash with the allocations, offset, duration and total.

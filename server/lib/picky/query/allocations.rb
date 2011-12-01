@@ -6,8 +6,6 @@ module Picky
     #
     class Allocations # :nodoc:all
 
-      attr_reader :total
-
       delegate :each,
                :empty?,
                :first,
@@ -63,6 +61,7 @@ module Picky
       # Parameters:
       #  * amount: the amount of ids to calculate
       #  * offset: the offset from where in the result set to take the ids
+      #  * terminate_early: Whether to calculate all allocations.
       #
       # Note: With an amount of 0, an offset > 0 doesn't make much
       #       sense, as seen in the live search.
@@ -72,21 +71,28 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      # TODO Lazy evaluation (only calculate as much as is necessary).
-      #
-      def process! amount, offset = 0, lazy = nil
-        @total = 0
+      def process! amount, offset = 0, terminate_early = nil
         current_offset = 0
-        @allocations.each do |allocation|
+        each do |allocation|
           ids = allocation.process! amount, offset
-          @total = @total + allocation.count # The total mixed in. TODO Needed here? Move to better location.
           if ids.empty?
             offset = offset - allocation.count unless offset.zero?
           else
             amount = amount - ids.size # we need less results from the following allocation
             offset = 0                 # we have already passed the offset
           end
-          break if lazy && offset <= 0 # See above.
+          if terminate_early
+            break if terminate_early < 0 && offset <= 0
+            terminate_early -= 1
+          end
+        end
+      end
+
+      # The total is simply the sum of the counts of all allocations.
+      #
+      def total
+        @total ||= inject(0) do |total, allocation|
+          total + (allocation.count || break)
         end
       end
 
