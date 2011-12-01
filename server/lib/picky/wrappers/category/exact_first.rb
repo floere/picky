@@ -25,6 +25,8 @@ module Picky
                  :dump,
                  :load,
 
+                 :empty,
+
                  :bundle_for,
                  :build_realtime_mapping,
 
