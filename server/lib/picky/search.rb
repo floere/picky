@@ -5,8 +5,8 @@ module Picky
   # = Picky Searches
   #
   # A Picky Search is an object which:
-  #  * holds one or more indexes
-  #  * offers an interface to query these indexes.
+  # * holds one or more indexes
+  # * offers an interface to query these indexes.
   #
   # You connect URL paths to indexes via a Query.
   #
@@ -84,14 +84,14 @@ module Picky
     # (So, early)
     #
     # Important note: Do not use this for the live search!
-    #                 (As Picky needs to calculate the total)
+    # (As Picky needs to calculate the total)
     #
     # Note: When using the Picky interface, do not terminate too
-    #       early as this will kill off the allocation selections.
-    #       A value of
-    #         early_terminate 5
-    #       is probably a good idea to show the user 5 extra
-    #       beyond the needed ones.
+    # early as this will kill off the allocation selections.
+    # A value of
+    #    early_terminate 5
+    # is probably a good idea to show the user 5 extra
+    # beyond the needed ones.
     #
     # Examples:
     #   # Terminate if you have enough ids.
