@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.13
+
+* hanke: (server) Fix for exact first matching (thanks geelen!).
+
 h2. Version 3.6.12
 
 * hanke: (server) @Picky::Search@ option @terminate_early(integer)@ or @terminate_early(with_extra_allocations: integer)@ introduces early termination. If in your interface you only need the ids and no total, then this is the option for you. Calling @terminate_early@ without parameters will use 0 as the default.

@@ -197,6 +197,7 @@ definitions.each do |definition, description|
         queries.prepare
 
         run = Search.new data
+        run.terminate_early
 
         # Quick sanity check.
         #

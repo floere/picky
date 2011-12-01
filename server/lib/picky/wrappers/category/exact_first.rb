@@ -11,6 +11,8 @@ module Picky
       #
       class ExactFirst
 
+        # TODO Refactor!
+        #
         delegate :add,
                  :qualifiers,
                  :exact,
@@ -26,6 +28,10 @@ module Picky
                  :load,
 
                  :empty,
+                 :prepared_index_file,
+                 :tokenizer,
+                 :cache,
+                 :from,
 
                  :bundle_for,
                  :build_realtime_mapping,
