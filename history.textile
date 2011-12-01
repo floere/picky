@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 3.6.16
+
+* hanke: (server) Semantics for terminate_early(n) are to calculate n more allocations than necessary. A n of 0 means that only exactly the number of necessary allocations for the ids is calculated.
+
 h2. Version 3.6.14/15
 
 * hanke: (server) Fix for terminate_early with offsets in 3.6.12 (thanks niko!).

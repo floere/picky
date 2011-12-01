@@ -79,14 +79,14 @@ describe 'Search#terminate_early' do
     try.search('hello', 13, 12).ids.should ==                                 [6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1]
     try.search('hello', 13, 16).ids.should ==                                             [2, 1, 6, 5, 4, 3, 2, 1]
 
-    try.search('hello', 13).to_hash[:allocations].size.should == 3
-    try.search('hello', 13, 4).to_hash[:allocations].size.should == 3
+    try.search('hello', 13).to_hash[:allocations].size.should == 4
+    try.search('hello', 13, 4).to_hash[:allocations].size.should == 4
     try.search('hello', 13, 8).to_hash[:allocations].size.should == 4
     try.search('hello', 13, 12).to_hash[:allocations].size.should == 4
     try.search('hello', 13, 16).to_hash[:allocations].size.should == 4
 
-    try.search('hello', 13).allocations.map(&:count).should == [6, 6, 6, nil]
-    try.search('hello', 13, 4).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 13).allocations.map(&:count).should == [6, 6, 6, 6]
+    try.search('hello', 13, 4).allocations.map(&:count).should == [6, 6, 6, 6]
     try.search('hello', 13, 8).allocations.map(&:count).should == [6, 6, 6, 6]
     try.search('hello', 13, 12).allocations.map(&:count).should == [6, 6, 6, 6]
     try.search('hello', 13, 16).allocations.map(&:count).should == [6, 6, 6, 6]
@@ -112,19 +112,41 @@ describe 'Search#terminate_early' do
 
     try.search('hello', 1).to_hash[:allocations].size.should == 2
     try.search('hello', 1, 4).to_hash[:allocations].size.should == 2
-    try.search('hello', 1, 8).to_hash[:allocations].size.should == 2
-    try.search('hello', 1, 12).to_hash[:allocations].size.should == 3
-    try.search('hello', 1, 16).to_hash[:allocations].size.should == 3
+    try.search('hello', 1, 8).to_hash[:allocations].size.should == 3
+    try.search('hello', 1, 12).to_hash[:allocations].size.should == 4
+    try.search('hello', 1, 16).to_hash[:allocations].size.should == 4
     try.search('hello', 1, 20).to_hash[:allocations].size.should == 4
     try.search('hello', 1, 24).to_hash[:allocations].size.should == 4
 
     try.search('hello', 1).allocations.map(&:count).should == [6, 6, nil, nil]
     try.search('hello', 1, 4).allocations.map(&:count).should == [6, 6, nil, nil]
-    try.search('hello', 1, 8).allocations.map(&:count).should == [6, 6, nil, nil]
-    try.search('hello', 1, 12).allocations.map(&:count).should == [6, 6, 6, nil]
-    try.search('hello', 1, 16).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 1, 8).allocations.map(&:count).should == [6, 6, 6, nil]
+    try.search('hello', 1, 12).allocations.map(&:count).should == [6, 6, 6, 6]
+    try.search('hello', 1, 16).allocations.map(&:count).should == [6, 6, 6, 6]
     try.search('hello', 1, 20).allocations.map(&:count).should == [6, 6, 6, 6]
     try.search('hello', 1, 24).allocations.map(&:count).should == [6, 6, 6, 6]
+
+    try.search('hello', 1, 0).to_hash.should == {
+      :allocations => [
+        [:terminate_early, 1.792, 6, [[:text1, "hello", "hello"]], [6]],
+        [:terminate_early, 1.792, 6, [[:text2, "hello", "hello"]], []]
+      ],
+      :offset => 0,
+      :duration => anything,
+      :total => 12
+    }
+
+    try.search('hello', 1, 12).to_hash.should == {
+      :allocations => [
+        [:terminate_early, 1.792, 6, [[:text1, "hello", "hello"]], []],
+        [:terminate_early, 1.792, 6, [[:text2, "hello", "hello"]], []],
+        [:terminate_early, 1.792, 6, [[:text3, "hello", "hello"]], [6]],
+        [:terminate_early, 1.792, 6, [[:text4, "hello", "hello"]], []]
+      ],
+      :offset => 12,
+      :duration => anything,
+      :total => 24
+    }
 
     GC.start
 
@@ -162,7 +184,7 @@ describe 'Search#terminate_early' do
     fast = performance_of do
       try_fast.search 'hello hello hello'
     end
-    (slow/fast).should >= 1.8
+    (slow/fast).should >= 1.7
 
     try_slow = Picky::Search.new index
     slow = performance_of do

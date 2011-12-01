@@ -121,7 +121,7 @@ describe Picky::Query::Allocations do
         it 'should call the process! method right' do
           @allocation1.should_receive(:process!).once.with(5,1).and_return [2, 3, 4]
           @allocation2.should_receive(:process!).once.with(2,0).and_return [5, 6]
-          @allocation3.should_receive(:process!).never
+          @allocation3.should_receive(:process!).once.with(0,0).and_return []
 
           @allocations.process! @amount, @offset, 1
         end
@@ -186,7 +186,7 @@ describe Picky::Query::Allocations do
         it 'should call the process! method right' do
           @allocation1.should_receive(:process!).once.with(5,0).and_return [1, 2, 3, 4]
           @allocation2.should_receive(:process!).once.with(1,0).and_return [5]
-          @allocation3.should_receive(:process!).never
+          @allocation3.should_receive(:process!).once.with(0,0).and_return []
 
           @allocations.process! @amount, @offset, 1
         end

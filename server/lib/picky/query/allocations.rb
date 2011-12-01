@@ -81,8 +81,8 @@ module Picky
             amount = amount - ids.size # we need less results from the following allocation
             offset = 0                 # we have already passed the offset
           end
-          if terminate_early
-            break if terminate_early <= 0 && amount <= 0
+          if terminate_early && amount <= 0
+            break if terminate_early <= 0
             terminate_early -= 1
           end
         end
@@ -91,8 +91,11 @@ module Picky
       # The total is simply the sum of the counts of all allocations.
       #
       def total
-        @total ||= inject(0) do |total, allocation|
-          total + (allocation.count || break)
+        @total ||= calculate_total
+      end
+      def calculate_total
+        inject(0) do |total, allocation|
+          total + (allocation.count or return total)
         end
       end
 
