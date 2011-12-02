@@ -1,5 +1,7 @@
 h1. Picky
 
+Users: "laut.de":http://laut.de, "goodfil.ms":http://goodfil.ms, "twixtel.ch":http://twixtel.ch, "wadoku.eu":http://wadoku.eu
+
 h2. The Ruby semantic text search engine.
 
 Take a dive with Picky in "the Getting Started section":http://florianhanke.com/picky/getting_started.html on "http://florianhanke.com/picky":http://florianhanke.com/picky.
