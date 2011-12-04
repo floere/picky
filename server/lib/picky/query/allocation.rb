@@ -49,6 +49,8 @@ module Picky
 
       # This starts the searching process.
       #
+      # Returns the calculated ids (from the offset).
+      #
       def process! amount, offset
         ids    = calculate_ids amount, offset
         @count = ids.size                         # cache the count before throwing away the ids

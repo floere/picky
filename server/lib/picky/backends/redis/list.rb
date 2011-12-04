@@ -62,7 +62,7 @@ module Picky
             client.zadd redis_key, i, value
           end
 
-          self[key] # TODO Performance?
+          self[key] # We need to return the whole list. TODO Performance?
         end
 
       end

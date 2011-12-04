@@ -61,7 +61,7 @@ module Picky
   			JSON.parse(resp)['rows'].each do |row|
   			  text = row[collection].to_s
   			  next unless text
-  				index_key = row.delete(@@id_key) # TODO Still works, I removed .values
+  				index_key = row.delete @@id_key # Note: I removed .values
   				yield index_key, text
   			end
   		end

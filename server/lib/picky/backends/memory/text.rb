@@ -6,7 +6,7 @@ module Picky
 
       # Index data dumped in the text format.
       #
-      # TODO Should this really be Memory::Text?
+      # TODO Should this really be Memory::Text? It should be Prepared::Text.
       #
       class Text < Basic
 

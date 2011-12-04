@@ -5,8 +5,6 @@ require 'spec_helper'
 # Describes a Picky index that uses the File backend
 # for data storage.
 #
-# TODO Everything should just fail.
-#
 describe Picky::Backends::File do
 
   class Book
@@ -49,7 +47,7 @@ describe Picky::Backends::File do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1'] # TODO Should be ['2', '1']
+      books.search('title').ids.should == ['2', '1']
 
       data.remove '1'
 
@@ -59,7 +57,7 @@ describe Picky::Backends::File do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == ['3', '2', '1'] # TODO Should be ['3', '2', '1']
+      books.search('title').ids.should == ['3', '2', '1']
 
       data.remove '1'
 
@@ -94,5 +92,8 @@ describe Picky::Backends::File do
 
     instance_eval &its
   end
+
+  # TODO dump/load backend.
+  #
 
 end

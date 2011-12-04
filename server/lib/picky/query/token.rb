@@ -32,10 +32,10 @@ module Picky
       def self.processed text, original = nil
         new(text, original).process
       end
-      def process # TODO Move this into the processed method and let the token have more params?
-        qualify # TODO Should this operate on the original?
-        partialize # TODO Should this operate on the original?
-        similarize # TODO Should this operate on the original?
+      def process
+        qualify
+        partialize
+        similarize
         remove_illegals # TODO Remove?
         self
       end

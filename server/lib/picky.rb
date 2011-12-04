@@ -18,6 +18,8 @@ module Picky
 
   # Load the framework
   #
+  # TODO Perhaps move the "Loaded" message?
+  #
   Loader.load_framework
   puts "Loaded picky with environment '#{PICKY_ENVIRONMENT}' in #{PICKY_ROOT} on Ruby #{RUBY_VERSION}."
 

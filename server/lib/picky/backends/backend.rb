@@ -20,6 +20,12 @@ module Picky
         thing && (thing.respond_to?(:call) && thing.call(*args) || thing)
       end
 
+      # Backends are comparable through their class.
+      #
+      def <=> other
+        self.class <=> other.class
+      end
+
       #
       #
       def to_s

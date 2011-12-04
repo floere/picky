@@ -22,7 +22,7 @@ module Picky
       # Note: We cannot mix memory and redis indexes just yet.
       #
       def initialize *indexes
-        IndexesCheck.check_backend_types indexes
+        IndexesCheck.check_backends indexes
 
         @indexes = indexes
 

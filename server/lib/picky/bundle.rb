@@ -47,14 +47,12 @@ module Picky
       @name     = name
       @category = category
 
-      # TODO Tidy up a bit.
-      #
-      @key_format = options.delete :key_format
-      @backend    = options.delete :backend
-
       @weights_strategy    = weights_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
+
+      @key_format = options.delete :key_format
+      @backend    = options.delete :backend
 
       reset_backend
     end

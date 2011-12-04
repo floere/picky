@@ -34,9 +34,7 @@ module Picky
 
         def delete value
           result = super value
-          if result
-            backend.client.zrem "#{backend.namespace}:#{key}", value # TODO if super(value) ?
-          end
+          backend.client.zrem "#{backend.namespace}:#{key}", value if result
           result
         end
       end

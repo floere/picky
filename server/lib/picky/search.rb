@@ -27,8 +27,6 @@ module Picky
     # Takes:
     # * A number of indexes
     #
-    # TODO Add reduce_allocations_to_amount (rename).
-    #
     # It is also possible to define the tokenizer and weights like so.
     # Example:
     #   search = Search.new(index1, index2, index3) do

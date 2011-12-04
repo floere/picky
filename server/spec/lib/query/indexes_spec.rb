@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Picky::Query::Indexes do
-  
+
   before(:each) do
-    Picky::Query::IndexesCheck.stub! :check_backend_types
+    Picky::Query::IndexesCheck.stub! :check_backends
   end
-  
+
   3.times do |i|
     n       = i + 1
     name    = :"index#{n}"
@@ -19,7 +19,7 @@ describe Picky::Query::Indexes do
     indexes.send :initialize, index1, index2, index3
     indexes
   end
-  
+
   describe 'expand_combinations_from' do
     it 'generates all possible combinations from the given ones' do
       combinations = [[1,2,3], [:a, :b, :c], [:k, :l]]
@@ -47,22 +47,22 @@ describe Picky::Query::Indexes do
     end
     it 'can handle small combinations' do
       combinations = [[1], [2], [3]]
-      
+
       indexes.expand_combinations_from(combinations).should == [[1, 2, 3]]
     end
     it 'can handle empty combinations' do
       combinations = [[1,2,3], [:a, :b, :c], []]
-      
+
       indexes.expand_combinations_from(combinations).should == []
     end
     it 'can handle empty combinations' do
       combinations = [[], [:a, :b, :c], []]
-      
+
       indexes.expand_combinations_from(combinations).should == []
     end
     it 'can handle totally empty combinations' do
       combinations = [[], [], []]
-      
+
       indexes.expand_combinations_from(combinations).should == []
     end
     it 'is fast in a complicated case' do
@@ -86,7 +86,7 @@ describe Picky::Query::Indexes do
       performance_of { indexes.expand_combinations_from(combinations) }.should < 0.00045
     end
   end
-  
+
   describe 'prepared_allocations_for' do
     before(:each) do
       @allocations = stub :allocations
@@ -96,14 +96,14 @@ describe Picky::Query::Indexes do
       @allocations.should_receive(:uniq).once.ordered.with()
       @allocations.should_receive(:calculate_score).once.ordered.with(:some_weights)
       @allocations.should_receive(:sort!).once.ordered.with()
-      
+
       indexes.prepared_allocations_for :some_tokens, :some_weights
     end
     it 'calls the right method in order' do
       @allocations.should_receive(:uniq).once.ordered.with()
       @allocations.should_receive(:calculate_score).once.ordered.with({})
       @allocations.should_receive(:sort!).once.ordered.with()
-      
+
       indexes.prepared_allocations_for :some_tokens
     end
   end
