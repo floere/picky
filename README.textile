@@ -22,69 +22,9 @@ h1. Installation
 
 <pre><code>gem install picky picky-client picky-generators</code></pre>
 
-h2. The server
+h1. Getting Started
 
-The server generates a library example, which you can run right away.
-
-<pre><code># Generates a directory "app_name"
-# with a new Picky unicorn server project.
-
-picky generate unicorn_server app_name</code></pre>
-
-<pre><code>cd app_name
-bundle install</code></pre>
-
-h3. Index the data
-
-<pre><code>rake index</code></pre>
-
-h3. Start the Picky server
-
-<pre><code>rake start</code></pre>
-
-h3. Try a query!
-
-<pre><code>curl localhost:8080/books?query=test</code></pre>
-
-Don't worry about the strange looking results! The next part (client) will take care of them.
-
-If you're interested anyway: "Results (Format & Structure)":http://github.com/floere/picky/wiki/results-format-and-structure
-
-h2. The client
-
-The client generates an example app for the "library" example backend, using Sinatra.
-
-<pre><code># Generates a directory "app_name"
-# with a new Picky Client Sinatra Webapp project.
-
-picky generate sinatra_client app_name</code></pre>
-
-<pre><code>cd app_name
-bundle install</code></pre>
-
-h3. Start the app server
-
-<pre><code>unicorn -p 3000</code></pre>
-
-h3. Admire your work
-
-Go to "http://localhost:3000/":http://localhost:3000/ and try the examples.
-
-h2. Your own search
-
-You're probably itching to change the example for your own data. How do you do this?
-
-h3. The server
-
-In the server directory, just type
-
-<pre><code>rake</code></pre>
-
-and it will tell you where to change the server configuration.
-
-h3. The client
-
-Go to "http://localhost:3000/configure":http://localhost:3000/configure and the page will show you how to configure your app server.
+Please see the "Getting Started section":http://florianhanke.com/picky/getting_started.html on the "Picky website":http://florianhanke.com/picky.
 
 h1. Working on Picky
 
