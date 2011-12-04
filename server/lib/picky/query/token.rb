@@ -6,7 +6,8 @@ module Picky
     #
     # It remembers the original form, and and a normalized form.
     #
-    # It also knows whether it needs to look for similarity (bla~), or whether it is a partial (bla*).
+    # It also knows whether it needs to look for similarity (bla~),
+    # or whether it is a partial (bla*).
     #
     class Token # :nodoc:all
 
@@ -17,7 +18,8 @@ module Picky
 
       # Normal initializer.
       #
-      # Note: Use this if you do not want a normalized token.
+      # Note:
+      # Use this if you do not want a normalized token.
       #
       def initialize text, original = nil
         @text     = text
@@ -26,8 +28,9 @@ module Picky
 
       # Returns a qualified and normalized token.
       #
-      # Note: Use this in the search engine if you need a qualified
-      #       and normalized token. I.e. one prepared for a search.
+      # Note:
+      # Use this in the search engine if you need a qualified
+      # and normalized token. I.e. one prepared for a search.
       #
       def self.processed text, original = nil
         new(text, original).process
@@ -36,11 +39,14 @@ module Picky
         qualify
         partialize
         similarize
-        remove_illegals # TODO Remove?
+        remove_illegals
         self
       end
 
+      # Symbolizes this token's text.
       #
+      # Note:
+      # Call externally when Picky operates in Symbols mode.
       #
       def symbolize!
         @text = @text.to_sym
@@ -48,7 +54,10 @@ module Picky
 
       # Translates this token's qualifiers into actual categories.
       #
-      # Note: If this is not done, there is no mapping.
+      # Note:
+      # If this is not done, there is no mapping.
+      #
+      # THINK Can this be improved somehow?
       #
       def categorize mapper
         @user_defined_categories = @qualifiers && @qualifiers.map do |qualifier|
@@ -63,13 +72,22 @@ module Picky
       def partial= partial
         @partial = partial if @partial.nil?
       end
+
+      # A token is partial? only if it not similar
+      # and is partial.
+      #
+      # It can't be similar and partial at the same time.
+      #
       def partial?
         !@similar && @partial
       end
 
-      # If the text ends with *, partialize it. If with ", don't.
+      # If the text ends with *, partialize it. If with ",
+      # non-partialize it.
       #
-      # The latter wins. So "hello*" will not be partially searched.
+      # The last one wins.
+      # So "hello*" will not be partially searched.
+      # So "hello"* will be partially searched.
       #
       @@no_partial = /\"\Z/
       @@partial    = /\*\Z/

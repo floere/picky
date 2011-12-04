@@ -20,8 +20,8 @@ module Picky
     #
     # Returns a (potentially empty) array of ids.
     #
-    # TODO Empty string ok, or does it need to be from the backend?
-    #      Should the backend always return an empty array? (Probably no)
+    # Note: If the backend wants to return a special
+    # enumerable, the backend should do so.
     #
     def ids sym_or_string
       @inverted[sym_or_string] || []

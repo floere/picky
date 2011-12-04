@@ -407,6 +407,16 @@ describe Picky::Query::Token do
 
       token.instance_variable_get(:@partial).should be_nil
     end
+    it 'lets the last one win' do
+      token = described_class.processed 'text"*'
+
+      token.partial?.should == true
+    end
+    it 'lets the last one win' do
+      token = described_class.processed 'text*"'
+
+      token.partial?.should == false
+    end
   end
 
   describe "processed" do

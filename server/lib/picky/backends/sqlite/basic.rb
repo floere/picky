@@ -67,9 +67,11 @@ module Picky
           self
         end
 
+        # Drops the table and creates it anew.
+        #
+        # THINK Could this be replaced by a truncate (DELETE FROM) statement?
+        #
         def truncate_db
-          # TODO Could this be replaced by a truncate statement?
-          #
           drop_table
           create_table
         end

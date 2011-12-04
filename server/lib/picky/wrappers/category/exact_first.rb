@@ -2,6 +2,8 @@
 #
 module Picky
 
+  # Rename Picky::ExactFirst?
+  #
   module Wrappers
 
     module Category
@@ -11,7 +13,7 @@ module Picky
       #
       class ExactFirst
 
-        # TODO Refactor!
+        # TODO Refactor! (Subclass Picky::Category? Or better yet, extend Picky::Category?)
         #
         delegate :add,
                  :qualifiers,
@@ -79,8 +81,6 @@ module Picky
           end
         end
 
-        # TODO Refactor! (Subclass Picky::Category?)
-        #
         def combination_for token
           weight(token) && Query::Combination.new(token, self)
         end
