@@ -2,6 +2,8 @@ module Picky
 
   module Backends
 
+    #
+    #
     class Backend
 
       attr_reader :inverted,
@@ -18,12 +20,6 @@ module Picky
 
       def extract_lambda_or thing, *args
         thing && (thing.respond_to?(:call) && thing.call(*args) || thing)
-      end
-
-      # Backends are comparable through their class.
-      #
-      def <=> other
-        self.class <=> other.class
       end
 
       #

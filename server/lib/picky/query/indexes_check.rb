@@ -2,8 +2,6 @@ module Picky
 
   module Query
 
-    # TODO Remove.
-    #
     class IndexesCheck
 
       class << self
@@ -17,8 +15,8 @@ module Picky
         # Picky will raise a Query::Indexes::DifferentBackendsError.
         #
         def check_backends indexes # :nodoc:
-          backends = indexes.map(&:backend)
-          backends.uniq!
+          backends = indexes.map &:backend
+          backends.uniq! &:class
           raise_different backends if backends.size > 1
           backends
         end
