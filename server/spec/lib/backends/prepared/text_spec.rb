@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Backends::Memory::Text do
+describe Picky::Backends::Prepared::Text do
 
   let(:text) { described_class.new "some_cache_path" }
 

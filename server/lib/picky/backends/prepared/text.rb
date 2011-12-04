@@ -2,13 +2,19 @@ module Picky
 
   module Backends
 
-    class Memory
+    class Prepared
 
       # Index data dumped in the text format.
       #
-      # TODO Should this really be Memory::Text? It should be Prepared::Text.
-      #
-      class Text < Basic
+      class Text
+
+        include Helpers::File
+
+        attr_reader :cache_path
+
+        def initialize cache_path, options = {}
+          @cache_path = "#{cache_path}.prepared.#{extension}"
+        end
 
         # Uses the extension "txt".
         #

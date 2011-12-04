@@ -55,7 +55,7 @@ module Picky
         @partial = Bundle.new :partial, self, weights, partial, no_similarity, options
       end
 
-      @prepared = Backends::Memory::Text.new prepared_index_path
+      @prepared = Backends::Prepared::Text.new prepared_index_path
     end
 
     # Indexes and loads the category.
@@ -121,7 +121,7 @@ module Picky
     # Note: If you don't use it with the block, do not forget to close it.
     #
     def prepared_index_file &block
-      @prepared_index_file ||= Backends::Memory::Text.new prepared_index_path
+      @prepared_index_file ||= Backends::Prepared::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
 

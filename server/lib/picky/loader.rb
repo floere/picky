@@ -112,9 +112,10 @@ module Picky
       load_relative 'backends/helpers/file'
       load_relative 'backends/backend'
 
+      load_relative 'backends/prepared/text'
+
       load_relative 'backends/memory'
       load_relative 'backends/memory/basic'
-      load_relative 'backends/memory/text'
       load_relative 'backends/memory/marshal'
       load_relative 'backends/memory/json'
 
