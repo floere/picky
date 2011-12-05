@@ -243,7 +243,9 @@ describe "Realtime Indexing" do
         index.replace Book.new(2, "Title New", "Author New")
         index.add Book.new(3, "TTL", "AUTHR")
 
-        books.search('author:Athr~').ids.should == [2, 1, 3] # TODO Is that what I'd expect?
+        # Note: [2, 1] are in one allocation, [3] in the other.
+        #
+        books.search('author:Athr~').ids.should == [2, 1, 3]
       end
     end
   end
@@ -465,7 +467,9 @@ describe "Realtime Indexing" do
         index.replace Book.new("two", "Title New", "Author New")
         index.add Book.new("three", "TTL", "AUTHR")
 
-        books.search('author:Athr~').ids.should == [:two, :one, :three] # TODO Is that what I'd expect?
+        # Note: Allocations are [:two, :one], then [:three].
+        #
+        books.search('author:Athr~').ids.should == [:two, :one, :three]
       end
     end
   end
