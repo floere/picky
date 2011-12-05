@@ -8,13 +8,10 @@ module Picky
     #
     def load
       timed_exclaim %Q{"#{identifier}": Loading index from cache.}
-      clear_realtime # TODO What to do?
+      clear_realtime # THINK Should we really explicitly clear the realtime? Or should it just be loaded?
       exact.load
       partial.load
     end
-    # TODO Remove in 4.0.
-    #
-    alias reload load
 
     # Gets the weight for this token's text.
     #

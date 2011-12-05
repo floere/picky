@@ -115,7 +115,7 @@ module Picky
       #
       @@illegals = /["*~]/
       def remove_illegals
-        @text.gsub! @@illegals, '' unless @text.blank?
+        @text.gsub! @@illegals, EMPTY_STRING unless @text.blank?
       end
 
       # Returns an array of possible combinations.
@@ -158,9 +158,9 @@ module Picky
       @@split_qualifier_text = ':'
       @@split_qualifiers     = ','
       def qualify
-        @qualifiers, @text = (@text || '').split(@@split_qualifier_text, 2)
+        @qualifiers, @text = (@text || EMPTY_STRING).split(@@split_qualifier_text, 2)
         @qualifiers, @text = if @text.blank?
-          [nil, (@qualifiers || '')]
+          [nil, (@qualifiers || EMPTY_STRING)]
         else
           [@qualifiers.split(@@split_qualifiers), @text]
         end

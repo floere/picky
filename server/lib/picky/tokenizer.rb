@@ -20,10 +20,6 @@ module Picky
       @query_default ||= new
     end
 
-    # TODO Move EMPTY_STRING top level.
-    #
-    EMPTY_STRING = ''.freeze
-
     def to_s
       reject_condition_location = @reject_condition.to_s[/:(\d+) \(lambda\)/, 1]
       <<-TOKENIZER

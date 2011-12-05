@@ -62,9 +62,8 @@ module Picky
       #
       def harvest category
         index = category_names.index category.from
-        get_data do |ary|
-          indexed_id = ary.shift
-          text       = ary[index]
+        get_data do |indexed_id, *ary|
+          text = ary[index]
           next unless text
           text.force_encoding 'utf-8' # TODO Still needed?
           yield indexed_id, text

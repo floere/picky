@@ -127,8 +127,6 @@ module Picky
 
     # The index directory for this category.
     #
-    # TODO Push down into files? Yes.
-    #
     def index_directory
       @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"
     end
