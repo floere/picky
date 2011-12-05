@@ -262,7 +262,7 @@ module Picky
 
       # Load tools. Load in specific case?
       #
-      load_relative 'cores'
+      load_relative 'parallelizer'
 
       # Load migration notices.
       #
