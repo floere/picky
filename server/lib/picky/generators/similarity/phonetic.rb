@@ -23,20 +23,12 @@ module Picky
           @amount = amount
         end
 
-        protected
-
-          # Sorts the index values in place.
-          #
-          # TODO Include this again. Sort at the end.
-          #      Or sort when inserting in realtime.
-          #
-          def sort hash
-            hash.each_pair.each do |code, ary|
-              ary.sort_by_levenshtein! code
-              ary.slice! amount, ary.size # size is not perfectly correct, but anyway
-            end
-            hash
-          end
+        # Sorts the index values in place.
+        #
+        def sort ary, code
+            ary.sort_by_levenshtein! code
+            ary.slice! amount, ary.size # THINK size is not perfectly correct, but anyway
+        end
 
       end
 

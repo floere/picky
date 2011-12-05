@@ -47,8 +47,6 @@ module Picky
         #
         str_or_syms << str_or_sym
 
-        # TODO Introduce a new method?
-        #
         ids = @inverted[str_or_sym] ||= []
         ids.send where, id
       end
@@ -77,7 +75,8 @@ module Picky
         # Not completely correct, as others will also be affected, but meh.
         #
         similars.delete str_or_sym if similars.include? str_or_sym
-        similars.send where, str_or_sym
+        similars << str_or_sym
+        self.similarity_strategy.sort similars, str_or_sym
       end
     end
 
