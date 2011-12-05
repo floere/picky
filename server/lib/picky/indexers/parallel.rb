@@ -25,18 +25,13 @@ module Picky
           [category, [], category.prepared_index_file, (category.tokenizer || tokenizer)]
         end
 
-        # Index.
-        #
-        # TODO Extract into flush_every(100_000) do
-        #
-        i = 0
-
         # Explicitly reset the source to avoid caching trouble.
         #
         source.reset if source.respond_to?(:reset)
 
         # Go through each object in the source.
         #
+        i = 0
         source.each do |object|
           id = object.id
 
@@ -58,7 +53,11 @@ module Picky
           end
           i += 1
         end
+
         flush combined
+
+        # Close all files.
+        #
         combined.each do |_, _, file, _|
           yield file
           file.close
