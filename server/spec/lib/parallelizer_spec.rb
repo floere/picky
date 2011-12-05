@@ -10,10 +10,50 @@ describe Picky::Parallelizer do
       before(:each) do
         parallelizer.stub! :fork? => false
       end
+      context 'non-stubbed forking' do
+        it 'works correctly' do
+          parallelizer.schedule { sleep 0.01 }
+          parallelizer.schedule { sleep 0.01 }
+          parallelizer.schedule { sleep 0.01 }
+          parallelizer.schedule { sleep 0.01 }
+        end
+        it 'works correctly' do
+          called = 0
+
+          parallelizer.schedule { called += 1 }
+          parallelizer.schedule { called += 1 }
+          parallelizer.schedule { called += 1 }
+          parallelizer.schedule { called += 1 }
+
+          called.should == 4
+        end
+      end
     end
     context 'with forking' do
       before(:each) do
         parallelizer.stub! :fork? => true
+      end
+      context 'stubbed forking' do
+        it 'works correctly' do
+          Process.should_receive(:fork).exactly(4).times.and_yield
+
+          parallelizer.schedule { sleep 0.01 }
+          parallelizer.schedule { sleep 0.01 }
+          parallelizer.schedule { sleep 0.01 }
+          parallelizer.schedule { sleep 0.01 }
+        end
+        it 'works correctly' do
+          Process.should_receive(:fork).any_number_of_times.and_yield
+
+          called = 0
+
+          parallelizer.schedule { called += 1 }
+          parallelizer.schedule { called += 1 }
+          parallelizer.schedule { called += 1 }
+          parallelizer.schedule { called += 1 }
+
+          called.should == 4
+        end
       end
     end
 

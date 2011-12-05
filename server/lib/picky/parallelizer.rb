@@ -54,17 +54,15 @@ module Picky
             #
             work = queue.shift
             break unless work
-            processing += 1
+            self.processing += 1
 
-            # Fork, wait a bit and call work.
+            # Fork and work.
             #
-            Process.fork do
-              sleep 0.05*processing
-              work.call
-            end
+            Process.fork &work
           else
             # No work, so we return.
             #
+            p [:returning]
             return
           end
 
@@ -75,14 +73,14 @@ module Picky
           rescue Errno::ECHILD => e
             break
           ensure
-            processing -= 1
+            self.processing -= 1
           end
         end
       else
-        # No forking possible, so we just do all
-        # work until the queue is finished.
+        # No forking possible, so we just do "one work".
         #
-        queue.each &:call
+        work = queue.shift
+        work.call
       end
     end
 
