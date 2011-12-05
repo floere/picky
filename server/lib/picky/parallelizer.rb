@@ -62,7 +62,6 @@ module Picky
           else
             # No work, so we return.
             #
-            p [:returning]
             return
           end
 
