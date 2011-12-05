@@ -200,7 +200,7 @@ module Picky
         Loader.load_user 'app'             # Sinatra appfile.
         Loader.load_user 'app/application' # Standard Picky appfile.
         finalize_apps
-        exclaim "Application #{apps.map(&:name).join(', ')} loaded."
+        exclaim "Loaded #{apps.map(&:name).join(', ')} running Picky with environment '#{PICKY_ENVIRONMENT}' in #{PICKY_ROOT} on Ruby #{RUBY_VERSION}."
       end
 
       # Finalize the subclass as soon as it
