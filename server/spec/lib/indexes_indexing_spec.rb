@@ -19,12 +19,12 @@ describe Picky::Indexes do
       indexes.register @index1
       indexes.register @index2
     end
-    describe 'index_for_tests' do
+    describe 'index' do
       it 'takes a snapshot, then indexes and caches each' do
         @index1.should_receive(:index).once.with.ordered
         @index2.should_receive(:index).once.with.ordered
 
-        indexes.index_for_tests
+        indexes.index
       end
     end
     describe 'register' do
@@ -50,6 +50,7 @@ describe Picky::Indexes do
       end
     end
     it_delegates_each :clear
+    it_delegates_each :index
   end
 
 end

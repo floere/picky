@@ -4,35 +4,27 @@ module Picky
   #
   class Indexes
 
-    instance_delegate :index,
-                      :clear,
-                      :index_for_tests,
+    instance_delegate :clear,
+                      :index,
+                      :parallel_index,
                       :tokenizer
 
     each_delegate :clear,
+                  :index,
                   :to => :indexes
 
     # Runs the indexers in parallel (prepare + cache).
     #
-    def index randomly = true
+    def index_in_parallel options = {}
       # Run in parallel.
       #
-      timed_exclaim "Indexing using #{Cores.max_processors} processors, in #{randomly ? 'random' : 'given'} order."
+      timed_exclaim "Indexing using #{Cores.max_processors} processors, in #{options[:randomly] ? 'random' : 'given'} order."
 
       # Run indexing/caching forked.
       #
-      Cores.forked self.indexes, { randomly: randomly }, &:index
+      Cores.forked self.indexes, options, &:index
 
       timed_exclaim "Indexing finished."
-    end
-
-    # For integration testing – indexes for the tests
-    # without forking and shouting ;)
-    #
-    # TODO Rename to #index_without_forking, or just #index.
-    #
-    def index_for_tests
-      indexes.each(&:index)
     end
 
     #

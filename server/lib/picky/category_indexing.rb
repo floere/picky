@@ -15,6 +15,7 @@ module Picky
       prepare
       cache
     end
+    alias index_in_parallel index
 
     # Indexes, creates the "prepared_..." file.
     #
@@ -109,8 +110,8 @@ module Picky
 
     # Clears the caches.
     #
-    # TODO Think about the semantics of clear.
-    #      Is a delete even needed or is it clear+dump?
+    # THINK about the semantics of clear.
+    # Is a delete even needed or is it clear+dump?
     #
     def clear
       exact.clear
