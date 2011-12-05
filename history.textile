@@ -1,6 +1,9 @@
 h2. Upcoming Version
 
-* hanke: (server) 
+* hanke: (server) BREAKING Renamed @Picky::Wrappers::Category::ExactFirst@ to @Picky::Results::ExactFirst@. Extend instead of wrap: @index.extend Results::ExactFirst@ or @category.extend Results::ExactFirst@. If an index is extended, each category of the index will be extended.
+* hanke: (server) BREAKING @Picky::Indexes.reload@ has been renamed to @Picky::Indexes.load@.
+* hanke: (server) BREAKING @index.reload@ has been renamed to @index.load@.
+* hanke: (server) BREAKING @category.reload@ has been renamed to @category.load@.
 
 h2. Version 3.6.16
 
