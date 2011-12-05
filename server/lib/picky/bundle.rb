@@ -104,7 +104,7 @@ module Picky
       @inverted = @backend_inverted.empty
     end
     def empty_weights
-      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      # THINK about this. Perhaps the strategies should implement the backend methods?
       #
       @weights = @weights_strategy.saved?? @backend_weights.empty : @weights_strategy
     end
@@ -124,7 +124,8 @@ module Picky
     #
     def similar text
       code = similarity_strategy.encoded text
-      similar_codes = code && @similarity[code]
+      return [] unless code
+      similar_codes = @similarity[code]
       if similar_codes.blank?
         [] # Return a simple array.
       else
