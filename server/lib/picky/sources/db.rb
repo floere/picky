@@ -56,8 +56,9 @@ module Picky
       end
 
       # Creates a database adapter for use with this source.
+      #
       def create_database_adapter # :nodoc:
-        # TODO Do not use ActiveRecord directly. Use set_table_name etc.
+        # THINK Do not use ActiveRecord directly? Use set_table_name etc?
         #
         adapter_class = Class.new ActiveRecord::Base
         adapter_class.abstract_class = true
@@ -143,7 +144,7 @@ module Picky
       def get_data category, offset, &block # :nodoc:
         select_statement = harvest_statement_with_offset category, offset
 
-        # TODO Rewrite ASAP.
+        # THINK Not really nice like this. Rewrite if possible.
         #
         if database.connection.adapter_name == "PostgreSQL"
           id_key   = 'id'

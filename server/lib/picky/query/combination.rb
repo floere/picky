@@ -51,7 +51,7 @@ module Picky
 
       # Note: Required for uniq!
       #
-      # TODO Ok with category or is the bundle needed?
+      # THINK Ok with category or is the bundle needed?
       #
       def hash
         [token, category].hash

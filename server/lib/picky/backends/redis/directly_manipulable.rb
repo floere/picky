@@ -14,7 +14,7 @@ module Picky
           list.key     = key
         end
 
-        # TODO Current implementation is very brittle.
+        # THINK Current implementation is very brittle.
         #
         @@append_index = 0
         def << value
@@ -23,7 +23,7 @@ module Picky
           backend[key]
         end
 
-        # TODO Current implementation is very brittle.
+        # THINK Current implementation is very brittle.
         #
         @@unshift_index = 0
         def unshift value

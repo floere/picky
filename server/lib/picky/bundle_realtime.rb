@@ -66,8 +66,6 @@ module Picky
 
     # Add string/symbol to similarity index.
     #
-    # TODO Probably where makes no sense here. Should have its own order.
-    #
     def add_similarity str_or_sym, where = :unshift
       if encoded = self.similarity_strategy.encoded(str_or_sym)
         similars = @similarity[encoded] ||= []
@@ -76,6 +74,9 @@ module Picky
         #
         similars.delete str_or_sym if similars.include? str_or_sym
         similars << str_or_sym
+
+        # Uses the sort order of the strategy.
+        #
         self.similarity_strategy.sort similars, str_or_sym
       end
     end
@@ -90,9 +91,10 @@ module Picky
 
     # Builds the realtime mapping.
     #
-    # Note: Experimental feature.
+    # Note: Experimental feature. Might be removed in 4.0.
     #
-    # TODO Subset of #add. Rewrite.
+    # TODO Subset of #add. Rewrite, optimize.
+    # THINK Maybe load it and just replace the arrays with the corresponding ones.
     #
     def build_realtime
       clear_realtime

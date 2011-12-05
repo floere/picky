@@ -13,7 +13,7 @@ describe Symbol do
       performance_of { @token.each_subtoken { |subtoken| } }.should < 0.00065
     end
     it 'is fast enough' do
-      performance_of { @token.each_intoken { |intoken| } }.should < 0.025 # TODO Slow!
+      performance_of { @token.each_intoken { |intoken| } }.should < 0.025 # THINK Is this too slow?
     end
   end
 

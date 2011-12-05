@@ -54,6 +54,8 @@ module Picky
 
         # Set a single list.
         #
+        # TODO We should optimize this by only adding. Maybe only add the difference?
+        #
         def []= key, values
           redis_key = "#{namespace}:#{key}"
           i = 0
@@ -62,7 +64,9 @@ module Picky
             client.zadd redis_key, i, value
           end
 
-          self[key] # We need to return the whole list. TODO Performance?
+          # We need to return the whole list.
+          #
+          self[key]
         end
 
       end
