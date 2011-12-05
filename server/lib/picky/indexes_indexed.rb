@@ -8,14 +8,7 @@ module Picky
                       :analyze
 
     each_delegate :load,
-                  :reload,
                   :to => :indexes
-
-    # TODO Remove in 4.0.
-    #
-    def self.reload
-      self.instance.reload
-    end
 
   end
 

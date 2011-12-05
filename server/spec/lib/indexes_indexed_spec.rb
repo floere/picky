@@ -48,14 +48,8 @@ describe Picky::Indexes do
         indexes.index_mapping.should == {}
       end
     end
-    describe 'reload' do
+    describe 'load' do
       it 'calls load on each in order' do
-        @index1.should_receive(:reload).once.with.ordered
-        @index2.should_receive(:reload).once.with.ordered
-
-        indexes.reload
-      end
-      it 'is aliased' do
         @index1.should_receive(:load).once.with.ordered
         @index2.should_receive(:load).once.with.ordered
 

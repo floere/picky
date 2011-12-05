@@ -10,10 +10,6 @@ module Picky
              :possible_combinations,
              :to => :categories
 
-    # TODO Remove in 4.0.
-    #
-    alias reload load
-
     # Define how the results of this index are identified.
     # (Shown in the client, for example)
     #

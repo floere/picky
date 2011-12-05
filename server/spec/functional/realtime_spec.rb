@@ -26,7 +26,7 @@ describe "Realtime Indexing" do
     end
 
     context 'dumping and loading' do
-      it "doesn't find books anymore after dumping and reloading and updating" do
+      it "doesn't find books anymore after dumping and loading and updating" do
         index.replace Book.new(2, "Title New", "Author New")
 
         books.search("title").ids.should == [2, 1]
