@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Picky::Cores do
-  
+
   describe ".forked" do
     context 'without fork' do
       before(:each) do
@@ -10,27 +10,27 @@ describe Picky::Cores do
       end
       it 'should not fork' do
         Process.should_receive(:fork).never
-        
+
         described_class.forked([1,2]) do |element|
-          
+
         end
       end
       it 'should yield the two elements' do
         result = []
-        
+
         described_class.forked([1,2]) do |element|
           result << element
         end
-        
+
         result.should == [1,2]
       end
       it 'should yield the two elements' do
         result = []
-        
+
         described_class.forked([1,2], randomly: true) do |element|
           result << element
         end
-        
+
         # This test remains like this because I
         # like the stupidity of it.
         #
@@ -49,21 +49,21 @@ describe Picky::Cores do
       context "with array" do
         context "with block" do
           it "runs ok" do
-            # TODO Problematic test. Should not raise the first time
+            # THINK Problematic test? Should it not raise the first time?
             #
             Process.should_receive(:wait).once.and_raise Errno::ECHILD.new
-            
+
             described_class.forked([1, 2]) do |e|
 
             end
           end
           it "yields the elements" do
             result = []
-            
+
             described_class.forked([1, 2]) do |e|
               result << e
             end
-            
+
             result.should == [1, 2]
           end
           it 'should not fork with amount option' do
@@ -105,7 +105,7 @@ describe Picky::Cores do
       end
     end
   end
-  
+
   describe 'fork?' do
     context 'with forking capabilities' do
       before(:all) do
@@ -122,7 +122,7 @@ describe Picky::Cores do
       end
     end
   end
-  
+
   describe 'number_of_cores' do
     before(:each) do
       @linux  = mock(:linux).as_null_object
@@ -146,17 +146,17 @@ describe Picky::Cores do
       end
       it 'should return whatever darwin returns' do
         @darwin.stub! :call => '1234'
-        
+
         described_class.number_of_cores.should == 1234
       end
       it 'should call darwin' do
         @darwin.should_receive(:call).once
-        
+
         described_class.number_of_cores
       end
       it 'should not call linux' do
         @linux.should_receive(:call).never
-        
+
         described_class.number_of_cores
       end
     end
@@ -166,20 +166,20 @@ describe Picky::Cores do
       end
       it 'should return whatever linux returns' do
         @linux.stub! :call => '1234'
-        
+
         described_class.number_of_cores.should == 1234
       end
       it 'should call linux' do
         @linux.should_receive(:call).once
-        
+
         described_class.number_of_cores
       end
       it 'should not call darwin' do
         @darwin.should_receive(:call).never
-        
+
         described_class.number_of_cores
       end
     end
   end
-  
+
 end

@@ -23,7 +23,27 @@ describe "exact first" do
     normal = Picky::Search.new index
     normal.search("disco").ids.should == [2, 1] # 2 was added later.
 
-    index = Picky::Wrappers::Category::ExactFirst.wrap index
+    index.extend Picky::Results::ExactFirst
+
+    exact_first = Picky::Search.new index
+    exact_first.search("disco").ids.should == [1, 2] # Exact first.
+    exact_first.search("disc").ids.should  == [2, 1] # Not exact, so not first.
+  end
+
+  it 'handles extending single categories' do
+    index    = Picky::Index.new :exact_first
+    category = index.category :text, partial: Picky::Partial::Substring.new(from: 1)
+
+    require 'ostruct'
+    exact   = OpenStruct.new id: 1, text: "disco"
+    partial = OpenStruct.new id: 2, text: "discofox"
+    index.add exact
+    index.add partial
+
+    normal = Picky::Search.new index
+    normal.search("disco").ids.should == [2, 1] # 2 was added later.
+
+    category.extend Picky::Results::ExactFirst
 
     exact_first = Picky::Search.new index
     exact_first.search("disco").ids.should == [1, 2] # Exact first.
@@ -45,7 +65,7 @@ describe "exact first" do
 
     normal.search("disco").ids.should == [1, 2] # Ordering with which it was added.
 
-    data = Picky::Wrappers::Category::ExactFirst.wrap data
+    data.extend Picky::Results::ExactFirst
     exact_first = Picky::Search.new data
 
     Picky::Indexes.index_for_tests

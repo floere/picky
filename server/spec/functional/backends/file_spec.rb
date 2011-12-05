@@ -93,7 +93,4 @@ describe Picky::Backends::File do
     instance_eval &its
   end
 
-  # TODO dump/load backend.
-  #
-
 end
