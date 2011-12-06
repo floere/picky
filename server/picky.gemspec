@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'text'
   s.add_runtime_dependency 'yajl-ruby'
   s.add_runtime_dependency 'activesupport', '~> 3.0'
+  s.add_runtime_dependency 'procrastinate', '~> 0.4'
 
   # Note: Move to optional soon.
   #

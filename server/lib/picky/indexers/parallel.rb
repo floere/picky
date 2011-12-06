@@ -15,14 +15,11 @@ module Picky
       # Parameters:
       #  * categories: An Enumerable of Category-s.
       #
-      def process categories
-        comma   = ?,
-        newline = ?\n
-
+      def process categories, scheduler = Scheduler.new
         # Prepare a combined object - array.
         #
         combined = categories.map do |category|
-          [category, [], category.prepared_index_file, (category.tokenizer || tokenizer)]
+          [category, category.prepared_index_file, [], (category.tokenizer || tokenizer)]
         end
 
         # Explicitly reset the source to avoid caching trouble.
@@ -31,45 +28,52 @@ module Picky
 
         # Go through each object in the source.
         #
-        i = 0
+        objects = []
+
         source.each do |object|
-          id = object.id
 
-          # This needs to be rewritten.
+          # Accumulate objects.
           #
-          # Is it a good idea that not the tokenizer has control over when he gets the next text?
+          objects << object
+          next if objects.size < 10_000
+
+          # THINK Is it a good idea that not the tokenizer has
+          # control over when he gets the next text?
           #
-          combined.each do |category, cache, _, tokenizer|
-            tokens, _ = tokenizer.tokenize object.send(category.from) # Note: Originals not needed.
-            tokens.each do |token_text|
-              next unless token_text
-              cache << id << comma << token_text << newline
-            end
+          combined.each do |category, file, cache, tokenizer|
+            index_flush objects, file, category, cache, tokenizer
           end
 
-          if i >= 100_000
-            flush combined
-            i = 0
-          end
-          i += 1
+          objects.clear
+
         end
-
-        flush combined
 
         # Close all files.
         #
-        combined.each do |_, _, file, _|
+        combined.each do |category, file, cache, tokenizer|
+          index_flush objects, file, category, cache, tokenizer
           yield file
           file.close
         end
       end
 
-      # Flush the combined array into the file.
-      #
-      def flush combined # :nodoc:
-        combined.each do |_, cache, file, _|
-          file.write(cache.join) && cache.clear
+      def index_flush objects, file, category, cache, tokenizer
+        comma   = ?,
+        newline = ?\n
+
+        objects.each do |object|
+          tokens, _ = tokenizer.tokenize object.send(category.from) # Note: Originals not needed.
+          tokens.each do |token_text|
+            next unless token_text
+            cache << object.id << comma << token_text << newline
+          end
         end
+
+        flush file, cache
+      end
+
+      def flush file, cache
+        file.write(cache.join) && cache.clear
       end
 
     end

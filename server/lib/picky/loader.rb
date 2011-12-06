@@ -64,6 +64,7 @@ module Picky
       # Requiring Helpers
       #
       load_relative 'helpers/measuring'
+      load_relative 'helpers/indexing'
 
       # Calculations.
       #
@@ -260,9 +261,10 @@ module Picky
       #
       load_relative 'application'
 
-      # Load tools. Load in specific case?
+      # Load tools.
       #
       load_relative 'parallelizer'
+      load_relative 'scheduler'
 
       # Load migration notices.
       #

@@ -4,27 +4,32 @@ module Picky
   #
   class Indexes
 
+    extend Helpers::Indexing
+
     instance_delegate :clear,
-                      :index,
-                      :parallel_index,
                       :tokenizer
 
     each_delegate :clear,
-                  :index,
                   :to => :indexes
 
-    # Runs the indexers in parallel (prepare + cache).
     #
-    def index_in_parallel options = {}
-      # Run in parallel.
-      #
-      timed_exclaim "Indexing using #{Cores.max_processors} processors, in #{options[:randomly] ? 'random' : 'given'} order."
+    #
+    def self.index scheduler = Scheduler.new
+      timed_indexing scheduler do
+        instance.index scheduler
+      end
+    end
 
-      # Run indexing/caching forked.
-      #
-      Cores.forked self.indexes, options, &:index
+    #
+    #
+    def index scheduler = Scheduler.new
+      indexes.each { |index| index.prepare scheduler }
+      scheduler.finish
 
-      timed_exclaim "Indexing finished."
+      timed_exclaim "Tokenizing finished, generating data for indexes from tokenized data."
+
+      indexes.each { |index| index.cache scheduler }
+      scheduler.finish
     end
 
     #

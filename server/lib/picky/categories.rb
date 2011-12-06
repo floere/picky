@@ -12,7 +12,6 @@ module Picky
     each_delegate :cache,
                   :dump,
                   :empty,
-                  :index,
                   :inject,
                   :reindex,
                   :reset_backend,

@@ -4,6 +4,8 @@ module Picky
   #
   class Category
 
+    include Helpers::Indexing
+
     attr_reader :exact,
                 :partial
 
@@ -11,19 +13,37 @@ module Picky
     #
     # This one should be used by users.
     #
-    def index
-      prepare
-      cache
+    def index scheduler = Scheduler.new
+      timed_indexing scheduler do
+        prepare scheduler
+        scheduler.finish
+
+        cache scheduler
+        scheduler.finish
+      end
     end
-    alias index_in_parallel index
 
     # Indexes, creates the "prepared_..." file.
     #
-    def prepare
+    def prepare scheduler = Scheduler.new
       categories = Categories.new
       categories << self
       with_data_snapshot do
-        indexer.index categories
+        scheduler.schedule do
+          indexer.prepare categories, scheduler
+          nil # TODO Needed so procrastinate is happy. Remove in 4.0.
+        end
+      end
+    end
+
+    # Generates all caches for this category.
+    #
+    def cache scheduler = Scheduler.new
+      scheduler.schedule do
+        empty
+        retrieve
+        dump
+        nil # TODO Needed so procrastinate is happy. Remove in 4.0.
       end
     end
 
@@ -44,15 +64,6 @@ module Picky
       else
         yield
       end
-    end
-
-    # Generates all caches for this category.
-    #
-    def cache
-      empty
-      retrieve
-      dump
-      clear_realtime # TODO To call or not to call, that is the question.
     end
 
     # Retrieves the prepared index data into the indexes and

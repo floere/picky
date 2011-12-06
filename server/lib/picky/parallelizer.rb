@@ -59,10 +59,6 @@ module Picky
             # Fork and work.
             #
             Process.fork &work
-          else
-            # No work, so we return.
-            #
-            return
           end
 
           # Block and wait for any child to finish.
@@ -83,10 +79,17 @@ module Picky
       end
     end
 
-    # Do work if there is another element in the queue.
+    # Do work if there is another element in the queue
+    # or if it's already at max_processes.
     #
     def work?
       !queue.empty?
+    end
+
+    #
+    #
+    def open_jobs?
+      processing < max_processes
     end
 
     # Do not fork if there is just one processor,

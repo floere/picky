@@ -97,7 +97,7 @@ module Picky
       # Uses CREATE TABLE AS with the given SELECT statement to create a snapshot of the data.
       #
       def take_snapshot index
-        timed_exclaim %Q{"#{index.identifier}": Taking snapshot of database data.}
+        timed_exclaim %Q{  "#{index.identifier}": Taking snapshot of database data.}
 
         origin = snapshot_table_name index.name
         on_database = database.connection

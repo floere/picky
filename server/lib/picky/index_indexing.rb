@@ -4,29 +4,13 @@ module Picky
   #
   class Index
 
+    include Helpers::Indexing
+
     # Delegators for indexing.
     #
     delegate :cache,
              :clear,
-             :prepare,
              :to => :categories
-
-    # Calling index on an index will call index
-    # on every category.
-    #
-    # Decides whether to use a parallel indexer or whether to
-    # delegate to each category to index themselves.
-    #
-    def index
-      if source.respond_to?(:each)
-        check_source_empty
-        index_in_parallel
-      else
-        with_data_snapshot do
-          categories.index
-        end
-      end
-    end
 
     # Define an index tokenizer on the index.
     #
@@ -39,7 +23,36 @@ module Picky
         options && Tokenizer.new(options)
       end
     end
-    alias define_indexing indexing
+    alias define_indexing indexing # TODO Remove in 4.0.
+
+    #
+    #
+    def index scheduler = Scheduler.new
+      timed_indexing scheduler do
+        prepare scheduler
+        scheduler.finish
+
+        cache scheduler
+        scheduler.finish
+      end
+    end
+
+    # Calling prepare on an index will call prepare
+    # on every category.
+    #
+    # Decides whether to use a parallel indexer or whether to
+    # delegate to each category to prepare themselves.
+    #
+    def prepare scheduler = Scheduler.new
+      if source.respond_to?(:each)
+        check_source_empty
+        prepare_in_parallel scheduler
+      else
+        with_data_snapshot do
+          categories.prepare scheduler
+        end
+      end
+    end
 
     # Check if the given enumerable source is empty.
     #
@@ -48,6 +61,15 @@ module Picky
     #
     def check_source_empty
       warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
+    end
+
+    # Indexes the categories in parallel.
+    #
+    # Only use where the category does have a #each source defined.
+    #
+    def prepare_in_parallel scheduler
+      indexer = Indexers::Parallel.new self
+      indexer.prepare categories, scheduler
     end
 
     # Note: Duplicated in category_indexing.rb.
@@ -62,15 +84,6 @@ module Picky
       else
         yield
       end
-    end
-
-    # Indexes the categories in parallel.
-    #
-    # Only use where the category does have a #each source defined.
-    #
-    def index_in_parallel
-      indexer = Indexers::Parallel.new self
-      indexer.index categories
     end
 
     # Returns the installed tokenizer or the default.

@@ -70,7 +70,7 @@ module Picky
     def dump
       exact.dump
       partial.dump
-      timed_exclaim %Q{"#{identifier}": Generated -> #{index_directory.gsub("#{PICKY_ROOT}/", '')}.}
+      timed_exclaim %Q{  "#{identifier}": Dumped -> #{index_directory.gsub("#{PICKY_ROOT}/", '')}/#{name}_*.}
     end
 
     # Returns the backend.
