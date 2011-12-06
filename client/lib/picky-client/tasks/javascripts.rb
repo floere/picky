@@ -14,6 +14,8 @@ module Picky
     #
     class Javascripts
 
+      include Rake::DSL
+
       define_method :initialize do |*args|
         target = args.shift || 'javascripts'
         desc "Copy the latest client javascripts to '#{target}' (Give target dir to Picky::Tasks::Javascripts.new to change)."
