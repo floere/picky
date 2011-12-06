@@ -23,7 +23,6 @@ module Picky
         options && Tokenizer.new(options)
       end
     end
-    alias define_indexing indexing # TODO Remove in 4.0.
 
     #
     #
@@ -100,7 +99,7 @@ module Picky
     #
     def source some_source = nil, &block
       some_source ||= block
-      some_source ? define_source(some_source) : (@source && extract_source)
+      some_source ? (check_source(some_source); @source = some_source) : (@source && extract_source)
     end
     # Extract the actual source if it is wrapped in a time
     # capsule, i.e. a block/lambda.
@@ -109,10 +108,6 @@ module Picky
     #
     def extract_source
       @source = @source.respond_to?(:call) ? @source.call : @source
-    end
-    def define_source source
-      check_source source
-      @source = source
     end
     def check_source source # :nodoc:
       raise ArgumentError.new(<<-SOURCE
@@ -132,21 +127,15 @@ SOURCE
     #
     # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip).
     #
-    def key_format format = nil
-      format ? define_key_format(format) : @key_format
-    end
-    def define_key_format key_format
-      @key_format = key_format
+    def key_format key_format = nil
+      key_format ? (@key_format = key_format) : @key_format
     end
 
     # Define what to do after indexing.
     # (Only used in the Sources::DB)
     #
     def after_indexing after_indexing = nil
-      after_indexing ? define_after_indexing(after_indexing) : @after_indexing
-    end
-    def define_after_indexing after_indexing
-      @after_indexing = after_indexing
+      after_indexing ? (@after_indexing = after_indexing) : @after_indexing
     end
 
   end

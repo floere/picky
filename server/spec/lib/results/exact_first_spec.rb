@@ -13,7 +13,7 @@ describe Picky::Results::ExactFirst do
     context "index" do
       it "wraps each category" do
         index = Picky::Index.new :some_index
-        index.define_category :some_category
+        index.category :some_category
 
         index.extend described_class
 
@@ -23,7 +23,7 @@ describe Picky::Results::ExactFirst do
       end
       it "returns the index" do
         index = Picky::Index.new :some_index
-        index.define_category :some_category
+        index.category :some_category
 
         index.extend(described_class).should == index
       end

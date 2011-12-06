@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Picky::Application do
-  
+
   describe "integration" do
     it "should run ok" do
       lambda {
@@ -14,10 +14,10 @@ describe Picky::Application do
                     :file => 'app/db.yml'
                   )
                   end
-          books.define_category :title
-          
+          books.category :title
+
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
-          
+
           route %r{^/books} => Picky::Search.new(books)
         end
         Picky::Tokenizer.index_default.tokenize 'some text'
@@ -35,29 +35,29 @@ describe Picky::Application do
                     removes_characters_after_splitting: /[\.]/,
                     normalizes_words:                   [[/\$(\w+)/i, '\1 dollars']],
                     rejects_token_if:                   lambda { |token| token.blank? || token == :amistad }
-                           
+
           searching removes_characters: /[^a-zA-Z0-9äöü\s\/\-\,\&\"\~\*\:]/,
                     stopwords:          /\b(and|the|of|it|in|for)\b/,
                     splits_text_on:     /[\s\/\-\,\&]+/,
                     normalizes_words:   [[/Deoxyribonucleic Acid/i, 'DNA']],
-                    
+
                     substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
                     maximum_tokens: 5
-          
+
           books_index = Picky::Index.new :books do
             source Picky::Sources::DB.new(
               'SELECT id, title, author, isbn13 as isbn FROM books',
               :file => 'app/db.yml'
             )
           end
-          
-          books_index.define_category :title,
-                                      similarity: Picky::Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
-          books_index.define_category :author,
-                                      similarity: Picky::Similarity::Soundex.new(2)
-          books_index.define_category :isbn,
+
+          books_index.category :title,
+                               similarity: Picky::Similarity::DoubleMetaphone.new(3) # Up to three similar title word indexed.
+          books_index.category :author,
+                               similarity: Picky::Similarity::Soundex.new(2)
+          books_index.category :isbn,
                                       partial: Picky::Partial::None.new # Partially searching on an ISBN makes not much sense.
-          
+
           geo_index = Picky::Index.new :geo do
             source          Picky::Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
             indexing        removes_characters: /[^a-z]/
@@ -66,11 +66,11 @@ describe Picky::Application do
             ranged_category :north1, 1, precision: 3, from: :north
             ranged_category :east1,  1, precision: 3, from: :east
           end
-          
+
           rack_adapter.stub! :exclaim # Stopping it from exclaiming.
-          
+
           route %r{^/books} => Picky::Search.new(books_index)
-          
+
           buks_search = Picky::Search.new(books_index) do
             searching removes_characters: /[buks]/
             ignore    :author
@@ -80,39 +80,39 @@ describe Picky::Application do
       }.should_not raise_error
     end
   end
-  
+
   describe 'finalize' do
     before(:each) do
       described_class.stub! :check
     end
     it 'checks if all is ok' do
       described_class.should_receive(:check).once.with
-      
+
       described_class.finalize
     end
     it 'tells the rack adapter to finalize' do
       described_class.rack_adapter.should_receive(:finalize).once.with
-      
+
       described_class.finalize
     end
   end
-  
+
   describe 'check' do
     it 'does something' do
       described_class.should_receive(:warn).once.with "\nWARNING: No routes defined for application configuration in Class.\n\n"
-      
+
       described_class.check
     end
   end
-  
+
   describe 'delegation' do
     it "should delegate route" do
       described_class.rack_adapter.should_receive(:route).once.with :path => :query
-      
+
       described_class.route :path => :query
     end
   end
-  
+
   describe 'rack_adapter' do
     it 'should be there' do
       lambda { described_class.rack_adapter }.should_not raise_error
@@ -124,11 +124,11 @@ describe Picky::Application do
       described_class.rack_adapter.should == described_class.rack_adapter
     end
   end
-  
+
   describe 'route' do
     it 'is delegated' do
       described_class.rack_adapter.should_receive(:route).once.with :some_options
-      
+
       described_class.route(:some_options)
     end
     it 'raises on block' do
@@ -139,7 +139,7 @@ describe Picky::Application do
       }.to raise_error("Warning: block passed into #route method, not into Search.new!")
     end
   end
-  
+
   describe 'call' do
     before(:each) do
       @routes = stub :routes
@@ -147,9 +147,9 @@ describe Picky::Application do
     end
     it 'should delegate' do
       @routes.should_receive(:call).once.with :env
-      
+
       described_class.call :env
     end
   end
-  
+
 end

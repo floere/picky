@@ -49,35 +49,35 @@ describe Picky::Index do
       end
     end
 
-    describe 'define_category' do
+    describe 'category' do
       context 'with block' do
         it 'returns the category' do
           expected = nil
-          api.define_category(:some_name){ |category| expected = category }.should == expected
+          api.category(:some_name){ |category| expected = category }.should == expected
         end
         it 'takes a string' do
-          lambda { api.define_category('some_name'){ |indexing, indexed| } }.should_not raise_error
+          lambda { api.category('some_name'){ |indexing, indexed| } }.should_not raise_error
         end
         it 'yields both the indexing category and the indexed category' do
-          api.define_category(:some_name) do |category|
+          api.category(:some_name) do |category|
             category.should be_kind_of(Picky::Category)
           end
         end
         it 'yields the category which has the given name' do
-          api.define_category(:some_name) do |category|
+          api.category(:some_name) do |category|
             category.name.should == :some_name
           end
         end
       end
       context 'without block' do
         it 'works' do
-          lambda { api.define_category(:some_name) }.should_not raise_error
+          lambda { api.category(:some_name) }.should_not raise_error
         end
         it 'takes a string' do
-          lambda { api.define_category('some_name') }.should_not raise_error
+          lambda { api.category('some_name') }.should_not raise_error
         end
         it 'returns itself' do
-          api.define_category(:some_name).should be_kind_of(Picky::Category)
+          api.category(:some_name).should be_kind_of(Picky::Category)
         end
       end
     end

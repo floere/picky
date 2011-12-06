@@ -167,7 +167,7 @@ module Picky
     # * qualifiers: An array of qualifiers with which you can define which category you’d like to search, for example “title:hobbit” will search for hobbit in just title categories. Example: qualifiers: [:t, :titre, :title] (use it for example with multiple languages). Default is the name of the category.
     # * qualifier: Convenience options if you just need a single qualifier, see above. Example: qualifiers => :title. Default is the name of the category.
     # * source: Use a different source than the index uses. If you think you need that, there might be a better solution to your problem. Please post to the mailing list first with your application.rb :)
-    # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: define_category(:similar_title, :from => :title).
+    # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: category(:similar_title, :from => :title).
     #
     def category category_name, options = {}
       new_category = Category.new category_name.intern, self, options
@@ -177,7 +177,6 @@ module Picky
 
       new_category
     end
-    alias define_category category
 
     # Make this category range searchable with a fixed range. If you need other
     # ranges, define another category with a different range value.
@@ -233,7 +232,7 @@ module Picky
     # Or go crazy and use 4 ranged categories for a space/time search! ;)
     #
     # === Parameters
-    # * category_name: The category_name as used in #define_category.
+    # * category_name: The category_name as used in #category.
     # * range: The range (in the units of your data values) around the query point where we search for results.
     #
     #  -----|<- range  ->*------------|-----
@@ -241,7 +240,7 @@ module Picky
     # === Options
     # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
     # * anchor: Where to anchor the geo grid.
-    # * ... all options of #define_category.
+    # * ... all options of #category.
     #
     def ranged_category category_name, range, options = {}
       precision = options.delete(:precision) || 1
@@ -251,19 +250,18 @@ module Picky
       #
       options = { partial: Partial::None.new }.merge options
 
-      define_category category_name, options do |category|
-        Wrappers::Category::Location.wrap category, range, precision, anchor
+      category category_name, options do |cat|
+        Wrappers::Category::Location.wrap cat, range, precision, anchor
       end
     end
-    alias define_ranged_category ranged_category
 
     # HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
     #
     # Also a range search see #ranged_category, but on the earth's surface.
     #
     # Parameters:
-    # * lat_name: The latitude's name as used in #define_category.
-    # * lng_name: The longitude's name as used in #define_category.
+    # * lat_name: The latitude's name as used in #category.
+    # * lng_name: The longitude's name as used in #category.
     # * radius: The distance (in km) around the query point which we search for results.
     #
     # Note: Picky uses a square, not a circle. That should be ok for most usages.
@@ -317,7 +315,6 @@ module Picky
       ranged_category lng_name, radius*0.01796624, options.merge(from: lng_from)
 
     end
-    alias define_geo_categories geo_categories
 
     def to_stats # :nodoc:
       stats = <<-INDEX

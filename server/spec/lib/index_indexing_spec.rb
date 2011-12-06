@@ -55,16 +55,14 @@ describe Picky::Index do
   context 'in general' do
     context 'with #each source' do
       let(:index) do
-        described_class.new :some_name do
-          source []
-        end
+        described_class.new :some_name
       end
 
       it 'does things in order' do
         scheduler = stub :scheduler, :fork? => false, :finish => nil
 
-        index.should_receive(:check_source_empty).once.with.ordered
-        index.should_receive(:prepare_in_parallel).once.with(scheduler).ordered
+        index.should_receive(:prepare).once.with(scheduler).ordered
+        index.should_receive(:cache).once.with(scheduler).ordered
 
         index.index scheduler
       end
@@ -97,14 +95,14 @@ describe Picky::Index do
       @index = described_class.new :some_name do
         source the_source
       end
-      @index.define_category :some_category_name1
-      @index.define_category :some_category_name2
+      @index.category :some_category_name1
+      @index.category :some_category_name2
     end
-    describe 'define_source' do
+    describe 'source' do
       it 'can be set with this method' do
         source = stub :source, :each => [].each
 
-        @index.define_source source
+        @index.source source
 
         @index.source.should == source
       end
@@ -119,7 +117,7 @@ describe Picky::Index do
       end
       context 'with categories' do
         before(:each) do
-          @index.define_category :some_name, :source => stub(:source)
+          @index.category :some_name, :source => stub(:source)
         end
         it 'returns it if found' do
           @index[:some_name].should_not == nil

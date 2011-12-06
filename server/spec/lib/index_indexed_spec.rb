@@ -7,14 +7,14 @@ describe Picky::Index do
       @index = described_class.new :some_index_name
     end
 
-    describe 'define_category' do
+    describe 'category' do
       it 'adds a new category to the categories' do
-        @index.define_category :some_category_name
+        @index.category :some_category_name
 
         @index.categories.categories.size.should == 1
       end
       it 'returns the new category' do
-        @index.define_category(:some_category_name).should be_kind_of(Picky::Category)
+        @index.category(:some_category_name).should be_kind_of(Picky::Category)
       end
     end
   end
@@ -24,8 +24,8 @@ describe Picky::Index do
       @categories = stub :categories
 
       @index = described_class.new :some_name
-      @index.define_category :some_category_name1
-      @index.define_category :some_category_name2
+      @index.category :some_category_name1
+      @index.category :some_category_name2
 
       @index.stub! :categories => @categories
     end
