@@ -21,7 +21,7 @@ module Picky
         end
 
         def scheduler
-          @scheduler ||= Procrastinate::Scheduler.start
+          @scheduler ||= Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(2)
         end
       else
         def schedule
