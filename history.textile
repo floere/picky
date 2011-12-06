@@ -1,6 +1,6 @@
 h2. Upcoming Version
 
-h2. Version 4.0.0-pre1
+h2. Version 4.0.0pre1
 
 * hanke: (server) BREAKING @Picky::Indexes.index@ does not index in parallel anymore.
 * hanke: (server) BREAKING Renamed @Picky::Indexes.index_for_tests@ to @Picky::Indexes.index@.
