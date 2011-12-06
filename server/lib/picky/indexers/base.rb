@@ -19,10 +19,10 @@ module Picky
 
       # Starts the indexing process.
       #
-      def prepare categories, scheduler = Scheduler.new
+      def prepare categories
         check_source
         categories.empty
-        process categories, scheduler do |prepared_file|
+        process categories do |prepared_file|
           notify_finished prepared_file
         end
       end

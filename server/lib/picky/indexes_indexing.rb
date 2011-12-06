@@ -23,12 +23,19 @@ module Picky
     #
     #
     def index scheduler = Scheduler.new
-      indexes.each { |index| index.prepare scheduler }
-      scheduler.finish
+      results = indexes.map { |index| index.prepare scheduler }.flatten
 
-      timed_exclaim "Tokenizing finished, generating data for indexes from tokenized data."
+      until results.empty?
+        results.delete_if do |result|
+          if result.ready?
+            index, category = result.value
+            specific = self[index]
+            specific = specific[category] if category
+            specific.cache scheduler
+          end
+        end
+      end
 
-      indexes.each { |index| index.cache scheduler }
       scheduler.finish
     end
 

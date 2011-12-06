@@ -81,8 +81,9 @@ module Picky
           take_snapshot index
         end
         @snapshot_taken += 1
-        yield
+        result = yield
         @snapshot_taken -= 1
+        result
       end
 
     end

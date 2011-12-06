@@ -28,10 +28,11 @@ module Picky
     def prepare scheduler = Scheduler.new
       categories = Categories.new
       categories << self
+
       with_data_snapshot do
         scheduler.schedule do
-          indexer.prepare categories, scheduler
-          nil # TODO Needed so procrastinate is happy. Remove in 4.0.
+          indexer.prepare categories
+          [index_name, name]
         end
       end
     end
@@ -43,7 +44,7 @@ module Picky
         empty
         retrieve
         dump
-        nil # TODO Needed so procrastinate is happy. Remove in 4.0.
+        [index_name, name] # TODO Needed so procrastinate is happy. Remove in 4.0.
       end
     end
 

@@ -66,9 +66,12 @@ module Picky
     #
     # Only use where the category does have a #each source defined.
     #
-    def prepare_in_parallel scheduler
+    def prepare_in_parallel scheduler = Scheduler.new
       indexer = Indexers::Parallel.new self
-      indexer.prepare categories, scheduler
+      scheduler.schedule do
+        indexer.prepare categories
+        [name]
+      end
     end
 
     # Note: Duplicated in category_indexing.rb.

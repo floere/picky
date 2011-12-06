@@ -6,7 +6,6 @@ module Picky
 
     each_delegate :cache,
                   :clear,
-                  :prepare,
                   :to => :categories
 
     # First prepares all categories,
@@ -20,6 +19,12 @@ module Picky
         categories.cache scheduler
         scheduler.finish
       end
+    end
+
+    # Returns a list of Procrastinate result proxies.
+    #
+    def prepare scheduler = Scheduler.new
+      categories.map { |category| category.prepare scheduler }
     end
   end
 

@@ -15,7 +15,7 @@ module Picky
       # Parameters:
       #  * categories: An Enumerable of Category-s.
       #
-      def process categories, scheduler = Scheduler.new
+      def process categories
         # Prepare a combined object - array.
         #
         combined = categories.map do |category|
