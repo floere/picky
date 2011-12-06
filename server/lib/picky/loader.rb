@@ -261,9 +261,8 @@ module Picky
       #
       load_relative 'application'
 
-      # Load tools.
+      # Load tools. Load specifically?
       #
-      load_relative 'parallelizer'
       load_relative 'scheduler'
 
       # Load migration notices.

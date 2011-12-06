@@ -7,6 +7,7 @@ gem 'rack'
 gem 'yajl-ruby', :require => 'yajl'
 gem 'text'
 gem 'rack_fast_escape'
+gem 'procrastinate'
 
 group :test do
   # Needed for testing itself.

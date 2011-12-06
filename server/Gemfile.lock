@@ -22,6 +22,8 @@ GEM
     picky-client (3.6.1)
       activesupport (>= 3.0.0)
       yajl-ruby (>= 0.7.8)
+    procrastinate (0.4.0)
+      state_machine (~> 0.9.4)
     rack (1.3.5)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
@@ -44,6 +46,7 @@ GEM
       simplecov-html (~> 0.5.3)
     simplecov-html (0.5.3)
     sqlite3 (1.3.4)
+    state_machine (0.9.4)
     text (0.2.0)
     tzinfo (0.3.31)
     url_escape (2009.06.24)
@@ -58,6 +61,7 @@ DEPENDENCIES
   activerecord
   highline
   picky-client
+  procrastinate
   rack
   rack-mount
   rack_fast_escape

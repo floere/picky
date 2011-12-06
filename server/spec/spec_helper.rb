@@ -30,7 +30,7 @@ rescue LoadError => e
   #
   module Picky; PerformanceRatio = 0.5 end
 end
-def performance_of
+gem def performance_of
   if block_given?
     code = Proc.new
     GC.disable
