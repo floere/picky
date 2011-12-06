@@ -61,10 +61,12 @@ describe Picky::Index do
       end
 
       it 'does things in order' do
-        index.should_receive(:check_source_empty).once.with.ordered
-        index.should_receive(:index_in_parallel).once.with.ordered
+        scheduler = stub :scheduler, :fork? => false, :finish => nil
 
-        index.index
+        index.should_receive(:check_source_empty).once.with.ordered
+        index.should_receive(:prepare_in_parallel).once.with(scheduler).ordered
+
+        index.index scheduler
       end
     end
     context 'with non#each source' do
@@ -80,7 +82,8 @@ describe Picky::Index do
         categories = stub :categories
         index.stub! :categories => categories
 
-        categories.should_receive(:index).once
+        categories.should_receive(:prepare).once
+        categories.should_receive(:cache).once
 
         index.index
       end

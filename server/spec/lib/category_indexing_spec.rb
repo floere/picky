@@ -127,7 +127,7 @@ describe Picky::Category do
         category.stub! :indexer => @indexer
       end
       it "tells the indexer to index" do
-        @indexer.should_receive(:index).once
+        @indexer.should_receive(:prepare).once
 
         category.prepare
       end

@@ -5,8 +5,7 @@ module Picky
     attr_reader :parallel
 
     def initialize options = {}
-      @parallel        = options[:parallel]
-      @on_finish_queue = []
+      @parallel = options[:parallel]
 
       configure
     end
@@ -19,7 +18,6 @@ module Picky
 
         def finish
           scheduler.join
-          finish!
         end
 
         def scheduler
@@ -31,16 +29,9 @@ module Picky
         end
 
         def finish
-          finish!
+          # Don't do anything.
         end
       end
-    end
-
-    def on_finish &block
-      @on_finish_queue << block
-    end
-    def finish!
-      @on_finish_queue.each &:call
     end
 
     def fork?

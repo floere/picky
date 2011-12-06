@@ -29,38 +29,11 @@ describe Picky::Scheduler do
         end
       end
     end
-    context 'with forking' do
-      before(:each) do
-        scheduler.stub! :fork? => true
-      end
-      context 'stubbed forking' do
-        it 'works correctly' do
-          Process.should_receive(:fork).exactly(4).times.and_yield
-
-          scheduler.schedule { sleep 0.01 }
-          scheduler.schedule { sleep 0.01 }
-          scheduler.schedule { sleep 0.01 }
-          scheduler.schedule { sleep 0.01 }
-        end
-        it 'works correctly' do
-          Process.should_receive(:fork).any_number_of_times.and_yield
-
-          called = 0
-
-          scheduler.schedule { called += 1 }
-          scheduler.schedule { called += 1 }
-          scheduler.schedule { called += 1 }
-          scheduler.schedule { called += 1 }
-
-          called.should == 4
-        end
-      end
-    end
 
     describe 'fork?' do
       context 'OS can fork' do
         it 'returns false' do
-          scheduler.fork?.should == false
+          scheduler.fork?.should be_false
         end
       end
       context 'OS cannot fork' do
@@ -68,7 +41,7 @@ describe Picky::Scheduler do
           Process.stub! :fork => nil
         end
         it 'returns false' do
-          scheduler.fork?.should == false
+          scheduler.fork?.should be_false
         end
       end
     end
@@ -76,20 +49,43 @@ describe Picky::Scheduler do
   context 'default params' do
     let(:scheduler) { described_class.new parallel: true }
 
+    context 'stubbed forking' do
+      it 'works correctly' do
+        scheduler.scheduler.should_receive(:schedule).exactly(4).times.and_yield
+
+        scheduler.schedule { sleep 0.01 }
+        scheduler.schedule { sleep 0.01 }
+        scheduler.schedule { sleep 0.01 }
+        scheduler.schedule { sleep 0.01 }
+      end
+      it 'works correctly' do
+        scheduler.scheduler.should_receive(:schedule).any_number_of_times.and_yield
+
+        called = 0
+
+        scheduler.schedule { called += 1 }
+        scheduler.schedule { called += 1 }
+        scheduler.schedule { called += 1 }
+        scheduler.schedule { called += 1 }
+
+        called.should == 4
+      end
+    end
+
     describe 'fork?' do
       context 'OS can fork' do
         it 'returns true' do
           scheduler.fork?.should == true
         end
       end
-      context 'OS cannot fork' do
-        before(:each) do
-          Process.stub! :fork => nil
-        end
-        it 'returns false' do
-          scheduler.fork?.should == false
-        end
-      end
+      # context 'OS cannot fork' do
+      #   before(:each) do
+      #     Process.send :undef, :fork
+      #   end
+      #   it 'returns false' do
+      #     scheduler.fork?.should == false
+      #   end
+      # end
     end
   end
 

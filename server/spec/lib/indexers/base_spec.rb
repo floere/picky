@@ -23,21 +23,21 @@ describe Picky::Indexers::Base do
       indexer.stub! :process
 
       expect {
-        indexer.index []
+        indexer.prepare []
       }.to raise_error("Trying to index without a source for some_index_or_category.")
     end
   end
 
-  describe 'index' do
+  describe 'prepare' do
     before(:each) do
       some_index_or_category.should_receive(:source).any_number_of_times.and_return :some_source
     end
     it 'processes' do
       categories = stub :categories, :empty => nil, :cache => nil
 
-      indexer.should_receive(:process).once.with categories
+      indexer.should_receive(:process).once.with categories, anything
 
-      indexer.index categories
+      indexer.prepare categories
     end
     it 'calls the right methods on the categories' do
       indexer.stub! :process
@@ -45,9 +45,8 @@ describe Picky::Indexers::Base do
       categories = stub :categories
 
       categories.should_receive(:empty).once.ordered
-      categories.should_receive(:cache).once.ordered
 
-      indexer.index categories
+      indexer.prepare categories
     end
   end
 

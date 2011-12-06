@@ -20,11 +20,16 @@ describe Picky::Indexes do
       indexes.register @index2
     end
     describe 'index' do
-      it 'takes a snapshot, then indexes and caches each' do
-        @index1.should_receive(:index).once.with.ordered
-        @index2.should_receive(:index).once.with.ordered
+      it 'prepares and caches each' do
+        scheduler = stub :scheduler, :fork? => false, :finish => nil
 
-        indexes.index
+        @index1.should_receive(:prepare).once.with(scheduler).ordered
+        @index2.should_receive(:prepare).once.with(scheduler).ordered
+
+        @index1.should_receive(:cache).once.with(scheduler).ordered
+        @index2.should_receive(:cache).once.with(scheduler).ordered
+
+        indexes.index scheduler
       end
     end
     describe 'register' do
@@ -50,7 +55,6 @@ describe Picky::Indexes do
       end
     end
     it_delegates_each :clear
-    it_delegates_each :index
   end
 
 end

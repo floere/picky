@@ -61,14 +61,14 @@ describe "exact first" do
       category :text, partial: Picky::Partial::Substring.new(from: 1)
     end
     normal = Picky::Search.new data
-    Picky::Indexes.index_for_tests
+    Picky::Indexes.index
 
     normal.search("disco").ids.should == [1, 2] # Ordering with which it was added.
 
     data.extend Picky::Results::ExactFirst
     exact_first = Picky::Search.new data
 
-    Picky::Indexes.index_for_tests
+    Picky::Indexes.index
 
     exact_first.search("disco").ids.should == [2, 1] # Exact first.
     exact_first.search("disc").ids.should  == [1, 2] # Not exact, so not first.

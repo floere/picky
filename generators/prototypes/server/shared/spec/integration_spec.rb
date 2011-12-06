@@ -6,7 +6,7 @@ require 'picky-client/spec'
 describe 'Integration Tests' do
 
   before(:all) do
-    Picky::Indexes.index_for_tests
+    Picky::Indexes.index
     Picky::Indexes.load
   end
 

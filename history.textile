@@ -1,9 +1,17 @@
 h2. Upcoming Version
 
+h2. Version 4.0.0-pre1
+
+* hanke: (server) BREAKING @Picky::Indexes.index@ does not index in parallel anymore.
+* hanke: (server) BREAKING Renamed @Picky::Indexes.index_for_tests@ to @Picky::Indexes.index@.
+* hanke: (server) If you want to explicitly run parallel indexing programmatically, use @Picky::Indexes.index Picky::Scheduler.new(parallel: true)@ or @Picky::Indexes[:index_name].index Picky::Scheduler.new(parallel: true)@.
 * hanke: (server) BREAKING Renamed @Picky::Wrappers::Category::ExactFirst@ to @Picky::Results::ExactFirst@. Extend instead of wrap: @index.extend Results::ExactFirst@ or @category.extend Results::ExactFirst@. If an index is extended, each category of the index will be extended.
 * hanke: (server) BREAKING @Picky::Indexes.reload@ has been renamed to @Picky::Indexes.load@.
 * hanke: (server) BREAKING @index.reload@ has been renamed to @index.load@.
 * hanke: (server) BREAKING @category.reload@ has been renamed to @category.load@.
+* hanke: (generators) Changed method calls to adapt to above changes.
+* hanke: (server) Using the @procrastinate@ gem to parallelize indexing.
+* hanke: (server) Indexing call structure cleaned up. Improves performance by about 40%.
 
 h2. Version 3.6.16
 

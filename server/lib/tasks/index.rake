@@ -10,12 +10,11 @@ namespace :index do
     task kind, [:index, :category] => :application do |_, options|
       index, category = options.index, options.category
 
-      scheduler = Picky::Scheduler.new kind => true
-
       specific = Picky::Indexes
       specific = specific[index]    if index
       specific = specific[category] if category
-      specific.index scheduler
+
+      specific.index Picky::Scheduler.new(kind => true)
     end
   end
 

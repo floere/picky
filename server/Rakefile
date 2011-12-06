@@ -1,9 +1,18 @@
-require 'rake'
+# require 'rake'
+#
+# task :default => :rspec
+#
+# all_rake_files = File.expand_path '../tasks/*.rake', __FILE__
+#
+# Dir[all_rake_files].each do |rakefile|
+#   load rakefile
+# end
 
-task :default => :rspec
+require File.expand_path '../lib/picky/tasks', __FILE__
 
-all_rake_files = File.expand_path '../tasks/*.rake', __FILE__
+require 'rspec'
+require 'rspec/core/rake_task'
 
-Dir[all_rake_files].each do |rakefile|
-  load rakefile
-end
+task :default => :spec
+
+RSpec::Core::RakeTask.new :spec

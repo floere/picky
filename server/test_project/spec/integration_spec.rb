@@ -6,7 +6,7 @@ require File.expand_path '../../../../client/lib/picky-client/spec', __FILE__
 describe BookSearch do
 
   before(:all) do
-    Picky::Indexes.index_for_tests
+    Picky::Indexes.index
     Picky::Indexes.load
   end
 
