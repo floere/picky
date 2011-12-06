@@ -10,6 +10,7 @@ h2. Version 4.0.0pre1
 * hanke: (server) BREAKING @index.reload@ has been renamed to @index.load@.
 * hanke: (server) BREAKING @category.reload@ has been renamed to @category.load@.
 * hanke: (server) BREAKING Removed all @define_...@ methods on indexes.
+* hanke: (generators) Fixed integration specs for the generated "all in one" server/client.
 * hanke: (generators) Changed method calls to adapt to above changes.
 * hanke: (server) Using the @procrastinate@ gem to parallelize indexing.
 * hanke: (server) Indexing call structure cleaned up. Improves performance by about 40%.
