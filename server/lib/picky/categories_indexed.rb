@@ -27,18 +27,8 @@ module Picky
     # Returns all possible similar tokens for the given token.
     #
     def similar_tokens_for token
-      text = token.text
       categories.inject([]) do |result, category|
-        next_token = token
-        # Note: We could also break off here if not all the available
-        #       similars are needed.
-        #       Wait for a concrete case that needs this before taking
-        #       action.
-        #
-        while next_token = next_token.next_similar_token(category)
-          result << next_token if next_token && next_token.text != text # TODO Double work?
-        end
-        result
+        result + token.similar_tokens_for(category)
       end
     end
 

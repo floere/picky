@@ -12,105 +12,40 @@ describe Picky::Query::Token do
     end
   end
 
-  describe 'next_similar_token' do
-    before(:each) do
-      @bundle   = stub :bundle, :similar => [:array, :of, :similar]
-      @category = stub :category, :bundle_for => @bundle
-
-      @token = described_class.processed 'similar~', 'Similar~'
-    end
-    it 'returns the right next tokens' do
-      next_token = @token.next_similar_token @category
-      next_token.text.should == :array
-      next_token = next_token.next_similar_token @category
-      next_token.text.should == :of
-      next_token = next_token.next_similar_token @category
-      next_token.text.should == :similar
-      next_token = next_token.next_similar_token @category
-      next_token.should == nil
-    end
-  end
-
-  describe 'next_similar' do
-    before(:each) do
-      @bundle = stub :bundle
-    end
-    describe 'original' do
-      context 'with stub' do
-        before(:each) do
-          @bundle.stub! :similar => [:array, :of, :similar]
-
-          @token = described_class.processed 'similar~', 'Similar'
-        end
-        it 'should have a certain original text' do
-          @token.next_similar @bundle
-
-          @token.original.should == :array
-        end
-      end
-    end
-    context 'similar' do
-      context 'with stub' do
-        before(:each) do
-          @bundle.stub! :similar => [:array, :of, :similar]
-
-          @token = described_class.processed 'similar~', 'Similar'
-        end
-        it 'generates all similar' do
-          @token.next_similar(@bundle).should == :array
-          @token.next_similar(@bundle).should == :of
-          @token.next_similar(@bundle).should == :similar
-          @token.next_similar(@bundle).should == nil
-        end
-        it 'should have a certain text' do
-          @token.next_similar @bundle
-          @token.next_similar @bundle
-          @token.next_similar @bundle
-          @token.next_similar @bundle
-
-          @token.text.should == :similar
-        end
-      end
-    end
-    context 'non-similar' do
-      context 'with stub' do
-        before(:each) do
-          @bundle.stub! :similar => [:array, :of, :similar]
-
-          @token = described_class.processed 'nonsimilar', 'Nonsimilar'
-        end
-        it 'generates all similar' do
-          @token.next_similar(@bundle).should == nil
-        end
-        it 'should have a certain text' do
-          @token.next_similar @bundle
-
-          @token.text.should == 'nonsimilar'
-        end
-      end
-    end
-  end
-
-  describe "generate_similarity_for" do
-    before(:each) do
-      @bundle = stub :bundle
-
-      @token = described_class.processed 'flarb~', 'FLARB~'
-    end
-    context "with similar" do
+  describe 'similar_tokens_for' do
+    let(:token) { described_class.processed 'similar~', 'Similar~' }
+    context 'with similar' do
       before(:each) do
-        @bundle.stub! :similar => [:array, :of, :similar]
+        @bundle   = stub :bundle, :similar => ['array', 'of', 'similar']
+        @category = stub :category, :bundle_for => @bundle
       end
-      it "returns an array of the right size" do
-        @token.generate_similarity_for(@bundle).size.should == 3
+      it 'returns a list of tokens' do
+        token.similar_tokens_for(@category).each do |token|
+          token.should be_kind_of(described_class)
+        end
+      end
+      it 'returns all non-similar tokens' do
+        token.similar_tokens_for(@category).each do |token|
+          token.should_not be_similar
+        end
+      end
+      it 'returns a list of tokens with the right text' do
+        token.similar_tokens_for(@category).map(&:text).should == ['array', 'of', 'similar']
+      end
+      it 'returns a list of tokens with the right original' do
+        token.similar_tokens_for(@category).map(&:original).should == ['array', 'of', 'similar']
+      end
+      it 'returns a list of tokens with the right categorization' do
+        token.similar_tokens_for(@category).map(&:user_defined_categories).should == [[@category], [@category], [@category]]
       end
     end
-    context "without similar" do
+    context 'without similar' do
       before(:each) do
-        @bundle.stub! :similar => []
+        @bundle   = stub :bundle, :similar => []
+        @category = stub :category, :bundle_for => @bundle
       end
-      it "returns an array of the right size" do
-        @token.generate_similarity_for(@bundle).size.should == 0
+      it 'returns an empty list' do
+        token.similar_tokens_for(@category).should == []
       end
     end
   end

@@ -11,8 +11,9 @@ module Picky
     #
     class Token # :nodoc:all
 
-      attr_reader :text, :original, :qualifiers, :user_defined_categories
+      attr_reader :text, :original, :qualifiers
       attr_writer :similar
+      attr_accessor :user_defined_categories
 
       delegate :blank?, :to => :text
 
@@ -21,9 +22,10 @@ module Picky
       # Note:
       # Use this if you do not want a normalized token.
       #
-      def initialize text, original = nil
+      def initialize text, original = nil, category = nil
         @text     = text
         @original = original
+        @user_defined_categories = [category]
       end
 
       # Returns a qualified and normalized token.
@@ -124,33 +126,13 @@ module Picky
         index.possible_combinations self
       end
 
-      # Returns a token with the next similar text.
+      # Returns all similar tokens for the token.
       #
-      # FIXME Rewrite this. It is hard to understand. Also spec performance.
-      #
-      def next_similar_token category
-        token = self.dup
-        token if token.next_similar category.bundle_for(token)
-      end
-      # Sets and returns the next similar word.
-      #
-      # Note: Also overrides the original.
-      #
-      def next_similar bundle
-        @text = @original = (similarity(bundle).shift || return) if similar?
-      end
-      # Lazy similar reader.
-      #
-      def similarity bundle = nil
-        @similarity ||= generate_similarity_for(bundle)
-      end
-      # Returns an enumerator that traverses over the similar.
-      #
-      # Note: The dup isn't too nice – since it is needed on account of the shift, above.
-      #       (We avoid a StopIteration exception. Which of both is less evil?)
-      #
-      def generate_similarity_for bundle
-        bundle.similar(@text) || []
+      def similar_tokens_for category
+        similars = category.bundle_for(self).similar @text
+        similars.map do |similar|
+          self.class.new similar, similar, category
+        end
       end
 
       # Splits text into a qualifier and text.
