@@ -166,8 +166,8 @@ describe BookSearch do
   #
   it { csv.search('title:le* title:hystoree~').ids.should == [4, 250, 428] }
   it { csv.search('hystori~ author:ferg').ids.should == [] }
-  it { csv.search('hystori~ author:fergu').ids.should == [4, 4] }
-  it { csv.search('hystori~ author:fergus').ids.should == [4, 4] }
+  it { csv.search('hystori~ author:fergu').ids.should == [4] }
+  it { csv.search('hystori~ author:fergus').ids.should == [4] }
   it { csv.search('author:fergus').ids.should == [4] }
 
   # Partial searches.
@@ -179,7 +179,7 @@ describe BookSearch do
 
   # Similarity.
   #
-  it { csv.search('hystori~ leeward').ids.should == [4, 4] }
+  it { csv.search('hystori~ leeward').ids.should == [4] }
   it { csv.search('strutigic~ guvurnance~').ids.should == [7] }
   it { csv.search('strategic~ governance~').ids.should == [] } # Does not find itself.
 

@@ -26,9 +26,8 @@ module Picky
       def hash
         @combinations.hash
       end
-      def eql? other_allocation
-        true # FIXME
-        # @combinations.eql? other_allocation.combinations
+      def eql? _
+        true
       end
 
       # Scores its combinations and caches the result.
