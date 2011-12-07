@@ -1,5 +1,10 @@
 module Picky
-  Partial    = Generators::Partial
+  remove_const :Partial if defined? Partial
+  Partial = Generators::Partial
+
+  remove_const :Similarity if defined? Similarity
   Similarity = Generators::Similarity
-  Weights    = Generators::Weights
+
+  remove_const :Weights if defined? Weights
+  Weights = Generators::Weights
 end

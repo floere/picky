@@ -182,6 +182,7 @@ module Picky
 
   # Aka.
   #
+  remove_const :LiveParameters if defined? LiveParameters
   LiveParameters = Interfaces::LiveParameters
 
 end

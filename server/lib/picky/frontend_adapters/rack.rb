@@ -89,6 +89,7 @@ module Picky
       #
       # Note: Rack-mount already handles the 404.
       #
+      remove_const :STATUSES if defined? STATUSES
       STATUSES = {
         200 => lambda { |_| [200, { 'Content-Type' => 'text/html', 'Content-Length' => '0' }, [EMPTY_STRING]] },
         404 => lambda { |_| [404, { 'Content-Type' => 'text/html', 'Content-Length' => '0' }, [EMPTY_STRING]] }

@@ -47,7 +47,7 @@ module Picky
         #
         # Defaults are 20 ids, offset 0.
         #
-        UTF8_STRING = 'UTF-8'.freeze
+        UTF8_STRING = 'UTF-8'.freeze unless defined? UTF8_STRING
         def extracted params
           [
             # query is encoded in ASCII
