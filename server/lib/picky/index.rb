@@ -285,8 +285,8 @@ module Picky
     # * lat_from: The data category to take the data for the latitude from.
     # * lng_from: The data category to take the data for the longitude from.
     #
-    # TODO Will have to write a wrapper that combines two categories that are
-    #      indexed simultaneously, since lat/lng are correlated.
+    # THINK Will have to write a wrapper that combines two categories that are
+    # indexed simultaneously, since lat/lng are correlated.
     #
     def geo_categories lat_name, lng_name, radius, options = {} # :nodoc:
 

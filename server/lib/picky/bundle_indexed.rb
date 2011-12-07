@@ -64,7 +64,7 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      # TODO THINK about this. Perhaps the strategies should implement the backend methods?
+      # THINK about this. Perhaps the strategies should implement the backend methods?
       #
       self.weights = @backend_weights.load if @weights_strategy.saved?
     end
