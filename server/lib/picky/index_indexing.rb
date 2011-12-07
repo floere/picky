@@ -104,8 +104,6 @@ module Picky
     # Extract the actual source if it is wrapped in a time
     # capsule, i.e. a block/lambda.
     #
-    # TODO Extract into module.
-    #
     def extract_source
       @source = @source.respond_to?(:call) ? @source.call : @source
     end

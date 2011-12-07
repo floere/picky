@@ -3,7 +3,7 @@
 #
 module Picky
 
-  # TODO Improve.
+  # Handles the IRB console for Picky.
   #
   class Console
 

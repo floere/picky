@@ -43,16 +43,17 @@ module Picky
     # strings to the index for the given id.
     #
     def add_tokenized id, tokens, where = :unshift
-      tokens.each { |text| add_tokenized_token id, text, where }
+      tokens.each { |text| add_tokenized_token id.send(key_format), text, where, false }
     end
 
     #
     #
-    def add_tokenized_token id, text, where = :unshift
+    def add_tokenized_token id, text, where = :unshift, format = true
       return unless text
-      id = id.send key_format # TODO Speed this up!
 
+      id = id.send key_format if format
       # text = text.to_sym if @symbols # TODO Symbols.
+
       exact.add id, text, where
       partial.add_partialized id, text, where
     end

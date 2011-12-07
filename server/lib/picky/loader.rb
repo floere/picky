@@ -20,7 +20,6 @@ module Picky
     # Loads this file anew.
     #
     def self.load_self
-      exclaim 'Loader loading itself.'
       load __FILE__
     end
 

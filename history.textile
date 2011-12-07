@@ -1,5 +1,7 @@
 h2. Upcoming Version
 
+* hanke: (server) Rake task @index@ now points to task @index:parallel@ by default. Call @rake:serial@ to index serially.
+
 h2. Version 4.0.0pre1
 
 * hanke: (server) BREAKING @Picky::Indexes.index@ does not index in parallel anymore.
