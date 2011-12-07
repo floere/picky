@@ -136,11 +136,13 @@ ram = ->() do
 end
 string = ->() do
   i = 0
+  # strs = []
   ObjectSpace.each_object(String) do |s|
-    # puts s
     i += 1
+    # strs << s
   end
   i
+  # strs
 end
 GC.enable
 
@@ -205,10 +207,10 @@ definitions.each do |definition, description|
 
         GC.start
         initial_ram = ram.call
-        initial_strings = string.call
         initial_symbols = Symbol.all_symbols.size
 
         last_gc = runs.call
+        initial_strings = string.call
 
         duration = performance_of do
 
@@ -222,8 +224,8 @@ definitions.each do |definition, description|
 
         end
 
-        rams << (ram.call - initial_ram)
         strings << (string.call - initial_strings)
+        rams << (ram.call - initial_ram)
         symbols << (Symbol.all_symbols.size - initial_symbols)
         gc_runs << (runs.call - last_gc)
 
