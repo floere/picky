@@ -36,7 +36,7 @@ module Picky
         #       action.
         #
         while next_token = next_token.next_similar_token(category)
-          result << next_token if next_token && next_token.text != text
+          result << next_token if next_token && next_token.text != text # TODO Double work?
         end
         result
       end
