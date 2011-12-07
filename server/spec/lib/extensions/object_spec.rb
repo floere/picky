@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe Object do
-  
+
   context 'basic object' do
     let(:object) { described_class.new }
-    
+
     describe "exclaim" do
       it "delegates to puts" do
-        object.should_receive(:puts).once.with :bla
+        STDOUT.should_receive(:puts).once.with :bla
+        STDOUT.should_receive(:flush).once.with
 
         object.exclaim :bla
       end
@@ -30,11 +31,11 @@ describe Object do
       end
     end
   end
-  
+
   describe 'indented_to_s' do
     describe String do
       let(:string) { String.new("Hello\nTest") }
-      
+
       it 'indents a default amount' do
         string.indented_to_s.should == "  Hello\n  Test"
       end
@@ -47,7 +48,7 @@ describe Object do
     end
     describe Array do
       let(:array) { Array.new(["Hello", "Test"]) }
-      
+
       it 'indents a default amount' do
         array.indented_to_s.should == "  Hello\n  Test"
       end
@@ -56,5 +57,5 @@ describe Object do
       end
     end
   end
-  
+
 end

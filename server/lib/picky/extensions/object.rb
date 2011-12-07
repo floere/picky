@@ -10,7 +10,8 @@ class Object # :nodoc:all
   # Just puts the given text.
   #
   def exclaim text
-    puts text
+    STDOUT.puts text
+    STDOUT.flush
   end
 
   # Puts a text that informs the user of a missing gem.
