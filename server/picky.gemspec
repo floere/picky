@@ -30,12 +30,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'yajl-ruby'
   s.add_runtime_dependency 'activesupport', '~> 3.0'
   s.add_runtime_dependency 'procrastinate', '~> 0.4'
-
-  # Note: Move to optional soon.
-  #
-  s.add_runtime_dependency 'unicorn'
-  s.add_runtime_dependency 'sinatra'
-  s.add_runtime_dependency 'rack'
   s.add_runtime_dependency 'rack_fast_escape'
 
   # Optional dependencies.
@@ -44,6 +38,9 @@ Gem::Specification.new do |s|
   #       less error prone. Picky will tell the
   #       users to install the gems if they need it.
   #
+  # s.add_runtime_dependency 'unicorn'
+  # s.add_runtime_dependency 'sinatra'
+  # s.add_runtime_dependency 'rack'
   # s.add_runtime_dependency 'activerecord', '~> 3.0'
   # s.add_runtime_dependency 'redis'
   # s.add_runtime_dependency 'mysql'
