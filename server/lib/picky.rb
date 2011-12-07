@@ -6,6 +6,7 @@ module Picky
   require 'active_support/core_ext/logger'
   require 'active_support/core_ext/object/blank'
   require 'active_support/core_ext/enumerable'
+  require 'active_support/multibyte'
   require 'yajl'
   require 'procrastinate'
 
