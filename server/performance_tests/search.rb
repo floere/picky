@@ -109,6 +109,13 @@ backends = [
 definitions = []
 
 definitions << [Proc.new do
+  category :text1, weights: Picky::Weights::Constant.new
+  category :text2, weights: Picky::Weights::Constant.new
+  category :text3, weights: Picky::Weights::Constant.new
+  category :text4, weights: Picky::Weights::Constant.new
+end, :no_weights]
+
+definitions << [Proc.new do
   category :text1
   category :text2
   category :text3
@@ -116,18 +123,11 @@ definitions << [Proc.new do
 end, :normal]
 
 definitions << [Proc.new do
-  category :text1, weights: Picky::Partial::Postfix.new(from: 1)
-  category :text2, weights: Picky::Partial::Postfix.new(from: 1)
-  category :text3, weights: Picky::Partial::Postfix.new(from: 1)
-  category :text4, weights: Picky::Partial::Postfix.new(from: 1)
+  category :text1, partial: Picky::Partial::Postfix.new(from: 1)
+  category :text2, partial: Picky::Partial::Postfix.new(from: 1)
+  category :text3, partial: Picky::Partial::Postfix.new(from: 1)
+  category :text4, partial: Picky::Partial::Postfix.new(from: 1)
 end, :full_partial]
-
-definitions << [Proc.new do
-  category :text1, weights: Picky::Weights::Constant.new
-  category :text2, weights: Picky::Weights::Constant.new
-  category :text3, weights: Picky::Weights::Constant.new
-  category :text4, weights: Picky::Weights::Constant.new
-end, :no_weights]
 
 ram = ->() do
   # Demeter is rotating in his grave :D
