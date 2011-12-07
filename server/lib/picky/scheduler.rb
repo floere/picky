@@ -6,6 +6,7 @@ module Picky
 
     def initialize options = {}
       @parallel = options[:parallel]
+      @factor   = options[:factor] || 2
 
       configure
     end
@@ -21,7 +22,7 @@ module Picky
         end
 
         def scheduler
-          @scheduler ||= Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(2)
+          @scheduler ||= Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(@factor)
         end
       else
         def schedule
