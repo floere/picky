@@ -7,8 +7,6 @@ module Picky
       # By default, all caches are saved in a
       # storage (like a file).
       #
-      # TODO Move to the backends? Rename to backend?
-      #
       def saved?
         true
       end

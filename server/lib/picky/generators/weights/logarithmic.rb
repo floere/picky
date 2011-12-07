@@ -16,7 +16,7 @@ module Picky
         # If the size is 0 or one, we would get -Infinity or 0.0.
         # Thus we do not set a value if there is just one. The default, dynamically, is 0.
         #
-        # BUT: We need the value, even if 0. To designate that there is a weight!
+        # BUT: We need the value, even if 0. To designate that there IS a weight!
         #
         def weight_for amount
           return 0 if amount < 1

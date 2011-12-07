@@ -26,9 +26,9 @@ module Picky
       def hash
         @combinations.hash
       end
-      def eql? _
-        true
-      end
+      # def eql? other
+      #   self.class == other.class && combinations.eql?(other.combinations)
+      # end
 
       # Scores its combinations and caches the result.
       #

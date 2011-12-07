@@ -9,14 +9,6 @@ describe Picky::Query::Allocation do
     @allocation   = described_class.new @index, @combinations
   end
 
-  describe "eql?" do
-    # FIXME This works, but is not acceptable.
-    #
-    it "returns true" do
-      @allocation.eql?(:anything).should == true
-    end
-  end
-
   describe "hash" do
     it "delegates to the combinations" do
       @combinations.should_receive(:hash).once.with

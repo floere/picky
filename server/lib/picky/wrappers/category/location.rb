@@ -20,6 +20,7 @@ module Picky
             # Both use the exact index.
             #
             # TODO Necessary to wrap?
+            # @exact ||= Wrappers::Bundle::Location.new(@exact, grid: grid, precision: precision, anchor: anchor)
             #
             define_method :exact do
               wrapped_exact

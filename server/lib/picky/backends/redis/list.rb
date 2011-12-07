@@ -54,7 +54,7 @@ module Picky
 
         # Set a single list.
         #
-        # TODO We should optimize this by only adding. Maybe only add the difference?
+        # TODO Clear? Maybe only add the difference?
         #
         def []= key, values
           redis_key = "#{namespace}:#{key}"

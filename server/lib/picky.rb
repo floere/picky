@@ -9,9 +9,6 @@ module Picky
   require 'active_support/multibyte'
   require 'yajl'
   require 'procrastinate'
-
-  # Load Rack fast escape if Rack is used.
-  #
   require 'rack_fast_escape' if defined? Rack
 
   # Require the constants.

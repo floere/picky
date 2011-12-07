@@ -133,7 +133,7 @@ describe BookSearch do
   # Breakage. As reported by Jason.
   #
   it 'finds with specific id' do
-    books.search('id:"2"').ids.should == [2]
+    books.search('id:"2"').ids.should == [2, 2] # books and isbn
   end
   # # As reported by Simon.
   # #

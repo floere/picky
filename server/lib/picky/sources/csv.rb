@@ -65,7 +65,6 @@ module Picky
         get_data do |indexed_id, *ary|
           text = ary[index]
           next unless text
-          text.force_encoding 'utf-8' # TODO Still needed?
           yield indexed_id, text
         end
       end

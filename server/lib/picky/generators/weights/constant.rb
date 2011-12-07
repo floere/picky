@@ -23,7 +23,6 @@ module Picky
         # except if there are no ids.
         #
         def [] _
-
           @weight
         end
 

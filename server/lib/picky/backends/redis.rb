@@ -97,9 +97,6 @@ module Picky
       #
       # Note: We use the amount and offset hints to speed Redis up.
       #
-      # TODO What if it hasn't been dumped?
-      #      Move this method to the actual backends?
-      #
       def ids combinations, amount, offset
         # TODO FIXME This is actually not correct:
         #            A dumped/loaded Redis backend should use
@@ -191,8 +188,6 @@ module Picky
             end
           end
         else
-          # TODO Refactor!
-          #
           class << self
             def ids combinations, _, _
               # Get the ids for each combination.
