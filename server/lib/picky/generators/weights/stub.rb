@@ -12,9 +12,7 @@ module Picky
       #   * [symbol_or_string] # During runtime.
       #   * weight_for(size)   # During indextime. # Probably never used.
       #
-      # TODO Find a better name.
-      #
-      class Runtime < Strategy
+      class Stub < Strategy
 
         # It is not saved, by default.
         #

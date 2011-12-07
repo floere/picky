@@ -91,7 +91,7 @@ module Picky
       # Weight index generation strategies.
       #
       load_relative 'generators/weights/strategy'
-      load_relative 'generators/weights/runtime'
+      load_relative 'generators/weights/stub'
       load_relative 'generators/weights/dynamic'
       load_relative 'generators/weights/constant'
       load_relative 'generators/weights/logarithmic'

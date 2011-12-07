@@ -1,30 +1,30 @@
 require 'spec_helper'
 
 describe Picky::Query::Allocation do
-  
+
   before(:each) do
     @backend      = stub :backend
     @index        = stub :index, :result_identifier => :some_result_identifier, :backend => @backend
     @combinations = stub :combinations, :empty? => false
     @allocation   = described_class.new @index, @combinations
   end
-  
+
   describe "eql?" do
-    # TODO This works, but is not acceptable.
+    # FIXME This works, but is not acceptable.
     #
     it "returns true" do
       @allocation.eql?(:anything).should == true
     end
   end
-  
+
   describe "hash" do
     it "delegates to the combinations" do
       @combinations.should_receive(:hash).once.with
-      
+
       @allocation.hash
     end
   end
-  
+
   describe "to_s" do
     before(:each) do
       @combinations.stub! :to_result => 'combinations_result'
@@ -40,15 +40,15 @@ describe Picky::Query::Allocation do
       end
     end
   end
-  
+
   describe 'remove' do
     it 'should delegate to the combinations' do
       @combinations.should_receive(:remove).once.with [:some_categories]
-      
+
       @allocation.remove [:some_categories]
     end
   end
-  
+
   describe 'process!' do
     context 'no ids' do
       before(:each) do
@@ -130,7 +130,7 @@ describe Picky::Query::Allocation do
       context 'with ids' do
         it 'should output an array of information' do
           @backend.stub! :ids => [1,2,3]
-          
+
           @allocation.process! 20, 0
 
           @allocation.to_result.should == [:some_result_identifier, :some_score, 3, [:some_result], [1, 2, 3]]
@@ -148,7 +148,7 @@ describe Picky::Query::Allocation do
       context 'with ids' do
         it 'should output an array of information' do
           @backend.stub! :ids => [1,2,3]
-          
+
           @allocation.process! 20, 0
 
           @allocation.to_result.should == [:some_result_identifier, :some_score, 3, [:some_result1, :some_result2], [1, 2, 3]]
@@ -162,7 +162,7 @@ describe Picky::Query::Allocation do
       end
       it 'should return nil' do
         @backend.stub! :ids => []
-        
+
         @allocation.process! 20, 0
 
         @allocation.to_result.should == nil
@@ -177,7 +177,7 @@ describe Picky::Query::Allocation do
     end
     it 'should output the correct json string' do
       @backend.stub! :ids => [1,2,3,4,5,6,7]
-      
+
       @allocation.process! 20, 0
 
       @allocation.to_json.should == '["some_result_identifier","some_score",7,["some_result1","some_result2"],[1,2,3,4,5,6,7]]'

@@ -13,7 +13,7 @@ module Picky
       #       sym_or_str * length
       #     end
       #
-      class Dynamic < Runtime
+      class Dynamic < Stub
 
         # Give it a block that takes a string/symbol
         # and returns a weight.

@@ -13,7 +13,7 @@ module Picky
       #   * Picky::Weights::Constant.new       # Uses 0.0 as a constant weight.
       #   * Picky::Weights::Constant.new(3.14) # Uses 3.14 as a constant weight.
       #
-      class Constant < Runtime
+      class Constant < Stub
 
         def initialize weight = 0.0
           @weight = weight
