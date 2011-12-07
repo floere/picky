@@ -22,13 +22,11 @@ module Picky
           [category, category.prepared_index_file, [], (category.tokenizer || tokenizer)]
         end
 
-        # Explicitly reset the source to avoid caching trouble.
-        #
-        source.reset if source.respond_to?(:reset)
-
         # Go through each object in the source.
         #
         objects = []
+
+        reset_source
 
         source.each do |object|
 

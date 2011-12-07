@@ -25,6 +25,8 @@ module Picky
             result = []
             tokenizer = category.tokenizer
 
+            reset_source
+
             source.harvest(category) do |*data|
 
               # Accumulate data.

@@ -27,6 +27,13 @@ module Picky
         end
       end
 
+      # Explicitly reset the source to avoid caching trouble.
+      #
+      def reset_source
+        source.reset     if source.respond_to?(:reset)
+        source.reconnect if source.respond_to?(:reconnect)
+      end
+
       def check_source # :nodoc:
         raise "Trying to index without a source for #{@index_or_category.name}." unless source
       end
