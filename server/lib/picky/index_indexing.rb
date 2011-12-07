@@ -69,8 +69,13 @@ module Picky
     def prepare_in_parallel scheduler = Scheduler.new
       indexer = Indexers::Parallel.new self
       scheduler.schedule do
-        indexer.prepare categories
-        [name]
+        begin
+          indexer.prepare categories
+        rescue Exception => e
+          e
+        else
+          [name]
+        end
       end
     end
 

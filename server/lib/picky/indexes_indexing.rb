@@ -26,14 +26,18 @@ module Picky
       results = indexes.map { |index| index.prepare scheduler }.flatten
 
       until results.empty?
-        results.delete_if do |result|
-          if result.ready?
-            index, category = result.value
-            specific = self[index]
-            specific = specific[category] if category
-            specific.cache scheduler
-          end
-        end
+        result = results.find &:ready?
+        next unless result
+
+        index, category = result.value
+
+        p index.backtrace if index.respond_to? :message
+
+        specific = self[index]
+        specific = specific[category] if category
+        specific.cache scheduler
+
+        results.delete result
       end
 
       scheduler.finish

@@ -31,8 +31,13 @@ module Picky
 
       with_data_snapshot do
         scheduler.schedule do
-          indexer.prepare categories
-          [index_name, name]
+          begin
+            indexer.prepare categories
+          rescue Exception => e
+            e
+          else
+            [index_name, name]
+          end
         end
       end
     end
