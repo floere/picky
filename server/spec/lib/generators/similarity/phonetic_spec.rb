@@ -10,6 +10,17 @@ describe Picky::Generators::Similarity::Phonetic do
     }.to raise_error("In Picky 2.0+, the Similarity::Phonetic has been renamed to Similarity::DoubleMetaphone. Please use that one. Thanks!")
   end
 
+  it "raises when you don't have the text gem" do
+    instance = Class.new(described_class).allocate
+
+    instance.should_receive(:require).any_number_of_times.and_raise LoadError
+
+    instance.should_receive(:warn).once.with "text gem missing!\nTo use a phonetic Similarity, you need to:\n  1. Add the following line to Gemfile:\n     gem 'text'\n     or\n     require 'text'\n     for example at the top of your app.rb file.\n  2. Then, run:\n     bundle update\n"
+    instance.should_receive(:exit).once.with 1
+
+    instance.send :initialize
+  end
+
   describe 'sort!' do
     let(:phonetic) { described_class.allocate }
     it 'sorts correctly' do
