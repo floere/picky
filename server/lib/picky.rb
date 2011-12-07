@@ -2,12 +2,16 @@ module Picky
 
   # External libraries.
   #
-  require 'active_support/core_ext'
-  require 'text'
-  require 'yajl' # THINK Maybe replace by multi_json?
-  require 'rack' # TODO Remove.
-  require 'rack_fast_escape' # TODO Remove.
+  require 'active_support/core_ext/module/delegation'
+  require 'active_support/core_ext/logger'
+  require 'active_support/core_ext/object/blank'
+  require 'active_support/core_ext/enumerable'
+  require 'yajl'
   require 'procrastinate'
+
+  # Load Rack fast escape if Rack is used.
+  #
+  require 'rack_fast_escape' if defined? Rack
 
   # Require the constants.
   #
