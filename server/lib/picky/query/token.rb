@@ -126,7 +126,7 @@ module Picky
 
       # Returns a token with the next similar text.
       #
-      # THINK Rewrite this. It is hard to understand. Also spec performance.
+      # FIXME Rewrite this. It is hard to understand. Also spec performance.
       #
       def next_similar_token category
         token = self.dup
@@ -142,7 +142,7 @@ module Picky
       # Lazy similar reader.
       #
       def similarity bundle = nil
-        @similarity || @similarity = generate_similarity_for(bundle)
+        @similarity ||= generate_similarity_for(bundle)
       end
       # Returns an enumerator that traverses over the similar.
       #

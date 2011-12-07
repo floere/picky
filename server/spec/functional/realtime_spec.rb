@@ -219,7 +219,7 @@ describe "Realtime Indexing" do
 
         index.replace Book.new(1, "Title New", "Author New")
 
-        books.search('Nuw~').ids.should == [1, 1] # TODO FIXME Not really what I'd expect.
+        books.search('Nuw~').ids.should == [1]
       end
       it 'handles more complex cases' do
         books.search('Now~').ids.should == []
@@ -443,7 +443,7 @@ describe "Realtime Indexing" do
 
         index.replace Book.new("one", "Title New", "Author New")
 
-        books.search('Nuw~').ids.should == [:one, :one] # TODO FIXME Not really what I'd expect.
+        books.search('Nuw~').ids.should == [:one]
       end
       it 'handles more complex cases' do
         books.search('Now~').ids.should == []
