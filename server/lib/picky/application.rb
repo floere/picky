@@ -196,8 +196,10 @@ module Picky
 
       # Reloads & finalizes the apps.
       #
-      def reload
-        Loader.load_user 'app'             # Sinatra appfile.
+      # TODO Remove in 4.0.
+      #
+      def reload file = 'app'
+        Loader.load_user file              # Sinatra appfile.
         Loader.load_user 'app/application' # Standard Picky appfile.
         finalize_apps
         exclaim "Loaded Picky application(s) with environment '#{PICKY_ENVIRONMENT}' in #{PICKY_ROOT} on Ruby #{RUBY_VERSION}."

@@ -7,14 +7,14 @@ module Picky
     # Reloads the whole app.
     # First itself, then the app.
     #
-    def self.reload
+    def self.reload app_file = 'app'
       Dir.chdir PICKY_ROOT
       exclaim 'Reloading loader.'
       load_self
       exclaim 'Reloading framework.'
       load_framework
-      exclaim 'Reloading application.'
-      load_application
+      exclaim "Reloading application in #{File.expand_path(app_file)}."
+      load_application app_file
     end
 
     # Loads this file anew.
@@ -38,8 +38,9 @@ module Picky
 
     # Load the user's application.
     #
-    def self.load_application
-      Application.reload
+    def self.load_application file = 'app'
+      # load_user file
+      Application.reload file # TODO Remove in 4.0.
     end
 
     # Loads the internal parts of the framework.
