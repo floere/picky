@@ -177,10 +177,21 @@ describe Picky::Query::Allocation do
   end
 
   describe "calculate_score" do
-    it 'should delegate to the combinations' do
-      @combinations.should_receive(:calculate_score).once.with :some_weights
+    context 'non-empty combinations' do
+      it 'should delegate to backend and combinations' do
+        @backend.should_receive(:weight).once.with(@combinations).and_return 1
+        @combinations.should_receive(:weighted_score).once.with(:some_weights).and_return 2
 
-      @allocation.calculate_score :some_weights
+        @allocation.calculate_score(:some_weights).should == 3
+      end
+    end
+    context 'empty combinations' do
+      before(:each) do
+        @combinations.stub! :empty? => true
+      end
+      it 'should just be zero' do
+        @allocation.calculate_score(:some_weights).should == 0
+      end
     end
   end
 
