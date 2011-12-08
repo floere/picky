@@ -46,26 +46,6 @@ module Picky
           JSON.new(bundle.index_path(:realtime))
       end
 
-      # Currently, the loaded ids are intersected using
-      # the fast C-based intersection.
-      #
-      # However, if we could come up with a clever way
-      # to do this faster, it would be most welcome.
-      #
-      def ids combinations, _, _
-        # Get the ids for each combination.
-        #
-        id_arrays = combinations.inject([]) do |total, combination|
-          total << combination.ids
-        end
-
-        # Call the optimized C algorithm.
-        #
-        # Note: It orders the passed arrays by size.
-        #
-        Performant::Array.memory_efficient_intersect id_arrays
-      end
-
     end
 
   end

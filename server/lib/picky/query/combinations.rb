@@ -25,12 +25,7 @@ module Picky
         @combinations.hash
       end
 
-      # Uses user specific weights to calculate a score for the combinations.
-      #
-      def calculate_score weights
-        total_score + weighted_score(weights)
-      end
-      def total_score
+      def score
         @combinations.sum &:weight
       end
       def weighted_score weights
