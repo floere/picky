@@ -19,6 +19,10 @@ module Picky
         warn_gem_missing 'redis', 'the Redis client'
       end
 
+      #
+      # TODO Add the PICKY_ENVIRONMENT to the keys etc?
+      #
+
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
@@ -89,6 +93,54 @@ module Picky
         version_string.split('.').map &:to_i
       end
 
+      # Returns the total weight for the combinations.
+      #
+      def weight combinations
+        # Note: A nice experiment that generated far too many strings.
+        #
+        # if redis_with_scripting?
+        #   @@weight_script = "local sum = 0; for i=1,#(KEYS),2 do local value = redis.call('hget', KEYS[i], KEYS[i+1]); if value then sum = sum + value end end return sum;"
+        #
+        #   require 'digest/sha1'
+        #   @@weight_sent_once = nil
+        #
+        #   # Scripting version of #ids.
+        #   #
+        #   class << self
+        #     def weight combinations
+        #       namespaces_keys = combinations.inject([]) do |namespaces_keys, combination|
+        #         namespaces_keys << "#{combination.bundle.identifier}:weights"
+        #         namespaces_keys << combination.token.text
+        #       end
+        #
+        #       # Assume it's using EVALSHA.
+        #       #
+        #       begin
+        #         client.evalsha @@weight_sent_once,
+        #                        namespaces_keys.size,
+        #                        *namespaces_keys
+        #       rescue RuntimeError => e
+        #         # Make the server have a SHA-1 for the script.
+        #         #
+        #         @@weight_sent_once = Digest::SHA1.hexdigest @@weight_script
+        #         client.eval @@weight_script,
+        #                     namespaces_keys.size,
+        #                     *namespaces_keys
+        #       end
+        #     end
+        #   end
+        # else
+        #   class << self
+        #     def weight combinations
+              combinations.score
+        #     end
+        #   end
+        # end
+        # # Call the newly installed version.
+        # #
+        # weight combinations
+      end
+
       # Returns the result ids for the allocation.
       #
       # Developers wanting to program fast intersection
@@ -107,10 +159,10 @@ module Picky
           # Just checked once on the first call.
           #
           if redis_with_scripting?
-            @@script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
+            @@ids_script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
 
             require 'digest/sha1'
-            @@sent_once = nil
+            @@ids_sent_once = nil
 
             # Scripting version of #ids.
             #
@@ -123,7 +175,7 @@ module Picky
                 # Assume it's using EVALSHA.
                 #
                 begin
-                  client.evalsha @@sent_once,
+                  client.evalsha @@ids_sent_once,
                                  identifiers.size,
                                  *identifiers,
                                  generate_intermediate_result_id,
@@ -132,8 +184,8 @@ module Picky
                 rescue RuntimeError => e
                   # Make the server have a SHA-1 for the script.
                   #
-                  @@sent_once = Digest::SHA1.hexdigest @@script
-                  client.eval @@script,
+                  @@ids_sent_once = Digest::SHA1.hexdigest @@ids_script
+                  client.eval @@ids_script,
                               identifiers.size,
                               *identifiers,
                               generate_intermediate_result_id,
@@ -190,7 +242,17 @@ module Picky
         else
           class << self
             def ids combinations, _, _
-              super
+              # Get the ids for each combination.
+              #
+              id_arrays = combinations.inject([]) do |total, combination|
+                total << combination.ids
+              end
+
+              # Call the optimized C algorithm.
+              #
+              # Note: It orders the passed arrays by size.
+              #
+              Performant::Array.memory_efficient_intersect id_arrays
             end
           end
         end

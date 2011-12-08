@@ -57,7 +57,7 @@ module Picky
       reset_backend
     end
     def identifier
-      :"#{category.identifier}:#{name}"
+      @identifier ||= :"#{category.identifier}:#{name}"
     end
 
     # If no specific backend has been set,

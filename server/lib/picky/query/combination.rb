@@ -27,6 +27,12 @@ module Picky
         @category_name ||= category.name
       end
 
+      #
+      #
+      def bundle
+        category.bundle_for token
+      end
+
       # Returns the weight of this combination.
       #
       # Note: Caching is most of the time useful.
@@ -46,7 +52,7 @@ module Picky
       # The identifier for this combination.
       #
       def identifier
-        @identifier ||= "#{category.bundle_for(token).identifier}:inverted:#{token.text}"
+        @identifier ||= "#{bundle.identifier}:inverted:#{token.text}"
       end
 
       # Note: Required for uniq!
