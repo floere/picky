@@ -36,9 +36,12 @@ module Picky
       # THINK Can the combinations be empty?
       #
       def calculate_score weights
-        return [] if @combinations.empty?
-        @backend.weight(@combinations) +
-          @combinations.weighted_score(weights)
+        @score ||= if @combinations.empty?
+          0
+        else
+          @backend.weight(@combinations) +
+            @combinations.weighted_score(weights)
+        end
       end
 
       # Asks the backend for the (intersected) ids.
