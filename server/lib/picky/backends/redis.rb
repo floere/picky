@@ -12,9 +12,25 @@ module Picky
       def initialize options = {}
         super options
 
-        require 'redis'
+        maybe_load_hiredis
+        check_hiredis_gem
+        check_redis_gem
+
         @client    = options[:client] || ::Redis.new(:db => (options[:db] || 15))
         @immediate = options[:immediate]
+      end
+      def maybe_load_hiredis
+        require 'hiredis'
+      rescue LoadError
+        # It's ok.
+      end
+      def check_hiredis_gem
+        require 'redis/connection/hiredis'
+      rescue LoadError
+        # It's ok, the next check will fail if this one does.
+      end
+      def check_redis_gem
+        require 'redis'
       rescue LoadError => e
         warn_gem_missing 'redis', 'the Redis client'
       end
