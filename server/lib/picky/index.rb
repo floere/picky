@@ -251,7 +251,7 @@ module Picky
       options = { partial: Partial::None.new }.merge options
 
       category category_name, options do |cat|
-        Wrappers::Category::Location.wrap cat, range, precision, anchor
+        Category::Location.install_on cat, range, precision, anchor
       end
     end
 

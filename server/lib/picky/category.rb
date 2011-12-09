@@ -2,9 +2,9 @@ module Picky
 
   class Category
 
+    attr_accessor :exact,
+                  :partial
     attr_reader :name,
-                :exact,
-                :partial,
                 :prepared,
                 :backend
 

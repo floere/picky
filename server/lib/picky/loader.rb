@@ -148,7 +148,7 @@ module Picky
 
       # Wrappers.
       #
-      load_relative 'wrappers/category/location'
+      load_relative 'category/location'
 
       load_relative 'wrappers/bundle/delegators'
       load_relative 'wrappers/bundle/wrapper'

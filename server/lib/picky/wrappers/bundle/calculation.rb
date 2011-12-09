@@ -26,11 +26,15 @@ module Picky
 
         # TODO Symbols. Use a block here?
         #
+        # THINK Move the calculation elsewhere?
+        #
         def ids float_str
           @bundle.ids calculate(float_str.to_f).to_s
         end
 
         # TODO Symbols.
+        #
+        # THINK Move the calculation elsewhere?
         #
         def weight float_str
           @bundle.weight calculate(float_str.to_f).to_s
