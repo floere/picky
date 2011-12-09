@@ -371,65 +371,65 @@ class BookSearch < Sinatra::Application
   # It's flexible.
   #
   books_search = Search.new books_index, isbn_index do boost weights end
-  get %r{\A/books\Z} do
+  get %r{\A/books\z} do
     books_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   books_ignoring_search = Search.new books_index, isbn_index do
                              boost weights
                              ignore_unassigned_tokens true
                           end
-  get %r{\A/books_ignoring\Z} do
+  get %r{\A/books_ignoring\z} do
     books_ignoring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   book_each_search = Search.new book_each_index do
                        boost weights
                        ignore :title
                      end
-  get %r{\A/book_each\Z} do
+  get %r{\A/book_each\z} do
     book_each_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   redis_search = Search.new redis_index do boost weights end
-  get %r{\A/redis\Z} do
+  get %r{\A/redis\z} do
     redis_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   memory_changing_search = Search.new memory_changing_index
-  get %r{\A/memory_changing\Z} do
+  get %r{\A/memory_changing\z} do
     memory_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   redis_changing_search = Search.new redis_changing_index
-  get %r{\A/redis_changing\Z} do
+  get %r{\A/redis_changing\z} do
     redis_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   csv_test_search = Search.new csv_test_index do boost weights end
-  get %r{\A/csv\Z} do
+  get %r{\A/csv\z} do
     csv_test_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   isbn_search = Search.new isbn_index
-  get %r{\A/isbn\Z} do
+  get %r{\A/isbn\z} do
     isbn_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   sym_keys_search = Search.new sym_keys_index
-  get %r{\A/sym\Z} do
+  get %r{\A/sym\z} do
     sym_keys_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   real_geo_search = Search.new real_geo_index
-  get %r{\A/geo\Z} do
+  get %r{\A/geo\z} do
     real_geo_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   mgeo_search = Search.new mgeo_index
-  get %r{\A/simple_geo\Z} do
+  get %r{\A/simple_geo\z} do
     mgeo_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   iphone_search = Search.new iphone_locations
-  get %r{\A/iphone\Z} do
+  get %r{\A/iphone\z} do
     iphone_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   indexing_search = Search.new indexing_index
-  get %r{\A/indexing\Z} do
+  get %r{\A/indexing\z} do
     indexing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   file_search = Search.new file_index
-  get %r{\A/file\Z} do
+  get %r{\A/file\z} do
     file_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   japanese_search = Search.new japanese_index do
@@ -437,29 +437,29 @@ class BookSearch < Sinatra::Application
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/
   end
-  get %r{\A/japanese\Z} do
+  get %r{\A/japanese\z} do
     japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   backends_search = Search.new backends_index do
     searching case_sensitive: false
   end
-  get %r{\A/backends\Z} do
+  get %r{\A/backends\z} do
     backends_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   nonstring_search = Search.new nonstring_data_index
-  get %r{\A/nonstring\Z} do
+  get %r{\A/nonstring\z} do
     nonstring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   partial_search = Search.new partial_index
-  get %r{\A/partial\Z} do
+  get %r{\A/partial\z} do
     partial_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   sqlite_search = Search.new sqlite_index
-  get %r{\A/sqlite\Z} do
+  get %r{\A/sqlite\z} do
     sqlite_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
   all_search = Search.new books_index, csv_test_index, isbn_index, mgeo_index do boost weights end
-  get %r{\A/all\Z} do
+  get %r{\A/all\z} do
     all_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
 

@@ -145,7 +145,7 @@ module Picky
           route_length = route.conditions[:path_info].source.to_s.size
           route_length > current_max ? route_length : current_max
         end
-        "Note: Anchored (\u2713) regexps are faster, e.g. /\\A.*\\Z/ or /^.*$/.\n\n" +
+        "Note: Anchored (\u2713) regexps are faster, e.g. /\\A.*\\z/ or /^.*$/.\n\n" +
         routes.instance_variable_get(:@routes).map do |route|
           path_info = route.conditions[:path_info]
           anchored = ::Rack::Mount::Utils.regexp_anchored?(path_info)

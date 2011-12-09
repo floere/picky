@@ -250,35 +250,35 @@ class BookSearch < Picky::Application
       [:author, :year]  => +2
     }
 
-    route %r{\A/admin\Z}           => Picky::LiveParameters.new
+    route %r{\A/admin\z}           => Picky::LiveParameters.new
 
-    route %r{\A/books\Z}           => (Picky::Search.new(books_index, isbn_index) do boost weights end),
-          %r{\A/books_ignoring\Z}  => (Picky::Search.new(books_index, isbn_index) do
+    route %r{\A/books\z}           => (Picky::Search.new(books_index, isbn_index) do boost weights end),
+          %r{\A/books_ignoring\z}  => (Picky::Search.new(books_index, isbn_index) do
                                          boost weights
                                          ignore_unassigned_tokens true
                                       end),
-          %r{\A/book_each\Z}       => (Picky::Search.new(book_each_index) do
+          %r{\A/book_each\z}       => (Picky::Search.new(book_each_index) do
                                          boost weights
                                          ignore :title
                                        end),
-          %r{\A/redis\Z}           => (Picky::Search.new(redis_index) do boost weights end),
-          %r{\A/memory_changing\Z} => Picky::Search.new(memory_changing_index),
-          %r{\A/redis_changing\Z}  => Picky::Search.new(redis_changing_index),
-          %r{\A/csv\Z}             => (Picky::Search.new(csv_test_index) do boost weights end),
-          %r{\A/isbn\Z}            => Picky::Search.new(isbn_index),
-          %r{\A/sym\Z}             => Picky::Search.new(sym_keys_index),
-          %r{\A/geo\Z}             => Picky::Search.new(real_geo_index),
-          %r{\A/simple_geo\Z}      => Picky::Search.new(mgeo_index),
-          %r{\A/iphone\Z}          => Picky::Search.new(iphone_locations),
-          %r{\A/indexing\Z}        => Picky::Search.new(indexing_index),
-          %r{\A/file\Z}            => Picky::Search.new(file_index)
+          %r{\A/redis\z}           => (Picky::Search.new(redis_index) do boost weights end),
+          %r{\A/memory_changing\z} => Picky::Search.new(memory_changing_index),
+          %r{\A/redis_changing\z}  => Picky::Search.new(redis_changing_index),
+          %r{\A/csv\z}             => (Picky::Search.new(csv_test_index) do boost weights end),
+          %r{\A/isbn\z}            => Picky::Search.new(isbn_index),
+          %r{\A/sym\z}             => Picky::Search.new(sym_keys_index),
+          %r{\A/geo\z}             => Picky::Search.new(real_geo_index),
+          %r{\A/simple_geo\z}      => Picky::Search.new(mgeo_index),
+          %r{\A/iphone\z}          => Picky::Search.new(iphone_locations),
+          %r{\A/indexing\z}        => Picky::Search.new(indexing_index),
+          %r{\A/file\z}            => Picky::Search.new(file_index)
     japanese_search = Picky::Search.new(japanese_index) do
       searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
                 stopwords:          /\b(and|the|of|it|in|for)\b/i,
                 splits_text_on:     /[\s\/\-\&]+/
     end
-    route %r{\A/japanese\Z}        => japanese_search
-    route %r{\A/all\Z}             => (Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index) do boost weights end)
+    route %r{\A/japanese\z}        => japanese_search
+    route %r{\A/all\z}             => (Picky::Search.new(books_index, csv_test_index, isbn_index, mgeo_index) do boost weights end)
 
 end
 

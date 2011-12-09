@@ -91,8 +91,8 @@ module Picky
       # So "hello*" will not be partially searched.
       # So "hello"* will be partially searched.
       #
-      @@no_partial = /\"\Z/
-      @@partial    = /\*\Z/
+      @@no_partial = /\"\z/
+      @@partial    = /\*\z/
       def partialize
         self.partial = false or return unless @text !~ @@no_partial
         self.partial = true unless @text !~ @@partial
@@ -102,8 +102,8 @@ module Picky
       #
       # The latter wins.
       #
-      @@no_similar = /\"\Z/
-      @@similar    = /\~\Z/
+      @@no_similar = /\"\z/
+      @@similar    = /\~\z/
       def similarize
         self.similar = false or return unless @text !~ @@no_similar
         self.similar = true unless @text !~ @@similar
