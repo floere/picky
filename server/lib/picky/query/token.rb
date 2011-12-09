@@ -142,7 +142,7 @@ module Picky
       def qualify
         @qualifiers, @text = (@text || EMPTY_STRING).split(@@split_qualifier_text, 2)
         @qualifiers, @text = if @text.blank?
-          [nil, (@qualifiers || EMPTY_STRING)]
+          [[], (@qualifiers || EMPTY_STRING)]
         else
           [@qualifiers.split(@@split_qualifiers), @text]
         end

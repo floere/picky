@@ -106,6 +106,20 @@ describe Picky::Query::Tokens do
         @token.should be_partial
       end
     end
+    context 'special case' do
+      before(:each) do
+        @token = Picky::Query::Token.processed 'a"'
+        @tokens = described_class.new [@token]
+      end
+      it 'should not have a last partialized token' do
+        @token.should_not be_partial
+      end
+      it 'should not partialize the last token' do
+        @tokens.partialize_last
+
+        @token.should_not be_partial
+      end
+    end
     context 'one token' do
       before(:each) do
         @token = Picky::Query::Token.processed 'Token'

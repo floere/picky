@@ -86,27 +86,27 @@ describe Picky::Query::Token do
     end
     it_should_qualify 'spec:qualifier',    [['spec'],      'qualifier']
     it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
-    it_should_qualify 'without qualifier', [nil,           'without qualifier']
-    it_should_qualify 'name:',             [nil,           'name']
+    it_should_qualify 'without qualifier', [[],            'without qualifier']
+    it_should_qualify 'name:',             [[],            'name']
     it_should_qualify ':broken qualifier', [[],            'broken qualifier'] # Unsure about that. Probably should recognize it as text.
-    it_should_qualify '',                  [nil,           '']
+    it_should_qualify '',                  [[],            '']
     it_should_qualify 'sp:text',           [['sp'],        'text']
-    it_should_qualify '""',                [nil,           '""']
-    it_should_qualify 'name:',             [nil,           'name']
+    it_should_qualify '""',                [[],            '""']
+    it_should_qualify 'name:',             [[],            'name']
     it_should_qualify 'name:hanke',        [['name'],      'hanke']
     it_should_qualify 'g:gaga',            [['g'],         'gaga']
     it_should_qualify ':nothing',          [[],            'nothing']
-    it_should_qualify 'hello',             [nil,           'hello']
+    it_should_qualify 'hello',             [[],            'hello']
     it_should_qualify 'a:b:c',             [['a'],         'b:c']
     it_should_qualify 'a,b:c',             [['a','b'],     'c']
     it_should_qualify 'a,b,c:d',           [['a','b','c'], 'd']
-    it_should_qualify ':',                 [nil,           '']
+    it_should_qualify ':',                 [[],            '']
     it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
     it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
-    it_should_qualify 'without qualifier', [nil,           'without qualifier']
-    it_should_qualify 'name:',             [nil,           'name']
+    it_should_qualify 'without qualifier', [[],            'without qualifier']
+    it_should_qualify 'name:',             [[],            'name']
     it_should_qualify ':broken qualifier', [[],            'broken qualifier']
-    it_should_qualify '',                  [nil,           '']
+    it_should_qualify '',                  [[] ,           '']
     it_should_qualify 'fn:text',           [['fn'],        'text']
   end
 
@@ -258,70 +258,66 @@ describe Picky::Query::Token do
 
   describe 'qualifiers' do
     context 'with qualifier' do
-      before(:each) do
-        @token = described_class.processed('sp:qualifier')
-      end
+      let(:token) { described_class.processed 'sp:qualifier' }
       it 'should return the qualifier' do
-        @token.qualifiers.should == ['sp']
+        token.qualifiers.should == ['sp']
       end
     end
     context 'with incorrect qualifier' do
-      before(:each) do
-        @token = described_class.processed('specific:qualifier')
-      end
+      let(:token) { described_class.processed 'specific:qualifier' }
       it 'should return the qualifier' do
-        @token.qualifiers.should == ['specific']
+        token.qualifiers.should == ['specific']
       end
     end
     context 'with multiple qualifiers' do
-      before(:each) do
-        @token = described_class.processed('sp,spec:qualifier')
-      end
+      let(:token) { described_class.processed 'sp,spec:qualifier' }
       it 'should return the qualifier' do
-        @token.qualifiers.should == ['sp', 'spec']
+        token.qualifiers.should == ['sp', 'spec']
       end
     end
     context 'without qualifier' do
-      before(:each) do
-        @token = described_class.processed('noqualifier')
-      end
-      it 'should return nil' do
-        @token.qualifiers.should == nil
+      let(:token) { described_class.processed 'noqualifier' }
+      it 'is correct' do
+        token.qualifiers.should == []
       end
     end
   end
 
   describe 'partial=' do
     context 'partial nil' do
-      before(:each) do
-        @token = described_class.new 'text'
+      let(:token) { described_class.new 'text' }
+      it 'should set partial' do
+        token.partial = true
+
+        token.should be_partial
       end
       it 'should set partial' do
-        @token.partial = true
+        token.partial = false
 
-        @token.instance_variable_get(:@partial).should be_true
-      end
-      it 'should set partial' do
-        @token.partial = false
-
-        @token.instance_variable_get(:@partial).should be_false
+        token.should_not be_partial
       end
     end
     context 'partial not nil' do
-      before(:each) do
-        @token = described_class.processed 'text*'
+      let(:token) { described_class.processed 'text"' }
+      it 'should not set partial' do
+        token.partial = true
+
+        token.should_not be_partial
+      end
+    end
+    context 'partial not nil' do
+      let(:token) { described_class.processed 'text*' }
+      it 'should not set partial' do
+        token.instance_variable_set :@partial, false
+
+        token.partial = true
+
+        token.should_not be_partial
       end
       it 'should not set partial' do
-        @token.instance_variable_set :@partial, false
+        token.partial = false
 
-        @token.partial = true
-
-        @token.instance_variable_get(:@partial).should be_false
-      end
-      it 'should not set partial' do
-        @token.partial = false
-
-        @token.instance_variable_get(:@partial).should be_true
+        token.should be_partial
       end
     end
   end
@@ -330,27 +326,27 @@ describe Picky::Query::Token do
     it 'should not partialize a token if the text ends with "' do
       token = described_class.processed 'text"'
 
-      token.instance_variable_get(:@partial).should be_false
+      token.should_not be_partial
     end
     it 'should partialize a token if the text ends with *' do
       token = described_class.processed 'text*'
 
-      token.instance_variable_get(:@partial).should be_true
+      token.should be_partial
     end
     it 'should not partialize a token if the text ends with ~' do
       token = described_class.processed 'text~'
 
-      token.instance_variable_get(:@partial).should be_nil
+      token.should_not be_partial
     end
     it 'lets the last one win' do
       token = described_class.processed 'text"*'
 
-      token.partial?.should == true
+      token.should be_partial
     end
     it 'lets the last one win' do
       token = described_class.processed 'text*"'
 
-      token.partial?.should == false
+      token.should_not be_partial
     end
   end
 
