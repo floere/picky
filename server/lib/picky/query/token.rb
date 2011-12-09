@@ -15,7 +15,8 @@ module Picky
       attr_writer :similar
       attr_accessor :user_defined_categories
 
-      delegate :blank?, :to => :text
+      delegate :blank?,
+               :to => :text
 
       # Normal initializer.
       #
@@ -23,9 +24,9 @@ module Picky
       # Use this if you do not want a normalized token.
       #
       def initialize text, original = nil, category = nil
-        @text     = text
-        @original = original
-        @user_defined_categories = [category]
+        @text       = text
+        @original   = original
+        @user_defined_categories = [category] if category
       end
 
       # Returns a qualified and normalized token.
@@ -62,9 +63,9 @@ module Picky
       # THINK Can this be improved somehow?
       #
       def categorize mapper
-        @user_defined_categories = @qualifiers && @qualifiers.map do |qualifier|
+        @user_defined_categories = @qualifiers.empty? ? nil : (@qualifiers.map do |qualifier|
           mapper.map qualifier
-        end.compact
+        end.compact)
       end
 
       # Partial is a conditional setter.
