@@ -94,7 +94,7 @@ module Picky
       @@no_partial = /\"\Z/
       @@partial    = /\*\Z/
       def partialize
-        self.partial = false and return unless @text !~ @@no_partial
+        self.partial = false or return unless @text !~ @@no_partial
         self.partial = true unless @text !~ @@partial
       end
 
@@ -105,8 +105,8 @@ module Picky
       @@no_similar = /\"\Z/
       @@similar    = /\~\Z/
       def similarize
-        self.similar = false and return if @text =~ @@no_similar
-        self.similar = true if @text =~ @@similar
+        self.similar = false or return unless @text !~ @@no_similar
+        self.similar = true unless @text !~ @@similar
       end
 
       def similar?

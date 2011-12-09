@@ -134,6 +134,76 @@ describe Picky::Query::Token do
     end
   end
 
+  describe 'partialize' do
+    context 'token explicitly partial' do
+      let(:token) { described_class.new 'a*' }
+      it 'is afterwards partial' do
+        token.partialize
+
+        token.should be_partial
+      end
+    end
+    context 'token explicitly nonpartial' do
+      let(:token) { described_class.new 'a"' }
+      it 'is afterwards not partial' do
+        token.partialize
+
+        token.should_not be_partial
+      end
+    end
+    context 'token nonpartial' do
+      let(:token) { described_class.new 'a' }
+      it 'is afterwards not partial' do
+        token.partialize
+
+        token.should_not be_partial
+      end
+    end
+    context 'special case' do
+      let(:token) { described_class.new 'a*"' }
+      it 'is afterwards not partial - last one wins' do
+        token.partialize
+
+        token.should_not be_partial
+      end
+    end
+    context 'special case' do
+      let(:token) { described_class.new 'a"*' }
+      it 'is afterwards partial - last one wins' do
+        token.partialize
+
+        token.should be_partial
+      end
+    end
+  end
+
+  describe 'similarize' do
+    context 'token explicitly similar' do
+      let(:token) { described_class.new 'a~' }
+      it 'is afterwards similar' do
+        token.similarize
+
+        token.should be_similar
+      end
+    end
+    context 'token explicitly nonsimilar' do
+      let(:token) { described_class.new 'a"' }
+      it 'is afterwards not similar' do
+        token.similarize
+
+        token.should_not be_similar
+      end
+    end
+    context 'token nonsimilar' do
+      let(:token) { described_class.new 'a' }
+      it 'is afterwards not similar' do
+        token.similarize
+
+        token.should_not be_similar
+      end
+    end
+  end
+
   describe 'symbolize!' do
     before(:each) do
       @token = described_class.processed 'string', 'String'
