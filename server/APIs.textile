@@ -1,0 +1,86 @@
+h1. APIs in Picky
+
+This is the reference document for all the APIs that can be used in Picky.
+
+It denotes several areas where you can plug into Picky.
+
+h2. Tokenizer
+
+Has methods
+
+* @tokenize(text)@ => @[[:token1, :token2, ...], ["Original1", "Original2", ...]]@ (2-D array of the tokens and the original texts)
+
+Accepted by
+
+* @Sinatra::Application#indexing@
+* @Sinatra::Application#searching@
+* @Picky::Index#indexing@
+* @Picky::Search#searching@
+* @Picky::Category.new(tokenizer: tokenizer_instance)@
+
+h2. CharacterSubstituter
+
+Has methods
+
+* @substitute(text)@ => @new text@ (with characters replaced)
+
+Accepted as
+
+* option @substitutes_characters_with@ for @indexing@ and @searching@.
+
+h2. Backends
+
+
+
+Accepted by
+
+* @Picky::Index#backend(backend_instance)@
+
+h2. Sources
+
+Has methods
+
+* @each(&block)@ yields @objects@ (that respond to methods listed in the categories, or in the categories' @from@ option)
+
+h2. Weight
+
+Has methods
+
+* @weight_for(amount_of_ids)@ => @float@ (a weight)
+
+Accepted as option @weights@ for the @category@. # TODO Rename @weight@?
+
+h2. Partial
+
+Has methods
+
+* @each_partial(token, &block)@ yields each @partialized token@
+
+Accepted as option @partial@ for the @category@.
+
+h2. Similarity
+
+Has methods
+
+* @encoded(token)@ => @encoded token@
+* @sort!(codes, token)@ => @unimportant@ # TODO Rename?
+
+Accepted as option @similarity@ for the @category@.
+
+h2. Searches
+
+Has methods
+
+* @Picky::Search#search(text, ids = 20, offset = 0)@ => @Picky::Results@ (an instance)
+
+h2. Results
+
+Has methods
+
+* @prepare!@ => @unimportant@ (prepares the search results, called by the Picky search)
+* @ids(amount = 20)@ => @[id1, id2, id3, ...]@ (a list of ids in order of importance)
+* @total@ => @1234@ (the total number of - calculated - results)
+* @duration@ => @1.234@ (a float)
+* @to_hash@ => @{...}@ (a hash representation of the results)
+* @to_json@ -> @"{...}"@ (a json representation of the hash representation of the results)
+* @to_s@ => @log output@ (a string for log output)

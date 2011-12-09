@@ -30,6 +30,15 @@ module Picky
       results
     end
 
+    # This starts the actual processing.
+    #
+    # Without this, the allocations are not processed,
+    # and no ids are calculated.
+    #
+    def prepare! extra_allocations = nil
+      allocations.process! amount, offset, extra_allocations
+    end
+
     # Delegates to allocations.
     #
     def ids amount = 20
@@ -48,15 +57,6 @@ module Picky
       @duration || 0
     end
 
-    # This starts the actual processing.
-    #
-    # Without this, the allocations are not processed,
-    # and no ids are calculated.
-    #
-    def prepare! extra_allocations = nil
-      allocations.process! amount, offset, extra_allocations
-    end
-
     # Returns a hash with the allocations, offset, duration and total.
     #
     def to_hash
@@ -72,18 +72,18 @@ module Picky
       to_hash.to_json options
     end
 
+    # For logging.
+    #
+    def to_s
+      "#{log_type}|#{Time.now.to_s(:db)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
+    end
+
     # The first character in the blog designates what type of query it is.
     #
     # No calculated ids means: No results.
     #
     def log_type
       amount.zero?? :'.' : :'>'
-    end
-
-    # For logging.
-    #
-    def to_s
-      "#{log_type}|#{Time.now.to_s(:db)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
     end
 
   end

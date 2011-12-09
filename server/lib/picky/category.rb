@@ -49,7 +49,7 @@ module Picky
       no_similarity = Generators::Similarity::None.new
 
       @exact = Bundle.new :exact, self, weights, no_partial, similarity, options
-      if partial.use_exact_for_partial?
+      if partial.respond_to? :use_exact_for_partial? && partial.use_exact_for_partial?
         @partial = Wrappers::Bundle::ExactPartial.new @exact
       else
         @partial = Bundle.new :partial, self, weights, partial, no_similarity, options
