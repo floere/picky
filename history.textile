@@ -3,6 +3,7 @@ h2. Upcoming Version
 * hanke: (server) BREAKING Picky does not require the text gem anymore by default. Only when you use phonetic similarity. It will tell you what it needs.
 * hanke: (server) Fixed cases where even when no similarity was defined on a category, similar results were still found.
 * hanke: (server) Rake task @index@ now points to task @index:parallel@ by default. Call @rake:serial@ to index serially.
+* hanke: (server) Location/Volumetric/Geosearch rewritten.
 
 h2. Version 4.0.0pre1
 
