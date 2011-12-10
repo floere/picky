@@ -86,28 +86,40 @@ describe Picky::Query::Token do
     end
     it_should_qualify 'spec:qualifier',    [['spec'],      'qualifier']
     it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
-    it_should_qualify 'without qualifier', [[],            'without qualifier']
-    it_should_qualify 'name:',             [[],            'name']
+    it_should_qualify 'without qualifier', [nil,           'without qualifier']
+    it_should_qualify 'name:',             [nil,           'name']
     it_should_qualify ':broken qualifier', [[],            'broken qualifier'] # Unsure about that. Probably should recognize it as text.
-    it_should_qualify '',                  [[],            '']
+    it_should_qualify '',                  [nil,           '']
     it_should_qualify 'sp:text',           [['sp'],        'text']
-    it_should_qualify '""',                [[],            '""']
-    it_should_qualify 'name:',             [[],            'name']
+    it_should_qualify '""',                [nil,           '""']
+    it_should_qualify 'name:',             [nil,           'name']
     it_should_qualify 'name:hanke',        [['name'],      'hanke']
     it_should_qualify 'g:gaga',            [['g'],         'gaga']
     it_should_qualify ':nothing',          [[],            'nothing']
-    it_should_qualify 'hello',             [[],            'hello']
+    it_should_qualify 'hello',             [nil,           'hello']
     it_should_qualify 'a:b:c',             [['a'],         'b:c']
     it_should_qualify 'a,b:c',             [['a','b'],     'c']
     it_should_qualify 'a,b,c:d',           [['a','b','c'], 'd']
-    it_should_qualify ':',                 [[],            '']
+    it_should_qualify ':',                 [nil,           '']
     it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
-    it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
-    it_should_qualify 'without qualifier', [[],            'without qualifier']
-    it_should_qualify 'name:',             [[],            'name']
-    it_should_qualify ':broken qualifier', [[],            'broken qualifier']
-    it_should_qualify '',                  [[] ,           '']
-    it_should_qualify 'fn:text',           [['fn'],        'text']
+  end
+
+  describe 'qualifier' do
+    it 'returns the right thing' do
+      token = described_class.processed 'b'
+
+      token.qualifiers.should == []
+    end
+    it 'returns the right thing' do
+      token = described_class.processed 'a:b'
+
+      token.qualifiers.should == ['a']
+    end
+    it 'returns the right thing' do
+      token = described_class.processed 'a,b:c'
+
+      token.qualifiers.should == ['a', 'b']
+    end
   end
 
   describe 'processed' do

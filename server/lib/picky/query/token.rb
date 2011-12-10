@@ -11,7 +11,7 @@ module Picky
     #
     class Token # :nodoc:all
 
-      attr_reader :text, :original, :qualifiers
+      attr_reader :text, :original
       attr_writer :similar
       attr_accessor :user_defined_categories
 
@@ -24,8 +24,8 @@ module Picky
       # Use this if you do not want a normalized token.
       #
       def initialize text, original = nil, category = nil
-        @text       = text
-        @original   = original
+        @text     = text
+        @original = original
         @user_defined_categories = [category] if category
       end
 
@@ -63,9 +63,9 @@ module Picky
       # THINK Can this be improved somehow?
       #
       def categorize mapper
-        @user_defined_categories = @qualifiers.empty? ? nil : (@qualifiers.map do |qualifier|
+        @user_defined_categories = @qualifiers && @qualifiers.map do |qualifier|
           mapper.map qualifier
-        end.compact)
+        end.compact
       end
 
       # Partial is a conditional setter.
@@ -143,10 +143,17 @@ module Picky
       def qualify
         @qualifiers, @text = (@text || EMPTY_STRING).split(@@split_qualifier_text, 2)
         @qualifiers, @text = if @text.blank?
-          [[], (@qualifiers || EMPTY_STRING)]
+          [nil, (@qualifiers || EMPTY_STRING)]
         else
           [@qualifiers.split(@@split_qualifiers), @text]
         end
+      end
+
+      # Internally, qualifiers are nil if there are none.
+      # This returns an empty array in this case for a nicer API.
+      #
+      def qualifiers
+        @qualifiers || []
       end
 
       #
