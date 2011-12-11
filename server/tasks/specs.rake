@@ -1,10 +1,10 @@
-# Specs.
-#
 require 'rspec'
 require 'rspec/core/rake_task'
 
-desc "Run specs"
-RSpec::Core::RakeTask.new :rspec
+task :default => :spec
+
+desc "Run specs."
+RSpec::Core::RakeTask.new :spec
 
 task :simplecov do
   ENV['COV'] = 'yes'
