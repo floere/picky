@@ -24,6 +24,7 @@ describe Picky::CharacterSubstituters::WestEuropean do
   #
   describe "speed" do
     it "is fast" do
+      substituter.substitute 'ä' # Prerun
       result = performance_of { substituter.substitute('ä') }
       result.should < 0.00009
     end
