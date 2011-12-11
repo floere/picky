@@ -30,8 +30,8 @@ module Picky
       # Explicitly reset the source to avoid caching trouble.
       #
       def reset_source
-        source.reset     if source.respond_to?(:reset)
-        source.reconnect if source.respond_to?(:reconnect)
+        source.reset      if source.respond_to?(:reset)
+        source.reconnect! if source.respond_to?(:reconnect!)
       end
 
       def check_source # :nodoc:
