@@ -42,6 +42,9 @@ module Picky
       #
       def load_application file = 'app'
         load_user file
+      rescue LoadError => e
+        exclaim "\nBy default, Picky needs/loads the PICKY_ROOT/app.rb file as the app.\n\n"
+        raise e
       end
 
       # Loads the internal parts of the framework.
