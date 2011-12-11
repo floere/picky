@@ -35,8 +35,7 @@ module Picky
       # Load a user file.
       #
       def load_user filename
-        file_name = File.join PICKY_ROOT, "#{filename}.rb"
-        Kernel.load file_name if File.exists? file_name
+        Kernel.load File.join(PICKY_ROOT, "#{filename}.rb")
       end
 
       # Load the user's application.

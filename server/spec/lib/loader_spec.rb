@@ -18,6 +18,8 @@ describe Picky::Loader do
 
   describe 'load_application' do
     it 'does ok' do
+      Kernel.should_receive(:load).once.with 'spec/test_directory/app.rb'
+
       lambda { described_class.load_application }.should_not raise_error
     end
     it 'loads correctly' do
