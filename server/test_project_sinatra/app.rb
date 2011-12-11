@@ -6,6 +6,8 @@
 #
 
 require 'sinatra/base'
+require 'active_record'
+require 'csv'
 require File.expand_path '../../lib/picky', __FILE__
 
 class ChangingItem
@@ -39,8 +41,11 @@ class BookSearch < Sinatra::Application
             case_sensitive:              true,
             maximum_tokens:              5
 
+  class Book < ActiveRecord::Base; end
+  Book.establish_connection YAML.load(File.open('db.yml'))
+
   books_index = Index.new :books do
-    source   Sources::DB.new('SELECT id, title, author, year FROM books', file: 'db.yml')
+    source   { Book.all } # Sources::DB.new('SELECT id, title, author, year FROM books', file: 'db.yml')
     category :id
     category :title,
              qualifiers: [:t, :title, :titre],
@@ -52,11 +57,9 @@ class BookSearch < Sinatra::Application
     result_identifier 'boooookies'
   end
 
-  class Book < ActiveRecord::Base; end
-  Book.establish_connection YAML.load(File.open('db.yml'))
   book_each_index = Index.new :book_each do
     key_format :to_s
-    source     Book.order('title ASC')
+    source     { Book.order('title ASC') }
     category   :id
     category   :title,
                qualifiers: [:t, :title, :titre],
@@ -67,7 +70,8 @@ class BookSearch < Sinatra::Application
   end
 
   isbn_index = Index.new :isbn do
-    source   Sources::DB.new("SELECT id, isbn FROM books", :file => 'db.yml')
+    source { Book.all }
+    # source   Sources::DB.new("SELECT id, isbn FROM books", :file => 'db.yml')
     category :isbn, :qualifiers => [:i, :isbn]
   end
 
@@ -118,52 +122,36 @@ class BookSearch < Sinatra::Application
     category :isbn, :qualifiers => [:i, :isbn], :key_format => :to_s
   end
 
+  require_relative 'models/each'
+
+  require_relative 'models/swiss_locations'
   mgeo_index = Index.new :memory_geo do
-    source          Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    source          { SwissLocations.all('data/ch.csv', col_sep: ",") }
     category        :location
     ranged_category :north1, 0.008, precision: 3, from: :north
     ranged_category :east1,  0.008, precision: 3, from: :east
   end
-
   real_geo_index = Index.new :real_geo do
-    source         Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
+    source         { SwissLocations.all('data/ch.csv', col_sep: ",") }
     category       :location, partial: Partial::Substring.new(from: 1)
     geo_categories :north, :east, 1, precision: 3
   end
 
+  require_relative 'models/iphone_data'
   iphone_locations = Index.new :iphone do
-    source Sources::CSV.new(
-      :mcc,
-      :mnc,
-      :lac,
-      :ci,
-      :timestamp,
-      :latitude,
-      :longitude,
-      :horizontal_accuracy,
-      :altitude,
-      :vertical_accuracy,
-      :speed,
-      :course,
-      :confidence,
-      file: 'data/iphone_locations.csv'
-    )
+    source { IphoneData.all('data/iphone_locations.csv') }
     ranged_category :timestamp, 86_400, precision: 5, qualifiers: [:ts, :timestamp]
     geo_categories  :latitude, :longitude, 25, precision: 3
   end
 
   Index.new :underscore_regression do
-    source   Sources::CSV.new(:location, file: 'data/ch.csv')
+    source   { SwissLocations.all('data/ch.csv', col_sep: ",") }
     category :some_place, :from => :location
   end
 
-  # rgeo_index = Index.new :redis_geo, Sources::CSV.new(:location, :north, :east, file: 'data/ch.csv', col_sep: ',')
-  # rgeo_index.define_category :location
-  # rgeo_index.define_map_location(:north1, 1, precision: 3, from: :north)
-  #           .define_map_location(:east1,  1, precision: 3, from: :east)
-
+  require_relative 'models/csv_book'
   csv_test_index = Index.new :csv_test do
-    source   Sources::CSV.new(:title,:author,:isbn,:year,:publisher,:subjects, file: 'data/books.csv')
+    source   { CSVBook.all('data/books.csv') }
 
     category :title,
              qualifiers: [:t, :title, :titre],
@@ -182,7 +170,7 @@ class BookSearch < Sinatra::Application
   end
 
   indexing_index = Index.new(:special_indexing) do
-    source   Sources::CSV.new(:title, file: 'data/books.csv')
+    source   { CSVBook.all('data/books.csv') }
     indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
              splits_text_on:     /[\s\/\-\"\&\/]/
     category :title,
@@ -193,7 +181,7 @@ class BookSearch < Sinatra::Application
 
   redis_index = Index.new(:redis) do
     backend  Backends::Redis.new
-    source   Sources::CSV.new(:title, :author, :isbn, :year, :publisher, :subjects, file: 'data/books.csv')
+    source   { CSVBook.all('data/books.csv') }
     category :title,
              qualifiers: [:t, :title, :titre],
              partial:    Partial::Substring.new(from: 1),
@@ -208,8 +196,10 @@ class BookSearch < Sinatra::Application
     category :subjects,  qualifiers: [:s, :subject]
   end
 
+  require_relative 'models/symbol_keys'
   sym_keys_index = Index.new :symbol_keys do
-    source   Sources::CSV.new(:text, file: "data/#{PICKY_ENVIRONMENT}/symbol_keys.csv", key_format: 'strip')
+    key_format :strip
+    source   { SymbolKeys.all("data/#{PICKY_ENVIRONMENT}/symbol_keys.csv") }
     category :text, partial: Partial::Substring.new(from: 1)
   end
 
@@ -243,8 +233,9 @@ class BookSearch < Sinatra::Application
              partial: Picky::Partial::Infix.new(min: -3)
   end
 
+  require_relative 'models/japanese'
   japanese_index = Picky::Index.new(:japanese) do
-    source Picky::Sources::CSV.new(:japanese, :german, :file => "data/japanese.tab", :col_sep => "\t")
+    source   { Japanese.all('data/japanese.tab', col_sep: "\t") }
 
     indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
              :stopwords =>         /\b(and|the|of|it|in|for)\b/i,

@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-#
-require File.expand_path '../../../lib/picky/console', __FILE__
-Picky::Console.start
