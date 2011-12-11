@@ -42,7 +42,7 @@ describe Picky::Loader do
       described_class.load_self
     end
     it 'should load __SELF__' do
-      described_class.should_receive(:load).once.with @loader_path
+      Kernel.should_receive(:load).once.with @loader_path
     end
   end
 
@@ -55,6 +55,29 @@ describe Picky::Loader do
     end
     after(:each) do
       described_class.reload
+    end
+    it 'should call the right methods in order' do
+      described_class.should_receive(:load_self).ordered
+      described_class.should_receive(:load_framework).ordered
+      described_class.should_receive(:load_application).ordered
+    end
+    it 'should load itself only once' do
+      described_class.should_receive(:load_self).once
+    end
+    # it 'should load the app only once' do
+    #   Loader.should_receive(:load_framework).once
+    # end
+  end
+
+  describe 'load' do
+    before(:each) do
+      load @loader_path
+      described_class.stub! :load_framework
+      described_class.stub! :load_application
+      Dir.stub! :chdir
+    end
+    after(:each) do
+      described_class.load
     end
     it 'should call the right methods in order' do
       described_class.should_receive(:load_self).ordered

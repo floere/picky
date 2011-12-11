@@ -6,7 +6,7 @@ module Picky
 
     delegate :remove,  # aka "delete".
              :add,     # aka "insert".
-             :replace, # aka "insert or update".
+             :replace, # aka "insert or update". Thus, not called update.
              :clear_realtime,
              :build_realtime_mapping,
              :to => :categories

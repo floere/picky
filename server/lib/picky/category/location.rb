@@ -7,8 +7,8 @@ module Picky
         category.extend self
 
         exact_bundle = category.exact
-        category.exact   = Wrappers::Bundle::Location.new(exact_bundle, grid: grid, precision: precision, anchor: anchor)
-        category.partial = Wrappers::Bundle::Location.new(exact_bundle, grid: grid, precision: precision, anchor: anchor)
+        category.exact   = Wrappers::Bundle::Location.new(exact_bundle, grid, precision: precision, anchor: anchor)
+        category.partial = Wrappers::Bundle::Location.new(exact_bundle, grid, precision: precision, anchor: anchor)
 
         category
       end

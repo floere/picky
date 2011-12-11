@@ -8,10 +8,9 @@ module Picky
         #
         class Location < Calculation
 
-          def initialize bundle, options = {}
+          def initialize bundle, user_grid, options = {}
             super bundle
 
-            user_grid  = options[:grid]      || raise("Gridsize needs to be given for location #{bundle.identifier}.")
             anchor     = options[:anchor]    || 0.0
             precision  = options[:precision] || 1
 
