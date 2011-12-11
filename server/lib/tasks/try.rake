@@ -5,7 +5,7 @@ task :try, [:text, :index, :category] => :application do |_, options|
   puts
   fail "\x1b[31mrake try needs a text to try indexing and query preparation\x1b[m, e.g. rake 'try[yourtext]'." unless options.text
 
-  require File.expand_path '../try', __FILE__
+  require_relative 'try'
   try = Picky::Try.new options.text, options.index, options.category
   try.to_stdout
 end

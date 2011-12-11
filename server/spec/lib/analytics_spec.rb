@@ -4,7 +4,7 @@ require 'spec_helper'
 
 # Not loaded by default.
 #
-require File.expand_path '../../../lib/picky/analytics', __FILE__
+require_relative '../../lib/picky/analytics'
 
 describe Picky::Analytics do
 

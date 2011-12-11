@@ -28,7 +28,7 @@ end
 namespace :stats do
 
   task :prepare => :application do
-    require File.expand_path('../../picky/statistics', __FILE__)
+    require_relative '../picky/statistics'
   end
 
 end

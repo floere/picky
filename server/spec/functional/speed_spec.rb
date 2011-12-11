@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe "Speccing Ruby for speed" do
   describe "various versions for allocation id concatenating – with symbols" do
@@ -91,5 +91,5 @@ describe "Speccing Ruby for speed" do
       end
     end
   end
-  
+
 end

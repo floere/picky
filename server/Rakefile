@@ -8,7 +8,7 @@
 #   load rakefile
 # end
 
-require File.expand_path '../lib/picky/tasks', __FILE__
+require_relative 'lib/picky/tasks'
 
 require 'rspec'
 require 'rspec/core/rake_task'

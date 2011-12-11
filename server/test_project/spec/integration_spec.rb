@@ -1,7 +1,7 @@
 # coding: utf-8
 #
 require 'spec_helper'
-require File.expand_path '../../../../client/lib/picky-client/spec', __FILE__
+require_relative '../../../client/lib/picky-client/spec'
 
 describe BookSearch do
 

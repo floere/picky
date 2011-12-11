@@ -13,11 +13,11 @@ module Picky
 
   # Require the constants.
   #
-  require ::File.expand_path '../picky/constants', __FILE__
+  require_relative 'picky/constants'
 
   # Loader which handles framework and app loading.
   #
-  require ::File.expand_path '../picky/loader', __FILE__
+  require_relative 'picky/loader'
 
   # Load the framework
   #
@@ -25,7 +25,7 @@ module Picky
 
   # Check if delegators need to be installed.
   #
-  require ::File.expand_path '../picky/sinatra', __FILE__
+  require_relative 'picky/sinatra'
 
   # This is only used in the classic project style.
   #
