@@ -14,13 +14,13 @@ module Picky
     # Sets tokenizer default indexing options.
     #
     def indexing options = {}
-      Tokenizer.indexing options
+      Tokenizer.default_indexing_with options
     end
 
     # Sets tokenizer default searching options.
     #
     def searching options = {}
-      Tokenizer.searching options
+      Tokenizer.default_searching_with options
     end
 
   end
