@@ -8,10 +8,9 @@ describe "Weights" do
   #
   it 'can handle dynamic weights' do
     index = Picky::Index.new :dynamic_weights do
-      source { [] }
-      category :text1, weights: Picky::Weights::Constant.new
-      category :text2, weights: Picky::Weights::Constant.new(3.14)
-      category :text3, weights: Picky::Weights::Dynamic.new { |str_or_sym| str_or_sym.size }
+      category :text1, weight: Picky::Weights::Constant.new
+      category :text2, weight: Picky::Weights::Constant.new(3.14)
+      category :text3, weight: Picky::Weights::Dynamic.new { |str_or_sym| str_or_sym.size }
       category :text4 # Default
     end
 

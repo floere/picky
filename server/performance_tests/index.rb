@@ -64,17 +64,17 @@ double_meta     = Picky::Similarity::DoubleMetaphone.new 3
 definitions = []
 
 definitions << [Proc.new do
-  category :text1, weights: constant_weight, partial: no_partial
-  category :text2, weights: constant_weight, partial: no_partial
-  category :text3, weights: constant_weight, partial: no_partial
-  category :text4, weights: constant_weight, partial: no_partial
+  category :text1, weight: constant_weight, partial: no_partial
+  category :text2, weight: constant_weight, partial: no_partial
+  category :text3, weight: constant_weight, partial: no_partial
+  category :text4, weight: constant_weight, partial: no_partial
 end, :no_weights_no_partial_default_similarity]
 
 definitions << [Proc.new do
-  category :text1, weights: constant_weight
-  category :text2, weights: constant_weight
-  category :text3, weights: constant_weight
-  category :text4, weights: constant_weight
+  category :text1, weight: constant_weight
+  category :text2, weight: constant_weight
+  category :text3, weight: constant_weight
+  category :text4, weight: constant_weight
 end, :no_weights_default_partial_default_similarity]
 
 definitions << [Proc.new do

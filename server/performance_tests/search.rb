@@ -109,10 +109,10 @@ backends = [
 definitions = []
 
 definitions << [Proc.new do
-  category :text1, weights: Picky::Weights::Constant.new
-  category :text2, weights: Picky::Weights::Constant.new
-  category :text3, weights: Picky::Weights::Constant.new
-  category :text4, weights: Picky::Weights::Constant.new
+  category :text1, weight: Picky::Weights::Constant.new
+  category :text2, weight: Picky::Weights::Constant.new
+  category :text3, weight: Picky::Weights::Constant.new
+  category :text4, weight: Picky::Weights::Constant.new
 end, :no_weights]
 
 definitions << [Proc.new do
