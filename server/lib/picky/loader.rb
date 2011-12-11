@@ -239,7 +239,8 @@ module Picky
 
         # Interfaces
         #
-        load_relative 'interfaces/live_parameters'
+        load_relative 'interfaces/live_parameters/master_child'
+        load_relative 'interfaces/live_parameters/unicorn'
 
         # Load tools. Load specifically?
         #
