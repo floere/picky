@@ -41,11 +41,10 @@ class BookSearch < Sinatra::Application
             case_sensitive:              true,
             maximum_tokens:              5
 
-  class Book < ActiveRecord::Base; end
-  Book.establish_connection YAML.load(File.open('db.yml'))
+  require_relative 'models/book'
 
   books_index = Index.new :books do
-    source   { Book.all } # Sources::DB.new('SELECT id, title, author, year FROM books', file: 'db.yml')
+    source   { Book.all }
     category :id
     category :title,
              qualifiers: [:t, :title, :titre],
@@ -71,7 +70,6 @@ class BookSearch < Sinatra::Application
 
   isbn_index = Index.new :isbn do
     source { Book.all }
-    # source   Sources::DB.new("SELECT id, isbn FROM books", :file => 'db.yml')
     category :isbn, :qualifiers => [:i, :isbn]
   end
 

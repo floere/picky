@@ -345,11 +345,10 @@ describe BookSearch do
 
     # Some webapp adds a book.
     #
-    BookSearch::Book.establish_connection YAML.load(File.open('db.yml'))
-    added_book = BookSearch::Book.create! title:  "Some Title",
-                                          author: "Tester Mc Testy",
-                                          isbn:   "1231231231231",
-                                          year:   1977
+    added_book = Book.create! title:  "Some Title",
+                              author: "Tester Mc Testy",
+                              isbn:   "1231231231231",
+                              year:   1977
     expected_id = added_book.id
 
     Picky::Indexes[:books].index
@@ -369,11 +368,10 @@ describe BookSearch do
 
     # Some webapp adds a book.
     #
-    BookSearch::Book.establish_connection YAML.load(File.open('db.yml'))
-    added_book = BookSearch::Book.create! title:  "Some Title",
-                                          author: "Tester Mc Testy",
-                                          isbn:   "1231231231231",
-                                          year:   1977
+    added_book = Book.create! title:  "Some Title",
+                              author: "Tester Mc Testy",
+                              isbn:   "1231231231231",
+                              year:   1977
     expected_id = added_book.id
 
     Picky::Indexes[:book_each].index
