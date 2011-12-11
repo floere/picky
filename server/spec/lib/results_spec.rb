@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe Picky::Results do
-  
+
   describe "from" do
     before(:each) do
       @results = stub :results
       described_class.stub! :new => @results
-      
+
       @results.stub! :prepare!
     end
     it "should generate a result" do
       described_class.from("some query", 20, 0, @allocations).should == @results
     end
   end
-  
+
   describe "ids" do
     before(:each) do
       @allocations = stub :allocations
@@ -21,11 +21,11 @@ describe Picky::Results do
     end
     it "delegates" do
       @allocations.should_receive(:ids).once.with :anything
-      
+
       @results.ids :anything
     end
   end
-  
+
   describe 'to_s' do
     before(:each) do
       time = stub :time, :to_s => '0-08-16 10:07:33'
