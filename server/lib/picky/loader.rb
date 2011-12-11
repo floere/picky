@@ -191,10 +191,6 @@ module Picky
         #
         load_relative 'rack/harakiri'
 
-        # Load analyzer. TODO Remove this?
-        #
-        load_relative 'analyzer'
-
         # Character Substituters
         #
         load_relative 'character_substituters/west_european'

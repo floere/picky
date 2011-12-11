@@ -1,5 +1,7 @@
 # encoding: utf-8
 #
+require_relative 'analyzer'
+
 module Picky
 
   # Gathers various statistics.
