@@ -48,7 +48,7 @@ Has methods
 
 * @weight_for(amount_of_ids)@ => @float@ (a weight)
 
-Accepted as option @weights@ for the @category@. # TODO Rename @weight@?
+Accepted as option @weight@ for the @category@.
 
 h2. Partial
 

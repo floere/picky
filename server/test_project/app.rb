@@ -331,10 +331,10 @@ class BookSearch < Sinatra::Application
         WeightsItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
       ]
     end
-    category :logarithmic,      weights: Picky::Weights::Logarithmic.new
-    category :constant_default, weights: Picky::Weights::Constant.new
-    category :constant,         weights: Picky::Weights::Constant.new(3.14)
-    category :dynamic,          weights: Picky::Weights::Dynamic.new { |token| token.size }
+    category :logarithmic,      weight: Picky::Weights::Logarithmic.new
+    category :constant_default, weight: Picky::Weights::Constant.new
+    category :constant,         weight: Picky::Weights::Constant.new(3.14)
+    category :dynamic,          weight: Picky::Weights::Dynamic.new { |token| token.size }
   end
 
   SQLiteItem = Struct.new :id, :first_name, :last_name

@@ -41,7 +41,7 @@ module Picky
 
       # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
 
-      weights    = options[:weights]    || Generators::Weights::Default
+      weights    = options[:weight]     || Generators::Weights::Default
       partial    = options[:partial]    || Generators::Partial::Default
       similarity = options[:similarity] || Generators::Similarity::Default
 
