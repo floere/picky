@@ -21,7 +21,6 @@ module Picky
           exclaim "Setting up Picky Sinatra Server \"#{name}\"."
           create_target_directory
           copy_all_files
-          copy_all_files expand_prototype_path('server/shared')
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""
           exclaim "Next steps:"

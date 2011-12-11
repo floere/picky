@@ -12,12 +12,6 @@ module Picky
         @types = {
           :client               => [Client::Sinatra, :sinatra_client_name],
           :server               => [Server::Sinatra, :sinatra_server_name],
-
-          :sinatra_client       => [Client::Sinatra, :sinatra_client_name],
-
-          :classic_server       => [Server::Classic, :unicorn_server_name],
-          :sinatra_server       => [Server::Sinatra, :sinatra_server_name],
-
           :all_in_one           => [AllInOne::Sinatra, :"directory_name (use e.g. for Heroku)"]
         }
       end

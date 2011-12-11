@@ -107,7 +107,7 @@ module Picky
     # TODO Try to load the other gems and get the commands dynamically.
     #
     @@mapping = {
-      :generate => [Generate, :'{client,server,sinatra_client,unicorn_server,all_in_one}', :'app_directory_name'],
+      :generate => [Generate, :'{client,server,all_in_one}', :'app_directory_name'],
       :help     => [Help],
       :live     => [Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)'],
       :search   => [Search, :url_or_path, 'amount of ids (default 20)'],

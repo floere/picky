@@ -22,10 +22,27 @@ class BookSearch < Sinatra::Application
   # Server.
   #
 
+  # Data source.
+  #
+  class BookSource
+
+    def initialize
+      @csv = CSV.new File.open("data/#{PICKY_ENVIRONMENT}/library.csv")
+    end
+
+    def each
+      Book = Struct.new :title, :author, :year
+      @csv.each do |row|
+        yield Book.new *row
+      end
+    end
+
+  end
+
   # Define an index.
   #
   books_index = Index.new :books do
-    source   Sources::CSV.new(:title, :author, :year, file: "data/#{PICKY_ENVIRONMENT}/library.csv")
+    source { BookSource.new }
     indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
              splits_text_on:     /[\s\/\-\_\:\"\&\/]/
