@@ -16,7 +16,7 @@ module Picky
     end
 
     def searched
-      Picky::Tokenizer.query_default.tokenize(text.dup).first
+      Picky::Tokenizer.searching.tokenize(text.dup).first
     end
 
     def output

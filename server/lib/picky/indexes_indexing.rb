@@ -35,7 +35,7 @@ module Picky
     #
     #
     def tokenizer
-      Tokenizer.index_default
+      Tokenizer.indexing
     end
 
   end

@@ -11,16 +11,16 @@ module Picky
       private :indexing, :searching
     end
 
-    # Delegates to Application.
+    # Sets tokenizer default indexing options.
     #
-    def indexing options
-      Application.indexing options
+    def indexing options = {}
+      Tokenizer.indexing options
     end
 
-    # Delegates to Application.
+    # Sets tokenizer default searching options.
     #
-    def searching options
-      Application.searching options
+    def searching options = {}
+      Tokenizer.searching options
     end
 
   end

@@ -40,7 +40,7 @@ module Picky
 
       instance_eval(&Proc.new) if block_given?
 
-      @tokenizer ||= Tokenizer.query_default # THINK Not dynamic. Ok?
+      @tokenizer ||= Tokenizer.searching # THINK Not dynamic. Ok?
       @weights   ||= Query::Weights.new
       @ignore_unassigned = false if @ignore_unassigned.nil?
 

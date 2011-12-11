@@ -42,8 +42,7 @@ module Picky
       # Load the user's application.
       #
       def load_application file = 'app'
-        # load_user file
-        Application.reload file # TODO Remove in 4.0.
+        load_user file
       end
 
       # Loads the internal parts of the framework.
@@ -182,17 +181,6 @@ module Picky
 
         load_relative 'query/indexes'
         load_relative 'query/indexes_check'
-
-        # Adapters.
-        #
-        load_relative 'adapters/rack/base'
-        load_relative 'adapters/rack/search'
-        load_relative 'adapters/rack/live_parameters'
-        load_relative 'adapters/rack'
-
-        # Routing.
-        #
-        load_relative 'frontend_adapters/rack'
       end
       # Loads the user interface parts.
       #
@@ -201,7 +189,7 @@ module Picky
         #
         load_relative 'rack/harakiri'
 
-        # Load analyzer.
+        # Load analyzer. TODO Remove this?
         #
         load_relative 'analyzer'
 
@@ -247,22 +235,9 @@ module Picky
         #
         load_relative 'search'
 
-        # Sources.
-        #
-        load_relative 'sources/base'
-        load_relative 'sources/db'
-        load_relative 'sources/csv'
-        load_relative 'sources/delicious'
-        load_relative 'sources/couch'
-        load_relative 'sources/mongo'
-
         # Interfaces
         #
         load_relative 'interfaces/live_parameters'
-
-        # Application.
-        #
-        load_relative 'application'
 
         # Load tools. Load specifically?
         #
