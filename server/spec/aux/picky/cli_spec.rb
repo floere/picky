@@ -4,10 +4,10 @@ require 'spec_helper'
 
 # We need to load the CLI file explicitly as the CLI is not loaded with the Loader (not needed in the server, only for script runs).
 #
-require File.expand_path '../../../../aux/picky/cli', __FILE__
+require_relative '../../../aux/picky/cli'
 
 describe Picky::CLI do
-  
+
   describe '.mapping' do
     it 'returns the right mapping' do
       Picky::CLI.mapping.should == {
@@ -19,20 +19,20 @@ describe Picky::CLI do
       }
     end
   end
-  
+
   describe 'instance' do
     let(:cli) { described_class.new }
     describe 'execute' do
       it 'calls generate correctly' do
         Kernel.should_receive(:system).once.with 'picky-generate one two three'
-        
+
         cli.execute 'generate', 'one', 'two', 'three'
       end
       it 'calls help correctly' do
         Kernel.should_receive(:puts).once.with <<-HELP
 Possible commands:
   picky generate {client,server,sinatra_client,unicorn_server,all_in_one} app_directory_name
-  picky help 
+  picky help
   picky live [host:port/path (default: localhost:8080/admin)] [port (default: 4568)]
   picky search url_or_path [amount of ids (default 20)]
   picky stats logfile (e.g. log/search.log) [port (default: 4567)]
@@ -70,17 +70,17 @@ HELP
       end
     end
   end
-  
+
   describe Picky::CLI::Live do
     let(:executor) { Picky::CLI::Live.new }
   end
-  
+
   describe Picky::CLI::Base do
     let(:executor) { Picky::CLI::Base.new }
     describe 'usage' do
       it 'calls puts with an usage' do
         executor.should_receive(:puts).once.with "Usage:\n  picky some_name param1 [param2]"
-        
+
         executor.usage :some_name, [:param1, 'param2']
       end
     end
@@ -90,5 +90,5 @@ HELP
       end
     end
   end
-  
+
 end

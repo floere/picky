@@ -38,7 +38,11 @@ module Picky
       def execute name, args, params
         commands = Picky::CLI.mapping.map do |command, object_and_params|
           _, *params = object_and_params
-          "  picky #{command} #{params_to_s(params)}"
+          ary = []
+          ary << "  picky"
+          ary << command
+          ary << params_to_s(params) unless params.empty?
+          ary.join ' '
         end.join(?\n)
 
         Kernel.puts "Possible commands:\n#{commands}\n"
