@@ -137,7 +137,8 @@ module Picky
           regexp && regexp.source
         end
         def querying_removes_characters= new_value
-          Tokenizer.searching.instance_variable_set(:@removes_characters_regexp, %r{#{new_value}})
+          Tokenizer.searching.removes_characters %r{#{new_value}}
+          # Tokenizer.searching.instance_variable_set(:@removes_characters_regexp, %r{#{new_value}})
         end
         def querying_stopwords
           regexp = Tokenizer.searching.instance_variable_get :@remove_stopwords_regexp
