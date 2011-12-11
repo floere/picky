@@ -6,18 +6,18 @@ module Picky
   #
   class Tokenizer
 
-    def self.index_default= new_default
-      @index_default = new_default
+    def self.default_indexing_with options = {}
+      @indexing = options.respond_to?(:tokenize) ? options : new(options)
     end
-    def self.index_default
-      @index_default ||= new
+    def self.indexing
+      @indexing ||= new
     end
 
-    def self.query_default= new_default
-      @query_default = new_default
+    def self.default_searching_with options = {}
+      @searching = options.respond_to?(:tokenize) ? options : new(options)
     end
-    def self.query_default
-      @query_default ||= new
+    def self.searching
+      @searching ||= new
     end
 
     def to_s

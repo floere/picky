@@ -17,11 +17,18 @@ describe Picky::Loader do
   end
 
   describe 'load_application' do
-    before(:each) do
-      Picky::Application.stub! :reload
-    end
-    it "does ok" do
+    it 'does ok' do
       lambda { described_class.load_application }.should_not raise_error
+    end
+    it 'loads correctly' do
+      described_class.should_receive(:load_user).once.with 'app'
+
+      described_class.load_application
+    end
+    it 'loads correctly' do
+      described_class.should_receive(:load_user).once.with 'special_app'
+
+      described_class.load_application 'special_app'
     end
   end
 
@@ -29,7 +36,7 @@ describe Picky::Loader do
     before(:each) do
       described_class.stub! :load_relative
     end
-    it "does ok" do
+    it 'does ok' do
       lambda { described_class.load_framework }.should_not raise_error
     end
   end
@@ -53,19 +60,22 @@ describe Picky::Loader do
       described_class.stub! :load_application
       Dir.stub! :chdir
     end
-    after(:each) do
-      described_class.reload
-    end
     it 'should call the right methods in order' do
       described_class.should_receive(:load_self).ordered
       described_class.should_receive(:load_framework).ordered
       described_class.should_receive(:load_application).ordered
+
+      described_class.reload
     end
     it 'should load itself only once' do
       described_class.should_receive(:load_self).once
+
+      described_class.reload
     end
-    # it 'should load the app only once' do
-    #   Loader.should_receive(:load_framework).once
+    # it 'can load a specific app' do
+    #   described_class.should_receive(:load_application).once.with 'special_app'
+    #
+    #   described_class.reload 'special_app'
     # end
   end
 
@@ -87,9 +97,6 @@ describe Picky::Loader do
     it 'should load itself only once' do
       described_class.should_receive(:load_self).once
     end
-    # it 'should load the app only once' do
-    #   Loader.should_receive(:load_framework).once
-    # end
   end
 
 end
