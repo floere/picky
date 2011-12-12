@@ -48,7 +48,7 @@ module Picky
     # The total results. Delegates to the allocations.
     #
     def total
-      @total || @total = allocations.total || 0
+      @total ||= allocations.total || 0
     end
 
     # Duration default is 0.
@@ -74,8 +74,9 @@ module Picky
 
     # For logging.
     #
+    @@log_time_format = "%Y-%m-%d %H:%M:%S".freeze
     def to_s
-      "#{log_type}|#{Time.now.to_s(:db)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
+      "#{log_type}|#{Time.now.strftime @@log_time_format}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
     end
 
     # The first character in the blog designates what type of query it is.

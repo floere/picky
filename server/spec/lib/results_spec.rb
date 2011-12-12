@@ -26,9 +26,15 @@ describe Picky::Results do
     end
   end
 
+  describe 'to_s time format' do
+    it 'is in the right format' do
+      described_class.new("some_query").to_s.should match(/\d{2}\-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
+    end
+  end
+
   describe 'to_s' do
     before(:each) do
-      time = stub :time, :to_s => '0-08-16 10:07:33'
+      time = stub :time, :strftime => '2011-08-16 10:07:33'
       Time.stub! :now => time
     end
     context 'without results' do
@@ -36,7 +42,7 @@ describe Picky::Results do
         @results = described_class.new "some_query"
       end
       it 'should output a default log' do
-        @results.to_s.should == '.|0-08-16 10:07:33|0.000000|some_query                                        |       0|   0| 0|'
+        @results.to_s.should == '.|2011-08-16 10:07:33|0.000000|some_query                                        |       0|   0| 0|'
       end
     end
     context 'with results' do
@@ -50,7 +56,7 @@ describe Picky::Results do
                        :total    => 12345678
       end
       it 'should output a specific log' do
-        @results.to_s.should == '>|0-08-16 10:07:33|0.123457|some_query                                        |12345678|1234|12|'
+        @results.to_s.should == '>|2011-08-16 10:07:33|0.123457|some_query                                        |12345678|1234|12|'
       end
     end
   end

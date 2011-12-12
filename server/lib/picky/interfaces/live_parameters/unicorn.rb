@@ -27,8 +27,10 @@ module Picky
 
     # Aka.
     #
-    remove_const :Unicorn if defined? Unicorn
-    Unicorn = LiveParameters::Unicorn
+    # TODO
+    #
+    # remove_const :Unicorn if defined? Unicorn
+    # Unicorn = LiveParameters::Unicorn
 
   end
 
