@@ -104,7 +104,7 @@ module Picky
 
     # Maps commands to the other gem's command.
     #
-    # TODO Try to load the other gems and get the commands dynamically.
+    # THINK Try to load the other gems and get the commands dynamically.
     #
     @@mapping = {
       :generate => [Generate, :'{client,server,all_in_one}', :'app_directory_name'],
