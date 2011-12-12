@@ -36,7 +36,9 @@ module Picky
 
         # Sorts the index values in place.
         #
-        def sort ary, code
+        # Not used currently.
+        #
+        def prioritize! ary, code
           ary.sort_by_levenshtein! code
           ary.slice! amount, ary.size # THINK size is not perfectly correct, but anyway
         end

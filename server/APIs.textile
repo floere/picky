@@ -63,7 +63,6 @@ h2. Similarity
 Has methods
 
 * @encoded(token)@ => @encoded token@
-* @sort!(codes, token)@ => @unimportant@ # TODO Rename?
 
 Accepted as option @similarity@ for the @category@.
 

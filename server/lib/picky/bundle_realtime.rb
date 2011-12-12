@@ -74,10 +74,6 @@ module Picky
         #
         similars.delete str_or_sym if similars.include? str_or_sym
         similars << str_or_sym
-
-        # Uses the sort order of the strategy.
-        #
-        self.similarity_strategy.sort similars, str_or_sym
       end
     end
 
