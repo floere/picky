@@ -5,6 +5,9 @@ h2. Upcoming Version
 * hanke: (server) BREAKING Option @weights@ for the @Picky::Index#category@ method has been renamed @weight@ to conform with the other methods.
 * hanke: (server) BREAKING Picky does not require the text gem anymore by default. Only when you use phonetic similarity. It will tell you what it needs.
 * hanke: (server) BREAKING Added the PICKY_ENVIRONMENT in front of the Redis key namespace to differentiate the various environments.
+* hanke: (server) BREAKING Removed @rake routes@ since only the classic server was able to provide it.
+* hanke: (server) BREAKING Removed the classic server from the generators.
+* hanke: (server) Explicitly uses @Yajl::Encoder#encode@ for JSON encoding.
 * hanke: (server) Fixed cases where even when no similarity was defined on a category, similar results were still found.
 * hanke: (server) Rake task @index@ now points to task @index:parallel@ by default. Call @rake:serial@ to index serially.
 * hanke: (server) Indexer calls @reconnect!@ on sources that support it.
