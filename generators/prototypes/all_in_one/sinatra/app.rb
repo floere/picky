@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'i18n'
 require 'haml'
+require 'csv'
 require 'picky'
 require 'picky-client'
 
@@ -31,9 +32,9 @@ class BookSearch < Sinatra::Application
     end
 
     def each
-      instance = Struct.new :title, :author, :year
+      instance = Struct.new :id, :title, :author, :year
       @csv.each do |row|
-        yield instance.new *row
+        yield instance.new *row[0..3]
       end
     end
 
@@ -116,7 +117,7 @@ class BookSearch < Sinatra::Application
     #   rendered_entries = results.entries.map do |book| (render each book here) end
     #
 
-    ActiveSupport::JSON.encode results
+    Yajl::Encoder.encode results
   end
 
   # Updates the search count while the user is typing.

@@ -45,7 +45,7 @@ get '/search/full' do
   #   rendered_entries = results.entries.map do |book| (render each book here) end
   #
 
-  ActiveSupport::JSON.encode results
+  Yajl::Encoder.encode results
 end
 
 # Updates the search count while the user is typing.

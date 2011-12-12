@@ -59,7 +59,7 @@ def install_sinatra_server
   # Note: Not using bundler anymore.
   #
   puts "Installing the Sinatra/Unicorn server."
-  system "picky generate sinatra_server sandbox/server"
+  system "picky generate server sandbox/server"
   system "cd sandbox/server; rake index"
   system "cd sandbox/server; unicorn -c unicorn.rb &"
 
@@ -81,7 +81,7 @@ end
 
 def install_sinatra_client
   puts "Installing the client."
-  system "picky generate sinatra_client sandbox/client"
+  system "picky generate client sandbox/client"
   system "cd sandbox/client; bundle install #{bundle_options}"
   system "cd sandbox/client; unicorn -p 3210 &"
 
@@ -131,7 +131,6 @@ def run_server_rake_tasks
   puts "Now the server rake tasks"
   run_server_rake_task '-T'
   run_server_rake_task 'analyze'
-  run_server_rake_task 'routes'
   run_server_rake_task 'todo'
   run_server_rake_task 'try[test]'
 end

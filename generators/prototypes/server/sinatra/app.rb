@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'csv'
 require 'picky'
 require File.expand_path '../logging', __FILE__
 
@@ -18,9 +19,9 @@ class BookSearch < Sinatra::Application
     end
 
     def each
-      instance = Struct.new :title, :author, :year
+      instance = Struct.new :id, :title, :author, :year
       @csv.each do |row|
-        yield instance.new *row
+        yield instance.new *row[0..3]
       end
     end
 
