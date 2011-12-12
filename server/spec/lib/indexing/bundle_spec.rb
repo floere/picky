@@ -25,7 +25,7 @@ describe Picky::Bundle do
       bundle.similar(:dragon).should == [:dargon]
     end
     it 'returns the right similars' do
-      bundle.similar(:trkn).should == [:dargon, :dragon]
+      bundle.similar(:trkn).should == [:dragon, :dargon]
     end
     it 'performs' do
       performance_of { bundle.similar(:dragon) }.should < 0.000075
