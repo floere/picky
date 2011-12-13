@@ -5,8 +5,6 @@ describe Object do
   context 'basic object' do
     let(:object) { described_class.new }
 
-    #
-    #
     # describe "exclaim" do
     #   it "delegates to puts" do
     #     STDOUT.should_receive(:puts).once.with :bla
