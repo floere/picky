@@ -80,9 +80,9 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      # TODO @weights = @weights_strategy.load || @backend_weights.load
+      # TODO @weights = @weight_strategy.load || @backend_weights.load
       #
-      self.weights = @backend_weights.load if @weights_strategy.saved?
+      self.weights = @backend_weights.load if @weight_strategy.saved?
     end
     # Loads the similarity index.
     #

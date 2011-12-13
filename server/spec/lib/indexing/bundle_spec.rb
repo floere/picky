@@ -67,7 +67,7 @@ describe Picky::Bundle do
       bundle.partial_strategy.should == :some_partial
     end
     it 'should initialize the weights strategy correctly' do
-      bundle.weights_strategy.should == @weights
+      bundle.weight_strategy.should == @weights
     end
     it 'should initialize the similarity strategy correctly' do
       bundle.similarity_strategy.should == @similarity

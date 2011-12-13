@@ -36,18 +36,18 @@ module Picky
                   :backend_similarity,
                   :backend_configuration,
 
-                  :weights_strategy,
+                  :weight_strategy,
                   :partial_strategy,
                   :similarity_strategy
 
     delegate :[], :[]=,        :to => :configuration
     delegate :index_directory, :to => :category
 
-    def initialize name, category, weights_strategy, partial_strategy, similarity_strategy, options = {}
+    def initialize name, category, weight_strategy, partial_strategy, similarity_strategy, options = {}
       @name     = name
       @category = category
 
-      @weights_strategy    = weights_strategy
+      @weight_strategy    = weight_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
 
@@ -72,11 +72,11 @@ module Picky
     def reset_backend
       # Extract specific indexes from backend.
       #
-      @backend_inverted      = backend.create_inverted      self
-      @backend_weights       = backend.create_weights       self
-      @backend_similarity    = backend.create_similarity    self
-      @backend_configuration = backend.create_configuration self
-      @backend_realtime      = backend.create_realtime      self
+      @backend_inverted,
+      @backend_weights,
+      @backend_similarity,
+      @backend_configuration,
+      @backend_realtime = backend.reset self
 
       # Initial indexes.
       #
@@ -84,9 +84,9 @@ module Picky
       # the strategy itself pretends to be an index.
       #
       @inverted      = @backend_inverted.initial
-      # TODO @weights = @weights_strategy.initial || @backend_weights.initial
+      # TODO @weights = @weight_strategy.initial || @backend_weights.initial
       #
-      @weights       = @weights_strategy.saved?? @backend_weights.initial : @weights_strategy
+      @weights       = @weight_strategy.saved?? @backend_weights.initial : @weight_strategy
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
       @realtime      = @backend_realtime.initial
@@ -108,7 +108,7 @@ module Picky
     def empty_weights
       # THINK about this. Perhaps the strategies should implement the backend methods?
       #
-      @weights = @weights_strategy.saved?? @backend_weights.empty : @weights_strategy
+      @weights = @weight_strategy.saved?? @backend_weights.empty : @weight_strategy
     end
     def empty_similarity
       @similarity = @backend_similarity.empty
@@ -164,7 +164,7 @@ module Picky
       @backend_inverted.delete       if @backend_inverted.respond_to? :delete
       # THINK about this. Perhaps the strategies should implement the backend methods?
       #
-      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weights_strategy.saved?
+      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
       @backend_realtime.delete  if @backend_realtime.respond_to? :delete

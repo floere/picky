@@ -6,6 +6,16 @@ module Picky
     #
     class Backend
 
+      def reset bundle
+       [
+         create_inverted(bundle),
+         create_weights(bundle),
+         create_similarity(bundle),
+         create_configuration(bundle),
+         create_realtime(bundle)
+        ]
+      end
+
       # Returns the total score of the combinations.
       #
       # Default implementation. Override to speed up.

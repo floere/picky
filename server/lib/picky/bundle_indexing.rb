@@ -47,7 +47,7 @@ module Picky
     def dump_weights
       # THINK about this. Perhaps the strategies should implement the backend methods? Or only the internal index ones?
       #
-      @backend_weights.dump @weights if @weights_strategy.saved?
+      @backend_weights.dump @weights if @weight_strategy.saved?
     end
     # Dumps the similarity index.
     #

@@ -24,7 +24,7 @@ module Picky
           #
           @similarity.delete self.similarity_strategy.encoded(str_or_sym)
         else
-          @weights[str_or_sym] = self.weights_strategy.weight_for ids.size
+          @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
         end
       end
 
@@ -53,7 +53,7 @@ module Picky
 
       # Weights.
       #
-      @weights[str_or_sym] = self.weights_strategy.weight_for ids.size
+      @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
 
       # Similarity.
       #
