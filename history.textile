@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+* hanke: (server) BREAKING Reverting customizeable backends from version 3.3.2. They are no longer available. Please use simple subclassing to achieve funky backends.
+* hanke: (server) The @Index#source@ block is now evaluated every time an indexer runs.
+
+h2. Version 4.0.0pre2
+
 * hanke: (server) BREAKING Removed Picky classic application. Please use Picky e.g. in a Sinatra app.
 * hanke: (server) BREAKING Removed Picky classic sources. Please use a source with the #each method.
 * hanke: (server) BREAKING Option @weights@ for the @Picky::Index#category@ method has been renamed @weight@ to conform with the other methods.
@@ -7,8 +12,6 @@ h2. Upcoming Version
 * hanke: (server) BREAKING Added the PICKY_ENVIRONMENT in front of the Redis key namespace to differentiate the various environments.
 * hanke: (server) BREAKING Removed @rake routes@ since only the classic server was able to provide it.
 * hanke: (server) BREAKING Removed the classic server from the generators.
-* hanke: (server) BREAKING Reverting customizeable backends from version 3.3.2. They are no longer available. Please use simple subclassing to achieve funky backends.
-* hanke: (server) The @Index#source@ block is now evaluated every time an indexer runs.
 * hanke: (server) Explicitly uses @Yajl::Encoder#encode@ for JSON encoding.
 * hanke: (server) Fixed cases where even when no similarity was defined on a category, similar results were still found.
 * hanke: (server) Rake task @index@ now points to task @index:parallel@ by default. Call @rake:serial@ to index serially.
