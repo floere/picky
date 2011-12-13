@@ -129,12 +129,14 @@ describe Picky::Backends::Redis do
 
       books.search('title').ids.should == []
     end
-    it 'handles dumping and loading' do
-      data.dump
-      data.load
-
-      books.search('title').ids.should == [1]
-    end
+    # TODO
+    #
+    # it 'handles dumping and loading' do
+    #   data.dump
+    #   data.load
+    #
+    #   books.search('title').ids.should == [1]
+    # end
   end
 
   context 'to_s key format' do
@@ -161,6 +163,27 @@ describe Picky::Backends::Redis do
       end
 
       instance_eval &its_to_i
+    end
+  end
+
+  describe 'special case' do
+    before(:each) do
+      data.key_format :to_i
+      data.backend described_class.new
+      data.clear
+    end
+    it 'handles direct manipulation and []= correctly' do
+      data.each_category do |category|
+        category.exact.dump
+        category.exact.load
+        category.exact.inverted['test'] = [1, 2, 3]
+        category.exact.inverted['test'] = [4, 5, 6]
+        category.exact.inverted['test'].should == ["4", "5", "6"]
+        category.exact.inverted['test'].delete "5"
+        category.exact.inverted['test'].should == ["4", "6"]
+        category.exact.inverted['test'].unshift "3"
+        category.exact.inverted['test'].should == ["3", "4", "6"]
+      end
     end
   end
 
