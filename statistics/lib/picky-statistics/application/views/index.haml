@@ -5,7 +5,11 @@
     %script{ :src => 'javascripts/jquery-1.4.4.min.js', :type => 'text/javascript' }
     %script{ :src => 'javascripts/jquery.sparkline-1.6.min.js', :type => 'text/javascript' }
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
-    
+    %script{ :src => 'javascripts/d3/d3.min.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/d3/d3.layout.min.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/rickshaw.js', :type => 'text/javascript' }
+    / %script{ :src => 'javascripts/d3/d3.layout.min.js', :type => 'text/javascript' }
+
   %body
     %h1 Clam: Picky Statistics Interface.
     .actions
@@ -18,8 +22,8 @@
     .overview.push
       %h2 Overview
       #full_live_graph.stats
-        %h2 Totals
-        .inlinesparkline
+        .graph
+        %script{ :src => 'javascripts/full_live.js', :type => 'text/javascript' }
         = haml :legend, {}, :color => :black, :type => :full, :text => 'full requests'
         = haml :legend, {}, :color => :grey, :type => :live, :text => 'live requests'
         = haml :legend, {}, :color => :white, :type => :total, :text => 'total'
@@ -27,7 +31,8 @@
       %h2 Full Results
       #results_graph.stats
         %h3 Counts
-        .inlinesparkline
+        .graph
+        %script{ :src => 'javascripts/results.js', :type => 'text/javascript' }
         = haml :legend, {}, :color => :green, :type => :result1, :text => 'x 1 result'
         = haml :legend, {}, :color => :darkgreen, :type => :result2, :text => 'x 2 results'
         = haml :legend, {}, :color => :browngreen, :type => :result3, :text => 'x 3 results'
@@ -49,4 +54,3 @@
         = haml :legend, {}, :color => :grey, :type => :without_offset, :text => 'without offset'
   :javascript
     updateStatistics();
-    

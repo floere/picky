@@ -314,9 +314,13 @@ class BookSearch < Sinatra::Application
   # This looks horrible – but usually you have it only once or twice.
   # It's flexible.
   #
+  require 'logger'
+  AppLogger = Logger.new File.expand_path('log/search.log', PICKY_ROOT)
   books_search = Search.new books_index, isbn_index do boost weights end
   get %r{\A/books\z} do
-    books_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
+    results = books_search.search params[:query], params[:ids] || 20, params[:offset] || 0
+    AppLogger.info results
+    results.to_json
   end
   books_ignoring_search = Search.new books_index, isbn_index do
                              boost weights

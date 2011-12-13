@@ -7,3 +7,9 @@ desc "Run specs"
 RSpec::Core::RakeTask.new :spec
 
 task :default => :spec
+
+desc "Run locally"
+task :start do
+  ENV['PICKY_LOG_FILE'] = File.expand_path '../../server/test_project/log/search.log', __FILE__
+  require File.expand_path '../lib/picky-statistics/application/app', __FILE__
+end

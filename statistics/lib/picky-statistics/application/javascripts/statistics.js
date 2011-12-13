@@ -9,19 +9,43 @@ var pieOptions = {
 };
 
 function updateFullLive(data) {
-  var values = [
-    data["full"]["total"],
-    data["live"]["total"]
-  ];
-  pieOptions['sliceColors'] = ['#000000','#999999'];
-  $('#full_live_graph .inlinesparkline').sparkline(values, pieOptions);
-  $('#full_live_graph .legend .full').html(data["full"]["total"]);
-  $('#full_live_graph .legend .live').html(data["live"]["total"]);
-  $('#full_live_graph .legend .total').html(parseInt(data["full"]["total"], 10) + parseInt(data["live"]["total"], 10));
+  // var values = [
+  //   data["full"]["total"],
+  //   data["live"]["total"]
+  // ];
+  // pieOptions['sliceColors'] = ['#000000','#999999'];
+  // $('#full_live_graph .inlinesparkline').sparkline(values, pieOptions);
+  // $('#full_live_graph .legend .full').html(data["full"]["total"]);
+  // $('#full_live_graph .legend .live').html(data["live"]["total"]);
+  // $('#full_live_graph .legend .total').html(parseInt(data["full"]["total"], 10) + parseInt(data["live"]["total"], 10));
+  
+  var full = parseInt(data["full"]["total"], 10);
+  var live = parseInt(data["live"]["total"], 10);
+  
+  updateNewFullLive(full, live);
 };
 
 function updateResults(data) {
-  var values = [
+  // var values = [
+  //   data["full"]["totals"][1],
+  //   data["full"]["totals"][2],
+  //   data["full"]["totals"][3],
+  //   data["full"]["totals"]['4+'],
+  //   data["full"]["totals"]['100+'],
+  //   data["full"]["totals"]['1000+'],
+  //   data["full"]["totals"][0]
+  // ];
+  // pieOptions['sliceColors'] = ['#66CC00','#669900','#666600','#996600','#FF9900','#FF9933','#CC0000'];
+  // $('#results_graph .inlinesparkline').sparkline(values, pieOptions);
+  // $('#results_graph .legend .result1').html(data["full"]["totals"][1]);
+  // $('#results_graph .legend .result2').html(data["full"]["totals"][2]);
+  // $('#results_graph .legend .result3').html(data["full"]["totals"][3]);
+  // $('#results_graph .legend .result4plus').html(data["full"]["totals"]['4+']);
+  // $('#results_graph .legend .result100plus').html(data["full"]["totals"]['100+']);
+  // $('#results_graph .legend .result1000plus').html(data["full"]["totals"]['1000+']);
+  // $('#results_graph .legend .result0').html(data["full"]["totals"][0]);
+  
+  updateNewResults(
     data["full"]["totals"][1],
     data["full"]["totals"][2],
     data["full"]["totals"][3],
@@ -29,16 +53,7 @@ function updateResults(data) {
     data["full"]["totals"]['100+'],
     data["full"]["totals"]['1000+'],
     data["full"]["totals"][0]
-  ];
-  pieOptions['sliceColors'] = ['#66CC00','#669900','#666600','#996600','#FF9900','#FF9933','#CC0000'];
-  $('#results_graph .inlinesparkline').sparkline(values, pieOptions);
-  $('#results_graph .legend .result1').html(data["full"]["totals"][1]);
-  $('#results_graph .legend .result2').html(data["full"]["totals"][2]);
-  $('#results_graph .legend .result3').html(data["full"]["totals"][3]);
-  $('#results_graph .legend .result4plus').html(data["full"]["totals"]['4+']);
-  $('#results_graph .legend .result100plus').html(data["full"]["totals"]['100+']);
-  $('#results_graph .legend .result1000plus').html(data["full"]["totals"]['1000+']);
-  $('#results_graph .legend .result0').html(data["full"]["totals"][0]);
+  );
 };
 
 function updateOffset(data) {
