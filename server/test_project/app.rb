@@ -243,51 +243,6 @@ class BookSearch < Sinatra::Application
              :partial => Picky::Partial::Substring.new(from: 1)
   end
 
-  BackendModel = Struct.new :id, :name
-
-  # # To test the interface definition.
-  # #
-  # class InternalBackendInterfaceTester
-  #
-  #   def initialize
-  #     @hash = {}
-  #   end
-  #
-  #   def [] key
-  #     @hash[key]
-  #   end
-  #
-  #   def []= key, value
-  #     @hash[key] = value
-  #   end
-  #
-  #   # We need to implement this as we use it
-  #   # in a Memory::JSON backend.
-  #   #
-  #   def to_json
-  #     @hash.to_json
-  #   end
-  #
-  # end
-  #
-  # backends_index = Picky::Index.new(:backends) do
-  #   source  [
-  #     BackendModel.new(1, "Memory"),
-  #     BackendModel.new(2, "Redis")
-  #   ]
-  #   backend Picky::Backends::Memory.new(
-  #             inverted: ->(bundle) do
-  #               Picky::Backends::Memory::JSON.new(bundle.index_path(:inverted))
-  #             end,
-  #             weights: Picky::Backends::Memory::JSON.new(
-  #               "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/funky_weights_path",
-  #               empty: InternalBackendInterfaceTester.new,
-  #               initial: InternalBackendInterfaceTester.new
-  #             )
-  #           )
-  #   category :name
-  # end
-
   # This checks that we can use a funky customized tokenizer.
   #
   NonStringDataSource = Struct.new :id, :nonstring
@@ -429,12 +384,6 @@ class BookSearch < Sinatra::Application
   get %r{\A/japanese\z} do
     japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  # backends_search = Search.new backends_index do
-  #   searching case_sensitive: false
-  # end
-  # get %r{\A/backends\z} do
-  #   backends_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
-  # end
   nonstring_search = Search.new nonstring_data_index
   get %r{\A/nonstring\z} do
     nonstring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json

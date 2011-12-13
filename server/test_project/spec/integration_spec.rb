@@ -297,10 +297,6 @@ describe BookSearch do
   #
   it { japanese.search("日").ids.should == [1] }
 
-  # # Different backends.
-  # #
-  # it { backends.search("Memor").ids.should == [1] }
-
   # Different tokenizer.
   #
   it { nonstring.search("moo zap").ids.should == [2] }

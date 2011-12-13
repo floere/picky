@@ -71,15 +71,18 @@ module Picky
     # Initializes all necessary indexes from the backend.
     #
     def reset_backend
-      # Extract specific indexes from backend.
-      #
-      @backend_inverted,
-      @backend_weights,
-      @backend_similarity,
-      @backend_configuration,
-      @backend_realtime = backend.reset self
-
+      create_backends
       initialize_backends
+    end
+
+    # Extract specific indexes from backend.
+    #
+    def create_backends
+      @backend_inverted      = backend.create_inverted self
+      @backend_weights       = backend.create_weights self
+      @backend_similarity    = backend.create_similarity self
+      @backend_configuration = backend.create_configuration self
+      @backend_realtime      = backend.create_realtime self
     end
 
     # Initial indexes.

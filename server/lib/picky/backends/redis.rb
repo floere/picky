@@ -180,12 +180,18 @@ module Picky
                 # Assume it's using EVALSHA.
                 #
                 begin
-                  client.evalsha @@ids_sent_once,
-                                 identifiers.size,
-                                 *identifiers,
-                                 generate_intermediate_result_id,
-                                 offset,
-                                 (offset + amount)
+                  if identifiers.size > 1
+                    client.evalsha @@ids_sent_once,
+                                   identifiers.size,
+                                   *identifiers,
+                                   generate_intermediate_result_id,
+                                   offset,
+                                   (offset + amount)
+                  else
+                    client.zrange identifiers.first,
+                                  offset,
+                                  (offset + amount)
+                  end
                 rescue RuntimeError => e
                   # Make the server have a SHA-1 for the script.
                   #
@@ -211,8 +217,6 @@ module Picky
                 result_id = generate_intermediate_result_id
 
                 # Little optimization.
-                #
-                # TODO Include in the scripting version as well.
                 #
                 if identifiers.size > 1
                   # Intersect and store.
