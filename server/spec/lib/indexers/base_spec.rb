@@ -35,7 +35,7 @@ describe Picky::Indexers::Base do
     it 'processes' do
       categories = stub :categories, :empty => nil, :cache => nil
 
-      indexer.should_receive(:process).once.with categories, anything
+      indexer.should_receive(:process).once.with :some_source, categories, anything
 
       indexer.prepare categories
     end

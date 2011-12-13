@@ -20,21 +20,22 @@ module Picky
       # Starts the indexing process.
       #
       def prepare categories, scheduler = Scheduler.new
-        check_source
+        source_for_prepare = source
+        check source_for_prepare
         categories.empty
-        process categories, scheduler do |prepared_file|
+        process source_for_prepare, categories, scheduler do |prepared_file|
           notify_finished prepared_file
         end
       end
 
       # Explicitly reset the source to avoid caching trouble.
       #
-      def reset_source
+      def reset source
         source.reset      if source.respond_to?(:reset)
         source.reconnect! if source.respond_to?(:reconnect!)
       end
 
-      def check_source # :nodoc:
+      def check source # :nodoc:
         raise "Trying to index without a source for #{@index_or_category.name}." unless source
       end
 
