@@ -1,6 +1,7 @@
 h2. Upcoming Version
 
 * hanke: (server) BREAKING Reverting customizeable backends from version 3.3.2. They are no longer available. Please use simple subclassing to achieve funky backends.
+* hanke: (server) BREAKING SQLite @self_indexed@ and Redis @immediate@ option is now called @realtime@, as changes go directly through to the actual backends, in "realtime".
 * hanke: (server) The @Index#source@ block is now evaluated every time an indexer runs.
 
 h2. Version 4.0.0pre2
