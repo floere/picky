@@ -54,9 +54,9 @@ module Picky
 
         # Set a single list.
         #
-        # TODO Clear? Maybe only add the difference?
-        #
         def []= key, values
+          delete key
+
           redis_key = "#{namespace}:#{key}"
           i = 0
           values.each do |value|
@@ -64,9 +64,8 @@ module Picky
             client.zadd redis_key, i, value
           end
 
-          # We need to return the whole list.
-          #
-          self[key]
+          DirectlyManipulable.make self, values, key
+          values
         end
 
       end

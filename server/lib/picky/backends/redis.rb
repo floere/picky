@@ -155,10 +155,10 @@ module Picky
       # Note: We use the amount and offset hints to speed Redis up.
       #
       def ids combinations, amount, offset
-        # TODO FIXME This is actually not correct:
-        #            A dumped/loaded Redis backend should use
-        #            the Redis backend calculation method.
-        #            So loaded? would be more appropriate.
+        # TODO This is actually not correct:
+        #      A dumped/loaded Redis backend should use
+        #      the Redis backend calculation method.
+        #      So loaded? would be more appropriate.
         #
         if immediate
           # Just checked once on the first call.
