@@ -47,7 +47,7 @@ module Picky
       @name     = name
       @category = category
 
-      @weight_strategy    = weight_strategy
+      @weight_strategy     = weight_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
 
