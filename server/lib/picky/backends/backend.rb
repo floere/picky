@@ -6,22 +6,6 @@ module Picky
     #
     class Backend
 
-      attr_reader :inverted,
-                  :weights,
-                  :similarity,
-                  :configuration
-
-      def initialize options = {}
-        @inverted      = options[:inverted]
-        @weights       = options[:weights]
-        @similarity    = options[:similarity]
-        @configuration = options[:configuration]
-      end
-
-      def extract_lambda_or thing, *args
-        thing && (thing.respond_to?(:call) && thing.call(*args) || thing)
-      end
-
       # Returns the total score of the combinations.
       #
       # Default implementation. Override to speed up.

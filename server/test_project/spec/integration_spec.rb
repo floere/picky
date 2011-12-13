@@ -23,7 +23,7 @@ describe BookSearch do
   let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
   let(:file)            { Picky::TestClient.new(described_class, :path => '/file')            }
   let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')        }
-  let(:backends)        { Picky::TestClient.new(described_class, :path => '/backends')        }
+  # let(:backends)        { Picky::TestClient.new(described_class, :path => '/backends')        }
   let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
   let(:partial)         { Picky::TestClient.new(described_class, :path => '/partial')         }
   let(:sqlite)          { Picky::TestClient.new(described_class, :path => '/sqlite')          }
@@ -297,9 +297,9 @@ describe BookSearch do
   #
   it { japanese.search("日").ids.should == [1] }
 
-  # Different backends.
-  #
-  it { backends.search("Memor").ids.should == [1] }
+  # # Different backends.
+  # #
+  # it { backends.search("Memor").ids.should == [1] }
 
   # Different tokenizer.
   #

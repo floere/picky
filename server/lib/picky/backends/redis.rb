@@ -10,8 +10,6 @@ module Picky
                   :immediate
 
       def initialize options = {}
-        super options
-
         maybe_load_hiredis
         check_hiredis_gem
         check_redis_gem
@@ -39,36 +37,31 @@ module Picky
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
-        extract_lambda_or(inverted, bundle, client) ||
-          List.new(client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:inverted", immediate: immediate)
+        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:inverted", immediate: immediate
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
-        extract_lambda_or(weights, bundle, client) ||
-          Float.new(client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:weights", immediate: immediate)
+        Float.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:weights", immediate: immediate
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
-        extract_lambda_or(similarity, bundle, client) ||
-          List.new(client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:similarity", immediate: immediate)
+        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:similarity", immediate: immediate
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
-        extract_lambda_or(configuration, bundle, client) ||
-          String.new(client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:configuration", immediate: immediate)
+        String.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:configuration", immediate: immediate
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [id] # => [:sym1, :sym2]
       #
       def create_realtime bundle
-        extract_lambda_or(similarity, bundle) ||
-          List.new(client, "#{bundle.identifier}:realtime", immediate: immediate)
+        List.new client, "#{bundle.identifier}:realtime", immediate: immediate
       end
 
       # Does the Redis version already include
