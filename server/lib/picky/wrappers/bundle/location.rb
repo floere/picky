@@ -40,7 +40,7 @@ module Picky
           # Save the config, then dump normally.
           #
           def dump
-            bundle[:location_anchor] = @calculation.anchor
+            bundle['location_anchor'] = @calculation.anchor
 
             bundle.dump
           end
@@ -50,10 +50,8 @@ module Picky
           def load
             bundle.load
 
-            # TODO Symbols (of the location_anchor!!!).
-            # It should always be a Symbol.
-            #
-            @calculation.anchor = bundle['location_anchor'] && bundle['location_anchor'].to_f || raise("Configuration 'location_anchor' for #{bundle.identifier} missing. Did you run rake index already?")
+            location_anchor     = bundle['location_anchor']
+            @calculation.anchor = location_anchor && location_anchor.to_f || raise("Configuration 'location_anchor' for #{bundle.identifier} missing. Did you run rake index already?")
           end
 
         end
