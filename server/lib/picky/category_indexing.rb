@@ -31,7 +31,7 @@ module Picky
       with_data_snapshot do
         scheduler.schedule do
           indexer.prepare categories, scheduler
-          nil # TODO Needed so procrastinate is happy. Remove in 4.0.
+          nil # Note: Needed so procrastinate is happy.
         end
       end
     end
@@ -43,7 +43,7 @@ module Picky
         empty
         retrieve
         dump
-        nil # TODO Needed so procrastinate is happy. Remove in 4.0.
+        nil # Note: Needed so procrastinate is happy.
       end
     end
 
