@@ -105,7 +105,7 @@ module Picky
     # capsule, i.e. a block/lambda.
     #
     def extract_source
-      @source = @source.respond_to?(:call) ? @source.call : @source
+      @source.respond_to?(:call) ? @source.call : @source
     end
     def check_source source # :nodoc:
       raise ArgumentError.new(<<-SOURCE

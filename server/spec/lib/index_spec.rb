@@ -20,6 +20,22 @@ describe Picky::Index do
     it 'does not fail' do
       expect { described_class.new :some_index_name do source [] end }.to_not raise_error
     end
+    it 'does not fail' do
+      expect { described_class.new :some_index_name do source { [] } end }.to_not raise_error
+    end
+    it 'evaluates the source every time' do
+      expector = stub :expector
+
+      data = described_class.new :some_index_name do
+        source do
+          expector.call
+        end
+      end
+
+      expector.should_receive(:call).twice.with()
+
+      data.prepare
+    end
     it 'registers with the indexes' do
       @api = described_class.allocate
 

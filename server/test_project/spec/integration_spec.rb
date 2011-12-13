@@ -344,7 +344,7 @@ describe BookSearch do
     added_book = Book.create! title:  "Some Title",
                               author: "Tester Mc Testy",
                               isbn:   "1231231231231",
-                              year:   1977
+                              year:   "1977"
     expected_id = added_book.id
 
     Picky::Indexes[:books].index
