@@ -31,6 +31,12 @@ module Picky
                   :configuration,
                   :realtime,
 
+                  :backend_inverted,
+                  :backend_weights,
+                  :backend_similarity,
+                  :backend_configuration,
+                  :backend_realtime,
+
                   :weight_strategy,
                   :partial_strategy,
                   :similarity_strategy

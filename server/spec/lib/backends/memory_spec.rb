@@ -2,57 +2,57 @@ require 'spec_helper'
 
 describe Picky::Backends::Memory do
 
-  context 'with options' do
-    before(:each) do
-      @backend = described_class.new inverted:      Picky::Backends::Memory::Marshal.new(:unimportant),
-                                     weights:       Picky::Backends::Memory::Marshal.new(:unimportant),
-                                     similarity:    Picky::Backends::Memory::JSON.new(:unimportant),
-                                     configuration: Picky::Backends::Memory::Marshal.new(:unimportant)
-
-      @backend.stub! :timed_exclaim
-    end
-  
-    describe 'create_...' do
-      [
-        [:inverted,      Picky::Backends::Memory::Marshal],
-        [:weights,       Picky::Backends::Memory::Marshal],
-        [:similarity,    Picky::Backends::Memory::JSON],
-        [:configuration, Picky::Backends::Memory::Marshal]
-      ].each do |type, kind|
-        it "creates and returns a(n) #{type} index" do
-          @backend.send(:"create_#{type}",
-                        stub(type, :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}")
-          ).should be_kind_of(kind)
-        end
-      end
-    end
-  end
-  
-  context 'with lambda options' do
-    before(:each) do
-      @backend = described_class.new inverted:      ->(bundle){ Picky::Backends::Memory::Marshal.new(bundle.index_path(:inverted)) },
-                                     weights:       ->(bundle){ Picky::Backends::Memory::Marshal.new(bundle.index_path(:weights)) },
-                                     similarity:    ->(bundle){ Picky::Backends::Memory::JSON.new(bundle.index_path(:similarity)) },
-                                     configuration: ->(bundle){ Picky::Backends::Memory::Marshal.new(bundle.index_path(:configuration)) }
-
-      @backend.stub! :timed_exclaim
-    end
-  
-    describe 'create_...' do
-      [
-        [:inverted,      Picky::Backends::Memory::Marshal],
-        [:weights,       Picky::Backends::Memory::Marshal],
-        [:similarity,    Picky::Backends::Memory::JSON],
-        [:configuration, Picky::Backends::Memory::Marshal]
-      ].each do |type, kind|
-        it "creates and returns a(n) #{type} index" do
-          to_a_able_stub = Object.new
-          to_a_able_stub.stub! :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}"
-          @backend.send(:"create_#{type}", to_a_able_stub).should be_kind_of(kind)
-        end
-      end
-    end
-  end
+  # context 'with options' do
+  #   before(:each) do
+  #     @backend = described_class.new inverted:      Picky::Backends::Memory::Marshal.new(:unimportant),
+  #                                    weights:       Picky::Backends::Memory::Marshal.new(:unimportant),
+  #                                    similarity:    Picky::Backends::Memory::JSON.new(:unimportant),
+  #                                    configuration: Picky::Backends::Memory::Marshal.new(:unimportant)
+  #
+  #     @backend.stub! :timed_exclaim
+  #   end
+  #
+  #   describe 'create_...' do
+  #     [
+  #       [:inverted,      Picky::Backends::Memory::Marshal],
+  #       [:weights,       Picky::Backends::Memory::Marshal],
+  #       [:similarity,    Picky::Backends::Memory::JSON],
+  #       [:configuration, Picky::Backends::Memory::Marshal]
+  #     ].each do |type, kind|
+  #       it "creates and returns a(n) #{type} index" do
+  #         @backend.send(:"create_#{type}",
+  #                       stub(type, :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}")
+  #         ).should be_kind_of(kind)
+  #       end
+  #     end
+  #   end
+  # end
+  #
+  # context 'with lambda options' do
+  #   before(:each) do
+  #     @backend = described_class.new inverted:      ->(bundle){ Picky::Backends::Memory::Marshal.new(bundle.index_path(:inverted)) },
+  #                                    weights:       ->(bundle){ Picky::Backends::Memory::Marshal.new(bundle.index_path(:weights)) },
+  #                                    similarity:    ->(bundle){ Picky::Backends::Memory::JSON.new(bundle.index_path(:similarity)) },
+  #                                    configuration: ->(bundle){ Picky::Backends::Memory::Marshal.new(bundle.index_path(:configuration)) }
+  #
+  #     @backend.stub! :timed_exclaim
+  #   end
+  #
+  #   describe 'create_...' do
+  #     [
+  #       [:inverted,      Picky::Backends::Memory::Marshal],
+  #       [:weights,       Picky::Backends::Memory::Marshal],
+  #       [:similarity,    Picky::Backends::Memory::JSON],
+  #       [:configuration, Picky::Backends::Memory::Marshal]
+  #     ].each do |type, kind|
+  #       it "creates and returns a(n) #{type} index" do
+  #         to_a_able_stub = Object.new
+  #         to_a_able_stub.stub! :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}"
+  #         @backend.send(:"create_#{type}", to_a_able_stub).should be_kind_of(kind)
+  #       end
+  #     end
+  #   end
+  # end
 
   context 'without options' do
     before(:each) do

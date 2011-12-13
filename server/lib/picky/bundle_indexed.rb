@@ -27,7 +27,6 @@ module Picky
       @inverted[sym_or_string] || []
       # TODO ?
       #
-      # p key_format
       # if @key_format
       #   class << self
       #     def ids
