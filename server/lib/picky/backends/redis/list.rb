@@ -27,7 +27,7 @@ module Picky
         # Writes the hash into Redis.
         #
         def dump hash
-          unless @immediate
+          unless @realtime
             clear
             # client.pipelined do
               hash.each_pair do |key, values|

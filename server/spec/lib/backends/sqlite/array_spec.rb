@@ -73,7 +73,7 @@ describe Picky::Backends::SQLite::Array do
   end
 
   context 'hash-based indexes' do
-    let(:db) { described_class.new 'some/cache/path/to/file', self_indexed: true }
+    let(:db) { described_class.new 'some/cache/path/to/file', realtime: true }
 
     describe 'dump' do
       it 'delegates to the given hash' do

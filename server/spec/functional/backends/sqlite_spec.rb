@@ -92,7 +92,7 @@ describe Picky::Backends::SQLite do
 
   context 'immediately indexing backend (no dump needed)' do
     before(:each) do
-      data.backend described_class.new(self_indexed: true)
+      data.backend described_class.new(realtime: true)
       data.clear
 
       data.add Book.new(1, 'title', 'author')

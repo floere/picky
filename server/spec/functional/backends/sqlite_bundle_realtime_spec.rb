@@ -14,7 +14,7 @@ describe Picky::Bundle do
                                         @weights,
                                         @partial,
                                         @similarity,
-                                        backend: Picky::Backends::SQLite.new(self_indexed: true)
+                                        backend: Picky::Backends::SQLite.new(realtime: true)
   end
 
   it 'is by default an SQLite Array' do

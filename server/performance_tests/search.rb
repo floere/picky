@@ -102,8 +102,8 @@ backends = [
   Backends::File.new,
   Backends::SQLite.new,
   Backends::Redis.new,
-  Backends::SQLite.new(self_indexed: true),
-  Backends::Redis.new(immediate: true),
+  Backends::SQLite.new(realtime: true),
+  Backends::Redis.new(realtime: true),
 ]
 
 definitions = []

@@ -24,14 +24,14 @@ module Picky
 
           @empty     = options[:empty]
           @initial   = options[:initial]
-          @immediate = options[:immediate]
+          @realtime = options[:realtime]
         end
 
         # The empty index that is used for putting the index
         # together.
         #
         def empty
-          @empty && @empty.clone || (@immediate ? self.reset : {})
+          @empty && @empty.clone || (@realtime ? self.reset : {})
         end
 
         # The initial content before loading.
@@ -40,7 +40,7 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.clone || (@immediate ? self.reset : {})
+          @initial && @initial.clone || (@realtime ? self.reset : {})
         end
 
         # Returns itself.

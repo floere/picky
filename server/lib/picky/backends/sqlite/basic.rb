@@ -14,21 +14,21 @@ module Picky
           @cache_path   = "#{cache_path}.sqlite3"
           @empty        = options[:empty]
           @initial      = options[:initial]
-          @self_indexed = options[:self_indexed]
+          @realtime = options[:realtime]
 
           lazily_initialize_client
         end
 
         def initial
-          @initial && @initial.clone || (@self_indexed ? self.reset : {})
+          @initial && @initial.clone || (@realtime ? self.reset : {})
         end
 
         def empty
-          @empty && @empty.clone || (@self_indexed ? self.reset.asynchronous : {})
+          @empty && @empty.clone || (@realtime ? self.reset.asynchronous : {})
         end
 
         def dump internal
-          dump_sqlite internal unless @self_indexed
+          dump_sqlite internal unless @realtime
           self
         end
 

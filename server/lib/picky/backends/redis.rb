@@ -7,7 +7,7 @@ module Picky
     class Redis < Backend
 
       attr_reader :client,
-                  :immediate
+                  :realtime
 
       def initialize options = {}
         maybe_load_hiredis
@@ -15,7 +15,7 @@ module Picky
         check_redis_gem
 
         @client    = options[:client] || ::Redis.new(:db => (options[:db] || 15))
-        @immediate = options[:immediate]
+        @realtime = options[:realtime]
       end
       def maybe_load_hiredis
         require 'hiredis'
@@ -37,31 +37,31 @@ module Picky
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
       def create_inverted bundle
-        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:inverted", immediate: immediate
+        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:inverted", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights bundle
-        Float.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:weights", immediate: immediate
+        Float.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:weights", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity bundle
-        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:similarity", immediate: immediate
+        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:similarity", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration bundle
-        String.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:configuration", immediate: immediate
+        String.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:configuration", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [id] # => [:sym1, :sym2]
       #
       def create_realtime bundle
-        List.new client, "#{bundle.identifier}:realtime", immediate: immediate
+        List.new client, "#{bundle.identifier}:realtime", realtime: realtime
       end
 
       # Does the Redis version already include
@@ -160,7 +160,7 @@ module Picky
         #      the Redis backend calculation method.
         #      So loaded? would be more appropriate.
         #
-        if immediate
+        if realtime
           # Just checked once on the first call.
           #
           if redis_with_scripting?
