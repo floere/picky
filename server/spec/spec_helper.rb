@@ -21,6 +21,12 @@ puts "Redefined PICKY_ROOT to '#{PICKY_ROOT}' for the tests."
 Picky.logger = Logger.new STDOUT
 puts "Using STDOUT as test log."
 
+class Object
+  def exclaim(*)
+    # Tke sound of silence.
+  end
+end
+
 begin
   require File.expand_path '../performance_ratio', __FILE__
 rescue LoadError => e

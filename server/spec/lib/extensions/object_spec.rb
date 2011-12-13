@@ -5,14 +5,16 @@ describe Object do
   context 'basic object' do
     let(:object) { described_class.new }
 
-    describe "exclaim" do
-      it "delegates to puts" do
-        STDOUT.should_receive(:puts).once.with :bla
-        STDOUT.should_receive(:flush).once.with
-
-        object.exclaim :bla
-      end
-    end
+    #
+    #
+    # describe "exclaim" do
+    #   it "delegates to puts" do
+    #     STDOUT.should_receive(:puts).once.with :bla
+    #     STDOUT.should_receive(:flush).once.with
+    #
+    #     object.exclaim :bla
+    #   end
+    # end
 
     describe "timed_exclaim" do
       it "should exclaim right" do
