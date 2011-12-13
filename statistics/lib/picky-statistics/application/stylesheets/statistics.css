@@ -5,44 +5,21 @@ body {
 
 h1, h2, h3, h4 {
   font-weight: normal;
-  margin: 0.5em 0em 0.5em; 
+  margin: 0.5em 0em 0.5em;
 }
 h1 { font-size: 1.3em; }
 h2 { font-size: 1.2em; }
 h3 { font-size: 1.1em; }
 h4 { font-size: 1.1em; }
 
-.push {
-  overflow: hidden;
-}
-
 .actions {
   padding: 5px;
 }
 
 .stats {
-  float: left;
   padding: 10px;
-  width: 200px;
-  height: 270px;
 }
 
-.legend {
-  clear: both;
-  margin-top: 10px;
-}
-.legend .color {
-  float: left;
-  width: 0.8em;
-  height: 0.8em;
-  color: green;
-  margin: 3px 0px 1px 3px;
-}
-.legend .text {
-  float: left;
-  font-size: 0.8em;
-  margin: 0px 5px;
-}
 .legend .color.green { background-color: #6c0; }
 .legend .color.darkgreen { background-color: #690; }
 .legend .color.browngreen { background-color: #660; }
@@ -52,3 +29,76 @@ h4 { font-size: 1.1em; }
 .legend .color.red { background-color: red; }
 .legend .color.black { background-color: black; }
 .legend .color.grey { background-color: #999; }
+
+.rickshaw_legend ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+.rickshaw_legend .line {
+  clear: both;
+  line-height: 140%;
+  padding-right: 15px;
+}
+
+.rickshaw_legend li {
+  padding: 0 0 0 2px;
+  min-width: 80px;
+  white-space: nowrap;
+  list-style-type: none;
+}
+
+.rickshaw_legend .line .swatch {
+  display: inline-block;
+  margin-right: 3px;
+  border-radius: 2px;
+}
+
+.rickshaw_legend .swatch {
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.rickshaw_graph .detail {
+  pointer-events: none;
+  position: relative;
+  top: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  width: 1px;
+  transition: opacity 0.25s linear;
+  -moz-transition: opacity 0.25s linear;
+  -o-transition: opacity 0.25s linear;
+  -webkit-transition: opacity 0.25s linear;
+}
+
+.rickshaw_graph .detail .item {
+  position: absolute;
+  z-index: 2;
+  border-radius: 3px;
+  padding: 0.25em;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  margin-left: 1em;
+  margin-top: -1em;
+  white-space: nowrap;
+}
+
+
+.rickshaw_graph .detail .x_label {
+  font-family: Arial, sans-serif;
+  border-radius: 3px;
+  padding: 6px;
+  opacity: 0.5;
+  border: 1px solid #E0E0E0;
+  font-size: 12px;
+  position: absolute;
+  background: white;
+  white-space: nowrap;
+}

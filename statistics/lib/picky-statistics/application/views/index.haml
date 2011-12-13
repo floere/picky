@@ -19,27 +19,19 @@
       %button{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(5);' } Update every 5 seconds
       %button{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(30);' } Update every 30 seconds
       %button{ :href => '#', :onclick => 'javascript:updateStatisticsPeriodically(600);' } Update every 5 minutes
-    .overview.push
-      %h2 Overview
+    .overview
       #full_live_graph.stats
+        %h3 Full/Live
         .graph
+        .legend
         %script{ :src => 'javascripts/full_live.js', :type => 'text/javascript' }
-        = haml :legend, {}, :color => :black, :type => :full, :text => 'full requests'
-        = haml :legend, {}, :color => :grey, :type => :live, :text => 'live requests'
-        = haml :legend, {}, :color => :white, :type => :total, :text => 'total'
-    .full.push
-      %h2 Full Results
+    .full
       #results_graph.stats
         %h3 Counts
         .graph
+        .legend
         %script{ :src => 'javascripts/results.js', :type => 'text/javascript' }
-        = haml :legend, {}, :color => :green, :type => :result1, :text => 'x 1 result'
-        = haml :legend, {}, :color => :darkgreen, :type => :result2, :text => 'x 2 results'
-        = haml :legend, {}, :color => :browngreen, :type => :result3, :text => 'x 3 results'
-        = haml :legend, {}, :color => :brownorange, :type => :result4plus, :text => 'x 4 or more results'
-        = haml :legend, {}, :color => :orange, :type => :result100plus, :text => 'x 100 or more results'
-        = haml :legend, {}, :color => :brownred, :type => :result1000plus, :text => 'x 1000 or more results'
-        = haml :legend, {}, :color => :red, :type => :result0, :text => 'x no results'
+    .full
       #speed_graph.stats
         %h3 Performance
         .inlinesparkline
@@ -47,6 +39,7 @@
         = haml :legend, {}, :color => :darkgreen, :type => :normal, :text => 'normal'
         = haml :legend, {}, :color => :orange, :type => :slow, :text => 'slow (> 0.1s)'
         = haml :legend, {}, :color => :red, :type => :very_slow, :text => 'very slow (> 1s)'
+    .full
       #offset_graph.stats
         %h3 Offsets
         .inlinesparkline
