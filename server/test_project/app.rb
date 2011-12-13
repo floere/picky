@@ -401,4 +401,12 @@ class BookSearch < Sinatra::Application
     all_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
 
+  # Live.
+  #
+  live = Picky::Interfaces::LiveParameters::Unicorn.new
+  get %r{\A/admin\z} do
+    results = live.parameters params
+    results.to_json
+  end
+
 end

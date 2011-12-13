@@ -1,4 +1,4 @@
-Picky::Loader.load_application
+require File.expand_path '../app', __FILE__
 
 # Load all indexes.
 #
