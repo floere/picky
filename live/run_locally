@@ -1,4 +1,4 @@
-#!/Users/admin/.rvm/rubies/ruby-1.9.2-p136/bin/ruby
+#!/Users/admin/.rbenv/versions/1.9.3-p0/bin/ruby
 #
 $:.unshift File.expand_path('../lib', __FILE__)
 require 'picky-live/application/app'
