@@ -31,37 +31,12 @@ module Picky
     # Saves the indexes in a dump file.
     #
     def dump
-      dump_inverted
-      dump_similarity
-      dump_weights
-      dump_configuration
-      dump_realtime
-    end
-    # Dumps the core index.
-    #
-    def dump_inverted
       @backend_inverted.dump @inverted
-    end
-    # Dumps the weights index.
-    #
-    def dump_weights
       # THINK about this. Perhaps the strategies should implement the backend methods? Or only the internal index ones?
       #
       @backend_weights.dump @weights if @weight_strategy.saved?
-    end
-    # Dumps the similarity index.
-    #
-    def dump_similarity
       @backend_similarity.dump @similarity if @similarity_strategy.saved?
-    end
-    # Dumps the configuration.
-    #
-    def dump_configuration
       @backend_configuration.dump @configuration
-    end
-    # Dumps the realtime.
-    #
-    def dump_realtime
       @backend_realtime.dump @realtime
     end
 

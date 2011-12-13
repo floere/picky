@@ -31,11 +31,6 @@ module Picky
                   :configuration,
                   :realtime,
 
-                  :backend_inverted,
-                  :backend_weights,
-                  :backend_similarity,
-                  :backend_configuration,
-
                   :weight_strategy,
                   :partial_strategy,
                   :similarity_strategy
@@ -78,11 +73,16 @@ module Picky
       @backend_configuration,
       @backend_realtime = backend.reset self
 
-      # Initial indexes.
-      #
-      # Note that if the weights strategy doesn't need to be saved,
-      # the strategy itself pretends to be an index.
-      #
+      initialize_backends
+    end
+
+    # Initial indexes.
+    #
+    # Note that if the weights strategy doesn't need to be saved,
+    # the strategy itself pretends to be an index.
+    #
+    def initialize_backends
+      # @inverted, @weights, @similarity, @configuration, @realtime = backend.initial weight_strategy
       @inverted      = @backend_inverted.initial
       # TODO @weights = @weight_strategy.initial || @backend_weights.initial
       #
@@ -96,28 +96,25 @@ module Picky
     # internal backend instance.
     #
     def empty
-      empty_inverted
-      empty_weights
-      empty_similarity
-      empty_configuration
-      empty_realtime
-    end
-    def empty_inverted
       @inverted = @backend_inverted.empty
-    end
-    def empty_weights
       # THINK about this. Perhaps the strategies should implement the backend methods?
       #
-      @weights = @weight_strategy.saved?? @backend_weights.empty : @weight_strategy
-    end
-    def empty_similarity
+      @weights = @weight_strategy.saved? ? @backend_weights.empty : @weight_strategy
       @similarity = @backend_similarity.empty
-    end
-    def empty_configuration
       @configuration = @backend_configuration.empty
-    end
-    def empty_realtime
       @realtime = @backend_realtime.empty
+    end
+
+    # Delete all index files.
+    #
+    def delete
+      @backend_inverted.delete       if @backend_inverted.respond_to? :delete
+      # THINK about this. Perhaps the strategies should implement the backend methods?
+      #
+      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.saved?
+      @backend_similarity.delete     if @backend_similarity.respond_to? :delete
+      @backend_configuration.delete  if @backend_configuration.respond_to? :delete
+      @backend_realtime.delete  if @backend_realtime.respond_to? :delete
     end
 
     # Get a list of similar texts.
@@ -156,18 +153,6 @@ module Picky
     #
     def index_path type = nil
       ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
-    end
-
-    # Delete all index files.
-    #
-    def delete
-      @backend_inverted.delete       if @backend_inverted.respond_to? :delete
-      # THINK about this. Perhaps the strategies should implement the backend methods?
-      #
-      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.saved?
-      @backend_similarity.delete     if @backend_similarity.respond_to? :delete
-      @backend_configuration.delete  if @backend_configuration.respond_to? :delete
-      @backend_realtime.delete  if @backend_realtime.respond_to? :delete
     end
 
     def to_s
