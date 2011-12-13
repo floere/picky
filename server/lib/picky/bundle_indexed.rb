@@ -25,6 +25,22 @@ module Picky
     #
     def ids sym_or_string
       @inverted[sym_or_string] || []
+      # TODO ?
+      #
+      # p key_format
+      # if @key_format
+      #   class << self
+      #     def ids
+      #       (@inverted[sym_or_string] || []).map &@key_format
+      #     end
+      #   end
+      # else
+      #   class << self
+      #     def ids
+      #       @inverted[sym_or_string] || []
+      #     end
+      #   end
+      # end
     end
 
     # Get a weight for the given symbol.
@@ -64,7 +80,7 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      # THINK about this. Perhaps the strategies should implement the backend methods?
+      # TODO @weights = @weights_strategy.load || @backend_weights.load
       #
       self.weights = @backend_weights.load if @weights_strategy.saved?
     end

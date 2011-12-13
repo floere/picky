@@ -84,6 +84,8 @@ module Picky
       # the strategy itself pretends to be an index.
       #
       @inverted      = @backend_inverted.initial
+      # TODO @weights = @weights_strategy.initial || @backend_weights.initial
+      #
       @weights       = @weights_strategy.saved?? @backend_weights.initial : @weights_strategy
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
