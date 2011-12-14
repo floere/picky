@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.0.0pre4
+
+* hanke: (statistics) Overhauled statistics interface. Use @picky statistics log/search.log@ to start it.
+
 h2. Version 4.0.0pre3
 
 * hanke: (server) BREAKING Reverting customizeable backends from version 3.3.2. They are no longer available. Please use simple subclassing to achieve funky backends.
