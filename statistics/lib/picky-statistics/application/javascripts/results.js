@@ -5,21 +5,17 @@ function addOne(ary, thing) {
   }
 }
 
-function add(data, r1, r2, r3, r4, r100, r1000, r0) {
-  var total = r1 + r2 + r3 + r4 + r100 + r1000 + r0;
+function add(data, params) {
+  for(var i=0,total=0;i<params.length;total+=params[i++]);
   if (total > 0) {
-    addOne(data[0], r1/total);
-    addOne(data[1], r2/total);
-    addOne(data[2], r3/total);
-    addOne(data[3], r4/total);
-    addOne(data[4], r100/total);
-    addOne(data[5], r1000/total);
-    addOne(data[6], r0/total);
+    for (i = 0; i < params.length; i++) {
+      addOne(data[i], params[i]/total);
+    }
   }
 }
 
 var data = [ [], [], [], [], [], [], [] ];
-add(data, 1, 1, 1, 1, 1, 1, 1);
+add(data, [1, 1, 1, 1, 1, 1, 1]);
 
 var palette = new Rickshaw.Color.Palette( { scheme: 'spectrum2000' } );
 
@@ -85,6 +81,6 @@ new Rickshaw.Graph.Behavior.Series.Highlight( {
 // });
 
 updateNewResults = function(r1, r2, r3, r4, r100, r1000, r0) {
-  add(data, r1, r2, r3, r4, r100, r1000, r0);
+  add(data, [r1, r2, r3, r4, r100, r1000, r0]);
   graph.update();
 };

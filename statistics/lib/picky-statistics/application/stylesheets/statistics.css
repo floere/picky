@@ -12,23 +12,24 @@ h2 { font-size: 1.2em; }
 h3 { font-size: 1.1em; }
 h4 { font-size: 1.1em; }
 
+input {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
 .actions {
   padding: 5px;
+  font-size: 0.8em;
 }
 
 .stats {
   padding: 10px;
+  clear: both;
 }
 
-.legend .color.green { background-color: #6c0; }
-.legend .color.darkgreen { background-color: #690; }
-.legend .color.browngreen { background-color: #660; }
-.legend .color.brownorange { background-color: #960; }
-.legend .color.orange { background-color: #f90; }
-.legend .color.brownred { background-color: #f93; }
-.legend .color.red { background-color: red; }
-.legend .color.black { background-color: black; }
-.legend .color.grey { background-color: #999; }
+.rickshaw_legend {
+  float: left;
+}
 
 .rickshaw_legend ul {
   padding: 0px;
@@ -58,6 +59,11 @@ h4 { font-size: 1.1em; }
   width: 10px;
   height: 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.rickshaw_graph {
+  float: left;
+  margin-right: 20px;
 }
 
 .rickshaw_graph .detail {

@@ -1,32 +1,17 @@
-// TODO Refactor the file.
-//
-
-var pieOptions = {
-  type: 'pie',
-  width: '100px',
-  height: '100px',
-  offset: -90
-};
+var fullLiveGraph = new Graph('#full_live_graph.stats', ['Full', 'Live'], 4);
+var resultsGraph  = new Graph('#results_graph.stats', ['1 result', '2 results', '3 results', '4 or more results', '100 or more results', '1000 or more results', 'no results'], 7);
+var speedGraph  = new Graph('#speed_graph.stats', ['quick (< 0.001s)', 'normal', 'slow (> 0.1s)', 'very slow (> 1s)'], 10);
+var offsetsGraph  = new Graph('#offset_graph.stats', ['with offset', 'without offset'], 3);
 
 function updateFullLive(data) {
-  // var values = [
-  //   data["full"]["total"],
-  //   data["live"]["total"]
-  // ];
-  // pieOptions['sliceColors'] = ['#000000','#999999'];
-  // $('#full_live_graph .inlinesparkline').sparkline(values, pieOptions);
-  // $('#full_live_graph .legend .full').html(data["full"]["total"]);
-  // $('#full_live_graph .legend .live').html(data["live"]["total"]);
-  // $('#full_live_graph .legend .total').html(parseInt(data["full"]["total"], 10) + parseInt(data["live"]["total"], 10));
-  
-  updateNewFullLive(
+  fullLiveGraph.update([
     parseInt(data["full"]["total"], 10),
     parseInt(data["live"]["total"], 10)
-  );
+  ]);
 };
 
 function updateResults(data) {
-  updateNewResults(
+  resultsGraph.update([
     parseInt(data["full"]["totals"][1], 10),
     parseInt(data["full"]["totals"][2], 10),
     parseInt(data["full"]["totals"][3], 10),
@@ -34,22 +19,7 @@ function updateResults(data) {
     parseInt(data["full"]["totals"]['100+'], 10),
     parseInt(data["full"]["totals"]['1000+'], 10),
     parseInt(data["full"]["totals"][0], 10)
-  );
-};
-
-function updateOffset(data) {
-  var withOffset    = parseInt(data["full"]["offset"], 10);
-  var total         = parseInt(data["full"]["total"], 10);
-  var withoutOffset = total - withOffset;
-  
-  var values = [
-    withOffset,
-    withoutOffset
-  ];
-  pieOptions['sliceColors'] = ['#000000','#999999'];
-  $('#offset_graph .inlinesparkline').sparkline(values, pieOptions);
-  $('#offset_graph .legend .with_offset').html(withOffset);
-  $('#offset_graph .legend .without_offset').html(withoutOffset);
+  ]);
 };
 
 function updateSpeed(data) {
@@ -58,14 +28,23 @@ function updateSpeed(data) {
   var long_running = parseInt(data["full"]["long_running"], 10);
   var very_long_running = parseInt(data["full"]["very_long_running"], 10);
   
-  var values = [
+  speedGraph.update([
     quick,
     (total - quick - long_running - very_long_running),
     long_running,
     very_long_running
-  ];
-  pieOptions['sliceColors'] = ['#66CC00','#669900','#FF9900','#CC0000'];
-  $('#speed_graph .inlinesparkline').sparkline(values, pieOptions);
+  ]);
+};
+
+function updateOffset(data) {
+  var withOffset    = parseInt(data["full"]["offset"], 10);
+  var total         = parseInt(data["full"]["total"], 10);
+  var withoutOffset = total - withOffset;
+  
+  offsetsGraph.update([
+    withOffset,
+    withoutOffset
+  ]);
 };
 
 var intervalUpdating = false;
