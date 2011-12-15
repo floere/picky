@@ -2,7 +2,7 @@ offsets = [0, 20]
 queries = %w|t te tes test testi tests|
 ids     = [0, 20]
 
-10_000.times do
+1000.times do
   offset = offsets[rand(offsets.size)]
   query  = queries[rand(queries.size)]
   id     = ids[rand(ids.size)]
