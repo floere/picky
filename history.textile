@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.0.0pre5
+
+* hanke: (statistics) Only use 0.01s for checking the log file instead of 0.1.
+
 h2. Version 4.0.0pre4
 
 * hanke: (statistics) Overhauled statistics interface. Use @picky statistics log/search.log@ to start it.

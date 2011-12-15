@@ -15,9 +15,11 @@
       %button{ :href => '#', :onclick => 'javascript:updateStatistics();' } Update now
       |
       %input{ :type => "radio", :name => "updating", :onclick => 'javascript:stopUpdatingStatistics();' } Don't update
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(5);', :checked => 'checked' } Update every 5 seconds
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(30);'} Update every 30 seconds
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(600);'} Update every 5 minutes
+      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(1);' } Every second
+      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(3);', :checked => 'checked' } Every 3 seconds
+      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(10);' } Every 10 seconds
+      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(30);'} Every 30 seconds
+      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(600);'} Every 5 minutes
     #full_live_graph.stats
       %h3 Full/Live
       .graph
@@ -37,4 +39,4 @@
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
   :javascript
     updateStatistics();
-    updateStatisticsPeriodically(5);
+    updateStatisticsPeriodically(3);
