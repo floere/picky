@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+* hanke: Ready for 4.0.0.
+
+h2. Version 4.0.0pre6
+
+* hanke: (server) Similarity API fixed.
+
 h2. Version 4.0.0pre5
 
 * hanke: (statistics) Only use 0.01s for checking the log file instead of 0.1.

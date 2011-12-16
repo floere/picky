@@ -143,6 +143,11 @@ def run_server_speed_tests
   end
 end
 
+def run_statistics
+  # system "picky stats sandbox/server/log/search.log &"
+  # system "open -a 'Google Chrome' http://localhost:4567/"
+end
+
 def kill_server
   puts "Killing server (if there)"
   system "ps ax | grep 'unicorn -c unicorn.rb' | awk '{print $1}' | xargs kill"
@@ -204,6 +209,8 @@ begin
 
   run_search_requests_on_client
   open_client_in_browser
+
+  run_statistics
 
   kill_server
   delete_server_directory
