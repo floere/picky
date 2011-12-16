@@ -130,7 +130,8 @@ module Picky
           }
         end
 
-        # TODO Move to Interface object.
+        # THINK What to do about this? Standardize the tokenizer interface,
+        # then access each individual tokenizer.
         #
         def querying_removes_characters
           regexp = Tokenizer.searching.instance_variable_get :@removes_characters_regexp

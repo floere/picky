@@ -18,6 +18,15 @@ module Picky
           end
         end
 
+        # Size of the list(s).
+        #
+        def size
+          redis_key = "#{namespace}:*"
+          client.keys(redis_key).inject(0) do |total, key|
+            total + client.zcard(key)
+          end
+        end
+
         # Deletes the list for the key.
         #
         def delete key

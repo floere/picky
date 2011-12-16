@@ -91,11 +91,8 @@ module Picky
     # the strategy itself pretends to be an index.
     #
     def initialize_backends
-      # @inverted, @weights, @similarity, @configuration, @realtime = backend.initial weight_strategy
       @inverted      = @backend_inverted.initial
-      # TODO @weights = @weight_strategy.initial || @backend_weights.initial
-      #
-      @weights       = @weight_strategy.saved?? @backend_weights.initial : @weight_strategy
+      @weights       = @weight_strategy.saved? ? @backend_weights.initial : @weight_strategy
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
       @realtime      = @backend_realtime.initial
@@ -106,8 +103,6 @@ module Picky
     #
     def empty
       @inverted = @backend_inverted.empty
-      # THINK about this. Perhaps the strategies should implement the backend methods?
-      #
       @weights = @weight_strategy.saved? ? @backend_weights.empty : @weight_strategy
       @similarity = @backend_similarity.empty
       @configuration = @backend_configuration.empty

@@ -12,6 +12,12 @@ module Picky
           client.del namespace
         end
 
+        # Returns the size of the hash.
+        #
+        def size
+          client.hlen namespace
+        end
+
         # Deletes the single value.
         #
         def delete key

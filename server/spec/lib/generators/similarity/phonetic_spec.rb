@@ -21,13 +21,13 @@ describe Picky::Generators::Similarity::Phonetic do
     instance.send :initialize
   end
 
-  describe 'prioritize!' do
+  describe 'prioritize' do
     let(:phonetic) { described_class.allocate }
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 2
 
       ary = [:a, :b, :c]
-      phonetic.prioritize! ary, :b
+      phonetic.prioritize ary, :b
 
       ary.should == [:b, :a]
     end
@@ -35,7 +35,7 @@ describe Picky::Generators::Similarity::Phonetic do
       phonetic.instance_variable_set :@amount, 2
 
       ary = [:aaa, :aa, :aaaa]
-      phonetic.prioritize! ary, :aaa
+      phonetic.prioritize ary, :aaa
 
       ary.should == [:aaa, :aa]
     end
@@ -43,7 +43,7 @@ describe Picky::Generators::Similarity::Phonetic do
       phonetic.instance_variable_set :@amount, 3
 
       ary = [:aaa, :aa, :aaaa]
-      phonetic.prioritize! ary, :aaa
+      phonetic.prioritize ary, :aaa
 
       ary.should == [:aaa, :aa, :aaaa]
     end
@@ -51,7 +51,7 @@ describe Picky::Generators::Similarity::Phonetic do
       phonetic.instance_variable_set :@amount, 3
 
       ary = [:aaaaa, :aa, :aaaa]
-      phonetic.prioritize! ary, :aaa
+      phonetic.prioritize ary, :aaa
 
       ary.should == [:aaaa, :aa, :aaaaa]
     end
@@ -59,7 +59,7 @@ describe Picky::Generators::Similarity::Phonetic do
       phonetic.instance_variable_set :@amount, 3
 
       ary = [:aaaaa, :aa]
-      phonetic.prioritize! ary, :aaa
+      phonetic.prioritize ary, :aaa
 
       ary.should == [:aa, :aaaaa]
     end
@@ -67,7 +67,15 @@ describe Picky::Generators::Similarity::Phonetic do
       phonetic.instance_variable_set :@amount, 3
 
       ary = [:aaa]
-      phonetic.prioritize! ary, :aaa
+      phonetic.prioritize ary, :aaa
+
+      ary.should == [:aaa]
+    end
+    it 'sorts correctly' do
+      phonetic.instance_variable_set :@amount, 1
+
+      ary = [:a, :aa, :aaa]
+      phonetic.prioritize ary, :aaa
 
       ary.should == [:aaa]
     end

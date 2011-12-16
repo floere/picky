@@ -16,13 +16,16 @@ module Picky
     #  * partial: Partial::None.new, Partial::Substring.new(from:start_char, to:up_to_char) (defaults from:-3, to:-1)
     #  * similarity: Similarity::None.new (default), Similarity::DoubleMetaphone.new(amount_of_similarly_linked_words)
     #  * from: The source category identifier to take the data from.
+    #  * key_format: What this category's keys are formatted with (default is :to_i)
+    #  * backend: The backend to use. Default is Backends::Memory.new.
+    #  Other options are: Backends::Redis.new, Backends::SQLite.new, Backends::File.new.
+    #  * qualifiers: Which qualifiers can be used to predefine the category. E.g. "title:bla".
     #
     # Advanced Options:
-    #  * source: Use if the category should use a different source.
-    #  * weights: Query::Weights.new( [:category1, :category2] => +2, ... )
+    #  * weight: Query::Weights.new( [:category1, :category2] => +2, ... )
     #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
-    #  * key_format: What this category's keys are formatted with (default is :to_i)
     #  * use_symbols: Whether to use symbols internally instead of strings.
+    #  * source: Use if the category should use a different source.
     #
     def initialize name, index, options = {}
       @name  = name

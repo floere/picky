@@ -40,6 +40,7 @@ class Analyzer # :nodoc:all
   end
   def cardinality identifier, index
     return if index.size.zero?
+    return unless index.respond_to?(:each_pair)
 
     key_length_average = 0
     ids_length_average = 0
@@ -49,7 +50,7 @@ class Analyzer # :nodoc:all
     min_key_length = 1.0/0 # Infinity
     max_key_length =     0
 
-    key_size, ids_size =
+    key_size, ids_size = 0, 0
     index.each_pair do |key, ids|
       key_size = key.size
       if key_size < min_key_length
@@ -91,7 +92,8 @@ class Analyzer # :nodoc:all
     end
   end
   def weights index
-    return if index.size.zero?
+    return if !index.respond_to?(:size) || index.size.zero?
+    return unless index.respond_to?(:each_pair)
 
     min_weight = 1.0/0 # Infinity
     max_weight =   0.0
@@ -131,11 +133,11 @@ class Analyzer # :nodoc:all
   end
   def index_to_s
     return if analysis[:__keys].zero?
-    [
-      "index key cardinality:                #{"%10d" % analysis[:__keys]}",
-      "index key length range (avg):         #{"%10s" % analysis[:index][:key_length]} (#{analysis[:index][:key_length_average].round(2)})",
-      "index ids per key length range (avg): #{"%10s" % analysis[:index][:ids_length]} (#{analysis[:index][:ids_length_average].round(2)})"
-    ].join("\n")
+    ary = ["index key cardinality:                #{"%10d" % analysis[:__keys]}"]
+    return ary.join "\n" unless analysis[:index]
+    ary << "index key length range (avg):         #{"%10s" % analysis[:index][:key_length]} (#{analysis[:index][:key_length_average].round(2)})"
+    ary << "index ids per key length range (avg): #{"%10s" % analysis[:index][:ids_length]} (#{analysis[:index][:ids_length_average].round(2)})"
+    ary.join "\n"
   end
   def weights_to_s
     return unless analysis[:weights]

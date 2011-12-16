@@ -40,6 +40,12 @@ module Picky
           self.mapping.clear
         end
 
+        # Size of the index is equal to the mapping size.
+        #
+        def size
+          self.mapping.size
+        end
+
         # Loads the mapping hash from json format.
         #
         def load

@@ -10,6 +10,11 @@ module Picky
           db.execute 'create table key_value (key varchar(255), value text);'
         end
 
+        def size
+          result = db.execute 'SELECT COUNT(*) FROM key_value'
+          result.first.first.to_i
+        end
+
         def []= key, array
           unless array.empty?
             db.execute 'INSERT OR REPLACE INTO key_value (key,value) VALUES (?,?)',

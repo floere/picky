@@ -74,6 +74,8 @@ module Picky
         #
         similars.delete str_or_sym if similars.include? str_or_sym
         similars << str_or_sym
+
+        self.similarity_strategy.prioritize similars, str_or_sym
       end
     end
 

@@ -25,7 +25,7 @@ module Picky
     #
     def ids sym_or_string
       @inverted[sym_or_string] || []
-      # TODO ?
+      # THINK Place the key_format conversion here – or move into the backend?
       #
       # if @key_format
       #   class << self
@@ -79,8 +79,6 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      # TODO @weights = @weight_strategy.load || @backend_weights.load
-      #
       self.weights = @backend_weights.load if @weight_strategy.saved?
     end
     # Loads the similarity index.
