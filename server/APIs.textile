@@ -65,6 +65,7 @@ h2. Similarity
 Has methods
 
 * @encoded(token)@ => @encoded token@
+* @prioritize(similar_encoded_array, encoded)@ (Gives your similarity a chance to lop off superfluous similars and reorder the array)
 
 Accepted as option @similarity@ for the @category@.
 
