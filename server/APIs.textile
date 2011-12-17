@@ -75,6 +75,14 @@ Has methods
 
 * @Picky::Search#search(text, ids = 20, offset = 0)@ => @Picky::Results@ (an instance)
 
+h2. Search option boost
+
+Hash methods
+
+* @weight_for(array_of_category_names)@ => @float@ (A negative or positive weight)
+
+Accepted as parameter for the @boost@ method in a @Search.new@ block.
+
 h2. Results
 
 Has methods

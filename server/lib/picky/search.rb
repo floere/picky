@@ -87,7 +87,7 @@ module Picky
     # Note: When using the Picky interface, do not terminate too
     # early as this will kill off the allocation selections.
     # A value of
-    #    early_terminate 5
+    #    terminate_early 5
     # is probably a good idea to show the user 5 extra
     # beyond the needed ones.
     #
