@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.0.0
+
+* hanke: No changes from 4.0.0pre7.
+
 h2. Version 4.0.0pre7
 
 * hanke: (server) BREAKING The @tokenizer@ option for a category has been renamed to @indexing@, to conform with the methods for the index and the sinatra app.

@@ -83,6 +83,8 @@ Hash methods
 
 Accepted as parameter for the @boost@ method in a @Search.new@ block.
 
+h1. Other
+
 h2. Results
 
 Has methods
