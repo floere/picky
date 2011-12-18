@@ -92,7 +92,7 @@ module Picky
     #
     def initialize_backends
       @inverted      = @backend_inverted.initial
-      @weights       = @weight_strategy.saved? ? @backend_weights.initial : @weight_strategy
+      @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.initial
       @similarity    = @backend_similarity.initial
       @configuration = @backend_configuration.initial
       @realtime      = @backend_realtime.initial
@@ -102,11 +102,11 @@ module Picky
     # internal backend instance.
     #
     def empty
-      @inverted = @backend_inverted.empty
-      @weights = @weight_strategy.saved? ? @backend_weights.empty : @weight_strategy
-      @similarity = @backend_similarity.empty
+      @inverted      = @backend_inverted.empty
+      @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.empty
+      @similarity    = @backend_similarity.empty
       @configuration = @backend_configuration.empty
-      @realtime = @backend_realtime.empty
+      @realtime      = @backend_realtime.empty
     end
 
     # Delete all index files.
@@ -115,10 +115,10 @@ module Picky
       @backend_inverted.delete       if @backend_inverted.respond_to? :delete
       # THINK about this. Perhaps the strategies should implement the backend methods?
       #
-      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.saved?
+      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.respond_to?(:saved?) && @weight_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
-      @backend_realtime.delete  if @backend_realtime.respond_to? :delete
+      @backend_realtime.delete       if @backend_realtime.respond_to? :delete
     end
 
     # Get a list of similar texts.

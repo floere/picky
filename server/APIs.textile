@@ -22,7 +22,7 @@ h2. CharacterSubstituter (Picky::API::Tokenizer::CharacterSubstituter)
 
 Has methods
 
-* @substitute(text)@ => @new text@ (with characters replaced)
+* @substitute(text)@ => @substituted_text@ (with characters replaced)
 
 Accepted as
 
@@ -77,9 +77,9 @@ Has methods
 
 h2. Search option boost (Picky::API::Search::Boosts)
 
-Hash methods
+Has methods
 
-* @weight_for(array_of_category_names)@ => @float@ (A negative or positive weight)
+* @boost_for(array_of_combinations)@ => @float@ (A negative or positive weight)
 
 Accepted as parameter for the @boost@ method in a @Search.new@ block.
 

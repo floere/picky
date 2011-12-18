@@ -79,12 +79,12 @@ module Picky
     # Loads the weights index.
     #
     def load_weights
-      self.weights = @backend_weights.load if @weight_strategy.saved?
+      self.weights = @backend_weights.load unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
     end
     # Loads the similarity index.
     #
     def load_similarity
-      self.similarity = @backend_similarity.load if @similarity_strategy.saved?
+      self.similarity = @backend_similarity.load unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
     end
     # Loads the configuration.
     #

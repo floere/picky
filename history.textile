@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.0.1
+
+* hanke: (server) Customized @weight@ and @similarity@ do not need the @saved?@ method anymore.
+
 h2. Version 4.0.0
 
 * hanke: No changes from 4.0.0pre7.

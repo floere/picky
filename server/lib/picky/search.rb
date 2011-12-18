@@ -19,7 +19,8 @@ module Picky
 
     include Helpers::Measuring
 
-    attr_reader   :indexes
+    attr_reader :indexes,
+                :ignore_unassigned
     attr_accessor :tokenizer,
                   :boosts
 
@@ -44,7 +45,6 @@ module Picky
 
       @tokenizer ||= Tokenizer.searching # THINK Not dynamic. Ok?
       @boosts    ||= Query::Boosts.new
-      @ignore_unassigned = false if @ignore_unassigned.nil?
 
       self
     end
@@ -156,14 +156,14 @@ module Picky
     #
     # Example:
     #   search = Search.new(books_index, dvd_index, mp3_index) do
-    #     ignore_unassigned_tokens true
+    #     ignore_unassigned_tokens
     #   end
     #
-    # With this set to true, if in "Peter Flunder", "Flunder"
+    # With this set (to true), if in "Peter Flunder", "Flunder"
     # couldn't be assigned to any category, it will simply be
     # ignored. This is done for each categorization.
     #
-    def ignore_unassigned_tokens value
+    def ignore_unassigned_tokens value = true
       @ignore_unassigned = value
     end
 

@@ -111,6 +111,39 @@ describe Picky::Search do
     end
   end
 
+  describe 'ignore_unassigned_tokens' do
+    let(:search) { described_class.new @index }
+    context 'by default' do
+      it 'is falsy' do
+        search.ignore_unassigned.should be_false
+      end
+    end
+    context 'set to nothing' do
+      before(:each) do
+        search.ignore_unassigned_tokens
+      end
+      it 'is truey' do
+        search.ignore_unassigned.should be_true
+      end
+    end
+    context 'set to true' do
+      before(:each) do
+        search.ignore_unassigned_tokens true
+      end
+      it 'is truey' do
+        search.ignore_unassigned.should be_true
+      end
+    end
+    context 'set to false' do
+      before(:each) do
+        search.ignore_unassigned_tokens false
+      end
+      it 'is falsy' do
+        search.ignore_unassigned.should be_false
+      end
+    end
+  end
+
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
