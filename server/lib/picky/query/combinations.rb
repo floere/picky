@@ -28,8 +28,8 @@ module Picky
       def score
         @combinations.sum &:weight
       end
-      def weighted_score weights
-        weights.score_for @combinations
+      def boost_for weights
+        weights.boost_for @combinations
       end
 
       # Filters the tokens and categories such that categories

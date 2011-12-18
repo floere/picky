@@ -40,7 +40,7 @@ module Picky
           0
         else
           @backend.weight(@combinations) +
-            @combinations.weighted_score(weights)
+            @combinations.boost_for(weights)
         end
       end
 

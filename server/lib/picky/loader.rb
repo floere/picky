@@ -175,7 +175,7 @@ module Picky
 
         load_relative 'query/qualifier_category_mapper'
 
-        load_relative 'query/weights'
+        load_relative 'query/boosts'
 
         load_relative 'query/indexes'
         load_relative 'query/indexes_check'
@@ -191,6 +191,7 @@ module Picky
         load_relative 'api/category/weight'
         load_relative 'api/category/partial'
         load_relative 'api/category/similarity'
+        load_relative 'api/search/boost'
 
         # Tokenizer.
         #

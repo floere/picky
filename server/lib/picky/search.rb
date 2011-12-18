@@ -15,6 +15,8 @@ module Picky
   #
   class Search
 
+    include API::Search::Boost
+
     include Helpers::Measuring
 
     attr_reader   :indexes
@@ -41,7 +43,7 @@ module Picky
       instance_eval(&Proc.new) if block_given?
 
       @tokenizer ||= Tokenizer.searching # THINK Not dynamic. Ok?
-      @weights   ||= Query::Weights.new
+      @boosts    ||= Query::Boosts.new
       @ignore_unassigned = false if @ignore_unassigned.nil?
 
       self
@@ -125,21 +127,17 @@ module Picky
     #     # and return a number that is
     #     # added to the weight.
     #     #
-    #     def score_for combinations
+    #     def boost_for combinations
     #       rand
     #     end
     #   end.new
     #
     #   search = Search.new(books_index, dvd_index, mp3_index) do
-    #     boost my_weights
+    #     boost my_boosts
     #   end
     #
-    def boost weights
-      @weights = if weights.respond_to?(:score_for)
-        weights
-      else
-        Query::Weights.new weights
-      end
+    def boost boosts
+      @boosts = extract_boosts boosts
     end
 
     # Ignore the given token if it cannot be matched to a category.
@@ -234,7 +232,7 @@ module Picky
       s = "#{self.class}("
       ary = []
       ary << @indexes.indexes.map(&:name).join(', ') unless @indexes.indexes.empty?
-      ary << "weights: #{@weights}" if @weights
+      ary << "boosts: #{@boosts}" if @boosts
       s << ary.join(', ')
       s << ")"
       s

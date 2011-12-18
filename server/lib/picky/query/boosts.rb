@@ -2,7 +2,7 @@ module Picky
 
   module Query
 
-    # Calculates scores/weights for combinations.
+    # Calculates boosts for combinations.
     #
     # Example:
     #   Someone searches for peter fish.
@@ -11,34 +11,34 @@ module Picky
     #   and
     #     [:name, :surname]
     #
-    # This class is concerned with calculating scores
+    # This class is concerned with calculating boosts
     # for the category combinations.
     #
     # Implement either
-    #   #score_for(combinations)
+    #   #boost_for(combinations)
     # or
-    #   #weight_for(category_names) # Subclass this class for this.
+    #   #boost_for_categories(category_names) # Subclass this class for this.
     #
-    # And return a weight.
+    # And return a boost (float).
     #
-    class Weights
+    class Boosts
 
-      attr_reader :weights
+      attr_reader :boosts
 
       delegate :empty?,
-               :to => :weights
+               :to => :boosts
 
       # Needs a Hash of
       #   [:category_name1, :category_name2] => +3
       # (some positive or negative weight)
       #
-      def initialize weights = {}
-        @weights = weights
+      def initialize boosts = {}
+        @boosts = boosts
       end
 
       # API.
       #
-      # Get the weight for an array of category names.
+      # Get the boost for an array of category names.
       #
       # Example:
       #   [:name, :height, :color] returns +3, but
@@ -47,8 +47,8 @@ module Picky
       # Note: Use Array#clustered_uniq_fast to make
       #       [:a, :a, :b, :a] => [:a, :b, :a]
       #
-      def weight_for category_names
-        @weights[category_names.clustered_uniq_fast] || 0
+      def boost_for_categories names
+        @boosts[names.clustered_uniq_fast] || 0
       end
 
       # API.
@@ -60,22 +60,22 @@ module Picky
       # Note: Cache this if more complicated weighings become necessary.
       # Note: Maybe make combinations comparable to Symbols?
       #
-      def score_for combinations
-        weight_for combinations.map(&:category_name)
+      def boost_for combinations
+        boost_for_categories combinations.map(&:category_name)
       end
 
       # A Weights instance is == to another if
       # the weights are the same.
       #
       def == other
-        @weights == other.weights
+        @boosts == other.boosts
       end
 
       # Prints out a nice representation of the
       # configured weights.
       #
       def to_s
-        "#{self.class}(#{@weights})"
+        "#{self.class}(#{@boosts})"
       end
 
     end
