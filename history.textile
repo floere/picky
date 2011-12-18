@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.0.2
+
+* hanke: (server) Fix for realtime indexing when using specific options.
+
 h2. Version 4.0.1
 
 * hanke: (server) Customized @weight@ and @similarity@ do not need the @saved?@ method anymore.
