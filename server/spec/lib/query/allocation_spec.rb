@@ -180,9 +180,9 @@ describe Picky::Query::Allocation do
     context 'non-empty combinations' do
       it 'should delegate to backend and combinations' do
         @backend.should_receive(:weight).once.with(@combinations).and_return 1
-        @combinations.should_receive(:weighted_score).once.with(:some_weights).and_return 2
+        @combinations.should_receive(:boost_for).once.with(:some_boosts).and_return 2
 
-        @allocation.calculate_score(:some_weights).should == 3
+        @allocation.calculate_score(:some_boosts).should == 3
       end
     end
     context 'empty combinations' do

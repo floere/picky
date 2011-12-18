@@ -26,10 +26,10 @@ describe Picky::Query::Combinations do
 
   describe "weighted_score" do
     it "uses the weights' score method" do
-      weights = stub :weights
-      weights.should_receive(:score_for).once.with @combinations_ary
+      boosts = stub :boosts
+      boosts.should_receive(:boost_for).once.with @combinations_ary
 
-      @combinations.weighted_score weights
+      @combinations.boost_for boosts
     end
   end
 

@@ -21,7 +21,7 @@ module Picky
 
     attr_reader   :indexes
     attr_accessor :tokenizer,
-                  :weights
+                  :boosts
 
     delegate :ignore,
              :to => :indexes
@@ -29,11 +29,11 @@ module Picky
     # Takes:
     # * A number of indexes
     #
-    # It is also possible to define the tokenizer and weights like so.
+    # It is also possible to define the tokenizer and boosts like so.
     # Example:
     #   search = Search.new(index1, index2, index3) do
     #     searching removes_characters: /[^a-z]/ # etc.
-    #     weights [:author, :title] => +3,
+    #     boosts [:author, :title] => +3,
     #             [:title, :isbn] => +1
     #   end
     #
@@ -119,13 +119,13 @@ module Picky
     #
     # or
     #
-    #   # Explicitly add a random number (0...1) to the weights.
+    #   # Explicitly add a random number (0...1) to the boosts.
     #   #
-    #   my_weights = Class.new do
+    #   my_boosts = Class.new do
     #     # Instance only needs to implement
-    #     #   score_for combinations
+    #     #   boost_for combinations
     #     # and return a number that is
-    #     # added to the weight.
+    #     # added to the score.
     #     #
     #     def boost_for combinations
     #       rand
@@ -223,7 +223,7 @@ module Picky
     # Gets sorted allocations for the tokens.
     #
     def sorted_allocations tokens, amount = nil # :nodoc:
-      indexes.prepared_allocations_for tokens, weights, amount
+      indexes.prepared_allocations_for tokens, boosts, amount
     end
 
     # Display some nice information for the user.

@@ -32,7 +32,7 @@ describe Picky::Search do
       end
     end
     it 'works' do
-      search.weights.should == Picky::Query::Weights.new([:a, :b] => 3, [:c, :d] => -1)
+      search.boosts.should == Picky::Query::Boosts.new([:a, :b] => 3, [:c, :d] => -1)
     end
   end
 
@@ -66,21 +66,21 @@ describe Picky::Search do
 
   end
 
-  describe "weights handling" do
+  describe "boosts handling" do
     it "creates a default weight when no weights are given" do
       search = described_class.new
 
-      search.weights.should be_kind_of(Picky::Query::Weights)
+      search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
     it "handles :weights options when not yet wrapped" do
       search = described_class.new do boost [:a, :b] => +3 end
 
-      search.weights.should be_kind_of(Picky::Query::Weights)
+      search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
     it "handles :weights options when already wrapped" do
-      search = described_class.new do boost Picky::Query::Weights.new([:a, :b] => +3) end
+      search = described_class.new do boost Picky::Query::Boosts.new([:a, :b] => +3) end
 
-      search.weights.should be_kind_of(Picky::Query::Weights)
+      search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
   end
 
@@ -134,7 +134,7 @@ describe Picky::Search do
         @search = described_class.new
       end
       it 'works correctly' do
-        @search.to_s.should == 'Picky::Search(weights: Picky::Query::Weights({}))'
+        @search.to_s.should == 'Picky::Search(boosts: Picky::Query::Boosts({}))'
       end
     end
     context 'with weights' do
@@ -142,23 +142,23 @@ describe Picky::Search do
         @search = described_class.new @index do boost [:a, :b] => +3 end
       end
       it 'works correctly' do
-        @search.to_s.should == 'Picky::Search(some_index, weights: Picky::Query::Weights({[:a, :b]=>3}))'
+        @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({[:a, :b]=>3}))'
       end
     end
     context 'with special weights' do
       before(:each) do
-        class RandomWeights
-          def score_for combinations
+        class RandomBoosts
+          def boost_for combinations
             rand
           end
           def to_s
             "#{self.class}(rand)"
           end
         end
-        @search = described_class.new @index do boost RandomWeights.new end
+        @search = described_class.new @index do boost RandomBoosts.new end
       end
       it 'works correctly' do
-        @search.to_s.should == 'Picky::Search(some_index, weights: RandomWeights(rand))'
+        @search.to_s.should == 'Picky::Search(some_index, boosts: RandomBoosts(rand))'
       end
     end
     context 'without weights' do
@@ -166,7 +166,7 @@ describe Picky::Search do
         @search = described_class.new @index
       end
       it 'works correctly' do
-        @search.to_s.should == 'Picky::Search(some_index, weights: Picky::Query::Weights({}))'
+        @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({}))'
       end
     end
   end
