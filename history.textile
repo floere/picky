@@ -1,6 +1,6 @@
 h2. Upcoming Version
 
-h2. Version 4.0.2
+h2. Version 4.0.2/3
 
 * hanke: (server) Fix for realtime indexing when using specific options.
 
