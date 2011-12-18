@@ -4,6 +4,9 @@ module Picky
 
     include API::Tokenizer
     include API::Source
+    include API::Category::Weight
+    include API::Category::Partial
+    include API::Category::Similarity
 
     attr_accessor :exact,
                   :partial
@@ -47,9 +50,9 @@ module Picky
 
       # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
 
-      weights    = options[:weight]     || Generators::Weights::Default
-      partial    = options[:partial]    || Generators::Partial::Default
-      similarity = options[:similarity] || Generators::Similarity::Default
+      weights    = extract_weight options[:weight]
+      partial    = extract_partial options[:partial]
+      similarity = extract_similarity options[:similarity]
 
       no_partial    = Generators::Partial::None.new
       no_similarity = Generators::Similarity::None.new

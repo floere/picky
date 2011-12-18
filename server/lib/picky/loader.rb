@@ -188,6 +188,9 @@ module Picky
         load_relative 'api/tokenizer'
         load_relative 'api/tokenizer/character_substituter'
         load_relative 'api/source'
+        load_relative 'api/category/weight'
+        load_relative 'api/category/partial'
+        load_relative 'api/category/similarity'
 
         # Tokenizer.
         #

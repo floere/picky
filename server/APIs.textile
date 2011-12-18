@@ -4,7 +4,7 @@ This is the reference document for all the APIs that can be used in Picky.
 
 It denotes several areas where you can customize/plug into Picky.
 
-h2. Tokenizer
+h2. Tokenizer (Picky::API::Tokenizer)
 
 Has methods
 
@@ -18,7 +18,7 @@ Accepted by
 * @Picky::Search#searching@
 * @Picky::Category.new(indexing: tokenizer_instance)@
 
-h2. CharacterSubstituter
+h2. CharacterSubstituter (Picky::API::Tokenizer::CharacterSubstituter)
 
 Has methods
 
@@ -38,13 +38,13 @@ Accepted by
 
 * @Picky::Index#backend(backend_instance)@
 
-h2. Sources
+h2. Sources (Picky::API::Source)
 
 Has methods
 
 * @each(&block)@ yields @objects@ (that respond to methods listed in the categories, or in the categories' @from@ option)
 
-h2. Weight
+h2. Weight (Picky::API::Category::Weight)
 
 Has methods
 
@@ -52,7 +52,7 @@ Has methods
 
 Accepted as option @weight@ for the @category@.
 
-h2. Partial
+h2. Partial (Picky::API::Category::Partial)
 
 Has methods
 
@@ -60,7 +60,7 @@ Has methods
 
 Accepted as option @partial@ for the @category@.
 
-h2. Similarity
+h2. Similarity (Picky::API::Category::Similarity)
 
 Has methods
 
