@@ -1,5 +1,7 @@
 h2. Upcoming Version
 
+* hanke: (server) Server uses PICKY_ENV environment variable before RUBY_ENV and then RACK_ENV.
+
 h2. Version 4.0.2/3
 
 * hanke: (server) Fix for realtime indexing when using specific options.
