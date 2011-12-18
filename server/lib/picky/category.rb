@@ -2,6 +2,8 @@ module Picky
 
   class Category
 
+    include API::Tokenizer
+
     attr_accessor :exact,
                   :partial
     attr_reader :name,
@@ -33,9 +35,9 @@ module Picky
 
       # Indexing.
       #
-      @source     = options[:source]
-      @from       = options[:from]
-      @tokenizer  = options[:tokenizer]
+      @source    = options[:source]
+      @from      = options[:from]
+      @tokenizer = extract_tokenizer options[:indexing]
 
       @key_format = options.delete :key_format
       @backend    = options.delete :backend

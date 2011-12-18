@@ -187,6 +187,10 @@ module Picky
       # Loads the user interface parts.
       #
       def load_user_interface
+        # Load API parts.
+        #
+        load_relative 'api/tokenizer'
+
         # Load harakiri.
         #
         load_relative 'rack/harakiri'

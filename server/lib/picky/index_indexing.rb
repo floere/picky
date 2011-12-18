@@ -4,6 +4,7 @@ module Picky
   #
   class Index
 
+    include API::Tokenizer
     include Helpers::Indexing
 
     # Delegators for indexing.
@@ -17,11 +18,7 @@ module Picky
     # Parameters are the exact same as for indexing.
     #
     def indexing options = {}
-      @tokenizer = if options.respond_to?(:tokenize)
-        options
-      else
-        options && Tokenizer.new(options)
-      end
+      @tokenizer = extract_tokenizer options
     end
 
     #

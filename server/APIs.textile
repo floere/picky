@@ -2,7 +2,7 @@ h1. APIs in Picky
 
 This is the reference document for all the APIs that can be used in Picky.
 
-It denotes several areas where you can plug into Picky.
+It denotes several areas where you can customize/plug into Picky.
 
 h2. Tokenizer
 
@@ -16,7 +16,7 @@ Accepted by
 * @Sinatra::Application#searching@
 * @Picky::Index#indexing@
 * @Picky::Search#searching@
-* @Picky::Category.new(tokenizer: tokenizer_instance)@
+* @Picky::Category.new(indexing: tokenizer_instance)@
 
 h2. CharacterSubstituter
 
@@ -69,7 +69,7 @@ Has methods
 
 Accepted as option @similarity@ for the @category@.
 
-h2. Searches
+h2. Search
 
 Has methods
 
