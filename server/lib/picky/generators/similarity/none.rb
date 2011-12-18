@@ -10,7 +10,7 @@ module Picky
 
         # Does not encode text. Just returns nil.
         #
-        def encoded text
+        def encode text
           nil
         end
 

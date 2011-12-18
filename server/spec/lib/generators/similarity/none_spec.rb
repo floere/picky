@@ -16,7 +16,7 @@ describe Picky::Generators::Similarity::None do
 
   describe 'encode' do
     it 'should always return nil' do
-      @similarity.encoded(:whatever).should == nil
+      @similarity.encode(:whatever).should == nil
     end
   end
 

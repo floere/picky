@@ -10,7 +10,7 @@ describe Picky::Generators::Similarity::Soundex do
 
   def self.it_should_encode text, expected
     it "should encode #{text.inspect} correctly" do
-      @similarity.encoded(text).should == expected
+      @similarity.encode(text).should == expected
     end
   end
   # def self.it_should_generate_from index, expected

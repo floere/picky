@@ -126,7 +126,7 @@ module Picky
     # Note: Does not return itself.
     #
     def similar text
-      code = similarity_strategy.encoded text
+      code = similarity_strategy.encode text
       return [] unless code
       similar_codes = @similarity[code]
       if similar_codes.blank?

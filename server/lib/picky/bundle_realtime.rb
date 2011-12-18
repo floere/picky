@@ -22,7 +22,7 @@ module Picky
           # Since no element uses this sym anymore, we can delete the similarity for it.
           # TODO Not really. Since multiple syms can point to the same encoded.
           #
-          @similarity.delete self.similarity_strategy.encoded(str_or_sym)
+          @similarity.delete self.similarity_strategy.encode(str_or_sym)
         else
           @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
         end
@@ -67,7 +67,7 @@ module Picky
     # Add string/symbol to similarity index.
     #
     def add_similarity str_or_sym, where = :unshift
-      if encoded = self.similarity_strategy.encoded(str_or_sym)
+      if encoded = self.similarity_strategy.encode(str_or_sym)
         similars = @similarity[encoded] ||= []
 
         # Not completely correct, as others will also be affected, but meh.

@@ -6,9 +6,9 @@ describe Picky::Category do
     @index = Picky::Index.new :some_index do
       source []
     end
-    @partial_strategy    = stub :partial, :use_exact_for_partial? => false
+    @partial_strategy    = stub :partial, :each_partial => nil, :use_exact_for_partial? => false
     @weight_strategy    = stub :weights, :saved? => true
-    @similarity_strategy = stub :similarity
+    @similarity_strategy = stub :similarity, :encode => nil, :prioritize => nil
 
     @exact   = stub :exact, :dump => nil
     @partial = stub :partial, :dump => nil

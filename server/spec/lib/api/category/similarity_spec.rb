@@ -42,7 +42,7 @@ describe Picky::API::Category::Similarity do
 similarity options for some_index:some_category should be either
 * for example a Similarity::Phonetic.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
 or
-* an object that responds to #encoded(text) => encoded_text and #prioritize(array_of_encoded, encoded)
+* an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
 ERROR
       end
     end
