@@ -28,11 +28,11 @@ Accepted as
 
 * option @substitutes_characters_with@ for @indexing@ and @searching@.
 
-h2. Backends
+h2. Backends (Not yet codified into a class)
 
 Have methods
 
-# TODO
+# TODO See examples in lib/picky/backends
 
 Accepted by
 
