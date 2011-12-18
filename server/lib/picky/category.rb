@@ -3,6 +3,7 @@ module Picky
   class Category
 
     include API::Tokenizer
+    include API::Source
 
     attr_accessor :exact,
                   :partial
@@ -35,7 +36,7 @@ module Picky
 
       # Indexing.
       #
-      @source    = options[:source]
+      @source    = extract_source options[:source], nil_ok: true
       @from      = options[:from]
       @tokenizer = extract_tokenizer options[:indexing]
 

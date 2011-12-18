@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Picky::Tokenizer do
-  
+
   context 'with special instance' do
     let (:tokenizer) { described_class.new rejects_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
     it 'rejects tokens with length < 2' do
@@ -26,10 +26,10 @@ EXPECTED
       end
     end
   end
-  
+
   context 'with normal instance' do
     let(:tokenizer) { described_class.new }
-    
+
         describe 'to_s' do
           it 'spits out the right text' do
             tokenizer.to_s.should == <<-EXPECTED
@@ -43,7 +43,7 @@ Case sensitive?     -
 EXPECTED
           end
         end
-    
+
     describe 'rejects_token_if' do
       it 'rejects empty tokens by default' do
         tokenizer.reject(['a', nil, '', 'b']).should == ['a', 'b']
@@ -60,7 +60,11 @@ EXPECTED
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzäöü'
       end
       it 'raises if nothing with #substitute is given' do
-        expect { tokenizer.substitutes_characters_with Object.new }.to raise_error("The substitutes_characters_with option needs a character substituter, which responds to #substitute.")
+        expect { tokenizer.substitutes_characters_with Object.new }.
+          to raise_error(<<-ERROR)
+The substitutes_characters_with option needs a character substituter,
+which responds to #substitute(text) and returns substituted_text."
+ERROR
       end
       it "uses the substituter to replace characters" do
         tokenizer.substitutes_characters_with Picky::CharacterSubstituters::WestEuropean.new
@@ -84,7 +88,7 @@ EXPECTED
         end
         it 'should define a method normalize_with_patterns does nothing' do
           unchanging = stub :unchanging
-          
+
           tokenizer.normalize_with_patterns(unchanging).should == unchanging
         end
       end
@@ -145,7 +149,7 @@ EXPECTED
         end
         it 'should define a method remove_illegals that does nothing' do
           unchanging = stub :unchanging
-          
+
           tokenizer.remove_illegals unchanging
         end
       end
@@ -210,5 +214,5 @@ EXPECTED
       end
     end
   end
-  
+
 end

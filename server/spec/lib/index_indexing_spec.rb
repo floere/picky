@@ -69,21 +69,17 @@ describe Picky::Index do
     end
     context 'with non#each source' do
       let(:source) { stub :source, :harvest => nil }
-      let(:index) do
+
+      it 'raises' do
         the_source = source
-        described_class.new :some_name do
-          source the_source
-        end
-      end
-
-      it 'does things in order' do
-        categories = stub :categories
-        index.stub! :categories => categories
-
-        categories.should_receive(:prepare).once
-        categories.should_receive(:cache).once
-
-        index.index
+        expect {
+          described_class.new :some_name do
+            source the_source
+          end
+        }.to raise_error(<<-ERROR)
+The some_name source should respond to either the method #each or
+it can be a lambda/block, returning such a source.
+ERROR
       end
     end
   end

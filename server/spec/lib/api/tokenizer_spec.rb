@@ -6,7 +6,7 @@ describe Picky::API::Tokenizer do
       include Picky::API::Tokenizer
     end.new
   end
-  context 'tokenizer' do
+  context 'extract_tokenizer' do
     context 'options hash' do
       it 'creates a tokenizer' do
         object.extract_tokenizer(indexing: { splits_text_on: /\t/ }).

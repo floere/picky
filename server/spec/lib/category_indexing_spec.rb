@@ -4,7 +4,7 @@ describe Picky::Category do
 
   before(:each) do
     @index  = Picky::Index.new :some_index
-    @source = stub :some_given_source, :key_format => nil
+    @source = stub :some_given_source, :each => nil
   end
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }
 
@@ -70,37 +70,24 @@ describe Picky::Category do
     end
 
     describe 'key_format' do
-      context 'source has key_format' do
+      context 'category has its own key_format' do
         before(:each) do
-          category.stub! :source => stub(:source, :key_format => :some_key_format)
+          category.instance_variable_set :@key_format, :other_key_format
         end
         it 'returns that key_format' do
-          category.key_format.should == :some_key_format
+          category.key_format.should == :other_key_format
         end
       end
-      context 'source does not have key_format' do
+      context 'category does not have its own key format' do
         before(:each) do
-          category.stub! :source => stub(:source)
+          category.instance_variable_set :@key_format, nil
         end
-        context 'category has its own key_format' do
+        context 'it has an index' do
           before(:each) do
-            category.instance_variable_set :@key_format, :other_key_format
+            category.instance_variable_set :@index, stub(:index, :key_format => :yet_another_key_format)
           end
           it 'returns that key_format' do
-            category.key_format.should == :other_key_format
-          end
-        end
-        context 'category does not have its own key format' do
-          before(:each) do
-            category.instance_variable_set :@key_format, nil
-          end
-          context 'it has an index' do
-            before(:each) do
-              category.instance_variable_set :@index, stub(:index, :key_format => :yet_another_key_format)
-            end
-            it 'returns that key_format' do
-              category.key_format.should == :yet_another_key_format
-            end
+            category.key_format.should == :yet_another_key_format
           end
         end
       end
@@ -108,9 +95,9 @@ describe Picky::Category do
 
     describe 'source' do
       context 'with explicit source' do
-        let(:category) { described_class.new(:some_category, @index, :source => :category_source) }
+        let(:category) { described_class.new(:some_category, @index, :source => [1]) }
         it 'returns the right source' do
-          category.source.should == :category_source
+          category.source.should == [1]
         end
       end
       context 'without explicit source' do

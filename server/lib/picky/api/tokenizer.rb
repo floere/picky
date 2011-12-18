@@ -11,9 +11,16 @@ module Picky
           if thing.respond_to? :[]
             Picky::Tokenizer.new thing
           else
-            location = ''
-            location += " for #{index_name}" if respond_to?(:index_name)
-            location += ":#{name}" if respond_to?(:name)
+            if respond_to? :name
+              location = ' for '
+              if @index
+                location += "#{@index.name}:#{name}"
+              else
+                location += "#{name}"
+              end
+            else
+              location = ''
+            end
             raise <<-ERROR
 indexing options#{location} should be either
 * a Hash

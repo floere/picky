@@ -165,10 +165,6 @@ module Picky
         load_relative 'query/token'
         load_relative 'query/tokens'
 
-        # Tokenizer.
-        #
-        load_relative 'tokenizer'
-
         # Query combinations, qualifiers, weigher.
         #
         load_relative 'query/combination'
@@ -190,6 +186,12 @@ module Picky
         # Load API parts.
         #
         load_relative 'api/tokenizer'
+        load_relative 'api/tokenizer/character_substituter'
+        load_relative 'api/source'
+
+        # Tokenizer.
+        #
+        load_relative 'tokenizer'
 
         # Load harakiri.
         #

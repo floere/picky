@@ -78,13 +78,7 @@ module Picky
     # If we have no explicit source, we'll check the index for one.
     #
     def source
-      extract_source || @index.source
-    end
-    # Extract the actual source if it is wrapped in a time
-    # capsule, i.e. a block/lambda.
-    #
-    def extract_source
-      @source = @source.respond_to?(:call) ? @source.call : @source
+      (@source = extract_source(@source, nil_ok: true)) || @index.source
     end
 
     # Return the key format.
@@ -96,7 +90,7 @@ module Picky
     # Default is to_i.
     #
     def key_format
-      @key_format ||= source.respond_to?(:key_format) && source.key_format || @index.key_format || :to_i
+      @key_format ||= @index.key_format || :to_i
     end
 
     # Where the data is taken from.

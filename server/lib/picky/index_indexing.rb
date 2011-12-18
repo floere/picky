@@ -5,6 +5,8 @@ module Picky
   class Index
 
     include API::Tokenizer
+    include API::Source
+
     include Helpers::Indexing
 
     # Delegators for indexing.
@@ -96,26 +98,7 @@ module Picky
     #
     def source some_source = nil, &block
       some_source ||= block
-      some_source ? (check_source(some_source); @source = some_source) : (@source && extract_source)
-    end
-    # Extract the actual source if it is wrapped in a time
-    # capsule, i.e. a block/lambda.
-    #
-    def extract_source
-      @source.respond_to?(:call) ? @source.call : @source
-    end
-    def check_source source # :nodoc:
-      raise ArgumentError.new(<<-SOURCE
-
-
-The index "#{name}" should use a data source that responds to either the method #each, or the method #harvest, which yields(id, text), OR it can be a lambda/block, returning such a source.
-Or it could use one of the built-in sources:
-  Sources::#{(Sources.constants - [:Base, :Wrappers, :NoCSVFileGiven, :NoCouchDBGiven]).join(',
-  Sources::')}
-
-
-SOURCE
-) unless source.respond_to?(:each) || source.respond_to?(:harvest) || source.respond_to?(:call)
+      some_source ? (@source = extract_source(some_source)) : unblock_source
     end
 
     # Define a key_format on the index.

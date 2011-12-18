@@ -6,15 +6,19 @@ module Picky
   #
   class Tokenizer
 
+    extend API::Tokenizer
+
+    include API::Tokenizer::CharacterSubstituter
+
     def self.default_indexing_with options = {}
-      @indexing = options.respond_to?(:tokenize) ? options : new(options)
+      @indexing = extract_tokenizer options
     end
     def self.indexing
       @indexing ||= new
     end
 
     def self.default_searching_with options = {}
-      @searching = options.respond_to?(:tokenize) ? options : new(options)
+      @searching = extract_tokenizer options
     end
     def self.searching
       @searching ||= new
@@ -108,8 +112,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     # Default is European Character substitution.
     #
     def substitutes_characters_with substituter = CharacterSubstituters::WestEuropean.new
-      raise ArgumentError.new "The substitutes_characters_with option needs a character substituter, which responds to #substitute." unless substituter.respond_to?(:substitute)
-      @substituter = substituter
+      @substituter = extract_character_substituter substituter
     end
     def substitute_characters text
       substituter?? substituter.substitute(text) : text
