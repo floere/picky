@@ -22,8 +22,8 @@ module Picky
           @client    = client
           @namespace = namespace
 
-          @empty     = options[:empty]
-          @initial   = options[:initial]
+          @empty    = options[:empty]
+          @initial  = options[:initial]
           @realtime = options[:realtime]
         end
 

@@ -11,10 +11,10 @@ module Picky
         attr_reader :cache_path, :db
 
         def initialize cache_path, options = {}
-          @cache_path   = "#{cache_path}.sqlite3"
-          @empty        = options[:empty]
-          @initial      = options[:initial]
-          @realtime = options[:realtime]
+          @cache_path = "#{cache_path}.sqlite3"
+          @empty      = options[:empty]
+          @initial    = options[:initial]
+          @realtime   = options[:realtime]
 
           lazily_initialize_client
         end
