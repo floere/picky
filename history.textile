@@ -1,5 +1,8 @@
 h2. Upcoming Version
 
+h2. 4.0.4
+
+* hanke: (server) Default amount of similar tokens is now set to 3 instead of 10 for phonetic similarities.
 * hanke: (server) Server uses PICKY_ENV environment variable before RUBY_ENV and then RACK_ENV.
 
 h2. Version 4.0.2/3
