@@ -8,11 +8,18 @@ describe Picky::Generators::Similarity::Metaphone do
     @similarity = described_class.new
   end
 
+  describe 'default amount' do
+    it 'is correct' do
+      @similarity.amount.should == 3
+    end
+  end
+
   def self.it_should_encode text, expected
     it "should encode #{text.inspect} correctly" do
       @similarity.encode(text).should == expected
     end
   end
+
   # def self.it_should_generate_from index, expected
   #   it "should generate #{expected.inspect} correctly from #{index.inspect}" do
   #     @similarity.generate_from(index).should == expected
