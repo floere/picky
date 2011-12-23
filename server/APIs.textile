@@ -8,7 +8,7 @@ h2. Tokenizer (Picky::API::Tokenizer)
 
 Has methods
 
-* @tokenize(text)@ => @[[:token1, :token2, ...], ["Original1", "Original2", ...]]@ (2-D array of the tokens and the original texts)
+* @tokenize(text)@ => @[ [:token1, :token2, ...], ["Original1", "Original2", ...] ]@ (2-D array of the tokens and the original texts)
 
 Accepted by
 
