@@ -3,6 +3,11 @@ require File.expand_path '../../../server/lib/picky', __FILE__
 # Our similarizer just encodes text as if
 # it had just vowels. 
 #
+# This means that as long as the vowels are
+# in the right order, words are similar.
+#
+# E.g. A search for chicklaus will find niklaus.
+#
 class Similarizer
   
   def encode text
@@ -27,7 +32,7 @@ data.replace Person.new(4, 'Peter', 'Niklaus')
 
 people = Picky::Search.new data
 
-results = people.search 'chicklaus~' # "Chicklaus" maps to "iau", as does "Niklaus". Hence, similar!
+results = people.search 'chicklaus~' # "chicklaus" maps to "iau", as does "Niklaus". Hence, similar!
 
 # p results.allocations
 fail __FILE__ unless results.ids == [4]
