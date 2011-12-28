@@ -1,0 +1,4 @@
+h1. Sinatra/Rails
+
+* sinatra.rb (ruby sinatra.rb)
+* rails.rb (just a description on how to use Picky)

@@ -1,0 +1,6 @@
+h1. Weight Categories
+
+* logarithmic.rb (logarithmic default weight)
+* dynamic.rb (dynamic weight)
+* constant.rb (constant weight)
+* customized.rb (customized weight)

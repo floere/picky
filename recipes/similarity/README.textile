@@ -1,0 +1,6 @@
+h1. Similarity Categories
+
+* double_metaphone.rb (double metaphone similarity)
+* metaphone.rb (metaphone similarity)
+* soundex.rb (soundex similarity)
+* customized.rb (customized similarity)

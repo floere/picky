@@ -1,0 +1,6 @@
+h1. Partial Categories
+
+* postfix.rb (postfix* partial)
+* infix.rb (* infix * partial)
+* substring.rb (* infix * partial)
+* customized.rb (customized partial)
