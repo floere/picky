@@ -27,7 +27,7 @@ data.replace Person.new(4, 'Peter', 'Niklaus')
 
 people = Picky::Search.new data
 
-results = people.search 'iau~' # "Niklaus" becomes "iau".
+results = people.search 'chicklaus~' # "Chicklaus" maps to "iau", as does "Niklaus". Hence, similar!
 
 # p results.allocations
 fail __FILE__ unless results.ids == [4]
