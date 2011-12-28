@@ -14,8 +14,9 @@ class Similarizer
     text.gsub /[^aeiou]/, ''
   end
   
-  def prioritize(*)
-    # We don't prioritize
+  def prioritize ary, code
+    ary.sort_by_levenshtein! code # We only use the most relevant ones
+    ary.slice! 3, ary.size        # and slice the rest off.
   end
   
 end
