@@ -1,0 +1,22 @@
+h1. Picky Recipes
+
+When viewing on github, use the key t followed by a recipe name for profit.
+
+h2. Basics
+
+* /basic (Basic recipes to show how to do a search)
+* /partial (How to configure partial* searches)
+* /weight (How to configure category specific weighing)
+* /similarity (How to configure similarity~ searches)
+* /boosting (How to boost certain results / category combinations)
+* /tokenizers (TODO How to configure tokenization for indexing/searching)
+* /sinatra_rails (TODO How to use Picky in Sinatra or Rails)
+
+h2. Intermediate
+
+* /searches (How to configure your search so it rocks)
+
+h2. Advanced
+
+* /advanced (Advanced recipes to inspire you to greatness)
+* All the customized.rb recipes

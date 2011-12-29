@@ -1,4 +1,4 @@
 h1. Boosting
 
-* example.rb (standard boosting using a hash)
+* standard.rb (standard boosting using a hash)
 * customized.rb (customized boosting)

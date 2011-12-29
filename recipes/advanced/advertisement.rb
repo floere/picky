@@ -63,4 +63,4 @@ fail __FILE__ unless ads.search(query).ids == [2] # Ad from Zurich.
 query = 'peter london'
 fail __FILE__ unless people.search(query).ids == [] # Finds nobody.
 # You could break off here if people.search(query).total.zero?
-fail __FILE__ unless ads.search(query).ids == [1] # Ad from London.
+fail __FILE__ unless ads.search(query).ids == [1] # Still finds ad from London.

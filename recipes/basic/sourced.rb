@@ -1,4 +1,4 @@
-require File.expand_path '../../server/lib/picky', __FILE__
+require File.expand_path '../../../server/lib/picky', __FILE__
 
 # An example where you give the Picky index
 # an #each source.

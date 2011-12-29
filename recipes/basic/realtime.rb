@@ -1,4 +1,4 @@
-require File.expand_path '../../server/lib/picky', __FILE__
+require File.expand_path '../../../server/lib/picky', __FILE__
 
 # Loading the Picky index without a source,
 # but purely by adding (replacing) items.

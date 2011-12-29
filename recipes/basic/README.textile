@@ -1,0 +1,4 @@
+h1. Basics
+
+* with_source.rb (The static way to index with an explicit source, then starting the indexing process)
+* realtime.rb (Giving Picky data to index during runtime)
