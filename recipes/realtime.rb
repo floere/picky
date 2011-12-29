@@ -1,5 +1,8 @@
 require File.expand_path '../../server/lib/picky', __FILE__
 
+# Loading the Picky index without a source,
+# but purely by adding (replacing) items.
+#
 data = Picky::Index.new :people do
   category :first
   category :last

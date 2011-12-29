@@ -1,5 +1,8 @@
 require File.expand_path '../../server/lib/picky', __FILE__
 
+# An example where you give the Picky index
+# an #each source.
+#
 data = Picky::Index.new :people do
   source do
     [Person.new(1, 'Donald', 'Knuth'),
@@ -13,7 +16,7 @@ end
 
 people = Picky::Search.new data
 
-data.reindex # aka data.index; data.load
+data.reindex # == data.index; data.load
 
 results = people.search 'donald'
 

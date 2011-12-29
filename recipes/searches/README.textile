@@ -1,6 +1,6 @@
 h1. Searches
 
 * ignore_unassigned.rb
-* ignore.rb (TODO)
-* max_words.rb (TODO)
-...
+* ignore.rb
+* max_allocations.rb
+* terminate_early.rb
