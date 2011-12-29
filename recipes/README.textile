@@ -1,6 +1,6 @@
 h1. Picky Recipes
 
-When viewing on github, use the key **t** followed by *recipes* and a *recipe category* (see below) for profit.
+When viewing on github, use the key **t** followed by *recipes* and a *recipe category* (see below) pressing enter and then using the handy copy&paste button next to the file name.
 
 h2. Basics
 
