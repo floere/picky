@@ -1,0 +1,3 @@
+h1. Advanced Examples
+
+* advertisements.rb (How to additionally search for an ad to be displayed)
