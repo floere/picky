@@ -8,10 +8,9 @@ module Picky
   # * holds one or more indexes
   # * offers an interface to query these indexes.
   #
-  # You connect URL paths to indexes via a Query.
-  #
-  # We recommend to not use this directly, but connect it to an URL and query through one of these
-  # (Protip: Use "curl 'localhost:8080/query/path?query=exampletext')" in a Terminal.
+  # Example:
+  #   search = Picky::Search.new index1, index2
+  #   search.search 'query'
   #
   class Search
 
