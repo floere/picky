@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe Picky::Query::QualifierCategoryMapper do
   
-  let(:mapper) { described_class.new }
-  before(:each) do
-    @category1 = stub(:category1, :qualifiers => ['t1', 'tt1', 'ttt1'])
-    @category2 = stub(:category2, :qualifiers => [:t2, :tt2, :ttt2])
-    @category3 = stub(:category3, :qualifiers => [:t3, :tt3, :ttt3])
-    mapper.add @category1
-    mapper.add @category2
-    mapper.add @category3
+  let(:index) do
+    categories = Picky::Index.new :categories
+    @category1 = categories.category :category1, :qualifiers => ['t1', 'tt1', 'ttt1']
+    @category2 = categories.category :category2, :qualifiers => [:t2, :tt2, :ttt2]
+    @category3 = categories.category :category3, :qualifiers => [:t3, :tt3, :ttt3]
+    categories
   end
+  let(:indexes) { [index] }
+  let(:mapper) { described_class.new indexes }
   
   def self.it_should_map(qualifier, expected)
     it "should map #{qualifier} to #{expected}" do

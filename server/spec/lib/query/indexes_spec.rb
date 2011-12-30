@@ -7,10 +7,8 @@ describe Picky::Query::Indexes do
   end
 
   3.times do |i|
-    n       = i + 1
-    name    = :"index#{n}"
-    indexed = :"indexed#{n}"
-    let(name) { stub name, :internal_indexed => stub(indexed) }
+    name = :"index#{i+1}"
+    let(name) { Picky::Index.new(name) }
   end
 
   let(:indexes) do

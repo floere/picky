@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. 4.0.5
+
+* hanke: (server) Experimental release of @only@ option for searches. Does the same as @only:that_category@, but implicitly, in the search. E.g. @only :cat1, :cat2@.
+
 h2. 4.0.4
 
 * hanke: (server) Default amount of similar tokens is now set to 3 instead of 10 for phonetic similarities.

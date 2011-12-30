@@ -24,6 +24,7 @@ module Picky
                   :boosts
 
     delegate :ignore,
+             :only,
              :to => :indexes
 
     # Takes:
@@ -37,8 +38,8 @@ module Picky
     #             [:title, :isbn] => +1
     #   end
     #
-    def initialize *index_definitions
-      @indexes = Query::Indexes.new *index_definitions
+    def initialize *indexes
+      @indexes = Query::Indexes.new *indexes
 
       instance_eval(&Proc.new) if block_given?
 

@@ -57,13 +57,20 @@ module Picky
 
       # Translates this token's qualifiers into actual categories.
       #
-      # Note:
-      # If this is not done, there is no mapping.
+      # Note: If this is not done, there is no mapping.
+      # Note: predefined is an Array of mapped categories.
       #
-      # THINK Can this be improved somehow?
+      # TODO Rename @user_defined_categories. It could now also be predefined by the query.
       #
       def categorize mapper
-        @user_defined_categories = @qualifiers && @qualifiers.map do |qualifier|
+        @user_defined_categories ||= extract_predefined mapper
+      end
+      def extract_predefined mapper
+        user_qualified = categorize_with mapper, @qualifiers
+        mapper.restrict user_qualified
+      end
+      def categorize_with mapper, qualifiers
+        qualifiers && qualifiers.map do |qualifier|
           mapper.map qualifier
         end.compact
       end

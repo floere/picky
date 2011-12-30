@@ -25,16 +25,8 @@ module Picky
         IndexesCheck.check_backends indexes
 
         @indexes = indexes
-
-        map_categories
-      end
-      def map_categories
-        @mapper = Query::QualifierCategoryMapper.new
-        @indexes.each do |index|
-          index.each_category do |category|
-            @mapper.add category
-          end
-        end
+        
+        @mapper = QualifierCategoryMapper.new indexes # TODO Move out?
       end
 
       # Ignore the categories with these qualifiers.
@@ -50,6 +42,19 @@ module Picky
         @ignored_categories ||= []
         @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
         @ignored_categories.uniq!
+      end
+      
+      # Restrict categories to the given ones.
+      #
+      # Functionally equivalent as if indexes didn't
+      # have the categories at all.
+      #
+      # Note: Probably only makes sense when an index
+      # is used in multiple searches. If not, why even
+      # have the categories?
+      #
+      def only *qualifiers
+        @mapper.restrict_to *qualifiers
       end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.

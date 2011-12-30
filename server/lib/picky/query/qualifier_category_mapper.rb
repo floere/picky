@@ -9,11 +9,16 @@ module Picky
     class QualifierCategoryMapper # :nodoc:all
 
       attr_reader :mapping
-
+      
       #
       #
-      def initialize
+      def initialize indexes
         @mapping = {}
+        indexes.each do |index|
+          index.each_category do |category|
+            add category
+          end
+        end
       end
 
       #
@@ -34,6 +39,19 @@ module Picky
         return nil if qualifier.empty?
 
         @mapping[qualifier.intern]
+      end
+      
+      # Restricts the given categories.
+      #
+      def restrict user_qualified
+        if @restricted
+          user_qualified ? @restricted & user_qualified : @restricted 
+        else
+          user_qualified
+        end
+      end
+      def restrict_to *qualifiers
+        @restricted = qualifiers.map { |qualifier| map qualifier }.compact
       end
 
     end

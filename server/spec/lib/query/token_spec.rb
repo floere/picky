@@ -11,6 +11,64 @@ describe Picky::Query::Token do
       described_class.processed('similar~', 'Similar~').should_not == described_class.processed('similar', 'Similar')
     end
   end
+  
+  describe 'categorize' do
+    let(:mapper) do
+      categories = Picky::Index.new :categories
+      @category1 = categories.category :category1
+      @category2 = categories.category :category2
+      @category3 = categories.category :category3
+      Picky::Query::QualifierCategoryMapper.new [categories]
+    end
+    context 'with qualifiers' do
+      let(:token) { described_class.processed 'category1:qualifier', 'category1:Qualifier' }
+      context 'unrestricted' do
+        it 'categorizes correctly' do
+          token.categorize(mapper).should == [@category1]
+        end
+      end
+      context 'restricted' do
+        before(:each) do
+          mapper.restrict_to :category1
+        end
+        it 'categorizes correctly' do
+          token.categorize(mapper).should == [@category1]
+        end
+      end
+      context 'restricted' do
+        before(:each) do
+          mapper.restrict_to :category2, :category3
+        end
+        it 'categorizes correctly' do
+          token.categorize(mapper).should == []
+        end
+      end
+    end
+    context 'without qualifiers' do
+      let(:token) { described_class.processed 'noqualifier', 'NoQualifier' }
+      context 'unrestricted' do
+        it 'categorizes correctly' do
+          token.categorize(mapper).should == nil
+        end
+      end
+      context 'restricted' do
+        before(:each) do
+          mapper.restrict_to :category1
+        end
+        it 'categorizes correctly' do
+          token.categorize(mapper).should == [@category1]
+        end
+      end
+      context 'restricted' do
+        before(:each) do
+          mapper.restrict_to :category2, :category3
+        end
+        it 'categorizes correctly' do
+          token.categorize(mapper).should == [@category2, @category3]
+        end
+      end
+    end
+  end
 
   describe 'similar_tokens_for' do
     let(:token) { described_class.processed 'similar~', 'Similar~' }
