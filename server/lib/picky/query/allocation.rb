@@ -15,7 +15,7 @@ module Picky
       #
       #
       def initialize index, combinations
-        @combinations      = combinations
+        @combinations = combinations
 
         # Could this be rewritten?
         #

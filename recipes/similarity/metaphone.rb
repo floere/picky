@@ -1,5 +1,7 @@
 require File.expand_path '../../../server/lib/picky', __FILE__
 
+Person = Struct.new :id, :first, :last
+
 data = Picky::Index.new :people do
   category :first
   category :last, similarity: Picky::Similarity::Metaphone.new

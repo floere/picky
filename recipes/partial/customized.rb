@@ -1,5 +1,7 @@
 require File.expand_path '../../../server/lib/picky', __FILE__
 
+Person = Struct.new :id, :first, :last
+
 # Our special partializer only allows partials
 # of even length.
 #

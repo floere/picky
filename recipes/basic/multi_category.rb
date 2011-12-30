@@ -1,5 +1,7 @@
 require File.expand_path '../../../server/lib/picky', __FILE__
 
+Person = Struct.new :id, :first, :last
+
 # We want to search 2 indexes at once.
 # One index uses a source, the indexes at realtime.
 #

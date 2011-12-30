@@ -1,0 +1,5 @@
+h1. Range Categories
+
+* one_dimensional.rb (Value range search)
+* two_dimensional.rb (Area search)
+* three_dimensional.rb (Volumetric search)

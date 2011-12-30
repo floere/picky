@@ -1,5 +1,7 @@
 require File.expand_path '../../../server/lib/picky', __FILE__
 
+Person = Struct.new :id, :first, :last
+
 # Our customized weighter for the last name.
 # We weigh results higher that are only found once.
 #

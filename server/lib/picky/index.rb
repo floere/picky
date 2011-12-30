@@ -239,7 +239,7 @@ module Picky
     #
     # === Options
     # * precision: Default is 1 (20% error margin, very fast), up to 5 (5% error margin, slower) makes sense.
-    # * anchor: Where to anchor the geo grid.
+    # * anchor: Where to anchor the grid.
     # * ... all options of #category.
     #
     def ranged_category category_name, range, options = {}
