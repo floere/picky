@@ -2,7 +2,7 @@ require File.expand_path '../../../server/lib/picky', __FILE__
 
 ThreeD = Struct.new :id, :x, :y, :z
 
-data = Picky::Index.new :people do
+data = Picky::Index.new :locations do
   # 1.0 is the range around which to search
   # precision 1 is low precision (20% error margin), but fast
   #
