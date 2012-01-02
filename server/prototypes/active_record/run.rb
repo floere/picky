@@ -20,3 +20,10 @@ Model.new(3, 'Tentacles', 'Jellyfish').save
 
 p client.search 'surname:mcnama*'
 p client.search 'hanke'
+
+Model.new(2, 'Kaspar', 'Schiess').save
+Model.new(3, 'Roger', 'Braun').save
+
+p client.search 'hanke' # Not found anymore.
+p client.search 'surname:schies*'
+p client.search 'roger' # And out.
