@@ -15,8 +15,7 @@ module Picky
     # given object.
     #
     def add object, where = :unshift
-      tokens, _ = tokenizer.tokenize object.send(from)
-      add_tokenized object.id, tokens, where
+      add_text object.id, object.send(from), where
     end
 
     # Removes the object's id, and then
@@ -25,6 +24,22 @@ module Picky
     def replace object, where = :unshift
       remove object.id
       add object, where
+    end
+    
+    # Replaces just part of the indexed data.
+    #
+    # Note: Takes a hash as opposed to the add/replace method.
+    #
+    def replace_from hash
+      # TODO Decide on a format.
+      #
+      return unless text = hash[from] || hash[from.to_s]
+      
+      id = hash[:id] || hash['id']
+      id = id.send key_format
+      
+      remove id
+      add_text id, text
     end
 
     # Add at the end.
@@ -42,7 +57,9 @@ module Picky
     # For the given id, adds the list of
     # strings to the index for the given id.
     #
-    def add_tokenized id, tokens, where = :unshift
+    def add_text id, text, where = :unshift
+      # text = text.to_sym if @symbols # TODO Symbols.
+      tokens, _ = tokenizer.tokenize text
       tokens.each { |text| add_tokenized_token id.send(key_format), text, where, false }
     end
 

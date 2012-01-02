@@ -7,6 +7,7 @@ module Picky
     delegate :remove,  # aka "delete".
              :add,     # aka "insert".
              :replace, # aka "insert or update". Thus, not called update.
+             :replace_from, # TODO Naming ok?
              :clear_realtime,
              :build_realtime_mapping,
              :to => :categories

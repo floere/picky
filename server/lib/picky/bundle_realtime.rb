@@ -82,9 +82,12 @@ module Picky
     # Partializes the text and then adds each.
     #
     def add_partialized id, text, where = :unshift
-      self.partial_strategy.each_partial text do |partial_text|
+      partialized text do |partial_text|
         add id, partial_text, where
       end
+    end
+    def partialized text, &block
+      self.partial_strategy.each_partial text, &block
     end
 
     # Builds the realtime mapping.
