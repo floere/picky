@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. 4.0.6
+
+* hanke: (client) Fixed "bug #57":https://github.com/floere/picky/issues/57, multicategory selections in the Javascript user interface.
+
 h2. 4.0.5
 
 * hanke: (server) Experimental release of @only@ option for searches. Does the same as @only:that_category@, but implicitly, in the search. E.g. @only :cat1, :cat2@.

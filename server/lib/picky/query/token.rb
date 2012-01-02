@@ -154,6 +154,12 @@ module Picky
         else
           [@qualifiers.split(@@split_qualifiers), @text]
         end
+        # if @text.blank?
+        #   @qualifiers = nil
+        #   @text = @qualifiers || EMPTY_STRING
+        # else
+        #   @qualifiers = @qualifiers.split @@split_qualifiers
+        # end
       end
 
       # Internally, qualifiers are nil if there are none.

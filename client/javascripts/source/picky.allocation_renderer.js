@@ -27,6 +27,7 @@ function AllocationRenderer(allocationChosenCallback, config) {
     var insert = {}; // remembers the insertion locations
     var remove = []; // remembers the remove indexes
     var i;
+	
     for (i = 0, l = zipped.length; i < l; i++) {
       var key = zipped[i][0];
       if (key in hash) {
@@ -97,12 +98,14 @@ function AllocationRenderer(allocationChosenCallback, config) {
     
     // Replace each word into the formatting string.
     //
-    $.each(zipped, function(i, author_original_token) {
-      var category = author_original_token[0];
-      var word     = author_original_token[1];
-      
+    $.each(zipped, function(i, original_token) {
+      var category = original_token[0];
+      var word     = original_token[2];
+	  
       if (formatting.filter) { word = formatting.filter(word); }
       
+	  console.log(word);
+	  
       var explanation = explanations[category] || category;
       if (single && !(formatting && formatting.ignoreSingle)) {
         result = word + '&nbsp;(' + explanation + ')';
@@ -197,7 +200,7 @@ function AllocationRenderer(allocationChosenCallback, config) {
     for (var i in zipped) {
       qualifier = zipped[i][0];
       qualifier = qualifiers[qualifier] || qualifier; // Use the returned qualifier if none is given.
-      query_parts[i] = qualifier + ':' + zipped[i][1];
+      query_parts[i] = qualifier + ':' + zipped[i][2];
     };
     return query_parts.join(' ');
   };
