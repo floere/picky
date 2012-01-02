@@ -149,21 +149,21 @@ module Picky
       @@split_qualifiers     = ','
       def qualify
         @qualifiers, @text = (@text || EMPTY_STRING).split(@@split_qualifier_text, 2)
-        @qualifiers, @text = if @text.blank?
-          [nil, (@qualifiers || EMPTY_STRING)]
+        if @text.blank?
+          @text = @qualifiers || EMPTY_STRING
+          @qualifiers = nil
         else
-          [@qualifiers.split(@@split_qualifiers), @text]
+          @qualifiers = @qualifiers.split @@split_qualifiers
         end
-        # if @text.blank?
-        #   @qualifiers = nil
-        #   @text = @qualifiers || EMPTY_STRING
-        # else
-        #   @qualifiers = @qualifiers.split @@split_qualifiers
-        # end
       end
-
-      # Internally, qualifiers are nil if there are none.
-      # This returns an empty array in this case for a nicer API.
+      
+      # Returns the qualifiers as an array.
+      #
+      # Example:
+      #   token.qualifiers # => ['title', 'author']
+      #   token.qualifiers # => []
+      #
+      # Note: Internally, qualifiers are nil if there are none.
       #
       def qualifiers
         @qualifiers || []

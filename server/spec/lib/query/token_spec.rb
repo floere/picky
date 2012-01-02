@@ -139,7 +139,9 @@ describe Picky::Query::Token do
   describe 'qualify' do
     def self.it_should_qualify text, expected_result
       it "should extract the qualifier #{expected_result} from #{text}" do
-        described_class.new(text).qualify.should == expected_result
+        token = described_class.new text
+        token.qualify
+        [token.instance_variable_get(:@qualifiers), token.text].should == expected_result
       end
     end
     it_should_qualify 'spec:qualifier',    [['spec'],      'qualifier']
