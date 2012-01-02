@@ -169,13 +169,16 @@ module Picky
         @qualifiers || []
       end
 
-      #
+      # Returns the token in the form
+      #   ['original:Text', 'processedtext']
       #
       def to_result
         [@original, @text]
       end
 
       # Internal identifier.
+      #
+      # Note: Used in many backends.
       #
       def identifier
         "#{similar?? :similarity : :inverted}:#{@text}"
