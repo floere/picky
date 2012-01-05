@@ -5,6 +5,8 @@ require 'spec_helper'
 
 describe 'Sinatra Index Actions' do
   
+  # This is the application that is tested.
+  #
   class MyPickyServer < Sinatra::Base
     extend Picky::Sinatra::IndexActions
     
