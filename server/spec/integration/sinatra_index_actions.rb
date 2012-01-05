@@ -23,6 +23,9 @@ describe 'Sinatra Index Actions' do
   end
   
   describe 'updating' do
+    before(:each) do
+      Picky::Indexes.clear
+    end
     let(:request) { ::Rack::MockRequest.new MyPickyServer }
     it 'should update the index correctly' do
       request.post('/', params: { index: 'index', data: { id: "1", name: "Florian", surname: "Hanke" } })
@@ -46,6 +49,12 @@ describe 'Sinatra Index Actions' do
       
       results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
       results['total'].should == 1
+    end
+    it 'should have no problem with a superfluous delete' do
+      request.delete('/', params: { index: 'index', data: { id: "1" } })
+      
+      results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+      results['total'].should == 0
     end
   end
   
