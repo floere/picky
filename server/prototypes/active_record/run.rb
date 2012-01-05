@@ -12,7 +12,7 @@ client = Picky::Client.new path: '/search'
 # when stopping/starting.
 #
 p client.search 'surname:mcnama*'
-p client.search 'hanke'
+p client.search 'picky'
 
 Model.new(1, 'Picky', 'McNamara').save
 Model.new(2, 'Florian', 'Hanke').save

@@ -1,0 +1,1 @@
+Note: At some point, the sinatra specific stuff needs to be extracted into its own gem.

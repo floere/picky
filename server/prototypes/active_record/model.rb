@@ -15,7 +15,7 @@ class Model # < ActiveRecord::Base
   
   def save
     puts "Saving #{self.to_json}."
-    index
+    index # after_save callback.
     # Save here.
   end
   
