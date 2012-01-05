@@ -6,11 +6,16 @@ module Picky
       def self.extended base
         base.post '/' do
           index_name = params['index']
-          index = Picky::Indexes[index_name.to_sym] # Get the right index from the indexes.
-          index.replace_from params['data']
+          index = Picky::Indexes[index_name.to_sym]
+          data = params['data']
+          index.replace_from data if data
         end
-        
-        # TODO delete etc.
+        base.delete '/' do
+          index_name = params['index']
+          index = Picky::Indexes[index_name.to_sym]
+          id = params['data']['id']
+          index.remove id if id
+        end
       end
       
     end
