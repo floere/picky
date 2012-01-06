@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. 4.0.8
+
+* hanke: (client/server) Encode data part in JSON.
+
 h2. 4.0.7
 
 * hanke: Experimental ActiveRecord 3.0+ integration release. See below.

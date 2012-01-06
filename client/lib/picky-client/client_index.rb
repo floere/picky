@@ -23,8 +23,10 @@ module Picky
     
     # Sends a request to the Picky server.
     #
+    # Note: Data is JSON encoded.
+    #
     def request request, index_name, data
-      request.form_data = { :index => index_name, :data => data }
+      request.form_data = { :index => index_name, :data => ActiveSupport::JSON.encode(data) }
       Net::HTTP.new(self.host, self.port).start { |http| http.request request }
     end
 

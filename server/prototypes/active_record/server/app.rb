@@ -3,11 +3,12 @@
 require 'active_support/json'
 require 'sinatra/base'
 require File.expand_path '../../../../lib/picky', __FILE__
+require File.expand_path '../../../../lib/picky/sinatra/index_actions', __FILE__
 
-class ExternalDataSearch < Sinatra::Application
+class ExternalDataSearch < Sinatra::Base
 
   include Picky
-  extend Picky::Sinatra
+  extend Sinatra::IndexActions
   
   data = Index.new :models do
     category :id
