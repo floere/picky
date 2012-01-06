@@ -64,6 +64,19 @@ describe Picky::Client::ActiveRecord do
     end
   end
   
+  # describe 'directly extend' do
+  #   let(:ar) { fake_ar.extend(described_class) }
+  #   
+  #   it 'calls the right method in the client' do
+  #     ar.save
+  #   end
+  #     
+  #   it 'calls the right method in the client' do
+  #     ar.destroy
+  #   end
+  #   
+  # end
+  
   context 'with params' do
     let(:client) { stub :client }
     context 'with client' do
