@@ -2,7 +2,11 @@ puts "Start server with 'cd server; thin -p 8080 start'"
 puts "(if you haven't done so already)"
 puts
 
-require File.expand_path '../../../../client/lib/picky-client', __FILE__
+begin
+  require File.expand_path '../../../../client/lib/picky-client', __FILE__
+rescue LoadError
+  require 'picky-client'
+end
 require_relative 'model'
 
 client = Picky::Client.new path: '/search'
