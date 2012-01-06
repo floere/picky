@@ -1,37 +1,37 @@
 h2. Upcoming Version
 
-h2. 4.0.8
+h2. Version 4.0.8 "smoke and mirrors"
 
 * hanke: (client/server) Encode data part in JSON.
 
-h2. 4.0.7
+h2. Version 4.0.7 "supermodel"
 
 * hanke: Experimental ActiveRecord 3.0+ integration release. See below.
 * hanke: (client) ActiveRecord models can now use @extend Picky::Client::ActiveRecord.new(*attributes_to_send, options = {})@ to have the model send updates/deletes back to the Picky server. Note that error handling is not yet built in. The server needs to be up and running.
 * hanke: (server) The Sinatra style server can now @extend Picky::Sinatra::IndexActions@ to install index updating POST/DELETE methods on the "/" path (Note: Currently needs a @require 'picky/sinatra/index_actions'@ beforehand). 
 
-h2. 4.0.6
+h2. Version 4.0.6 "bug #57"
 
 * hanke: (client) Fixed "bug #57":https://github.com/floere/picky/issues/57, multicategory selections in the Javascript user interface.
 
-h2. 4.0.5
+h2. Version 4.0.5 "only :you"
 
 * hanke: (server) Experimental release of @only@ option for searches. Does the same as @only:that_category@, but implicitly, in the search. E.g. @only :cat1, :cat2@.
 
-h2. 4.0.4
+h2. Version 4.0.4 "opinionated environment"
 
 * hanke: (server) Default amount of similar tokens is now set to 3 instead of 10 for phonetic similarities.
 * hanke: (server) Server uses PICKY_ENV environment variable before RUBY_ENV and then RACK_ENV.
 
-h2. Version 4.0.2/3
+h2. Version 4.0.2/3 "mea culpa"
 
 * hanke: (server) Fix for realtime indexing when using specific options.
 
-h2. Version 4.0.1
+h2. Version 4.0.1 "unauthorized"
 
 * hanke: (server) Customized @weight@ and @similarity@ do not need the @saved?@ method anymore.
 
-h2. Version 4.0.0
+h2. Version 4.0.0 "singing in the rain"
 
 * hanke: No changes from 4.0.0pre7.
 
