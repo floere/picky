@@ -75,11 +75,19 @@ describe Picky::Client::ActiveRecord do
       end
     
       it 'calls the right method in the client' do
-        client.should_receive(:index).once.with 'some_index_name', { 'id' => 1, 'name' => 'Niko', 'surname' => 'Dittmann' }
+        client.should_receive(:replace).once.with 'some_index_name', { 'id' => 1, 'name' => 'Niko', 'surname' => 'Dittmann' }
       
         ar.save
       end
+      
+      it 'calls the right method in the client' do
+        client.should_receive(:remove).once.with 'some_index_name', { 'id' => 1 }
+        
+        ar.destroy
+      end
+      
     end
+    
     context 'with client and index' do
       let(:ar_module) { described_class.new :client => client, :index => 'some_other_index_name' }
       let(:ar) { fake_ar.extend(ar_module).new(1, 'Niko', 'Dittmann') }
@@ -89,9 +97,15 @@ describe Picky::Client::ActiveRecord do
       end
     
       it 'calls the right method in the client' do
-        client.should_receive(:index).once.with 'some_other_index_name', { 'id' => 1, 'name' => 'Niko', 'surname' => 'Dittmann' }
+        client.should_receive(:replace).once.with 'some_other_index_name', { 'id' => 1, 'name' => 'Niko', 'surname' => 'Dittmann' }
       
         ar.save
+      end
+      
+      it 'calls the right method in the client' do
+        client.should_receive(:remove).once.with 'some_other_index_name', { 'id' => 1 }
+        
+        ar.destroy
       end
     end
     context 'with client and specific attributes' do
@@ -103,9 +117,15 @@ describe Picky::Client::ActiveRecord do
       end
     
       it 'calls the right method in the client' do
-        client.should_receive(:index).once.with 'some_index_name', { 'id' => 1, 'name' => 'Niko' }
+        client.should_receive(:replace).once.with 'some_index_name', { 'id' => 1, 'name' => 'Niko' }
       
         ar.save
+      end
+      
+      it 'calls the right method in the client' do
+        client.should_receive(:remove).once.with 'some_index_name', { 'id' => 1 }
+        
+        ar.destroy
       end
     end
     context 'standard client' do
@@ -119,7 +139,6 @@ describe Picky::Client::ActiveRecord do
         
         described_class.new :host => 'some_host', :port => :some_port, :path => '/bla'
       end
-      
     end
   end
   

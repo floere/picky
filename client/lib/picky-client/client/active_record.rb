@@ -61,20 +61,18 @@ module Picky
             # updated the data do we want to index.
             #
             model.after_commit do |object|
+              data = { 'id' => object.id }
+              
               if object.destroyed?
                 client.remove index_name, data
               else
-                data = { 'id' => object.id }
-            
                 (attributes || object.attributes.keys).each do |attr|
                   data[attr] = object.respond_to?(attr) &&
                                object.send(attr) ||
                                object[attr]
                 end
                 
-                # TODO Name #replace?
-                #
-                client.index index_name, data
+                client.replace index_name, data
               end
             end
           
