@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+h2. 4.0.7
+
+* hanke: Experimental ActiveRecord 3.0+ integration release. See below.
+* hanke: (client) ActiveRecord models can now use @extend Picky::Client::ActiveRecord.new(*attributes_to_send, options = {})@ to have the model send updates/deletes back to the Picky server. Note that error handling is not yet built in. The server needs to be up and running.
+* hanke: (server) The Sinatra style server can now @extend Picky::Sinatra::IndexActions@ to install index updating POST/DELETE methods on the "/" path. 
+
 h2. 4.0.6
 
 * hanke: (client) Fixed "bug #57":https://github.com/floere/picky/issues/57, multicategory selections in the Javascript user interface.
