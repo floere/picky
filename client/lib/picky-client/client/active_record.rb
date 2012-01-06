@@ -1,5 +1,5 @@
 module Picky
-  module Client
+  class Client
     
     # An ActiveRecord integration that uses the
     # Picky HTTP client to send index updates
@@ -30,6 +30,10 @@ module Picky
       #
       # Note: See class documentation for a description.
       #
+      # Examples:
+      #   Picky::Client::ActiveRecord.new
+      #   Picky::Client::ActiveRecord.new('name', 'surname', index: 'some_index_name')
+      #
       # Options:
       #   * index: The index name to save to.
       #   * host: The host where the Picky server is.
@@ -52,20 +56,26 @@ module Picky
           define_method :extended do |model|
             attributes = nil if attributes.empty?
             index_name ||= model.table_name
-          
-            model.after_save do |object|
-              data = { 'id' => object.id }
             
-              (attributes || object.attributes.keys).each do |attr|
-                data[attr] = object.respond_to?(attr) &&
-                             object.send(attr) ||
-                             object[attr]
+            # Only after the database has actually
+            # updated the data do we want to index.
+            #
+            model.after_commit do |object|
+              if object.destroyed?
+                client.remove index_name, data
+              else
+                data = { 'id' => object.id }
+            
+                (attributes || object.attributes.keys).each do |attr|
+                  data[attr] = object.respond_to?(attr) &&
+                               object.send(attr) ||
+                               object[attr]
+                end
+                
+                # TODO Name #replace?
+                #
+                client.index index_name, data
               end
-            
-              puts "Saving #{data} to index #{index_name}."
-            
-              # TODO Actually saving changes by calling the
-              # client#index(index_name, data) method.
             end
           
           end

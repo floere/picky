@@ -8,3 +8,5 @@ require File.expand_path('picky-client/client', dir)
 require File.expand_path('picky-client/convenience', dir)
 require File.expand_path('picky-client/helper', dir)
 require File.expand_path('picky-client/extensions/object', dir)
+
+require File.expand_path('picky-client/client/active_record', dir)
