@@ -57,7 +57,7 @@ describe Picky::Client::ActiveRecord do
   end
   
   context 'default module' do
-    let(:ar_module) { described_class.new }
+    let(:ar_module) { described_class.configure }
     
     it 'is (also) a module' do
       ar_module.should be_kind_of(Module)
@@ -80,7 +80,7 @@ describe Picky::Client::ActiveRecord do
   context 'with params' do
     let(:client) { stub :client }
     context 'with client' do
-      let(:ar_module) { described_class.new :client => client }
+      let(:ar_module) { described_class.configure :client => client }
       let(:ar) { fake_ar.extend(ar_module).new(1, 'Niko', 'Dittmann') }
     
       it 'is a module' do
@@ -102,7 +102,7 @@ describe Picky::Client::ActiveRecord do
     end
     
     context 'with client and index' do
-      let(:ar_module) { described_class.new :client => client, :index => 'some_other_index_name' }
+      let(:ar_module) { described_class.configure :client => client, :index => 'some_other_index_name' }
       let(:ar) { fake_ar.extend(ar_module).new(1, 'Niko', 'Dittmann') }
     
       it 'is a module' do
@@ -122,7 +122,7 @@ describe Picky::Client::ActiveRecord do
       end
     end
     context 'with client and specific attributes' do
-      let(:ar_module) { described_class.new 'name', :client => client }
+      let(:ar_module) { described_class.configure 'name', :client => client }
       let(:ar) { fake_ar.extend(ar_module).new(1, 'Niko', 'Dittmann') }
     
       it 'is a module' do
@@ -145,12 +145,12 @@ describe Picky::Client::ActiveRecord do
       it 'instantiates the client correctly' do
         Picky::Client.should_receive(:new).once.with :path => '/'
         
-        described_class.new
+        described_class.configure
       end
       it 'instantiates the client correctly' do
         Picky::Client.should_receive(:new).once.with :host => 'some_host', :port => :some_port, :path => '/bla'
         
-        described_class.new :host => 'some_host', :port => :some_port, :path => '/bla'
+        described_class.configure :host => 'some_host', :port => :some_port, :path => '/bla'
       end
     end
   end

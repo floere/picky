@@ -16,5 +16,7 @@ end
 # Fake ActiveRecord model.
 #
 class Model < ActiveRecord::Base
-  extend Picky::Client::ActiveRecord.new
+  # Default options just as an example.
+  #
+  extend Picky::Client::ActiveRecord.configure(host: 'localhost', port: 8080, path: '/')
 end

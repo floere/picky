@@ -31,8 +31,8 @@ module Picky
       # Note: See class documentation for a description.
       #
       # Examples:
-      #   Picky::Client::ActiveRecord.new
-      #   Picky::Client::ActiveRecord.new('name', 'surname', index: 'some_index_name')
+      #   Picky::Client::ActiveRecord.configure
+      #   Picky::Client::ActiveRecord.configure('name', 'surname', index: 'some_index_name')
       #
       # Options:
       #   * index: The index name to save to.
@@ -41,6 +41,9 @@ module Picky
       #   * path: The path the Picky server uses for index updates (use e.f. extend Picky::Sinatra::IndexActions to open up a HTTP indexing interface).
       #   * client: The client to use if you want to pass in your own (host, port, path options will be ignored).
       #
+      def self.configure *attributes
+        new *attributes
+      end
       def initialize *attributes
         options = {}
         options = attributes.pop if attributes.last.respond_to?(:to_hash)
