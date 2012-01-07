@@ -4,10 +4,8 @@ require 'active_support/json'
 require 'sinatra/base'
 begin
   require File.expand_path '../../../../lib/picky', __FILE__
-  require File.expand_path '../../../../lib/picky/sinatra/index_actions', __FILE__
 rescue LoadError
   require 'picky'
-  require 'picky/sinatra/index_actions'
 end
 
 

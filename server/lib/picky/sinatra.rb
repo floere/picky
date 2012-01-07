@@ -1,3 +1,7 @@
+# Enable index actions.
+#
+require_relative 'sinatra/index_actions'
+
 module Picky
 
   # This Module is used to install delegator methods
@@ -31,7 +35,4 @@ end
 #
 if private_methods.include? :get
   extend Picky::Sinatra
-  # Enable index actions.
-  #
-  require_relative 'sinatra/index_actions'
 end
