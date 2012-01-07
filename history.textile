@@ -2,7 +2,7 @@ h2. Upcoming Version
 
 h2. Version 4.0.9 "new york new york"
 
-* hanke: (client) @Picky::Client::ActiveRecord.configure(options)@ added as an alias of @new@.
+* hanke: (client) @Picky::Client::ActiveRecord.configure(options)@ added as an alias of @new@ (thanks auastro!).
 * hanke: (server) @require 'picky/sinatra/index_actions'@ is not necessary anymore to load the index actions. They are required automatically with @require 'picky/sinatra'@.
 
 h2. Version 4.0.8 "smoke and mirrors"
