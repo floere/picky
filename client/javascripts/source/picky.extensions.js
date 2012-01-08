@@ -13,3 +13,7 @@ Array.prototype.remove = function(index) {
   this.splice(index, 1);
   return this;
 };
+
+Array.prototype.compare = function(other) {
+  return this.join('') == other.join('');
+};
