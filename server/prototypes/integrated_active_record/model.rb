@@ -17,10 +17,15 @@ end
 # Fake ActiveRecord model.
 #
 class Model < ActiveRecord::Base
-  extend(Picky::ActiveRecord.new(:models) do
-    Picky::Index.new :models do
-      category :name
-      category :surname
-    end
-  end)
+  include Picky::ActiveRecord
+  
+  index = Picky::Index.new :models do
+    category :name
+    category :surname
+  end
+  
+  search = Picky::Search.new index
+  
+  updates_picky index
+  searches_picky search
 end
