@@ -36,7 +36,6 @@ class Model < ActiveRecord::Base
     define_method :search do |*args|
       models.search *args
     end
-    
   end
   after_commit do
     if destroyed?
