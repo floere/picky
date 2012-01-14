@@ -8,5 +8,6 @@ js -f spec_helper.js \
    spec/picky.extensions.spec.js
 
 js -f spec_helper.js \
+   -f source/picky.extensions.js \
    -f source/picky.data.js \
    spec/picky.data.spec.js

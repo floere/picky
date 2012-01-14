@@ -53,5 +53,19 @@ describe(
 	      });
 	    }
 	  );
+    describe(
+      "each",
+		  null,
+		  function() {
+	      it("is correct", function() {
+          result = true;
+          comparison = [1,2,3,4,5];
+	        [1,2,3,4,5].each(function(i, element) {
+            result = result && (element === comparison.shift());
+          });
+          return result;
+	      });
+	    }
+	  );
   }
 );

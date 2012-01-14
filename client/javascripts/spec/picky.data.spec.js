@@ -19,5 +19,14 @@ describe(
 	      });
 	    }
 	  );
+    describe(
+      "renderedAmount",
+		  null,
+		  function() {
+	      it("is correct", function() {
+	        return data.renderedAmount() == 0;
+	      });
+	    }
+	  );
   }
 );

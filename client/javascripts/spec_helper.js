@@ -12,7 +12,7 @@ it = function(should, callback) {
   if (result) {
     print('.');
   } else {
-    print('F');
+    print('F - was not ' + should + ' : ' + callback);
   };
 };
 
