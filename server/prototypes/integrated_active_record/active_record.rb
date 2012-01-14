@@ -19,8 +19,7 @@ module Picky
       def self.included model
         model.class.class_eval do
           
-          define_method :updates_picky do |index_or_index_name = nil|
-            index_or_index_name ||= model.name.tableize
+          define_method :updates_picky do |index_or_index_name = model.name.tableize|
             index = index_or_index_name.respond_to?(:to_sym) ?
                     Picky::Indexes[index_or_index_name.to_sym] :
                     index_or_index_name
