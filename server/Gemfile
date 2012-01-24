@@ -18,6 +18,7 @@ group :test do
 
   # Needed to test optional data sources etc.
   #
+  gem 'sinatra'
   gem 'www-delicious'
   gem 'rest-client'
   gem 'uuidtools'
