@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.1.0 "identification needed"
+
+* hanke: (server) @Picky::Results#ids(only = nil)@ returns the amount of ids originally requested, except if an @only@ amount gets passed in (then that amount is used).
+
 h2. Version 4.0.9 "new york new york"
 
 * hanke: (client) @Picky::Client::ActiveRecord.configure(options)@ added as an alias of @new@ (thanks auastro!).

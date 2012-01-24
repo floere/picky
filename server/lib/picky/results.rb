@@ -49,7 +49,7 @@ module Picky
     # a reference to the result.
     #
     def ids only = nil
-      allocations.ids only ? only : amount
+      allocations.ids only || amount
     end
 
     # The total results. Delegates to the allocations.

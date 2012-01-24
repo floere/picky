@@ -14,6 +14,7 @@ describe 'Sinatra Index Actions' do
       category :name
       category :surname
     end
+    
     people = Picky::Search.new data
     
     get '/people' do
