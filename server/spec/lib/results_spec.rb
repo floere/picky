@@ -17,13 +17,19 @@ describe Picky::Results do
   describe "ids" do
     before(:each) do
       @allocations = stub :allocations
-      @results = described_class.new :unimportant, :unimportant, :unimportant, @allocations
+      @results = described_class.new :unimportant, :amount, :unimportant, @allocations
     end
     it "delegates" do
       @allocations.should_receive(:ids).once.with :anything
 
       @results.ids :anything
     end
+    it "delegates and uses amount if nothing given" do
+      @allocations.should_receive(:ids).once.with :amount
+
+      @results.ids
+    end
+    
   end
 
   describe 'to_s time format' do

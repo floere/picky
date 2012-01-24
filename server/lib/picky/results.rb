@@ -41,8 +41,15 @@ module Picky
 
     # Delegates to allocations.
     #
-    def ids amount = 20
-      allocations.ids amount
+    # TODO Remove parameter in 5.0 and just call
+    # the method with amount.
+    #
+    # Note that this is an expensive call and
+    # should not be done repeatedly. Just keep
+    # a reference to the result.
+    #
+    def ids only = nil
+      allocations.ids only ? only : amount
     end
 
     # The total results. Delegates to the allocations.
