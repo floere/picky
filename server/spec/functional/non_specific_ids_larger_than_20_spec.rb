@@ -16,11 +16,11 @@ describe 'Location search with live updates' do
 
     stuff = Picky::Search.new data
 
-    result = stuff.search 'titel:japan', 50
+    result = stuff.search 'titel:japan', 10000
     result.total.should == 50
     result.ids.size.should == 50
     
-    result = stuff.search 'japan', 50
+    result = stuff.search 'japan', 10000
     result.total.should == 100
     result.ids.size.should == 100
   end
