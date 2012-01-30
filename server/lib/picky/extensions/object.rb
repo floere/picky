@@ -1,5 +1,7 @@
 class Object # :nodoc:all
-
+  
+  # TODO Remove.
+  
   # Puts a text in the form:
   #   12:34:56: text here
   #
@@ -10,8 +12,8 @@ class Object # :nodoc:all
   # Just puts the given text.
   #
   def exclaim text
-    STDOUT.puts text
-    STDOUT.flush
+    Picky.logger.info text
+    Picky.logger.flush
   end
 
   # Puts a text that informs the user of a missing gem.

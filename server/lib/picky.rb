@@ -32,5 +32,7 @@ module Picky
   class << self
     attr_accessor :logger
   end
+  
+  self.logger = Loggers::Default
 
 end

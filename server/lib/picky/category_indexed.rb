@@ -7,7 +7,7 @@ module Picky
     # Loads the index from cache.
     #
     def load
-      timed_exclaim %Q{  "#{identifier}": Loading index from cache.}
+      Picky.logger.load self
       clear_realtime # THINK Should we really explicitly clear the realtime? Or should it just be loaded?
       exact.load
       partial.load

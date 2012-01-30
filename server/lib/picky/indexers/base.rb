@@ -40,7 +40,7 @@ module Picky
       end
 
       def notify_finished prepared_file
-        timed_exclaim %Q{  "#{@index_or_category.identifier}": Tokenized -> #{prepared_file.path.gsub("#{PICKY_ROOT}/", '')}.}
+        Picky.logger.tokenize @index_or_category, prepared_file
       end
 
     end

@@ -6,12 +6,10 @@ module Picky
     module Indexing
 
       include Measuring
-
-      # Returns a duration in seconds.
-      #
+      
       def timed_indexing scheduler, &block
-        timed_exclaim "Indexing using #{scheduler.fork? ? 'multiple processes' : 'a single process'}."
-        timed_exclaim "Indexing finished after #{timed(&block).round}s."
+        Picky.logger.info "Picky is indexing using #{scheduler.fork? ? 'multiple processes' : 'a single process'}: "
+        Picky.logger.info " Done in #{timed(&block).round}s.\n"
       end
 
     end
