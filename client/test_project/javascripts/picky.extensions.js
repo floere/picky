@@ -13,3 +13,14 @@ Array.prototype.remove = function(index) {
   this.splice(index, 1);
   return this;
 };
+
+Array.prototype.compare = function(other) {
+  return this.join('') == other.join('');
+};
+
+Array.prototype.each = function(callback) {
+  for(var i = 0, l = this.length; i < l; i++) {
+    callback(i, this[i]);
+  }
+  return this;
+}

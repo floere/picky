@@ -1,5 +1,6 @@
 var PickyResultsRenderer = function(addination, config) {
   
+  var results = $(config['resultsSelector'] || '#picky div.results');
   var allocationWrapper = config['wrapResults'] || '<ol class="results"></ol>';
   
   // Adds asterisks to the last token.
@@ -98,9 +99,6 @@ var PickyResultsRenderer = function(addination, config) {
   // Render results with the data.
   //
   this.render = function(data) {
-    // TODO Extract, also from view.
-    //
-    var results = $('#picky div.results');
     data.allocations.each(function(i, allocation) {
       // Only render if there is something to render.
       // TODO Move into methods.

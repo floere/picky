@@ -5,14 +5,15 @@ var PickyView = function(picky_controller, config) {
   
   var showResultsLimit = config.showResultsLimit || 10;
   
-  var searchField    = $('#picky input.query');
-  var clearButton    = $('#picky div.reset');
-  var searchButton   = $('#picky input.search_button');
-  var resultCounter  = $('#picky div.status');
-  var dashboard      = $('#picky .dashboard');
-                     
-  var results        = $('#picky .results'); // Push into results.
-  var noResults      = $('#picky .no_results');
+  var searchField    = $(config['inputSelector'] || '#picky input.query');
+  var clearButton    = $(config['resetSelector'] || '#picky div.reset');
+  var searchButton   = $(config['buttonSelector'] || '#picky input.search_button');
+  var resultCounter  = $(config['counterSelector'] || '#picky div.status');
+  var dashboard      = $(config['dashboardSelector'] || '#picky .dashboard');
+	
+  // Push into results.
+  var results        = $(config['resultsSelector'] || '#picky div.results');
+  var noResults      = $(config['noResultsSelector'] || '#picky .no_results');
                      
   var addination     = new PickyAddination(this, results); // Push into results.
   
