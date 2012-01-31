@@ -81,7 +81,7 @@ describe BookSearch do
 
   it 'finds the same after reloading' do
     csv.search('soledad human').ids.should == [72]
-    puts "Reloading the Indexes."
+    Picky.logger.info "Reloading"
     Picky::Indexes.load
     csv.search('soledad human').ids.should == [72]
   end

@@ -38,7 +38,7 @@ function Allocations(allocations) {
   this.length = this.allocations.length;
   
   this.each = function(callback) {
-    return $.each(this.allocations, callback);
+    return this.allocations.each(callback);
   };
 };
 

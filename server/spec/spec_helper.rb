@@ -18,12 +18,12 @@ Object.send :remove_const, :PICKY_ROOT
 PICKY_ROOT = 'spec/test_directory'
 puts "Redefined PICKY_ROOT to '#{PICKY_ROOT}' for the tests."
 
-Picky.logger = Logger.new STDOUT
-puts "Using STDOUT as test log."
+Picky.logger = Picky::Loggers::Silent.new STDOUT
+puts "Using Picky::Loggers::Silent.new(STDOUT) as test logger."
 
 class Object
   def exclaim(*)
-    # Tke sound of silence.
+    # The sound of silence.
   end
 end
 

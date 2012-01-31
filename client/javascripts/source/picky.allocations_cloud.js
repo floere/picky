@@ -1,6 +1,6 @@
 var PickyAllocationsCloud = function(view, config) {
   
-  var allocations         = $('#picky .allocations');
+  var allocations         = $(config['allocationsSelector'] || '#picky .allocations');
   var shownAllocations    = allocations.find('.shown');
   var showMoreAllocations = allocations.find('.more');
   var hiddenAllocations   = allocations.find('.hidden');

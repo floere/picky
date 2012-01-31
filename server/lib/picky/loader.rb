@@ -192,6 +192,13 @@ module Picky
         load_relative 'api/category/partial'
         load_relative 'api/category/similarity'
         load_relative 'api/search/boost'
+        
+        # Loggers.
+        #
+        load_relative 'loggers/silent'
+        load_relative 'loggers/concise'
+        load_relative 'loggers/verbose'
+        load_relative 'loggers/default'
 
         # Tokenizer.
         #

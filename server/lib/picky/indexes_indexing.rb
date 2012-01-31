@@ -26,7 +26,7 @@ module Picky
       indexes.each { |index| index.prepare scheduler }
       scheduler.finish
 
-      timed_exclaim "Tokenizing finished, generating data for indexes from tokenized data."
+      # timed_exclaim "Tokenizing finished, generating data for indexes from tokenized data."
 
       indexes.each { |index| index.cache scheduler }
       scheduler.finish

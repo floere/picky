@@ -20,6 +20,8 @@ class ChangingItem
 
 end
 
+Picky.logger = Picky::Loggers::Verbose.new
+
 class BookSearch < Sinatra::Application
 
   include Picky

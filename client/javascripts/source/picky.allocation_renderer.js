@@ -103,8 +103,6 @@ function AllocationRenderer(allocationChosenCallback, config) {
       var word     = original_token[2];
 	  
       if (formatting.filter) { word = formatting.filter(word); }
-      
-	  console.log(word);
 	  
       var explanation = explanations[category] || category;
       if (single && !(formatting && formatting.ignoreSingle)) {
