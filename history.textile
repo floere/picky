@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 4.2.1 "fries with that"
+
+* hanke: (server) Experimental extensions to get Picky run on MacRuby 0.12.
+* hanke: (server) Unfortunately, we dom't have the resources to always run the tests – please use with caution.
+
 h2. Version 4.2.0 "talk to the hand"
 
 * hanke: (server) Redesigned how Picky logs: Picky itself logs its index handling (tokenizing/dumping/loading) using one of its built-in loggers. Set a logger after requiring 'picky' like this: @Picky.logger = Picky::Loggers::Verbose.new(STDOUT) # or any IO@. Default is @Picky::Loggers::Concise.new(STDOUT)@ aka @Picky::Loggers::Default@. Also an option is @Picky::Loggers::Silent@. This closes "issue 70":https://github.com/floere/picky/issues/70.

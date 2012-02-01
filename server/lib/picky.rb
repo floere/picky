@@ -10,7 +10,15 @@ module Picky
   require 'yajl'
   require 'procrastinate'
   require 'rack_fast_escape' if defined? Rack
-
+  
+  # Check if platform specific modifiers need to be installed.
+  #
+  
+  # Note: We don't use require_relative because MacRuby doesn't
+  # have it.
+  #
+  require File.expand_path '../picky/platforms/macruby', __FILE__
+  
   # Require the constants.
   #
   require_relative 'picky/constants'
