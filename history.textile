@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.2.4 "fileutils"
+
+* hanke: (server) Require fileutils regardless of the Ruby version Picky is run in. 
+
 h2. Version 4.2.3 "overbird"
 
 * hanke: (server) Require fileutils in case we run Picky on MacRuby (thanks overbryd).

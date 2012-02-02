@@ -7,12 +7,6 @@ if RUBY_ENGINE == 'macruby' && !Kernel.respond_to?(:require_relative)
   
   puts "Installing Picky specific MacRuby extensions."
   
-  # Note by @overbryd in https://gist.github.com/1710233:
-  # require fileutils to use FileUtils. Otherwise an error gets raised.
-  # uninitialized constant Picky::Backends::Helpers::File::FileUtils (NameError)
-  #
-  require 'fileutils'
-  
   module Kernel
     
     def require_relative relative_feature
