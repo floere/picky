@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.2.2 "cheese royale"
+
+* hanke: (server) Use the "standard" way to detect the Ruby engine used for MacRuby.
+
 h2. Version 4.2.1 "fries with that"
 
 * hanke: (server) Experimental extensions to get Picky run on MacRuby 0.12.

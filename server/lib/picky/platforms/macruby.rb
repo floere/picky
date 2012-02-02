@@ -3,7 +3,7 @@
 #
 # TODO Remove (too verbose) message as soon as it is final.
 #
-if Kernel.respond_to?(:to_plist) && !Kernel.respond_to?(:require_relative)
+if RUBY_ENGINE == 'macruby' && !Kernel.respond_to?(:require_relative)
   
   puts "Installing Picky specific MacRuby extensions."
   
