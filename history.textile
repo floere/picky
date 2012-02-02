@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.2.3 "overbird"
+
+* hanke: (server) Require fileutils in case we run Picky on MacRuby (thanks overbryd).
+
 h2. Version 4.2.2 "cheese royale"
 
 * hanke: (server) Use the "standard" way to detect the Ruby engine used for MacRuby.
