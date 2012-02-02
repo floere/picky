@@ -10,6 +10,7 @@ module Picky
   require 'yajl'
   require 'procrastinate'
   require 'rack_fast_escape' if defined? Rack
+  require 'fileutils'
   
   # Check if platform specific modifiers need to be installed.
   #
