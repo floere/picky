@@ -15,3 +15,5 @@ server/dump.rdb
 config
 
 coverage
+.rbenv*
+sandbox/
