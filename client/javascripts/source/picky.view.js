@@ -10,6 +10,7 @@ var PickyView = function(picky_controller, config) {
   var searchButton   = config['button'];
   var resultCounter  = config['counter'];
   var dashboard      = config['dashboard'];
+  var moreSelector   = config['moreSelector']; // e.g. "#picky div.results div.addination:last"
 	
   // Push into results.
   //
@@ -126,7 +127,7 @@ var PickyView = function(picky_controller, config) {
   };
   
   var appendResults = function(data) {
-    var position = $("#picky div.results div.addination:last").position().top;
+    var position = $(moreSelector).position().top;
     
     addination.remove(); // TODO Where should this be?
     resultsRenderer.render(data);

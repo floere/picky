@@ -1,10 +1,7 @@
 var Localization = {};
 var PickyI18n = { };
 
-// Set the correct locale for all Picky js code using
-// the "lang" attribute on the "html" html element.
-//
-// Note: Default is 'en'.
+// Set the correct locale for all js code.
 //
 $(function() {
   PickyI18n.locale = $('html').attr('lang').split('-')[0] || 'en';
@@ -18,24 +15,6 @@ var PickyClient = function(config) {
   // The following part handles all of the parameters.
   // jQuery selectors are executed.
   //
-  
-  // View config.
-  //
-  config['input']     = $(config['inputSelector']     || '#picky input.query');
-  config['reset']     = $(config['resetSelector']     || '#picky div.reset');
-  config['button']    = $(config['buttonSelector']    || '#picky input.search_button');
-  config['counter']   = $(config['counterSelector']   || '#picky div.status');
-  config['dashboard'] = $(config['dashboardSelector'] || '#picky .dashboard');
-  config['results']   = $(config['resultsSelector']   || '#picky div.results');
-  config['noResults'] = $(config['noResultsSelector'] || '#picky .no_results');
-  
-  // Allocations cloud.
-  //
-  config['allocations']         = $(config['allocationsSelector'] || '#picky .allocations');
-  config['shownAllocations']    = config['allocations'].find('.shown');
-  config['showMoreAllocations'] = config['allocations'].find('.more');
-  config['hiddenAllocations']   = config['allocations'].find('.hidden');
-  
   
   // This is used to generate the correct query strings, localized.
   //
@@ -79,6 +58,34 @@ var PickyClient = function(config) {
     };
   }
   
+  // Enclosing selector.
+  //
+  var enclosingSelector = config['enclosingSelector'] || '#picky';
+  
+  // View config.
+  //
+  config['input']        = $(config['inputSelector']     || (enclosingSelector + ' input.query'));
+  config['reset']        = $(config['resetSelector']     || (enclosingSelector + ' div.reset'));
+  config['button']       = $(config['buttonSelector']    || (enclosingSelector + ' input.search_button'));
+  config['counter']      = $(config['counterSelector']   || (enclosingSelector + ' div.status'));
+  config['dashboard']    = $(config['dashboardSelector'] || (enclosingSelector + ' .dashboard'));
+  config['results']      = $(config['resultsSelector']   || (enclosingSelector + ' div.results'));
+  config['noResults']    = $(config['noResultsSelector'] || (enclosingSelector + ' .no_results'));
+  config['moreSelector'] =   config['moreSelector']      ||  enclosingSelector + ' div.results div.addination:last';
+  
+  // Allocations cloud.
+  //
+  config['allocations']         = $(config['allocationsSelector'] || (enclosingSelector + ' .allocations'));
+  config['shownAllocations']    = config['allocations'].find('.shown');
+  config['showMoreAllocations'] = config['allocations'].find('.more');
+  config['hiddenAllocations']   = config['allocations'].find('.hidden');
+  
+  // Results rendering.
+  //
+  config['results']     = $(config['resultsSelector'] || (enclosingSelector + ' div.results'));
+  config['noAsterisks'] = config['noAsterisks'] || []; // e.g. ['category1', 'category2']
+  config['wrapResults'] = config['wrapResults'] || '<ol class="results"></ol>';
+  
   // The central Picky controller.
   //
   var controller = config.controller && new config.controller(config) || new PickyController(config);
@@ -100,9 +107,18 @@ var PickyClient = function(config) {
     if (override && override != '') {
       insert(override);
     } else {
-      var lastQuery = controller.lastQuery();
-      lastQuery && insert(lastQuery);
+      resend();
     }
+  };
+  
+  // Resends the last query text.
+  //
+  // Note: Other variables apart from the text
+  // could have changed.
+  //
+  this.resend = function() {
+    var lastQuery = controller.lastQuery();
+    lastQuery && insert(lastQuery);
   };
   
   // Bind adapter to let the back/forward button start queries.

@@ -1,16 +1,16 @@
 var PickyResultsRenderer = function(addination, config) {
   
-  var results = $(config['resultsSelector'] || '#picky div.results');
-  var allocationWrapper = config['wrapResults'] || '<ol class="results"></ol>';
+  var results           = config['results'];
+  var allocationWrapper = config['wrapResults'];
+  var noAsterisks       = config['noAsterisks'];
   
   // Adds asterisks to the last token.
   //
-  var no_asterisks = ['street_number', 'zipcode']; // TODO Works. Parametrize!
   var asteriskifyLastToken = function(combination) {
     var last_part = combination[combination.length-1];
     var parts = combination.slice(0, combination.length-1);
     if (parts == []) { parts = [parts]; }
-    if (!no_asterisks.include(last_part[0])) {
+    if (!noAsterisks.include(last_part[0])) {
       // Replace with * unless there is already one or a tilde.
       //
       if (last_part[1].match(/[^\*~]$/)) { last_part[1] += '*'; }
