@@ -98,16 +98,12 @@ var PickyClient = function(config) {
   };
   var insert = this.insert;
   
-  // Resends the last query text.
+  // Resends the last query text, full/live.
   //
   // Note: Other variables apart from the text
   // could have changed.
   //
-  var resend = function() {
-    var lastQuery = controller.lastQuery();
-    lastQuery && insert(lastQuery);
-  };
-  this.resend = resend;
+  this.resend = controller.resend;
   
   // Takes a query or nothing as parameter.
   //
@@ -118,7 +114,8 @@ var PickyClient = function(config) {
     if (override && override != '') {
       insert(override);
     } else {
-      resend();
+      var lastFullQuery = controller.lastFullQuery();
+      lastFullQuery && insert(lastFullQuery);
     }
   };
   

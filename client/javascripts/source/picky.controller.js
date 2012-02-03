@@ -10,6 +10,8 @@ var PickyController = function(config) {
   var liveRendered            = config.liveRendered       || false;
   var liveSearchTimerInterval = config.liveSearchInterval || 180;
   
+  var lastQueryParams;
+  
   // Extracts the query part from an URL.
   //
   var extractQuery = function(url) {
@@ -20,19 +22,30 @@ var PickyController = function(config) {
   
   // Failsafe extraction of the last made query.
   //
-  var lastQuery = function() {
+  var lastFullQuery = function() {
     var state = window.History && window.History.getState();
     var url = state && state.url;
     return extractQuery(url);
   };
-  this.lastQuery = lastQuery;
+  this.lastFullQuery = lastFullQuery;
   
   // If the given backend cannot be found, ignore the search request.
   //
   var search = function(type, query, callback, specificParams) {
+    lastQueryParams = [type, query, callback, specificParams];
+    
+    query = beforeCallback(query, specificParams) || query;
+    
     var currentBackend = backends[type];
     if (currentBackend) { currentBackend.search(query, callback, specificParams); };
   };
+  
+  // Resend the last query as it was.
+  //
+  var resend = function() {
+    if (lastQueryParams) { search.apply(this, lastQueryParams); }
+  };
+  this.resend = resend;
   
   var fullSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
@@ -42,21 +55,18 @@ var PickyController = function(config) {
     afterCallback(data, query);
   };
   var fullSearch = function(query, possibleParams) {
-    var params = possibleParams || {};
     clearInterval(liveSearchTimerId);
     
     // Be extra cautious since not all browsers/histories offer pushState.
     //
     // Note: If this query is the same as the last, we do not save it in the history.
     //
-    if (query != lastQuery()) {
+    if (query != lastFullQuery()) {
       var url = "?q=" + escape(query).replace(/\*/g,'%2A');
       window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
     }
       
-    query = beforeCallback(query, params) || query;
-    
-    search('full', query, fullSearchCallback, params);
+    search('full', query, fullSearchCallback, possibleParams || {});
   };
   
   var liveSearchCallback = function(data, query) {
@@ -68,11 +78,7 @@ var PickyController = function(config) {
   };
   var liveCallbackUsed = liveRendered ? fullSearchCallback : liveSearchCallback;
   var liveSearch = function(query, possibleParams) {
-    var params = possibleParams || {};
-    
-    query = beforeCallback(query, params) || query;
-    
-    search('live', query, liveCallbackUsed, params);
+    search('live', query, liveCallbackUsed, possibleParams || {});
   };
   
   // The timer is initially instantly stopped.
