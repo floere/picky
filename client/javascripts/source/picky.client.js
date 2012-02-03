@@ -1,12 +1,38 @@
 var Localization = {};
+var PickyI18n = { };
+
+// Set the correct locale for all js code.
+//
+$(function() {
+  PickyI18n.locale = $('html').attr('lang').split('-')[0] || 'en';
+});
 
 // The client handles parameters and
 // offers an insert method.
 //
 var PickyClient = function(config) {
   
-  // Params handling.
+  // The following part handles all of the parameters.
+  // jQuery selectors are executed.
   //
+  
+  // View config.
+  //
+  config['input']     = $(config['inputSelector']     || '#picky input.query');
+  config['reset']     = $(config['resetSelector']     || '#picky div.reset');
+  config['button']    = $(config['buttonSelector']    || '#picky input.search_button');
+  config['counter']   = $(config['counterSelector']   || '#picky div.status');
+  config['dashboard'] = $(config['dashboardSelector'] || '#picky .dashboard');
+  config['results']   = $(config['resultsSelector']   || '#picky div.results');
+  config['noResults'] = $(config['noResultsSelector'] || '#picky .no_results');
+  
+  // Allocations cloud.
+  //
+  config['allocations']         = $(config['allocationsSelector'] || '#picky .allocations');
+  config['shownAllocations']    = config['allocations'].find('.shown');
+  config['showMoreAllocations'] = config['allocations'].find('.more');
+  config['hiddenAllocations']   = config['allocations'].find('.hidden');
+  
   
   // This is used to generate the correct query strings, localized.
   //

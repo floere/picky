@@ -1,9 +1,9 @@
 var PickyAllocationsCloud = function(view, config) {
   
-  var allocations         = $(config['allocationsSelector'] || '#picky .allocations');
-  var shownAllocations    = allocations.find('.shown');
-  var showMoreAllocations = allocations.find('.more');
-  var hiddenAllocations   = allocations.find('.hidden');
+  var allocations         = config['allocations'];
+  var shownAllocations    = config['shownAllocations'];
+  var showMoreAllocations = config['showMoreAllocations'];
+  var hiddenAllocations   = config['hiddenAllocations'];
   
   // Show the cloud.
   //
@@ -48,7 +48,7 @@ var PickyAllocationsCloud = function(view, config) {
   
   var renderList = function(list) {
     if (list.length == 0) {
-      return $('#search .allocations').hide();
+      return allocations.hide();
     }
     var maxSuggestions = 3;
     clearAllocationCloud();
@@ -67,7 +67,7 @@ var PickyAllocationsCloud = function(view, config) {
         shownAllocations.append(item);
       });
     }
-    return $('#search .allocations').show();
+    return allocations.show();
   };
   
   // Render the allocation list.

@@ -220,7 +220,7 @@ function AllocationRenderer(allocationChosenCallback, config) {
     return self;
   };
   
-  //
+  // TODO Extract.
   //
   var listItem = function(text, count) {
     return $('<li><div class="text">' + text + '</div><div class="count">' + count + '</div></li>');
