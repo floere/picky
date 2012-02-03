@@ -98,6 +98,17 @@ var PickyClient = function(config) {
   };
   var insert = this.insert;
   
+  // Resends the last query text.
+  //
+  // Note: Other variables apart from the text
+  // could have changed.
+  //
+  var resend = function() {
+    var lastQuery = controller.lastQuery();
+    lastQuery && insert(lastQuery);
+  };
+  this.resend = resend;
+  
   // Takes a query or nothing as parameter.
   //
   // And runs a query with it (if $.address exists).
@@ -109,16 +120,6 @@ var PickyClient = function(config) {
     } else {
       resend();
     }
-  };
-  
-  // Resends the last query text.
-  //
-  // Note: Other variables apart from the text
-  // could have changed.
-  //
-  this.resend = function() {
-    var lastQuery = controller.lastQuery();
-    lastQuery && insert(lastQuery);
   };
   
   // Bind adapter to let the back/forward button start queries.
