@@ -7,6 +7,8 @@ var PickyController = function(config) {
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
+  var liveRendered     = config.liveRendered || false;
+  
   // Extracts the query part from an URL.
   //
   var extractQuery = function(url) {
@@ -30,32 +32,6 @@ var PickyController = function(config) {
     var currentBackend = backends[type];
     if (currentBackend) { currentBackend.search(query, callback, specificParams); };
   };
-  
-  var liveSearchCallback = function(data, query) {
-    data = successCallback(data, query) || data;
-    
-    view.liveResultsCallback(data);
-    
-    afterCallback(data, query);
-  };
-  var liveSearch = function(query, possibleParams) {
-    var params = possibleParams || {};
-    
-    query = beforeCallback(query, params) || query;
-    
-    search('live', query, liveSearchCallback, params);
-  };
-  
-  // The timer is initially instantly stopped.
-  //
-  var liveSearchTimerInterval = 180;
-  var liveSearchTimerId;
-  var liveSearchTimerCallback = function() {
-    liveSearch(view.text());
-    clearInterval(liveSearchTimerId);
-  };
-  liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);
-  clearInterval(liveSearchTimerId);
   
   var fullSearchCallback = function(data, query) {
     data = successCallback(data, query) || data;
@@ -82,6 +58,35 @@ var PickyController = function(config) {
     search('full', query, fullSearchCallback, params);
   };
   
+  var liveSearchCallback = function(data, query) {
+    data = successCallback(data, query) || data;
+    
+    view.liveResultsCallback(data);
+    
+    afterCallback(data, query);
+  };
+  var liveCallbackUsed = liveRendered ? fullSearchCallback : liveSearchCallback;
+  var liveSearch = function(query, possibleParams) {
+    var params = possibleParams || {};
+    
+    query = beforeCallback(query, params) || query;
+    
+    search('live', query, liveCallbackUsed, params);
+  };
+  
+  // The timer is initially instantly stopped.
+  //
+  var liveSearchTimerInterval = 180;
+  var liveSearchTimerId;
+  var liveSearchTimerCallback = function() {
+    liveSearch(view.text());
+    clearInterval(liveSearchTimerId);
+  };
+  liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);
+  clearInterval(liveSearchTimerId);
+  
+  //
+  //
   this.insert = function(query, params, full) {
     view.insert(query);
     
