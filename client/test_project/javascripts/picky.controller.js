@@ -7,7 +7,8 @@ var PickyController = function(config) {
   var successCallback  = config.success || function(data, query) {  };
   var afterCallback    = config.after || function(data, query) {  };
   
-  var liveRendered     = config.liveRendered || false;
+  var liveRendered            = config.liveRendered       || false;
+  var liveSearchTimerInterval = config.liveSearchInterval || 180;
   
   // Extracts the query part from an URL.
   //
@@ -76,7 +77,6 @@ var PickyController = function(config) {
   
   // The timer is initially instantly stopped.
   //
-  var liveSearchTimerInterval = 180;
   var liveSearchTimerId;
   var liveSearchTimerCallback = function() {
     liveSearch(view.text());
