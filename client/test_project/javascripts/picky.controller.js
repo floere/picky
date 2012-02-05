@@ -16,7 +16,7 @@ var PickyController = function(config) {
   //
   var extractQuery = function(url) {
     var match = url && url.match(/q=([^&]+)/);
-    return match && unescape(match[1] || "");
+    return match && decodeURIComponent(match[1]).replace(/\+/g, ' ').replace(/#/g, '') || "";
   };
   this.extractQuery = extractQuery;
   
@@ -99,16 +99,10 @@ var PickyController = function(config) {
     if (full) { fullSearch(query, params); }
   };
   
-  var clearButtonClicked = function() {
-    clearInterval(liveSearchTimerId);
-    // liveSearchTimer.stop();
-  };
+  var clearButtonClicked = function() { clearInterval(liveSearchTimerId); };
   this.clearButtonClicked = clearButtonClicked;
   
-  var searchTextCleared  = function() {
-    clearInterval(liveSearchTimerId);
-    // liveSearchTimer.stop();
-  };
+  var searchTextCleared  = function() { clearInterval(liveSearchTimerId); };
   this.searchTextCleared = searchTextCleared;
   
   var shouldTriggerSearch = function(event) {
@@ -131,19 +125,13 @@ var PickyController = function(config) {
   };
   this.searchTextEntered = searchTextEntered;
   
-  var searchButtonClicked = function(text) {
-    fullSearch(text);
-  };
+  var searchButtonClicked = function(text) { fullSearch(text); };
   this.searchButtonClicked = searchButtonClicked;
   
-  var allocationChosen = function(text) {
-    fullSearch(text);
-  };
+  var allocationChosen = function(text) { fullSearch(text); };
   this.allocationChosen = allocationChosen;
   
   // Move to a view object.
-  var addinationClicked = function(text, event) {
-    fullSearch(text, { offset: event.data.offset });
-  };
+  var addinationClicked = function(text, event) { fullSearch(text, { offset: event.data.offset }); };
   this.addinationClicked = addinationClicked;
 };
