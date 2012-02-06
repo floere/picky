@@ -79,12 +79,14 @@ var PickyClient = function(config) {
   config['shownAllocations']    = config['allocations'].find('.shown');
   config['showMoreAllocations'] = config['allocations'].find('.more');
   config['hiddenAllocations']   = config['allocations'].find('.hidden');
+  config['maxSuggestions']      = config['maxSuggestions'] || 3; // How many are shown directly?
   
   // Results rendering.
   //
-  config['results']     = $(config['resultsSelector'] || (enclosingSelector + ' div.results'));
-  config['noAsterisks'] = config['noAsterisks'] || []; // e.g. ['category1', 'category2']
-  config['wrapResults'] = config['wrapResults'] || '<ol class="results"></ol>';
+  config['results']        = $(config['resultsSelector'] || (enclosingSelector + ' div.results'));
+  config['resultsDivider'] = config['resultsDivider'] || '';
+  config['noAsterisks']    = config['noAsterisks'] || []; // e.g. ['category1', 'category2']
+  config['wrapResults']    = config['wrapResults'] || '<ol class="results"></ol>';
   
   // The central Picky controller.
   //
@@ -118,14 +120,5 @@ var PickyClient = function(config) {
       lastFullQuery && insert(lastFullQuery);
     }
   };
-  
-  // Bind adapter to let the back/forward button start queries.
-  //
-  if (window.History) {
-    window.History.Adapter.bind(window, 'statechange', function() {
-      var state = window.History.getState();
-      var query = controller.extractQuery(state.url);
-      query && insert(query);
-    });
-  };
+
 };

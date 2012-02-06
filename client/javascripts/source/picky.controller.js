@@ -3,9 +3,9 @@ var PickyController = function(config) {
   var view = new PickyView(this, config);
   
   var backends         = config.backends;
-  var beforeCallback   = config.before || function(query, params) {  };
+  var beforeCallback   = config.before  || function(query, params) {  };
   var successCallback  = config.success || function(data, query) {  };
-  var afterCallback    = config.after || function(data, query) {  };
+  var afterCallback    = config.after   || function(data, query) {  };
   
   var liveRendered            = config.liveRendered       || false;
   var liveSearchTimerInterval = config.liveSearchInterval || 180;
@@ -20,6 +20,13 @@ var PickyController = function(config) {
   };
   this.extractQuery = extractQuery;
   
+  // Returns the last saved query from
+  // the saved params.
+  //
+  var lastQuery = function() {
+    return lastQueryParams.length > 1 && lastQueryParams[1];
+  }
+  
   // Failsafe extraction of the last made query.
   //
   var lastFullQuery = function() {
@@ -29,12 +36,26 @@ var PickyController = function(config) {
   };
   this.lastFullQuery = lastFullQuery;
   
+  // Saves the last query in history.
+  //
+  var saveInHistory = function(query) {
+    // Be extra cautious since not all browsers/histories offer pushState.
+    //
+    // Note: If this query is the same as the last, we do not save it in the history.
+    //
+    if (query != lastFullQuery()) { // TODO Not full.
+      var url = "?q=" + escape(query).replace(/\*/g,'%2A');
+      window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
+    }
+  }
+  
   // If the given backend cannot be found, ignore the search request.
   //
   var search = function(type, query, callback, specificParams) {
-    lastQueryParams = [type, query, callback, specificParams];
-    
     query = beforeCallback(query, specificParams) || query;
+    
+    lastQueryParams = [type, query, callback, specificParams];
+    saveInHistory(query);
     
     var currentBackend = backends[type];
     if (currentBackend) { currentBackend.search(query, callback, specificParams); };
@@ -56,15 +77,6 @@ var PickyController = function(config) {
   };
   var fullSearch = function(query, possibleParams) {
     clearInterval(liveSearchTimerId);
-    
-    // Be extra cautious since not all browsers/histories offer pushState.
-    //
-    // Note: If this query is the same as the last, we do not save it in the history.
-    //
-    if (query != lastFullQuery()) {
-      var url = "?q=" + escape(query).replace(/\*/g,'%2A');
-      window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
-    }
       
     search('full', query, fullSearchCallback, possibleParams || {});
   };
@@ -93,11 +105,12 @@ var PickyController = function(config) {
   
   //
   //
-  this.insert = function(query, params, full) {
+  var insert = function(query, params, full) {
     view.insert(query);
     
     if (full) { fullSearch(query, params); }
   };
+  this.insert = insert;
   
   var clearButtonClicked = function() { clearInterval(liveSearchTimerId); };
   this.clearButtonClicked = clearButtonClicked;
@@ -134,4 +147,15 @@ var PickyController = function(config) {
   // Move to a view object.
   var addinationClicked = function(text, event) { fullSearch(text, { offset: event.data.offset }); };
   this.addinationClicked = addinationClicked;
+  
+  // Bind adapter to let the back/forward button start queries.
+  //
+  if (window.History) {
+    window.History.Adapter.bind(window, 'statechange', function() {
+      var state = window.History.getState();
+      var query = extractQuery(state.url);
+      if (query && query != lastQuery()) { insert(query); }
+    });
+  };
+  
 };

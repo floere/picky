@@ -1,6 +1,7 @@
 var PickyResultsRenderer = function(addination, config) {
   
   var results           = config['results'];
+  var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
   var noAsterisks       = config['noAsterisks'];
   
@@ -107,7 +108,7 @@ var PickyResultsRenderer = function(addination, config) {
         // TODO header.render(data);
         //
         results.append(renderHeader(data, allocation))
-               .append(allocation.entries.join(''));
+               .append(allocation.entries.join(resultsDivider));
         results.children('li').wrapAll(allocationWrapper);
       }
     });

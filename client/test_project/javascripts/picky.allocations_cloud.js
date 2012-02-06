@@ -4,6 +4,7 @@ var PickyAllocationsCloud = function(view, config) {
   var shownAllocations    = config['shownAllocations'];
   var showMoreAllocations = config['showMoreAllocations'];
   var hiddenAllocations   = config['hiddenAllocations'];
+  var maxSuggestions      = config['maxSuggestions'];
   
   // Show the cloud.
   //
@@ -50,7 +51,6 @@ var PickyAllocationsCloud = function(view, config) {
     if (list.length == 0) {
       return allocations.hide();
     }
-    var maxSuggestions = 3;
     clearAllocationCloud();
     
     if (list.length > maxSuggestions) {
