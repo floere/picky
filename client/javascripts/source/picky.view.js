@@ -209,11 +209,11 @@ var PickyView = function(picky_controller, config) {
   // in the allocation cloud.
   //
   var allocationChosen = function(event) {
-    var text = event.data.query;
+    var query = event.data.query;
     
-    searchField.val(text);
+    controller.insert(query);
     
-    controller.allocationChosen(text);
+    controller.allocationChosen(query);
   };
   this.allocationChosen = allocationChosen;
   

@@ -36,9 +36,11 @@ function Allocations(allocations) {
     this.allocations.push(new_allocation);
   }
   this.length = this.allocations.length;
-  
-  this.each = function(callback) {
-    return this.allocations.each(callback);
+  this.remove = function(index) {
+    this.allocations.splice(index, 1);
+  };
+  this.each   = function(callback) {
+	  this.allocations.each(callback);
   };
 };
 

@@ -2,10 +2,11 @@ var PickyController = function(config) {
   
   var view = new PickyView(this, config);
   
-  var backends         = config.backends;
-  var beforeCallback   = config.before  || function(query, params) {  };
-  var successCallback  = config.success || function(data, query) {  };
-  var afterCallback    = config.after   || function(data, query) {  };
+  var backends             = config.backends;
+  var beforeInsertCallback = config.beforeInsert || function(query) { };
+  var beforeCallback       = config.before       || function(query, params) { };
+  var successCallback      = config.success      || function(data, query) { };
+  var afterCallback        = config.after        || function(data, query) { };
   
   var liveRendered            = config.liveRendered       || false;
   var liveSearchTimerInterval = config.liveSearchInterval || 180;
@@ -103,9 +104,11 @@ var PickyController = function(config) {
   liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);
   clearInterval(liveSearchTimerId);
   
-  //
+  // TODO Remove the full parameter?
   //
   var insert = function(query, params, full) {
+    query = beforeInsertCallback(query) || query;
+    
     view.insert(query);
     
     if (full) { fullSearch(query, params); }
@@ -154,7 +157,10 @@ var PickyController = function(config) {
     window.History.Adapter.bind(window, 'statechange', function() {
       var state = window.History.getState();
       var query = extractQuery(state.url);
-      if (query && query != lastQuery()) { insert(query); }
+      
+      // A back/forward is always a full query.
+      //
+      if (query && query != lastQuery()) { insert(query, {}, true); }
     });
   };
   
