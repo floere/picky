@@ -1,12 +1,6 @@
 var Localization = {};
 var PickyI18n = { };
 
-// Set the correct locale for all js code.
-//
-$(function() {
-  PickyI18n.locale = $('html').attr('lang').split('-')[0] || 'en';
-});
-
 // The client handles parameters and
 // offers an insert method.
 //
@@ -15,6 +9,13 @@ var PickyClient = function(config) {
   // The following part handles all of the parameters.
   // jQuery selectors are executed.
   //
+  
+  // The locale is by default extracted from the html attribute.
+  //
+  // TODO Remove.
+  //
+  PickyI18n.locale = $('html').attr('lang').split('-')[0] || 'en';
+  config['locale'] = config['locale'] || PickyI18n.locale;
   
   // This is used to generate the correct query strings, localized.
   //

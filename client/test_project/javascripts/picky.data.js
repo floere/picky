@@ -11,9 +11,9 @@ function Allocation(type, weight, count, combination, ids, rendered) {
   this.count       = count;       // 14
   this.combination = combination; // [['title', 'Old', 'old'], ['title', 'Man', 'man']]
   this.ids         = ids || [];
-  this.rendered    = rendered;
+  this.rendered    = rendered || [];
   this.entries     = this.rendered; // TODO Remove?
-
+  
   this.isType = function(name) {
     return name == self.type;
   };
@@ -25,7 +25,7 @@ function Allocation(type, weight, count, combination, ids, rendered) {
 //
 function Allocations(allocations) {
   var self = this;
-
+  
   this.allocations = [];
 
   // Wrap and save the allocations.
@@ -76,7 +76,7 @@ function PickyData(data) {
   var renderedAmount = function() {
     var sum = 0;
     allocations.each(function(i, allocation) {
-	    sum += allocation.rendered.length;
+		  sum += allocation.rendered.length;
     });
     return sum;
   };

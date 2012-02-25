@@ -1,7 +1,7 @@
 function AllocationRenderer(allocationChosenCallback, config) {
   var self = this;
 
-  var locale                = PickyI18n.locale;
+  var locale = config.locale;
   
   var qualifiers            = Localization.qualifiers && Localization.qualifiers[locale] || {};
   var explanations          = Localization.explanations && Localization.explanations[locale] || {};

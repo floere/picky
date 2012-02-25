@@ -24,6 +24,8 @@ var PickyAddination = function(view, results) {
     var total = data.total;
     var range = calculateRange(data);
     if (range.offset < total) {
+	    // TODO Use an actual link for the addination.
+      //
       var result = $("<div class='addination'>" + t('results.addination.more') + "</div>");
       result.bind('click', { offset: range.offset }, view.addinationClicked);
       return result;

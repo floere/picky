@@ -1,5 +1,7 @@
 var PickyResultsRenderer = function(addination, config) {
   
+  var locale = config.locale;
+  
   var results           = config['results'];
   var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
@@ -7,9 +9,10 @@ var PickyResultsRenderer = function(addination, config) {
   
   // Adds asterisks to the last token.
   //
-  var asteriskifyLastToken = function(combination) {
-    var last_part = combination[combination.length-1];
-    var parts = combination.slice(0, combination.length-1);
+  var asteriskifyLastToken = function(combinations) {
+    var last_part = combinations[combinations.length-1];
+	if (last_part === undefined) { return []; }
+    var parts = combinations.slice(0, combinations.length-1);
     if (parts == []) { parts = [parts]; }
     if (!noAsterisks.include(last_part[0])) {
       // Replace with * unless there is already one or a tilde.
@@ -19,11 +22,12 @@ var PickyResultsRenderer = function(addination, config) {
     parts.push(last_part);
     return parts;
   };
+  this.asteriskifyLastToken = asteriskifyLastToken; // Note: For tests.
   
   // Replaces the category with an explanation of the category.
   //
   var explainCategory = function(combination) {
-    var explanations = Localization.explanations && Localization.explanations[PickyI18n.locale] || {}; // TODO
+    var explanations = Localization.explanations && Localization.explanations[locale] || {}; // TODO
     var parts = [];
     var combo;
     
@@ -33,24 +37,33 @@ var PickyResultsRenderer = function(addination, config) {
       explanation = explanations[explanation] || explanation;
       parts.push([explanation, combo[1]]);
     }
+	
     return parts;
   };
+  this.explainCategory = explainCategory; // Note: Only exposed for testing.
+  
+  //
+  //
+  var strongify = function(category, joinedTokens) {
+    return [category.replace(/([\w\sÄäÖöÜüéèà\,]+)/, "<strong>$1</strong>"), joinedTokens].join(' ');
+  };
+  this.strongify = strongify; // Note: Only exposed for testing.
   
   // Puts together an explanation.
   //
   // Note: Accumulates same categories using a whitespace.
   //
-  var strongify = function(category, joinedTokens) {
-    return [category.replace(/([\w\sÄäÖöÜüéèà]+)/, "<strong>$1</strong>"), joinedTokens].join(' ');
-  };
-  var explain = function(type, combination) {
-    var explanation_delimiter = Localization.explanation_delimiters[PickyI18n.locale];
+  var explain = function(type, combinations) {
+    var explanation_delimiter = Localization.explanation_delimiters[locale];
     
-    var parts = explainCategory(asteriskifyLastToken(combination));
+    var parts = explainCategory(asteriskifyLastToken(combinations));
     var lastCategory     = '';
     var tokenAccumulator = [];
     var joinedTokens     = '';
-    var replaced = $.map(parts, function(part) {
+    var replaced = []
+    
+    // Note: Was $.map
+    parts.each(function(i, part) {
       var category = part[0];
       var token    = part[1];
       
@@ -63,7 +76,7 @@ var PickyResultsRenderer = function(addination, config) {
         tokenAccumulator.push(token);
         lastCategory = category;
         
-        return undefined;
+        return;
       }
       
       var result = strongify(lastCategory, tokenAccumulator.join(' '));
@@ -72,16 +85,19 @@ var PickyResultsRenderer = function(addination, config) {
       tokenAccumulator.push(token);
       lastCategory = category;
       
-      return result;
+      replaced.push(result);
     });
+    
     // there might be something in the accumulator
     //
     replaced.push(strongify(lastCategory, tokenAccumulator.join(' ')));
     
     replaced = replaced.join(' ' + explanation_delimiter + ' ');
+    replaced = '<span class="explanation">' + type + ' ' + replaced + '</span>';
     
-    return '<span class="explanation">' + type + ' ' + replaced + '</span>';
+    return replaced;
   };
+  this.explain = explain; // Note: Only exposed for testing.
   
   // TODO Make customizable.
   //
@@ -89,13 +105,18 @@ var PickyResultsRenderer = function(addination, config) {
     // TODO Make type definable. (Mapping, i18n)
     //
     var header_html = '<div class="header">';
-    header_html += explain(allocation.type, allocation.combination);
+    header_html += explain(allocation.type, allocation.combination); // TODO Rename to combinations?
     if (data.offset > 0) {
-      header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>'; // searchEngine.focus();
+	    // TODO Add the class to the link. Remove the div.
+      //
+      header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>';
+      // searchEngine.focus();
     }
+    header_html += '</div>';
     
     return header_html;
   };
+  this.renderHeader = renderHeader;
   
   // Render results with the data.
   //

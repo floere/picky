@@ -1,5 +1,7 @@
 // Translations
 //
+// TODO Still needed?
+//
 
 var dictionary = {
   common:{
@@ -39,5 +41,6 @@ var t = function(key) {
       break;
     }
   };
+  
   return current;
 };

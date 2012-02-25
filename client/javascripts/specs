@@ -11,3 +11,31 @@ js -f spec_helper.js \
    -f source/picky.extensions.js \
    -f source/picky.data.js \
    spec/picky.data.spec.js
+
+js -f spec_helper.js \
+   -f source/picky.extensions.js \
+   -f source/picky.data.js \
+   spec/picky.allocations.spec.js
+
+js -f spec_helper.js \
+   -f source/picky.extensions.js \
+   -f source/picky.data.js \
+   spec/picky.allocation.spec.js
+
+js -f spec_helper.js \
+   -f source/picky.extensions.js \
+   -f source/picky.results_renderer.js \
+   spec/picky.results_renderer.spec.js
+
+# js -f spec_helper.js \
+#    -f source/picky.client.js \
+#    spec/picky.client.spec.js
+
+# js -f spec_helper.js \
+#    -f source/picky.extensions.js \
+#    -f source/picky.allocation_renderer.js \
+#    -f source/picky.allocations_cloud.js \
+#    -f source/picky.addination.js \
+#    -f source/picky.view.js \
+#    -f source/picky.controller.js \
+#    spec/picky.controller.spec.js
