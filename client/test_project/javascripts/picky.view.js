@@ -117,7 +117,7 @@ var PickyView = function(picky_controller, config) {
   var showResults = function(data) {
     clean();
     updateResultCounter(data.total);
-    resultsRenderer.render(data);
+    resultsRenderer.render(results, data);
     results.show();
     showClearButton();
   };
@@ -130,7 +130,7 @@ var PickyView = function(picky_controller, config) {
     var position = $(moreSelector).position().top;
     
     addination.remove(); // TODO Where should this be?
-    resultsRenderer.render(data);
+    resultsRenderer.render(results, data);
     
     scrollTo(position);
   };

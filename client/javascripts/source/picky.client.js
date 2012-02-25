@@ -1,4 +1,3 @@
-var Localization = {};
 var PickyI18n = { };
 
 // The client handles parameters and
@@ -24,25 +23,31 @@ var PickyClient = function(config) {
   //
   // This needs to correspond to the parsing in the search engine.
   //
-  Localization.qualifiers   = config.qualifiers || {};
+  config['qualifiers'] = config.qualifiers || {};
   
   // This is used to explain the preceding word in the suggestion text.
   //
   // e.g. with locale it:
   // ['title', 'ulysses', 'Ulysses'] => 'Ulysses (titolo)'
   //
-  Localization.explanations = config.explanations || {};
+  config['explanations'] = config.explanations || {};
   
   // This is used to expain more complex combinations of categories
   // in the choices.
   //
   // e.g. with locale en:{'author,title': '%1$s, who wrote %2$s'}
   //
-  Localization.choices = config.choices || {};
+  config['choices'] = config.choices || {};
   
   // Delimiters for connecting explanations.
   //
-  Localization.explanation_delimiters = { de:'und', fr:'et', it:'e', en:'and', ch:'und' };
+  config['explanation_delimiters'] = {
+	  ch:'und',
+    de:'und',
+    en:'and',
+    fr:'et',
+    it:'e'
+  };
   
   // Either you pass it a backends hash with full and live,
   // or you pass it full and live (urls), which will then
@@ -85,9 +90,9 @@ var PickyClient = function(config) {
   // Results rendering.
   //
   config['results']        = $(config['resultsSelector'] || (enclosingSelector + ' div.results'));
-  config['resultsDivider'] = config['resultsDivider'] || '';
-  config['noAsterisks']    = config['noAsterisks'] || []; // e.g. ['category1', 'category2']
-  config['wrapResults']    = config['wrapResults'] || '<ol class="results"></ol>';
+  config['resultsDivider'] = config['resultsDivider']    || '';
+  config['nonPartial']     = config['nonPartial']        || []; // e.g. ['category1', 'category2']
+  config['wrapResults']    = config['wrapResults']       || '<ol class="results"></ol>';
   
   // The central Picky controller.
   //

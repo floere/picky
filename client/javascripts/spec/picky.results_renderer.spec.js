@@ -2,11 +2,24 @@ var renderer;
 describe(
   "Mocked controller",
   function() {
+    var append = "";
+    var results = {
+      append: function(string) {
+        append += string;
+      },
+      str: function() {
+        return append;
+      }  
+    }
+    
 	  renderer = new PickyResultsRenderer(
-		  null,
+		  {
+		    render: function() { return "the_addination"; }
+		  },
 		  {
 			  locale: 'en',
-        noAsterisks: ['noAsterisksCategory']
+        nonPartial: ['nonPartialCategory'],
+        results: results
 		  }
 	  );
   },
@@ -15,6 +28,9 @@ describe(
 		  function() {
 	      it("is correct", function() {
 	        return renderer.asteriskifyLastToken([]).compare([]);
+	      });
+	      it("is correct", function() {
+	        return renderer.asteriskifyLastToken([['nonPartialCategory', 'Orig1', 'parsed1']]).compare([['nonPartialCategory', 'Orig1', 'parsed1']]);
 	      });
 	      it("is correct", function() {
 	        return renderer.asteriskifyLastToken([['cat1', 'Orig1', 'parsed1']]).compare([['cat1', 'Orig1*', 'parsed1']]);
@@ -98,7 +114,7 @@ describe(
 	      it("is correct", function() {
 	        return renderer.renderHeader(
             { offset: 0 },
-            {
+            { 
               type: 'type1',
               combination: [['cat1', 'Orig1', 'parsed1']]
             }
@@ -107,7 +123,7 @@ describe(
 	      it("is correct", function() {
 	        return renderer.renderHeader(
             { offset: 0 },
-            {
+            { 
               type: 'type1',
               combination: [
                 ['cat1', 'Orig1', 'parsed1'],
@@ -118,5 +134,18 @@ describe(
 	      });
 	    }
 	  );
+    // describe("render", null,
+    //   function() {
+    //     it("is correct", function() {
+    //       return renderer.render(
+    //         new PickyData({
+    //           offset: 0,
+    //           allocations: [
+    //             ['type1', 3.14, 123, [['cat1', 'Orig1', 'parsed1']]]
+    //           ]
+    //         })) == '<div class="header"><span class="explanation">type1 <strong>done by</strong> Orig1*</span></div>';
+    //     });
+    //   }
+    // );
   }
 );

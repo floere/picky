@@ -26,24 +26,34 @@ var PickyAllocationsCloud = function(view, config) {
   
   // 
   //
-  var allocationChosen = function(event) {
+  var allocationChosenCallback = function(event) {
     hide();
     view.allocationChosen(event);
   };
   
-  var allocationRenderer = new AllocationRenderer(allocationChosen, config);
+  var allocationRenderer = new AllocationRenderer(config);
   
+  // How an allocation renders as a list item.
+  //
+  var listItem = function(text, count) {
+    return $('<li><div class="text">' + text + '</div><div class="count">' + count + '</div></li>');
+  };
+  
+  //
+  //
   var createAllocationList = function(allocations) {
     var shown = [];
+    
     allocations.each(function(i, allocation) {
-      shown.push(allocationRenderer.render(allocation));
+	    var rendered = allocationRenderer.render(allocation);
+      var query    = allocationRenderer.querify(allocation.combination);
       
-      // TODO Combine.
-      // allocationRenderer.generate();
-      // var listItem = renderListItem(allocationRenderer);
-      
-      // shown.push(listItem);
+      rendered = listItem(rendered, allocation.count);
+      rendered.bind('click', { query: query }, allocationChosenCallback);
+	    
+      shown.push(rendered);
     });
+    
     return shown;
   };
   

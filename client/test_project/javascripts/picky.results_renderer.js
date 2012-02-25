@@ -2,10 +2,9 @@ var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;
   
-  var results           = config['results'];
   var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
-  var noAsterisks       = config['noAsterisks'];
+  var nonPartial        = config['nonPartial'];
   
   // Adds asterisks to the last token.
   //
@@ -14,7 +13,7 @@ var PickyResultsRenderer = function(addination, config) {
 	if (last_part === undefined) { return []; }
     var parts = combinations.slice(0, combinations.length-1);
     if (parts == []) { parts = [parts]; }
-    if (!noAsterisks.include(last_part[0])) {
+    if (!nonPartial.include(last_part[0])) {
       // Replace with * unless there is already one or a tilde.
       //
       if (last_part[1].match(/[^\*~]$/)) { last_part[1] += '*'; }
@@ -120,7 +119,7 @@ var PickyResultsRenderer = function(addination, config) {
   
   // Render results with the data.
   //
-  this.render = function(data) {
+  this.render = function(results, data) {
     data.allocations.each(function(i, allocation) {
       // Only render if there is something to render.
       // TODO Move into methods.

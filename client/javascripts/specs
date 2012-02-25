@@ -1,8 +1,3 @@
-# js -f spec_helper.js \
-#    -f source/picky.translations.js \
-#    -f source/picky.allocation_renderer.js \
-#    spec/picky.allocation_renderer.spec.js
-   
 js -f spec_helper.js \
    -f source/picky.extensions.js \
    spec/picky.extensions.spec.js
@@ -24,8 +19,14 @@ js -f spec_helper.js \
 
 js -f spec_helper.js \
    -f source/picky.extensions.js \
+   -f source/picky.data.js \
    -f source/picky.results_renderer.js \
    spec/picky.results_renderer.spec.js
+
+js -f spec_helper.js \
+   -f source/picky.extensions.js \
+   -f source/picky.allocation_renderer.js \
+   spec/picky.allocation_renderer.spec.js
 
 # js -f spec_helper.js \
 #    -f source/picky.client.js \

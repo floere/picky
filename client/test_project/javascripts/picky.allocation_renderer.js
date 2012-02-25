@@ -3,22 +3,19 @@ function AllocationRenderer(allocationChosenCallback, config) {
 
   var locale = config.locale;
   
-  var qualifiers            = Localization.qualifiers && Localization.qualifiers[locale] || {};
-  var explanations          = Localization.explanations && Localization.explanations[locale] || {};
-  var explanation_delimiter = Localization.explanation_delimiters[locale];
-  
-  var choiceGroups          = config.groups || [];
-  var choices               = Localization.choices && Localization.choices[locale] || {};
+  // TODO Maybe make dynamic.
+  //
+  var qualifiers   = config.qualifiers && config.qualifiers[locale] || {};
+  var explanations = config.explanations && config.explanations[locale] || {};
+  var choiceGroups = config.groups || [];
+  var choices      = config.choices && config.choices[locale] || {};
+  var nonPartial   = config['nonPartial'] || [];
   
   // Those are of interest to the public.
   //
   this.text = '';
   this.query = '';
   this.explanation = '';
-  
-  // TODO parametrize.
-  //
-  var no_ellipses           = ['street_number', 'zipcode'];
   
   // Contracts the originals of the zipped.
   //
@@ -46,6 +43,7 @@ function AllocationRenderer(allocationChosenCallback, config) {
     for (i = remove.length-1; i >= 0; i--) {
       zipped.remove(remove[i]);
     }
+    
     return zipped;
   };
   this.contract = contract;
@@ -53,11 +51,17 @@ function AllocationRenderer(allocationChosenCallback, config) {
   // Renders the given combinations according to the
   // choice formatting defined in the config.
   //
-  function makeUpMissingFormat(key) {
-    return $.map(key, function(element, i) {
-      return '%' + (i+1) + '$s';
-    }).join(' ');
+  function makeUpMissingFormat(keys) {
+	  var result = [];
+	  keys.each(function(i, _) {
+      result.push('%' + (i+1) + '$s');
+    });
+    return result.join(' ');
   };
+  this.makeUpMissingFormat = makeUpMissingFormat;
+  
+  //
+  //
   function rendered(zipped) {
     // Return an empty string if there are no combinations.
     //
@@ -72,25 +76,25 @@ function AllocationRenderer(allocationChosenCallback, config) {
     
     // Now that it's sorted, get the right string.
     //
-    var key = [];
+    var keys = [];
     for (var i = 0, l = key_ary.length; i < l; i++) {
-      key.push(key_ary[i][0]);
+      keys.push(key_ary[i][0]);
     };
     
     // Get the right formatting or make up a simple one.
     //
     // var result = choices[key] || (choices[key] = makeUpMissingFormat(key));
     
-    var single = key.length == 1;
+    var single = keys.length == 1;
     
     // Get the formatting to be replaced.
     //
-    var formatting = choices[key] || (choices[key] = makeUpMissingFormat(key));
+    var formatting = choices[keys.join(',')] || (choices[keys] = makeUpMissingFormat(keys));
     // If someone uses the simple format, change into complex format.
     //
-    if ($.type(formatting) === "string") {
-      choices[key] = { format: formatting };
-      formatting = choices[key];
+    if (typeof formatting === "string") {
+      choices[keys] = { format: formatting };
+      formatting = choices[keys];
     };
     
     var j = 1;
@@ -98,7 +102,7 @@ function AllocationRenderer(allocationChosenCallback, config) {
     
     // Replace each word into the formatting string.
     //
-    $.each(zipped, function(i, original_token) {
+    zipped.each(function(i, original_token) {
       var category = original_token[0];
       var word     = original_token[2];
 	  
@@ -110,15 +114,10 @@ function AllocationRenderer(allocationChosenCallback, config) {
         return result;
       }
       
-      var regexp = new RegExp("%" + j + "\\$s", "g");
+      var regexp = new RegExp("%" + (i+1) + "\\$s", "g");
       result = result.replace(regexp, word);
-      
-      j += 1;
-      
-      return j;
     });
     
-
     return result;
   };
   this.rendered = rendered;
@@ -180,13 +179,16 @@ function AllocationRenderer(allocationChosenCallback, config) {
     
     // And append ellipses.
     //
-    if (!no_ellipses.include(last_part[0])) { last_part[1] += '...'; } // TODO *
+    if (!nonPartial.include(last_part[0])) { last_part[1] += '...'; }
     
     // Render each group and return the resulting rendered array.
     //
-    return $.map(groups, function(group) {
-      return rendered(group);
+    var result = [];
+    groups.each(function(i, group) {
+      result.push(rendered(group));
     });
+    
+    return result;
   };
   this.groupify = groupify;
 
@@ -195,11 +197,13 @@ function AllocationRenderer(allocationChosenCallback, config) {
   function querify(zipped) {
     var query_parts = [];
     var qualifier;
+    
     for (var i in zipped) {
       qualifier = zipped[i][0];
       qualifier = qualifiers[qualifier] || qualifier; // Use the returned qualifier if none is given.
       query_parts[i] = qualifier + ':' + zipped[i][2];
     };
+    
     return query_parts.join(' ');
   };
   this.querify = querify;
@@ -209,37 +213,10 @@ function AllocationRenderer(allocationChosenCallback, config) {
   function suggestify(zipped) {
     return groupify(zipped).join(' ');
   };
-
-
-  // Generates the text and the link.
-  //
-  var generate = function() {
-    this.query       = querify(combination);
-    this.text        = suggestify(combination);
-    
-    return self;
-  };
-  
-  // TODO Extract.
-  //
-  var listItem = function(text, count) {
-    return $('<li><div class="text">' + text + '</div><div class="count">' + count + '</div></li>');
-  };
+  this.suggestify = suggestify;
   
   var render = function(allocation) {
-    
-    var combination = allocation.combination;
-    var type        = allocation.type;
-    var count       = allocation.count;
-    
-    var query       = querify(combination);
-    
-    var item = listItem(suggestify(combination), count);
-    
-    // TODO Move this outwards?
-    //
-    item.bind('click', { query: query }, allocationChosenCallback);
-    return item;
+    return suggestify(allocation.combination);
   };
   this.render = render;
 
