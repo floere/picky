@@ -3,6 +3,8 @@
 
 // Container for an allocation.
 //
+// TODO Rename to combinations.
+//
 function Allocation(type, weight, count, combination, ids, rendered) {
   var self = this;
 

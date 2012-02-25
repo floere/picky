@@ -76,7 +76,6 @@ var PickyResultsRenderer = function(addination, config) {
         tokenAccumulator.push(token);
         lastCategory = category;
         
-        replaced.push(undefined);
         return;
       }
       
@@ -106,15 +105,18 @@ var PickyResultsRenderer = function(addination, config) {
     // TODO Make type definable. (Mapping, i18n)
     //
     var header_html = '<div class="header">';
-    header_html += explain(allocation.type, allocation.combination);
+    header_html += explain(allocation.type, allocation.combination); // TODO Rename to combinations?
     if (data.offset > 0) {
 	    // TODO Add the class to the link. Remove the div.
       //
-      header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>'; // searchEngine.focus();
+      header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>';
+      // searchEngine.focus();
     }
+    header_html += '</div>';
     
     return header_html;
   };
+  this.renderHeader = renderHeader;
   
   // Render results with the data.
   //
