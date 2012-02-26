@@ -19,7 +19,15 @@ describe(
 		  {
 			  locale: 'en',
         nonPartial: ['nonPartialCategory'],
-        results: results
+        results: results,
+        explanations: {
+          en: {
+            cat1: 'done by'
+          }
+        },
+        explanation_delimiters: {
+          en: 'and'
+        }
 		  }
 	  );
   },
@@ -48,13 +56,6 @@ describe(
 	  );
     describe("explainCategory", null,
 		  function() {
-        Localization = {
-          explanations: {
-            en: {
-              cat1: 'done by'
-            }
-          }
-        }
 	      it("is correct", function() {
 	        return renderer.explainCategory([
             ['cat1', 'Orig1', 'parsed1']
@@ -86,16 +87,6 @@ describe(
 	  );
     describe("explain", null,
 		  function() {
-        Localization = {
-          explanations: {
-            en: {
-              cat1: 'done by'
-            }
-          },
-          explanation_delimiters: {
-            en: 'and'
-          }
-        }
 	      it("is correct", function() {
 	        return renderer.explain("type1", [
             ['cat1', 'Orig1', 'parsed1']

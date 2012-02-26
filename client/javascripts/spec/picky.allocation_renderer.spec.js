@@ -106,7 +106,33 @@ describe(
         ]) == "author1, who wrote title1";
       });
     });
-    
+    describe("groupify", null, function() {
+      it("is correct", function() {
+        return renderer.groupify([
+          ['cat1', 'Orig1', 'parsed1']
+        ]).compare([['cat1', 'Orig1...', 'parsed1']]);
+      });
+      it("is correct", function() {
+        return renderer.groupify([
+          ['cat1', 'Orig1', 'parsed1'],
+          ['cat2', 'Orig2', 'parsed2']
+        ]).compare([
+		  ['cat1', 'Orig1',    'parsed1'],
+		  ['cat2', 'Orig2...', 'parsed2']
+		]);
+      });
+      it("is correct", function() {
+        return renderer.groupify([
+          ['cat1', 'Orig1', 'parsed1'],
+          ['cat2', 'Orig2', 'parsed2'],
+		  ['cat1', 'Orig3', 'parsed3']
+        ]).compare([
+  		  ['cat1', 'Orig1',    'parsed1'],
+  		  ['cat2', 'Orig2',    'parsed2'],
+		  ['cat1', 'Orig3...', 'parsed3']
+	    ]);
+      });
+    });    
     describe("querify", null, function() {
       it("is correct", function() {
         return renderer.querify([
@@ -116,12 +142,6 @@ describe(
       it("is correct", function() {
         return renderer.querify([
           ['cat1', 'Orig1', 'parsed1'],
-          ['cat2', 'Orig2', 'parsed2']
-        ]) == "cat1:parsed1 cat2:parsed2";
-      });
-      it("is correct", function() {
-        return renderer.querify([
-          ['cat1', 'Orig1 Orig3', 'parsed1 parsed3'],
           ['cat2', 'Orig2', 'parsed2']
         ]) == "cat1:parsed1 cat2:parsed2";
       });

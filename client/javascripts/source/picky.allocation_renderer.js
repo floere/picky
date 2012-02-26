@@ -113,6 +113,8 @@ function AllocationRenderer(config) {
         result = word + '&nbsp;(' + explanation + ')';
         return result;
       }
+	  
+	  word = word.replace(/[\w,]+:(.+)/, "$1");
       
       var regexp = new RegExp("%" + (i+1) + "\\$s", "g");
       result = result.replace(regexp, word);
@@ -181,14 +183,7 @@ function AllocationRenderer(config) {
     //
     if (!nonPartial.include(last_part[0])) { last_part[1] += '...'; }
     
-    // Render each group and return the resulting rendered array.
-    //
-    var result = [];
-    groups.each(function(i, group) {
-      result.push(rendered(group));
-    });
-    
-    return result;
+	  return groups;
   };
   this.groupify = groupify;
 
@@ -211,7 +206,16 @@ function AllocationRenderer(config) {
   //
   //
   function suggestify(zipped) {
-    return groupify(zipped).join(' ');
+    var groups = groupify(zipped);
+    
+    // Render each group and return the resulting rendered array.
+    //
+    var result = [];
+    groups.each(function(i, group) {
+      result.push(rendered(group));
+    });
+    
+    return result.join(' ');
   };
   this.suggestify = suggestify;
   
