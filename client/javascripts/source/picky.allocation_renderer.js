@@ -1,4 +1,4 @@
-function AllocationRenderer(allocationChosenCallback, config) {
+function AllocationRenderer(config) {
   var self = this;
 
   var locale = config.locale;

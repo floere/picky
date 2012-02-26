@@ -2,6 +2,9 @@ var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;
   
+  var explanations           = config.explanations || {};
+  var explanation_delimiters = config.explanation_delimiters || {};
+  
   var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
   var nonPartial        = config['nonPartial'];
@@ -26,14 +29,14 @@ var PickyResultsRenderer = function(addination, config) {
   // Replaces the category with an explanation of the category.
   //
   var explainCategory = function(combination) {
-    var explanations = Localization.explanations && Localization.explanations[locale] || {}; // TODO
+    var localized_explanations = explanations[locale] || {};
     var parts = [];
     var combo;
     
     for (var i = 0, l = combination.length; i < l; i++) {
       combo = combination[i];
       var explanation = combo[0];
-      explanation = explanations[explanation] || explanation;
+      explanation = localized_explanations[explanation] || explanation;
       parts.push([explanation, combo[1]]);
     }
 	
@@ -53,7 +56,7 @@ var PickyResultsRenderer = function(addination, config) {
   // Note: Accumulates same categories using a whitespace.
   //
   var explain = function(type, combinations) {
-    var explanation_delimiter = Localization.explanation_delimiters[locale];
+    var explanation_delimiter = explanation_delimiters[locale];
     
     var parts = explainCategory(asteriskifyLastToken(combinations));
     var lastCategory     = '';
@@ -66,25 +69,25 @@ var PickyResultsRenderer = function(addination, config) {
       var category = part[0];
       var token    = part[1];
       
+      // Remove categorization (including commas)
+      // before the token.
+      //
+      token = token.replace(/[\w,]+:(.+)/, "$1");
+      
+      // Accumulate same categories.
+      //
       if (lastCategory == '' || category == lastCategory) {
-        // Remove categorization (including commas)
-        // before the token.
-        //
-        token = token.replace(/[\w,]+:(.+)/, "$1");
-        
         tokenAccumulator.push(token);
         lastCategory = category;
-        
-        return;
+      } else {
+        var result = strongify(lastCategory, tokenAccumulator.join(' '));
+      
+        tokenAccumulator = [];
+        tokenAccumulator.push(token);
+        lastCategory = category;
+      
+        replaced.push(result);
       }
-      
-      var result = strongify(lastCategory, tokenAccumulator.join(' '));
-      
-      tokenAccumulator = [];
-      tokenAccumulator.push(token);
-      lastCategory = category;
-      
-      replaced.push(result);
     });
     
     // there might be something in the accumulator
@@ -93,7 +96,7 @@ var PickyResultsRenderer = function(addination, config) {
     
     replaced = replaced.join(' ' + explanation_delimiter + ' ');
     replaced = '<span class="explanation">' + type + ' ' + replaced + '</span>';
-    
+	
     return replaced;
   };
   this.explain = explain; // Note: Only exposed for testing.

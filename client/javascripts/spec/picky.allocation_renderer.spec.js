@@ -2,9 +2,7 @@ var renderer;
 describe(
   "AllocationRenderer",
   function() {
-    renderer = new AllocationRenderer(function() {
-  	  // 
-  	}, {
+    renderer = new AllocationRenderer({
   	  locale: 'en',
       choices: {
         en:{
