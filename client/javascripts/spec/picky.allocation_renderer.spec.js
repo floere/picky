@@ -47,7 +47,7 @@ describe(
           ['cat1', 'Orig2', 'parsed2'],
           ['cat2', 'Orig3', 'parsed3']
         ]).compare([
-          ['cat2', 'Orig1 Orig3', 'parsed1'], // TODO Is just parsed1 ok? Do we care?
+          ['cat2', 'Orig1 Orig3', 'parsed1 parsed3'], // TODO Should this be an array? Is just parsed1 ok? Do we care?
           ['cat1', 'Orig2', 'parsed2']
         ]);
       });
@@ -58,8 +58,8 @@ describe(
           ['cat2', 'Orig3', 'parsed3'],
           ['cat1', 'Orig4', 'parsed4']
         ]).compare([
-          ['cat2', 'Orig1 Orig3', 'parsed1'], // TODO Is just parsed1 ok? Do we care?
-          ['cat1', 'Orig2 Orig4', 'parsed2']
+          ['cat2', 'Orig1 Orig3', 'parsed1 parsed3'], // TODO Is just parsed1 ok? Do we care?
+          ['cat1', 'Orig2 Orig4', 'parsed2 parsed4']
         ]);
       });
     });
@@ -141,9 +141,20 @@ describe(
       });
       it("is correct", function() {
         return renderer.querify([
+          ['cat1', 'Orig1*', 'parsed1*']
+        ]) == "cat1:parsed1*";
+      });
+      it("is correct", function() {
+        return renderer.querify([
           ['cat1', 'Orig1', 'parsed1'],
           ['cat2', 'Orig2', 'parsed2']
         ]) == "cat1:parsed1 cat2:parsed2";
+      });
+      it("is correct", function() {
+        return renderer.querify([
+          ['cat1', 'Orig1*', 'parsed1*'],
+          ['cat2', 'Orig2', 'parsed2']
+        ]) == "cat1:parsed1* cat2:parsed2";
       });
     });
     describe("suggestify", null, function() {

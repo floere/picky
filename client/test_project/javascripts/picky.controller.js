@@ -25,7 +25,7 @@ var PickyController = function(config) {
   // the saved params.
   //
   var lastQuery = function() {
-    return lastQueryParams.length > 1 && lastQueryParams[1];
+    return lastQueryParams && lastQueryParams.length > 1 && lastQueryParams[1];
   }
   
   // Failsafe extraction of the last made query.
@@ -53,13 +53,23 @@ var PickyController = function(config) {
   // If the given backend cannot be found, ignore the search request.
   //
   var search = function(type, query, callback, specificParams) {
-    query = beforeCallback(query, specificParams) || query;
+    var beforeQuery = beforeCallback(query, specificParams);
+    // If the before callback returns nothing, 
+    // don't use the result.
+    //
+    if (beforeQuery != undefined) { query = beforeQuery; }
     
     lastQueryParams = [type, query, callback, specificParams];
     saveInHistory(query);
     
-    var currentBackend = backends[type];
-    if (currentBackend) { currentBackend.search(query, callback, specificParams); };
+    // Only trigger a search if the text is not empty.
+    //
+    if (query == '') {
+      view.reset();
+    } else {
+      var currentBackend = backends[type];
+      if (currentBackend) { currentBackend.search(query, callback, specificParams); };
+    }
   };
   
   // Resend the last query as it was.
@@ -107,7 +117,13 @@ var PickyController = function(config) {
   // TODO Remove the full parameter?
   //
   var insert = function(query, params, full) {
-    query = beforeInsertCallback(query) || query;
+    var beforeInsertQuery = beforeInsertCallback(query);
+    
+    // If the beforeInsert callback returns nothing, 
+    // don't use the result.
+    // Note: Can't use the comfy || since "" is falsy.
+    //
+    if (beforeInsertQuery != undefined) { query = beforeInsertQuery; }
     
     view.insert(query);
     
@@ -122,21 +138,28 @@ var PickyController = function(config) {
   this.searchTextCleared = searchTextCleared;
   
   var shouldTriggerSearch = function(event) {
-    var validTriggerKeys = [
-                  0,  // special char (ä ö ü etc...)
-                  8,  // backspace
-                  13, // enter
-                  32, // space
-                  46, // delete
-                  48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers
-                  65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90 // a-z
-                ];
+  var validTriggerKeys = [
+      0,  // special char (ä ö ü etc...)
+      8,  // backspace
+      13, // enter
+      32, // space
+      46, // delete
+      48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers
+      65, 66, 67, 68, 69, 70, 71, 72, 73, 74, // a-z
+      75, 76, 77, 78, 79, 80, 81, 82, 83, 84,
+      85, 86, 87, 88, 89, 90
+    ];
                 
     return $.inArray(event.keyCode, validTriggerKeys) > -1;
   };
   var searchTextEntered = function(text, event) {
     if (shouldTriggerSearch(event)) {
-      if (event.keyCode == 13) { fullSearch(text); } else { clearInterval(liveSearchTimerId); liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);  /* liveSearchTimer.reset(); */ }
+      if (event.keyCode == 13) {
+        fullSearch(text);
+      } else {
+        clearInterval(liveSearchTimerId);
+        liveSearchTimerId = setInterval(liveSearchTimerCallback, liveSearchTimerInterval);
+      }
     }
   };
   this.searchTextEntered = searchTextEntered;
@@ -160,7 +183,7 @@ var PickyController = function(config) {
       
       // A back/forward is always a full query.
       //
-      if (query && query != lastQuery()) { insert(query, {}, true); }
+      if (query != undefined && query != lastQuery()) { insert(query, {}, true); }
     });
   };
   

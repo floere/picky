@@ -72,6 +72,8 @@ var PickyResultsRenderer = function(addination, config) {
       // Remove categorization (including commas)
       // before the token.
       //
+      // TODO Duplicate code.
+      //
       token = token.replace(/[\w,]+:(.+)/, "$1");
       
       // Accumulate same categories.

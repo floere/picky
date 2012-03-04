@@ -119,7 +119,7 @@ var PickyClient = function(config) {
   // Can be overridden with a non-empty parameter. 
   //
   this.insertFromURL = function(override) {
-    if (override && override != '') {
+    if (override) {
       insert(override);
     } else {
       var lastFullQuery = controller.lastFullQuery();

@@ -63,28 +63,27 @@ var PickyView = function(picky_controller, config) {
     resultCounter.empty();
     clean();
   };
+  this.reset = reset;
   
   var bindEventHandlers = function() {
     searchField.keyup(function(event) {
+      // TODO Move to controller.
+      //
       if (isTextEmpty()) {
         reset();
         controller.searchTextCleared();
       } else {
-        controller.searchTextEntered(text(), event);
         showClearButton();
       }
+      controller.searchTextEntered(text(), event);
     });
     
     resultCounter.click(function(event) {
-      if (!isTextEmpty()) {
-        controller.searchButtonClicked(text());
-      }
+      controller.searchButtonClicked(text());
     });
     
     searchButton.click(function(event) {
-      if (!isTextEmpty()) {
-        controller.searchButtonClicked(text());
-      }
+      controller.searchButtonClicked(text());
     });
     
     clearButton.click(function() {

@@ -20,26 +20,36 @@ function AllocationRenderer(config) {
   // Contracts the originals of the zipped.
   //
   function contract(zipped) {
-    var hash = {}; // remembers the values
-    var insert = {}; // remembers the insertion locations
-    var remove = []; // remembers the remove indexes
+    var originals = {}; // Remembers the combined values.
+    var parsed = {};
+    var insert = {}; // Remembers the insertion locations.
+    var remove = []; // Remembers the remove indexes.
     var i;
-	
+	  
+    // Combine the values.
+    //
     for (i = 0, l = zipped.length; i < l; i++) {
       var key = zipped[i][0];
-      if (key in hash) {
-        hash[key] = hash[key] + ' ' + zipped[i][1];
+      if (key in originals) {
+        originals[key] = originals[key] + ' ' + zipped[i][1];
+        // parsed[key]    = parsed[key]    + ' ' + zipped[i][2];
         remove.push(i);
       } else {
-        hash[key] = zipped[i][1];
+        originals[key] = zipped[i][1];
+        // parsed[key]    = zipped[i][2];
         insert[i] = key;
       }
     }
-    // Insert the ones from the hash.
+    
+    // Insert the combined values.
+    //
     for (i in insert) {
-      zipped[i][1] = hash[insert[i]];
+      zipped[i][1] = originals[insert[i]];
+      // zipped[i][2] = parsed[insert[i]];
     }
+    
     // Remove the ones from zipped we don't like. From the end.
+    //
     for (i = remove.length-1; i >= 0; i--) {
       zipped.remove(remove[i]);
     }
@@ -130,7 +140,6 @@ function AllocationRenderer(config) {
   // Returns rendered groups.
   //
   function groupify(zipped) {
-    
     // Create a parts array the same size as the groups array.
     //
     var groups = new Array(0);
@@ -179,9 +188,9 @@ function AllocationRenderer(config) {
     //
     last_part = last_part[last_part.length-1];
     
-    // And append ellipses.
+    // And append ellipses. TODO Duplicate text!
     //
-    if (!nonPartial.include(last_part[0])) { last_part[1] += '...'; }
+    if (!nonPartial.include(last_part[0])) { last_part[1] = last_part[1].valueOf() + '...'; }
     
 	  return groups;
   };
@@ -196,7 +205,7 @@ function AllocationRenderer(config) {
     for (var i in zipped) {
       qualifier = zipped[i][0];
       qualifier = qualifiers[qualifier] || qualifier; // Use the returned qualifier if none is given.
-      query_parts[i] = qualifier + ':' + zipped[i][2];
+      query_parts[i] = qualifier + ':' + zipped[i][2]; // TODO Use original.
     };
     
     return query_parts.join(' ');
