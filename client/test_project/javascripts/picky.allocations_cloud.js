@@ -45,8 +45,8 @@ var PickyAllocationsCloud = function(view, config) {
     var shown = [];
     
     allocations.each(function(i, allocation) {
-	  	var rendered = allocationRenderer.render(allocation);
       var query    = allocationRenderer.querify(allocation.combination);
+	  	var rendered = allocationRenderer.render(allocation); // Note: Render destroys the data.
       
       rendered = listItem(rendered, allocation.count);
       rendered.bind('click', { query: query }, allocationChosenCallback);

@@ -17,7 +17,16 @@ function AllocationRenderer(config) {
   this.query = '';
   this.explanation = '';
   
-  // Contracts the originals of the zipped.
+  // Contracts the originals/parsed of the zipped into
+  // an array of originals/parsed.
+  //
+  // Example:
+  //     ['cat2', 'Orig1', 'parsed1'],
+  //     ['cat1', 'Orig2', 'parsed2'],
+  //     ['cat2', 'Orig3', 'parsed3']
+  //   becomes
+  //     ['cat2', ['Orig1', 'Orig3'], ['parsed1', 'parsed3']],
+  //     ['cat1', ['Orig2'], ['parsed2']]
   //
   function contract(zipped) {
     var originals = {}; // Remembers the combined values.
@@ -31,12 +40,12 @@ function AllocationRenderer(config) {
     for (i = 0, l = zipped.length; i < l; i++) {
       var key = zipped[i][0];
       if (key in originals) {
-        originals[key] = originals[key] + ' ' + zipped[i][1];
-        // parsed[key]    = parsed[key]    + ' ' + zipped[i][2];
+        originals[key].push(zipped[i][1]);
+        parsed[key].push(zipped[i][2]);
         remove.push(i);
       } else {
-        originals[key] = zipped[i][1];
-        // parsed[key]    = zipped[i][2];
+        originals[key] = [zipped[i][1]];
+        parsed[key]    = [zipped[i][2]];
         insert[i] = key;
       }
     }
@@ -45,7 +54,7 @@ function AllocationRenderer(config) {
     //
     for (i in insert) {
       zipped[i][1] = originals[insert[i]];
-      // zipped[i][2] = parsed[insert[i]];
+      zipped[i][2] = parsed[insert[i]];
     }
     
     // Remove the ones from zipped we don't like. From the end.
@@ -62,22 +71,21 @@ function AllocationRenderer(config) {
   // choice formatting defined in the config.
   //
   function makeUpMissingFormat(keys) {
-	  var result = [];
-	  keys.each(function(i, _) {
-      result.push('%' + (i+1) + '$s');
+	  keys.map(function(i, _) {
+      return '%' + (i+1) + '$s';
     });
-    return result.join(' ');
+    return keys.join(' ');
   };
   this.makeUpMissingFormat = makeUpMissingFormat;
   
   //
   //
-  function rendered(zipped) {
+  function rendered(allocation) {
     // Return an empty string if there are no combinations.
     //
-    if (zipped.length == 0) { return ''; };
+    if (allocation.length == 0) { return ''; };
     
-    zipped = contract(zipped);
+    var zipped = contract(allocation);
     
     var key_ary = zipped;
     key_ary.sort(function(zipped1, zipped2) {
@@ -99,11 +107,16 @@ function AllocationRenderer(config) {
     
     // Get the formatting to be replaced.
     //
-    var formatting = choices[keys.join(',')] || (choices[keys] = makeUpMissingFormat(keys));
+    var formatting = choices[keys.join(',')]
+    if (formatting === undefined) { formatting = (choices[keys] = makeUpMissingFormat(keys)) };
+
     // If someone uses the simple format, change into complex format.
     //
     if (typeof formatting === "string") {
-      choices[keys] = { format: formatting };
+      choices[keys] = {
+        format: formatting,
+        ignoreSingle: true
+      };
       formatting = choices[keys];
     };
     
@@ -114,20 +127,28 @@ function AllocationRenderer(config) {
     //
     zipped.each(function(i, original_token) {
       var category = original_token[0];
-      var word     = original_token[2];
+      var words    = original_token[2];
 	  
-      if (formatting.filter) { word = formatting.filter(word); }
-	  
-      var explanation = explanations[category] || category;
-      if (single && !(formatting && formatting.ignoreSingle)) {
-        result = word + '&nbsp;(' + explanation + ')';
-        return result;
+      if (formatting.filter) {
+        words.map(function(i, word) {
+          return formatting.filter(word);
+        });
       }
 	  
-	  word = word.replace(/[\w,]+:(.+)/, "$1");
+      if (single && !(formatting && formatting.ignoreSingle)) {
+        var explanation = explanations[category] || category;
+        result = words.join('&nbsp;') + '&nbsp;(' + explanation + ')';
+        return result;
+      }
+	    
+      // Remove the category.
+      //
+      words.map(function(i, word) {
+        return word.replace(/[\w,]+:(.+)/, "$1");
+      });
       
       var regexp = new RegExp("%" + (i+1) + "\\$s", "g");
-      result = result.replace(regexp, word);
+      result = result.replace(regexp, words.join('&nbsp;'));
     });
     
     return result;
@@ -188,7 +209,7 @@ function AllocationRenderer(config) {
     //
     last_part = last_part[last_part.length-1];
     
-    // And append ellipses. TODO Duplicate text!
+    // And append "ellipses".
     //
     if (!nonPartial.include(last_part[0])) { last_part[1] = last_part[1].valueOf() + '...'; }
     
@@ -198,14 +219,19 @@ function AllocationRenderer(config) {
 
   // Creates a query string from combination and originals.
   //
-  function querify(zipped) {
+  function querify(combination) {
     var query_parts = [];
     var qualifier;
+    var original;
     
-    for (var i in zipped) {
-      qualifier = zipped[i][0];
+    for (var i in combination) {
+      qualifier = combination[i][0];
       qualifier = qualifiers[qualifier] || qualifier; // Use the returned qualifier if none is given.
-      query_parts[i] = qualifier + ':' + zipped[i][2]; // TODO Use original.
+      original  = combination[i][1];
+      original  = original || "";
+      
+      var partial = original.charAt(original.length - 1) == '*' ? '*' : ''; // TODO This is not the way to do this!
+      query_parts[i] = qualifier + ':' + combination[i][2] + partial;
     };
     
     return query_parts.join(' ');
@@ -221,7 +247,8 @@ function AllocationRenderer(config) {
     //
     var result = [];
     groups.each(function(i, group) {
-      result.push(rendered(group));
+      var render = rendered(group);
+      if (render) { result.push(render); }
     });
     
     return result.join(' ');

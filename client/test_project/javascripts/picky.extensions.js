@@ -24,3 +24,10 @@ Array.prototype.each = function(callback) {
   }
   return this;
 }
+
+Array.prototype.map = function(callback) {
+  for(var i = 0, l = this.length; i < l; i++) {
+    this[i] = callback(i, this[i]);
+  }
+  return this;
+}

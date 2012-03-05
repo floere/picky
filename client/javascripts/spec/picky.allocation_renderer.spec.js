@@ -4,6 +4,7 @@ describe(
   function() {
     renderer = new AllocationRenderer({
   	  locale: 'en',
+      groups: [['invisible']], // Invisible is first, always.
       choices: {
         en:{
           'title': {
@@ -16,7 +17,9 @@ describe(
             filter: function(text) { return text.toLowerCase(); },
             ignoreSingle: true
           },
+          'invisible': '', // Not visible.
           'author,title': '%1$s, who wrote %2$s',
+          'invisible,title': 'only %2$s is visible'
         }
       }
   	});
@@ -47,8 +50,8 @@ describe(
           ['cat1', 'Orig2', 'parsed2'],
           ['cat2', 'Orig3', 'parsed3']
         ]).compare([
-          ['cat2', 'Orig1 Orig3', 'parsed1 parsed3'], // TODO Should this be an array? Is just parsed1 ok? Do we care?
-          ['cat1', 'Orig2', 'parsed2']
+          ['cat2', ['Orig1', 'Orig3'], ['parsed1', 'parsed3']],
+          ['cat1', ['Orig2'], ['parsed2']]
         ]);
       });
       it("is correct", function() {
@@ -58,20 +61,25 @@ describe(
           ['cat2', 'Orig3', 'parsed3'],
           ['cat1', 'Orig4', 'parsed4']
         ]).compare([
-          ['cat2', 'Orig1 Orig3', 'parsed1 parsed3'], // TODO Is just parsed1 ok? Do we care?
-          ['cat1', 'Orig2 Orig4', 'parsed2 parsed4']
+          ['cat2', ['Orig1', 'Orig3'], ['parsed1', 'parsed3']],
+          ['cat1', ['Orig2', 'Orig4'], ['parsed2', 'parsed4']]
         ]);
       });
     });
     describe("rendered", null, function() {
       it("is correct", function() {
-        return renderer.rendered([['cat1', 'Orig1 Orig2', 'parsed1']]) == "parsed1&nbsp;(cat1)";
+        return renderer.rendered([
+          ['cat1', 'Orig1', 'parsed1'],
+          ['cat2', 'Orig2', 'parsed2']
+        ]) == "parsed1 parsed2";
       });
       it("is correct", function() {
-        return renderer.rendered([
-          ['cat1', 'Orig1 Orig2', 'parsed1'],
-          ['cat2', 'Orig3 Orig4', 'parsed2']
-        ]) == "parsed1 parsed2";
+        return renderer.rendered(
+          [
+            ['cat1', 'Orig1', 'parsed1'],
+            ['cat1', 'Orig2', 'parsed2']
+          ]
+        ) == "parsed1&nbsp;parsed2";
       });
       it("is correct", function() {
         return renderer.rendered([
@@ -80,8 +88,9 @@ describe(
       });
       it("is correct", function() {
         return renderer.rendered([
-          ['title', 'Title1 Title2', 'title1 title2']
-        ]) == "TITLE1 TITLE2&nbsp;(title)";
+          ['title', 'Title1', 'title1'],
+          ['title', 'Title2', 'title2']
+        ]) == "TITLE1&nbsp;TITLE2&nbsp;(title)";
       });
       it("is correct", function() {
         return renderer.rendered([
@@ -90,8 +99,9 @@ describe(
       });
       it("is correct", function() {
         return renderer.rendered([
-          ['author', 'Author1 Author2', 'author1 author2']
-        ]) == "<em>author1 author2</em>";
+          ['author', 'Author1', 'author1'],
+          ['author', 'Author2', 'author2']
+        ]) == "<em>author1&nbsp;author2</em>";
       });
       it("is correct", function() {
         return renderer.rendered([
@@ -105,32 +115,75 @@ describe(
           ['author', 'Author1', 'author:author1']
         ]) == "author1, who wrote title1";
       });
+      it("is correct", function() {
+        return renderer.rendered([
+          ['invisible', 'Invisible1', 'invisible:invisible1'],
+          ['title', 'Title1', 'title:title1']
+        ]) == "only title1 is visible";
+      });
+      it("is correct", function() {
+        return renderer.rendered([
+          ['invisible', 'Invisible1', 'invisible:invisible1'],
+          ['invisible', 'Invisible2', 'invisible:invisible2'],
+          ['title', 'Title1', 'title:title1']
+        ]) == "only title1 is visible";
+      });
+      it("is correct", function() {
+        return renderer.rendered([
+          ['title', 'Title1', 'title:title1'],
+          ['invisible', 'Invisible1', 'invisible:invisible1'],
+          ['invisible', 'Invisible2', 'invisible:invisible2']
+        ]) == "only title1 is visible";
+      });
     });
     describe("groupify", null, function() {
       it("is correct", function() {
         return renderer.groupify([
           ['cat1', 'Orig1', 'parsed1']
-        ]).compare([['cat1', 'Orig1...', 'parsed1']]);
+        ]).compare([
+          ['cat1', 'Orig1...', 'parsed1']
+        ]);
       });
       it("is correct", function() {
         return renderer.groupify([
           ['cat1', 'Orig1', 'parsed1'],
           ['cat2', 'Orig2', 'parsed2']
         ]).compare([
-		  ['cat1', 'Orig1',    'parsed1'],
-		  ['cat2', 'Orig2...', 'parsed2']
-		]);
+          [],
+		      [
+            ['cat1', 'Orig1',    'parsed1'], // Both in the second group.
+		        ['cat2', 'Orig2...', 'parsed2']
+          ]
+		    ]);
       });
       it("is correct", function() {
         return renderer.groupify([
           ['cat1', 'Orig1', 'parsed1'],
           ['cat2', 'Orig2', 'parsed2'],
-		  ['cat1', 'Orig3', 'parsed3']
+		      ['cat1', 'Orig3', 'parsed3']
         ]).compare([
-  		  ['cat1', 'Orig1',    'parsed1'],
-  		  ['cat2', 'Orig2',    'parsed2'],
-		  ['cat1', 'Orig3...', 'parsed3']
-	    ]);
+          [],
+          [
+  		      ['cat1', 'Orig1',    'parsed1'], // All in the second group.
+  		      ['cat2', 'Orig2',    'parsed2'],
+		        ['cat1', 'Orig3...', 'parsed3']
+          ]
+	      ]);
+      });
+      it("is correct", function() {
+        return renderer.groupify([
+          ['cat1', 'Orig1', 'parsed1'],
+          ['invisible', 'Invisible2', 'invisible2'],
+		      ['cat1', 'Orig2', 'parsed2']
+        ]).compare([
+          [
+            ['invisible', 'Invisible2', 'invisible2']
+          ],
+          [
+  		      ['cat1', 'Orig1',    'parsed1'],
+		        ['cat1', 'Orig2...', 'parsed2']
+          ]
+	      ]);
       });
     });    
     describe("querify", null, function() {
@@ -141,7 +194,7 @@ describe(
       });
       it("is correct", function() {
         return renderer.querify([
-          ['cat1', 'Orig1*', 'parsed1*']
+          ['cat1', 'Orig1*', 'parsed1']
         ]) == "cat1:parsed1*";
       });
       it("is correct", function() {
@@ -152,7 +205,7 @@ describe(
       });
       it("is correct", function() {
         return renderer.querify([
-          ['cat1', 'Orig1*', 'parsed1*'],
+          ['cat1', 'Orig1*', 'parsed1'],
           ['cat2', 'Orig2', 'parsed2']
         ]) == "cat1:parsed1* cat2:parsed2";
       });
@@ -161,7 +214,7 @@ describe(
       it("is correct", function() {
         return renderer.suggestify([
           ['cat1', 'Orig1', 'parsed1']
-        ]) == "parsed1&nbsp;(cat1)";
+        ]) == "parsed1";
       });
       it("is correct", function() {
         return renderer.suggestify([
