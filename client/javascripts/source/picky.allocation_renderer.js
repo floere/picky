@@ -126,9 +126,18 @@ function AllocationRenderer(config) {
     // Replace each word into the formatting string.
     //
     zipped.each(function(i, original_token) {
-      var category = original_token[0];
-      var words    = original_token[2];
+      var category  = original_token[0];
+      var originals = original_token[1];
+      var words     = original_token[2];
 	  
+      // Add ellipses.
+      //
+      words.map(function(i, word) {
+        var original = originals[i];
+        if (original.charAt(original.length - 1) == "*") { word += "..."; }
+        return word;
+      });
+    
       if (formatting.filter) {
         words.map(function(i, word) {
           return formatting.filter(word);
@@ -211,7 +220,7 @@ function AllocationRenderer(config) {
     
     // And append "ellipses".
     //
-    if (!nonPartial.include(last_part[0])) { last_part[1] = last_part[1].valueOf() + '...'; }
+    if (!nonPartial.include(last_part[0])) { last_part[1] = last_part[1].valueOf() + '*'; }
     
 	  return groups;
   };
