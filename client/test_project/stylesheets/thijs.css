@@ -1,0 +1,230 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@font-face  /* TODO: Replace with images */
+{
+  font-family: 'myriad';
+  src: url('MyriadPro-Semibold.otf') format('opentype');
+}
+body,
+html
+{
+  margin: 0;
+  padding: 0;
+}
+body
+{
+  font: 15px/20px "HelveticaNeue", arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  background: url(images/background.png), #f8f8fc;
+  background-size: 64px;
+}
+body > div
+{
+  width: 728px;
+  padding: 20px;
+  margin: 0 auto;
+}
+pre
+{
+  overflow: hidden;
+}
+.content
+{
+  padding: 20px;
+  background: rgba(0,0,0,0.08);
+  border: 1px solid #cacacb;
+  border-top-color: #d1d1d2;
+  border-bottom-color: #b8b8ba;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.16);
+}
+form
+{
+  display: block;
+  position: relative;
+  height: 46px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.08))), rgba(255,255,255,0.4);
+  background: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.08)), rgba(255,255,255,0.4);
+  border-radius: 99px;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.08), inset 0 0 4px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.6);
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+form input[type=search],
+form input[type=button],
+form .status
+{
+  height: 46px;
+  border: 1px solid #98989f;
+  -webkit-appearance: none;
+  border-radius: 99px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+  background: #fff;
+  font-size: 30px;
+  line-height: 1;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+form input[type=search] {
+  z-index: 3;
+  display: block;
+  position: absolute;
+  margin: 0 0 0 2em;
+  padding: 0 8px 0 13px;
+  width: 546px;
+}
+form input[type=search]::-webkit-input-placeholder
+{
+  color: #c0c0c8;
+  font-size: 30px;
+  line-height: 36px;  /* Fixes placeholder vertical alignment in Chrome and Webkit Nightly (535.*) */
+}
+form input[type=search]:-moz-placeholder
+{
+  color: #c0c0c8;
+}
+form input[type=search]:focus
+{
+  outline: none;
+  border-color: #6e96c7;
+  box-shadow: inset 0 0 4px #6e96c7, inset 0 0 4px #6e96c7, 0 0 4px #6e96c7, 0 0 4px #6e96c7, inset 0 2px 4px rgba(0,0,0,0.16);
+}
+form input[type=search]::-webkit-search-cancel-button
+{
+  z-index: 9;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  background: url(images/cancel.svg);
+  -webkit-appearance: none;
+}
+form input[type=search]::-webkit-search-cancel-button:active
+{
+  background-position: 0 -32px;
+}
+form input[type=search]::-webkit-search-cancel-button
+{
+/*  outline: 1px dashed red !important;*/
+}
+form input[type=button]
+{
+  background: rgba(0,0,0,0.01);
+  z-index: 2;
+  display: block;
+  position: absolute;
+  padding-right: 2em;
+  right: 0;
+  width: 130px;
+  font: 13px/1 "HelveticaNeue-Medium", arial, sans-serif;
+  color: #606068;
+  text-align: right;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  -webkit-transition: background 0.15s ease-in;
+}
+form input[type=button]:active
+{
+  background: rgba(0,0,0,0.08);
+  -webkit-transition-duration: 0;
+}
+form .status {
+  background: rgba(0,0,0,0.0);
+  z-index: 2;
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100px;
+}
+footer
+{
+  text-align: center;
+}
+footer,
+footer a
+{
+  color: #a0a0a8;
+}
+footer a:hover
+{
+  color: #808088;
+}
+
+.content form ol.more,
+.content form ol.hidden {
+  margin-top: 3px;
+}
+.content form ol li:last-child {
+  margin-bottom: 0;
+}
+.content form div.results div.header {
+  display: none;
+  color: #eee;
+  padding: 0em;
+}
+.content form div.allocations,
+.content form div.no_results,
+.content form div.results:not(:empty) {
+  margin: 0 1.5em;
+  padding: 0 0 0 0;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  border-bottom: solid 1px #b8b8ba;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0), 0 1px 3px rgba(0,0,0,0.16);
+}
+.content form div.no_results {
+  padding: 0.5em 0;
+}
+.content form ol.more, .content form div.no_results {
+  display: none;
+}
+.content form ol.more h3, .content form div.no_results h3 {
+  margin: 0;
+  text-align: center;
+}
+.results .pod {
+  margin: 0 1em;
+  padding: 1.5em 0;
+}
+.results .pod h3 {
+  margin-top: 0;
+}
+.results .pod h3 a:link,
+.results .pod h3 a:visited {
+  color: black;
+  text-decoration: none;
+}
+.results .pod h3 a:hover {
+  text-decoration: underline;
+}
+.results hr {
+  margin: 0;
+}
+.results hr:last-child {
+  display: none;
+}
+.content form .no_results {
+  margin: 0px 1em;
+  padding: 0.5em 1em 0;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.allocations ol {
+  list-style-type: none;
+}
+.content form .allocations {
+  margin: 0px 1.5em;
+  padding-bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.02);
+  box-shadow: -2px 0px rgba(0,0,0,0.05), 2px 0px rgba(0,0,0,0.05);
+}
+form .allocations .shown li, form .allocations .hidden li {
+  font-size: 1.2em;
+}

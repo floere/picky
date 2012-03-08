@@ -1,8 +1,9 @@
 !!!
 %html{ :lang => 'en' }
   %head
+    %link{:href => "stylesheets/thijs.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     %link{:href => "stylesheets/picky.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-    %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    / %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     = js 'jquery-1.5.0.min'
     = js 'history.min'
     = js 'history.adapter.jquery.min'
@@ -21,50 +22,51 @@
 
   %body
     %img{:src => "images/picky-new.png"}/
-    %p
-      %a{:href => "http://floere.github.com/picky"} To the Picky Homepage
-      \/
-      %a{:href => '/configure' } Configuring this app server
-    %p
-      Try a few examples
-      = succeed ":" do
-        %span.explanation (on a simple database with 540 books - note that the server is on Heroku and needs a little time to ramp up)
-    %p
-      A simple word,
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('alan');"} alan
-      %span.explanation
-        (Finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.)
-        %span
-    %p
-      With qualifier,
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('title:women');"} title:women
-      %span.explanation
-        (Finds "women*" just in titles.)
-        %span
-    %p
-      With similarity,
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
-      %span.explanation (Finds "pynchon", note: Only title in example with similarity. Uses a combination of double metaphone and Levenshtein.)
-    %p
-      More complex,
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~');"} title:lyterature~
-      %span.explanation (Finds similar titles)
-    %p
-      With choice,
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
-      %span.explanation (Finds "sp*" in multiple categories. Choose the one you're looking for.)
-    %p
-      More complex,
-      = succeed "." do
-        %a{:href => "#", :onclick => "pickyClient.insert('soc* p');"} soc* p
-      %span.explanation (This is where Picky really shines, "the title started with soc, and the author starts with p")
     .content
       = Picky::Helper.cached_interface
+      %section
+        %p
+          %a{:href => "http://floere.github.com/picky"} To the Picky Homepage
+          \/
+          %a{:href => '/configure' } Configuring this app server
+        %p
+          Try a few examples
+          = succeed ":" do
+            %span.explanation (on a simple database with 540 books - note that the server is on Heroku and needs a little time to ramp up)
+        %p
+          A simple word,
+          = succeed "." do
+            %a{:href => "#", :onclick => "pickyClient.insert('alan');"} alan
+          %span.explanation
+            (Finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.)
+            %span
+        %p
+          With qualifier,
+          = succeed "." do
+            %a{:href => "#", :onclick => "pickyClient.insert('title:women');"} title:women
+          %span.explanation
+            (Finds "women*" just in titles.)
+            %span
+        %p
+          With similarity,
+          = succeed "." do
+            %a{:href => "#", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
+          %span.explanation (Finds "pynchon", note: Only title in example with similarity. Uses a combination of double metaphone and Levenshtein.)
+        %p
+          More complex,
+          = succeed "." do
+            %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~');"} title:lyterature~
+          %span.explanation (Finds similar titles)
+        %p
+          With choice,
+          = succeed "." do
+            %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
+          %span.explanation (Finds "sp*" in multiple categories. Choose the one you're looking for.)
+        %p
+          More complex,
+          = succeed "." do
+            %a{:href => "#", :onclick => "pickyClient.insert('soc* p');"} soc* p
+          %span.explanation (This is where Picky really shines, "the title started with soc, and the author starts with p")
       :javascript
         $(window).load(function() {
           pickyClient = new PickyClient({

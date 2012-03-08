@@ -7,14 +7,14 @@ module Picky
     @@localized_input    = lambda { |options|
       search_button_text = options[:button]     || 'search'
 <<-HTML
-<div class="dashboard empty">
-  <div class="feedback">
+<form class="empty">
+  <!-- <div class="feedback"> -->
     <div class="status"></div>
-    <input type="text" autocorrect="off" class="query"/>
+    <input type="search" autocorrect="off" class="query"/>
     <div class="reset" title="clear"></div>
-  </div>
+  <!-- </div> -->
   <input type="button" class="search_button" value="#{search_button_text}">
-</div>
+</form>
 HTML
     }
     @@localized_results = lambda { |options|
@@ -32,7 +32,7 @@ HTML
     }
     @@localized_interface = lambda { |options|
 <<-HTML
-<div id="picky">
+<section class="picky">
   #{@@localized_input[options]}
   #{@@localized_results[options]}
 </div>

@@ -1,0 +1,135 @@
+#picky {
+  overflow: hidden; }
+  #picky > div.header {
+    display: none; }
+  #picky div.dashboard {
+    position: relative;
+    overflow: hidden;
+    background-color: lightGrey;
+    padding: 5px 5px 7px 5px;
+    height: 26px;
+    margin-bottom: 3px; }
+    #picky div.dashboard.empty .status {
+      background-color: #8cacda; }
+    #picky div.dashboard.empty .feedback {
+      background-color: #d0e2ff; }
+    #picky div.dashboard.none .status {
+      background-color: red; }
+    #picky div.dashboard.none .feedback {
+      background-color: #ffdddd; }
+    #picky div.dashboard.support .status {
+      background-color: #ff6600; }
+    #picky div.dashboard.support .feedback {
+      background-color: #faf3d0; }
+    #picky div.dashboard.ok .status {
+      background-color: #09be01; }
+    #picky div.dashboard.ok .feedback {
+      background-color: #bcf0b3; }
+    #picky div.dashboard .feedback {
+      width: 85%;
+      float: left;
+      border: 1px solid #cccccc;
+      padding: 0;
+      margin: 0; }
+      #picky div.dashboard .feedback .status {
+        float: left;
+        width: 45px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        padding: 0 0 0 2px;
+        font-weight: bold;
+        color: white;
+        margin-right: 5px; }
+      #picky div.dashboard .feedback .status.alert {
+        background-color: lightgreen; }
+      #picky div.dashboard .feedback input.query {
+        float: left;
+        width: 80%;
+        height: 100%;
+        font-size: 1em;
+        font-weight: bold;
+        border-style: solid;
+        border-width: 0px 0px 3px 0px;
+        border-color: transparent;
+        margin: 0;
+        padding: 4px 0 0 0;
+        outline: none;
+        background: none; }
+      #picky div.dashboard .feedback .reset {
+        float: right;
+        width: 18px;
+        height: 18px;
+        margin: 3px 3px 0px 0px;
+        cursor: pointer;
+        opacity: 0; }
+    #picky div.dashboard input.search_button {
+      margin: 5px 0px 5px 2%; }
+  #picky div.results {
+    margin-top: 0px;
+    padding: 0px; }
+    #picky div.results div.header, #picky div.results div.addination {
+      color: #555555;
+      background-color: #eeeeee;
+      padding: 6px 5px 5px 8px; }
+      #picky div.results div.header .tothetop, #picky div.results div.addination .tothetop {
+        float: right; }
+        #picky div.results div.header .tothetop a, #picky div.results div.addination .tothetop a {
+          display: block;
+          width: 20px;
+          height: 20px; }
+    #picky div.results ol.results {
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px; }
+    #picky div.results div.addination {
+      position: relative;
+      text-align: center;
+      color: #276abb;
+      cursor: pointer; }
+  #picky .no_results {
+    display: none; }
+  #picky .allocations {
+    clear: both;
+    overflow: hidden;
+    background-color: white;
+    padding-bottom: 2px; }
+    #picky .allocations ol.hidden {
+      display: none; }
+    #picky .allocations ol.more:hover {
+      background-color: #cccccc;
+      cursor: pointer; }
+    #picky .allocations ol.more {
+      background-color: #eeeeee;
+      display: none;
+      text-align: center;
+      height: 32px;
+      line-height: 32px; }
+      #picky .allocations ol.more li {
+        text-align: center; }
+    #picky .allocations ol {
+      list-style-position: outside;
+      list-style: none;
+      padding: 0;
+      margin: 0px;
+      overflow: hidden; }
+      #picky .allocations ol li {
+        margin: 0px;
+        margin-bottom: 3px;
+        padding: 10px 13px;
+        cursor: pointer;
+        display: block;
+        font: menu;
+        font-size: 1em;
+        line-height: 16px;
+        background-color: #f3f3f3;
+        overflow: hidden;
+        color: #276abb; }
+        #picky .allocations ol li .text {
+          max-width: 90%;
+          float: left; }
+        #picky .allocations ol li .count {
+          float: right;
+          color: #cccccc; }
+      #picky .allocations ol li:hover {
+        background-color: #d0e2ff; }
