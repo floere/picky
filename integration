@@ -89,6 +89,8 @@ def install_sinatra_client
 end
 
 def run_search_requests_on_client port = 3210
+  sleep 3 # loading
+  
   puts
   puts "Running search requests on the client directly"
   client "alan", "author", port
@@ -106,8 +108,6 @@ def open_client_in_browser port = 3210
   system "open -a 'Google Chrome' http://localhost:#{port}/?q=alan"
   sleep 1
   system "open -a 'Google Chrome' http://localhost:#{port}/?q=a%2A%20b"
-  sleep 1
-  system "open -a 'Google Chrome' http://localhost:#{port}/configure"
   sleep 5
 end
 

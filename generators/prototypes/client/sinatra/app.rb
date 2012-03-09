@@ -2,22 +2,21 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-# Sinatra settings.
+# Load the "model".
 #
+require File.expand_path 'book', File.dirname(__FILE__)
+
+set :haml, { :format => :html5 }
+
+# Sets up two query instances.
+#
+BooksSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/csv'
+
 set :static, true
 set :public, File.dirname(__FILE__)
-set :views,  File.expand_path('../views', __FILE__)
-set :haml,   :format => :html5
+set :views,  File.expand_path('views', File.dirname(__FILE__))
 
-# Load the simplified "model".
-#
-require File.expand_path '../book', __FILE__
-
-# Sets up a search instance to the server.
-#
-BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
-
-# Root, the search page.
+# Root, the search interface.
 #
 get '/' do
   @query = params[:q]
@@ -25,41 +24,31 @@ get '/' do
   haml :'/search'
 end
 
-# Renders the results into the json.
-#
-# You get the results from the picky server and then
-# populate the result hash with rendered models.
+# For full results, you get the ids from the picky server
+# and then populate the result with models (rendered, even).
 #
 get '/search/full' do
-  results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
+  results = BooksSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
   results.extend Picky::Convenience
   results.populate_with Book do |book|
-    book.render
+    book.to_s
   end
 
   #
-  # Or, to populate with the model instances, use:
+  # Or use:
   #   results.populate_with Book
   #
-  # Then to render:
+  # Then:
   #   rendered_entries = results.entries.map do |book| (render each book here) end
   #
 
-  Yajl::Encoder.encode results
+  ActiveSupport::JSON.encode results
 end
 
-# Updates the search count while the user is typing.
-#
-# We don't parse/reencode the returned json string using search_unparsed.
+# For live results, you'd actually go directly to the search server without taking the detour.
 #
 get '/search/live' do
-  BookSearch.search_unparsed params[:query], :ids => params[:ids], :offset => params[:offset]
-end
-
-# Configure. The configuration info page.
-#
-get '/configure' do
-  haml :'/configure'
+  BooksSearch.search_unparsed params[:query], :offset => params[:offset]
 end
 
 helpers do

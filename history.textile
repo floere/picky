@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 4.3.0 "evening wear"
+
+* hanke: (client) Gorgeous new design (thanks @tvandervossen!)
+* hanke: (client) Completely overhauled Picky JavaScript.
+
 h2. Version 4.2.4 "fileutils"
 
 * hanke: (server) Require fileutils regardless of the Ruby version Picky is run in. 

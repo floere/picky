@@ -89,12 +89,6 @@ class BookSearch < Sinatra::Application
     haml :'/search'
   end
 
-  # Configure. The configuration info page.
-  #
-  get '/configure' do
-    haml :'/configure'
-  end
-
   # Renders the results into the json.
   #
   # You get the results from the (local) picky server and then
@@ -106,7 +100,7 @@ class BookSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Book do |book|
-      book.render
+      book.to_s
     end
 
     #
