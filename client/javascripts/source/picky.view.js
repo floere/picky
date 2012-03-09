@@ -87,7 +87,7 @@ var PickyView = function(picky_controller, config) {
     });
     
     clearButton.click(function() {
-      reset('');
+      reset();
       controller.clearButtonClicked();
       focus();
     });

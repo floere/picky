@@ -7,11 +7,11 @@ module Picky
     @@localized_input    = lambda { |options|
       search_button_text = options[:button]     || 'search'
 <<-HTML
-<form class="empty">
+<form class="empty" onkeypress="return event.keyCode != 13;">
   <!-- <div class="feedback"> -->
     <div class="status"></div>
     <input type="search" autocorrect="off" class="query"/>
-    <div class="reset" title="clear"></div>
+    <a class="reset" title="clear"></a>
   <!-- </div> -->
   <input type="button" value="#{search_button_text}"/>
 </form>

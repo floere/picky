@@ -21,50 +21,38 @@
     = js 'picky.allocations_cloud'
 
   %body
-    %img{ :class => 'picky', :src => "images/picky-new.png"}/
+    %hgroup
+      / Replace these headers with your code
+      %img{ :class => 'picky', :src => "images/picky.png"}/
+      %h1 Picky
+      %h2
+        A great start into your
+        %em fantastic
+        search engine!
+        ☛
+        %a{:href => "http://floere.github.com/picky"} Picky Homepage
     .content
       = Picky::Helper.cached_interface
       %section
+        %h1 Examples:
         %p
-          %a{:href => "http://floere.github.com/picky"} To the Picky Homepage
+          %a{:href => "", :onclick => "pickyClient.insert('alan');"} alan
+          finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.
         %p
-          Try a few examples
-          = succeed ":" do
-            %span.explanation (on a simple database with 540 books - note that the server is on Heroku and needs a little time to ramp up)
+          %a{:href => "", :onclick => "pickyClient.insert('title:women');"} title:women
+          finds "women*" just in titles.
         %p
-          A simple word,
-          = succeed "." do
-            %a{:href => "#", :onclick => "pickyClient.insert('alan');"} alan
-          %span.explanation
-            (Finds Alan in the title, and Alans who wrote books. The title is ranked higher due to weighing.)
-            %span
+          %a{:href => "", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
+          finds the similar "pynchon".
         %p
-          With qualifier,
-          = succeed "." do
-            %a{:href => "#", :onclick => "pickyClient.insert('title:women');"} title:women
-          %span.explanation
-            (Finds "women*" just in titles.)
-            %span
+          %a{:href => "", :onclick => "pickyClient.insert('title:lyterature~');"} title:lyterature~
+          finds similar titles.
         %p
-          With similarity,
-          = succeed "." do
-            %a{:href => "#", :onclick => "pickyClient.insert('pinchn~');"} pinchn~
-          %span.explanation (Finds "pynchon", note: Only title in example with similarity. Uses a combination of double metaphone and Levenshtein.)
+          %a{:href => "", :onclick => "pickyClient.insert('sp');"} sp
+          finds "sp*" in multiple categories. Choose the one you're looking for.
         %p
-          More complex,
-          = succeed "." do
-            %a{:href => "#", :onclick => "pickyClient.insert('title:lyterature~');"} title:lyterature~
-          %span.explanation (Finds similar titles)
-        %p
-          With choice,
-          = succeed "." do
-            %a{:href => "#", :onclick => "pickyClient.insert('sp');"} sp
-          %span.explanation (Finds "sp*" in multiple categories. Choose the one you're looking for.)
-        %p
-          More complex,
-          = succeed "." do
-            %a{:href => "#", :onclick => "pickyClient.insert('soc* p');"} soc* p
-          %span.explanation (This is where Picky really shines, "the title started with soc, and the author starts with p")
+          %a{:href => "", :onclick => "pickyClient.insert('soc* p');"} soc* p
+          means "find something that starts with soc, and another thing starting with p".
       %section
         %h1 Already made it this far? You're good!
         %p I think you're ready for configuring me for your own purposes.
@@ -96,7 +84,9 @@
           %code
             %pre
               :preserve
-                BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
+                BookSearch = Picky::Client.new host: 'localhost',
+                                               port: 8080,
+                                               path: '/books'
         %p
           Both clients offer the options:
           %dl
@@ -115,7 +105,9 @@
             %pre
               :preserve
                 get '/search/full' do
-                  results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
+                  results = BookSearch.search params[:query],
+                                              :ids => params[:ids],
+                                              :offset => params[:offset]
                   results.extend Picky::Convenience
                   results.populate_with Book do |book|
                     book.to_s
@@ -127,7 +119,11 @@
           %strong hash
           with the results:
           %code
-            %pre results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
+            %pre
+              :preserve
+                results = BookSearch.search params[:query],
+                                            :ids => params[:ids],
+                                            :offset => params[:offset]
         %p
           This part takes the
           %strong hash
@@ -175,10 +171,14 @@
           %code
             %pre
               :preserve
-                BookSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
+                BookSearch = Picky::Client.new host: 'localhost', 
+                                               port: 8080,
+                                               path: '/books'
 
                 get '/search/full' do
-                  results = BookSearch.search params[:query], :ids => params[:ids], :offset => params[:offset]
+                  results = BookSearch.search params[:query],
+                                              ids: params[:ids],
+                                              offset: params[:offset]
 
                   results.extend Picky::Convenience
                   results.populate_with Book do |book|
@@ -196,10 +196,18 @@
           if you use just one language, or
           %code
             %pre
-              \= Picky::Helper.interface :button => 'search', :no_results => 'No results!', :more => 'more'
+              :preserve
+                \= Picky::Helper.interface button: 'search',
+                                           no_results: 'No results!',
+                                           more: 'more'
           if you use multiple languages.
           (You'd use the options
-          %pre :button => t(:'search.button'), :no_results => t(:'search.no_results'), :more => t(:'search.more')
+          %code
+            %pre
+              :preserve
+                button: t(:'search.button'), 
+                no_results: t(:'search.no_results'),
+                more: t(:'search.more')
           of course, with proper i18n)
           The same options can be used for
           %strong #cached_interface
@@ -222,6 +230,12 @@
         %p
           %strong Good luck my friend!
           %em *waves several stubby pink tentacles*
+      %footer
+        Website design by
+        %a{ :href => 'http://twitter.com/' } Thijs van der Vossen
+        of
+        %a{ :href => 'http://fngtps.com' } Fingertips
+        with modifications by Florian Hanke.
       :javascript
         $(window).load(function() {
           pickyClient = new PickyClient({
@@ -269,14 +283,17 @@
             choices: {
               en:{
                 'title': {
-                  format: "<strong>%1$s</strong>",
+                  format: "Called <strong>%1$s</strong>",
                   filter: function(text) { return text.toUpperCase(); },
-                  ignoreSingle: false
+                  ignoreSingle: true
                 },
-                'author,title':    '%1$s, who wrote %2$s',
-                'title,author':    '%2$s, written by %2$s',
-                'title,subjects':  '%1$s, about %2$s',
-                'author,subjects': '%1$s, who wrote about %2$s'
+                'author': 'Written by %1$s',
+                'subjects': 'Being about %1$s',
+                'publisher': 'Published by %1$s',
+                'author,title':    'Called %1$s, written by %2$s',
+                'title,author':    'Called %2$s, written by %1$s',
+                'title,subjects':  'Called %1$s, about %2$s',
+                'author,subjects': '%1$s who wrote about %2$s'
               }
             },
 
