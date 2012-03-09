@@ -1,9 +1,8 @@
 !!!
 %html{ :lang => 'en' }
   %head
-    %link{:href => "stylesheets/thijs.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     %link{:href => "stylesheets/picky.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-    / %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     = js 'jquery-1.5.0.min'
     = js 'history.min'
     = js 'history.adapter.jquery.min'
@@ -26,11 +25,11 @@
       %img{ :class => 'picky', :src => "images/picky.png"}/
       %h1 Picky
       %h2
-        A great start into your
+        Scaffold: A great start into your
         %em fantastic
         search engine!
         ☛
-        %a{:href => "http://floere.github.com/picky"} Picky Homepage
+        %a{ :href => "http://florianhanke.com/picky" } Picky Homepage
     .content
       = Picky::Helper.cached_interface
       %section
@@ -98,7 +97,7 @@
             %dd The Picky search server port (see unicorn.rb in the server).
             %dt
               %strong path
-            %dd The Picky search path (see app/application.rb in the server for the mapping path => query).
+            %dd The Picky search path (see app.rb in the server).
         %p
           Then, use these Client instances in your actions. For example like this:
           %code
@@ -192,14 +191,15 @@
           The view is even easier. Just add the line
           %code
             %pre
-              \= Picky::Helper.cached_interface
+              :preserve
+                = Picky::Helper.cached_interface
           if you use just one language, or
           %code
             %pre
               :preserve
-                \= Picky::Helper.interface button: 'search',
-                                           no_results: 'No results!',
-                                           more: 'more'
+                = Picky::Helper.interface button: 'search',
+                                          no_results: 'No results!',
+                                          more: 'more'
           if you use multiple languages.
           (You'd use the options
           %code
@@ -232,10 +232,12 @@
           %em *waves several stubby pink tentacles*
       %footer
         Website design by
-        %a{ :href => 'http://twitter.com/' } Thijs van der Vossen
+        %a{ :href => 'http://twitter.com/thijs' } Thijs van der Vossen
         of
         %a{ :href => 'http://fngtps.com' } Fingertips
-        with modifications by Florian Hanke.
+        with modifications by
+        = succeed('.') do
+          %a{ :href => 'http://twitter.com/hanke' } Florian Hanke
       :javascript
         $(window).load(function() {
           pickyClient = new PickyClient({

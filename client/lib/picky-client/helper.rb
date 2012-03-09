@@ -5,12 +5,13 @@ module Picky
   class Helper
     
     @@localized_input    = lambda { |options|
-      search_button_text = options[:button]     || 'search'
+      search_button_text = options[:button]      || 'search'
+      placeholder_text   = options[:placeholder] || 'Search here...'
 <<-HTML
 <form class="empty" onkeypress="return event.keyCode != 13;">
   <!-- <div class="feedback"> -->
     <div class="status"></div>
-    <input type="search" autocorrect="off" class="query"/>
+    <input type="search" placeholder="#{placeholder_text}" autocorrect="off" class="query"/>
     <a class="reset" title="clear"></a>
   <!-- </div> -->
   <input type="button" value="#{search_button_text}"/>
