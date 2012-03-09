@@ -53,10 +53,10 @@ system gzip_command
 # Copied also into the generator prototypes.
 #
 stylesheets_command = <<-STYLESHEETS
-sass -C test_project/stylesheets/picky.sass test_project/stylesheets/picky.css;
-sass -C test_project/stylesheets/application.sass test_project/stylesheets/application.css;
-cp test_project/stylesheets/picky.css ../generators/prototypes/client/sinatra/stylesheets/picky.css;
-cp test_project/stylesheets/application.css ../generators/prototypes/client/sinatra/stylesheets/application.css;
+# sass -C test_project/stylesheets/picky.sass test_project/stylesheets/picky.css;
+# sass -C test_project/stylesheets/application.sass test_project/stylesheets/application.css;
+# cp test_project/stylesheets/picky.css ../generators/prototypes/client/sinatra/stylesheets/picky.css;
+# cp test_project/stylesheets/application.css ../generators/prototypes/client/sinatra/stylesheets/application.css;
 STYLESHEETS
 p stylesheets_command
 system stylesheets_command

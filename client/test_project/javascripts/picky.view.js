@@ -9,7 +9,7 @@ var PickyView = function(picky_controller, config) {
   var clearButton    = config['reset'];
   var searchButton   = config['button'];
   var resultCounter  = config['counter'];
-  var dashboard      = config['dashboard'];
+  var form           = config['form'];
   var moreSelector   = config['moreSelector']; // e.g. "#picky div.results div.addination:last"
 	
   // Push into results.
@@ -157,7 +157,7 @@ var PickyView = function(picky_controller, config) {
     return 'ok';
   };
   var setSearchStatus = function(statusClass) {
-    dashboard.attr('class', 'dashboard ' + statusClass);
+    form.attr('class', statusClass);
   };
   var setSearchStatusFor = function(data) {
     setSearchStatus(resultStatusFor(data));

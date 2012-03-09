@@ -66,17 +66,23 @@ var PickyClient = function(config) {
   
   // Enclosing selector.
   //
-  var enclosingSelector = config['enclosingSelector'] || '#picky';
+  var enclosingSelector = config['enclosingSelector'] || '.picky';
   
+  // Form selector.
+  //
+  var formSelector = config['formSelector'] || (enclosingSelector + ' form');
+
   // View config.
   //
-  config['input']        = $(config['inputSelector']     || (enclosingSelector + ' input.query'));
-  config['reset']        = $(config['resetSelector']     || (enclosingSelector + ' div.reset'));
-  config['button']       = $(config['buttonSelector']    || (enclosingSelector + ' input.search_button'));
-  config['counter']      = $(config['counterSelector']   || (enclosingSelector + ' div.status'));
-  config['dashboard']    = $(config['dashboardSelector'] || (enclosingSelector + ' .dashboard'));
+  config['form']         = $(formSelector);
+  
+  config['input']        = $(config['inputSelector']     || (formSelector + ' input[type=search]'));
+  config['reset']        = $(config['resetSelector']     || (formSelector + ' div.reset'));
+  config['button']       = $(config['buttonSelector']    || (formSelector + ' input[type=button]'));
+  config['counter']      = $(config['counterSelector']   || (formSelector + ' div.status'));
+  
   config['results']      = $(config['resultsSelector']   || (enclosingSelector + ' div.results'));
-  config['noResults']    = $(config['noResultsSelector'] || (enclosingSelector + ' .no_results'));
+  config['noResults']    = $(config['noResultsSelector'] || (enclosingSelector + ' div.no_results'));
   config['moreSelector'] =   config['moreSelector']      ||  enclosingSelector + ' div.results div.addination:last';
   
   // Allocations cloud.
@@ -92,7 +98,7 @@ var PickyClient = function(config) {
   config['results']        = $(config['resultsSelector'] || (enclosingSelector + ' div.results'));
   config['resultsDivider'] = config['resultsDivider']    || '';
   config['nonPartial']     = config['nonPartial']        || []; // e.g. ['category1', 'category2']
-  config['wrapResults']    = config['wrapResults']       || '<ol class="results"></ol>';
+  config['wrapResults']    = config['wrapResults']       || '<ol></ol>';
   
   // The central Picky controller.
   //

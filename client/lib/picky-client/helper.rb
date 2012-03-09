@@ -13,7 +13,7 @@ module Picky
     <input type="search" autocorrect="off" class="query"/>
     <div class="reset" title="clear"></div>
   <!-- </div> -->
-  <input type="button" class="search_button" value="#{search_button_text}">
+  <input type="button" value="#{search_button_text}"/>
 </form>
 HTML
     }
@@ -35,7 +35,7 @@ HTML
 <section class="picky">
   #{@@localized_input[options]}
   #{@@localized_results[options]}
-</div>
+</section>
 HTML
     }
     
