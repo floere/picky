@@ -10,7 +10,7 @@ set :haml, { :format => :html5 }
 
 # Sets up two query instances.
 #
-BooksSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/csv'
+BooksSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
 
 set :static, true
 set :public, File.dirname(__FILE__)
