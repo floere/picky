@@ -1,6 +1,6 @@
 h1. Picky
 
-In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://goodfil.ms, "cocoapods.org":http://cocoapods.org, "wadoku.eu":http://wadoku.eu, "twixtel.ch":http://twixtel.ch 
+In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://goodfil.ms, "cocoapods.org":http://cocoapods.org, "wadoku.eu":http://wadoku.eu, "twixtel.ch":http://twixtel.ch, and many more…
 
 h2. The Ruby semantic text search engine.
 
