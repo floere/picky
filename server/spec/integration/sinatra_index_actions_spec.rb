@@ -1,4 +1,4 @@
-require 'Yajl'
+require 'yajl'
 require 'sinatra'
 require 'picky-client'
 require 'spec_helper'

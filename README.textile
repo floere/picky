@@ -1,6 +1,6 @@
 h1. Picky
 
-Examples: "laut.de":http://laut.de, "goodfil.ms":http://goodfil.ms, "twixtel.ch":http://twixtel.ch, "wadoku.eu":http://wadoku.eu, "gemsearch.heroku.com":http://gemsearch.heroku.com
+In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://goodfil.ms, "cocoapods.org":http://cocoapods.org, "wadoku.eu":http://wadoku.eu, "twixtel.ch":http://twixtel.ch 
 
 h2. The Ruby semantic text search engine.
 
