@@ -96,7 +96,9 @@ ERROR
         before(:each) do
           tokenizer.normalizes_words([
             [/st\./, 'sankt'],
-            [/stras?s?e?/, 'str']
+            [/stras?s?e?/, 'str'],
+            [/\+/, 'plus'],
+            [/\&/, 'and']
           ])
         end
         it "has normalize_with_patterns" do
@@ -104,6 +106,12 @@ ERROR
         end
         it "normalizes, but just the first one" do
           tokenizer.normalize_with_patterns('st. wegstrasse').should == 'sankt wegstrasse'
+        end
+        it "works correctly" do
+          tokenizer.normalize_with_patterns('camera +').should == 'camera plus'
+        end
+        it "works correctly" do
+          tokenizer.normalize_with_patterns('alice & bob').should == 'alice and bob'
         end
       end
     end
