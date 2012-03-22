@@ -3,6 +3,8 @@ module Picky
       
     module IndexActions
       
+      # TODO Add customizable path?
+      #
       def self.extended base
         base.post '/' do
           index_name = params['index']
