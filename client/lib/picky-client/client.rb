@@ -106,7 +106,6 @@ module Picky
     #
     # Note: For live queries, parsing is actually not really necessary.
     #
-
     def send_search params = {}
       params = defaultize params
       ::Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port

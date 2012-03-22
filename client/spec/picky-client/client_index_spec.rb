@@ -6,7 +6,7 @@ describe Picky::Client do
   
   describe 'replace' do
     it 'delegates to the request method' do
-      client.should_receive(:request).once.with anything, :some_index_name, :some_data
+      client.should_receive(:send_off).once.with anything, :some_index_name, :some_data
     
       client.replace :some_index_name, :some_data
     end
@@ -14,7 +14,7 @@ describe Picky::Client do
   
   describe 'remove' do
     it 'delegates to the request method' do
-      client.should_receive(:request).once.with anything, :some_index_name, :some_data
+      client.should_receive(:send_off).once.with anything, :some_index_name, :some_data
     
       client.remove :some_index_name, :some_data
     end

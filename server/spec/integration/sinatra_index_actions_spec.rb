@@ -1,6 +1,7 @@
 require 'yajl'
 require 'sinatra'
-require 'picky-client'
+require_relative '../../../client/lib/picky-client'
+require_relative '../../../client/lib/picky-client/spec'
 require 'spec_helper'
 
 describe 'Sinatra Index Actions' do
@@ -32,7 +33,7 @@ describe 'Sinatra Index Actions' do
       Picky::Indexes.clear
     end
     let(:request) { ::Rack::MockRequest.new MyIndexActionsPickyServer }
-    it 'should update the index correctly' do
+    it 'updates the index correctly' do
       request.post('/', params: {
         index: 'some_index',
         data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
@@ -49,7 +50,35 @@ describe 'Sinatra Index Actions' do
       results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
       results['total'].should == 2
     end
-    it 'should delete entries from the index correctly' do
+    it 'updates the index correctly' do
+      request.post('/', params: {
+        index: 'some_index',
+        data: %Q{{ "id":"1", "name":"Flarian", "surname":"Hanke" }}
+      })
+      
+      results = Yajl::Parser.parse request.get('/people', params: { query: 'hanke' }).body
+      results['total'].should == 1
+      
+      results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+      results['total'].should == 0
+      
+      # Whoops, typo. Let's fix it.
+      #
+      request.post('/', params: {
+        index: 'some_index',
+        data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+      })
+      
+      results = Yajl::Parser.parse request.get('/people', params: { query: 'hanke' }).body
+      results['total'].should == 1
+      
+      results = Yajl::Parser.parse request.get('/people', params: { query: 'flarian' }).body
+      results['total'].should == 0
+      
+      results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+      results['total'].should == 1
+    end
+    it 'deletes entries from the index correctly' do
       request.post('/', params: {
         index: 'some_index',
         data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
@@ -70,7 +99,7 @@ describe 'Sinatra Index Actions' do
       results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
       results['total'].should == 1
     end
-    it 'should have no problem with a superfluous delete' do
+    it 'has no problem with a superfluous delete' do
       request.delete('/', params: {
         index: 'some_index',
         data: %Q{{ "id":"1" }}
@@ -78,6 +107,16 @@ describe 'Sinatra Index Actions' do
       
       results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
       results['total'].should == 0
+    end
+    it 'works with the (test) client' do
+      client = Picky::TestClient.new MyIndexActionsPickyServer, :path => '/people'
+      
+      request.post('/', params: {
+        index: 'some_index',
+        data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+      })
+      
+      client.search('florian').total.should == 1
     end
   end
   
