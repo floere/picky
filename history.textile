@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.3.1 "status anxiety"
+
+* hanke: (server) Sinatra index actions now return more sensible HTTP status codes.
+
 h2. Version 4.3.0 "evening wear"
 
 * hanke: (client) Gorgeous new design (thanks @tvandervossen!)
