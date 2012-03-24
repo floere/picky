@@ -29,5 +29,16 @@ describe Picky::Category, "Realtime API" do
   it 'offers an unshift method' do
     category.unshift Thing.new(1, 'text')
   end
+  it 'offers a replace_from method' do
+    category.replace_from id: 1, text: "some text"
+  end
+  it 'raises on no id given' do
+    expect {
+      category.replace_from text: "some text"
+    }.to raise_error
+  end
+  it 'shrugs off no data given' do
+    category.replace_from id: 1
+  end
 
 end

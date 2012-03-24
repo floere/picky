@@ -1,6 +1,8 @@
 module Picky
 
   class Category
+    
+    class Picky::IdNotGivenException < StandardError; end
 
     # Removes an indexed object with the
     # given id.
@@ -31,11 +33,9 @@ module Picky
     # Note: Takes a hash as opposed to the add/replace method.
     #
     def replace_from hash
-      # TODO Decide on a format.
-      #
       return unless text = hash[from] || hash[from.to_s]
       
-      id = hash[:id] || hash['id']
+      raise IdNotGivenException.new unless id = hash[:id] || hash['id']
       id = id.send key_format
       
       remove id
