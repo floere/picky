@@ -29,6 +29,10 @@ describe Picky::Client::ActiveRecord do
       def attributes
         { 'id' => nil, 'name' => nil, 'surname' => nil }
       end
+
+      def virtual_attribute
+        'virtual'
+      end
       
       def save
         after_commit
@@ -131,6 +135,26 @@ describe Picky::Client::ActiveRecord do
     
       it 'calls the right method in the client' do
         client.should_receive(:replace).once.with 'some_index_name', { 'id' => 1, 'name' => 'Niko' }
+      
+        ar.save
+      end
+      
+      it 'calls the right method in the client' do
+        client.should_receive(:remove).once.with 'some_index_name', { 'id' => 1 }
+        
+        ar.destroy
+      end
+    end
+    context 'with client and virtual attributes' do
+      let(:ar_module) { described_class.configure :client => client, :virtuals => ['virtual_attribute'] }
+      let(:ar) { fake_ar.extend(ar_module).new(1, 'Niko', 'Dittmann') }
+    
+      it 'is a module' do
+        ar_module.should be_kind_of(Module)
+      end
+    
+      it 'calls the right method in the client' do
+        client.should_receive(:replace).once.with 'some_index_name', { 'id' => 1, 'name' => 'Niko', 'surname' => 'Dittmann', 'virtual_attribute' => 'virtual' }
       
         ar.save
       end

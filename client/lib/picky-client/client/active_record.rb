@@ -40,6 +40,7 @@ module Picky
       #   * port: The host which the Picky server listens to.
       #   * path: The path the Picky server uses for index updates (use e.f. extend Picky::Sinatra::IndexActions to open up a HTTP indexing interface).
       #   * client: The client to use if you want to pass in your own (host, port, path options will be ignored).
+      #   * virtuals: An Array of additional virtual attributes to index.
       #
       def self.configure *attributes
         new *attributes
@@ -52,6 +53,8 @@ module Picky
         #
         client = options[:client] ||
                  (options[:path] ||= '/') && Picky::Client.new(options)      
+
+        virtuals = options[:virtuals] || []
       
         self.class.class_eval do
           index_name = options[:index]
@@ -69,12 +72,12 @@ module Picky
               if object.destroyed?
                 client.remove index_name, data
               else
-                (attributes || object.attributes.keys).each do |attr|
+               ((attributes || object.attributes.keys) + virtuals).each do |attr|
                   data[attr] = object.respond_to?(attr) &&
                                object.send(attr) ||
                                object[attr]
                 end
-                
+
                 client.replace index_name, data
               end
             end
