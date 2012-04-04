@@ -40,7 +40,7 @@ module Picky
       #   * port: The host which the Picky server listens to.
       #   * path: The path the Picky server uses for index updates (use e.f. extend Picky::Sinatra::IndexActions to open up a HTTP indexing interface).
       #   * client: The client to use if you want to pass in your own (host, port, path options will be ignored).
-      #   * virtuals: If you want to add index additional attributes that are actually method calls.
+      #   * virtuals: An Array of additional virtual attributes to index.
       #
       def self.configure *attributes
         new *attributes
