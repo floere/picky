@@ -1,5 +1,30 @@
 h2. Upcoming Version
 
+h2. Version 4.3.2 "show of character"
+
+This version lets you define control characters on tokens, like so (shows how, and the default):
+
+* hanke: (server) @Picky::Query::Token.partial_character = '\*'@ for searching partially.
+* hanke: (server) @Picky::Query::Token.no_partial_character = '"'@ for _not_ searching partially.
+* hanke: (server) @Picky::Query::Token.similar_character = '~'@ for searching similar strings.
+* hanke: (server) @Picky::Query::Token.no_similar_character = '"'@ for _not_ searching similar strings.
+* hanke: (server) @Picky::Query::Token.qualifier_text_delimiter = ':'@ for telling qualifier and string apart (@title:sometitle@).
+* hanke: (server) @Picky::Query::Token.qualifiers_delimiter = ','@ for telling qualifiers apart (@title,author:bla@).
+
+The first four are going to be interpolated into @%r@, so escape the character like you would in a regexp. The last two are used in @String#split@, so doing this is not necessary.
+
+So, for example, if you set
+
+@Picky::Query::Token.partial_character = '…'@
+
+@Picky::Query::Token.qualifier_text_delimiter = '?'@
+
+@Picky::Query::Token.qualifiers_delimiter = '|'@
+
+Then you can search like so:
+
+@something.search("title|author?wittgenstei…")@
+
 h2. Version 4.3.1 "status anxiety"
 
 * hanke: (server) Sinatra index actions now return more sensible HTTP status codes.
