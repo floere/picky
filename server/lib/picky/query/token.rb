@@ -99,34 +99,107 @@ module Picky
       # So "hello*" will not be partially searched.
       # So "hello"* will be partially searched.
       #
+      @@no_partial_character = '"'
+      @@partial_character = '*'
       @@no_partial = /\"\z/
       @@partial    = /\*\z/
       def partialize
         self.partial = false or return unless @text !~ @@no_partial
         self.partial = true unless @text !~ @@partial
       end
+      # Define a character which stops a token from
+      # being a partial token, even if it is the last token.
+      #
+      # Default is '"'.
+      #
+      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # so escape the character.
+      #
+      # Example:
+      #   Picky::Query::Token.no_partial_character = '\?'
+      #   try.search("tes?") # Won't find "test".
+      #
+      def self.no_partial_character= character
+        @@no_partial_character = character
+        @@no_partial = %r{#{character}\z}
+      end
+      # Define a character which makes a token a partial token.
+      #
+      # Default is '*'.
+      #
+      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # so escape the character.
+      #
+      # Example:
+      #   Picky::Query::Token.partial_character = '\?'
+      #   try.search("tes?") # Will find "test".
+      #
+      def self.partial_character= character
+        @@partial_character = character
+        @@partial = %r{#{character}\z}
+        redefine_illegals
+      end
 
       # If the text ends with ~ similarize it. If with ", don't.
       #
       # The latter wins.
       #
-      @@no_similar = /\"\z/
-      @@similar    = /\~\z/
+      @@no_similar_character = '"'
+      @@similar_character = '~'
+      @@no_similar = %r{#{@@no_similar_character}\z}
+      @@similar    = %r{#{@@similar_character}\z}
       def similarize
         self.similar = false or return unless @text !~ @@no_similar
         self.similar = true unless @text !~ @@similar
       end
-
+      # Define a character which stops a token from
+      # being a similar token, even if it is the last token.
+      #
+      # Default is '"'.
+      #
+      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # so escape the character.
+      #
+      # Example:
+      #   Picky::Query::Token.no_similar_character = '\?'
+      #   try.search("tost?") # Won't find "test".
+      #
+      def self.no_similar_character= character
+        @@no_similar_character = character
+        @@no_similar = %r{#{character}\z}
+      end
+      # Define a character which makes a token a similar token.
+      #
+      # Default is '~'.
+      #
+      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # so escape the character.
+      #
+      # Example:
+      #   Picky::Query::Token.similar_character = '\?'
+      #   try.search("tost?") # Will find "test".
+      #
+      def self.similar_character= character
+        @@similar_character = character
+        @@similar = %r{#{character}\z}
+        redefine_illegals
+      end
+      
+      # Is this a "similar" character?
+      #
       def similar?
         @similar
       end
 
       # Normalizes this token's text.
       #
-      @@illegals = /["*~]/
       def remove_illegals
         @text.gsub! @@illegals, EMPTY_STRING unless @text.blank?
       end
+      def self.redefine_illegals
+        @@illegals = %r{[#{@@no_similar_character}#{@@partial_character}#{@@similar_character}]}
+      end
+      redefine_illegals
 
       # Returns an array of possible combinations.
       #
@@ -145,16 +218,45 @@ module Picky
 
       # Splits text into a qualifier and text.
       #
-      @@split_qualifier_text = ':'
-      @@split_qualifiers     = ','
+      @@qualifier_text_delimiter = ':'
+      @@qualifiers_delimiter     = ','
       def qualify
-        @qualifiers, @text = (@text || EMPTY_STRING).split(@@split_qualifier_text, 2)
+        @qualifiers, @text = (@text || EMPTY_STRING).split(@@qualifier_text_delimiter, 2)
         if @text.blank?
           @text = @qualifiers || EMPTY_STRING
           @qualifiers = nil
         else
-          @qualifiers = @qualifiers.split @@split_qualifiers
+          @qualifiers = @qualifiers.split @@qualifiers_delimiter
         end
+      end
+      # Define a character which separates the qualifier
+      # from the search text.
+      #
+      # Default is ':'.
+      #
+      # This is used in a String#split.
+      #
+      # Example:
+      #   Picky::Query::Token.qualifier_text_delimiter = '?'
+      #   try.search("text1?hello text2?world").ids.should == [1]
+      #
+      def self.qualifier_text_delimiter= character
+        @@qualifier_text_delimiter = character
+      end
+      # Define a character which separates the qualifiers
+      # (before the search text).
+      #
+      # Default is ','.
+      #
+      # This is used in a String#split.
+      #
+      # Example:
+      #   Picky::Query::Token.qualifiers_delimiter = '|'
+      #   try.search("text1|text2:hello").ids.should == [1]
+      #
+      
+      def self.qualifiers_delimiter= character
+        @@qualifiers_delimiter = character
       end
       
       # Returns the qualifiers as an array.
