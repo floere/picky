@@ -31,9 +31,9 @@ class BookSearch < Sinatra::Application
   #
   books_index = Index.new :books do
     source   { Books.new }
-    indexing removes_characters: /[^\p{L}\p{N}\s\/\-\_\:\"\&\.]/i,
+    indexing removes_characters: /[^\p{L}\p{N}\s\/\-\_\:\"\&\.]/,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
-             splits_text_on:     /[\s\/\-\_\:\"\&\/]/
+             splits_text_on:     /[\s\/\-\_\:\"\&]/
     category :title,
              similarity: Similarity::DoubleMetaphone.new(3),
              partial: Partial::Substring.new(from: 1) # Default is from: -3.
