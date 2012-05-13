@@ -33,7 +33,7 @@ class BookSearch < Sinatra::Application
   #
   books_index = Index.new :books do
     source   { Books.new }
-    indexing removes_characters: /[^[a-z0-9]\s\/\-\_\:\"\&\.]/i,
+    indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
              splits_text_on:     /[\s\/\-\_\:\"\&\.]/
     category :title,

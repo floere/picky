@@ -14,7 +14,7 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  it { books.search('a s').total.should == 42 }
+  it { books.search('a s').total.should == 57 }
 
   # Testing a specific order of result ids.
   #
