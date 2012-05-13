@@ -2,7 +2,16 @@ h2. Upcoming Version
 
 h2. Version 4.4.0 "unique like a snowflake"
 
-* hanke: (server) Added @unique: truey/falsy@ option on @Search#search@. Use like: @search_instance.search 'query', 20, 0, unique: true@.
+Unique option on search instance. This will remove each result id in allocations if they have appeared in preceding allocations. What does this mean?
+
+Example:
+You search for @"picky search"@. And you find it in two allocations, @name, type@ and @name, name@. Let's say Picky finds ids @[1, 2, 3]@
+in @name, type@ and then @[2, 3, 4]@
+in @name, name@. Picky will then remove @2 and 3@ from @name, name@ because they have been found in @name, type@ already.
+
+Usually this is used when you only want a list of unique ids in the results.
+
+* hanke: (server) Added @unique: truey/falsy@ option on @Search#search@. Use like this: @search_instance.search 'query', 20, 0, unique: true@.
 
 h2. Version 4.3.2 "show of character"
 
