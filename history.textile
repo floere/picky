@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.4.0 "unique like a snowflake"
+
+* hanke: (server) Added @unique: truey/falsy@ option on @Search#search@. Use like: @search_instance.search 'query', 20, 0, unique: true@.
+
 h2. Version 4.3.2 "show of character"
 
 This version lets you define control characters on tokens, like so (shows how, and the default):
