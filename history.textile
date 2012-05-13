@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.4.1 "even more unique"
+
+* hanke: (server) Fix for bug introduced in 4.4.0, @unique@ option works correctly with offset.
+
 h2. Version 4.4.0 "unique like a snowflake"
 
 Unique option on search instance. This will remove each result id in allocations if they have appeared in preceding allocations. What does this mean?
