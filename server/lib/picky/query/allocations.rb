@@ -63,7 +63,6 @@ module Picky
       #  * amount: the amount of ids to calculate
       #  * offset: the offset from where in the result set to take the ids
       #  * terminate_early: Whether to calculate all allocations.
-      #  * unique: If ids have already been found, do not find them anymore (if true)
       #
       # Note: With an amount of 0, an offset > 0 doesn't make much
       #       sense, as seen in the live search.
@@ -73,21 +72,47 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      def process! amount, offset = 0, terminate_early = nil, unique = false
-        unique_ids = nil if unique
+      def process! amount, offset = 0, terminate_early = nil
         each do |allocation|
-          calculated_ids = allocation.process! amount, offset, (unique ? unique_ids : nil)
+          calculated_ids = allocation.process! amount, offset
           if calculated_ids.empty?
             offset = offset - allocation.count unless offset.zero?
           else
             amount = amount - calculated_ids.size # we need less results from the following allocation
-            offset = 0                 # we have already passed the offset
+            offset = 0                            # we have already passed the offset
           end
           if terminate_early && amount <= 0
             break if terminate_early <= 0
             terminate_early -= 1
           end
-          unique_ids ? (unique_ids += calculated_ids) : (unique_ids = calculated_ids) if unique
+        end
+      end
+      
+      # Same as #process! but with this added parameter: 
+      #  * unique: If ids have already been found, do not find them anymore (if true)
+      #
+      # Note: Slower than #process! especially with large offsets.
+      #
+      # TODO Remove duplicate code.
+      #
+      def process_unique! amount, offset = 0, terminate_early = nil
+        unique_ids = []
+        each do |allocation|
+          calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids
+          projected_offset = offset - allocation.count
+          unique_ids += calculated_ids # TODO uniq this?
+          if projected_offset <= 0
+            allocation.ids.slice!(0, offset)
+          end
+          offset = projected_offset
+          unless calculated_ids.empty?
+            amount = amount - calculated_ids.size # we need less results from the following allocation
+            offset = 0                            # we have already passed the offset
+          end
+          if terminate_early && amount <= 0
+            break if terminate_early <= 0
+            terminate_early -= 1
+          end
         end
       end
 

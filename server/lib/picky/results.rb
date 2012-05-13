@@ -36,7 +36,9 @@ module Picky
     # and no ids are calculated.
     #
     def prepare! extra_allocations = nil, unique = false
-      allocations.process! amount, offset, extra_allocations, unique
+      unique ?
+        allocations.process_unique!(amount, offset, extra_allocations) :
+        allocations.process!(amount, offset, extra_allocations)
     end
 
     # Delegates to allocations.
