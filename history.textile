@@ -5,9 +5,7 @@ h2. Version 4.4.0 "unique like a snowflake"
 Unique option on search instance. This will remove each result id in allocations if they have appeared in preceding allocations. What does this mean?
 
 Example:
-You search for @"picky search"@. And you find it in two allocations, @name, type@ and @name, name@. Let's say Picky finds ids @[1, 2, 3]@
-in @name, type@ and then @[2, 3, 4]@
-in @name, name@. Picky will then remove @2 and 3@ from @name, name@ because they have been found in @name, type@ already.
+You search for @"picky search"@. And you find it in two allocations, @name, type@ and @name, name@. Let's say Picky finds ids @[1, 2, 3]@ in @name, type@ and then @[2, 3, 4]@ in @name, name@. Picky will then remove @2 and 3@ from @name, name@ because they have been found in @name, type@ already.
 
 Usually this is used when you only want a list of unique ids in the results.
 
