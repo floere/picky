@@ -177,19 +177,19 @@ module Picky
     #
     # Note: The Rack adapter calls this method after unravelling the HTTP request.
     #
-    def search text, ids = 20, offset = 0
-      search_with tokenized(text), ids.to_i, offset.to_i, text
+    def search text, ids = 20, offset = 0, options = {}
+      search_with tokenized(text), ids.to_i, offset.to_i, text, options[:unique]
     end
 
     # Runs the actual search using Query::Tokens.
     #
     # Note: Internal method, use #search to search.
     #
-    def search_with tokens, ids = 20, offset = 0, original_text = nil
+    def search_with tokens, ids = 20, offset = 0, original_text = nil, unique = false
       results = nil
 
       duration = timed do
-        results = execute tokens, ids, offset, original_text
+        results = execute tokens, ids, offset, original_text, unique
       end
       results.duration = duration.round 6
 
@@ -200,8 +200,13 @@ module Picky
     #
     # Note: Internal method, use #search to search.
     #
-    def execute tokens, ids, offset, original_text = nil
-      Results.from original_text, ids, offset, sorted_allocations(tokens, @max_allocations), @extra_allocations
+    def execute tokens, ids, offset, original_text = nil, unique = false
+      Results.from original_text,
+                   ids,
+                   offset,
+                   sorted_allocations(tokens, @max_allocations),
+                   @extra_allocations,
+                   unique
     end
 
     # Delegates the tokenizing to the query tokenizer.

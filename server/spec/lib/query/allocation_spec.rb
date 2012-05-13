@@ -111,6 +111,32 @@ describe Picky::Query::Allocation do
         @allocation.process!(20, 10).should == []
       end
     end
+    context 'with ids & illegal ids' do
+      before(:each) do
+        @allocation.stub! :calculate_ids => [1,2,3,4,5,6,7,8,9,10]
+      end
+      it 'should process right' do
+        @allocation.process!(0, 0, [1,3,7]).should == []
+      end
+      it 'should process right' do
+        @allocation.process!(0, 10, [1,3,7]).should == []
+      end
+      it 'should process right' do
+        @allocation.process!(5, 0, [1,3,7]).should == [2,4,5,6,8]
+      end
+      it 'should process right' do
+        @allocation.process!(5, 5, [1,3,7]).should == [9,10]
+      end
+      it 'should process right' do
+        @allocation.process!(20, 0, [1,3,7]).should == [2,4,5,6,8,9,10]
+      end
+      it 'should process right' do
+        @allocation.process!(20, 5, [1,3,7]).should == [9,10]
+      end
+      it 'should process right' do
+        @allocation.process!(20, 10, [1,3,7]).should == []
+      end
+    end
   end
 
   describe 'to_result' do

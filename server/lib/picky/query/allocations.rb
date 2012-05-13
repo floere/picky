@@ -63,6 +63,7 @@ module Picky
       #  * amount: the amount of ids to calculate
       #  * offset: the offset from where in the result set to take the ids
       #  * terminate_early: Whether to calculate all allocations.
+      #  * unique: If ids have already been found, do not find them anymore (if true)
       #
       # Note: With an amount of 0, an offset > 0 doesn't make much
       #       sense, as seen in the live search.
@@ -72,19 +73,21 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      def process! amount, offset = 0, terminate_early = nil
+      def process! amount, offset = 0, terminate_early = nil, unique = false
+        unique_ids = nil if unique
         each do |allocation|
-          ids = allocation.process! amount, offset
-          if ids.empty?
+          calculated_ids = allocation.process! amount, offset, (unique ? unique_ids : nil)
+          if calculated_ids.empty?
             offset = offset - allocation.count unless offset.zero?
           else
-            amount = amount - ids.size # we need less results from the following allocation
+            amount = amount - calculated_ids.size # we need less results from the following allocation
             offset = 0                 # we have already passed the offset
           end
           if terminate_early && amount <= 0
             break if terminate_early <= 0
             terminate_early -= 1
           end
+          unique_ids ? (unique_ids += calculated_ids) : (unique_ids = calculated_ids) if unique
         end
       end
 

@@ -91,16 +91,23 @@ describe Picky::Search do
     it "delegates to search_with correctly" do
       @search.stub! :tokenized => :tokens
 
-      @search.should_receive(:search_with).once.with :tokens, 20, 10, :text
+      @search.should_receive(:search_with).once.with :tokens, 20, 10, :text, nil
 
       @search.search :text, 20, 10
     end
     it "delegates to search_with correctly" do
       @search.stub! :tokenized => :tokens
 
-      @search.should_receive(:search_with).once.with :tokens, 20, 0, :text
+      @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, nil
 
       @search.search :text, 20, 0
+    end
+    it "delegates to search_with correctly" do
+      @search.stub! :tokenized => :tokens
+
+      @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, true
+
+      @search.search :text, 20, 0, unique: true
     end
     it "uses the tokenizer" do
       @search.stub! :search_with

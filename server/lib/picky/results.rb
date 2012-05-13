@@ -24,9 +24,9 @@ module Picky
 
     # Create new results and calculate the ids.
     #
-    def self.from query, amount, offset, allocations, extra_allocations = nil
+    def self.from query, amount, offset, allocations, extra_allocations = nil, unique = false
       results = new query, amount, offset, allocations
-      results.prepare! extra_allocations
+      results.prepare! extra_allocations, unique
       results
     end
 
@@ -35,8 +35,8 @@ module Picky
     # Without this, the allocations are not processed,
     # and no ids are calculated.
     #
-    def prepare! extra_allocations = nil
-      allocations.process! amount, offset, extra_allocations
+    def prepare! extra_allocations = nil, unique = false
+      allocations.process! amount, offset, extra_allocations, unique
     end
 
     # Delegates to allocations.

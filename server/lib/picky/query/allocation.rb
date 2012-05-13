@@ -63,8 +63,22 @@ module Picky
       #
       # Returns the calculated ids (from the offset).
       #
-      def process! amount, offset
-        ids    = calculate_ids amount, offset
+      # Parameters:
+      #  * amount: The amount of ids to calculate.
+      #  * offset: The offset to calculate them from.
+      #  * illegal_ids: ids to ignore.
+      #
+      def process! amount, offset, illegal_ids = nil
+        if illegal_ids
+          # Note: Fairly inefficient calculation since it
+          # assumes the worst case that the ids contain
+          # all illegal ids.
+          #
+          ids = calculate_ids amount + illegal_ids.size, offset
+          ids = ids - illegal_ids
+        else
+          ids = calculate_ids amount, offset
+        end
         @count = ids.size                         # cache the count before throwing away the ids
         @ids   = ids.slice!(offset, amount) || [] # slice out the relevant part
       end
