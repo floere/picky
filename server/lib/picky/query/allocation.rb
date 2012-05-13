@@ -74,13 +74,13 @@ module Picky
           # assumes the worst case that the ids contain
           # all illegal ids.
           #
-          ids = calculate_ids amount + illegal_ids.size, offset
-          ids = ids - illegal_ids
+          calculated_ids = calculate_ids amount + illegal_ids.size, offset
+          calculated_ids = calculated_ids - illegal_ids
         else
-          ids = calculate_ids amount, offset
+          calculated_ids = calculate_ids amount, offset
         end
-        @count = ids.size                         # cache the count before throwing away the ids
-        @ids   = ids.slice!(offset, amount) || [] # slice out the relevant part
+        @count = calculated_ids.size                         # cache the count before throwing away the ids
+        @ids   = calculated_ids.slice!(offset, amount) || [] # slice out the relevant part
       end
 
       #
