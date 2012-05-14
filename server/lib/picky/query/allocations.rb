@@ -88,8 +88,11 @@ module Picky
         end
       end
       
-      # Same as #process! but with this added parameter: 
-      #  * unique: If ids have already been found, do not find them anymore (if true)
+      # Same as #process! but removes duplicate ids from results.
+      #
+      # Note that in the result later on an allocation won't be
+      # included if it contains no ids (even in case they have been
+      # eliminated by the unique constraint in this method).
       #
       # Note: Slower than #process! especially with large offsets.
       #
