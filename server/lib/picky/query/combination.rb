@@ -2,14 +2,10 @@ module Picky
 
   module Query
 
-    # Describes the #Combination of a #Token (the text) and
-    # the index (the bundle): [text, index_bundle]
+    # Describes the Combination of a Token (the text) and
+    # the index (the bundle): [text, index_bundle].
     #
-    # A #Combination is a single part of an allocation:
-    # [..., [text2, index_bundle2], ...]
-    #
-    # An #Allocation consists of an ordered number of #Combinations:
-    # [[text1, index_bundle1], [text2, index_bundle2], [text3, index_bundle1]]
+    # An Allocation consists of an ordered number of Combinations.
     #
     class Combination
 
@@ -74,7 +70,7 @@ module Picky
       end
 
       # Example:
-      #  "exact title:Peter*:peter"
+      #   "exact title:Peter*:peter"
       #
       def to_s
         "#{category.bundle_for(token).identifier}(#{to_result.join(':')})"

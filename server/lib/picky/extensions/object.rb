@@ -1,4 +1,4 @@
-class Object # :nodoc:all
+class Object
   
   # TODO Remove.
   

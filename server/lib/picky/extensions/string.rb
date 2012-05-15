@@ -1,6 +1,6 @@
 # Extending the String class.
 #
-class String # :nodoc:all
+class String
 
   # Returns a _single_ double metaphone code
   # for this string.

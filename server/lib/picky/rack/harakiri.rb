@@ -1,4 +1,4 @@
-module Rack # :nodoc:
+module Rack
 
   # Simple Rack Middleware to kill Unicorns after X requests.
   #

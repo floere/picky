@@ -6,7 +6,7 @@ module Picky
 
     # Collection class for qualifiers.
     #
-    class QualifierCategoryMapper # :nodoc:all
+    class QualifierCategoryMapper
 
       attr_reader :mapping
       

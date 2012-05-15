@@ -35,7 +35,7 @@ module Picky
         source.reconnect! if source.respond_to?(:reconnect!)
       end
 
-      def check source # :nodoc:
+      def check source
         raise "Trying to index without a source for #{@index_or_category.name}." unless source
       end
 

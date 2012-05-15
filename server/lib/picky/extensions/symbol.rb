@@ -1,6 +1,6 @@
 # Extending the Symbol class.
 #
-class Symbol # :nodoc:all
+class Symbol
 
   # Returns a _single_ double metaphone code
   # for this symbol.

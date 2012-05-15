@@ -1,6 +1,6 @@
 module Picky
 
-  module Calculations # :nodoc:all
+  module Calculations
 
     # A location calculation recalculates a 1-d location
     # to the Picky internal 1-d "grid".

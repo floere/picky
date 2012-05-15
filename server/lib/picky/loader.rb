@@ -2,7 +2,7 @@ module Picky
 
   # Loads the search engine and it
   #
-  module Loader # :nodoc:all
+  module Loader
 
     class << self
 

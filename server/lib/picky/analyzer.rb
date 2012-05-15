@@ -3,7 +3,7 @@
 
 # Analyzes indexes (index bundles, actually).
 #
-class Analyzer # :nodoc:all
+class Analyzer
 
   attr_reader :analysis, :comments
 

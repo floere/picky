@@ -288,7 +288,7 @@ module Picky
     # THINK Will have to write a wrapper that combines two categories that are
     # indexed simultaneously, since lat/lng are correlated.
     #
-    def geo_categories lat_name, lng_name, radius, options = {} # :nodoc:
+    def geo_categories lat_name, lng_name, radius, options = {}
 
       # Extract lat/lng specific options.
       #
@@ -316,7 +316,7 @@ module Picky
 
     end
 
-    def to_stats # :nodoc:
+    def to_stats
       stats = <<-INDEX
 #{name} (#{self.class}):
 #{"source:            #{source}".indented_to_s}

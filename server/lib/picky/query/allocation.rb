@@ -2,12 +2,14 @@ module Picky
 
   module Query
     
-    # An #Allocation contains an ordered list of
-    # tuples (#Combination s).
-    # The #Combination s are ordered according to the order
+    # An Allocation contains an ordered list of
+    # tuples (Combinations).
+    # The Combinations are ordered according to the order
     # of the words in the query.
     #
     # It offers convenience methods to calculate the #ids etc.
+    #
+    # An Allocation is normally contained in an Allocations container.
     #
     class Allocation
 

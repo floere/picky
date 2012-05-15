@@ -9,7 +9,7 @@ module Picky
     # It also knows whether it needs to look for similarity (bla~),
     # or whether it is a partial (bla*).
     #
-    class Token # :nodoc:all
+    class Token
 
       attr_reader :text, :original
       attr_writer :similar

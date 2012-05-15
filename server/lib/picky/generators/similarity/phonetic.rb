@@ -27,7 +27,7 @@ module Picky
 
         # Tries to require the text gem.
         #
-        def check_gem # :nodoc:
+        def check_gem
           require 'text'
         rescue LoadError
           warn_gem_missing 'text', 'a phonetic Similarity'

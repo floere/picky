@@ -1,6 +1,6 @@
 # The original Module class.
 #
-class Module # :nodoc:all
+class Module
 
   def each_delegate *methods
     options = methods.pop

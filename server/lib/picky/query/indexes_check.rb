@@ -14,13 +14,13 @@ module Picky
         #
         # Picky will raise a Query::Indexes::DifferentBackendsError.
         #
-        def check_backends indexes # :nodoc:
+        def check_backends indexes
           backends = indexes.map &:backend
           backends.uniq! &:class
           raise_different backends if backends.size > 1
           backends
         end
-        def raise_different backends # :nodoc:
+        def raise_different backends
           raise DifferentBackendsError.new(backends)
         end
 
@@ -31,7 +31,7 @@ module Picky
     # Currently it isn't possible using Memory and Redis etc.
     # indexes in the same query index group.
     #
-    class DifferentBackendsError < StandardError # :nodoc:all
+    class DifferentBackendsError < StandardError
       def initialize backends
         @backends = backends
       end

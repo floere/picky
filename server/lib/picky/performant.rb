@@ -1,6 +1,6 @@
 module Picky
 
-  module Performant # :nodoc:all
+  module Performant
     # C Code here.
   end
 

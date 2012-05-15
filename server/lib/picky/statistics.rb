@@ -6,7 +6,7 @@ module Picky
 
   # Gathers various statistics.
   #
-  class Statistics # :nodoc:all
+  class Statistics
 
     def initialize
       @indexes = ["\033[1mIndexes analysis\033[m:"]

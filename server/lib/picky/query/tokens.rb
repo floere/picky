@@ -6,7 +6,7 @@ module Picky
 
     # This class primarily handles switching through similar token constellations.
     #
-    class Tokens # :nodoc:all
+    class Tokens
 
       attr_reader :ignore_unassigned
 

@@ -1,6 +1,6 @@
 # The original Class class.
 #
-class Class # :nodoc:all
+class Class
 
   def instance_delegate *methods
     methods.each do |method|

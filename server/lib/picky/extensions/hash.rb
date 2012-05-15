@@ -1,6 +1,6 @@
 # Extensions for the Hash.
 #
-class Hash # :nodoc:all
+class Hash
 
   # Use yajl's encoding.
   #

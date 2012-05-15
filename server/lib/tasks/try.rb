@@ -1,5 +1,8 @@
 module Picky
-
+  
+  # Try is used by
+  #   rake try[index,category]
+  #
   class Try
 
     attr_reader :text, :specific

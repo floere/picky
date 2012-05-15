@@ -2,7 +2,7 @@ module Picky
 
   # A very simple CLI selector.
   #
-  class CLI # :nodoc:all
+  class CLI
 
     # Execute a command.
     #

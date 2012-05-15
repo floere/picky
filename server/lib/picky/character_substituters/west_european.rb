@@ -12,7 +12,7 @@ module Picky
     #
     class WestEuropean
 
-      def initialize # :nodoc:
+      def initialize
         @chars = ActiveSupport::Multibyte.proxy_class
       end
 
@@ -45,7 +45,7 @@ module Picky
         }.pack 'U*'
       end
 
-      def to_s # :nodoc:
+      def to_s
         self.class.name
       end
 
