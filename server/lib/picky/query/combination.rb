@@ -2,16 +2,16 @@ module Picky
 
   module Query
 
-    # Describes the combination of a token (the text) and
+    # Describes the #Combination of a #Token (the text) and
     # the index (the bundle): [text, index_bundle]
     #
-    # A combination is a single part of an allocation:
+    # A #Combination is a single part of an allocation:
     # [..., [text2, index_bundle2], ...]
     #
-    # An allocation consists of a number of combinations:
+    # An #Allocation consists of an ordered number of #Combinations:
     # [[text1, index_bundle1], [text2, index_bundle2], [text3, index_bundle1]]
     #
-    class Combination # :nodoc:all
+    class Combination
 
       attr_reader :token,
                   :category

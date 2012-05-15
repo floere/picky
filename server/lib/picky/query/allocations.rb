@@ -2,7 +2,15 @@ module Picky
 
   module Query
 
-    # Container class for allocations.
+    # Container class for #Allocation s.
+    #
+    # This class is asked by the #Results class to
+    # compile and process a query.
+    # It then asks the #Allocation s to process their
+    # ids and scores, each in turn.
+    #
+    # It also offers convenience methods to access #ids
+    # of its #Allocation s.
     #
     class Allocations # :nodoc:all
 

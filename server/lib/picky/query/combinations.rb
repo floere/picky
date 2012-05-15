@@ -2,12 +2,12 @@ module Picky
 
   module Query
 
-    # Combinations are a number of Combination-s.
+    # #Combinations represent an ordered list of #Combination s.
     #
-    # They are the core of an allocation.
-    # An allocation consists of a number of combinations.
+    # They are the core of an #Allocation.
+    # An #Allocation consists of a number of #Combinations.
     #
-    # Base Combinations contain methods for calculating score and ids.
+    # #Combinations contain methods for calculating score (including the boost) and ids.
     #
     class Combinations # :nodoc:all
 

@@ -1,11 +1,15 @@
 module Picky
 
   module Query
-
-    # An allocation has a number of combinations:
-    # [token, index] [other_token, other_index], ...
+    
+    # An #Allocation contains an ordered list of
+    # tuples (#Combination s).
+    # The #Combination s are ordered according to the order
+    # of the words in the query.
     #
-    class Allocation # :nodoc:all
+    # It offers convenience methods to calculate the #ids etc.
+    #
+    class Allocation
 
       attr_reader :count,
                   :score,
