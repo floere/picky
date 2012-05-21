@@ -1,7 +1,8 @@
 module Picky
   
   # Try is used by
-  #   rake try[index,category]
+  #   rake try[text,index,category]
+  # to test how the text would be indexed and processed during a search.
   #
   class Try
 
