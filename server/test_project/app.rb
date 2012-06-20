@@ -1,6 +1,11 @@
 # encoding: utf-8
 #
 
+# 1. Index using rake index
+# 2. Start with rake start
+# 3. curl '127.0.0.1:8080/all?query=bla'
+#
+
 # Stresstest using
 #   ab -kc 5 -t 5 http://127.0.0.1:4567/csv?query=t
 #
