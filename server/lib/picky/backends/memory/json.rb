@@ -31,7 +31,8 @@ module Picky
         #
         def dump_json internal
           ::File.open(cache_path, 'w') do |out_file|
-            Yajl::Encoder.encode internal, out_file
+            #Yajl::Encoder.encode internal, out_file
+            out_file.write (Yajl::Encoder.encode internal) 
           end
         end
 
