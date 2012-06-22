@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.4.2 "not carbon copy"
+
+* hanke: (server) Implements "a suggestion by David Lowenfels":https://groups.google.com/forum/?fromgroups#!topic/picky-ruby/8kuG8FkATgU which enables a Picky user to set the CC environment variable to define which C compiler is used.
+
 h2. Version 4.4.1 "even more unique"
 
 * hanke: (server) Fix for bug introduced in 4.4.0, @unique@ option works correctly with offset.
