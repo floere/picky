@@ -4,6 +4,7 @@ source :gemcutter
 #
 gem 'rake'
 gem 'rack'
+gem 'multi_json'
 gem 'yajl-ruby', :require => 'yajl'
 gem 'text'
 gem 'rack_fast_escape'
