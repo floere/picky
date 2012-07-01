@@ -117,7 +117,7 @@ describe Picky::Bundle do
     end
     describe "load_index" do
       it "uses the right file" do
-        Yajl::Parser.stub! :parse
+        MultiJson.stub! :decode
 
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
 
@@ -126,7 +126,7 @@ describe Picky::Bundle do
     end
     describe "load_weights" do
       it "uses the right file" do
-        Yajl::Parser.stub! :parse
+        MultiJson.stub! :decode
 
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
 
@@ -144,7 +144,7 @@ describe Picky::Bundle do
     end
     describe "load_configuration" do
       it "uses the right file" do
-        Yajl::Parser.stub! :parse
+        MultiJson.stub! :decode
 
         File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'
 

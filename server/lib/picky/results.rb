@@ -78,7 +78,7 @@ module Picky
     # Convert to json format.
     #
     def to_json options = {}
-      Yajl::Encoder.encode to_hash, options
+      MultiJson.encode to_hash, options
     end
 
     # For logging.

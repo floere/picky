@@ -17,7 +17,7 @@ module Picky
         # Loads the index hash from json format.
         #
         def load
-          Yajl::Parser.parse ::File.open(cache_path, 'r') # , symbolize_keys: true # TODO Symbols.
+          MultiJson.decode ::File.open(cache_path, 'r') # , symbolize_keys: true # TODO Symbols.
         end
 
         # Dumps the index internal backend in json format.
@@ -31,7 +31,7 @@ module Picky
         #
         def dump_json internal
           ::File.open(cache_path, 'w') do |out_file|
-            Yajl::Encoder.encode internal, out_file
+            MultiJson.encode internal, out_file
           end
         end
 

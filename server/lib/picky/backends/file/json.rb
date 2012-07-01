@@ -26,7 +26,7 @@ module Picky
         def [] key
           length, offset = mapping[key]
           return unless length
-          result = Yajl::Parser.parse IO.read(cache_path, length, offset)
+          result = MultiJson.decode IO.read(cache_path, length, offset)
           result
         end
 
@@ -65,7 +65,7 @@ module Picky
           create_directory cache_path
           ::File.open(cache_path, 'w:utf-8') do |out_file|
             hash.each do |(key, object)|
-              encoded = Yajl::Encoder.encode object
+              encoded = MultiJson.encode object
               length  = encoded.size
               mapping[key] = [length, offset]
               offset += length

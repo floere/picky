@@ -52,7 +52,7 @@ module Picky
             #       implement each.
             #
             internal.each do |key, value|
-              encoded_value = Yajl::Encoder.encode value
+              encoded_value = MultiJson.encode value
               db.execute 'insert into key_value values (?,?)', key.to_s, encoded_value
             end
           end

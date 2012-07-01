@@ -1,4 +1,4 @@
-require 'yajl'
+require 'multi_json'
 require 'sinatra'
 require_relative '../../../client/lib/picky-client'
 require_relative '../../../client/lib/picky-client/spec'
@@ -112,7 +112,7 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 1
       
         request.post('/', params: {
@@ -120,7 +120,7 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"2", "name":"Florian", "surname":"Meier" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 2
       end
       it 'updates the index correctly' do
@@ -129,10 +129,10 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"1", "name":"Flarian", "surname":"Hanke" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'hanke' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'hanke' }).body
         results['total'].should == 1
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 0
       
         # Whoops, typo. Let's fix it.
@@ -142,13 +142,13 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'hanke' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'hanke' }).body
         results['total'].should == 1
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'flarian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'flarian' }).body
         results['total'].should == 0
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 1
       end
       it 'deletes entries from the index correctly' do
@@ -161,7 +161,7 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"2", "name":"Florian", "surname":"Meier" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 2
       
         request.delete('/', params: {
@@ -169,7 +169,7 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"1" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 1
       end
       it 'has no problem with a superfluous delete' do
@@ -178,7 +178,7 @@ describe 'Sinatra Index Actions' do
           data: %Q{{ "id":"1" }}
         })
       
-        results = Yajl::Parser.parse request.get('/people', params: { query: 'florian' }).body
+        results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 0
       end
       it 'works with the (test) client' do

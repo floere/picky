@@ -115,7 +115,7 @@ module Picky
       # Note: Delegates to to_result.
       #
       def to_json options = {}
-        Yajl::Encoder.encode to_result, options
+        MultiJson.encode to_result, options
       end
 
       #

@@ -2,10 +2,10 @@
 #
 class Hash
 
-  # Use yajl's encoding.
+  # Use multi_json's encoding.
   #
   def to_json options = {}
-    Yajl::Encoder.encode self, options
+    MultiJson.encode self, options
   end
 
 end

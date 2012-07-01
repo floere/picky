@@ -17,7 +17,7 @@ module Picky
             index = Picky::Indexes[index_name.to_sym]
             data = params['data']
             return 400 unless data
-            data && index.replace_from(Yajl::Parser.parse data) && 200
+            data && index.replace_from(MultiJson.decode data) && 200
           rescue IdNotGivenException
             400
           rescue StandardError
@@ -36,7 +36,7 @@ module Picky
           index_name = params['index']
           begin
             index = Picky::Indexes[index_name.to_sym]
-            data = Yajl::Parser.parse params['data']
+            data = MultiJson.decode params['data']
             id = data['id']
             id ? index.remove(id) && 200 : 400
           rescue StandardError

@@ -19,7 +19,7 @@ module Picky
           unless array.empty?
             db.execute 'INSERT OR REPLACE INTO key_value (key,value) VALUES (?,?)',
                        key.to_s,
-                       Yajl::Encoder.encode(array)
+                       MultiJson.encode(array)
           end
 
           DirectlyManipulable.make self, array, key
@@ -30,7 +30,7 @@ module Picky
           res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1",
                            key.to_s
 
-          array = res.blank? ? [] : Yajl::Parser.parse(res.first.first)
+          array = res.blank? ? [] : MultiJson.decode(res.first.first)
           DirectlyManipulable.make self, array, key
           array
         end

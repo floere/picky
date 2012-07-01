@@ -13,7 +13,7 @@ module Picky
         def []= key, value
           db.execute 'INSERT OR REPLACE INTO key_value (key, value) VALUES (?,?)',
                      key.to_s,
-                     Yajl::Encoder.encode(value)
+                     MultiJson.encode(value)
 
           value
         end
@@ -22,7 +22,7 @@ module Picky
           res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1;", key.to_s
           return nil if res.empty?
 
-          Yajl::Parser.parse res.first.first
+          MultiJson.decode res.first.first
         end
 
         def delete key
