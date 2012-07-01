@@ -37,6 +37,10 @@ class PickyStatistics < Sinatra::Base
     Stats.since_last.to_json
   end
   
+  get '/entries.json' do
+    
+  end
+  
 end
 
 puts "Clam, Picky's friend, is looking at Picky's logfile\n#{log_file}\nand showing results on port #{port}."

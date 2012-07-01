@@ -1,0 +1,2 @@
+Run using:
+PICKY_LOG_FILE=../server/test_project/log/search.log ruby lib/picky-statistics/application/app.rb
