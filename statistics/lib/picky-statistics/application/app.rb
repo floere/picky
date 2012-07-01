@@ -11,12 +11,12 @@ require 'sinatra'
 require 'haml'
 
 begin
-  require File.expand_path '../../../picky-statistics', __FILE__
+  require File.expand_path '../../picky-statistics', Dir.pwd
 rescue LoadError => e
   require 'picky-statistics'
 end
 
-Stats = Statistics::LogfileReader.new log_file
+Stats = LogfileReader.new log_file
 
 class PickyStatistics < Sinatra::Base
   
@@ -34,11 +34,8 @@ class PickyStatistics < Sinatra::Base
   # Returns statistics data in JSON for the index page.
   #
   get '/index.json' do
+    Stats.reset # TODO Remove.
     Stats.since_last.to_json
-  end
-  
-  get '/entries.json' do
-    
   end
   
 end
