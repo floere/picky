@@ -44,7 +44,7 @@ class LogfileReader
       
       File.open(statistics, 'r') do |file|
         while line = file.gets
-          next if line =~ /^\s*\#/
+          next if line =~ /\A\s*\#/
           results << process(line)
         end
       end
@@ -62,7 +62,7 @@ class LogfileReader
     [
       line[2,  19],
       Float(line[22, 8]),
-      line[31, 50],
+      line[31, 50].gsub!(/\s*\z/, ''),
       Integer(line[82, 8]),
       Integer(line[92, 3]),
       Integer(line[96, 2])

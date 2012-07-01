@@ -1,16 +1,22 @@
 body {
   font-family: "Helvetica Neue", Helvetica;
+  font-size: 16px;
   background-image: url('../images/background.png');
+  text-rendering: optimizeLegibility;
+  padding: 1em;
+  width: 1024px;
 }
 
-h1, h2, h3, h4 {
-  font-weight: normal;
+h1, h2, h3, h4, aside {
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 3px;
   margin: 0.5em 0em 0.5em;
 }
 h1 { font-size: 1.3em; }
-h2 { font-size: 1.2em; }
-h3 { font-size: 1.1em; }
-h4 { font-size: 1.1em; }
+h2 { font-size: 1.1em; }
+h3 { font-size: 1.0em; }
+h4 { font-size: 0.9em; }
 
 input {
   margin-left: 10px;
@@ -22,89 +28,150 @@ input {
   font-size: 0.8em;
 }
 
-.stats {
-  padding: 10px;
-  clear: both;
+.search {
+  font-family: "Courier New", monospace;
+  overflow: hidden;
 }
 
-.rickshaw_legend {
+.search > div {
   float: left;
+  padding: 5px;
 }
 
-.rickshaw_legend ul {
-  padding: 0px;
-  margin: 0px;
+.text, .total, .allocation, .offset, .duration {
+  font-weight: bold;
 }
 
-.rickshaw_legend .line {
-  clear: both;
-  line-height: 140%;
-  padding-right: 15px;
+.search > .time {
+  width: 6em;
 }
 
-.rickshaw_legend li {
-  padding: 0 0 0 2px;
-  min-width: 80px;
-  white-space: nowrap;
-  list-style-type: none;
+.search > .text {
+  width: 22em;
 }
 
-.rickshaw_legend .line .swatch {
+.search > .total {
+  text-align: right;
+  width: 4em;
+}
+
+.search > .offset {
+  text-align: right;
+  width: 2em;
+}
+
+.search > .duration {
+  text-align: right;
+  width: 6em;
+}
+
+span#active, span#total {
+  font-weight: bold;
+}
+
+// Specific
+
+#body > p {
+  line-height: 1.5em;
+  width: 800px;
+  text-rendering: optimizeLegibility;
+}
+
+#charts {
+  padding: 10px 0;
+}
+
+.chart {
   display: inline-block;
-  margin-right: 3px;
-  border-radius: 2px;
+  height: 151px;
+  margin-bottom: 20px;
 }
 
-.rickshaw_legend .swatch {
-  width: 10px;
-  height: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+.reset {
+  padding-left: 1em;
+  font-size: smaller;
+  color: #ccc;
 }
 
-.rickshaw_graph {
-  float: left;
-  margin-right: 20px;
+.background.bar {
+  fill: #ccc;
 }
 
-.rickshaw_graph .detail {
-  pointer-events: none;
-  position: relative;
-  top: 0;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.1);
-  bottom: 0;
-  width: 1px;
-  transition: opacity 0.25s linear;
-  -moz-transition: opacity 0.25s linear;
-  -o-transition: opacity 0.25s linear;
-  -webkit-transition: opacity 0.25s linear;
+.foreground.bar {
+  fill: steelblue;
 }
 
-.rickshaw_graph .detail .item {
-  position: absolute;
-  z-index: 2;
-  border-radius: 3px;
-  padding: 0.25em;
-  font-size: 12px;
-  font-family: Arial, sans-serif;
-  opacity: 0;
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  margin-left: 1em;
-  margin-top: -1em;
-  white-space: nowrap;
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
 
+.axis text {
+  font: 10px sans-serif;
+}
 
-.rickshaw_graph .detail .x_label {
-  font-family: Arial, sans-serif;
-  border-radius: 3px;
-  padding: 6px;
-  opacity: 0.5;
-  border: 1px solid #E0E0E0;
-  font-size: 12px;
-  position: absolute;
-  background: white;
-  white-space: nowrap;
+.brush rect.extent {
+  fill: steelblue;
+  fill-opacity: .125;
+}
+
+.brush .resize path {
+  fill: #eee;
+  stroke: #666;
+}
+
+/*#hour-chart {
+  width: 260px;
+}
+
+#delay-chart {
+  width: 230px;
+}
+
+#distance-chart {
+  width: 420px;
+}
+
+#date-chart {
+  width: 920px;
+}*/
+
+#search-list {
+  min-height: 1024px;
+}
+
+#search-list .date,
+#search-list .day {
+  margin-bottom: .4em;
+}
+
+#search-list .search {
+  line-height: 1.5em;
+  background: #eee;
+  margin-bottom: 1px;
+}
+
+#search-list .time {
+  color: #999;
+}
+
+#search-list .flight div {
+  display: inline-block;
+  width: 100px;
+}
+
+#search-list div.distance,
+#search-list div.delay {
+  width: 160px;
+  padding-right: 10px;
+  text-align: right;
+}
+
+#search-list .early {
+  color: green;
+}
+
+aside {
+  float: right;
 }
