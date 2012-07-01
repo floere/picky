@@ -2,12 +2,8 @@
 %html{ :lang => 'en' }
   %head
     %link{ :href => 'stylesheets/statistics.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css' }/
-    %script{ :src => 'javascripts/jquery-1.4.4.min.js', :type => 'text/javascript' }
-    %script{ :src => 'javascripts/jquery.sparkline-1.6.min.js', :type => 'text/javascript' }
-    %script{ :src => 'javascripts/d3/d3.min.js', :type => 'text/javascript' }
-    %script{ :src => 'javascripts/d3/d3.layout.min.js', :type => 'text/javascript' }
-    %script{ :src => 'javascripts/rickshaw.js', :type => 'text/javascript' }
-    %script{ :src => 'javascripts/graph.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/crossfilter.v1.min.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/d3.v2.min.js', :type => 'text/javascript' }
 
   %body
     %h1 Clam: Picky Statistics Interface.
@@ -20,23 +16,3 @@
       %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(10);' } Every 10 seconds
       %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(30);'} Every 30 seconds
       %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(600);'} Every 5 minutes
-    #full_live_graph.stats
-      %h3 Full/Live
-      .graph
-      .legend
-    #results_graph.stats
-      %h3 Full Results
-      .graph
-      .legend
-    #speed_graph.stats
-      %h3 Full Performance
-      .graph
-      .legend
-    #offset_graph.stats
-      %h3 Full Offsets
-      .graph
-      .legend
-    %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
-  :javascript
-    updateStatistics();
-    updateStatisticsPeriodically(3);

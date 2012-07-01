@@ -21,8 +21,8 @@ Stats = Statistics::LogfileReader.new log_file
 class PickyStatistics < Sinatra::Base
   
   set :static, true
-  set :public, File.expand_path('..', __FILE__)
-  set :views,  File.expand_path('../views', __FILE__)
+  set :public, File.expand_path('.', Dir.pwd)
+  set :views,  File.expand_path('views', Dir.pwd)
   set :haml, { :format => :html5 }
   
   # Returns an index page with all the statistics.
