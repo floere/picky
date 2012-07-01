@@ -69,6 +69,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   highline
+  multi_json
   picky-client
   procrastinate
   rack
