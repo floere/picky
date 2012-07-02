@@ -34,7 +34,12 @@ class PickyStatistics < Sinatra::Base
   # Returns statistics data in JSON for the index page.
   #
   get '/index.json' do
-    Stats.reset # TODO Remove.
+    Stats.since(0).to_json
+  end
+  
+  # Returns statistics data in JSON since the last request.
+  #
+  get '/since_last.json' do
     Stats.since_last.to_json
   end
   

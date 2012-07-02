@@ -4,19 +4,28 @@
     %link{ :href => 'stylesheets/statistics.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css' }/
     %script{ :src => 'javascripts/d3.v2.min.js', :type => 'text/javascript' }
     %script{ :src => 'javascripts/crossfilter.v1.min.js', :type => 'text/javascript' }
+    %script{ :src => 'javascripts/helpers.js', :type => 'text/javascript' }
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
 
-  %body
+  %body{ :onload => "document.getElementsByTagName('input')[0].click(); updateStatistics(true);" }
     %h1 Clam: Picky Statistics Interface.
     .actions
       %button{ :href => '#', :onclick => 'javascript:updateStatistics();' } Update now
+      %button{ :href => '#', :onclick => "javascript:document.getElementsByTagName('input')[0].click();" } Stop Updating
       |
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:stopUpdatingStatistics();', :checked => 'checked' } Don't update
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(1);' } Every second
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(3);' } Every 3 seconds
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(10);' } Every 10 seconds
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(30);'} Every 30 seconds
-      %input{ :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(600);'} Every 5 minutes
+      %input{ :id => 'updateStop', :type => "radio", :name => "updating", :onclick => 'javascript:stopUpdatingStatistics();' }
+      %label{ :for => 'updateStop' } Don't update
+      %input{ :id => 'update3', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(3);' }
+      %label{ :for => 'update3' } Every 3 seconds
+      %input{ :id => 'update10', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(10);' }
+      %label{ :for => 'update10' } Every 10 seconds
+      %input{ :id => 'update30', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(30);'}
+      %label{ :for => 'update30' } Every 30 seconds
+      %input{ :id => 'update600', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(600);'}
+      %label{ :for => 'update600' } Every 5 minutes
+
+#notice
+  %div READING LOG&nbspFILE
 
 #charts
   #hour-chart.chart

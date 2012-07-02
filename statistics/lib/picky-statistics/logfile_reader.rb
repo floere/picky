@@ -28,18 +28,15 @@ class LogfileReader
     @last_offset = 0
   end
 
-  #
-  #
-  def since_last
+  def since log_offset = 0
     @last_offset ||= 0
-
-    log_offset = @last_offset
+    
     start_time = Time.now
 
     # Add all the data to the results.
     #
     results = []
-    with_temp_file(@last_offset) do |statistics|
+    with_temp_file(log_offset) do |statistics|
       calculate_last_offset_from statistics
       
       File.open(statistics, 'r') do |file|
@@ -54,6 +51,12 @@ class LogfileReader
     exclaim "Parsed log from byte #{log_offset} in #{duration}s"
       
     results
+  end
+
+  #
+  #
+  def since_last
+    since @last_offset
   end
   
   # Processes one line and returns an array.

@@ -26,7 +26,7 @@ describe LogfileReader do
   
   describe 'since_last' do
     it 'works correctly' do
-      reader.since_last.should == [
+      reader.since(0).should == [
         ["2010-12-09 16:13:45", 1.0e-06,  "", 0, 0, 0],
         ["2010-12-09 16:13:45", 1.0e-05,  "", 1, 0, 1],
         ["2010-12-09 16:13:45", 0.0001,   "", 2, 0, 2],
