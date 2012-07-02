@@ -27,11 +27,15 @@ module Picky
           dump_json internal
         end
 
+        # Dump JSON into the cache file.
         #
+        # TODO Ask MultiJson people to add IO option:
+        # MultiJson.encode(object, out_file)
         #
         def dump_json internal
           ::File.open(cache_path, 'w') do |out_file|
-            MultiJson.encode internal, out_file
+            # MultiJson.encode internal, out_file
+            out_file.write MultiJson.encode internal
           end
         end
 
