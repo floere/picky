@@ -18,12 +18,12 @@ describe Picky::Indexers::Base do
       indexer.source
     end
     it 'raises when none is there' do
-      some_index_or_category.should_receive(:source).any_number_of_times.and_return
+      some_index_or_category.should_receive(:source).any_number_of_times.and_return nil
 
       indexer.stub! :process
 
       expect {
-        indexer.prepare []
+        indexer.prepare Picky::Categories.new
       }.to raise_error("Trying to index without a source for some_index_or_category.")
     end
   end
