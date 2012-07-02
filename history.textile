@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.5.2 "statistically probable"
+
+* hanke: (statistics) New experimental statistics interface. Run @picky stats@ to get the usage.
+
 h2. Version 4.5.1 "JSON, a nightmare"
 
 * hanke: (server) Fix for @multi_json@ gem usage.
