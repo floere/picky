@@ -1,0 +1,86 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@font-face  /* TODO: Replace with images */
+{
+  font-family: 'myriad';
+  src: url('MyriadPro-Semibold.otf') format('opentype');
+}
+body,
+html
+{
+  margin: 0;
+  padding: 0;
+}
+body
+{
+  font: 15px/20px "HelveticaNeue", arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  background: url(images/background.png), #f8f8fc;
+  background-size: 64px;
+}
+body > div
+{
+  width: 728px;
+  padding: 20px;
+  margin: 0 auto;
+}
+pre {
+  padding: 10px;
+  background-color: #efede5;
+}
+
+/* Headers */
+hgroup {
+  width: 728px;
+  height: 61px;
+  margin: 0 auto;
+}
+hgroup img.picky {
+  float: left;
+  margin-left: 30px;
+}
+hgroup h1 {
+  font-size: 1.5em;
+}
+hgroup h2 {
+  font-size: 1.0em;
+}
+hgroup h1, hgroup h2 {
+  margin: 10px 0px 0px 150px;
+}
+hgroup a {
+  color: #999;
+}
+
+/* Content */
+.content
+{
+  padding: 20px;
+  background: rgba(0,0,0,0.08);
+  border: 1px solid #cacacb;
+  border-top-color: #d1d1d2;
+  border-bottom-color: #b8b8ba;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.16);
+}
+section {
+  padding: 10px;
+}
+
+/* Footer */
+footer
+{
+  text-align: center;
+}
+footer,
+footer a
+{
+  color: #a0a0a8;
+}
+footer a:hover
+{
+  color: #808088;
+}

@@ -1,0 +1,83 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activemodel (3.2.6)
+      activesupport (= 3.2.6)
+      builder (~> 3.0.0)
+    activerecord (3.2.6)
+      activemodel (= 3.2.6)
+      activesupport (= 3.2.6)
+      arel (~> 3.0.2)
+      tzinfo (~> 0.3.29)
+    activesupport (3.2.6)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    arel (3.0.2)
+    builder (3.0.0)
+    cod (0.5.0)
+    diff-lcs (1.1.3)
+    haml (3.1.6)
+    i18n (0.6.0)
+    kgio (2.7.4)
+    multi_json (1.3.6)
+    picky (4.5.1)
+      activesupport (~> 3.0)
+      multi_json
+      procrastinate (~> 0.4)
+      rack_fast_escape
+      text
+    picky-client (4.5.1)
+      activesupport (>= 3.0.0)
+      yajl-ruby (>= 0.7.8)
+    procrastinate (0.4.1)
+      cod (~> 0.4)
+      state_machine (~> 0.9.4)
+    rack (1.4.1)
+    rack-protection (1.2.0)
+      rack
+    rack_fast_escape (2009.06.24)
+      url_escape
+    raindrops (0.10.0)
+    rake (0.9.2.2)
+    rspec (2.10.0)
+      rspec-core (~> 2.10.0)
+      rspec-expectations (~> 2.10.0)
+      rspec-mocks (~> 2.10.0)
+    rspec-core (2.10.1)
+    rspec-expectations (2.10.0)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.10.1)
+    sinatra (1.3.2)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    state_machine (0.9.4)
+    text (1.2.1)
+    tilt (1.3.3)
+    tzinfo (0.3.33)
+    unicorn (4.3.1)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
+    url_escape (2009.06.24)
+    yajl-ruby (1.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activerecord (~> 3.0)
+  activesupport
+  haml
+  i18n
+  multi_json
+  picky (~> 4.0)
+  picky-client (~> 4.0)
+  rack
+  rack_fast_escape (= 2009.06.24)
+  rake
+  rspec
+  sinatra
+  text
+  unicorn
+  yajl-ruby

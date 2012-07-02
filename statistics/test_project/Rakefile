@@ -1,0 +1,11 @@
+require 'picky/tasks'
+require 'picky-client/tasks'
+
+# Pass in location of your javascript files, default is "javascripts".
+#
+Picky::Tasks::Javascripts.new
+
+require 'rspec'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new :spec

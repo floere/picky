@@ -1,0 +1,1388 @@
+  1,weinberg
+  1,steven
+  2,heft
+  2,james
+  2,l
+  3,lambdin
+  3,laura
+  3,cooner
+  4,fergus
+  4,howard
+  4,a
+  5,juster
+  5,susan
+  6,schnapp
+  6,jeffrey
+  6,t
+  7,daley
+  7,glenn
+  7,a
+  8,bass
+  8,scott
+  8,a
+  9,klass
+  9,morton
+ 10,faruqee
+ 10,rashid
+ 11,pertman
+ 11,adam
+ 12,glaser
+ 12,robert
+ 13,walsh
+ 13,w
+ 13,bruce
+ 14,gunter
+ 14,barrie
+ 15,fisher
+ 15,joseph
+ 15,c
+ 16,fraginals
+ 16,manuel
+ 16,m
+ 17,hansen
+ 17,karen
+ 17,t
+ 18,adelman
+ 18,howard
+ 19,green
+ 19,edward
+ 19,c
+ 20,bond
+ 20,george
+ 20,c
+ 21,roth
+ 21,leland
+ 21,m
+ 22,mullaney
+ 22,marie
+ 22,m
+ 23,berube
+ 23,maurice
+ 23,r
+ 24,bordman
+ 24,gerald
+ 25,rogers
+ 25,rebecca
+ 26,lange
+ 26,nicholas
+ 26,de
+ 27,lemay
+ 27,michael
+ 27,c
+ 28,mainfort
+ 28,robert
+ 28,c
+ 28,jr
+ 29,zentall
+ 29,thomas
+ 29,r
+ 30,mclean
+ 30,peter
+ 30,d
+ 31,taylor
+ 31,c
+ 31,robert
+ 32,ohair
+ 32,dan
+ 33,staley
+ 33,thomas
+ 33,f
+ 34,smooha
+ 34,sammy
+ 35,kaufman
+ 35,daniel
+ 36,gutman
+ 36,huck
+ 37,cook
+ 37,cynthia
+ 37,r
+ 38,aaron
+ 38,henry
+ 38,j
+ 39,berends
+ 39,mark
+ 40,barrett
+ 40,thomas
+ 40,m
+ 41,lewis
+ 41,glen
+ 42,faaland
+ 42,just
+ 43,long
+ 43,timothy
+ 44,maurice
+ 44,donald
+ 44,g
+ 45,fizel
+ 45,john
+ 46,croce
+ 46,benedetto
+ 47,quirk
+ 47,tom
+ 48,addler
+ 48,chaim
+ 49,friedland
+ 49,roger
+ 50,lerner
+ 50,richard
+ 50,m
+ 51,beaulieu
+ 51,elizabeth
+ 51,ann
+ 52,gross
+ 52,rita
+ 52,m
+ 53,bergmann
+ 53,theodor
+ 54,hoffman
+ 54,w
+ 54,michael
+ 55,alt
+ 55,betty
+ 55,s
+ 56,crane
+ 56,edward
+ 56,h
+ 57,rumer
+ 57,boris
+ 58,bey
+ 58,george
+ 58,j
+ 58,iii
+ 59,schmidt
+ 59,conrad
+ 59,p
+ 60,hansen
+ 60,holger
+ 60,bernt
+ 61,lamb
+ 61,michael
+ 61,e
+ 62,rothery
+ 62,m
+ 63,manley
+ 63,casimir
+ 63,michael
+ 63,e
+ 64,seibert
+ 64,jeffrey
+ 64,m
+ 65,koocher
+ 65,gerald
+ 65,p
+ 66,chen
+ 66,shuxun
+ 67,chai
+ 67,joseph
+ 67,c
+ 68,faiman
+ 68,silva
+ 68,sandra
+ 69,rousseau
+ 69,richard
+ 69,w
+ 70,gill
+ 70,robin
+ 71,jackson
+ 71,kenneth
+ 71,t
+ 72,ballesteros
+ 72,soledad
+ 73,petty
+ 73,richard
+ 73,e
+ 74,morgan
+ 74,harry
+ 75,castellan
+ 75,n
+ 75,j
+ 75,jr
+ 76,young
+ 76,john
+ 77,marx
+ 77,herbert
+ 77,l
+ 78,gilbert
+ 78,neil
+ 79,rochelle
+ 79,warren
+ 79,g
+ 80,almond
+ 80,gabriel
+ 80,a
+ 81,snow
+ 81,richard
+ 81,e
+ 82,saler
+ 82,benson
+ 83,woods
+ 83,michael
+ 84,read
+ 84,stephen
+ 84,j
+ 85,phillips
+ 85,gene
+ 85,d
+ 86,page
+ 86,talbot
+ 87,painter
+ 87,colin
+ 88,lauber
+ 88,volkmar
+ 89,cohen
+ 89,robert
+ 90,brady
+ 90,david
+ 90,w
+ 91,rafael
+ 91,vicente
+ 91,l
+ 92,mcneil
+ 92,linda
+ 93,brown
+ 93,catherine
+ 94,bonn
+ 94,international
+ 94,center
+ 94,conversion
+ 94,staff
+ 95,olson
+ 95,gary
+ 95,m
+ 96,mcdermott
+ 96,john
+ 97,alexandris
+ 97,athina
+ 98,flamming
+ 98,douglas
+ 99,ingram
+ 99,david
+100,voich
+100,dan
+100,jr
+101,borsook
+101,paulina
+102,bartlett
+102,irving
+102,h
+103,tuska
+103,jon
+104,hobbes
+104,thomas
+105,tranquillus
+105,suetonius
+105,c
+106,stich
+106,stephen
+106,p
+107,simon
+107,john
+108,ranney
+108,austin
+109,eklof
+109,ben
+110,van
+110,vugt
+110,johannes
+110,p
+111,caputo
+111,john
+111,d
+112,pile
+112,john
+112,f
+113,davis
+113,paul
+113,k
+114,franklin
+114,margery
+114,b
+115,hall
+115,joan
+115,kelly
+116,schor
+116,hilary
+116,margo
+117,hall
+117,james
+117,a
+118,siker
+118,jeffrey
+118,s
+119,graham
+119,a
+119,c
+120,pizer
+120,donald
+121,roberts
+121,nancy
+121,l
+122,tims
+122,frank
+122,m
+123,saunders
+123,martha
+124,jackson
+124,paul
+124,j
+125,andow
+125,david
+125,a
+126,cairncross
+126,alec
+127,england
+127,richard
+127,w
+128,unger
+128,jonathan
+129,parsons
+129,carl
+130,townsend
+130,tony
+131,hoffman
+131,w
+131,michael
+132,dutton
+132,mary
+132,a
+133,poplawski
+133,paul
+134,adler
+134,rachel
+135,beinart
+135,william
+136,nath
+136,bhaskar
+137,slack
+137,paul
+138,addleson
+138,mark
+139,wagner
+139,martin
+139,linda
+140,healy
+140,alice
+140,f
+141,wallace
+141,james
+141,d
+142,ashmore
+142,r
+143,broberg
+143,gunnar
+144,rossi
+144,peter
+144,h
+145,rosen
+145,d
+145,h
+146,patzer
+146,gordon
+146,l
+147,kohn
+147,tamara
+148,delgado
+148,richard
+149,bodenhamer
+149,david
+149,j
+150,maclean
+150,mavis
+151,mussell
+151,kay
+152,daly
+152,lois
+152,k
+153,bloch
+153,marc
+154,strehle
+154,susan
+155,ireson
+155,carol
+156,laybourn
+156,keith
+157,blake
+157,david
+158,caplan
+158,patricia
+159,levine
+159,robert
+160,garfield
+160,jay
+160,l
+161,strohm
+161,kitchener
+161,karen
+162,bruschke
+162,jon
+163,horrocks
+163,roger
+164,barth
+164,richard
+164,p
+165,tucher
+165,andie
+166,kainz
+166,howard
+166,p
+167,mohammed
+167,patricia
+168,lewis
+168,lisa
+168,a
+169,kalbfleisch
+169,pamela
+169,j
+170,wemyss
+170,courtney
+170,t
+171,carter
+171,dan
+171,t
+172,watson
+172,donald
+172,r
+173,demartino
+173,george
+174,rao
+174,c
+174,p
+175,suarez
+175,orozco
+175,marcelo
+176,kelley
+176,margot
+176,a
+177,kiresuk
+177,thomas
+178,ferr
+178,frederick
+179,carter
+179,stephen
+179,l
+180,davies
+180,ian
+181,steinberg
+181,sheldon
+181,s
+182,humphrey
+182,john
+182,w
+183,mandel
+183,siegfried
+184,hare
+184,a
+184,paul
+185,nussbaum
+185,jon
+185,f
+186,lyn
+186,d
+187,bornstein
+187,marc
+187,h
+188,eisner
+188,elliot
+188,w
+189,padgett
+189,deborah
+189,k
+190,bloom
+190,harold
+191,dixon
+191,david
+192,furniss
+192,w
+192,todd
+193,harry
+193,keith
+194,cahill
+194,james
+195,guha
+195,ranajit
+196,schwaab
+196,edleff
+196,h
+197,gopin
+197,marc
+198,cody
+198,w
+198,j
+199,cairncross
+199,liz
+200,blacking
+200,john
+201,white
+201,stephen
+202,baum
+202,andrew
+203,allen
+203,gary
+203,l
+204,ford
+204,martin
+204,e
+205,balagura
+205,saul
+206,loveless
+206,avril
+207,paris
+207,david
+207,c
+208,blau
+208,joel
+209,schackle
+209,g
+209,l
+210,ben
+210,sira
+210,zeev
+211,murphy
+211,patrick
+212,brandon
+212,henry
+213,taylor
+213,quintard
+214,sheley
+214,joseph
+214,f
+215,harrington
+215,j
+215,w
+216,woodward
+216,joan
+217,blumer
+217,herbert
+218,simonelli
+218,maria
+218,p
+219,inhorn
+219,marcia
+219,claire
+220,fox
+220,christopher
+220,j
+221,thorson
+221,esther
+222,romberg
+222,thomas
+222,a
+223,galegher
+223,jolene
+224,sedikides
+224,constantine
+225,shafritz
+225,jay
+225,m
+226,stoll
+226,hans
+226,r
+227,aston
+227,michael
+228,lockman
+228,zachary
+229,rezun
+229,miron
+230,finnegan
+230,richard
+230,b
+231,funchion
+231,michael
+231,f
+232,etzkowitz
+232,henry
+233,kazarian
+233,elias
+233,g
+234,todd
+234,janet
+235,mcguire
+235,brian
+235,p
+236,rosenbaum
+236,herbert
+236,d
+237,reskin
+237,barbara
+237,f
+238,wentz
+238,richard
+238,e
+239,morrison
+239,michael
+239,a
+240,guevara
+240,daniel
+241,taylor
+241,clarence
+242,mccartin
+242,joseph
+242,a
+243,sfeir
+243,younis
+243,alfredo
+244,tindal
+244,gerald
+245,black
+245,jan
+245,k
+246,greenfield
+246,gerald
+246,m
+247,wiarda
+247,howard
+247,j
+248,rodriguez
+248,clara
+248,e
+249,livesey
+249,p
+249,j
+250,koelb
+250,clayton
+251,barnett
+251,timothy
+251,j
+252,baaklini
+252,abdo
+253,friedman
+253,kathi
+253,v
+254,patterson
+254,charlotte
+254,j
+255,barnett
+255,louise
+255,k
+256,hix
+256,w
+256,m
+257,albert
+257,michael
+258,cohen
+258,patricia
+259,ross
+259,alan
+259,duncan
+260,pereboom
+260,derk
+261,leonard
+261,james
+261,s
+262,islam
+262,shafiqul
+263,donahue
+263,john
+263,d
+264,scarce
+264,michael
+265,agust
+265,jordi
+266,liou
+266,kuotsai
+266,tom
+267,hosek
+267,james
+268,miller
+268,barbara
+268,s
+269,champion
+269,dean
+269,j
+270,brochmann
+270,grete
+271,bryant
+271,jennings
+272,weingartner
+272,herbert
+273,braine
+273,martin
+274,menn
+274,lise
+275,kelley
+275,charles
+276,honderich
+276,ted
+277,mcdowell
+277,john
+278,von
+278,mehren
+278,joan
+279,destler
+279,i
+279,m
+280,jesteadt
+280,walter
+281,trusted
+281,jennifer
+282,mitchell
+282,basil
+283,kane
+283,peter
+283,e
+284,mans
+284,minette
+285,kramer
+285,lawrence
+286,jones
+286,howard
+287,taylor
+287,talbot
+287,j
+288,roberts
+288,j
+288,j
+289,ferguson
+289,duncan
+289,s
+290,foner
+290,nancy
+291,davis
+291,richard
+292,schrimer
+292,peter
+293,jones
+293,catherine
+294,warth
+294,robert
+294,d
+295,patton
+295,paul
+296,spitz
+296,herman
+296,h
+297,brown
+297,hilary
+298,fleer
+298,jack
+298,d
+299,boller
+299,paul
+299,f
+299,jr
+300,spear
+300,swerling
+300,louise
+300,c
+301,manheimer
+301,ronald
+301,j
+302,kroth
+302,jerry
+303,nietzsche
+303,friedrich
+304,blais
+304,andrew
+304,l
+305,ong
+305,walter
+305,j
+306,marutollo
+306,frank
+307,fogel
+307,alan
+308,maser
+308,jack
+308,d
+309,glanz
+309,jeffrey
+310,gehring
+310,wes
+310,d
+311,mason
+311,ronald
+311,m
+312,brinkerhoff
+312,jennifer
+312,m
+313,pike
+313,david
+313,l
+314,jahn
+314,hubertus
+314,f
+315,segal
+315,david
+315,r
+316,conroy
+316,hilary
+317,liao
+317,kang
+318,vetlesen
+318,arne
+318,j
+319,saward
+319,john
+320,alexander
+320,bryant
+320,keith
+321,murphey
+321,murray
+321,g
+322,rimer
+322,j
+322,thomas
+323,rescher
+323,nicholas
+324,miyajima
+324,hideaki
+325,chua
+325,beng
+325,huat
+326,chubb
+326,john
+326,e
+327,halls
+327,w
+327,d
+328,quine
+328,maria
+328,s
+329,carty
+329,anthony
+330,hughes
+330,freeland
+330,felicia
+331,hussen
+331,ahmed
+331,m
+332,hohendahl
+332,peter
+332,u
+333,mcwhirter
+333,darien
+333,a
+334,bier
+334,william
+334,c
+335,mount
+335,eric
+335,jr
+336,wolf
+336,charles
+336,jr
+337,bloom
+337,kathleen
+338,cantor
+338,j
+338,h
+339,blomberg
+339,thomas
+339,g
+340,dimsdale
+340,joel
+340,e
+341,baldwin
+341,sally
+342,le
+342,poidevin
+342,robin
+343,simon
+343,rita
+343,j
+344,ramsey
+344,guthrie
+344,p
+345,man
+345,glenn
+346,mcalister
+346,elizabeth
+346,a
+347,page
+347,philip
+348,nemiroff
+348,greta
+348,h
+349,weisberg
+349,herbert
+349,f
+350,holdstock
+350,t
+350,len
+351,heimann
+351,mikael
+352,nord
+352,warren
+352,a
+353,ward
+353,keith
+354,szasz
+354,f
+355,thierstein
+355,joel
+355,r
+356,shupe
+356,anson
+357,mandelker
+357,ira
+357,l
+358,sabin
+358,marie
+358,noonan
+359,willis
+359,jim
+360,garrick
+360,john
+361,bositis
+361,david
+361,a
+362,keogh
+362,barbara
+362,k
+363,wraga
+363,william
+363,g
+364,bowers
+364,c
+364,a
+365,van
+365,dyne
+365,susan
+365,r
+366,gmez
+366,quiones
+366,juan
+367,mckinstry
+367,sam
+368,thompson
+368,john
+369,krasnov
+369,vladislav
+370,rule
+370,wilma
+371,flynn
+371,thomas
+371,r
+372,cohen
+372,jonathan
+372,d
+373,archibald
+373,rae
+373,w
+374,ball
+374,desmond
+375,bond
+375,h
+375,lawrence
+376,bukharin
+376,nikolai
+376,i
+377,ames
+377,roger
+377,t
+378,flanagan
+378,owen
+379,weaver
+379,darlene
+379,fozard
+380,jopling
+380,david
+380,a
+381,bowlby
+381,john
+382,fisher
+382,s
+383,bentley
+383,gerald
+383,e
+383,jr
+384,wallis
+384,robert
+384,j
+385,baum
+385,robert
+385,m
+386,giles
+386,wenona
+386,mary
+387,woodworth
+387,steven
+387,e
+388,cannan
+388,crescy
+389,barchas
+389,patricia
+389,r
+390,edwards
+390,meredith
+391,sorensen
+391,aage
+391,b
+392,whittaker
+392,james
+392,k
+393,leighninger
+393,leslie
+394,doherty
+394,robert
+395,grene
+395,marjorie
+395,glicksman
+396,johnson
+396,benjamin
+397,charon
+397,rita
+398,phillips
+398,robert
+398,l
+399,bailey
+399,kathleen
+399,c
+400,menzel
+400,paul
+400,t
+401,lachmann
+401,ludwig
+401,m
+402,dunphy
+402,dexter
+403,blum
+403,kulka
+403,shoshana
+404,winkler
+404,barbara
+404,scott
+405,hart
+405,andrew
+406,schweitzer
+406,g
+406,e
+407,shanahan
+407,james
+408,molfese
+408,dennis
+408,l
+409,brenner
+409,michael
+410,prier
+410,raymond
+410,a
+411,goozner
+411,merrill
+412,mayers
+412,david
+413,levine
+413,michael
+413,p
+414,biggs
+414,murray
+415,fischer
+415,frank
+416,savelyev
+416,aleksandr
+416,g
+417,emery
+417,robert
+417,f
+418,morse
+418,donald
+418,e
+419,darling
+419,arthur
+419,b
+420,bebler
+420,anton
+420,a
+421,bunge
+421,marcia
+421,j
+422,elgin
+422,don
+422,g
+423,zucker
+423,norman
+423,l
+424,persons
+424,stow
+425,mass
+425,jeffrey
+425,p
+426,dutton
+426,donald
+426,g
+427,emmerson
+427,john
+427,k
+428,bede
+429,heinzelman
+429,kurt
+430,weeks
+430,john
+431,mcmullen
+431,matthew
+431,s
+432,maloy
+432,robert
+432,w
+433,pears
+433,david
+434,halliburton
+434,david
+435,meyer
+435,alfred
+435,g
+436,searles
+436,george
+436,j
+437,glover
+437,michael
+438,barnett
+438,jonathan
+439,diller
+439,ann
+440,friedlander
+440,walter
+440,j
+441,nicholas
+441,david
+442,denman
+442,sue
+443,killinger
+443,charles
+443,l
+444,turberville
+444,arthur
+444,s
+445,barnett
+445,louise
+445,k
+446,plomp
+446,reinier
+447,shlapentokh
+447,vladimir
+448,abul
+448,husn
+448,latif
+449,millican
+449,peter
+450,abbot
+450,philip
+451,wiley
+451,roland
+451,j
+452,ostrander
+452,rick
+453,rapoport
+453,ronald
+453,b
+454,buzan
+454,barry
+454,g
+455,machan
+455,tibor
+455,r
+456,youngson
+456,a
+456,j
+457,milani
+457,mohsen
+457,m
+458,putnam
+458,hilary
+459,haigh
+459,philip
+459,a
+460,kitcher
+460,philip
+461,durr
+461,marlese
+462,shojai
+462,siamack
+463,domenach
+463,jean
+463,luc
+464,holt
+464,marilyn
+464,i
+465,kane
+465,robert
+466,paltin
+466,d
+466,m
+467,yetiv
+467,steve
+467,a
+468,hahn
+468,lewis
+468,e
+469,dombrowski
+469,daniel
+469,a
+470,odden
+470,david
+471,cross
+471,richard
+472,prentice
+472,penelope
+473,cox
+473,robert
+473,w
+474,schatzberg
+474,michael
+474,g
+475,jelen
+475,ted
+475,g
+476,bruneau
+476,thomas
+476,c
+477,kent
+477,george
+478,kiely
+478,ray
+479,hargrove
+479,erwin
+479,c
+480,peterson
+480,paul
+480,e
+481,bracken
+481,bruce
+481,a
+482,medin
+482,douglas
+482,l
+483,langholtz
+483,harvey
+483,j
+484,mooney
+484,christopher
+484,z
+485,cooke
+485,james
+485,j
+486,hilberman
+486,elaine
+487,harris
+487,cole
+488,leeman
+488,richard
+488,w
+489,hubert
+489,henri
+489,h
+490,goodenough
+490,ursula
+491,maconie
+491,robin
+492,stonehill
+492,brian
+493,gregory
+493,adrian
+494,granovetter
+494,mark
+494,s
+495,ferguson
+495,r
+495,brian
+496,conner
+496,colin
+497,hachten
+497,william
+497,a
+498,uttal
+498,william
+499,dinsmore
+499,john
+500,plato
+501,krupat
+501,arnold
+502,boyle
+502,kevin
+503,wood
+503,john
+504,link
+504,s
+504,w
+505,mcintosh
+505,roderick
+505,j
+506,datlof
+506,natalie
+507,burke
+507,edmund
+508,burke
+508,edmund
+509,gray
+509,susan
+509,e
+510,risse
+510,kappen
+510,thomas
+511,brown
+511,robert
+511,m
+512,losee
+512,john
+513,tonry
+513,michael
+513,h
+514,price
+514,jonathan
+514,j
+515,smythe
+515,william
+515,e
+516,westoff
+516,charles
+516,f
+517,champion
+517,dean
+517,j
+518,neusner
+518,jacob
+519,lopes
+519,dominic
+520,berg
+520,john
+520,c
+521,hilton
+521,thomas
+522,roulston
+522,christine
+523,najita
+523,tetsuo
+524,aloimonos
+524,yiannis
+525,park
+525,peter
+526,cheng
+526,liying
+527,stern
+527,madeleine
+527,b
+528,vasoli
+528,robert
+528,h
+529,walters
+529,james
+529,w
+530,guldin
+530,gregory
+530,eliyo
+531,rhodes
+531,warren
+531,a
+532,moy
+532,patricia
+533,jenkins
+533,pamela
+533,j
+534,thomas
+534,sue
+535,james
+535,valentine
+535,u
+536,brunn
+536,emilie
+536,z
+537,darcy
+537,r
+538,turshen
+538,meredeth
+539,brown
+539,jonathan
+539,c
+540,litvin
+540,a
+540,l

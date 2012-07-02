@@ -1,0 +1,277 @@
+/* Form */
+form
+{
+  display: block;
+  position: relative;
+  height: 46px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.08))), rgba(255,255,255,0.4);
+  background: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.08)), rgba(255,255,255,0.4);
+  border-radius: 99px;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.08), inset 0 0 4px rgba(0,0,0,0.6), 0 0px 0 rgba(255,255,255,0.6);
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+form input[type=search],
+form input[type=button],
+form .status
+{
+  height: 46px;
+  border: 1px solid #98989f;
+  -webkit-appearance: none;
+  border-radius: 99px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+  background: #fff;
+  line-height: 1;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+form input[type=search] {
+  font-size: 30px;
+  z-index: 3;
+  display: block;
+  position: absolute;
+  margin: 0 0 0 2em;
+  padding: 0 8px 0 13px;
+  width: 526px;
+}
+form input[type=search]::-webkit-input-placeholder
+{
+  color: #c0c0c8;
+  font-size: 30px;
+  line-height: 36px;  /* Fixes placeholder vertical alignment in Chrome and Webkit Nightly (535.*) */
+}
+form input[type=search]:-moz-placeholder
+{
+  color: #c0c0c8;
+}
+form input[type=search]:focus
+{
+  outline: none;
+  border-color: #6e96c7;
+  box-shadow: inset 0 0 4px #6e96c7, inset 0 0 4px #6e96c7, 0 0 4px #6e96c7, 0 0 4px #6e96c7, inset 0 2px 4px rgba(0,0,0,0.16);
+}
+form input[type=search]::-webkit-search-cancel-button
+{
+  z-index: 9;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  background: url(images/cancel.svg);
+  -webkit-appearance: none;
+}
+form input[type=search]::-webkit-search-cancel-button:active
+{
+  background-position: 0 -32px;
+}
+form input[type=search]::-webkit-search-cancel-button
+{
+/*  outline: 1px dashed red !important;*/
+}
+form input[type=button]
+{
+  background: rgba(0,0,0,0.01);
+  font-size: 1.2em;
+  z-index: 2;
+  display: block;
+  position: absolute;
+  padding-right: 0.8em;
+  right: 0;
+  width: 130px;
+  color: #606068;
+  text-align: right;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  -webkit-transition: background 0.15s ease-in;
+}
+form input[type=button]:active
+{
+  background: rgba(0,0,0,0.08);
+  -webkit-transition-duration: 0;
+}
+form .status {
+  background: rgba(0,0,0,0.0);
+  z-index: 2;
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100px;
+  line-height: 46px;
+  padding-right: 2em;
+  text-align: right;
+  font-size: 1.5em;
+}
+.picky form.empty .status {
+  background-color: hsl(215, 51%, 70%); }
+.picky form.empty .feedback {
+  background-color: #d0e2ff; }
+.picky form.none .status {
+  background-color: hsl(6, 51%, 70%); }
+.picky form.none .feedback {
+  background-color: #ffdddd; }
+.picky form.support .status {
+  background-color: hsl(29, 51%, 70%); }
+.picky form.support .feedback {
+  background-color: #faf3d0; }
+.picky form.ok .status {
+  background-color: hsl(82, 51%, 70%); }
+.picky form.ok .feedback {
+  background-color: #bcf0b3; }
+.picky form .feedback {
+  width: 85%;
+  float: left;
+  border: 1px solid #cccccc;
+  padding: 0;
+  margin: 0; }
+    
+/* To the top */
+.picky .header .tothetop {
+  float: right;
+}
+.picky .header .tothetop a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin-left: 1em;
+  border-radius: 5px;
+  background-color: #EEE;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: bold;
+  color: #777;
+} 
+.picky .header .tothetop a:hover {
+  background-color: white;
+}
+
+/* Addination */
+.picky .addination {
+  line-height: 2em;
+  text-align: center;
+  cursor: pointer;
+}
+.picky .addination:hover {
+  background-color: #eee;
+}
+
+/* Allocations */
+.picky .allocations ol {
+  margin-bottom: 10px;
+}
+.picky ol {
+  cursor: pointer;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.picky li:hover {
+  background-color: #eee;
+}
+.picky ol.more,
+.picky ol.hidden {
+  margin-top: 3px;
+}
+.picky .allocations ol.hidden {
+  display: none; }
+.picky .allocations ol.more:hover {
+  background-color: #ccc;
+  cursor: pointer; }
+.picky .allocations ol {
+  list-style-position: outside;
+  list-style: none;
+  padding: 0;}
+  
+.picky .allocations li {
+  font-size: 1.2em;
+  padding: 24px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.picky .allocations li:last-child {
+  border-bottom: 0px;
+  margin-bottom: 0;
+}
+.picky .allocations .text {
+  max-width: 90%;
+  float: left; }
+.picky .allocations .count {
+  float: right;
+  color: #cccccc; }
+
+.picky .results .header {
+  padding: 0.5em;
+  background-color: rgba(0, 0, 0, 0.04);
+  background: -webkit-gradient(radial, 0% 100%, 90, 0% 100%, 600, from(rgba(0, 0, 0, 0.02)), to(rgba(0, 0, 0, 0.1)));
+  text-align: right;
+}
+.picky .allocations,
+.picky .no_results,
+.picky .results,
+.picky .more {
+  display: none;
+  margin: 0 1.5em;
+  padding: 0 0 0 0;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  border-bottom: solid 1px #b8b8ba;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0), 0 1px 3px rgba(0,0,0,0.16);
+}
+.picky ol.more, .picky .no_results {
+  display: none;
+}
+.picky ol.more h3, .picky .no_results h3 {
+  margin: 0;
+  text-align: center;
+}
+.picky .allocations .more {
+  position: absolute;
+  font-weight: bold;
+  line-height: 1.1em;
+  padding: 0.2em 1em 0.4em;
+  margin: 0 16.5%;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  -o-border-bottom-left-radius: 20px;
+  -ms-border-bottom-left-radius: 20px;
+  -khtml-border-bottom-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  -moz-border-radius-bottomright: 20px;
+  -webkit-border-bottom-right-radius: 20px;
+  -o-border-bottom-right-radius: 20px;
+  -ms-border-bottom-right-radius: 20px;
+  -khtml-border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 2px;
+}
+
+/* Results */
+.picky .results li {
+  margin: 0;
+  padding: 1em;
+  border-bottom: 1px solid #aaa;
+}
+.picky .results li:last-child {
+  border-bottom: 0px;
+}
+.picky .results li h3 {
+  margin-top: 0;
+}
+.picky .results li h3 a:link,
+.picky .results li h3 a:visited {
+  color: black;
+  text-decoration: none;
+}
+.picky .results li h3 a:hover {
+  text-decoration: underline;
+}
+.picky .no_results {
+  padding: 1em;
+}
