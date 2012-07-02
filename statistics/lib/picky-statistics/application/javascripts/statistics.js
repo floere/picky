@@ -51,7 +51,6 @@ var allocationsScale = d3.scale.linear()
       .domain([0, 0])
       .rangeRound(chartWidth);
 
-
 var offsetScale = d3.scale.linear()
       .domain([0, 0])
       .rangeRound(chartWidth);
@@ -125,10 +124,10 @@ function renderAll() {
   
   // Render the total.
   //
-  d3.selectAll("#total")
+  d3.selectAll("aside.totals .total")
       .text(formatNumber(search.size()));
   
-  d3.select("#active").text(formatNumber(all.value()));
+  d3.selectAll("aside.totals .active").text(formatNumber(all.value()));
 }
 
 // Like d3.time.format, but faster.
@@ -156,12 +155,13 @@ window.reset = function(i) {
 
 var intervalUpdating = false;
 
-function updateStatistics(reloadAll) {
+function updateStatistics(reloadAll, seconds) {
   path = reloadAll ? 'index.json' : 'since_last.json';
   
-  showNotice();
+  if (!seconds || seconds >= 30) { showNotice(); }
+  
   d3.json(path, function(searches) {
-    if (searches.length == 0) { return; }
+    if (!searches || searches.length == 0) { return; }
     
     var totalMin = 1000000; // Highest minimum set to sane number.
     var totalMax = 0;
@@ -193,24 +193,23 @@ function updateStatistics(reloadAll) {
       if (durationMax < d.duration) { durationMax = d.duration; }
     });
     
-    // console.log([totalMin, totalMax]);
-    
     // Set scales.
     //
     var totalDomain = totalScale.domain();
-    totalScale.domain([d3.min([totalMin, totalDomain[0]])*0.9, d3.max([totalMax, totalDomain[1]])*1.1]);
+    totalScale.domain([d3.min([totalMin, totalDomain[0]])*0.9, d3.max([totalMax, totalDomain[1]])]);
     var allocationsDomain = allocationsScale.domain();
-    allocationsScale.domain([d3.min([allocationsMin, allocationsDomain[0]])*0.9, d3.max([allocationsMax, allocationsDomain[1]])*1.1]);
+    allocationsScale.domain([d3.min([allocationsMin, allocationsDomain[0]])*0.9, d3.max([allocationsMax, allocationsDomain[1]])]);
     var offsetDomain = offsetScale.domain();
-    offsetScale.domain([d3.min([offsetMin, offsetDomain[0]])*0.9, d3.max([offsetMax, offsetDomain[1]])*1.1]);
+    offsetScale.domain([d3.min([offsetMin, offsetDomain[0]])*0.9, d3.max([offsetMax, offsetDomain[1]])]);
     var durationDomain = durationScale.domain();
-    durationScale.domain([d3.min([durationMin, durationDomain[0]])*0.9, d3.max([durationMax, durationDomain[1]])*1.1]);
+    durationScale.domain([d3.min([durationMin, durationDomain[0]])*0.9, d3.max([durationMax, durationDomain[1]])]);
   
     search.add(searches);
   
     renderAll();
+    
+    if (!seconds || seconds >= 30) { hideNotice(); }
   });
-  hideNotice();
 };
 
 var periodicalUpdaterId;
@@ -218,7 +217,7 @@ var periodicalUpdaterId;
 function updateStatisticsPeriodically(seconds) {
   clearInterval(periodicalUpdaterId);
   periodicalUpdaterId = setInterval(function() {
-       updateStatistics();
+       updateStatistics(false, seconds);
   }, 1000*seconds);
   intervalUpdating = true;
 };

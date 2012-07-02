@@ -28,8 +28,8 @@ class LogfileReader
     @last_offset = 0
   end
 
-  def since log_offset = 0
-    @last_offset ||= 0
+  def since log_offset = nil
+    @last_offset = log_offset || 0
     
     start_time = Time.now
 
@@ -42,7 +42,7 @@ class LogfileReader
       File.open(statistics, 'r') do |file|
         while line = file.gets
           next if line =~ /\A\s*\#/
-          results << process(line)
+          results << process(line) rescue nil
         end
       end
     end

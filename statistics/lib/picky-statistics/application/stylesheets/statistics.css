@@ -48,9 +48,6 @@ input {
   height: 4em;
   margin: -2em 0px 0px -5em;
 }
-#notice.show {
-  display: block;
-}
 
 .actions {
   padding: 5px;
@@ -171,6 +168,6 @@ span#active, span#total {
   color: green;
 }
 
-aside {
+aside.totals {
   float: right;
 }

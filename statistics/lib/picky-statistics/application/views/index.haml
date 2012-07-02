@@ -8,6 +8,13 @@
     %script{ :src => 'javascripts/statistics.js', :type => 'text/javascript' }
 
   %body{ :onload => "document.getElementsByTagName('input')[0].click(); updateStatistics(true);" }
+    %aside.totals
+      %span.active
+        -
+      of
+      %span.total
+        -
+      searches selected.
     %h1 Clam: Picky Statistics Interface.
     .actions
       %button{ :href => '#', :onclick => 'javascript:updateStatistics();' } Update now
@@ -15,6 +22,8 @@
       |
       %input{ :id => 'updateStop', :type => "radio", :name => "updating", :onclick => 'javascript:stopUpdatingStatistics();' }
       %label{ :for => 'updateStop' } Don't update
+      %input{ :id => 'update1', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(1);' }
+      %label{ :for => 'update1' } Every second
       %input{ :id => 'update3', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(3);' }
       %label{ :for => 'update3' } Every 3 seconds
       %input{ :id => 'update10', :type => "radio", :name => "updating", :onclick => 'javascript:updateStatisticsPeriodically(10);' }
@@ -39,11 +48,11 @@
   #duration-chart.chart
     %h2.title Duration
 
-%aside#totals
-  %span#active
+%aside.totals
+  %span.active
     -
   of
-  %span#total
+  %span.total
     -
   searches selected.
 
