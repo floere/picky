@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.5.3 "hero koo koo"
+
+* hanke: (server) CHeck for the existence of @RbConfig@ before compiling.
+
 h2. Version 4.5.2 "statistically probable"
 
 * hanke: (statistics) New experimental statistics interface. Run @picky stats@ to get the usage.
