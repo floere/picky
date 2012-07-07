@@ -1,8 +1,12 @@
 h2. Upcoming Version
 
+h2. Version 4.5.4 "like stripes on a car"
+
+* hanke: (server) Removed code, making Picky approximately 10% faster.
+
 h2. Version 4.5.3 "hero koo koo"
 
-* hanke: (server) CHeck for the existence of @RbConfig@ before compiling.
+* hanke: (server) Check for the existence of @RbConfig@ before compiling.
 
 h2. Version 4.5.2 "statistically probable"
 
