@@ -27,7 +27,7 @@ module Picky
       end
 
       def score
-        @combinations.sum &:weight
+        @combinations.inject(0) { |total, combination| total + combination.weight }
       end
       def boost_for weights
         weights.boost_for @combinations
