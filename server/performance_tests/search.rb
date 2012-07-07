@@ -99,21 +99,21 @@ end
 
 backends = [
   Backends::Memory.new,
-  Backends::File.new,
-  Backends::SQLite.new,
-  Backends::Redis.new,
-  Backends::SQLite.new(realtime: true),
-  Backends::Redis.new(realtime: true),
+  # Backends::File.new,
+  # Backends::SQLite.new,
+  # Backends::Redis.new,
+  # Backends::SQLite.new(realtime: true),
+  # Backends::Redis.new(realtime: true),
 ]
 
 definitions = []
 
-definitions << [Proc.new do
-  category :text1, weight: Picky::Weights::Constant.new
-  category :text2, weight: Picky::Weights::Constant.new
-  category :text3, weight: Picky::Weights::Constant.new
-  category :text4, weight: Picky::Weights::Constant.new
-end, :no_weights]
+# definitions << [Proc.new do
+#   category :text1, weight: Picky::Weights::Constant.new
+#   category :text2, weight: Picky::Weights::Constant.new
+#   category :text3, weight: Picky::Weights::Constant.new
+#   category :text4, weight: Picky::Weights::Constant.new
+# end, :no_weights]
 
 definitions << [Proc.new do
   category :text1
@@ -122,12 +122,12 @@ definitions << [Proc.new do
   category :text4
 end, :normal]
 
-definitions << [Proc.new do
-  category :text1, partial: Picky::Partial::Postfix.new(from: 1)
-  category :text2, partial: Picky::Partial::Postfix.new(from: 1)
-  category :text3, partial: Picky::Partial::Postfix.new(from: 1)
-  category :text4, partial: Picky::Partial::Postfix.new(from: 1)
-end, :full_partial]
+# definitions << [Proc.new do
+#   category :text1, partial: Picky::Partial::Postfix.new(from: 1)
+#   category :text2, partial: Picky::Partial::Postfix.new(from: 1)
+#   category :text3, partial: Picky::Partial::Postfix.new(from: 1)
+#   category :text4, partial: Picky::Partial::Postfix.new(from: 1)
+# end, :full_partial]
 
 ram = ->() do
   # Demeter is rotating in his grave :D
@@ -178,11 +178,11 @@ definitions.each do |definition, description|
 
     Indexes.each do |data|
 
-      data.prepare if backend == backends.first
+      # TODO Uncomment: data.prepare if backend == backends.first
 
       data.backend backend
       data.clear
-      data.cache
+      # TODO Uncomment: data.cache
       data.load
 
       amount = 50
