@@ -83,4 +83,6 @@ end
 printer = RubyProf::GraphPrinter.new(result)
 printer.print(STDOUT, :min_percent => 2)
 
-puts "open #{filename}"
+command = "open #{filename}"
+puts command
+`#{command}`
