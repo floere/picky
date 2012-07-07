@@ -9,13 +9,13 @@ describe Picky::Query::Allocation do
     @allocation   = described_class.new @index, @combinations
   end
 
-  describe "hash" do
-    it "delegates to the combinations" do
-      @combinations.should_receive(:hash).once.with
-
-      @allocation.hash
-    end
-  end
+  # describe "hash" do
+  #   it "delegates to the combinations" do
+  #     @combinations.should_receive(:hash).once.with
+  # 
+  #     @allocation.hash
+  #   end
+  # end
 
   describe "to_s" do
     before(:each) do

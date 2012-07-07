@@ -138,7 +138,7 @@ module Picky
         end
       end
 
-      def uniq
+      def uniq!
         @allocations.uniq!
       end
 

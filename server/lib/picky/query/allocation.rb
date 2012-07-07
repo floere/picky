@@ -23,15 +23,12 @@ module Picky
       def initialize index, combinations
         @combinations = combinations
 
-        # Could this be rewritten?
+        # TODO Could this be rewritten?
         #
         @result_identifier = index.result_identifier
         @backend           = index.backend
       end
 
-      def hash
-        @combinations.hash
-      end
       # def eql? other
       #   self.class == other.class && combinations.eql?(other.combinations)
       # end

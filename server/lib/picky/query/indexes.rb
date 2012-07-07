@@ -62,9 +62,11 @@ module Picky
       def prepared_allocations_for tokens, weights = {}, amount = nil
         allocations = allocations_for tokens
 
-        # Remove double allocations.
+        # Removed: Remove potential double allocations.
         #
-        allocations.uniq
+        # Note: allocations are unique by definition.
+        #
+        # allocations.uniq! unless tokens.uniq?
 
         # Score the allocations using weights as bias.
         #

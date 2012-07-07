@@ -47,13 +47,13 @@ describe Picky::Query::Combinations do
     end
   end
 
-  describe 'hash' do
-    it "delegates to the combinations array" do
-      @combinations_ary.should_receive(:hash).once.with
-
-      @combinations.hash
-    end
-  end
+  # describe 'hash' do
+  #   it "delegates to the combinations array" do
+  #     @combinations_ary.should_receive(:hash).once.with
+  # 
+  #     @combinations.hash
+  #   end
+  # end
 
   describe 'remove' do
     before(:each) do

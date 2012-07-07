@@ -22,10 +22,10 @@ module Picky
         @combinations = combinations
       end
 
-      def hash
-        @combinations.hash
-      end
-
+      # Sums up the weights of the combinations.
+      #
+      # Note: Optimized sum(&:weight) away – ~3% improvement.
+      #
       def score
         @combinations.inject(0) { |total, combination| total + combination.weight }
       end

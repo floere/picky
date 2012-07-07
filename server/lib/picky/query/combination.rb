@@ -51,14 +51,6 @@ module Picky
         @identifier ||= "#{bundle.identifier}:inverted:#{token.text}"
       end
 
-      # Note: Required for uniq!
-      #
-      # THINK Ok with category or is the bundle needed?
-      #
-      def hash
-        [token, category].hash
-      end
-
       # Combines the category names with the original names.
       # [
       #  [:title,    'Flarbl', :flarbl],
