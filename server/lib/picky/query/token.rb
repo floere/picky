@@ -15,6 +15,8 @@ module Picky
       attr_writer :similar
       attr_accessor :user_defined_categories
 
+      # TODO Do not check on blank, but empty?
+      #
       delegate :blank?,
                :to => :text
 

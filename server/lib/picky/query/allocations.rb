@@ -154,7 +154,7 @@ module Picky
       # ]
       #
       def to_result
-        @allocations.map(&:to_result).compact
+        @allocations.map { |allocation| allocation.to_result }.compact
       end
 
       # Simply inspects the internal allocations.

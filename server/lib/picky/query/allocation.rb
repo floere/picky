@@ -29,14 +29,10 @@ module Picky
         @backend           = index.backend
       end
 
-      # def eql? other
-      #   self.class == other.class && combinations.eql?(other.combinations)
-      # end
-
       # Asks the backend for the total score and
       # adds the boosts to it.
       #
-      # THINK Can the combinations be empty?
+      # TODO THINK Can the combinations be empty?
       #
       def calculate_score weights
         @score ||= if @combinations.empty?
@@ -49,7 +45,7 @@ module Picky
 
       # Asks the backend for the (intersected) ids.
       #
-      # THINK Can the combinations be empty?
+      # TODO THINK Can the combinations be empty?
       #
       def calculate_ids amount, offset
         return [] if @combinations.empty?
