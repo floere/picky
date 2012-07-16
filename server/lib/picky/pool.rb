@@ -5,23 +5,46 @@ module Picky
   #
   module Pool
     
+    class << self
+      require 'set'
+      @@pools = Set.new
+      
+      # Add a Pool to the managed pools.
+      #
+      def add klass
+        @@pools << klass
+      end
+      
+      # Releases all obtained objects.
+      #
+      def release_all
+        @@pools.each { |pool| pool.release_all }
+      end
+      
+    end
+    
     def self.extended klass
+      add klass
       
       class << klass
-        @@__free__ = []
-        @@__used__ = []
-      
+        #
+        #
+        def clear
+          @__free__ = []
+          @__used__ = []
+        end
+           
         # Obtain creates a new reference if there is no free one
         # and uses an existing one if there is.
         #
         # (Any caches should be cleared using clear TODO in all initializers)
         #
         def obtain *args, &block
-          unless reference = @@__free__.shift
+          unless reference = @__free__.shift
             reference = allocate
           end
           reference.send :initialize, *args, &block
-          @@__used__ << reference
+          @__used__ << reference
           reference
         end
       
@@ -29,8 +52,8 @@ module Picky
         # (And removes it from the used pool)
         #
         def release instance
-           @@__free__ << instance
-           @@__used__.delete instance # TODO Optimize
+           @__free__ << instance
+           @__used__.delete instance # TODO Optimize
         end
       
         # After you have called release all, you can't
@@ -38,22 +61,26 @@ module Picky
         # anymore.
         #
         def release_all
-          @@__used__.each { |used| @@__free__ << used } # TODO Optimize
-          @@__used__.clear
+          @__used__.each { |used| @__free__ << used } # TODO Optimize
+          @__used__.clear
         end
       
         # How many obtainable objects are there?
         #
         def free_size
-          @@__free__.size
+          @__free__.size
         end
       
         # How many used objects are there?
         #
         def used_size
-          @@__used__.size
+          @__used__.size
         end
       end
+      
+      # Initialize the pool.
+      #
+      klass.clear
     
       # Pooled objects can be released using
       #   object.release
