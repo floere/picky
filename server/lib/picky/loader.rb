@@ -70,6 +70,10 @@ module Picky
         load_relative 'helpers/measuring'
         load_relative 'helpers/indexing'
 
+        # Extension Modules
+        #
+        load_relative 'pool'
+
         # Calculations.
         #
         load_relative 'calculations/location'

@@ -9,7 +9,7 @@ class Case
   attr_reader :url, :index, :search
 
   def initialize url, index, search
-    @url, @index, @search
+    @url, @index, @search = url, index, search
   end
 
 end
