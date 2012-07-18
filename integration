@@ -10,7 +10,9 @@ def remote?
   @remote
 end
 
-puts "Using remote gems etc." if remote?
+puts
+puts "Running integration tests with #{remote?? 'REMOTE' : 'LOCAL'} gems."
+puts
 
 def bundle_options
   @remote ? '' : '--local'
