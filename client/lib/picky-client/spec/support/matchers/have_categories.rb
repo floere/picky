@@ -1,4 +1,5 @@
-(defined?(RSpec) && RSpec || defined?(Spec) && Spec)::Matchers.define :have_categories do |*expected|
+require 'rspec/matchers'
+RSpec::Matchers.define :have_categories do |*expected|
 
   match do |results|
     extract_categories(actual) == expected
