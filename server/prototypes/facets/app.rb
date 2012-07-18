@@ -14,9 +14,13 @@ data.replace_from id: 5, name: 'Florian', surname: 'Tentacles'
 
 # Look facets up in the index.
 #
-puts data[:name].exact.inverted.map { |name, ids|
-  [name, ids.size]
+puts "Facets:"
+puts data[:name].exact.inverted.inject({}) { |result, token_ids|
+  token, ids = token_ids
+  result[token] = ids.size
+  result
 }
+
 
 class Picky::Index
   
@@ -32,3 +36,11 @@ end
 
 puts data.facets :name
 puts data.facets :surname
+
+# Query generation.
+#
+puts "Queries: (with original query 'something')"
+queries = data.facets(:name).map do |token, _|
+  "name:#{token} something"
+end
+puts queries
