@@ -37,7 +37,7 @@ inline VALUE rb_ary_length(VALUE ary) {
 //  * orders the arrays by ascending size, small to large.
 //  * calls the & consecutively for all arrays.
 //
-inline VALUE _memory_efficient_intersect(VALUE self, VALUE unsorted_array_of_arrays) {
+inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_of_arrays) {
   // Counters.
   //
   long i, j;
@@ -94,5 +94,5 @@ VALUE p_mPerformant, p_cArray;
 void Init_performant() {
   p_mPerformant = rb_define_module("Performant");
   p_cArray = rb_define_class_under(p_mPerformant, "Array", rb_cObject);
-  rb_define_singleton_method(p_cArray, "memory_efficient_intersect", _memory_efficient_intersect, 1);
+  rb_define_singleton_method(p_cArray, "memory_efficient_intersect", memory_efficient_intersect, 1);
 }

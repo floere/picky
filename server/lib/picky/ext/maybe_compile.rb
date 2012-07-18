@@ -1,15 +1,17 @@
 failed = 0
 
 begin
-  require_relative 'ruby19/performant'
-rescue LoadError
+  require File.expand_path '../ruby19/performant', __FILE__
+rescue LoadError => e
   failed += 1
+  
+  require File.expand_path '../ruby19/extconf', __FILE__
   
   # For some reason we need to enter ./ruby19
   # via external command (see issue #81).
   #
   Dir.chdir File.expand_path('..', __FILE__) do
-    puts %x(cd ruby19; ruby extconf.rb; make)
+    puts %x(cd ruby19; make)
   end
   
   # Try again.
@@ -25,6 +27,9 @@ Please add an issue: https://github.com/floere/picky/issues/
 and copy anything into it that you think is helpful. Thanks!
 
 See related issue: https://github.com/floere/picky/issues/81
+
+The problem reported by the compiler was:
+#{e}
 
 NOTE
   exit 1
