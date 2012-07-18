@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+#
+gem_command = 'gem'
+
+puts "Uninstalling all gems."
+system "#{gem_command} uninstall -x -a -I picky-generators picky-live picky-statistics picky-client picky"
