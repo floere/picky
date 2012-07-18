@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 4.5.5 "swish swish clang clang"
+
+* hanke: (server) Clang can now compile Picky.
+* hanke: (server) Much better error message in case Picky can't be compiled.
+
 h2. Version 4.5.4 "like stripes on a car"
 
 * hanke: (server) Removed code, making Picky approximately 10% faster.
