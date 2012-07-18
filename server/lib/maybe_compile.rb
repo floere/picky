@@ -1,17 +1,20 @@
+# Note: This is handled toplevel to not confuse compilers.
+#
 failed = 0
 
 begin
-  require File.expand_path '../ruby19/performant', __FILE__
+  require File.expand_path '../performant', __FILE__
 rescue LoadError => e
   failed += 1
   
-  require File.expand_path '../ruby19/extconf', __FILE__
+  # Have Makefile built.
+  #
+  require File.expand_path '../extconf', __FILE__
   
-  # For some reason we need to enter ./ruby19
-  # via external command (see issue #81).
+  # Run make.
   #
   Dir.chdir File.expand_path('..', __FILE__) do
-    puts %x(cd ruby19; make)
+    puts %x(make)
   end
   
   # Try again.

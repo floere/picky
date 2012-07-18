@@ -14,5 +14,5 @@ Dir.chdir File.expand_path('..', __FILE__) do
 
   abort 'need ruby.h' unless have_header("ruby.h")
   
-  create_makefile('picky/ext/ruby19/performant')
+  create_makefile('performant')
 end
