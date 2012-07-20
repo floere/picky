@@ -14,13 +14,15 @@ module Picky
                 :prepared,
                 :backend
 
-    # Mandatory params:
+    # Parameters:
     #  * name: Category name to use as identifier and file names.
     #  * index: Index to which this category is attached to.
     #
     # Options:
-    #  * partial: Partial::None.new, Partial::Substring.new(from:start_char, to:up_to_char) (defaults from:-3, to:-1)
-    #  * similarity: Similarity::None.new (default), Similarity::DoubleMetaphone.new(amount_of_similarly_linked_words)
+    #  * partial: Partial::None.new, Partial::Substring.new(from:start_char, to:up_to_char)
+    #  (defaults from:-3, to:-1)
+    #  * similarity: Similarity::None.new (default),
+    #  Similarity::DoubleMetaphone.new(amount_of_similarly_linked_words)
     #  * from: The source category identifier to take the data from.
     #  * key_format: What this category's keys are formatted with (default is :to_i)
     #  * backend: The backend to use. Default is Backends::Memory.new.
@@ -28,10 +30,11 @@ module Picky
     #  * qualifiers: Which qualifiers can be used to predefine the category. E.g. "title:bla".
     #
     # Advanced Options:
-    #  * weight: Query::Weights.new( [:category1, :category2] => +2, ... )
-    #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
-    #  * use_symbols: Whether to use symbols internally instead of strings.
     #  * source: Use if the category should use a different source.
+    #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
+    #  * weight: Weights::Logarithmic.new, Weights::Constant.new(int = 0),
+    #  Weights::Dynamic.new(&block) or an object that responds
+    #  to #weight_for(amount_of_ids_for_token) and returns a float.
     #
     def initialize name, index, options = {}
       @name  = name

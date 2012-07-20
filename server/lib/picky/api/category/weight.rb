@@ -9,6 +9,8 @@ module Picky
 
           if thing.respond_to? :weight_for
             thing
+          elsif thing.respond_to? :to_int
+            Generators::Weights::Logarithmic.new thing
           else
             raise <<-ERROR
 weight options for #{index_name}:#{name} should be either

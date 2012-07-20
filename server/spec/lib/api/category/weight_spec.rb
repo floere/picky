@@ -19,6 +19,14 @@ describe Picky::API::Category::Weight do
         object.extract_weight(nil).should == Picky::Weights::Default
       end
     end
+    context 'with a number' do
+      it 'returns a logarithmic weighter' do
+        object.extract_weight(7.3).should be_kind_of(Picky::Weights::Logarithmic)
+      end
+      it 'returns a logarithmic weighter' do
+        object.extract_weight(3.14).weight_for(10).should == 5.443 # ln(10) + 3.14 = 2.3025 + 3.14
+      end
+    end
     context 'with a weight object' do
       let(:weighter) do
         Class.new do
