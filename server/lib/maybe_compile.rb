@@ -13,9 +13,7 @@ rescue LoadError => e
   
   # Run make.
   #
-  Dir.chdir File.expand_path('..', __FILE__) do
-    puts %x(make)
-  end
+  puts %x(make)
   
   # Try again.
   #

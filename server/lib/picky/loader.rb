@@ -53,7 +53,7 @@ module Picky
       def load_framework_internals
         # Load compiled C code.
         #
-        load_relative '../maybe_compile'
+        require_relative '../performant'
 
         # Load extensions.
         #

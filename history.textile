@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.5.6
+
+* hanke: (server) Fixed runtime compilation.
+
 h2. Version 4.5.5 "swish swish clang clang"
 
 * hanke: (server) Clang can now compile Picky.
