@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.5.7
+
+* hanke: (server) Added category option @weight@. The @weight@ option now takes a number and adds that to the default logarithmic weighing. E.g. @weight: +6@ (very strong positive weight) or @weight: -0.5@ (slightly negative weight). This results in a higher/lower score.
+
 h2. Version 4.5.6
 
 * hanke: (server) Fixed runtime compilation.
