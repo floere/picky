@@ -3,10 +3,10 @@ h2. Upcoming Version
 h2. Version 4.5.8 / 4.5.9 "ruby and its many facets"
 
 * hanke: (server) Experimental simple facets support.
-* hanke: (server) Added @Index#facets(:category_name, minimum_weight = nil)@. Will return keys and weights.
+* hanke: (server) Added @Index#facets(:category_name, options = {})@ with @options@: @more_than@ (a minimum weight a facet needs to have to be included). Will return keys and weights.
 * hanke: (server) Added @Search#facets(:category_name, options = {})@ with @options@: @filter@ (a query to filter with, e.g. @'brand:mammut'@), and @more_than@ (a minimum weight, see above).
 * hanke: Note – if your data is very dirty (ie. many facets that occur only once./), consider using a minimum to speed up the facets query!
-* hanke: Usage – @products.facets :brand_name, filter: 'category:boots', more_than: 0@.
+* hanke: Usage – @products.facets :brand_name, filter: 'category:boots', more_than: 0@ (will return all @brand_name@ facets filtered by @'category:boots'@ that have more weight than @0@).
 
 h2. Version 4.5.7 "bel hevy"
 
