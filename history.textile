@@ -1,6 +1,6 @@
 h2. Upcoming Version
 
-h2. Version 4.5.8
+h2. Version 4.5.8 / 4.5.9 "ruby and its many facets"
 
 * hanke: (server) Experimental simple facets support.
 * hanke: (server) Added @Index#facets(:category_name, minimum_weight = nil)@. Will return keys and weights.
@@ -8,15 +8,11 @@ h2. Version 4.5.8
 * hanke: Note – if your data is very dirty (ie. many facets that occur only once./), consider using a minimum to speed up the facets query!
 * hanke: Usage – @products.facets :brand_name, filter: 'category:boots', more_than: 0@.
 
-h2. Version 4.5.7
+h2. Version 4.5.7 "bel hevy"
 
 * hanke: (server) Added category option @weight@. The @weight@ option now takes a number and adds that to the default logarithmic weighing. E.g. @weight: +6@ (very strong positive weight) or @weight: -0.5@ (slightly negative weight). This results in a higher/lower score.
 
-h2. Version 4.5.6
-
-* hanke: (server) Fixed runtime compilation.
-
-h2. Version 4.5.5 "swish swish clang clang"
+h2. Version 4.5.5 / 4.5.6 "swish swish clang clang"
 
 * hanke: (server) Clang can now compile Picky.
 * hanke: (server) Much better error message in case Picky can't be compiled.
