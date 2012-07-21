@@ -25,10 +25,10 @@ module Picky
       # Note:
       # Use this if you do not want a normalized token.
       #
-      def initialize text, original = nil, category = nil
+      def initialize text, original = nil, categories = nil
         @text     = text
         @original = original
-        @user_defined_categories = [category] if category
+        @user_defined_categories = categories
       end
 
       # Returns a qualified and normalized token.
@@ -214,7 +214,9 @@ module Picky
       def similar_tokens_for category
         similars = category.bundle_for(self).similar @text
         similars.map do |similar|
-          self.class.new similar, similar, category
+          # The array describes all possible categories. There is only one here.
+          #
+          self.class.new similar, similar, [category]
         end
       end
 

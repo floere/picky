@@ -12,7 +12,13 @@ module Picky
     #   # bundle them in an index bundle.
     #
     class Indexes
-
+      
+      # TODO Only needed for .
+      #
+      delegate :size,
+               :first,
+               :to => :@indexes
+      
       attr_reader :indexes,
                   :ignored_categories
 

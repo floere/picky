@@ -243,6 +243,7 @@ module Picky
         load_relative 'index_indexed'
         load_relative 'index_indexing'
         load_relative 'index_realtime'
+        load_relative 'index_facets'
         load_relative 'index_convenience'
 
         # Results.
@@ -253,6 +254,7 @@ module Picky
         # Search.
         #
         load_relative 'search'
+        load_relative 'search_facets'
 
         # Interfaces
         #
