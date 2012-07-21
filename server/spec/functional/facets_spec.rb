@@ -38,10 +38,16 @@ describe 'facets' do
           'kaspar' => 0,
           'florian' => 0
         }
+        
+        # Picky only selects facets with a weight >= the given one.
+        #
+        index.facets(:surname, more_than: 0.5).should == {
+          'hanke' => 0.693
+        }
       end
     end
   
-    describe 'filtered_facets' do
+    describe 'facets' do
       it 'filters them correctly' do
         # Passing in no filter query just returns the facets
         #
@@ -54,7 +60,7 @@ describe 'facets' do
         #
         # TODO Rewrite API.
         #
-        finder.facets(:name, 'surname:hanke').should == {
+        finder.facets(:name, filter: 'surname:hanke').should == {
           'fritz' => 0,
           'florian' => 0
         }
@@ -100,23 +106,35 @@ describe 'facets' do
           'peter' => 1.099,
           'ursula' => 0.0
         }
+        
+        # It has 1 facet with weight > 0.
+        #
+        index.facets(:name, more_than: 0).should == {
+          'peter' => 1.099
+        }
       end
     end
   
-    describe 'filtered_facets' do
+    describe 'facets' do
       it 'filters them correctly' do
         # It has one facet.
         #
         # TODO Fix problems with alternative qualifiers (like :age).
         #
-        finder.facets(:age_category, 'surname:meier name:peter').should == {
+        finder.facets(:age_category, filter: 'surname:meier name:peter').should == {
           '45' => 0
         }
         
         # It has two facets.
         #
-        finder.facets(:surname, 'age_category:40 name:peter').should == {
+        finder.facets(:surname, filter: 'age_category:40 name:peter').should == {
           'kunz' => 0.0,
+          'hanke' => 0.693
+        }
+        
+        # It has 1 facet > weight 0.
+        #
+        finder.facets(:surname, filter: 'age_category:40 name:peter', more_than: 0).should == {
           'hanke' => 0.693
         }
       end

@@ -15,30 +15,43 @@ module Picky
       class Logarithmic < Strategy
         
         def initialize constant = 0.0
-          # Note: Optimisation since it is called
-          # once per indexed object.
-          #
-          if constant == 0.0
-            def weight_for amount
-              return 0 if amount < 1
-              Math.log(amount).round 3
-            end
-          else
-            @constant = constant
-            # Sets the weight value.
-            #
-            # If the size is 0 or one, we would get -Infinity or 0.0.
-            # Thus we do not set a value if there is just one. The default, dynamically, is 0.
-            #
-            # BUT: We need the value, even if 0. To designate that there IS a weight!
-            #
-            def weight_for amount
-              return @constant if amount < 1
-              @constant + Math.log(amount).round(3)
-            end
-          end
+          @constant = constant
+          # # Note: Optimisation since it is called
+          # # once per indexed object.
+          # #
+          # if constant == 0.0
+          #   install_without_constant
+          # else
+          #   @constant = constant
+          #   install_with_constant
+          # end
         end
-
+        
+        def weight_for amount
+          return @constant if amount < 1
+          @constant + Math.log(amount).round(3)
+        end
+        
+        # def install_with_constant
+        #   # Sets the weight value.
+        #   #
+        #   # If the size is 0 or one, we would get -Infinity or 0.0.
+        #   # Thus we do not set a value if there is just one. The default, dynamically, is 0.
+        #   #
+        #   # BUT: We need the value, even if 0. To designate that there IS a weight!
+        #   #
+        #   def weight_for amount
+        #     return @constant if amount < 1
+        #     @constant + Math.log(amount).round(3)
+        #   end
+        # end
+        # def install_without_constant
+        #   def weight_for amount
+        #     return 0 if amount < 1
+        #     Math.log(amount).round 3
+        #   end
+        # end
+        
       end
 
     end
