@@ -213,15 +213,18 @@ module Picky
     #
     # Parameters:
     # * text: The string to tokenize.
+    # * partialize_last: Whether to partialize the last token
+    #
+    # Note: By default, the last token is always partial.
     #
     # Returns:
     # * A Picky::Query::Tokens instance.
     #
-    def tokenized text
+    def tokenized text, partialize_last = true
       tokens, originals = tokenizer.tokenize text
       tokens = Query::Tokens.processed tokens, originals || tokens, @ignore_unassigned
       # tokens.symbolize # TODO Symbols.
-      tokens.partialize_last # Note: In the standard Picky search, the last token is always partial.
+      tokens.partialize_last if partialize_last
       tokens
     end
 

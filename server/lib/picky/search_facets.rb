@@ -28,7 +28,7 @@ module Picky
       
       # Pre-tokenize filter for reuse.
       #
-      tokenized_filter = tokenized filter_query
+      tokenized_filter = tokenized filter_query, false
       
       # Filter out impossible facets.
       #
