@@ -17,10 +17,24 @@ module Picky
     def facets category_identifier, options = {}
       raise "#{__method__} cannot be used on searches with more than 1 index yet. Sorry!" if indexes.size > 1
       index = indexes.first
+      
+      # Get index-specific facet weights.
+      #
       weights = index.facets category_identifier, options
+      
+      # We're done if there is no filter.
+      #
       return weights unless filter_query = options[:filter]
+      
+      # Pre-tokenize filter for reuse.
+      #
+      tokenized_filter = tokenized filter_query
+      
+      # Filter out impossible facets.
+      #
       weights.select do |key, weight|
-        search("#{filter_query} #{category_identifier}:#{key}", 0, 0).total > 0
+        tokenized_query = tokenized "#{category_identifier}:#{key}"
+        search_with(tokenized_filter + tokenized_query, 0, 0).total > 0
       end
     end
 

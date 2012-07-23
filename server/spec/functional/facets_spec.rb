@@ -116,6 +116,11 @@ describe 'facets' do
     end
   
     describe 'facets' do
+      it 'is fast enough' do
+        performance_of {
+          10.times { finder.facets(:age_category, filter: 'surname:meier name:peter') }
+        }.should < 0.0025
+      end
       it 'filters them correctly' do
         # It has one facet.
         #

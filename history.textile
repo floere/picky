@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.5.10 "fastcets"
+
+* hanke: (server) @Search#facets@ performance improved.
+
 h2. Version 4.5.8 / 4.5.9 "ruby and its many facets"
 
 * hanke: (server) Experimental simple facets support.

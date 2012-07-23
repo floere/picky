@@ -8,7 +8,7 @@ module Picky
     #
     class Tokens
 
-      attr_reader :ignore_unassigned
+      attr_reader :tokens, :ignore_unassigned
 
       # Basically delegates to its internal tokens array.
       #
@@ -74,9 +74,19 @@ module Picky
       def originals
         @tokens.map(&:original)
       end
-
+      
+      #
+      #
       def == other
         self.tokens == other.tokens
+      end
+      
+      # Non destructive.
+      #
+      # TODO Make destructive?
+      #
+      def + other
+        self.class.new (@tokens + other.tokens), (self.ignore_unassigned || other.ignore_unassigned)
       end
 
       # Just join the token original texts.

@@ -208,6 +208,23 @@ describe Picky::Query::Tokens do
       @tokens.to_s.should == 'Hello~ I~ Am A* Token~'
     end
   end
+  
+  describe '+' do
+    before(:each) do
+      @tokens = described_class.new [
+        Picky::Query::Token.processed('hello~', 'Hello~'),
+        Picky::Query::Token.processed('i~', 'I~')
+      ]
+      @other = described_class.new [
+        Picky::Query::Token.processed('am', 'Am'),
+        Picky::Query::Token.processed('a*', 'A*'),
+        Picky::Query::Token.processed('token~', 'Token~')
+      ]
+    end
+    it 'should work correctly' do
+      (@tokens + @other).to_s.should == 'Hello~ I~ Am A* Token~'
+    end
+  end
 
   def self.it_should_delegate name
     describe name do
