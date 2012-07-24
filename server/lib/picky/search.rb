@@ -175,6 +175,9 @@ module Picky
     # * ids = 20:   The amount of ids to calculate (with offset).
     # * offset = 0: The offset from which position to return the ids. Useful for pagination.
     #
+    # Options:
+    # * unique: Whether to return unique ids.
+    #
     # Note: The Rack adapter calls this method after unravelling the HTTP request.
     #
     def search text, ids = 20, offset = 0, options = {}
