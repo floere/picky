@@ -3,14 +3,27 @@ module Picky
   class Index
     
     # Return facets for a category in the form:
-    #   { text => weight } # or ids.size?
+    #   { text => count }
+    #
+    # Options
+    #   counts: Whether you want counts or not.
+    #   at_least: A minimum count a facet needs to have (inclusive). 
+    #
+    # TODO Think about having a separate index for counts to reduce the complexity of this.
     #
     def facets category_identifier, options = {}
-      weights = self[category_identifier].exact.weights
-      if minimal_weight = options[:more_than]
-        weights.select { |_, weight| weight > minimal_weight }
-      else
-        weights
+      text_ids = self[category_identifier].exact.inverted
+      no_counts = options[:counts] == false
+      minimal_counts = options[:at_least]
+      text_ids.inject(no_counts ? [] : {}) do |result, text_ids|
+        text, ids = text_ids
+        size = ids.size
+        next result if minimal_counts && size < minimal_counts
+        if no_counts
+          result << text
+        else
+          result[text] = size; result
+        end
       end
     end
 

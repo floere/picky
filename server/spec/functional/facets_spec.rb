@@ -22,38 +22,38 @@ describe 'facets' do
     }
     let(:finder) { Picky::Search.new index }
     
-    describe 'facets' do
+    describe 'Index#facets' do
       it 'is correct' do
-        # Picky has 2 facets with different weights for surname.
+        # Picky has 2 facets with different counts for surname.
         #
         index.facets(:surname).should == {
-          'hanke' => 0.693,
-          'schiess' => 0
+          'hanke' => 2,
+          'schiess' => 1
         }
     
-        # It has 3 facets with the same weight for name.
+        # It has 3 facets with the same count for name.
         #
         index.facets(:name).should == {
-          'fritz' => 0,
-          'kaspar' => 0,
-          'florian' => 0
+          'fritz' => 1,
+          'kaspar' => 1,
+          'florian' => 1
         }
         
-        # Picky only selects facets with a weight >= the given one.
+        # Picky only selects facets with a count >= the given one.
         #
-        index.facets(:surname, more_than: 0.5).should == {
-          'hanke' => 0.693
+        index.facets(:surname, at_least: 2).should == {
+          'hanke' => 2
         }
       end
     end
   
-    describe 'facets' do
+    describe 'Search#facets' do
       it 'filters them correctly' do
         # Passing in no filter query just returns the facets
         #
         finder.facets(:surname).should == {
-          'hanke' => 0.693,
-          'schiess' => 0.0
+          'hanke' => 2,
+          'schiess' => 1
         }
         
         # It has two facets.
@@ -61,8 +61,8 @@ describe 'facets' do
         # TODO Rewrite API.
         #
         finder.facets(:name, filter: 'surname:hanke').should == {
-          'fritz' => 0,
-          'florian' => 0
+          'fritz' => 1,
+          'florian' => 1
         }
       end
     end
@@ -88,61 +88,94 @@ describe 'facets' do
     }
     let(:finder) { Picky::Search.new index }
   
-    describe 'facets' do
-      it 'is correct' do
-        # Picky has 2 facets with different weights for surname.
-        #
+    describe 'Index#facets' do
+      it 'has 2 facets with different counts for surname' do
         index.facets(:surname).should == {
-          'hanke' => 0.693,
-          'kunz' => 0.0,
-          'meier' => 1.099
+          'hanke' => 2,
+          'kunz' => 1,
+          'meier' => 3
         }
-    
-        # It has 3 facets with the same weight for name.
-        #
+      end
+      it 'has 4 facets for the name' do
         index.facets(:name).should == {
-          'annabelle' => 0.0,
-          'hans' => 0.0,
-          'peter' => 1.099,
-          'ursula' => 0.0
+          'annabelle' => 1,
+          'hans' => 1,
+          'peter' => 3,
+          'ursula' => 1
         }
-        
-        # It has 1 facet with weight > 0.
-        #
-        index.facets(:name, more_than: 0).should == {
-          'peter' => 1.099
+      end
+      it 'has 3 facets with the same count for name' do
+        index.facets(:name).should == {
+          'annabelle' => 1,
+          'hans' => 1,
+          'peter' => 3,
+          'ursula' => 1
+        }
+      end
+      it 'has 1 facet with count >= 2' do
+        index.facets(:name, at_least: 2).should == {
+          'peter' => 3
         }
       end
     end
   
-    describe 'facets' do
+    describe 'Search#facets' do
       it 'is fast enough' do
         performance_of {
           10.times { finder.facets(:age_category, filter: 'surname:meier name:peter') }
         }.should < 0.00275
       end
-      it 'filters them correctly' do
-        # It has one facet.
-        #
+      it 'has one filtered facet' do
         # TODO Fix problems with alternative qualifiers (like :age).
         #
         finder.facets(:age_category, filter: 'surname:meier name:peter').should == {
-          '45' => 0
-        }
-        
-        # It has two facets.
-        #
-        finder.facets(:surname, filter: 'age_category:40 name:peter').should == {
-          'kunz' => 0.0,
-          'hanke' => 0.693
-        }
-        
-        # It has 1 facet > weight 0.
-        #
-        finder.facets(:surname, filter: 'age_category:40 name:peter', more_than: 0).should == {
-          'hanke' => 0.693
+          '45' => 1
         }
       end
+      it 'has two filtered facets' do
+        finder.facets(:surname, filter: 'age_category:40 name:peter').should == {
+          'kunz' => 1,
+          'hanke' => 1 # Not 2 since it is filtered.
+        }
+      end
+      it 'has 2 facets >= count 0' do
+        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 1).should == {
+          'kunz' => 1,
+          'hanke' => 1
+        }
+      end
+      it 'has 0 facets >= counts 2' do
+        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 2).should == {}
+      end
     end
+    
+    describe 'Search#facets without counts' do
+      it 'is fast enough' do
+        performance_of {
+          10.times { finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false) }
+        }.should < 0.00275
+      end
+      it 'has one filtered facet' do
+        # TODO Fix problems with alternative qualifiers (like :age).
+        #
+        finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false).should == ['45']
+      end
+      it 'has two filtered facets' do
+        finder.facets(:surname, filter: 'age_category:40 name:peter', counts: false).should == [
+          'kunz',
+          'hanke'
+        ]
+      end
+      it 'has 2 facets >= count 0' do
+        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 1, counts: false).should == [
+          'kunz',
+          'hanke'
+        ]
+      end
+      it 'has 0 facets >= counts 2' do
+        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 2, counts: false).should == []
+      end
+    end
+    
   end
 end

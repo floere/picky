@@ -1,5 +1,11 @@
 h2. Upcoming Version
 
+h2. Version 4.5.12 "counts count more than weights"
+
+* hanke: (server) Facets API now returns counts rather than weights.
+* hanke: (server) Facets API changed option @more_than@ into @at_least@ – give if you need facets with at least a certain count.
+* hanke: (server) Facets API added option @counts@ (@true@/@false@) – @facets@ methods will return a hash with counts if @true@ or not given, ie. @nil@, and an array if @false@.
+
 h2. Version 4.5.11 "partial to facets"
 
 * hanke: (server) @Search#facets@ now does access the partial index, but always the exact index.
