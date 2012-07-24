@@ -33,7 +33,7 @@ module Picky
       # Filter out impossible facets.
       #
       weights.select do |key, weight|
-        tokenized_query = tokenized "#{category_identifier}:#{key}"
+        tokenized_query = tokenized "#{category_identifier}:#{key}", false
         search_with(tokenized_filter + tokenized_query, 0, 0).total > 0
       end
     end
