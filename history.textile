@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.5.11 "partial to facets"
+
+* hanke: (server) @Search#facets@ now does access the partial index, but always the exact index.
+
 h2. Version 4.5.10 "fastcets"
 
 * hanke: (server) @Search#facets@ performance improved.
