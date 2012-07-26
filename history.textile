@@ -1,5 +1,10 @@
 h2. Upcoming Version
 
+h2. Version 4.6.0 "better being prepared than prepared prepared"
+
+* hanke: Important Note: This release changes the file location of the prepared indexes! If you rely on this not changing, you need to adapt your scripts!
+* hanke: (server) Prepared files had a double "prepared" and an unnecessary "index" in the file name. They do not anymore. For example, @prepared_keywords_index.prepared.txt@ has changed to @keywords.prepared.txt@, the tokenized index for the keywords category.
+
 h2. Version 4.5.12 "counts count more than weights"
 
 * hanke: (server) Facets API now returns counts rather than weights.
