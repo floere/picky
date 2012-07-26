@@ -126,7 +126,7 @@ module Picky
     # Path and partial filename of the prepared index on this category.
     #
     def prepared_index_path
-      @prepared_index_path ||= "#{index_directory}/prepared_#{name}_index"
+      @prepared_index_path ||= ::File.join(index_directory, name.to_s)
     end
     # Get an opened index file.
     #
@@ -140,7 +140,7 @@ module Picky
     # The index directory for this category.
     #
     def index_directory
-      @index_directory ||= "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/#{@index.name}"
+      @index_directory ||= ::File.join(PICKY_ROOT, 'index', PICKY_ENVIRONMENT, @index.name.to_s)
     end
 
     # Identifier for technical output.
