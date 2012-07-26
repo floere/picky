@@ -50,7 +50,6 @@ module Picky
         else
           result[key] = total; result
         end
-        result
       end
     end
 
