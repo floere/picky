@@ -38,8 +38,6 @@ module Picky
       
       # Get actual counts.
       #
-      # TODO Rewrite.
-      #
       counts.inject(no_counts ? [] : {}) do |result, key_count|
         key, _ = key_count
         tokenized_query = tokenized "#{category_identifier}:#{key}", false
