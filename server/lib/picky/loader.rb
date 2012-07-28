@@ -53,7 +53,10 @@ module Picky
       def load_framework_internals
         # Load compiled C code.
         #
-        require_relative '../performant'
+        # Note: Picky already tries to compile
+        # when installing the gem.
+        #
+        require_relative '../maybe_compile'
 
         # Load extensions.
         #

@@ -1,22 +1,22 @@
-# TODO Decide what to do with this.
-#
-
-# Note: This is handled toplevel to not confuse compilers.
+# Note: This is handled toplevel (in the file
+# structure) to not confuse compilers.
 #
 failed = 0
 
 begin
-  require File.expand_path '../performant', __FILE__
+  require ::File.expand_path '../performant', __FILE__
 rescue LoadError => e
   failed += 1
   
   # Have Makefile built.
   #
-  require File.expand_path '../extconf', __FILE__
+  require ::File.expand_path '../extconf', __FILE__
   
-  # Run make.
+  # Run make in the right gem directory.
   #
-  puts %x(make)
+  Dir.chdir(::File.expand_path '..', __FILE__) do
+    puts %x(make)
+  end
   
   # Try again.
   #
