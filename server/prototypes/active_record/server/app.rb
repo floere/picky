@@ -19,7 +19,7 @@ class ExternalDataSearch < Sinatra::Base
     category :name
     category :surname
   end
-  post %r{\A/update\z} do # TODO Make this a PUT.
+  post %r{\A/update\z} do # PUT?
     hash = JSON.parse params['data']
     data.replace_from hash
     puts "UPDATING from #{hash}"
