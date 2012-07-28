@@ -7,14 +7,18 @@ describe Picky::Tokenizer do
     it 'works correctly' do
       tokenizer = described_class.new(split_words_on: /\&/, normalizes_words: [[/\&/, 'and']])
       
-      # TODO Is this really correct? Shouldn't we split after normalizing? 
+      # Is this really correct? Shouldn't we split after normalizing? 
+      #
+      # Yes – we split using more information.
       #
       tokenizer.tokenize('M & M').should == [['m', 'and', 'm'], ['m', 'and', 'm']]
     end
     it 'works correctly' do
       tokenizer = described_class.new(stopwords: /\b(and)\b/, normalizes_words: [[/\&/, 'and']])
       
-      # TODO Is this really correct? Shouldn't we stop words after normalizing? 
+      # Is this really correct? Shouldn't we stop words after normalizing? 
+      #
+      # Yes – we do stopwords using more information.
       #
       tokenizer.tokenize('M & M').should == [['m', 'and', 'm'], ['m', 'and', 'm']]
     end

@@ -58,8 +58,6 @@ describe 'facets' do
         
         # It has two facets.
         #
-        # TODO Rewrite API.
-        #
         finder.facets(:name, filter: 'surname:hanke').should == {
           'fritz' => 1,
           'florian' => 1
