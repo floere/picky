@@ -13,8 +13,6 @@ module Picky
     #
     class Indexes
       
-      # TODO Only needed for .
-      #
       delegate :size,
                :first,
                :to => :@indexes
@@ -32,7 +30,7 @@ module Picky
 
         @indexes = indexes
         
-        @mapper = QualifierCategoryMapper.new indexes # TODO Move out?
+        @mapper = QualifierCategoryMapper.new indexes # TODO Move out ... or into indexes?
       end
 
       # Ignore the categories with these qualifiers.
