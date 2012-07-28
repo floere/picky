@@ -1,11 +1,7 @@
 # This tests if we are using MacRuby.
 # If yes, it checks if we already have require_relative.
 #
-# TODO Remove (too verbose) message as soon as it is final.
-#
 if RUBY_ENGINE == 'macruby' && !Kernel.respond_to?(:require_relative)
-  
-  puts "Installing Picky specific MacRuby extensions."
   
   module Kernel
     
