@@ -64,6 +64,17 @@ describe 'facets' do
           'fritz' => 1,
           'florian' => 1
         }
+        
+        # It only uses exact matches (ie. the last token is not partialized).
+        #
+        finder.facets(:name, filter: 'surname:hank').should == {}
+        
+        # It allows explicit partial matches.
+        #
+        finder.facets(:name, filter: 'surname:hank*').should == {
+          'fritz' => 1,
+          'florian' => 1
+        }
       end
     end
   end
@@ -138,7 +149,7 @@ describe 'facets' do
           'hanke' => 1 # Not 2 since it is filtered.
         }
       end
-      it 'has 2 facets >= count 0' do
+      it 'has 2 facets >= count 1' do
         finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 1).should == {
           'kunz' => 1,
           'hanke' => 1
@@ -166,7 +177,7 @@ describe 'facets' do
           'hanke'
         ]
       end
-      it 'has 2 facets >= count 0' do
+      it 'has 2 facets >= count 1' do
         finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 1, counts: false).should == [
           'kunz',
           'hanke'
