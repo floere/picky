@@ -178,11 +178,11 @@ definitions.each do |definition, description|
 
     Indexes.each do |data|
 
-      # TODO Uncomment: data.prepare if backend == backends.first
+      data.prepare if backend == backends.first
 
       data.backend backend
       data.clear
-      # TODO Uncomment: data.cache
+      data.cache
       data.load
 
       amount = 50
