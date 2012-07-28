@@ -43,8 +43,7 @@ module Picky
 
     # Delegates to allocations.
     #
-    # TODO Remove parameter in 5.0 and just call
-    # the method with amount.
+    # TODO Remove parameter in 5.0 and just call the method with amount.
     #
     # Note that this is an expensive call and
     # should not be done repeatedly. Just keep
