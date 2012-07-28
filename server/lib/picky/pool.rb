@@ -6,22 +6,29 @@ module Picky
   module Pool
     
     class << self
-      require 'set'
-      @@pools = Set.new
+      
+      def clear
+        require 'set'
+        @pools = Set.new
+      end
       
       # Add a Pool to the managed pools.
       #
       def add klass
-        @@pools << klass
+        @pools << klass
       end
       
       # Releases all obtained objects.
       #
       def release_all
-        @@pools.each { |pool| pool.release_all }
+        @pools.each { |pool| pool.release_all }
       end
       
     end
+    
+    # Reset the pool.
+    #
+    self.clear
     
     def self.extended klass
       add klass
