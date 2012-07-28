@@ -107,7 +107,7 @@ describe Picky::Categories do
       context 'without preselected categories' do
         context 'user defined exists' do
           before(:each) do
-            @token = stub :token, :user_defined_categories => [@category2]
+            @token = stub :token, :predefined_categories => [@category2]
           end
           context 'combination exists' do
             before(:each) do
@@ -139,7 +139,7 @@ describe Picky::Categories do
     describe 'possible_categories' do
       context 'user defined exists' do
         before(:each) do
-          @token = stub :token, :user_defined_categories => [@category2]
+          @token = stub :token, :predefined_categories => [@category2]
         end
         it 'should return the right categories' do
           @categories.possible_categories(@token).should == [@category2]
@@ -147,7 +147,7 @@ describe Picky::Categories do
       end
       context 'user defined does not exist' do
         before(:each) do
-          @token = stub :token, :user_defined_categories => nil
+          @token = stub :token, :predefined_categories => nil
         end
         it 'should return all categories' do
           @categories.possible_categories(@token).should == [@category1, @category2, @category3]

@@ -13,7 +13,7 @@ module Picky
 
       attr_reader :text, :original
       attr_writer :similar
-      attr_accessor :user_defined_categories
+      attr_accessor :predefined_categories
 
       # TODO Do not check on blank, but empty?
       #
@@ -28,7 +28,7 @@ module Picky
       def initialize text, original = nil, categories = nil
         @text     = text
         @original = original
-        @user_defined_categories = categories
+        @predefined_categories = categories
       end
 
       # Returns a qualified and normalized token.
@@ -62,10 +62,8 @@ module Picky
       # Note: If this is not done, there is no mapping.
       # Note: predefined is an Array of mapped categories.
       #
-      # TODO Rename @user_defined_categories. It could now also be predefined by the query.
-      #
       def categorize mapper
-        @user_defined_categories ||= extract_predefined mapper
+        @predefined_categories ||= extract_predefined mapper
       end
       def extract_predefined mapper
         user_qualified = categorize_with mapper, @qualifiers

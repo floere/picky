@@ -62,7 +62,7 @@ module Picky
     # Note: Once I thought this was called too often. But it is not (18.01.2011).
     #
     def possible_categories token
-      token.user_defined_categories || categories
+      token.predefined_categories || categories
     end
 
   end
