@@ -32,23 +32,13 @@ module Picky
       # Asks the backend for the total score and
       # adds the boosts to it.
       #
-      # TODO THINK Can the combinations be empty?
-      #
       def calculate_score weights
-        # if @combinations.empty?
-        #           0
-        #         else
-        
-        @score ||= @backend.weight(@combinations) +
-                     @combinations.boost_for(weights)
+        @score ||= @backend.weight(@combinations) + @combinations.boost_for(weights)
       end
 
       # Asks the backend for the (intersected) ids.
       #
-      # TODO THINK Can the combinations be empty?
-      #
       def calculate_ids amount, offset
-        # return [] if @combinations.empty?
         @backend.ids @combinations, amount, offset
       end
 
