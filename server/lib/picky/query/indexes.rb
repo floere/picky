@@ -30,7 +30,7 @@ module Picky
 
         @indexes = indexes
         
-        @mapper = QualifierCategoryMapper.new indexes # TODO Move out?
+        @mapper = QualifierCategoryMapper.new indexes # TODO Move into search?
       end
 
       # Ignore the categories with these qualifiers.
@@ -66,22 +66,22 @@ module Picky
       def prepared_allocations_for tokens, weights = {}, amount = nil
         allocations = allocations_for tokens
 
-        # Removed: Remove potential double allocations.
-        #
-        # Note: Code removed. Allocations are unique by definition.
-        #
-        # allocations.uniq! unless tokens.uniq?
-
         # Score the allocations using weights as bias.
+        #
+        # Note: Before we can sort them we need to score them.
         #
         allocations.calculate_score weights
 
         # Sort the allocations.
         # (allocations are sorted according to score, highest to lowest)
         #
+        # Before we can chop off unimportant allocations, we need to sort them.
+        #
         allocations.sort!
 
         # Reduce the amount of allocations.
+        #
+        # Before we remove categories, we should reduce the amount of allocations.
         #
         allocations.reduce_to amount if amount
 
