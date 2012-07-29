@@ -141,7 +141,7 @@ module Picky
       end
     end
 
-    # TODO Symbols.
+    # SYMBOLS.
     #
     # # API method.
     # #

@@ -81,9 +81,7 @@ module Picky
         self.tokens == other.tokens
       end
       
-      # Non destructive.
-      #
-      # TODO Make destructive?
+      # Non-destructive addition.
       #
       def + other
         self.class.new (@tokens + other.tokens), (self.ignore_unassigned || other.ignore_unassigned)

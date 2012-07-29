@@ -212,14 +212,16 @@ describe Picky::Query::Allocation do
         @allocation.calculate_score(:some_boosts).should == 3
       end
     end
-    context 'empty combinations' do
-      before(:each) do
-        @combinations.stub! :empty? => true
-      end
-      it 'should just be zero' do
-        @allocation.calculate_score(:some_weights).should == 0
-      end
-    end
+    # TODO Remove.
+    #
+    # context 'empty combinations' do
+    #   before(:each) do
+    #     @combinations.stub! :empty? => true
+    #   end
+    #   it 'should just be zero' do
+    #     @allocation.calculate_score(:some_weights).should == 0
+    #   end
+    # end
   end
 
   describe "<=>" do

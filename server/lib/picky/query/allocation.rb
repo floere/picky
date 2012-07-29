@@ -35,12 +35,12 @@ module Picky
       # TODO THINK Can the combinations be empty?
       #
       def calculate_score weights
-        @score ||= if @combinations.empty?
-          0
-        else
-          @backend.weight(@combinations) +
-            @combinations.boost_for(weights)
-        end
+        # if @combinations.empty?
+        #           0
+        #         else
+        
+        @score ||= @backend.weight(@combinations) +
+                     @combinations.boost_for(weights)
       end
 
       # Asks the backend for the (intersected) ids.
@@ -48,7 +48,7 @@ module Picky
       # TODO THINK Can the combinations be empty?
       #
       def calculate_ids amount, offset
-        return [] if @combinations.empty?
+        # return [] if @combinations.empty?
         @backend.ids @combinations, amount, offset
       end
 

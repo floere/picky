@@ -104,14 +104,12 @@ module Picky
       #
       # Note: Slower than #process! especially with large offsets.
       #
-      # TODO Remove duplicate code.
-      #
       def process_unique! amount, offset = 0, terminate_early = nil
         unique_ids = []
         each do |allocation|
           calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids
           projected_offset = offset - allocation.count
-          unique_ids += calculated_ids # TODO uniq this?
+          unique_ids += calculated_ids # uniq this? <- No, slower than just leaving duplicates.
           if projected_offset <= 0
             allocation.ids.slice!(0, offset)
           end

@@ -30,7 +30,7 @@ module Picky
 
         @indexes = indexes
         
-        @mapper = QualifierCategoryMapper.new indexes # TODO Move out ... or into indexes?
+        @mapper = QualifierCategoryMapper.new indexes # TODO Move out?
       end
 
       # Ignore the categories with these qualifiers.
@@ -68,7 +68,7 @@ module Picky
 
         # Removed: Remove potential double allocations.
         #
-        # Note: allocations are unique by definition.
+        # Note: Code removed. Allocations are unique by definition.
         #
         # allocations.uniq! unless tokens.uniq?
 

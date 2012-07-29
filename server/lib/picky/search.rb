@@ -35,7 +35,7 @@ module Picky
     #   search = Search.new(index1, index2, index3) do
     #     searching removes_characters: /[^a-z]/ # etc.
     #     boosts [:author, :title] => +3,
-    #             [:title, :isbn] => +1
+    #            [:title, :isbn] => +1
     #   end
     #
     def initialize *indexes
@@ -226,7 +226,7 @@ module Picky
     def tokenized text, partialize_last = true
       tokens, originals = tokenizer.tokenize text
       tokens = Query::Tokens.processed tokens, originals || tokens, @ignore_unassigned
-      # tokens.symbolize # TODO Symbols.
+      # tokens.symbolize # SYMBOLS.
       tokens.partialize_last if partialize_last
       tokens
     end

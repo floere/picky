@@ -51,7 +51,7 @@ module Picky
 
       @qualifiers = extract_qualifiers_from options
 
-      # @symbols    = options[:use_symbols] || index.use_symbols? # TODO Symbols.
+      # @symbols    = options[:use_symbols] || index.use_symbols? # SYMBOLS.
 
       weights    = extract_weight options[:weight]
       partial    = extract_partial options[:partial]

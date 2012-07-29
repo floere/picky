@@ -44,8 +44,6 @@ module Picky
         # Obtain creates a new reference if there is no free one
         # and uses an existing one if there is.
         #
-        # (Any caches should be cleared using clear TODO in all initializers)
-        #
         def obtain *args, &block
           unless reference = @__free__.shift
             reference = allocate
@@ -60,7 +58,10 @@ module Picky
         #
         def release instance
            @__free__ << instance
-           @__used__.delete instance # TODO Optimize
+           
+           # Note: This is relatively fast as there are often only
+           # few instances in the used pool.
+           @__used__.delete instance 
         end
       
         # After you have called release all, you can't
@@ -68,7 +69,7 @@ module Picky
         # anymore.
         #
         def release_all
-          @__used__.each { |used| @__free__ << used } # TODO Optimize
+          @__free__ += @__used__
           @__used__.clear
         end
       

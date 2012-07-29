@@ -17,7 +17,7 @@ module Picky
         # Loads the index hash from json format.
         #
         def load
-          MultiJson.decode ::File.open(cache_path, 'r') # , symbolize_keys: true # TODO Symbols.
+          MultiJson.decode ::File.open(cache_path, 'r') # , symbolize_keys: true # SYMBOLS.
         end
 
         # Dumps the index internal backend in json format.

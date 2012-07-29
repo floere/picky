@@ -20,7 +20,7 @@ module Picky
           float
         end
 
-        # TODO Symbols. Use a block here?
+        # SYMBOLS. Use a block here?
         #
         # THINK Move the calculation elsewhere?
         #
@@ -28,7 +28,7 @@ module Picky
           @bundle.ids calculate(float_str.to_f).to_s
         end
 
-        # TODO Symbols.
+        # SYMBOLS.
         #
         # THINK Move the calculation elsewhere?
         #
