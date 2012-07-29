@@ -1,5 +1,9 @@
 h2. Upcoming Version
 
+h2. Version 4.6.1 "small change"
+
+* hanke: Many small internal improvements.
+
 h2. Version 4.6.0 "better being prepared than prepared prepared"
 
 * hanke: Important Note: This release changes the file location of the prepared indexes! If you rely on this not changing, you need to adapt your scripts!
