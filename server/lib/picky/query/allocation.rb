@@ -23,7 +23,7 @@ module Picky
       def initialize index, combinations
         @combinations = combinations
 
-        # TODO Could this be rewritten?
+        # THINK Could this be rewritten?
         #
         @result_identifier = index.result_identifier
         @backend           = index.backend

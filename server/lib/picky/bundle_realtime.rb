@@ -20,7 +20,10 @@ module Picky
           @weights.delete  str_or_sym
 
           # Since no element uses this sym anymore, we can delete the similarity for it.
+          #
           # TODO Not really. Since multiple syms can point to the same encoded.
+          # In essence, we don't know if and when we can remove it.
+          # (One idea is to add an array of ids and remove from that)
           #
           @similarity.delete self.similarity_strategy.encode(str_or_sym)
         else
@@ -92,9 +95,8 @@ module Picky
 
     # Builds the realtime mapping.
     #
-    # Note: Experimental feature. Might be removed in 4.0.
+    # Note: Experimental feature. Might be removed in 5.0.
     #
-    # TODO Subset of #add. Rewrite, optimize.
     # THINK Maybe load it and just replace the arrays with the corresponding ones.
     #
     def build_realtime
