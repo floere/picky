@@ -55,7 +55,7 @@ inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_of_arra
 
   // Conversions & presorting.
   //
-  rb_array_of_arrays = rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
+  rb_array_of_arrays = (struct RArray*) rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
   smallest_array     = (VALUE) RARRAY(rb_ary_dup(RARRAY_PTR(rb_array_of_arrays)[0]));
 
   // Iterate through all arrays.
