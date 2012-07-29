@@ -32,13 +32,26 @@ module Picky
       # Asks the backend for the total score and
       # adds the boosts to it.
       #
+      # Note: Combinations can be empty on eg.
+      # query "alan history" and category :title is
+      # ignored (ie. removed).
+      #
       def calculate_score weights
-        @score ||= @backend.weight(@combinations) + @combinations.boost_for(weights)
+        @score ||= if @combinations.empty?                                                                                                     
+          0 # Optimization.
+        else                                                                                                                                   
+          @backend.weight(@combinations) + @combinations.boost_for(weights)                                                                                                   
+        end 
       end
 
       # Asks the backend for the (intersected) ids.
       #
+      # Note: Combinations can be empty on eg.
+      # query "alan history" and category :title is
+      # ignored (ie. removed).
+      #
       def calculate_ids amount, offset
+        return [] if @combinations.empty? # Checked here to avoid checking in each backend.
         @backend.ids @combinations, amount, offset
       end
 
