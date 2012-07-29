@@ -225,7 +225,7 @@ rescue Exception => e
   puts e.backtrace
 ensure
   puts "Press enter to kill (Break and have mercy with Ctrl-C)"
-  gets
+  gets() # () to not take ARGV
 
   kill_server
   kill_client
