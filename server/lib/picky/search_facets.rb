@@ -38,8 +38,7 @@ module Picky
       
       # Get actual counts.
       #
-      counts.inject(no_counts ? [] : {}) do |result, key_count|
-        key, _ = key_count
+      counts.inject(no_counts ? [] : {}) do |result, (key, _)|
         tokenized_query = tokenized "#{category_identifier}:#{key}", false
         total = search_with(tokenized_filter + tokenized_query, 0, 0).total
         next result unless total >= minimal_counts
