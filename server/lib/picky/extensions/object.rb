@@ -1,7 +1,5 @@
 class Object
   
-  # TODO Remove.
-  
   # Puts a text in the form:
   #   12:34:56: text here
   #

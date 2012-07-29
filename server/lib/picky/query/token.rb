@@ -14,12 +14,9 @@ module Picky
       attr_reader :text, :original
       attr_writer :similar
       attr_accessor :predefined_categories
-
-      # TODO Do not check on blank, but empty?
-      #
-      delegate :blank?,
-               :to => :text
-
+      
+      delegate :blank?, :to => :@text
+      
       # Normal initializer.
       #
       # Note:
@@ -194,7 +191,9 @@ module Picky
       # Normalizes this token's text.
       #
       def remove_illegals
-        @text.gsub! @@illegals, EMPTY_STRING unless @text.blank?
+        # Note: unless @text.blank? was removed.
+        #
+        @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
       def self.redefine_illegals
         @@illegals = %r{[#{@@no_similar_character}#{@@partial_character}#{@@similar_character}]}
@@ -224,11 +223,11 @@ module Picky
       @@qualifiers_delimiter     = ','
       def qualify
         @qualifiers, @text = (@text || EMPTY_STRING).split(@@qualifier_text_delimiter, 2)
-        if @text.blank?
+        if @text
+          @qualifiers = @qualifiers.split @@qualifiers_delimiter
+        else
           @text = @qualifiers || EMPTY_STRING
           @qualifiers = nil
-        else
-          @qualifiers = @qualifiers.split @@qualifiers_delimiter
         end
       end
       # Define a character which separates the qualifier

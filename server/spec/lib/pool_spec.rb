@@ -25,6 +25,7 @@ describe Picky::Pool do
   
   context 'functional' do
     before(:each) do
+      described_class.clear
       PoolTest.clear
       OtherPoolTest.clear
     end
