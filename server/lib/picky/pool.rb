@@ -7,12 +7,30 @@ module Picky
     
     class << self
       
+      # Installs itself on a few internal classes.
+      #
+      # Note: If you need to run two consecutive queries,
+      # this can't be used.
+      #
+      # TODO Also install calling release_all after each query.
+      #
+      def install
+        Query::Token.extend self
+        Query::Tokens.extend self
+        Query::Combination.extend self
+        Query::Combinations.extend self
+        Query::Allocation.extend self
+        Query::Allocations.extend self
+      end
+      
+      # Initialise/Reset the pool.
+      #
       def clear
         require 'set'
         @pools = Set.new
       end
       
-      # Add a Pool to the managed pools.
+      # Add a pooled class to the managed pools.
       #
       def add klass
         @pools << klass
@@ -34,7 +52,8 @@ module Picky
       add klass
       
       class << klass
-        #
+        
+        # Initialise/Reset the class pool.
         #
         def clear
           @__free__ = []
@@ -44,7 +63,7 @@ module Picky
         # Obtain creates a new reference if there is no free one
         # and uses an existing one if there is.
         #
-        def obtain *args, &block
+        def new *args, &block
           unless reference = @__free__.shift
             reference = allocate
           end

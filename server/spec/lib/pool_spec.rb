@@ -30,40 +30,40 @@ describe Picky::Pool do
       OtherPoolTest.clear
     end
     it 'lets me get an instance' do
-      PoolTest.obtain(1).should be_kind_of(PoolTest)
+      PoolTest.new(1).should be_kind_of(PoolTest)
     end
     it 'does not create a new reference if it has free ones' do
-      pt1 = PoolTest.obtain 1
-      pt2 = PoolTest.obtain 2
+      pt1 = PoolTest.new 1
+      pt2 = PoolTest.new 2
       pt1.release
       
       PoolTest.free_size.should == 1
     end
-    it 'gives me the released reference if I try to obtain' do
-      pt1 = PoolTest.obtain 1
-      pt2 = PoolTest.obtain 2
+    it 'gives me the released reference if I try to new' do
+      pt1 = PoolTest.new 1
+      pt2 = PoolTest.new 2
       pt1.release
       
-      PoolTest.obtain(3).number.should == 3
+      PoolTest.new(3).number.should == 3
     end
     it 'releases all PoolTests if called on PoolTest' do
-      pt1 = PoolTest.obtain 1
-      PoolTest.obtain 2
-      OtherPoolTest.obtain 1
-      OtherPoolTest.obtain 2
+      pt1 = PoolTest.new 1
+      PoolTest.new 2
+      OtherPoolTest.new 1
+      OtherPoolTest.new 2
       
       OtherPoolTest.free_size.should == 0 
       
       PoolTest.release_all
       
-      PoolTest.obtain(3).should == pt1
+      PoolTest.new(3).should == pt1
       OtherPoolTest.free_size.should == 0
     end
     it 'releases all if called on Pool' do
-      PoolTest.obtain 1
-      PoolTest.obtain 2
-      OtherPoolTest.obtain 1
-      OtherPoolTest.obtain 2
+      PoolTest.new 1
+      PoolTest.new 2
+      OtherPoolTest.new 1
+      OtherPoolTest.new 2
       
       PoolTest.free_size.should == 0
       
