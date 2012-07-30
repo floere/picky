@@ -40,8 +40,8 @@
 - Experimental simple facets support.
 - Added `Index#facets(:category_name, options = {})` with `options`: `more_than` (a minimum weight a facet needs to have to be included). Will return keys and weights.
 - Added `Search#facets(:category_name, options = {})` with `options`: `filter` (a query to filter with, e.g. `'brand:mammut'`), and `more_than` (a minimum weight, see above).
-* hanke: Note – if your data is very dirty (ie. many facets that occur only once./), consider using a minimum to speed up the facets query!
-* hanke: Usage – `products.facets :brand_name, filter: 'category:boots', more_than: 0` (will return all `brand_name` facets filtered by `'category:boots'` that have more weight than `0`).
+- Note – if your data is very dirty (ie. many facets that occur only once./), consider using a minimum to speed up the facets query!
+- Usage – `products.facets :brand_name, filter: 'category:boots', more_than: 0` (will return all `brand_name` facets filtered by `'category:boots'` that have more weight than `0`).
 
 ## 4.5.7 "bel hevy"
 
@@ -208,7 +208,7 @@ Then you can search like so:
 
 ## 4.0.7 "supermodel"
 
-* hanke: Experimental ActiveRecord 3.0+ integration release. See below.
+- Experimental ActiveRecord 3.0+ integration release. See below.
 
 ###### Client
 
@@ -251,7 +251,7 @@ Then you can search like so:
 
 ## 4.0.0 "singing in the rain"
 
-* hanke: No changes from 4.0.0pre7.
+- No changes from 4.0.0pre7.
 
 ## 4.0.0pre7
 
@@ -431,7 +431,7 @@ This release includes BREAKING changes. See below.
 
 ###### Server
 
-* hanke: This version tries to reduce maintenance complexity and prepare for 4.0.
+- This version tries to reduce maintenance complexity and prepare for 4.0.
 - BREAKING In your code, rename any occurrences of `Indexes.reload`, `Indexes#reload`, `Index#reload`, `Category#reload` with an equivalent `load` method.
 - Renamed `load_from_cache` with `load` on `Indexes`, `Index`, `Category`.
 - Removed `rake check` and related methods with no replacement. Please tell us if you miss it.
@@ -567,14 +567,14 @@ This release includes BREAKING changes. See below.
 ###### Server
 
 - See last release. This release adds support for similarity searches on a realtime index.
-* Please only use realtime indexing for experimental purposes.
+- Please only use realtime indexing for experimental purposes.
 
 ## 3.1.10
 
 ###### Server
 
 - This release holds an *experimental* release of realtime indexing for 3.2: An index now supports `#add(object_responding_to_id_and_categories)`, `#remove(id_of_added_object)`, `#replace(object_responding_to_id_and_categories)`. Replace is simply remove+add. Replacing a non-existent object behaves like an add. I suggest using solely `replace`. Notes: Only works in single-process, single-threaded servers. Does not persist. Only yet works when starting from an empty index, e.g. `source []`.
-* Please only use realtime indexing for experimental purposes.
+- Please only use realtime indexing for experimental purposes.
 
 ## 3.1.9
 
@@ -664,7 +664,7 @@ This release includes BREAKING changes. See below. (Here we start with this styl
 ###### Server
 
 - BREAKING Removed `Results#to_log`. `Results#to_s` returns a log worthy string now.
-* See changes in pre versions for complete changelog on 3.0.
+- See changes in pre versions for complete changelog on 3.0.
 
 ## 3.0.0.pre5
 
@@ -872,7 +872,7 @@ This release includes BREAKING changes. See below. (Here we start with this styl
 
 ## 2.0.0
 
-* hanke: Let's go live, wohoo! :) See the prerelease history notes for all changes.
+- Let's go live, wohoo! :) See the prerelease history notes for all changes.
 
 ## 2.0.0.pre3
 
@@ -887,11 +887,11 @@ This release includes BREAKING changes. See below. (Here we start with this styl
 ###### Client
 
 - Asterisks are correctly escaped before saved in the browser history.
-* you: Give feedback, thanks! :)
+- you: Give feedback, thanks! :)
 
 ## 2.0.0.pre1
 
-* hanke: New major version number – see reasons for API change: [http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html](http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html).
+- New major version number – see reasons for API change: [http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html](http://florianhanke.com/blog/2011/03/16/pickys-adolescence.html).
 
 ###### Server
 
@@ -1111,8 +1111,8 @@ This release includes BREAKING changes. See below. (Here we start with this styl
 
 ## 1.0.0
 
-* hanke: Lots of [API RDoc](http://floere.github.com/picky/doc/index.html).
-* hanke: Yaaaay! Finally :)
+- Lots of [API RDoc](http://floere.github.com/picky/doc/index.html).
+- Yaaaay! Finally :)
 
 ## 0.12.3 (1.0.0 pre4)
 
