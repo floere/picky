@@ -216,7 +216,7 @@ module Picky
     #
     # Parameters:
     # * text: The string to tokenize.
-    # * partialize_last: Whether to partialize the last token
+    # * partialize_last: Whether to partialize the last token.
     #
     # Note: By default, the last token is always partial.
     #
