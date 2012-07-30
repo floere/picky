@@ -9,7 +9,7 @@ describe 'facets' do
   describe 'simple example' do
     let(:index) {
       index = Picky::Index.new :facets do
-        category :name
+        category :name, partial: Picky::Partial::Substring.new(from: 1)
         category :surname
       end
 
@@ -66,6 +66,13 @@ describe 'facets' do
         # It only uses exact matches (ie. the last token is not partialized).
         #
         finder.facets(:name, filter: 'surname:hank').should == {}
+        
+        # It allows explicit partial matches.
+        #
+        finder.facets(:name, filter: 'surname:hank*').should == {
+          'fritz' => 1,
+          'florian' => 1
+        }
         
         # It allows explicit partial matches.
         #
