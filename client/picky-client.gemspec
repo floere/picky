@@ -21,6 +21,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*_spec.rb"]
   s.extra_rdoc_files = ['README.rdoc']
 
-  s.add_dependency('yajl-ruby', '>= 0.7.8')
-  s.add_dependency('activesupport', '>=3.0.0')
+  s.add_runtime_dependency 'yajl-ruby' # We suggest to use Yajl.
+  s.add_runtime_dependency 'activesupport', '~> 3'
 end

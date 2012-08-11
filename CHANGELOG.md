@@ -1,5 +1,9 @@
 ## Upcoming Version
 
+## 4.6.2 "actively support activesupport"
+
+- Also allow activesupport 4 (Note: Untested, assuming semantics didn't change and version change is Rails related).
+
 ## 4.6.1 "small change"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)

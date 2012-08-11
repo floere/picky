@@ -20,7 +20,7 @@ gem 'multi_json'
 # Optional.
 #
 gem 'yajl-ruby', :require => 'yajl'
-gem 'activerecord', '~> 3.0', :require => 'active_record'
+gem 'activerecord', '~> 3', :require => 'active_record'
 
 # Required by your project.
 #

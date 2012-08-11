@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'text'
   s.add_runtime_dependency 'multi_json'
-  s.add_runtime_dependency 'activesupport', '~> 3.0'
+  s.add_runtime_dependency 'activesupport', '~> 3'
   s.add_runtime_dependency 'procrastinate', '~> 0.4'
   s.add_runtime_dependency 'rack_fast_escape'
 
@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   # s.add_runtime_dependency 'sinatra'
   # s.add_runtime_dependency 'rack'
   # s.add_runtime_dependency 'yajl-ruby' # As JSON lib we suggest to use yajl.
-  # s.add_runtime_dependency 'activerecord', '~> 3.0'
+  # s.add_runtime_dependency 'activerecord', '~> 3'
   # s.add_runtime_dependency 'redis'
   # s.add_runtime_dependency 'mysql'
   # s.add_runtime_dependency 'sqlite3'
