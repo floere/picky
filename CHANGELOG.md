@@ -1,5 +1,9 @@
 ## Upcoming Version
 
+## 4.6.3 "spermy operation"
+
+- The spermy operator (~>) in the gemspec is not consistent over all version granularities.
+
 ## 4.6.2 "actively support activesupport"
 
 - Also allow activesupport 4 (Note: Untested, assuming semantics didn't change and version change is Rails related).

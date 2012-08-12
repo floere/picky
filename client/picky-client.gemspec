@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc']
 
   s.add_runtime_dependency 'yajl-ruby' # We suggest to use Yajl.
-  s.add_runtime_dependency 'activesupport', '~> 3'
+  s.add_runtime_dependency 'activesupport', '>= 3.0'
 end
