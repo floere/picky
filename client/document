@@ -1,2 +1,2 @@
-rm -r ../../picky.pagez/doc/client
-sdoc --main lib/picky-client/client.rb -o ../../picky.pagez/doc/client -x spec\.rb lib
+rm -r ../../picky.gh-pages/doc/client
+sdoc --main lib/picky-client/client.rb -o ../../picky.gh-pages/doc/client -x spec\.rb lib
