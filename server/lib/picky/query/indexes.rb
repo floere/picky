@@ -30,7 +30,18 @@ module Picky
 
         @indexes = indexes
         
-        @mapper = QualifierCategoryMapper.new indexes # TODO Move into search?
+        remap_qualifiers
+      end
+      
+      # Updates the qualifier ("qualifier:searchterm") mapping.
+      #
+      # Example:
+      #   You dynamically add a new category to an index.
+      #   To add the qualifiers to a search, you call this
+      #   method.
+      #
+      def remap_qualifiers
+        @mapper = QualifierCategoryMapper.new @indexes # TODO Move into search?
       end
 
       # Ignore the categories with these qualifiers.

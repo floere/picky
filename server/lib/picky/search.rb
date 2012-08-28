@@ -25,6 +25,7 @@ module Picky
 
     delegate :ignore,
              :only,
+             :remap_qualifiers,
              :to => :indexes
 
     # Takes:
