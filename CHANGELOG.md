@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.6.3 "Qualifier remapping"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- If you add categories dynamically _after_ using the index in a search, you have to call `search.remap_categories` to have the new category's qualifiers registered. 
+
 ## 4.6.3 "spermy operation"
 
 - The spermy operator (~>) in the gemspec is not consistent over all version granularities.
