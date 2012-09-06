@@ -3,6 +3,10 @@ module Picky
   module Backends
 
     class Memory
+      
+      def json *args
+        JSON.new *args
+      end
 
       # Memory-based index files dumped in the JSON format.
       #
