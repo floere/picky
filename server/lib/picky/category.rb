@@ -40,6 +40,11 @@ module Picky
       @name  = name
       @index = index
 
+      configure_from options
+      configure_indexes_from options
+    end
+    
+    def configure_from options
       # Indexing.
       #
       @source    = extract_source options[:source], nil_ok: true
@@ -52,7 +57,9 @@ module Picky
       @qualifiers = extract_qualifiers_from options
 
       # @symbols    = options[:use_symbols] || index.use_symbols? # SYMBOLS.
+    end
 
+    def configure_indexes_from options
       weights    = extract_weight options[:weight]
       partial    = extract_partial options[:partial]
       similarity = extract_similarity options[:similarity]
