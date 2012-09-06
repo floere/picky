@@ -1,4 +1,4 @@
-require_relative '../model_setup'
+require 'active_record'
 
 # Set up model backend.
 #
@@ -11,12 +11,4 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :name
     t.string :surname
   end
-end
-
-# Fake ActiveRecord model.
-#
-class Model < ActiveRecord::Base
-  # Default options just as an example.
-  #
-  extend Picky::Client::ActiveRecord.configure(host: 'localhost', port: 8080, path: '/')
 end
