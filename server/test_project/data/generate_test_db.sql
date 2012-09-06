@@ -1,5 +1,10 @@
 # MySQL data
 #
+# > mysql -u root
+# CREATE USER developer@localhost;
+# CREATE DATABASE picky_test_project;
+# GRANT ALL ON picky_test_project.* TO developer@localhost;
+#
 # On Florian's local computer:
 # mysql --user developer -D picky_test_project < /Users/hanke/temp/picky/server/test_project/data/generate_test_db.sql
 #
