@@ -23,18 +23,6 @@ module Picky
       @tokenizer = extract_tokenizer options
     end
 
-    #
-    #
-    def index scheduler = Scheduler.new
-      timed_indexing scheduler do
-        prepare scheduler
-        scheduler.finish
-
-        cache scheduler
-        scheduler.finish
-      end
-    end
-
     # Calling prepare on an index will call prepare
     # on every category.
     #
