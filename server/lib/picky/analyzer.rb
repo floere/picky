@@ -135,9 +135,12 @@ class Analyzer
     return if analysis[:__keys].zero?
     ary = ["index key cardinality:                #{"%10d" % analysis[:__keys]}"]
     return ary.join "\n" unless analysis[:index]
-    ary << "index key length range (avg):         #{"%10s" % analysis[:index][:key_length]} (#{analysis[:index][:key_length_average].round(2)})"
-    ary << "index ids per key length range (avg): #{"%10s" % analysis[:index][:ids_length]} (#{analysis[:index][:ids_length_average].round(2)})"
+    ary << formatted('',        :key_length)
+    ary << formatted('ids per', :ids_length)
     ary.join "\n"
+  end
+  def formatted description, key
+    "index #{description} key length range (avg): #{"%10s" % analysis[:index][key]} (#{analysis[:index][:"#{key}_average"].round(2)})"
   end
   def weights_to_s
     return unless analysis[:weights]
