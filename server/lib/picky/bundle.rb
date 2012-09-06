@@ -91,22 +91,24 @@ module Picky
     # the strategy itself pretends to be an index.
     #
     def initialize_backends
-      @inverted      = @backend_inverted.initial
-      @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.initial
-      @similarity    = @backend_similarity.initial
-      @configuration = @backend_configuration.initial
-      @realtime      = @backend_realtime.initial
+      on_all_indexes_call :initial
     end
 
     # "Empties" the index(es) by getting a new empty
     # internal backend instance.
     #
     def empty
-      @inverted      = @backend_inverted.empty
-      @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.empty
-      @similarity    = @backend_similarity.empty
-      @configuration = @backend_configuration.empty
-      @realtime      = @backend_realtime.empty
+      on_all_indexes_call :empty
+    end
+    
+    # Extracted to avoid duplicate code.
+    #
+    def on_all_indexes_call method_name
+      @inverted      = @backend_inverted.send method_name
+      @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.send(method_name)
+      @similarity    = @backend_similarity.send method_name
+      @configuration = @backend_configuration.send method_name
+      @realtime      = @backend_realtime.send method_name
     end
 
     # Delete all index files.
