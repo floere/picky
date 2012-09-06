@@ -46,20 +46,16 @@ module Picky
         exclaim "\nBy default, Picky needs/loads the PICKY_ROOT/app.rb file as the app.\n\n"
         raise e
       end
-
-      # Loads the internal parts of the framework.
-      # (Not for the user)
+      
+      # Loads the compiled C code.
       #
-      def load_framework_internals
-        # Load compiled C code.
-        #
-        # Note: Picky already tries to compile
-        # when installing the gem.
-        #
+      # Note: Picky already tries to compile
+      # when installing the gem.
+      #
+      def load_c_code
         require_relative '../maybe_compile'
-
-        # Load extensions.
-        #
+      end
+      def load_extensions
         load_relative 'extensions/object'
         load_relative 'extensions/array'
         load_relative 'extensions/symbol'
@@ -67,30 +63,18 @@ module Picky
         load_relative 'extensions/module'
         load_relative 'extensions/class'
         load_relative 'extensions/hash'
-
-        # Requiring Helpers
-        #
+      end
+      def load_helpers
         load_relative 'helpers/measuring'
         load_relative 'helpers/indexing'
-
-        # Extension Modules
-        #
-        load_relative 'pool'
-
-        # Calculations.
-        #
-        load_relative 'calculations/location'
-
-        # Index generation strategies.
-        #
+      end
+      def load_index_generation_strategies
         load_relative 'indexers/base'
         load_relative 'indexers/serial'
         load_relative 'indexers/parallel'
-
-        # Generators.
-        #
+        
         load_relative 'generators/strategy'
-
+        
         # Partial index generation strategies.
         #
         load_relative 'generators/partial/strategy'
@@ -99,7 +83,7 @@ module Picky
         load_relative 'generators/partial/postfix'
         load_relative 'generators/partial/infix'
         load_relative 'generators/partial/default'
-
+        
         # Weight index generation strategies.
         #
         load_relative 'generators/weights/strategy'
@@ -108,7 +92,7 @@ module Picky
         load_relative 'generators/weights/constant'
         load_relative 'generators/weights/logarithmic'
         load_relative 'generators/weights/default'
-
+        
         # Similarity index generation strategies.
         #
         load_relative 'generators/similarity/strategy'
@@ -118,9 +102,11 @@ module Picky
         load_relative 'generators/similarity/double_metaphone'
         load_relative 'generators/similarity/soundex'
         load_relative 'generators/similarity/default'
-
-        # Index store handling.
-        #
+      end
+      
+      # Loads the index store handling.
+      #
+      def load_index_stores
         load_relative 'backends/helpers/file'
         load_relative 'backends/backend'
 
@@ -149,16 +135,20 @@ module Picky
         load_relative 'backends/sqlite/value'
         load_relative 'backends/sqlite/string_key_array'
         load_relative 'backends/sqlite/integer_key_array'
-
-        # Indexing and Indexed things.
-        #
+      end
+      
+      # Indexing and Indexed things.
+      #
+      def load_indexes
         load_relative 'bundle'
         load_relative 'bundle_indexing'
         load_relative 'bundle_indexed'
         load_relative 'bundle_realtime'
-
-        # Wrappers.
-        #
+      end
+      
+      # Index wrappers.
+      #
+      def load_wrappers
         load_relative 'category/location'
 
         load_relative 'wrappers/bundle/delegators'
@@ -166,14 +156,11 @@ module Picky
         load_relative 'wrappers/bundle/calculation'
         load_relative 'wrappers/bundle/location'
         load_relative 'wrappers/bundle/exact_partial'
-
-        # Tokens.
-        #
-        load_relative 'query/token'
-        load_relative 'query/tokens'
-
-        # Query combinations, qualifiers, weigher.
-        #
+      end
+      
+      # Query combinations, qualifiers, weigher.
+      #
+      def load_query
         load_relative 'query/combination'
         load_relative 'query/combinations'
 
@@ -187,11 +174,28 @@ module Picky
         load_relative 'query/indexes'
         load_relative 'query/indexes_check'
       end
-      # Loads the user interface parts.
+      
+      # Loads the internal parts of the framework.
+      # (Not for the user)
       #
-      def load_user_interface
-        # Load API parts.
-        #
+      def load_framework_internals
+        load_c_code
+        load_extensions
+        load_helpers
+        load_relative 'pool'
+        load_relative 'calculations/location' # Calculations
+        load_index_generation_strategies
+        load_index_stores
+        load_indexes
+        load_wrappers
+        load_relative 'query/token' # Token related.
+        load_relative 'query/tokens'
+        load_query
+      end
+      
+      # All things API related.
+      #
+      def load_api
         load_relative 'api/tokenizer'
         load_relative 'api/tokenizer/character_substituter'
         load_relative 'api/source'
@@ -199,32 +203,16 @@ module Picky
         load_relative 'api/category/partial'
         load_relative 'api/category/similarity'
         load_relative 'api/search/boost'
-        
-        # Loggers.
-        #
+      end
+      
+      def load_logging
         load_relative 'loggers/silent'
         load_relative 'loggers/concise'
         load_relative 'loggers/verbose'
         load_relative 'loggers/default'
-
-        # Tokenizer.
-        #
-        load_relative 'tokenizer'
-
-        # Load harakiri.
-        #
-        load_relative 'rack/harakiri'
-
-        # Character Substituters
-        #
-        load_relative 'character_substituters/west_european'
-
-        # Convenience accessors for generators.
-        #
-        load_relative 'generators/aliases'
-
-        # API.
-        #
+      end
+      
+      def load_inner_api
         load_relative 'category'
         load_relative 'category_indexed'
         load_relative 'category_indexing'
@@ -248,29 +236,38 @@ module Picky
         load_relative 'index_realtime'
         load_relative 'index_facets'
         load_relative 'index_convenience'
-
-        # Results.
-        #
+      end
+      
+      def load_results
         load_relative 'results'
         load_relative 'results/exact_first'
-
-        # Search.
-        #
+      end
+      
+      def load_search
         load_relative 'search'
         load_relative 'search_facets'
-
-        # Interfaces
-        #
+      end
+      
+      def load_interfaces
         load_relative 'interfaces/live_parameters/master_child'
         load_relative 'interfaces/live_parameters/unicorn'
-
-        # Load tools. Load specifically?
-        #
+      end
+      
+      # Loads the user interface parts.
+      #
+      def load_user_interface
+        load_api
+        load_logging
+        load_relative 'tokenizer'
+        load_relative 'rack/harakiri'
+        load_relative 'character_substituters/west_european'
+        load_relative 'generators/aliases'
+        load_inner_api
+        load_results
+        load_search
+        load_interfaces
         load_relative 'scheduler'
-
-        # Load migration notices.
-        #
-        load_relative 'migrations/from_30_to_31'
+        load_relative 'migrations/from_30_to_31' # TODO Remove.
       end
 
       # Loads the framework.
