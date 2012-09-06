@@ -11,6 +11,8 @@ module Picky
         attr_reader :cache_path, :db
 
         def initialize cache_path, options = {}
+          # TODO @cache_path = ::File.expand_path "#{cache_path}.sqlite3"
+          #
           @cache_path = "#{cache_path}.sqlite3"
           @empty      = options[:empty]
           @initial    = options[:initial]
