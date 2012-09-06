@@ -9,20 +9,6 @@ module Picky
     attr_reader :exact,
                 :partial
 
-    # Prepares and caches this category.
-    #
-    # This one should be used by users.
-    #
-    def index scheduler = Scheduler.new
-      timed_indexing scheduler do
-        prepare scheduler
-        scheduler.finish
-
-        cache scheduler
-        scheduler.finish
-      end
-    end
-
     # Indexes, creates the "prepared_..." file.
     #
     def prepare scheduler = Scheduler.new
