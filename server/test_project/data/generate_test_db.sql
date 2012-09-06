@@ -1,7 +1,7 @@
 # MySQL data
 #
 # On Florian's local computer:
-# mysql --user developer -D picky_test_project < /Users/admin/temp/picky/server/test_project/data/generate_test_db.sql
+# mysql --user developer -D picky_test_project < /Users/hanke/temp/picky/server/test_project/data/generate_test_db.sql
 #
 DROP TABLE IF EXISTS books;
 
@@ -14,7 +14,7 @@ CREATE TABLE books (
   PRIMARY KEY (id)
 );
 
-LOAD DATA INFILE '/Users/admin/temp/picky/server/test_project/data/books.csv'
+LOAD DATA INFILE '/Users/hanke/temp/picky/server/test_project/data/books.csv'
   INTO TABLE books
   FIELDS TERMINATED BY ',' ENCLOSED BY '"'
     LINES TERMINATED BY '\n';
