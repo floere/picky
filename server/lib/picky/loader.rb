@@ -28,8 +28,10 @@ module Picky
 
       # Load a file relative to this.
       #
-      def load_relative filename_without_rb
-        Kernel.load File.join(File.dirname(__FILE__), "#{filename_without_rb}.rb")
+      def load_relative *filenames_without_rb
+        filenames_without_rb.each do |filename_without_rb|
+          Kernel.load File.join(File.dirname(__FILE__), "#{filename_without_rb}.rb")
+        end
       end
 
       # Load a user file.
@@ -56,94 +58,94 @@ module Picky
         require_relative '../maybe_compile'
       end
       def load_extensions
-        load_relative 'extensions/object'
-        load_relative 'extensions/array'
-        load_relative 'extensions/symbol'
-        load_relative 'extensions/string'
-        load_relative 'extensions/module'
-        load_relative 'extensions/class'
-        load_relative 'extensions/hash'
+        load_relative 'extensions/object',
+                      'extensions/array',
+                      'extensions/symbol',
+                      'extensions/string',
+                      'extensions/module',
+                      'extensions/class',
+                      'extensions/hash'
       end
       def load_helpers
-        load_relative 'helpers/measuring'
-        load_relative 'helpers/indexing'
+        load_relative 'helpers/measuring',
+                      'helpers/indexing'
       end
       def load_index_generation_strategies
-        load_relative 'indexers/base'
-        load_relative 'indexers/serial'
-        load_relative 'indexers/parallel'
+        load_relative 'indexers/base',
+                      'indexers/serial',
+                      'indexers/parallel'
         
         load_relative 'generators/strategy'
         
         # Partial index generation strategies.
         #
-        load_relative 'generators/partial/strategy'
-        load_relative 'generators/partial/none'
-        load_relative 'generators/partial/substring'
-        load_relative 'generators/partial/postfix'
-        load_relative 'generators/partial/infix'
-        load_relative 'generators/partial/default'
+        load_relative 'generators/partial/strategy',
+                      'generators/partial/none',
+                      'generators/partial/substring',
+                      'generators/partial/postfix',
+                      'generators/partial/infix',
+                      'generators/partial/default'
         
         # Weight index generation strategies.
         #
-        load_relative 'generators/weights/strategy'
-        load_relative 'generators/weights/stub'
-        load_relative 'generators/weights/dynamic'
-        load_relative 'generators/weights/constant'
-        load_relative 'generators/weights/logarithmic'
-        load_relative 'generators/weights/default'
+        load_relative 'generators/weights/strategy',
+                      'generators/weights/stub',
+                      'generators/weights/dynamic',
+                      'generators/weights/constant',
+                      'generators/weights/logarithmic',
+                      'generators/weights/default'
         
         # Similarity index generation strategies.
         #
-        load_relative 'generators/similarity/strategy'
-        load_relative 'generators/similarity/none'
-        load_relative 'generators/similarity/phonetic'
-        load_relative 'generators/similarity/metaphone'
-        load_relative 'generators/similarity/double_metaphone'
-        load_relative 'generators/similarity/soundex'
-        load_relative 'generators/similarity/default'
+        load_relative 'generators/similarity/strategy',
+                      'generators/similarity/none',
+                      'generators/similarity/phonetic',
+                      'generators/similarity/metaphone',
+                      'generators/similarity/double_metaphone',
+                      'generators/similarity/soundex',
+                      'generators/similarity/default'
       end
       
       # Loads the index store handling.
       #
       def load_index_stores
-        load_relative 'backends/helpers/file'
-        load_relative 'backends/backend'
+        load_relative 'backends/helpers/file',
+                      'backends/backend'
 
         load_relative 'backends/prepared/text'
 
-        load_relative 'backends/memory'
-        load_relative 'backends/memory/basic'
-        load_relative 'backends/memory/marshal'
-        load_relative 'backends/memory/json'
+        load_relative 'backends/memory',
+                      'backends/memory/basic',
+                      'backends/memory/marshal',
+                      'backends/memory/json'
 
-        load_relative 'backends/file'
-        load_relative 'backends/file/basic'
-        load_relative 'backends/file/json'
+        load_relative 'backends/file',
+                      'backends/file/basic',
+                      'backends/file/json'
 
-        load_relative 'backends/redis'
-        load_relative 'backends/redis/directly_manipulable'
-        load_relative 'backends/redis/basic'
-        load_relative 'backends/redis/list'
-        load_relative 'backends/redis/string'
-        load_relative 'backends/redis/float'
+        load_relative 'backends/redis',
+                      'backends/redis/directly_manipulable',
+                      'backends/redis/basic',
+                      'backends/redis/list',
+                      'backends/redis/string',
+                      'backends/redis/float'
 
-        load_relative 'backends/sqlite'
-        load_relative 'backends/sqlite/directly_manipulable'
-        load_relative 'backends/sqlite/basic'
-        load_relative 'backends/sqlite/array'
-        load_relative 'backends/sqlite/value'
-        load_relative 'backends/sqlite/string_key_array'
-        load_relative 'backends/sqlite/integer_key_array'
+        load_relative 'backends/sqlite',
+                      'backends/sqlite/directly_manipulable',
+                      'backends/sqlite/basic',
+                      'backends/sqlite/array',
+                      'backends/sqlite/value',
+                      'backends/sqlite/string_key_array',
+                      'backends/sqlite/integer_key_array'
       end
       
       # Indexing and Indexed things.
       #
       def load_indexes
-        load_relative 'bundle'
-        load_relative 'bundle_indexing'
-        load_relative 'bundle_indexed'
-        load_relative 'bundle_realtime'
+        load_relative 'bundle',
+                      'bundle_indexing',
+                      'bundle_indexed',
+                      'bundle_realtime'
       end
       
       # Index wrappers.
@@ -151,28 +153,28 @@ module Picky
       def load_wrappers
         load_relative 'category/location'
 
-        load_relative 'wrappers/bundle/delegators'
-        load_relative 'wrappers/bundle/wrapper'
-        load_relative 'wrappers/bundle/calculation'
-        load_relative 'wrappers/bundle/location'
-        load_relative 'wrappers/bundle/exact_partial'
+        load_relative 'wrappers/bundle/delegators',
+                      'wrappers/bundle/wrapper',
+                      'wrappers/bundle/calculation',
+                      'wrappers/bundle/location',
+                      'wrappers/bundle/exact_partial'
       end
       
       # Query combinations, qualifiers, weigher.
       #
       def load_query
-        load_relative 'query/combination'
-        load_relative 'query/combinations'
+        load_relative 'query/combination',
+                      'query/combinations'
 
-        load_relative 'query/allocation'
-        load_relative 'query/allocations'
+        load_relative 'query/allocation',
+                      'query/allocations'
 
         load_relative 'query/qualifier_category_mapper'
 
         load_relative 'query/boosts'
 
-        load_relative 'query/indexes'
-        load_relative 'query/indexes_check'
+        load_relative 'query/indexes',
+                      'query/indexes_check'
       end
       
       # Loads the internal parts of the framework.
@@ -196,61 +198,61 @@ module Picky
       # All things API related.
       #
       def load_api
-        load_relative 'api/tokenizer'
-        load_relative 'api/tokenizer/character_substituter'
-        load_relative 'api/source'
-        load_relative 'api/category/weight'
-        load_relative 'api/category/partial'
-        load_relative 'api/category/similarity'
-        load_relative 'api/search/boost'
+        load_relative 'api/tokenizer',
+                      'api/tokenizer/character_substituter',
+                      'api/source',
+                      'api/category/weight',
+                      'api/category/partial',
+                      'api/category/similarity',
+                      'api/search/boost'
       end
       
       def load_logging
-        load_relative 'loggers/silent'
-        load_relative 'loggers/concise'
-        load_relative 'loggers/verbose'
-        load_relative 'loggers/default'
+        load_relative 'loggers/silent',
+                      'loggers/concise',
+                      'loggers/verbose',
+                      'loggers/default'
       end
       
       def load_inner_api
-        load_relative 'category'
-        load_relative 'category_indexed'
-        load_relative 'category_indexing'
-        load_relative 'category_realtime'
-        load_relative 'category_convenience'
+        load_relative 'category',
+                      'category_indexed',
+                      'category_indexing',
+                      'category_realtime',
+                      'category_convenience'
 
-        load_relative 'categories'
-        load_relative 'categories_indexed'
-        load_relative 'categories_indexing'
-        load_relative 'categories_realtime'
-        load_relative 'categories_convenience'
+        load_relative 'categories',
+                      'categories_indexed',
+                      'categories_indexing',
+                      'categories_realtime',
+                      'categories_convenience'
 
-        load_relative 'indexes'
-        load_relative 'indexes_indexed'
-        load_relative 'indexes_indexing'
-        load_relative 'indexes_convenience'
+        load_relative 'indexes',
+                      'indexes_indexed',
+                      'indexes_indexing',
+                      'indexes_convenience'
 
-        load_relative 'index'
-        load_relative 'index_indexed'
-        load_relative 'index_indexing'
-        load_relative 'index_realtime'
-        load_relative 'index_facets'
-        load_relative 'index_convenience'
+        load_relative 'index',
+                      'index_indexed',
+                      'index_indexing',
+                      'index_realtime',
+                      'index_facets',
+                      'index_convenience'
       end
       
       def load_results
-        load_relative 'results'
-        load_relative 'results/exact_first'
+        load_relative 'results',
+                      'results/exact_first'
       end
       
       def load_search
-        load_relative 'search'
-        load_relative 'search_facets'
+        load_relative 'search',
+                      'search_facets'
       end
       
       def load_interfaces
-        load_relative 'interfaces/live_parameters/master_child'
-        load_relative 'interfaces/live_parameters/unicorn'
+        load_relative 'interfaces/live_parameters/master_child',
+                      'interfaces/live_parameters/unicorn'
       end
       
       # Loads the user interface parts.
