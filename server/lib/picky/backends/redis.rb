@@ -171,88 +171,17 @@ module Picky
 
             # Scripting version of #ids.
             #
-            class << self
-              def ids combinations, amount, offset
-                identifiers = combinations.inject([]) do |identifiers, combination|
-                  identifiers << "#{combination.identifier}"
-                end
-
-                # Assume it's using EVALSHA.
-                #
-                begin
-                  if identifiers.size > 1
-                    client.evalsha @@ids_sent_once,
-                                   identifiers.size,
-                                   *identifiers,
-                                   generate_intermediate_result_id,
-                                   offset,
-                                   (offset + amount)
-                  else
-                    client.zrange identifiers.first,
-                                  offset,
-                                  (offset + amount)
-                  end
-                rescue RuntimeError => e
-                  # Make the server have a SHA-1 for the script.
-                  #
-                  @@ids_sent_once = Digest::SHA1.hexdigest @@ids_script
-                  client.eval @@ids_script,
-                              identifiers.size,
-                              *identifiers,
-                              generate_intermediate_result_id,
-                              offset,
-                              (offset + amount)
-                end
-              end
-            end
+            extend Scripting
           else
-            # Non-Scripting version of #ids.
-            #
-            class << self
-              def ids combinations, amount, offset
-                identifiers = combinations.inject([]) do |identifiers, combination|
-                  identifiers << "#{combination.identifier}"
-                end
-
-                result_id = generate_intermediate_result_id
-
-                # Little optimization.
-                #
-                if identifiers.size > 1
-                  # Intersect and store.
-                  #
-                  intersected = client.zinterstore result_id, identifiers
-
-                  # Return clean and early if there has been no intersection.
-                  #
-                  if intersected.zero?
-                    client.del result_id
-                    return []
-                  end
-
-                  # Get the stored result.
-                  #
-                  results = client.zrange result_id, offset, (offset + amount)
-
-                  # Delete the stored result as it was only for temporary purposes.
-                  #
-                  # Note: I could also not delete it, but that
-                  #       would not be clean at all.
-                  #
-                  client.del result_id
-                else
-                  results = client.zrange identifiers.first, offset, (offset + amount)
-                end
-
-                results
-              end
-            end
+            extend NonScripting
           end
           # Call the newly installed version.
           #
           ids combinations, amount, offset
         else
           # Simply super call.
+          #
+          # TODO Remove the ids method.
           #
           super
         end
@@ -277,6 +206,85 @@ module Picky
       #
       def generate_intermediate_result_id
         @intermediate_result_id ||= "#{host}:#{pid}:picky:result"
+      end
+      
+      # Uses Lua scripting on Redis 2.6.
+      #
+      module Scripting
+        def ids combinations, amount, offset
+          identifiers = combinations.inject([]) do |identifiers, combination|
+            identifiers << "#{combination.identifier}"
+          end
+
+          # Assume it's using EVALSHA.
+          #
+          begin
+            if identifiers.size > 1
+              client.evalsha @@ids_sent_once,
+                             identifiers.size,
+                             *identifiers,
+                             generate_intermediate_result_id,
+                             offset,
+                             (offset + amount)
+            else
+              client.zrange identifiers.first,
+                            offset,
+                            (offset + amount)
+            end
+          rescue RuntimeError => e
+            # Make the server have a SHA-1 for the script.
+            #
+            @@ids_sent_once = Digest::SHA1.hexdigest @@ids_script
+            client.eval @@ids_script,
+                        identifiers.size,
+                        *identifiers,
+                        generate_intermediate_result_id,
+                        offset,
+                        (offset + amount)
+          end
+        end
+      end
+      
+      # Does not use Lua scripting, < Redis 2.6.
+      #
+      module NonScripting
+        def ids combinations, amount, offset
+          identifiers = combinations.inject([]) do |identifiers, combination|
+            identifiers << "#{combination.identifier}"
+          end
+
+          result_id = generate_intermediate_result_id
+
+          # Little optimization.
+          #
+          if identifiers.size > 1
+            # Intersect and store.
+            #
+            intersected = client.zinterstore result_id, identifiers
+
+            # Return clean and early if there has been no intersection.
+            #
+            if intersected.zero?
+              client.del result_id
+              return []
+            end
+
+            # Get the stored result.
+            #
+            results = client.zrange result_id, offset, (offset + amount)
+
+            # Delete the stored result as it was only for temporary purposes.
+            #
+            # Note: I could also not delete it, but that
+            #       would not be clean at all.
+            #
+            client.del result_id
+          else
+            results = client.zrange identifiers.first, offset, (offset + amount)
+          end
+
+          results
+        end
       end
 
     end
