@@ -139,8 +139,8 @@ class Analyzer
     ary << formatted('ids per', :ids_length)
     ary.join "\n"
   end
-  def formatted description, key
-    "index #{description} key length range (avg): #{"%10s" % analysis[:index][key]} (#{analysis[:index][:"#{key}_average"].round(2)})"
+  def formatted description, key, index = :index
+    "index #{description} key length range (avg): #{"%10s" % analysis[index][key]} (#{analysis[index][:"#{key}_average"].round(2)})"
   end
   def weights_to_s
     return unless analysis[:weights]
@@ -148,7 +148,7 @@ class Analyzer
   end
   def similarity_to_s
     return unless analysis[:similarity]
-    %Q{similarity key length range (avg):    #{"%10s" % analysis[:similarity][:key_length]} (#{analysis[:similarity][:key_length_average].round(2)})}
+    formatted('similarity', :key_length, :similarity)
   end
   def configuration_to_s
     # analysis[:configuration]
