@@ -169,22 +169,26 @@ module Picky
             require 'digest/sha1'
             @@ids_sent_once = nil
 
-            # Scripting version of #ids.
+            # Overrides _this_ method.
             #
             extend Scripting
           else
+            # Overrides _this_ method.
+            #
             extend NonScripting
           end
-          # Call the newly installed version.
-          #
-          ids combinations, amount, offset
         else
-          # Simply super call.
+          # Remove _this_ method and use the super
+          # class method from now on.
           #
-          # TODO Remove the ids method.
+          # Note: This fails if there are multiple
+          # Redis backends with different versions.
           #
-          super
+          self.class.send :remove_method, __method__
         end
+        # Call the newly installed / super class version.
+        #
+        ids combinations, amount, offset
       end
 
       # Generate a multiple host/process safe result id.
