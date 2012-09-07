@@ -4,42 +4,6 @@ module Picky
   #
   class Helper
     
-    @@localized_input    = lambda { |options|
-      search_button_text = options[:button]      || 'search'
-      placeholder_text   = options[:placeholder] || 'Search here...'
-<<-HTML
-<form class="empty" onkeypress="return event.keyCode != 13;">
-  <!-- <div class="feedback"> -->
-    <div class="status"></div>
-    <input type="search" placeholder="#{placeholder_text}" autocorrect="off" class="query"/>
-    <a class="reset" title="clear"></a>
-  <!-- </div> -->
-  <input type="button" value="#{search_button_text}"/>
-</form>
-HTML
-    }
-    @@localized_results = lambda { |options|
-      no_results        = options[:no_results] || 'Sorry, no results found!'
-      more_allocations  = options[:more]       || 'more'
-<<-HTML
-<div class="results"></div>
-<div class="no_results">#{no_results}</div>
-<div class="allocations">
-  <ol class="shown"></ol>
-  <ol class="more">#{more_allocations}</ol>
-  <ol class="hidden"></ol>
-</div>
-HTML
-    }
-    @@localized_interface = lambda { |options|
-<<-HTML
-<section class="picky">
-  #{@@localized_input[options]}
-  #{@@localized_results[options]}
-</section>
-HTML
-    }
-    
     # Returns a standard search interface for easy starting.
     #
     # ... aka scaffolding ;)
@@ -55,13 +19,37 @@ HTML
     #
     #
     def self.interface options = {}
-      @@localized_interface[options]
+<<-HTML
+<section class="picky">
+  #{input(options)}
+  #{results(options)}
+</section>
+HTML
     end
     def self.input options = {}
-      @@localized_input[options]
+      search_button_text = options[:button]      || 'search'
+      placeholder_text   = options[:placeholder] || 'Search here...'
+<<-HTML
+<form class="empty" onkeypress="return event.keyCode != 13;">
+    <div class="status"></div>
+    <input type="search" placeholder="#{placeholder_text}" autocorrect="off" class="query"/>
+    <a class="reset" title="clear"></a>
+  <input type="button" value="#{search_button_text}"/>
+</form>
+HTML
     end
     def self.results options = {}
-      @@localized_results[options]
+      no_results        = options[:no_results] || 'Sorry, no results found!'
+      more_allocations  = options[:more]       || 'more'
+<<-HTML
+<div class="results"></div>
+<div class="no_results">#{no_results}</div>
+<div class="allocations">
+  <ol class="shown"></ol>
+  <ol class="more">#{more_allocations}</ol>
+  <ol class="hidden"></ol>
+</div>
+HTML
     end
     
     # Returns a cached version if you always use a single language.
