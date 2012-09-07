@@ -49,7 +49,20 @@ module Picky
   class Client
     attr_accessor :host, :port, :path
 
-    def initialize options = {}
+    def initialize hash_or_uri = {}
+      if hash_or_uri.respond_to? :to_hash
+        initialize_from_hash hash_or_uri
+      else
+        initialize_from_uri hash_or_uri
+      end
+    end
+    def initialize_from_uri uri
+      initialize_from_hash :host => uri.host,
+                           :port => uri.port,
+                           :path => uri.path
+      
+    end
+    def initialize_from_hash options
       options = default_configuration.merge options
 
       @host = options[:host]

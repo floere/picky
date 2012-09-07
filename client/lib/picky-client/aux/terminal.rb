@@ -31,7 +31,7 @@ module Picky
       @cursor_offset = 0
       @last_ids      = ''
       @id_amount     = id_amount && Integer(id_amount) || 20
-      @client = Picky::Client.new :host => (uri.host || 'localhost'), :port => (uri.port || 8080), :path => uri.path
+      @client = Picky::Client.new uri
 
       install_trap
     end
