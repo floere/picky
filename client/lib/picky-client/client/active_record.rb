@@ -52,10 +52,18 @@ module Picky
         #
         client = options[:client] ||
                  (options[:path] ||= '/') && Picky::Client.new(options)      
-      
-        self.class.class_eval do
-          index_name = options[:index]
+        index_name = options[:index]
         
+        # Install.
+        #
+        install_extended_on client, index_name, attributes
+      end
+      
+      # Installs an extended method on client which
+      # handles the model passed to it.
+      #
+      def install_extended_on client, index_name, attributes
+        self.class.class_eval do
           define_method :extended do |model|
             attributes = nil if attributes.empty?
             index_name ||= model.table_name
@@ -81,7 +89,6 @@ module Picky
           
           end
         end
-      
       end
     
     end
