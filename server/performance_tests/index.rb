@@ -3,32 +3,12 @@
 require 'csv'
 require 'sinatra/base'
 require_relative '../lib/picky'
+require_relative 'helpers'
+require_relative 'source'
 
-class Object; def timed_exclaim(_); end end
-
-def performance_of
-  if block_given?
-    code = Proc.new
-    GC.disable
-    t0 = Time.now
-    code.call
-    t1 = Time.now
-    GC.enable
-    (t1 - t0)
-  else
-    raise "#performance_of needs a block"
-  end
-end
-
+# Reopen class.
+#
 class Source
-
-  attr_reader :amount
-
-  def initialize amount
-    @amount = amount
-  end
-
-  Thing = Struct.new :id, :text1, :text2, :text3, :text4
 
   def prepare
     @buffer = []
