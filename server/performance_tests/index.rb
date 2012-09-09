@@ -63,46 +63,42 @@ double_meta     = Picky::Similarity::DoubleMetaphone.new 3
 
 definitions = []
 
+categories = 4
+
 definitions << [Proc.new do
-  category :text1, weight: constant_weight, partial: no_partial
-  category :text2, weight: constant_weight, partial: no_partial
-  category :text3, weight: constant_weight, partial: no_partial
-  category :text4, weight: constant_weight, partial: no_partial
+  1.upto(categories).each do |i|
+    category :"text#{i}", weight: constant_weight, partial: no_partial
+  end
 end, :no_weights_no_partial_default_similarity]
 
 definitions << [Proc.new do
-  category :text1, weight: constant_weight
-  category :text2, weight: constant_weight
-  category :text3, weight: constant_weight
-  category :text4, weight: constant_weight
+  1.upto(categories).each do |i|
+    category :"text#{i}", weight: constant_weight
+  end
 end, :no_weights_default_partial_default_similarity]
 
 definitions << [Proc.new do
-  category :text1
-  category :text2
-  category :text3
-  category :text4
+  1.upto(categories).each do |i|
+    category :"text#{i}"
+  end
 end, :default_weights_default_partial_default_similarity]
 
 definitions << [Proc.new do
-  category :text1, partial: full_partial
-  category :text2, partial: full_partial
-  category :text3, partial: full_partial
-  category :text4, partial: full_partial
+  1.upto(categories).each do |i|
+    category :"text#{i}", partial: full_partial
+  end
 end, :default_weights_full_partial_no_similarity]
 
 definitions << [Proc.new do
-  category :text1, similarity: double_meta
-  category :text2, similarity: double_meta
-  category :text3, similarity: double_meta
-  category :text4, similarity: double_meta
+  1.upto(categories).each do |i|
+    category :"text#{i}", similarity: double_meta
+  end
 end, :default_weights_default_partial_double_metaphone_similarity]
 
 definitions << [Proc.new do
-  category :text1, partial: full_partial, similarity: double_meta
-  category :text2, partial: full_partial, similarity: double_meta
-  category :text3, partial: full_partial, similarity: double_meta
-  category :text4, partial: full_partial, similarity: double_meta
+  1.upto(categories).each do |i|
+    category :"text#{i}", partial: full_partial, similarity: double_meta
+  end
 end, :default_weights_full_partial_double_metaphone_similarity]
 
 puts
