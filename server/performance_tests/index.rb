@@ -88,22 +88,6 @@ puts "All measurements in processed per second!"
 source = Source.new 500
 source.prepare
 
-ram = ->() do
-  # Demeter is rotating in his grave :D
-  #
-  `ps u`.split("\n").select { |line| line.include? __FILE__ }.first.split(/\s+/)[5].to_i
-end
-string = ->() do
-  i = 0
-  ObjectSpace.each_object(String) do |s|
-    # puts s
-    i += 1
-  end
-  i
-end
-runs = ->() do
-  GC::Profiler.result.match(/\d+/)[0].to_i
-end
 GC.enable
 GC::Profiler.enable
 
@@ -124,11 +108,11 @@ backends.each do |backend_description, backend, amount|
     data.backend backend
 
     GC.start
-    initial_ram = ram.call
-    initial_strings = string.call
+    initial_ram = ram __FILE__
+    initial_strings = string_count
     initial_symbols = Symbol.all_symbols.size
 
-    last_gc = runs.call
+    last_gc = runs
 
     add_duration = performance_of do
       source.each(amount) do |thing|
@@ -136,8 +120,8 @@ backends.each do |backend_description, backend, amount|
       end
     end
 
-    current_ram = ram.call - initial_ram
-    strings = string.call
+    current_ram = ram(__FILE__) - initial_ram
+    strings = string_count
     symbols = Symbol.all_symbols.size
 
     print "%7.0f" % (amount / add_duration)
@@ -158,7 +142,7 @@ backends.each do |backend_description, backend, amount|
     print "%6.1f" % ((symbols - initial_symbols) / amount.to_f)
     print " Symbols  "
     print "GC extra: "
-    print "%2d" % (runs.call - last_gc)
+    print "%2d" % (runs - last_gc)
     puts
 
     data.clear

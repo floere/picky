@@ -31,3 +31,20 @@ def compare_strings
   p s2 - s1
 
 end
+
+def ram file_name
+  # Demeter is rotating in his grave :D
+  #
+  `ps u`.split("\n").select { |line| line.include? file_name }.first.split(/\s+/)[5].to_i
+end
+def string_count
+  i = 0
+  ObjectSpace.each_object(String) do |s|
+    # puts s
+    i += 1
+  end
+  i
+end
+def runs
+  GC::Profiler.result.match(/\d+/)[0].to_i
+end

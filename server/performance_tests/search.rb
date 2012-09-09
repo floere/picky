@@ -91,26 +91,7 @@ end, :normal]
 #   category :text4, partial: Picky::Partial::Postfix.new(from: 1)
 # end, :full_partial]
 
-ram = ->() do
-  # Demeter is rotating in his grave :D
-  #
-  `ps u`.split("\n").select { |line| line.include? __FILE__ }.first.split(/\s+/)[5].to_i
-end
-string = ->() do
-  i = 0
-  # strs = []
-  ObjectSpace.each_object(String) do |s|
-    i += 1
-    # strs << s
-  end
-  i
-  # strs
-end
 GC.enable
-
-runs = ->() do
-  GC::Profiler.result.match(/\d+/)[0].to_i
-end
 GC::Profiler.enable
 
 definitions.each do |definition, description|
@@ -168,11 +149,11 @@ definitions.each do |definition, description|
         # fail if run.search(queries.each { |query| p query; break query }).ids.empty?
 
         GC.start
-        initial_ram = ram.call
+        initial_ram = ram __FILE__
         initial_symbols = Symbol.all_symbols.size
 
-        last_gc = runs.call
-        initial_strings = string.call
+        last_gc = runs
+        initial_strings = string_count
 
         duration = performance_of do
 
@@ -186,10 +167,10 @@ definitions.each do |definition, description|
 
         end
 
-        strings << (string.call - initial_strings)
-        rams << (ram.call - initial_ram)
+        strings << (string_count - initial_strings)
+        rams << (ram(__FILE__) - initial_ram)
         symbols << (Symbol.all_symbols.size - initial_symbols)
-        gc_runs << (runs.call - last_gc)
+        gc_runs << (runs - last_gc)
 
         print ", "
         print "%2.4f" % (duration*1000/amount)
