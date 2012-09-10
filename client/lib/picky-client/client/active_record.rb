@@ -63,31 +63,29 @@ module Picky
       # handles the model passed to it.
       #
       def install_extended_on client, index_name, attributes
-        self.class.class_eval do
-          define_method :extended do |model|
-            attributes = nil if attributes.empty?
-            index_name ||= model.table_name
+        self.class.send :define_method, :extended do |model|
+          attributes = nil if attributes.empty?
+          index_name ||= model.table_name
             
-            # Only after the database has actually
-            # updated the data do we want to index.
-            #
-            model.after_commit do |object|
-              data = { 'id' => object.id }
+          # Only after the database has actually
+          # updated the data do we want to index.
+          #
+          model.after_commit do |object|
+            data = { 'id' => object.id }
               
-              if object.destroyed?
-                client.remove index_name, data
-              else
-                (attributes || object.attributes.keys).each do |attr|
-                  data[attr] = object.respond_to?(attr) &&
-                               object.send(attr) ||
-                               object[attr]
-                end
-                
-                client.replace index_name, data
+            if object.destroyed?
+              client.remove index_name, data
+            else
+              (attributes || object.attributes.keys).each do |attr|
+                data[attr] = object.respond_to?(attr) &&
+                             object.send(attr) ||
+                             object[attr]
               end
+                
+              client.replace index_name, data
             end
-          
           end
+          
         end
       end
     
