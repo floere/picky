@@ -7,7 +7,7 @@ require 'csv'
 require 'picky'
 require 'picky-client'
 
-require File.expand_path '../book',    __FILE__
+require File.expand_path '../../../generators/prototypes/shared/both/book',    __FILE__
 require File.expand_path '../logging', __FILE__
 
 # This app shows how to integrate the Picky server directly

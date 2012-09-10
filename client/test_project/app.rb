@@ -8,7 +8,7 @@ require File.expand_path('../../client/lib/picky-client')
 
 # Load the "model".
 #
-require File.expand_path 'book', File.dirname(__FILE__)
+require File.expand_path '../../../generators/prototypes/shared/both/book', __FILE__
 
 set :haml, { :format => :html5 }
 
