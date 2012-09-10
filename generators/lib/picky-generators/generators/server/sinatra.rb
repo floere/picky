@@ -22,6 +22,7 @@ module Picky
           create_target_directory
           copy_all_files
           copy_all_files expand_prototype_path('shared/server')
+          copy_all_files expand_prototype_path('shared/both')
           exclaim "\"#{name}\" is a great project name! Have fun :)\n"
           exclaim ""
           exclaim "Next steps:"

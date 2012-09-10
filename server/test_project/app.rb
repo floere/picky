@@ -46,7 +46,7 @@ class BookSearch < Sinatra::Application
             stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
             splits_text_on:              /[\s\/\&\/]/,
             case_sensitive:              true,
-            maximum_tokens:              5
+            max_words:                   5
 
   require_relative 'models/book'
 
