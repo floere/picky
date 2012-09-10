@@ -4,7 +4,7 @@ require_relative '../lib/picky'
 
 # ruby search_only.rb xxs (index size) 100 (amount of queries)
 #
-size   = ARGV[0].to_sym
+size   = ARGV[0].to_sym rescue puts("This script needs an index size as first argument.") && exit(1)
 amount = ARGV[1] && ARGV[1].to_i || 10
 
 data = Picky::Index.new size do
@@ -14,34 +14,7 @@ data = Picky::Index.new size do
   category :text4
 end
 
-class Searches
-
-  def initialize complexity, amount
-    @complexity, @amount = complexity, amount
-  end
-
-  def each &block
-    @buffer.each &block
-  end
-
-  def prepare
-    @buffer = []
-
-    i = 0
-    CSV.open('data.csv').each do |args|
-      _, *args = args
-      args = args + [args.first]
-      query = []
-      (@complexity-1).times do
-        query << args.shift
-      end
-      query << args.shift
-      @buffer << query.join(' ')
-      break if (i+=1) == @amount
-    end
-  end
-
-end
+require_relative 'searches'
 
 queries  = ->(complexity, amount) do
   Searches.new complexity, amount
