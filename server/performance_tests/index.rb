@@ -43,43 +43,21 @@ double_meta     = Picky::Similarity::DoubleMetaphone.new 3
 
 definitions = []
 
-categories = 4
+def definition_with identifier, options = {}
+  categories = 4
+  [Proc.new do
+    1.upto(categories).each do |i|
+      category :"text#{i}", options
+    end
+  end, identifier]
+end
 
-definitions << [Proc.new do
-  1.upto(categories).each do |i|
-    category :"text#{i}", weight: constant_weight, partial: no_partial
-  end
-end, :no_weights_no_partial_default_similarity]
-
-definitions << [Proc.new do
-  1.upto(categories).each do |i|
-    category :"text#{i}", weight: constant_weight
-  end
-end, :no_weights_default_partial_default_similarity]
-
-definitions << [Proc.new do
-  1.upto(categories).each do |i|
-    category :"text#{i}"
-  end
-end, :default_weights_default_partial_default_similarity]
-
-definitions << [Proc.new do
-  1.upto(categories).each do |i|
-    category :"text#{i}", partial: full_partial
-  end
-end, :default_weights_full_partial_no_similarity]
-
-definitions << [Proc.new do
-  1.upto(categories).each do |i|
-    category :"text#{i}", similarity: double_meta
-  end
-end, :default_weights_default_partial_double_metaphone_similarity]
-
-definitions << [Proc.new do
-  1.upto(categories).each do |i|
-    category :"text#{i}", partial: full_partial, similarity: double_meta
-  end
-end, :default_weights_full_partial_double_metaphone_similarity]
+definitions << definition_with(:no_weights_no_partial_default_similarity, weight: constant_weight, partial: no_partial)
+definitions << definition_with(:no_weights_default_partial_default_similarity, weight: constant_weight)
+definitions << definition_with(:default_weights_default_partial_default_similarity)
+definitions << definition_with(:default_weights_full_partial_no_similarity, partial: full_partial)
+definitions << definition_with(:default_weights_default_partial_double_metaphone_similarity, similarity: double_meta)
+definitions << definition_with(:default_weights_full_partial_double_metaphone_similarity, partial: full_partial, similarity: double_meta)
 
 puts
 puts
