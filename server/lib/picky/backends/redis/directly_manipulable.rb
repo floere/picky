@@ -18,25 +18,33 @@ module Picky
         #
         @@append_index = 0
         def << value
-          super value
-          backend.client.zadd "#{backend.namespace}:#{key}", (@@append_index+=1), value
-          backend[key]
+          super
+          zadd value, @@append_index+=1
         end
 
         # THINK Current implementation is very brittle.
         #
         @@unshift_index = 0
         def unshift value
-          super value
-          backend.client.zadd "#{backend.namespace}:#{key}", (@@unshift_index-=1), value
-          backend[key]
+          super
+          zadd value, @@unshift_index -= 1
         end
-
+        
+        # Deletes the value.
+        #
         def delete value
           result = super value
           backend.client.zrem "#{backend.namespace}:#{key}", value if result
           result
         end
+        
+        # Z-Adds a value with the given index.
+        #
+        def zadd value, index
+          backend.client.zadd "#{backend.namespace}:#{key}", index, value
+          backend[key]
+        end
+        
       end
 
     end
