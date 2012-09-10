@@ -16,14 +16,14 @@ florian.save
 tentacles = Model.new(name: 'Tentacles', surname: 'Jellyfish')
 tentacles.save
 
-p "Expected: 1, 2"
+p "Expected: 1, 1"
 p Model.search 'surname:mcnama*'
 p Model.search 'hanke'
 
 florian.update_attributes! name: 'Kaspar', surname: 'Schiess'
 tentacles.update_attributes! name: 'Roger', surname: 'Braun'
 
-p "Expected: Nothing, 2, 3"
+p "Expected: Nothing, 1, 1"
 p Model.search 'hanke' # Not found anymore.
 p Model.search 'surname:schies*'
 p Model.search 'roger'
