@@ -110,7 +110,7 @@ definitions.each do |definition, description|
       symbols = []
       gc_runs = []
 
-      [queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
+      Searches.series_for(amount).each do |queries|
 
         queries.prepare
 

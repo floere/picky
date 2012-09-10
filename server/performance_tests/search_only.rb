@@ -16,10 +16,6 @@ end
 
 require_relative 'searches'
 
-queries  = ->(complexity, amount) do
-  Searches.new complexity, amount
-end
-
 # You need to create the indexes first.
 #
 data.clear
@@ -31,7 +27,7 @@ RubyProf.pause
 
 # Run queries.
 #
-[queries[1, amount], queries[2, amount], queries[3, amount], queries[4, amount]].each do |queries|
+Searches.series_for(amount).each do |queries|
 
   queries.prepare
 

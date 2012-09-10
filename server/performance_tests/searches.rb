@@ -1,4 +1,8 @@
 class Searches
+  
+  def self.series_for amount
+    (1..4).map { |i| new i, amount }
+  end
 
   def initialize complexity, amount
     @complexity, @amount = complexity, amount
