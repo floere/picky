@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Picky::Tokenizer do
   describe 'examples' do
     it 'works correctly' do
-      tokenizer = described_class.new(split_words_on: /\&/, normalizes_words: [[/\&/, 'and']])
+      tokenizer = described_class.new(normalizes_words: [[/\&/, 'and']])
       
       # Is this really correct? Shouldn't we split after normalizing? 
       #

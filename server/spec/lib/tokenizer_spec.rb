@@ -4,6 +4,14 @@ require 'spec_helper'
 
 describe Picky::Tokenizer do
 
+  describe 'with wrong/incorrectly spelled option' do
+    it 'informs the user nicely' do
+      expect {
+        described_class.new rejetcs_token_if: :blank?.to_proc
+      }.to raise_error(%Q{The option "rejetcs_token_if" is not a valid option for a Picky tokenizer\nPlease see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.})
+    end
+  end
+
   context 'with special instance' do
     let (:tokenizer) { described_class.new rejects_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
     it 'rejects tokens with length < 2' do
@@ -19,7 +27,7 @@ Removes characters: -
 Stopwords:          -
 Splits text on:     /\\s/
 Normalizes words:   -
-Rejects tokens?     Yes, see line 8 in app/application.rb
+Rejects tokens?     Yes, see line 16 in app/application.rb
 Substitutes chars?  -
 Case sensitive?     Yes.
 EXPECTED
@@ -49,7 +57,7 @@ EXPECTED
         tokenizer.reject(['a', nil, '', 'b']).should == ['a', 'b']
       end
       it 'rejects tokens based on the given rejection criteria if set' do
-        tokenizer.rejects_token_if &:nil?
+        tokenizer.rejects_token_if :nil?.to_proc
 
         tokenizer.reject(['a', nil, '', 'b']).should == ['a', '', 'b']
       end

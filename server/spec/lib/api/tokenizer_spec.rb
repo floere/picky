@@ -9,7 +9,7 @@ describe Picky::API::Tokenizer do
   context 'extract_tokenizer' do
     context 'options hash' do
       it 'creates a tokenizer' do
-        object.extract_tokenizer(indexing: { splits_text_on: /\t/ }).
+        object.extract_tokenizer(splits_text_on: /\t/).
           tokenize("hello\tworld").should == [['hello', 'world'], ['hello', 'world']]
       end
     end

@@ -120,7 +120,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
 
     # Reject tokens after tokenizing based on the given criteria.
     #
-    def rejects_token_if &condition
+    def rejects_token_if condition
       @reject_condition = condition
     end
     def reject tokens
@@ -161,14 +161,18 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     alias substituter? substituter
 
     def initialize options = {}
-      substitutes_characters_with options[:substitutes_characters_with] if options[:substitutes_characters_with]
-      removes_characters options[:removes_characters]                   if options[:removes_characters]
-      stopwords options[:stopwords]                                     if options[:stopwords]
-      splits_text_on options[:splits_text_on]                           || /\s/
-      normalizes_words options[:normalizes_words]                       if options[:normalizes_words]
-      max_words options[:max_words]
-      rejects_token_if &(options[:rejects_token_if]                     || :blank?)
-      case_sensitive options[:case_sensitive]                           unless options[:case_sensitive].nil?
+      options = default_options.merge options
+      options.each do |method_name, value|
+        send method_name, value unless value.nil?
+      end
+    rescue NoMethodError => e
+      raise %Q{The option "#{e.name}" is not a valid option for a Picky tokenizer\nPlease see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.}
+    end
+    def default_options
+      {
+        splits_text_on: /\s/,
+        rejects_token_if: :blank?.to_proc
+      }
     end
 
     # Returns a number of tokens, generated from the given text,

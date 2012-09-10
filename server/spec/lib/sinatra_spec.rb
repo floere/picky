@@ -16,10 +16,10 @@ describe Picky::Sinatra do
       extendee.extend Picky::Sinatra
     end
     it 'has Picky specific methods' do
-      extendee.send :indexing, some: 'option'
+      extendee.send :indexing, splits_text_on: /something/
     end
     it 'has Picky specific methods' do
-      extendee.send :searching, some: 'option'
+      extendee.send :searching, splits_text_on: /something/
     end
     it 'gets delegated correctly' do
       Picky::Tokenizer.should_receive(:default_indexing_with).once.with some: 'option'
