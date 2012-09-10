@@ -2,14 +2,14 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-require File.expand_path 'book', File.dirname(__FILE__)
+require File.expand_path '../../../../generators/prototypes/shared/both/book', __FILE__
 
 set :haml, { :format => :html5 } # default Haml format is :xhtml
 
 # What you would do in an app.
 #
-FullBooks = Picky::Client::Full.new :host => 'picky-simple-example-backend.heroku.com', :port => 80, :path => '/books/full'
-LiveBooks = Picky::Client::Live.new :host => 'picky-simple-example-backend.heroku.com', :port => 80, :path => '/books/live'
+FullBooks = Picky::Client.new :host => 'picky-simple-example-backend.heroku.com', :port => 80, :path => '/books/full'
+LiveBooks = Picky::Client.new :host => 'picky-simple-example-backend.heroku.com', :port => 80, :path => '/books/live'
 
 set :static, true
 set :public, File.dirname(__FILE__)
