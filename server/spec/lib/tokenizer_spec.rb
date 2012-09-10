@@ -8,7 +8,7 @@ describe Picky::Tokenizer do
     it 'informs the user nicely' do
       expect {
         described_class.new rejetcs_token_if: :blank?.to_proc
-      }.to raise_error(%Q{The option "rejetcs_token_if" is not a valid option for a Picky tokenizer\nPlease see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.})
+      }.to raise_error(%Q{The option "rejetcs_token_if" is not a valid option for a Picky tokenizer.\nPlease see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.})
     end
   end
 
