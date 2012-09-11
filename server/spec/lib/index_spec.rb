@@ -55,6 +55,12 @@ describe Picky::Index do
         source the_source
       end
     end
+    
+    describe 'directory' do
+      it 'is correct' do
+        api.directory.should == 'spec/test_directory/index/test/some_index_name'
+      end
+    end
 
     describe 'geo_categories' do
       it 'delegates correctly' do

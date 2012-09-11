@@ -143,11 +143,9 @@ module Picky
       @prepared_index_file ||= Backends::Prepared::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
-
-    # The index directory for this category.
-    #
+    
     def index_directory
-      @index_directory ||= ::File.join(PICKY_ROOT, 'index', PICKY_ENVIRONMENT, @index.name.to_s)
+      @index.directory
     end
 
     # Identifier for technical output.

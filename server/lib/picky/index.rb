@@ -178,6 +178,12 @@ module Picky
 
       new_category
     end
+    
+    # The directory used by this index.
+    #
+    def directory
+      @directory ||= ::File.join(PICKY_ROOT, 'index', PICKY_ENVIRONMENT, name.to_s)
+    end
 
     # Make this category range searchable with a fixed range. If you need other
     # ranges, define another category with a different range value.

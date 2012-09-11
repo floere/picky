@@ -29,9 +29,6 @@ describe Picky::Category do
     it 'is correct' do
       category.prepared_index_path.should == 'spec/test_directory/index/test/some_index/some_category'
     end
-    it 'is correct' do
-      category.index_directory.should == 'spec/test_directory/index/test/some_index'
-    end
   end
 
   context 'tokenizer' do
