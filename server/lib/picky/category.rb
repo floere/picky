@@ -106,12 +106,6 @@ module Picky
       partial.reset_backend
     end
 
-    # Index name.
-    #
-    def index_name
-      @index.name
-    end
-
     # Returns the qualifiers if set or
     # just the name if not.
     #
