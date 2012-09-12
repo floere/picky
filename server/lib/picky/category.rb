@@ -142,6 +142,9 @@ module Picky
     def index_directory
       @index.directory
     end
+    def index_name
+      @index.name
+    end
 
     # Identifier for technical output.
     #
