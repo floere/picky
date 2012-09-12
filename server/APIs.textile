@@ -38,13 +38,13 @@ Accepted by
 
 * @Picky::Index#backend(backend_instance)@
 
-h2. Sources (Picky::API::Source)
+h2. Sources
 
 Has methods
 
 * @each(&block)@ yields @objects@ (that respond to methods listed in the categories, or in the categories' @from@ option)
 
-h2. Weight (Picky::API::Category::Weight)
+h2. Weight
 
 Has methods
 
@@ -52,7 +52,7 @@ Has methods
 
 Accepted as option @weight@ for the @category@.
 
-h2. Partial (Picky::API::Category::Partial)
+h2. Partial
 
 Has methods
 
@@ -60,7 +60,7 @@ Has methods
 
 Accepted as option @partial@ for the @category@.
 
-h2. Similarity (Picky::API::Category::Similarity)
+h2. Similarity
 
 Has methods
 

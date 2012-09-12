@@ -33,8 +33,6 @@ or
 * an object that responds to #each_partial(str_or_sym) and yields each partial
 ERROR
       end
-    end
-    context 'invalid partial' do
       it 'raises with a nice error message' do
         expect {
           partial.from Object.new, 'some_index'
@@ -45,8 +43,6 @@ or
 * an object that responds to #each_partial(str_or_sym) and yields each partial
 ERROR
       end
-    end
-    context 'invalid partial' do
       it 'raises with a nice error message' do
         expect {
           partial.from Object.new, 'some_index', 'some_category'

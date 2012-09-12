@@ -64,7 +64,7 @@ module Picky
     # If we have no explicit source, we'll check the index for one.
     #
     def source
-      (@source = extract_source(@source, nil_ok: true)) || @index.source
+      (@source = Generators::Source.from(@source, true, @index && @index.name)) || @index.source
     end
 
     # Return the key format.

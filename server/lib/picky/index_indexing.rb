@@ -5,8 +5,6 @@ module Picky
   class Index
 
     include API::Tokenizer
-    include API::Source
-
     include Helpers::Indexing
 
     # Delegators for indexing.
@@ -86,7 +84,13 @@ module Picky
     #
     def source some_source = nil, &block
       some_source ||= block
-      some_source ? (@source = extract_source(some_source)) : unblock_source
+      some_source ? (@source = Generators::Source.from(some_source, false, name)) : unblock_source
+    end
+    # Get the actual source if it is wrapped in a time
+    # capsule, i.e. a block/lambda.
+    #
+    def unblock_source
+      @source.respond_to?(:call) ? @source.call : @source
     end
 
     # Define a key_format on the index.

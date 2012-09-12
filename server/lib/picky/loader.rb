@@ -200,7 +200,6 @@ module Picky
       def load_api
         load_relative 'api/tokenizer',
                       'api/tokenizer/character_substituter',
-                      'api/source',
                       'api/search/boost'
       end
       
@@ -215,6 +214,7 @@ module Picky
         load_relative 'generators/weights'
         load_relative 'generators/partial'
         load_relative 'generators/similarity'
+        load_relative 'generators/source'
         load_relative 'generators/aliases'
       end
       
