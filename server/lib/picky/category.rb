@@ -41,14 +41,11 @@ module Picky
     end
     
     def configure_from options
-      # Indexing.
-      #
       @from      = options[:from]
       
-      # TODO Can this be replaced?
+      # Instantly extracted to raise an error instantly.
       #
       @source    = Source.from options[:source], true, @index.name
-      
       @tokenizer = Tokenizer.from options[:indexing], @index.name, name
 
       @key_format = options.delete :key_format

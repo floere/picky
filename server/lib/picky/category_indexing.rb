@@ -59,14 +59,6 @@ module Picky
       prepared.retrieve { |id, token| add_tokenized_token id, token, :<< }
     end
 
-    # Return an appropriate source.
-    #
-    # If we have no explicit source, we'll check the index for one.
-    #
-    def source
-      (@source = Source.from(@source, true, @index && @index.name)) || @index.source
-    end
-
     # Return the key format.
     #
     # If no key_format is defined on the category
@@ -83,6 +75,14 @@ module Picky
     #
     def from
       @from || name
+    end
+    
+    # Return an appropriate source.
+    #
+    # If we have no explicit source, we'll check the index for one.
+    #
+    def source
+      @source || @index.source
     end
 
     # The indexer is lazily generated and cached.
