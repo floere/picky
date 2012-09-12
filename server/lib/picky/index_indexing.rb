@@ -3,8 +3,6 @@ module Picky
   #
   #
   class Index
-
-    include API::Tokenizer
     include Helpers::Indexing
 
     # Delegators for indexing.
@@ -18,7 +16,7 @@ module Picky
     # Parameters are the exact same as for indexing.
     #
     def indexing options = {}
-      @tokenizer = extract_tokenizer options
+      @tokenizer = Tokenizer.from options
     end
 
     # Calling prepare on an index will call prepare
@@ -84,7 +82,7 @@ module Picky
     #
     def source some_source = nil, &block
       some_source ||= block
-      some_source ? (@source = Generators::Source.from(some_source, false, name)) : unblock_source
+      some_source ? (@source = Source.from(some_source, false, name)) : unblock_source
     end
     # Get the actual source if it is wrapped in a time
     # capsule, i.e. a block/lambda.

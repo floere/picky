@@ -3,7 +3,7 @@ module Picky
   module Generators
     
     module Partial
-      extend Helpers
+      extend Helpers::Identification
       
       def self.from thing, index_name = nil, category_name = nil
         return Default unless thing

@@ -68,7 +68,8 @@ module Picky
       end
       def load_helpers
         load_relative 'helpers/measuring',
-                      'helpers/indexing'
+                      'helpers/indexing',
+                      'helpers/identification'
       end
       def load_index_generation_strategies
         load_relative 'indexers/base',
@@ -198,8 +199,7 @@ module Picky
       # All things API related.
       #
       def load_api
-        load_relative 'api/tokenizer',
-                      'api/tokenizer/character_substituter',
+        load_relative 'api/tokenizer/character_substituter',
                       'api/search/boost'
       end
       
@@ -211,11 +211,9 @@ module Picky
       end
       
       def load_generators
-        load_relative 'generators/helpers'
         load_relative 'generators/weights'
         load_relative 'generators/partial'
         load_relative 'generators/similarity'
-        load_relative 'generators/source'
         load_relative 'generators/aliases'
       end
       
@@ -262,9 +260,12 @@ module Picky
       
       # Loads the user interface parts.
       #
+      # TODO Move tokenizer etc.?
+      #
       def load_user_interface
         load_api
         load_logging
+        load_relative 'source'
         load_relative 'tokenizer'
         load_relative 'rack/harakiri'
         load_relative 'character_substituters/west_european'

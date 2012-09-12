@@ -59,7 +59,7 @@ describe Picky::Category do
 indexing options for some_index:some_category should be either
 * a Hash
 or
-* an object that responds to #tokenize(text) => [[token1, ...], [original1, ...]]
+* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
 ERROR
       end
     end

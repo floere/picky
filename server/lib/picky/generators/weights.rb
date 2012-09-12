@@ -3,7 +3,7 @@ module Picky
   module Generators
 
     module Weights
-      extend Helpers
+      extend Helpers::Identification
       
       # Factory method to return a fitting
       # weight handling thing for the given thing.

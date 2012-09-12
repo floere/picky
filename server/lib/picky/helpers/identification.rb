@@ -1,8 +1,8 @@
 module Picky
 
-  module Generators
+  module Helpers
     
-    module Helpers
+    module Identification
       
       def identifier_for index_name = nil, category_name = nil
         specifics = ""

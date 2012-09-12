@@ -6,22 +6,40 @@ module Picky
   #
   class Tokenizer
 
-    extend API::Tokenizer
-
+    extend Picky::Helpers::Identification
     include API::Tokenizer::CharacterSubstituter
 
     def self.default_indexing_with options = {}
-      @indexing = extract_tokenizer options
+      @indexing = from options
     end
     def self.indexing
       @indexing ||= new
     end
 
     def self.default_searching_with options = {}
-      @searching = extract_tokenizer options
+      @searching = from options
     end
     def self.searching
       @searching ||= new
+    end
+    
+    def self.from thing, index_name = nil, category_name = nil
+      return unless thing
+        
+      if thing.respond_to? :tokenize
+        thing
+      else
+        if thing.respond_to? :[]
+          Picky::Tokenizer.new thing
+        else
+          raise <<-ERROR
+indexing options #{identifier_for(index_name, category_name)}should be either
+* a Hash
+or
+* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+ERROR
+        end
+      end
     end
 
     def to_s

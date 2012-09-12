@@ -43,9 +43,13 @@ module Picky
     def configure_from options
       # Indexing.
       #
-      @source    = Generators::Source.from options[:source], true
       @from      = options[:from]
-      @tokenizer = extract_tokenizer options[:indexing]
+      
+      # TODO Can this be replaced?
+      #
+      @source    = Source.from options[:source], true, @index.name
+      
+      @tokenizer = Tokenizer.from options[:indexing], @index.name, name
 
       @key_format = options.delete :key_format
       @backend    = options.delete :backend
