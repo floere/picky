@@ -1,3 +1,5 @@
+# Removes and reinstalls convenience generator accessors.
+#
 module Picky
   remove_const :Partial if defined? Partial
   Partial = Generators::Partial

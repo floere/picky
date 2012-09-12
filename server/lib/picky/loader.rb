@@ -201,9 +201,6 @@ module Picky
         load_relative 'api/tokenizer',
                       'api/tokenizer/character_substituter',
                       'api/source',
-                      'api/category/weight',
-                      'api/category/partial',
-                      'api/category/similarity',
                       'api/search/boost'
       end
       
@@ -212,6 +209,13 @@ module Picky
                       'loggers/concise',
                       'loggers/verbose',
                       'loggers/default'
+      end
+      
+      def load_generators
+        load_relative 'generators/weights'
+        load_relative 'generators/partial'
+        load_relative 'generators/similarity'
+        load_relative 'generators/aliases'
       end
       
       def load_inner_api
@@ -263,7 +267,7 @@ module Picky
         load_relative 'tokenizer'
         load_relative 'rack/harakiri'
         load_relative 'character_substituters/west_european'
-        load_relative 'generators/aliases'
+        load_generators
         load_inner_api
         load_results
         load_search

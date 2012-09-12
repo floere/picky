@@ -6,7 +6,7 @@ describe Picky::API::Search::Boost do
       include Picky::API::Search::Boost
     end.new
   end
-  context 'extract_weight' do
+  context 'boost_for' do
     context 'with a Hash' do
       it 'returns a boosts object' do
         combinations = [

@@ -4,9 +4,6 @@ module Picky
 
     include API::Tokenizer
     include API::Source
-    include API::Category::Weight
-    include API::Category::Partial
-    include API::Category::Similarity
 
     attr_accessor :exact,
                   :partial
@@ -59,10 +56,14 @@ module Picky
       # @symbols    = options[:use_symbols] || index.use_symbols? # SYMBOLS.
     end
 
+    # TODO I do a lot of helper method calls here. Refactor?
+    #
     def configure_indexes_from options
-      weights    = extract_weight options[:weight]
-      partial    = extract_partial options[:partial]
-      similarity = extract_similarity options[:similarity]
+      index_name = @index.name
+      
+      weights    = Generators::Weights.from    options[:weight],     index_name, name
+      partial    = Generators::Partial.from    options[:partial],    index_name, name
+      similarity = Generators::Similarity.from options[:similarity], index_name, name
 
       no_partial    = Generators::Partial::None.new
       no_similarity = Generators::Similarity::None.new
