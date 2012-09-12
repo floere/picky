@@ -3,6 +3,7 @@ module Picky
   module Generators
 
     module Similarity
+      extend Helpers
 
       def self.from thing, index_name = nil, category_name = nil
         return Default unless thing
@@ -15,7 +16,7 @@ module Picky
           specifics << ":#{category_name}" if category_name
           specifics = "for #{specifics} " unless specifics.empty?
           raise <<-ERROR
-similarity options #{specifics}should be either
+similarity options #{identifier_for(index_name, category_name)}should be either
 * for example a Similarity::Phonetic.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
 or
 * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)

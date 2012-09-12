@@ -211,6 +211,7 @@ module Picky
       end
       
       def load_generators
+        load_relative 'generators/helpers'
         load_relative 'generators/weights'
         load_relative 'generators/partial'
         load_relative 'generators/similarity'
