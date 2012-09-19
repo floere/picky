@@ -2,7 +2,7 @@
 
 // Copying internal ruby methods.
 //
-inline VALUE rb_ary_elt(ary, offset)
+static inline VALUE rb_ary_elt(ary, offset)
     VALUE ary;
     long offset;
 {
@@ -12,7 +12,7 @@ inline VALUE rb_ary_elt(ary, offset)
     }
     return RARRAY_PTR(ary)[offset];
 }
-inline VALUE ary_make_hash(ary1, ary2)
+static inline VALUE ary_make_hash(ary1, ary2)
     VALUE ary1, ary2;
 {
     VALUE hash = rb_hash_new();
@@ -28,7 +28,7 @@ inline VALUE ary_make_hash(ary1, ary2)
     }
     return hash;
 }
-inline VALUE rb_ary_length(VALUE ary) {
+static inline VALUE rb_ary_length(VALUE ary) {
   long length = RARRAY_LEN(ary);
   return LONG2NUM(length);
 }
@@ -37,7 +37,7 @@ inline VALUE rb_ary_length(VALUE ary) {
 //  * orders the arrays by ascending size, small to large.
 //  * calls the & consecutively for all arrays.
 //
-inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_of_arrays) {
+static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_of_arrays) {
   // Counters.
   //
   long i, j;
