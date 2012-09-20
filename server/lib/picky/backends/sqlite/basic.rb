@@ -17,6 +17,12 @@ module Picky
           @realtime   = options[:realtime]
 
           lazily_initialize_client
+        
+        # Note: If on OSX, too many files get opened during
+        #       the specs -> ulimit -n 3000
+        #  
+        # rescue SQLite3::CantOpenException => e
+        #  
         end
 
         def initial
