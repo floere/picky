@@ -30,9 +30,7 @@ module Picky
         check_source_empty
         prepare_in_parallel scheduler
       else
-        with_data_snapshot do
-          categories.prepare scheduler
-        end
+        with_data_snapshot { categories.prepare scheduler }
       end
     end
 
