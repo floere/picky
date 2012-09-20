@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.6.4 "Swish swish clang clang"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Fixes issues with Clang on OSX (thanks Andy Kitchen!).
+
 ## 4.6.3 "Qualifier remapping"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
