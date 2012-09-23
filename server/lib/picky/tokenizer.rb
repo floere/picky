@@ -184,7 +184,21 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         send method_name, value unless value.nil?
       end
     rescue NoMethodError => e
-      raise %Q{The option "#{e.name}" is not a valid option for a Picky tokenizer.\nPlease see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.}
+      # TODO Print out valid options.
+      #
+      raise <<-ERROR
+The option "#{e.name}" is not a valid option for a Picky tokenizer.
+Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
+A short overview:
+  removes_characters          /regexp/
+  stopwords                   /regexp/
+  splits_text_on              /regexp/ or "String", default /\s/
+  normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
+  rejects_token_if            Proc/lambda, default :blank?.to_proc
+  substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
+  case_sensitive              true/false
+
+ERROR
     end
     def default_options
       {

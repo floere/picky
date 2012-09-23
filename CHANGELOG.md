@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.6.5 "Help is on the way"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- More helpful tokenizer error message.
+
 ## 4.6.4 "Swish swish clang clang"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)

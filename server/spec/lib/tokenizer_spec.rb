@@ -8,7 +8,19 @@ describe Picky::Tokenizer do
     it 'informs the user nicely' do
       expect {
         described_class.new rejetcs_token_if: :blank?.to_proc
-      }.to raise_error(%Q{The option "rejetcs_token_if" is not a valid option for a Picky tokenizer.\nPlease see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.})
+      }.to raise_error(<<-MESSAGE)
+The option "rejetcs_token_if" is not a valid option for a Picky tokenizer.
+Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
+A short overview:
+  removes_characters          /regexp/
+  stopwords                   /regexp/
+  splits_text_on              /regexp/ or "String", default /\s/
+  normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
+  rejects_token_if            Proc/lambda, default :blank?.to_proc
+  substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
+  case_sensitive              true/false
+
+MESSAGE
     end
   end
 
@@ -27,7 +39,7 @@ Removes characters: -
 Stopwords:          -
 Splits text on:     /\\s/
 Normalizes words:   -
-Rejects tokens?     Yes, see line 16 in app/application.rb
+Rejects tokens?     Yes, see line 28 in app/application.rb
 Substitutes chars?  -
 Case sensitive?     Yes.
 EXPECTED
