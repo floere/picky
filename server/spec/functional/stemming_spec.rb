@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 require 'stemmer'
+require 'lingua/stemmer'
 
 describe 'stemming' do
   let(:stemmer) {
@@ -30,9 +31,9 @@ describe 'stemming' do
       tokenizer.stem('computer').should  == 'comput'
     end
     
-    # This tests the weights option.
+    # This tests the stems_with option.
     #
-    it 'stems right' do
+    it 'stems right (API conform Stemmer)' do
       # Fix the Stemmer API.
       #
       module Stemmer
@@ -63,6 +64,37 @@ describe 'stemming' do
 
       try = Picky::Search.new index do
         searching stems_with: Stemmer
+      end
+      
+      # With stemming in search AND indexing, it works :)
+      #
+      try.search("text:stemming").ids.should == [2, 1]
+      try.search("text:lem").ids.should == [2]
+    end
+    
+    # This tests the stems_with option.
+    #
+    it 'stems right (Lingua::Stemmer.new)' do
+      index = Picky::Index.new :stemming do
+        # Be aware that if !s are not removed from
+        # eg. Lemming!, then stemming won't work.
+        #
+        indexing removes_characters: /[^a-z\s]/i,
+                 stems_with: Lingua::Stemmer.new
+        category :text
+      end
+      
+      index.replace_from id: 1, text: "Hello good Sirs, these things here need stems to work!"
+      index.replace_from id: 2, text: "Stemming Lemming!"
+
+      try = Picky::Search.new index
+      
+      # If you don't stem in the search, it should not be found!
+      #
+      try.search("text:stemming").ids.should == []
+
+      try = Picky::Search.new index do
+        searching stems_with: Lingua::Stemmer.new
       end
       
       # With stemming in search AND indexing, it works :)

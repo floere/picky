@@ -28,7 +28,9 @@ group :test do
   gem 'activerecord'
   gem 'redis'
   gem 'sqlite3'
+  
   gem 'fast-stemmer', :require => 'stemmer'
+  gem 'ruby-stemmer', :require => 'lingua/stemmer'
 
   gem 'rack-mount'
 end
