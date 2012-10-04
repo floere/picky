@@ -65,7 +65,7 @@ describe 'stemming' do
         searching stems_with: Stemmer
       end
       
-      # With stemming in search and indexing, it works :)
+      # With stemming in search AND indexing, it works :)
       #
       try.search("text:stemming").ids.should == [2, 1]
       try.search("text:lem").ids.should == [2]
