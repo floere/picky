@@ -18,6 +18,7 @@ A short overview:
   normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
   rejects_token_if            Proc/lambda, default :blank?.to_proc
   substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
+  stems_with                  Instance responds to #stem(String)
   case_sensitive              true/false
 
 MESSAGE
@@ -39,8 +40,9 @@ Removes characters: -
 Stopwords:          -
 Splits text on:     /\\s/
 Normalizes words:   -
-Rejects tokens?     Yes, see line 28 in app/application.rb
+Rejects tokens?     Yes, see line 29 in app/application.rb
 Substitutes chars?  -
+Stems?              -
 Case sensitive?     Yes.
 EXPECTED
       end
@@ -59,6 +61,7 @@ Splits text on:     /\\s/
 Normalizes words:   -
 Rejects tokens?     -
 Substitutes chars?  -
+Stems?              -
 Case sensitive?     -
 EXPECTED
           end

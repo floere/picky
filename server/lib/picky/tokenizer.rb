@@ -8,6 +8,7 @@ module Picky
 
     extend Picky::Helpers::Identification
     include API::Tokenizer::CharacterSubstituter
+    include API::Tokenizer::Stemmer
 
     def self.default_indexing_with options = {}
       @indexing = from options
@@ -51,6 +52,7 @@ Splits text on:     #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on
 Normalizes words:   #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
 Rejects tokens?     #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
 Substitutes chars?  #{@substituter ? "Yes, using #{@substituter}." : '-' }
+Stems?              #{@stemmer ? "Yes, using #{@stemmer}." : '-' }
 Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       TOKENIZER
     end
@@ -135,6 +137,15 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def substitute_characters text
       substituter?? substituter.substitute(text) : text
     end
+    
+    # Stems tokens with this stemmer.
+    #
+    def stems_with stemmer
+      @stemmer = extract_stemmer stemmer
+    end
+    def stem text
+      stemmer?? stemmer.stem(text) : text
+    end
 
     # Reject tokens after tokenizing based on the given criteria.
     #
@@ -175,8 +186,9 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       raise ArgumentError.new "Application##{method} takes a #{type} as argument, not a #{argument.class}." unless type === argument
     end
 
-    attr_reader :substituter
+    attr_reader :substituter, :stemmer
     alias substituter? substituter
+    alias stemmer? stemmer
 
     def initialize options = {}
       options = default_options.merge options
@@ -196,6 +208,7 @@ A short overview:
   normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
   rejects_token_if            Proc/lambda, default :blank?.to_proc
   substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
+  stems_with                  Instance responds to #stem(String)
   case_sensitive              true/false
 
 ERROR
@@ -259,6 +272,7 @@ ERROR
     #
     def tokens_for words
       words.collect! { |word| word.downcase!; word } if downcase?
+      words.collect! { |word| stem word } if stemmer?
       words
     end
 

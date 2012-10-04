@@ -200,6 +200,7 @@ module Picky
       #
       def load_api
         load_relative 'api/tokenizer/character_substituter',
+                      'api/tokenizer/stemmer',
                       'api/search/boost'
       end
       
