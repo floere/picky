@@ -5,7 +5,7 @@
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
 - Experimental update: Stemming.
-- New tokenizer (indexing/searching) option: `stems\_with`. Give it a thing that responds to `#stem(text) # => stemmed\_text`.
+- New tokenizer (indexing/searching) option: `stems_with`. Give it a thing that responds to `#stem(text) # => stemmed_text`.
 - See [https://github.com/floere/picky/blob/master/server/spec/functional/stemming_spec.rb](https://github.com/floere/picky/blob/master/server/spec/functional/stemming_spec.rb) for examples.
 
 ## 4.6.5 "Help is on the way"
