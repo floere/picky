@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.7.0 "Yajl house rock"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- By default, we use Yajl if it is available, via `MultiJson.use :yajl if defined? ::Yajl`.
+
 ## 4.6.6 "All development stems from open source"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)

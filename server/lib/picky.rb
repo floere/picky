@@ -23,10 +23,14 @@ module Picky
   # Check if platform specific modifiers need to be installed.
   #
   
-  # Note: We don't use require_relative because MacRuby doesn't
-  # have it.
+  # Note: We don't use require_relative yet because MacRuby
+  # doesn't have it.
   #
   require File.expand_path '../picky/platforms/macruby', __FILE__
+  
+  # Modify/configure the external libraries.
+  #
+  require_relative 'multi_json'
   
   # Require the constants.
   #
