@@ -30,7 +30,7 @@ module Picky
   
   # Modify/configure the external libraries.
   #
-  # require_relative 'multi_json'
+  require_relative 'multi_json'
   
   # Require the constants.
   #
