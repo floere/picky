@@ -3,6 +3,7 @@ require 'ostruct'
 abc = ('a'..'z').to_a + [' ', ' ']
 
 Picky::Index.new :memory do
+  backend Picky::Backends::Memory.new
   source do
     (1..75_000).map do |i|
       OpenStruct.new(
