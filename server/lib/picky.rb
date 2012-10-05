@@ -30,7 +30,10 @@ module Picky
   
   # Modify/configure the external libraries.
   #
-  require_relative 'multi_json'
+  
+  # By default, MultiJson uses Yajl.
+  #
+  MultiJson.use :yajl if defined? ::Yajl
   
   # Require the constants.
   #

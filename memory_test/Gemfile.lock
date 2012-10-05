@@ -1,0 +1,30 @@
+GEM
+  specs:
+    activesupport (3.2.8)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    cod (0.5.0)
+    i18n (0.6.1)
+    multi_json (1.1.0)
+    picky (4.2.0)
+      activesupport (~> 3.0)
+      procrastinate (~> 0.4)
+      rack_fast_escape
+      text
+      yajl-ruby
+    procrastinate (0.4.1)
+      cod (~> 0.4)
+      state_machine (~> 0.9.4)
+    rack_fast_escape (2009.06.24)
+      url_escape
+    state_machine (0.9.4)
+    text (1.2.1)
+    url_escape (2009.06.24)
+    yajl-ruby (1.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  picky (= 4.2.0)
+  yajl-ruby
