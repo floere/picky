@@ -1,0 +1,1 @@
+gem 'picky', ENV['PICKY_VERSION']

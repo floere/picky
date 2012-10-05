@@ -1,0 +1,2 @@
+PICKY_VERSION=3.6 bundle exec ruby run.rb
+PICKY_VERSION=4.6.6 bundle exec ruby run.rb
