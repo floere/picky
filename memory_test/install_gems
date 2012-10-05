@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
 
-%w|3.6.0 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0 4.6.6|.each do |version|
+%w|3.6.0 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0 4.6.6 4.7.0|.each do |version|
   `gem install picky -v #{version} --no-ri --no-rdoc`
 end

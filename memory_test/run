@@ -1,4 +1,4 @@
-                    bundle exec ruby run.rb
+PICKY_VERSION=4.7.0 bundle exec ruby run.rb
 PICKY_VERSION=4.6.6 bundle exec ruby run.rb
 PICKY_VERSION=4.6.0 bundle exec ruby run.rb
 PICKY_VERSION=4.5.0 bundle exec ruby run.rb
