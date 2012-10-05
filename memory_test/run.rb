@@ -3,7 +3,7 @@ require_relative 'definition'
 
 # For Pickies that don't have that baked into.
 #
-MultiJson.use :yajl if defined? MultiJson
+# MultiJson.use :yajl if defined? MultiJson
 
 Picky::Indexes.load
 
