@@ -3,7 +3,7 @@ require_relative 'definition'
 
 # For Pickies that don't have that baked into.
 #
-MultiJson.use :yajl if defined? MultiJson
+# MultiJson.use :yajl if defined? MultiJson
 
 puts ENV['PICKY_VERSION'] || 'Latest version (pid, rss, command)'
 

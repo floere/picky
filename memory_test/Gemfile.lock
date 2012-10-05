@@ -6,12 +6,12 @@ GEM
     cod (0.5.0)
     i18n (0.6.1)
     multi_json (1.3.6)
-    picky (4.7.0)
-      activesupport (>= 3.0)
-      multi_json
+    picky (4.0.0)
+      activesupport (~> 3.0)
       procrastinate (~> 0.4)
       rack_fast_escape
       text
+      yajl-ruby
     procrastinate (0.4.1)
       cod (~> 0.4)
       state_machine (~> 0.9.4)
@@ -26,5 +26,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  picky
+  picky (= 4.0.0)
   yajl-ruby
