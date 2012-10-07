@@ -35,12 +35,12 @@ namespace :server do
   end
 
   def chdir_to_root
-    Dir.chdir PICKY_ROOT
+    Dir.chdir Picky.root
   end
 
   def current_pid
     pidfile = 'tmp/pids/unicorn.pid'
-    pid = `cat #{File.join(PICKY_ROOT, pidfile)}`
+    pid = `cat #{File.join(Picky.root, pidfile)}`
     if pid.blank?
       puts
       puts "No server running (no #{pidfile} found)."

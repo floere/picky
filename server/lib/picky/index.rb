@@ -181,8 +181,10 @@ module Picky
     
     # The directory used by this index.
     #
+    # Note: Used @directory ||=, but needs to be dynamic.
+    #
     def directory
-      @directory ||= ::File.join(PICKY_ROOT, 'index', PICKY_ENVIRONMENT, name.to_s)
+      ::File.join(Picky.root, 'index', PICKY_ENVIRONMENT, name.to_s)
     end
 
     # Make this category range searchable with a fixed range. If you need other

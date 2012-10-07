@@ -11,11 +11,11 @@ module Picky
       end
       
       def tokenize index_or_category, prepared_file
-        timed_exclaim %Q{  "#{index_or_category.identifier}": Tokenized -> #{prepared_file.path.gsub("#{PICKY_ROOT}/", '')}.}
+        timed_exclaim %Q{  "#{index_or_category.identifier}": Tokenized -> #{prepared_file.path.gsub("#{Picky.root}/", '')}.}
       end
       
       def dump category
-        timed_exclaim %Q{  "#{category.identifier}": Dumped -> #{category.index_directory.gsub("#{PICKY_ROOT}/", '')}/#{category.name}_*.}
+        timed_exclaim %Q{  "#{category.identifier}": Dumped -> #{category.index_directory.gsub("#{Picky.root}/", '')}/#{category.name}_*.}
       end
       
       def load category

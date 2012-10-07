@@ -1,5 +1,13 @@
 module Picky
   
+  # Picky class methods.
+  #  * logger: Picky specific logger.
+  #  * root: Root used for Picky (eg. index directories).
+  #
+  class << self
+    attr_accessor :logger, :root
+  end
+  
   # Set default encoding.
   # (Note: Rails does this already as well)
   #
@@ -38,6 +46,11 @@ module Picky
   # Require the constants.
   #
   require_relative 'picky/constants'
+  
+  # Set the root path of Picky.
+  # (necessary for the index directory etc.)
+  #
+  Picky.root = Dir.pwd
 
   # Loader which handles framework and app loading.
   #
@@ -50,13 +63,14 @@ module Picky
   # Check if delegators need to be installed.
   #
   require_relative 'picky/sinatra'
-
-  # This is only used in the classic project style.
-  #
-  class << self
-    attr_accessor :logger
-  end
   
+  # Set the default logger.
+  #
+  # Options include:
+  #  * Loggers::Silent
+  #  * Loggers::Concise (default)
+  #  * Loggers::Verbose
+  #  
   self.logger = Loggers::Default
 
 end

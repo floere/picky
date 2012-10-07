@@ -313,7 +313,7 @@ class BookSearch < Sinatra::Application
                 Picky::Backends::Memory::JSON.new(bundle.index_path(:inverted))
               end,
               weights: Picky::Backends::Memory::JSON.new(
-                "#{PICKY_ROOT}/index/#{PICKY_ENVIRONMENT}/funky_weights_path",
+                "#{Picky.root}/index/#{PICKY_ENVIRONMENT}/funky_weights_path",
                 empty: InternalBackendInterfaceTester.new,
                 initial: InternalBackendInterfaceTester.new
               )

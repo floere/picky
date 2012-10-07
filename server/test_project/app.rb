@@ -322,7 +322,7 @@ class BookSearch < Sinatra::Application
   # It's flexible.
   #
   require 'logger'
-  AppLogger = Logger.new File.expand_path('log/search.log', PICKY_ROOT)
+  AppLogger = Logger.new File.expand_path('log/search.log', Picky.root)
   books_search = Search.new books_index, isbn_index do boost weights end
   get %r{\A/books\z} do
     results = books_search.search params[:query], params[:ids] || 20, params[:offset] || 0

@@ -1,5 +1,15 @@
 ## Upcoming Version
 
+## 4.8.0 "The only constant is change"
+
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- Removed `PICKY_ROOT` and did not replace it.
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Removed `PICKY_ROOT` and replaced it with `Picky.root = "absolute path"` and `Picky.root # => Current Picky root directory (used for indexes).`
+
 ## 4.7.0 "Yajl house rock"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)

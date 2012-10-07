@@ -14,9 +14,8 @@ require File.expand_path '../../lib/picky', __FILE__
 
 # Set some spec preconditions.
 #
-Object.send :remove_const, :PICKY_ROOT
-PICKY_ROOT = 'spec/test_directory'
-puts "Redefined PICKY_ROOT to '#{PICKY_ROOT}' for the tests."
+Picky.root = 'spec/test_directory'
+puts "Redefined Picky.root to '#{Picky.root}' for the tests."
 
 Picky.logger = Picky::Loggers::Silent.new STDOUT
 puts "Using Picky::Loggers::Silent.new(STDOUT) as test logger."
