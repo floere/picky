@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "Realtime Indexing" do
 
-  Book = Struct(:id, :title, :author)
+  Book = Struct.new(:id, :title, :author)
 
   context 'default index' do
     let(:index) do
