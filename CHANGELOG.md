@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.8.1 "source equals data"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Added `Picky::Category#source=`. Each category can have a different source, mostly used for different sorting.
+
 ## 4.8.0 "The only constant is change"
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
