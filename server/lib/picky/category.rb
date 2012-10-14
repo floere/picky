@@ -9,6 +9,7 @@ module Picky
     attr_reader :name,
                 :prepared,
                 :backend
+    attr_writer :source
 
     # Parameters:
     #  * name: Category name to use as identifier and file names.
