@@ -64,14 +64,14 @@ module Picky
       partial    = Generators::Partial.from    options[:partial],    index_name, name
       similarity = Generators::Similarity.from options[:similarity], index_name, name
 
-      no_partial    = Generators::Partial::None.new
-      no_similarity = Generators::Similarity::None.new
-
-      @exact = Bundle.new :exact, self, weights, no_partial, similarity, options
+      @exact = Bundle.new :exact, self, weights, Generators::Partial::None.new, similarity, options
+      
+      # TODO Also partial.extend Bundle::Exact like in the category.
+      #
       if partial.respond_to?(:use_exact_for_partial?) && partial.use_exact_for_partial?
         @partial = Wrappers::Bundle::ExactPartial.new @exact
       else
-        @partial = Bundle.new :partial, self, weights, partial, no_similarity, options
+        @partial = Bundle.new :partial, self, weights, partial, Generators::Similarity::None.new, options
       end
 
       @prepared = Backends::Prepared::Text.new prepared_index_path
