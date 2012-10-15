@@ -43,7 +43,9 @@ module Picky
 
     delegate :[], :[]=,        :to => :configuration
     delegate :index_directory, :to => :category
-
+    
+    # TODO Move the strategies into options.
+    #
     def initialize name, category, weight_strategy, partial_strategy, similarity_strategy, options = {}
       @name     = name
       @category = category
