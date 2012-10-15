@@ -60,23 +60,37 @@ module Picky
     # TODO I do a lot of helper method calls here. Refactor?
     #
     def configure_indexes_from options
-      weights    = Generators::Weights.from    options[:weight],     index_name, name
-      partial    = Generators::Partial.from    options[:partial],    index_name, name
-      similarity = Generators::Similarity.from options[:similarity], index_name, name
+      weights    = weights_from options
+      partial    = partial_from options
+      similarity = similarity_from options
 
-      @exact = Bundle.new :exact, self, weights, Generators::Partial::None.new, similarity, options
-      
+      @exact     = exact_for weights, similarity, options
+      @partial   = partial_for @exact, partial, weights, options
+
+      @prepared  = Backends::Prepared::Text.new prepared_index_path
+    end
+    def weights_from options
+      Generators::Weights.from options[:weight], index_name, name
+    end
+    def partial_from options
+      Generators::Partial.from options[:partial], index_name, name
+    end
+    def similarity_from options
+      Generators::Similarity.from options[:similarity], index_name, name
+    end
+    def exact_for weights, similarity, options
+      Bundle.new :exact, self, weights, Generators::Partial::None.new, similarity, options
+    end
+    def partial_for exact, partial_options, weights, options
       # TODO Also partial.extend Bundle::Exact like in the category.
       #
-      if partial.respond_to?(:use_exact_for_partial?) && partial.use_exact_for_partial?
-        @partial = Wrappers::Bundle::ExactPartial.new @exact
+      if partial_options.respond_to?(:use_exact_for_partial?) && partial_options.use_exact_for_partial?
+        Wrappers::Bundle::ExactPartial.new exact
       else
-        @partial = Bundle.new :partial, self, weights, partial, Generators::Similarity::None.new, options
+        Bundle.new :partial, self, weights, partial_options, Generators::Similarity::None.new, options
       end
-
-      @prepared = Backends::Prepared::Text.new prepared_index_path
     end
-
+    
     # Indexes and loads the category.
     #
     def reindex
