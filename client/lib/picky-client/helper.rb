@@ -27,26 +27,22 @@ module Picky
 HTML
     end
     def self.input options = {}
-      search_button_text = options[:button]      || 'search'
-      placeholder_text   = options[:placeholder] || 'Search here...'
 <<-HTML
 <form class="empty" onkeypress="return event.keyCode != 13;">
     <div class="status"></div>
-    <input type="search" placeholder="#{placeholder_text}" autocorrect="off" class="query"/>
+    <input type="search" placeholder="#{options[:placeholder] || 'Search here...'}" autocorrect="off" class="query"/>
     <a class="reset" title="clear"></a>
-  <input type="button" value="#{search_button_text}"/>
+  <input type="button" value="#{options[:button] || 'search'}"/>
 </form>
 HTML
     end
     def self.results options = {}
-      no_results        = options[:no_results] || 'Sorry, no results found!'
-      more_allocations  = options[:more]       || 'more'
 <<-HTML
 <div class="results"></div>
-<div class="no_results">#{no_results}</div>
+<div class="no_results">#{options[:no_results] || 'Sorry, no results found!'}</div>
 <div class="allocations">
   <ol class="shown"></ol>
-  <ol class="more">#{more_allocations}</ol>
+  <ol class="more">#{options[:more] || 'more'}</ol>
   <ol class="hidden"></ol>
 </div>
 HTML
