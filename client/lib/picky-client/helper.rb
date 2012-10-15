@@ -27,17 +27,17 @@ module Picky
 HTML
     end
     def self.input options = {}
-<<-HTML
+<<-INPUT
 <form class="empty" onkeypress="return event.keyCode != 13;">
     <div class="status"></div>
     <input type="search" placeholder="#{options[:placeholder] || 'Search here...'}" autocorrect="off" class="query"/>
     <a class="reset" title="clear"></a>
   <input type="button" value="#{options[:button] || 'search'}"/>
 </form>
-HTML
+INPUT
     end
     def self.results options = {}
-<<-HTML
+<<-RESULTS
 <div class="results"></div>
 <div class="no_results">#{options[:no_results] || 'Sorry, no results found!'}</div>
 <div class="allocations">
@@ -45,7 +45,7 @@ HTML
   <ol class="more">#{options[:more] || 'more'}</ol>
   <ol class="hidden"></ol>
 </div>
-HTML
+RESULTS
     end
     
     # Returns a cached version if you always use a single language.
