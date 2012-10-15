@@ -60,8 +60,6 @@ module Picky
     # TODO I do a lot of helper method calls here. Refactor?
     #
     def configure_indexes_from options
-      index_name = @index.name
-      
       weights    = Generators::Weights.from    options[:weight],     index_name, name
       partial    = Generators::Partial.from    options[:partial],    index_name, name
       similarity = Generators::Similarity.from options[:similarity], index_name, name
