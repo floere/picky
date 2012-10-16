@@ -43,8 +43,12 @@ module Picky
       require 'procrastinate'
       parallel && Process.respond_to?(:fork)
     rescue LoadError => e
-      warn_gem_missing 'procrastinate', 'parallelized indexing (with the procrastinate gem)'
+      warn_procrastinate_missing
       return false
+    end
+    def warn_procrastinate_missing
+      warn_gem_missing 'Procrastinate', 'parallelized indexing (with the procrastinate gem)' unless @gem_missing_warned
+      @gem_missing_warned = true
     end
 
   end

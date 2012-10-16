@@ -24,7 +24,6 @@ module Picky
   require 'active_support/core_ext/enumerable'
   require 'active_support/multibyte'
   require 'multi_json'
-  require 'procrastinate'
   require 'rack_fast_escape' if defined? Rack
   require 'fileutils'
   
