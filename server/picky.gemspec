@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'text'
   s.add_runtime_dependency 'multi_json'
   s.add_runtime_dependency 'activesupport', '>= 3.0'
-  s.add_runtime_dependency 'procrastinate', '~> 0.4'
   s.add_runtime_dependency 'rack_fast_escape'
 
   # Optional dependencies.
@@ -46,4 +45,5 @@ Gem::Specification.new do |s|
   # s.add_runtime_dependency 'redis'
   # s.add_runtime_dependency 'mysql'
   # s.add_runtime_dependency 'sqlite3'
+  # s.add_runtime_dependency 'procrastinate', '~> 0.4'
 end
