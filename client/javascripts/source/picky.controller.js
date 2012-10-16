@@ -47,7 +47,7 @@ var PickyController = function(config) {
     //
     if (query != lastFullQuery()) { // TODO Not full.
       var url;
-      if (query == '') {
+      if (!searchOnEmpty && query == '') {
         url = '';
       } else {
         url = "?q=" + escape(query).replace(/\*/g,'%2A');
