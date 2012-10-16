@@ -23,28 +23,28 @@ picky_files = %w{
 
 js = picky_files.map { |filename| "--js=#{filename}" }.join(' ')
 compiler_command = "java -jar javascripts/compiler.jar --compilation_level=SIMPLE_OPTIMIZATIONS #{js} --js_output_file=javascripts/picky.min.js"
-p compiler_command
+puts compiler_command
 system compiler_command
 
 # Copy the latest javascripts into the generators' js directory.
 #
 min_js_copy_command = "cp javascripts/*.min.js ../generators/prototypes/client/sinatra/javascripts/"
-p min_js_copy_command
+puts min_js_copy_command
 system min_js_copy_command
 
 # Copy the latest javascripts into the test project.
 #
 min_js_copy_command = "cp javascripts/source/picky.*.js test_project/javascripts/"
-p min_js_copy_command
+puts min_js_copy_command
 system min_js_copy_command
 min_js_copy_command = "cp javascripts/{history,jquery}*.min.js test_project/javascripts/"
-p min_js_copy_command
+puts min_js_copy_command
 system min_js_copy_command
 
 # Tar the js files for downloads.
 #
 gzip_command = "tar -cf javascripts/picky.source.js.tar #{picky_files.join(' ')}"
-p gzip_command
+puts gzip_command
 system gzip_command
 
 # Stylesheets
@@ -58,7 +58,7 @@ stylesheets_command = <<-STYLESHEETS
 # cp test_project/stylesheets/picky.css ../generators/prototypes/client/sinatra/stylesheets/picky.css;
 # cp test_project/stylesheets/application.css ../generators/prototypes/client/sinatra/stylesheets/application.css;
 STYLESHEETS
-p stylesheets_command
+puts stylesheets_command
 system stylesheets_command
 
 puts "\nSUCCESS!"
