@@ -26,10 +26,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'picky-client', "~> #{Picky::VERSION}"
 
-  s.add_runtime_dependency 'text'
+  s.add_runtime_dependency 'text' # TODO Make optional?
   s.add_runtime_dependency 'multi_json'
   s.add_runtime_dependency 'activesupport', '>= 3.0'
-  s.add_runtime_dependency 'rack_fast_escape'
+  s.add_runtime_dependency 'rack_fast_escape' # TODO Make optional?
 
   # Optional dependencies.
   #
