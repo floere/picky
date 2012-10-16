@@ -148,6 +148,8 @@ var PickyView = function(picky_controller, config) {
     }
   };
   
+  // TODO Extract part of this into data.
+  //
   var tooManyResults = function(data) {
     return data.total > showResultsLimit && data.allocations.length > 1;
   };
