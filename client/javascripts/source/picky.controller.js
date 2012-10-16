@@ -8,6 +8,7 @@ var PickyController = function(config) {
   var successCallback      = config.success      || function(data, query) { };
   var afterCallback        = config.after        || function(data, query) { };
   
+  var searchOnEmpty           = config.searchOnEmpty      || false;
   var liveRendered            = config.liveRendered       || false;
   var liveSearchTimerInterval = config.liveSearchInterval || 180;
   
@@ -69,7 +70,7 @@ var PickyController = function(config) {
     
     // Only trigger a search if the text is not empty.
     //
-    if (query == '') {
+    if (!searchOnEmpty && query == '') {
       view.reset();
     } else {
       var currentBackend = backends[type];
