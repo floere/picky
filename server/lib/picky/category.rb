@@ -84,6 +84,8 @@ module Picky
     def partial_for exact, partial_options, weights, options
       # TODO Also partial.extend Bundle::Exact like in the category.
       #
+      # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance? 
+      #
       if partial_options.respond_to?(:use_exact_for_partial?) && partial_options.use_exact_for_partial?
         Wrappers::Bundle::ExactPartial.new exact
       else
