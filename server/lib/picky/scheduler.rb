@@ -22,7 +22,11 @@ module Picky
         end
 
         def scheduler
-          @scheduler ||= Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(@factor)
+          @scheduler ||= create_scheduler
+        end
+        
+        def create_scheduler
+          Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(@factor)
         end
       else
         def schedule
@@ -36,7 +40,11 @@ module Picky
     end
 
     def fork?
+      require 'procrastinate'
       parallel && Process.respond_to?(:fork)
+    rescue LoadError => e
+      warn_gem_missing 'procrastinate', 'parallelized indexing (with the procrastinate gem)'
+      return false
     end
 
   end
