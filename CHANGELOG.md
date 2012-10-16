@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.9.0 "Stop slacking"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Procrastinate gem is optional (add when you wish parallel indexing).
+
 ## 4.8.1 "source equals data"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
