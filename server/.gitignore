@@ -10,8 +10,6 @@
 test_project_sinatra/index
 test_project_sinatra/tmp
 
-spec/performance_ratio.rb
-
 performance_tests/index
 
 spec/test_directory
