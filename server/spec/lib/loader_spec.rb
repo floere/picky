@@ -12,7 +12,7 @@ describe Picky::Loader do
       performance_of do
         described_class.load_self
         described_class.load_framework
-      end.should < 0.025
+      end.should < 0.04
     end
   end
 
