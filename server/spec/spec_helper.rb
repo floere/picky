@@ -15,10 +15,10 @@ require File.expand_path '../../lib/picky', __FILE__
 # Set some spec preconditions.
 #
 Picky.root = 'spec/test_directory'
-puts "Redefined Picky.root to '#{Picky.root}' for the tests."
+# puts "Redefined Picky.root to '#{Picky.root}' for the tests."
 
 Picky.logger = Picky::Loggers::Silent.new STDOUT
-puts "Using Picky::Loggers::Silent.new(STDOUT) as test logger."
+# puts "Using Picky::Loggers::Silent.new(STDOUT) as test logger."
 
 class Object
   def exclaim(*)
