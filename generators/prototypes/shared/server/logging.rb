@@ -3,22 +3,11 @@
 # (But go ahead and place the code in app.rb if you wish)
 #
 
-# Standard logging.
+# Picky loggers log into IO instances or Loggers.
 #
-require 'logger'
-AppLogger = Logger.new File.expand_path('log/search.log', Picky.root)
+# For example:
+# Picky.logger = Picky::Loggers::Concise.new STDOUT
+# Picky.logger = Picky::Loggers::Concise.new Logger.new('log/search.log')
+#
 
-# Example with using the syslog logger.
-# Falling back to the standard log if it isn't available.
-# (For example, because it is used locally and syslog is
-# only available on the servers)
-#
-# begin
-#   log_program_name = 'search/query'
-#   AppLogger        = SyslogLogger.new log_program_name
-#   puts "Logging on syslog #{log_program_name}."
-# rescue StandardError
-#   puts "Could not connect to the syslog, using the normal log."
-#   require 'logger'
-#   AppLogger = Logger.new(File.join(Picky.root, 'log/search.log'))
-# end
+Picky.logger = Picky::Loggers::Concise.new STDOUT
