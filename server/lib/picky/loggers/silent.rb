@@ -31,20 +31,18 @@ module Picky
         def flush
             
         end
-        def write message
-          output << message
-        end
       end
       def adapt_for_io
         def flush
           output.flush
         end
-        def write message
-          output.write message
-        end
       end
       
       def info(*)
+        
+      end
+      
+      def warn(*)
         
       end
       

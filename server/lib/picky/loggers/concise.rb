@@ -22,22 +22,33 @@ module Picky
         progress
       end
       
+      def progress type = '.'
+        write type
+      end
+      
       def adapt_for_logger
         super
         def info text
           output.info text
         end
-        def progress type = '.'
-          write type
+        def warn text
+          output.warn text
+        end
+        def write message
+          output << message
         end
       end
       def adapt_for_io
         super
         def info text
-          output.puts text
+          output.write text
         end
-        def progress type = '.'
-          write type
+        def warn text
+          output.puts text
+          flush
+        end
+        def write message
+          output.write message
         end
       end
       
