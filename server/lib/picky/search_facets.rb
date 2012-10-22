@@ -31,6 +31,10 @@ module Picky
       #
       tokenized_filter = tokenized filter_query, false
       
+      # Pre-tokenize query token category.
+      #
+      predefined_categories = [index[category_identifier]]
+      
       # Extract options.
       #
       no_counts = options[:counts] == false
@@ -39,7 +43,12 @@ module Picky
       # Get actual counts.
       #
       counts.inject(no_counts ? [] : {}) do |result, (key, _)|
-        tokenized_query = tokenized "#{category_identifier}:#{key}", false
+        # TODO Rewrite this.
+        #
+        tokenized_query = Query::Tokens.new(
+          [Query::Token.new(key, key, predefined_categories)]
+        )
+        # tokenized_query = tokenized "#{category_identifier}:#{key}", false
         total = search_with(tokenized_filter + tokenized_query, 0, 0).total
         next result unless total >= minimal_counts
         if no_counts
