@@ -17,7 +17,7 @@ class Object
   # Puts a text that informs the user of a missing gem.
   #
   def warn_gem_missing gem_name, message
-    warn "#{gem_name} gem missing!\nTo use #{message}, you need to:\n  1. Add the following line to Gemfile:\n     gem '#{gem_name}'\n     or\n     require '#{gem_name}'\n     for example at the top of your app.rb file.\n  2. Then, run:\n     bundle update\n"
+    Picky.logger.warn "#{gem_name} gem missing!\nTo use #{message}, you need to:\n  1. Add the following line to Gemfile:\n     gem '#{gem_name}'\n     or\n     require '#{gem_name}'\n     for example at the top of your app.rb file.\n  2. Then, run:\n     bundle update\n"
   end
 
   # Indents each line by <tt>amount=2</tt> spaces.

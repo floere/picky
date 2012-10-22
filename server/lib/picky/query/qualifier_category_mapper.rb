@@ -26,7 +26,7 @@ module Picky
       def add category
         category.qualifiers.each do |qualifier|
           sym_qualifier = qualifier.intern
-          warn %Q{Warning: Qualifier "#{qualifier}" already mapped to category #{mapping[sym_qualifier].identifier} (ambiguous qualifier mapping).} if mapping.has_key? sym_qualifier
+          Picky.logger.warn %Q{Warning: Qualifier "#{qualifier}" already mapped to category #{mapping[sym_qualifier].identifier} (ambiguous qualifier mapping).} if mapping.has_key? sym_qualifier
           mapping[sym_qualifier] = category
         end
       end
