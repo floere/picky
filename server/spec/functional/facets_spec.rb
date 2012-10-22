@@ -89,7 +89,7 @@ describe 'facets' do
       index = Picky::Index.new :facets do
         category :name
         category :surname
-        category :age_category
+        category :age_category, :qualifier => :age
       end
 
       thing = Struct.new :id, :name, :surname, :age_category
@@ -147,21 +147,19 @@ describe 'facets' do
         }
       end
       it 'has two filtered facets' do
-        # TODO Fix problems with alternative qualifiers (like :age).
-        #
-        finder.facets(:surname, filter: 'age_category:40 name:peter').should == {
+        finder.facets(:surname, filter: 'age:40 name:peter').should == {
           'kunz' => 1,
           'hanke' => 1 # Not 2 since it is filtered.
         }
       end
       it 'has 2 facets >= count 1' do
-        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 1).should == {
+        finder.facets(:surname, filter: 'age:40 name:peter', at_least: 1).should == {
           'kunz' => 1,
           'hanke' => 1
         }
       end
       it 'has 0 facets >= counts 2' do
-        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 2).should == {}
+        finder.facets(:surname, filter: 'age:40 name:peter', at_least: 2).should == {}
       end
     end
     
@@ -175,21 +173,19 @@ describe 'facets' do
         finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false).should == ['45']
       end
       it 'has two filtered facets' do
-        # TODO Fix problems with alternative qualifiers (like :age).
-        #
-        finder.facets(:surname, filter: 'age_category:40 name:peter', counts: false).should == [
+        finder.facets(:surname, filter: 'age:40 name:peter', counts: false).should == [
           'kunz',
           'hanke'
         ]
       end
       it 'has 2 facets >= count 1' do
-        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 1, counts: false).should == [
+        finder.facets(:surname, filter: 'age:40 name:peter', at_least: 1, counts: false).should == [
           'kunz',
           'hanke'
         ]
       end
       it 'has 0 facets >= counts 2' do
-        finder.facets(:surname, filter: 'age_category:40 name:peter', at_least: 2, counts: false).should == []
+        finder.facets(:surname, filter: 'age:40 name:peter', at_least: 2, counts: false).should == []
       end
     end
     
