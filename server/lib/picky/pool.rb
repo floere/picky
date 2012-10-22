@@ -77,14 +77,15 @@ module Picky
         # (And removes it from the used pool)
         #
         def release instance
-           @__free__ << instance
+          @__free__ << instance
            
-           # Note: This is relatively fast as there are often only
-           # few instances in the used pool.
-           @__used__.delete instance 
+          # Note: This is relatively fast as there are often only
+          # few instances in the used pool.
+          #
+          @__used__.delete instance 
         end
       
-        # After you have called release all, you can't
+        # After you have called release all, you can't externally
         # use any reference that has formerly been obtained
         # anymore.
         #
