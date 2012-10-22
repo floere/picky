@@ -276,7 +276,6 @@ module Picky
         load_search
         load_interfaces
         load_relative 'scheduler'
-        load_relative 'migrations/from_30_to_31' # TODO Remove.
       end
 
       # Loads the framework.
