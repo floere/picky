@@ -196,8 +196,6 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         send method_name, value unless value.nil?
       end
     rescue NoMethodError => e
-      # TODO Print out valid options.
-      #
       raise <<-ERROR
 The option "#{e.name}" is not a valid option for a Picky tokenizer.
 Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
