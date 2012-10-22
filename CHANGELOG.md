@@ -1,5 +1,13 @@
 ## Upcoming Version
 
+## 4.10.0 "Lumberjack know logging"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Picky Loggers now also accept Ruby Logger instances instead of just IO instances: `Picky.logger = Picky::Loggers::Concise.new Logger.new('log/some.log')`. `Picky.logger = Picky::Loggers::Concise.new`
+- Same three logging types still available: `Picky::Loggers::Silent`, `Picky::Loggers::Concise`, `Picky::Loggers::Verbose`.
+- Picky now outputs all warnings/info to the logger set in `Picky.logger=` (available via `Picky.logger`).
+
 ## 4.9.0 "Stop slacking"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
