@@ -34,7 +34,7 @@ module Picky
       def adapt_for_io
         super
         def info text
-          output.write text
+          output.puts text
         end
         def progress type = '.'
           write type
