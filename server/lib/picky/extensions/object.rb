@@ -9,6 +9,8 @@ class Object
 
   # Just outputs the given text to the logger.
   #
+  # Note: stubbed in spec_helper.rb
+  #
   def exclaim text
     Picky.logger.info text
     Picky.logger.flush
