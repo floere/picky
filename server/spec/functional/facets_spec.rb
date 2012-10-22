@@ -142,13 +142,13 @@ describe 'facets' do
         }.should < 0.004
       end
       it 'has one filtered facet' do
-        # TODO Fix problems with alternative qualifiers (like :age).
-        #
         finder.facets(:age_category, filter: 'surname:meier name:peter').should == {
           '45' => 1
         }
       end
       it 'has two filtered facets' do
+        # TODO Fix problems with alternative qualifiers (like :age).
+        #
         finder.facets(:surname, filter: 'age_category:40 name:peter').should == {
           'kunz' => 1,
           'hanke' => 1 # Not 2 since it is filtered.
@@ -172,11 +172,11 @@ describe 'facets' do
         }.should < 0.004
       end
       it 'has one filtered facet' do
-        # TODO Fix problems with alternative qualifiers (like :age).
-        #
         finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false).should == ['45']
       end
       it 'has two filtered facets' do
+        # TODO Fix problems with alternative qualifiers (like :age).
+        #
         finder.facets(:surname, filter: 'age_category:40 name:peter', counts: false).should == [
           'kunz',
           'hanke'
