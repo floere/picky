@@ -7,7 +7,7 @@ class Object
     exclaim "#{Time.now.strftime("%H:%M:%S")}: #{text}"
   end
 
-  # Just puts the given text.
+  # Just outputs the given text to the logger.
   #
   def exclaim text
     Picky.logger.info text
