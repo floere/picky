@@ -12,8 +12,8 @@ module Picky
       # Note: If you need to run two consecutive queries,
       # this can't be used.
       #
-      # TODO Blog post. Measure the advantages (ie. how many times is the GC called?)
-      # TODO Also install calling release_all after each query.
+      # Note: You need to call Picky::Pool.release_all after each query
+      # (or after a few queries).
       #
       def install
         Query::Token.extend self
