@@ -6,13 +6,49 @@ module Picky
     #
     class Silent
       
-      attr_reader :io
+      attr_reader :output
       
-      def initialize io = STDOUT
-        @io = io
+      def initialize output = STDOUT
+        @output = output
+        adapt
+      end
+      
+      # Is the output a logger?
+      #
+      def logger_output?
+        output.respond_to?(:fatal) &&
+        output.respond_to?(:error) &&
+        output.respond_to?(:warn)  &&
+        output.respond_to?(:info)  &&
+        output.respond_to?(:debug)
+      end
+      
+      def adapt
+        logger_output? ? adapt_for_logger : adapt_for_io
+      end
+      
+      def adapt_for_logger
+        def flush
+            
+        end
+        def write message
+          output << message
+        end
+      end
+      def adapt_for_io
+        def flush
+          output.flush
+        end
+        def write message
+          output.write message
+        end
       end
       
       def info(*)
+        
+      end
+      
+      def write(*)
         
       end
       
@@ -26,12 +62,6 @@ module Picky
       
       def load(*)
         
-      end
-      
-      # Flush this logger.
-      #
-      def flush
-        io.flush
       end
       
     end

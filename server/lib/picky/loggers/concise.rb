@@ -6,24 +6,8 @@ module Picky
     #
     class Concise < Silent
       
-      attr_reader :tokenized,
-                  :dumped,
-                  :loaded
-      
       def initialize *args
         super *args
-        
-        reset
-      end
-      
-      def reset
-        @tokenized = false
-        @dumped    = false
-        @loaded    = false
-      end
-      
-      def info text
-        io.write text
       end
       
       def tokenize(*)
@@ -38,8 +22,23 @@ module Picky
         progress
       end
       
-      def progress type = '.'
-        io.write type
+      def adapt_for_logger
+        super
+        def info text
+          output.info text
+        end
+        def progress type = '.'
+          write type
+        end
+      end
+      def adapt_for_io
+        super
+        def info text
+          output.write text
+        end
+        def progress type = '.'
+          write type
+        end
       end
       
     end

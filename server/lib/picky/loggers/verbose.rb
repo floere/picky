@@ -25,9 +25,18 @@ module Picky
       # Puts a text in the form:
       #   12:34:56: text here
       #
-      def timed_exclaim text
-        io.puts "#{Time.now.strftime("%H:%M:%S")}: #{text}"
-        flush
+      def adapt_for_logger
+        super
+        def timed_exclaim text
+          output.info "#{Time.now.strftime("%H:%M:%S")}: #{text}"
+        end
+      end
+      def adapt_for_io
+        super
+        def timed_exclaim text
+          output.puts "#{Time.now.strftime("%H:%M:%S")}: #{text}"
+          flush
+        end
       end
       
     end
