@@ -20,8 +20,6 @@ module Picky
         #
         def initialize amount = 3
           check_gem
-
-          raise "In Picky 2.0+, the Similarity::Phonetic has been renamed to Similarity::DoubleMetaphone. Please use that one. Thanks!" if self.class == Phonetic
           @amount = amount
         end
 

@@ -71,7 +71,7 @@ module Picky
   #  * Loggers::Silent
   #  * Loggers::Concise (default)
   #  * Loggers::Verbose
-  #  
+  #
   self.logger = Loggers::Default
 
 end

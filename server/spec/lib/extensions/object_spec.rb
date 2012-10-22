@@ -1,18 +1,11 @@
 require 'spec_helper'
 
+require 'time'
+
 describe Object do
 
   context 'basic object' do
     let(:object) { described_class.new }
-
-    # describe "exclaim" do
-    #   it "delegates to puts" do
-    #     STDOUT.should_receive(:puts).once.with :bla
-    #     STDOUT.should_receive(:flush).once.with
-    #
-    #     object.exclaim :bla
-    #   end
-    # end
 
     describe "timed_exclaim" do
       it "should exclaim right" do
@@ -25,8 +18,18 @@ describe Object do
 
     describe 'warn_gem_missing' do
       it 'should warn right' do
-        object.should_receive(:warn).once.with "gnorf gem missing!\nTo use gnarble gnarf, you need to:\n  1. Add the following line to Gemfile:\n     gem 'gnorf'\n  2. Then, run:\n     bundle update\n"
-
+        Picky.logger.should_receive(:warn).once.with <<-EXPECTED
+Warning: gnorf gem missing!
+To use gnarble gnarf, you need to:
+  1. Add the following line to Gemfile:
+     gem 'gnorf'
+     or
+     require 'gnorf'
+     for example at the top of your app.rb file.
+  2. Then, run:
+     bundle update
+EXPECTED
+        
         object.warn_gem_missing 'gnorf', 'gnarble gnarf'
       end
     end

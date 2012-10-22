@@ -14,19 +14,12 @@ require File.expand_path '../../lib/picky', __FILE__
 
 # Set some spec preconditions.
 #
-Picky.root = 'spec/test_directory'
-# puts "Redefined Picky.root to '#{Picky.root}' for the tests."
-
-Picky.logger = Picky::Loggers::Silent.new STDOUT
-# puts "Using Picky::Loggers::Silent.new(STDOUT) as test logger."
-
-class Object
-  def exclaim(*)
-    # The sound of silence.
-  end
-end
+Picky.root   = 'spec/test_directory'
+Picky.logger = Picky::Loggers::Silent.new
 
 begin
+  # Remove this file for the default.
+  #
   require File.expand_path '../performance_ratio', __FILE__
 rescue LoadError => e
   # Default is for slower computers and

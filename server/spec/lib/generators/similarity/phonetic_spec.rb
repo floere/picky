@@ -2,20 +2,27 @@
 #
 require 'spec_helper'
 
-describe Picky::Generators::Similarity::Phonetic do
+require 'text'
 
-  it 'raises if you try to use Phonetic directly' do
-    expect {
-      described_class.new
-    }.to raise_error("In Picky 2.0+, the Similarity::Phonetic has been renamed to Similarity::DoubleMetaphone. Please use that one. Thanks!")
-  end
+describe Picky::Generators::Similarity::Phonetic do
 
   it "raises when you don't have the text gem" do
     instance = Class.new(described_class).allocate
 
     instance.should_receive(:require).any_number_of_times.and_raise LoadError
+    
+    Picky.logger.should_receive(:warn).once.with <<-EXPECTED
+Warning: text gem missing!
+To use a phonetic Similarity, you need to:
+  1. Add the following line to Gemfile:
+     gem 'text'
+     or
+     require 'text'
+     for example at the top of your app.rb file.
+  2. Then, run:
+     bundle update
+EXPECTED
 
-    instance.should_receive(:warn).once.with "text gem missing!\nTo use a phonetic Similarity, you need to:\n  1. Add the following line to Gemfile:\n     gem 'text'\n  2. Then, run:\n     bundle update\n"
     instance.should_receive(:exit).once.with 1
 
     instance.send :initialize
