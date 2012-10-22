@@ -33,12 +33,15 @@ module Picky
 
         # Dump JSON into the cache file.
         #
-        # TODO Ask MultiJson people to add IO option:
-        # MultiJson.encode(object, out_file)
+        # TODO Add IO option:
+        # MultiJson.encode(object, io: out_file)
         #
         def dump_json internal
           ::File.open(cache_path, 'w') do |out_file|
-            # MultiJson.encode internal, out_file
+            # If using Yajl, this will stream write to out_file.
+            # Note: But it fails on oj.
+            #
+            # MultiJson.dump internal, [out_file]
             out_file.write MultiJson.encode internal
           end
         end
