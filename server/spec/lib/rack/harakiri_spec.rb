@@ -1,6 +1,11 @@
 # encoding: utf-8
 require 'spec_helper'
 
+# If you want to use Rack::Harakiri, you
+# need to explicitly require it.
+#
+require 'picky/rack/harakiri'
+
 describe Rack::Harakiri do
   before(:each) do
     @app = stub :app
