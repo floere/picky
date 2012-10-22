@@ -44,11 +44,11 @@ module Picky
       #   [:name, :height, :color] returns +3, but
       #   [:name, :height, :street] returns -1.
       #
-      # Note: Use Array#clustered_uniq_fast to make
+      # Note: Use Array#clustered_uniq to make
       #       [:a, :a, :b, :a] => [:a, :b, :a]
       #
       def boost_for_categories names
-        @boosts[names.clustered_uniq_fast] || 0
+        @boosts[names.clustered_uniq] || 0
       end
 
       # API.

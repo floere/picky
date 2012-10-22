@@ -2,21 +2,11 @@
 #
 class Array
 
-  # Cluster-uniqs equal neighborly elements.
-  #
-  # Returns a copy.
-  #
-  def clustered_uniq
-    self.inject([]) do |result, element|
-      result << element if element != result.last
-      result
-    end
-  end
   # Around 10% faster than the above.
   #
   # Returns a copy.
   #
-  def clustered_uniq_fast
+  def clustered_uniq
     result = []
     self.inject(nil) do |last, element|
       if last == element
