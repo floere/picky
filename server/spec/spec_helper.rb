@@ -45,12 +45,10 @@ def gc_runs_of
   if block_given?
     code = Proc.new
     GC.start
-    GC::Profiler.enable
     calls = GC.count
     code.call
-    GC::Profiler.disable
     GC.count - calls
   else
-    raise '#gc_calls_of needs a block'
+    raise '#gc_runs_of needs a block'
   end
 end
