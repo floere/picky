@@ -90,7 +90,8 @@ module Picky
         # anymore.
         #
         def release_all
-          @__free__ += @__used__
+          @__used__.each { |used| @__free__ << used } # +0 Array per release_all
+          # @__used__ += @__free__ # +1 Array per release_all
           @__used__.clear
         end
       
