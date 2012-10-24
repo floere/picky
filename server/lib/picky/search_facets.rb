@@ -27,13 +27,19 @@ module Picky
       #
       return counts unless filter_query = options[:filter]
       
-      # Pre-tokenize filter for reuse.
-      #
-      tokenized_filter = tokenized filter_query, false
-      
       # Pre-tokenize query token category.
       #
       predefined_categories = [index[category_identifier]]
+      
+      # Pre-tokenize key token – replace text below.
+      # Note: The original is not important.
+      #
+      key_token = Query::Token.new '', nil, predefined_categories
+      
+      # Pre-tokenize filter for reuse.
+      #
+      tokenized_filter_query = tokenized filter_query, false
+      tokenized_filter_query.tokens.push key_token
       
       # Extract options.
       #
@@ -42,19 +48,30 @@ module Picky
       
       # Get actual counts.
       #
-      counts.inject(no_counts ? [] : {}) do |result, (key, _)|
-        # TODO Rewrite this.
-        #
-        tokenized_query = Query::Tokens.new(
-          [Query::Token.new(key, key, predefined_categories)]
-        )
-        # tokenized_query = tokenized "#{category_identifier}:#{key}", false
-        total = search_with(tokenized_filter + tokenized_query, 0, 0).total
-        next result unless total >= minimal_counts
-        if no_counts
+      if no_counts
+        counts.inject([]) do |result, (key, _)|
+          # Replace only the key token text because that
+          # is the only information that changes in between
+          # queries.
+          #
+          key_token.text.replace key
+          total = search_with(tokenized_filter_query, 0, 0).total
+        
+          next result unless total >= minimal_counts
           result << key
-        else
-          result[key] = total; result
+        end
+      else
+        counts.inject({}) do |result, (key, _)|
+          # Replace only the key token text because that
+          # is the only information that changes in between
+          # queries.
+          #
+          key_token.text.replace key
+          total = search_with(tokenized_filter_query, 0, 0).total
+        
+          next result unless total >= minimal_counts
+          result[key] = total
+          result
         end
       end
     end

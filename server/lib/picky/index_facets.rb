@@ -15,12 +15,16 @@ module Picky
       text_ids = self[category_identifier].exact.inverted
       no_counts = options[:counts] == false
       minimal_counts = options[:at_least]
-      text_ids.inject(no_counts ? [] : {}) do |result, (text, ids)|
-        size = ids.size
-        next result if minimal_counts && size < minimal_counts
-        if no_counts
+      
+      if no_counts
+        text_ids.inject([]) do |result, (text, ids)|
+          next result if minimal_counts && ids.size < minimal_counts
           result << text
-        else
+        end
+      else
+        text_ids.inject({}) do |result, (text, ids)|
+          size = ids.size
+          next result if minimal_counts && size < minimal_counts
           result[text] = size; result
         end
       end
