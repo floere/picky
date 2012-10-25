@@ -2,6 +2,8 @@
 #
 require_relative 'sinatra/index_actions'
 
+# TODO Remove for 5.0.
+#
 module Picky
 
   # This Module is used to install delegator methods
