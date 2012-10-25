@@ -49,30 +49,36 @@ module Picky
       # Get actual counts.
       #
       if no_counts
-        counts.inject([]) do |result, (key, _)|
-          # Replace only the key token text because that
-          # is the only information that changes in between
-          # queries.
-          #
-          key_token.text.replace key
-          total = search_with(tokenized_filter_query, 0, 0).total
-        
-          next result unless total >= minimal_counts
-          result << key
-        end
+        facets_without_counts counts, minimal_counts, tokenized_filter_query, key_token.text
       else
-        counts.inject({}) do |result, (key, _)|
-          # Replace only the key token text because that
-          # is the only information that changes in between
-          # queries.
-          #
-          key_token.text.replace key
-          total = search_with(tokenized_filter_query, 0, 0).total
+        facets_with_counts    counts, minimal_counts, tokenized_filter_query, key_token.text
+      end
+    end
+    def facets_without_counts counts, minimal_counts, tokenized_filter_query, last_token_text
+      counts.inject([]) do |result, (key, _)|
+        # Replace only the key token text because that
+        # is the only information that changes in between
+        # queries.
+        #
+        last_token_text.replace key
+        total = search_with(tokenized_filter_query, 0, 0).total
         
-          next result unless total >= minimal_counts
-          result[key] = total
-          result
-        end
+        next result unless total >= minimal_counts
+        result << key
+      end
+    end
+    def facets_with_counts counts, minimal_counts, tokenized_filter_query, last_token_text
+      counts.inject({}) do |result, (key, _)|
+        # Replace only the key token text because that
+        # is the only information that changes in between
+        # queries.
+        #
+        last_token_text.replace key
+        total = search_with(tokenized_filter_query, 0, 0).total
+        
+        next result unless total >= minimal_counts
+        result[key] = total
+        result
       end
     end
 
