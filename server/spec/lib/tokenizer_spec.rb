@@ -157,15 +157,30 @@ ERROR
           tokenizer.split('this is a test').should == ['this', 'is', 'a', 'test']
         end
       end
-      context "with removes_characters called" do
+      context "with specific splitting pattern" do
         before(:each) do
           tokenizer.splits_text_on(/[\s\.\/]/)
         end
-        it "has split" do
+        it "splits text correctly" do
           expect { tokenizer.split('a b/c.d') }.to_not raise_error
         end
-        it "removes illegal characters" do
+        it "splits text correctly" do
           tokenizer.split('a b/c.d').should == ['a','b','c','d']
+        end
+      end
+      context "with a splitter given" do
+        let(:splitter) do
+          Class.new do
+            def split text
+              text.split(/,/)
+            end
+          end.new
+        end
+        before(:each) do
+          tokenizer.splits_text_on splitter
+        end
+        it "splits text correctly" do
+          tokenizer.split('a,b/c.d').should == ['a', 'b/c.d']
         end
       end
     end

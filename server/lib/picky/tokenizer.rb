@@ -93,15 +93,22 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
 
     # Splitting.
     #
-    # We allow Strings and Regexps.
+    # We allow Strings, Regexps, and things that respond to #split.
+    #
     # Note: We do not test against to_str since symbols do not work with String#split.
     #
-    def splits_text_on regexp_or_string
-      raise ArgumentError.new "#{__method__} takes a Regexp or String as argument, not a #{regexp_or_string.class}." unless Regexp === regexp_or_string || String === regexp_or_string
-      @splits_text_on = regexp_or_string
-    end
-    def split text
-      text.split @splits_text_on
+    def splits_text_on thing
+      raise ArgumentError.new "#{__method__} takes a Regexp or String or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
+      @splits_text_on = thing
+      if thing.respond_to? :split
+        def split text
+          @splits_text_on.split text
+        end
+      else
+        def split text
+          text.split @splits_text_on
+        end
+      end
     end
 
     # Normalizing.
