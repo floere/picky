@@ -4,7 +4,7 @@
   /* line 4, specific.css.sass */
   .container_2 div.index {
     width: 20em;
-    float: right;
+/*    float: left;*/
     padding: 3em;
     margin: 1em;
     border: 2px solid #e0e0d0; }
