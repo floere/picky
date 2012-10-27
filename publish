@@ -1,12 +1,14 @@
 #!/bin/bash
-cd web
-bundle exec middleman build --verbose 
 echo
-echo 'middleman finished'
-cd ..
+echo "Don't forget to run"
+echo "cd web; bundle exec middleman build; cd .."
 
 git checkout gh-pages                # switch to gh-pages branch
+
 git checkout master -- web/build     # checkout just the web/build folder from master
+cp -r web/build/* .                  # TODO Make elegant
+git add .                            # commit the changes
 git commit -m "Picky website update" # commit the changes
-git push -n                          # 
+git push                             # 
+
 git checkout master                  # go back to the master branch
