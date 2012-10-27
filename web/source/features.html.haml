@@ -1,0 +1,189 @@
+---
+title: Features
+---
+
+.container_2
+  .grid_2.plain
+    %ul
+      %li
+        %a{ :href => '#server' } Full-blown standalone search server
+      %li
+        %a{ :href => '#client' } Helpful, comfortable Javascript web client and server query interface.
+      %li
+        %a{ :href => '#statistics' } Clam: Gaining insight on how good your search works
+      %li
+        %a{ :href => '#live' } Suckerfish: Looking at and changing server parameters on the fly in the running server
+  .grid_2
+    %h3#server Full-blown standalone search server
+    .grid_1
+      %h4 Goodies
+      %p
+        Picky is a standalone search server currently offering a HTTP interface (returning JSON) and a nice in-code Ruby configuration (no huge XML files).
+        Also:
+        %ul
+          %li Flexibly configure indexing
+          %li
+            Easily configure handling query text, e.g.
+            %code splits_text_on:&nbsp;/[\s\/\-\"\&]/
+          %li Multiple data sources (DB, CSV, ...)
+          %li Choice of in-memory or Redis indexes.
+          %li
+            Partial searching,
+            %code pick*
+          %li
+            Phonetic similarity,
+            %code pecky~
+          %li
+            Categorized searching,
+            %code napoleon, title:war
+          %li
+            Weighing not only categories, but combinations!
+            %code {&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}
+          %li
+            Range queries
+          %li
+            Comfortable routing,
+            %code route %r{/books} => book_query
+        %p
+          … and much more.
+    .grid_1
+      %h4 Getting Started
+      %p
+        %code
+          %pre
+            gem install picky
+      %p
+        There's a whole section devoted to getting started with Picky!
+        See
+        %a{ :href => 'getting_started.html' } here
+        for getting on your feet quickly :)
+  .grid_2
+    %h3#client Helpful, comfortable web client
+    .grid_1
+      %h4 Goodies
+      %p
+        Offers a Ruby client that connects to the Server's JSON interface and provides a clever (in a helpful way) and easily configurable Javascript interface.
+      %p
+        Including the interface in your views is as easy as
+        %code
+          %pre
+            \= Picky::Client.interface
+      %p
+        and adding the
+        %code picky.min.js
+        file.
+      %p
+        This is it:
+        %img{ :src => 'images/client1.png', :width => '480px' }
+      %p
+        This is how you search for books with title similar to lyterature that were published in 2002.
+      %p
+        The gem also contains useful methods to render results into the JSON that is sent to the Javascript interface, extracting just the ids, and much more.
+    .grid_1
+      %h4 Getting Started
+      %p
+        %code
+          %pre
+            gem install picky-client
+      %p
+        There's a whole section devoted to getting started with the Picky client!
+        See
+        %a{ :href => 'getting_started.html' } here
+        and scroll down to the client part on the left.
+  .grid_2
+    %h3#statistics Clam: Statistics Server
+    .grid_1
+      %h4 Goodies
+      %p
+        Clam is a simple log parser that starts a in-gem webapp and shows you relevant statistics about your app.
+      %p
+        This is part of its interface:
+        %img{ :src => 'images/statistics.png', :width => '480px' }
+      %p
+        It shows you
+        %ul
+          %li how often people were successful in finding things
+          %li if it was a request for "more results" (indicating that they haven't found it in the first 20 displayed results)
+          %li how fast Picky was
+          %li if the query was just a "results while you type" or a full one
+      %p
+        and other things.
+    .grid_1
+      %h4 Getting Started
+      %p
+        %code
+          %pre
+            gem install picky-statistics
+      %p Then run:
+      %p
+        %code
+          %pre
+            picky stats path/to/pickys/log/search.log
+      %p
+        If you are in the Picky server directory, the path is probably
+        %code log/search.log
+        \.
+      %p You should see a message like:
+      %p
+        %code
+          %pre
+            :preserve
+              Clam, Picky's friend, is looking at Picky's logfile.
+              ... and showing results on port 4567.
+      %p
+        Go to
+        %a{ :href => 'localhost:4567' } localhost:4567
+        and you should see the statistics interface in its full glory!
+      %p
+        More params are available, just enter
+        %code picky
+        in the console.
+  .grid_2
+    %h3#live Suckerfish: Live Interface into a running Picky
+    .grid_1
+      %h4 Goodies
+      %p
+        Suckerfish is an introspective system that allows you to look at parameters of a running Picky Server. Not only that, it allows you to change parameters on the fly.
+      %p
+        This is part of its interface:
+        %img{ :src => 'images/live.png', :width => '480px' }
+      %p
+        Currently, you have the possibility to modify how the server handles query input.
+      %p
+        Hit "Update Server now" and see the effects instantly on all queries.
+      %p
+        Note: Only works with multiprocessing servers, like Unicorn.
+    .grid_1
+      %h4 Getting Started
+      %p
+        %code
+          %pre
+            gem install picky-live
+      %p
+        Add this to
+        %code app/application.rb
+        in the server:
+      %p
+        %code
+          %pre
+            \%r{/admin} => LiveParameters.new
+      %p Start the server and enter:
+      %p
+        %code
+          %pre
+            picky live
+      %p You should see a message like:
+      %p
+        %code
+          %pre
+            :preserve
+              Suckerfish has sucked onto Picky at localhost:8080/admin.
+              Sinatra has taken the stage on port 4568...
+      %p
+        Go to
+        %a{ :href => 'localhost:4568' } localhost:4568
+        and fiddle with the parameters (server needs to be running).
+      %p
+        More params are available, just enter
+        %code picky
+        in the console.

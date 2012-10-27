@@ -1,0 +1,23 @@
+!!!
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", :'xml:lang' => "en", :lang => "en" }
+  %head
+    = partial 'layouts/meta'
+    = partial 'layouts/links'
+    %script{ :type => "text/javascript", :src => "javascripts/sh.min.js" }
+    %script{ :type => "text/javascript", :src => "javascripts/sh-ruby.min.js" }
+    = partial 'layouts/scripts'
+    = partial 'layouts/title'
+    = partial 'layouts/analytics'
+  %body{ :onload => "sh_highlightDocument();" }
+    = partial 'layouts/header'
+    = partial 'layouts/logo'
+    .container_2
+      %h1 Picky
+      = partial 'layouts/navigation'
+    .container_2
+      %h2
+        = current_page.data.title
+        = partial 'layouts/social'
+    = yield
+    = partial 'layouts/license'
+    = partial 'layouts/footer'

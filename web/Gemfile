@@ -1,0 +1,7 @@
+source :rubygems
+
+gem 'middleman', '~>3.0'
+
+gem 'haml'
+gem 'RedCloth'
+gem 'sass'

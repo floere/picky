@@ -1,0 +1,96 @@
+---
+title: In Detail
+---
+
+.container_2
+  .grid_1
+    %h3 Huh? What's a semantic text search engine?
+    %p
+      A semantic text search engine does not operate on huge blobs of text, but instead on smaller, highly categorized text amounts. For example, on varchar database fields.
+    %p
+      If your data isn't categorized well (like text from a book), then you should instead choose a full-text search engine, like
+      %a{ :href => 'http://sphinxsearch.com/' } Sphinx
+      or
+      = succeed('.') do
+        %a{ :href => 'http://lucene.apache.org/solr/' } Solr (Lucene)
+    %h3 Then why use it?
+    %p
+      Often, full-text search engines are misused by letting them loose on highly categorized (semantic) text.
+    %p
+      Picky helps your user find data which in a full-text search engine would be buried in a heap of results. Also, it lets him do so with a Google-y single search field.
+    %p
+      Sure the word "peter" is found most often in document #7, but he actually just wants documents by someone with surname "Peter", and not everything related to peters.
+    %p
+      Picky helps him refine his search by way of a comfortable interface to get exactly what he wants.
+    %h3 But why not use a full-text search engine?
+    %p
+      Full-Text search engines do one thing especially well: Making full (i.e. uncategorized heaps of) text searchable.
+    %p
+      For small, highly categorized text, we simply need new ideas. Picky is one of them.
+    %p
+      Ok, that was my elevator pitch ;)
+    %h3 See me show (it) off
+    %p
+      Using a real
+      %a{ :href => 'http://twixtel.ch' } telephone search
+      as an example.
+    %iframe{ :src => "http://player.vimeo.com/video/12614970", :width => "460", :height => "365", :frameborder => "0" }
+    %p
+      This was at the fantastic
+      %a{ :href => 'http://euruko2010.org/' } EuRuKo 2010
+      Conference in
+      %a{ :href => 'http://www.google.ch/images?q=krakow+poland' } beautiful
+      Krakow.
+    %h3 Why would one write a search engine in Ruby?
+    %p
+      It's fast enough and the high level really helped understanding it as it evolved. There are some parts that have been written in pedal-to-the-metal C code.
+    %h3 How does it perform?
+    %p
+      This depends on many factors, but generally we recommend using Picky with a maximum of 150 million data points, i.e. words (we used it there).
+      The area under 20 millions is probably best. Your mileage may vary, of course, depending on how many partial indexes you use etc.
+    %p
+      See the
+      %a{ :href => 'enterprise.html' } use case
+      in the enterprise section.
+    %p
+      Indexing is not too fast, and I'd be glad if it were faster. However, you get the full power of Ruby and fully customizable indexing.
+  .grid_1
+    %h3 Why the octopus?
+    %p
+      Glad you asked. But first, read this
+      = succeed('.') do
+        %a{ :href => 'http://en.wikipedia.org/wiki/Octopus' } Wikipedia entry about octopuses
+      Also,
+      = succeed('.') do
+        %a{ :href => 'http://www.youtube.com/watch?v=badHUNl2HXU' } a movie
+      Finished? I think that sums it up pretty well. And it's cuuute, don't you think? :)
+    %p
+      But don't call him that. He likes to be called "Octor the Destroyer".
+    %h3 Who wrote it?
+    %p
+      Mainly me,
+      = succeed(', ') do
+        %a{ :href => 'http://florianhanke.com' } Florian Hanke
+      but I also had
+      %a{ :href => 'status.html' } excellent help
+      by friends and coworkers.
+    %h3 Why the LGPL license?
+    %p
+      I'd have preferred a MIT license. In the end it was a compromise between my former employer and me.
+    %h3 Roadmap
+    %p
+      %a{ :href => 'http://github.com/floere/picky/wiki/Roadmap' } Wiki Roadmap
+    %h3 Alternatives
+    %p
+      There aren't many
+      %strong real
+      Ruby search engines. Just more or less elegant adapters for existing ones. I found two real ones:
+    %p
+      %a{ :href => 'http://masanjin.net/whistlepig/' } Whistlepig
+      by William Morgan.
+      "Whistlepig is a minimalist real-time full-text search".
+    %p
+      %a{ :href => 'https://github.com/rstacruz/ion' } Ion
+      by Rico Sta. Cruz.
+      A Ruby search engine based on a Redis backend.
+  .grid_1

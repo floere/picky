@@ -1,0 +1,22 @@
+!!!
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", :'xml:lang' => "en", :lang => "en" }
+  %head
+    = partial 'layouts/meta'
+    = partial 'layouts/links'
+    %link{ :rel => 'stylesheet', :href => 'stylesheets/enterprise.css', :type => 'text/css' }
+    = partial 'layouts/scripts'
+    = partial 'layouts/title'
+    = partial 'layouts/analytics'
+  %body
+    = partial 'layouts/header'
+    = partial 'layouts/logo'
+    .container_2
+      %h1 Picky
+      = partial 'layouts/navigation'
+    .container_2
+      %h2
+        = h current_page.data.title
+        = partial 'layouts/social'
+    = yield
+    = partial 'layouts/license'
+    = partial 'layouts/footer'
