@@ -1,0 +1,136 @@
+/* line 1, basic.css.sass */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+/* line 18, basic.css.sass */
+ol, ul {
+  list-style: none; }
+
+/* line 21, basic.css.sass */
+blockquote, q {
+  quotes: none; }
+
+/* line 24, basic.css.sass */
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none; }
+
+/* line 29, basic.css.sass */
+h1, h2, h3, h4 {
+  font-family: Futura, "Century Gothic", "URW Gothic L", Helvetica, sans-serif;
+  font-weight: normal;
+  border-bottom: 1px solid #777777; }
+
+/* line 35, basic.css.sass */
+h2, h3, h4, p, ul, ol {
+  margin-top: 1em;
+  font-size: 0.9em; }
+
+/* line 39, basic.css.sass */
+ul, ol {
+  margin-top: 0.5em; }
+
+/* line 42, basic.css.sass */
+h1 {
+  font-size: 2em; }
+
+/* line 46, basic.css.sass */
+h2 {
+  font-size: 1.5em; }
+
+/* line 50, basic.css.sass */
+h3 {
+  font-size: 1.25em; }
+
+/* line 54, basic.css.sass */
+h4 {
+  font-size: 1.05em; }
+
+/* line 57, basic.css.sass */
+a {
+  color: #224466;
+  text-decoration: none;
+  border-bottom: 1px solid; }
+
+/* line 63, basic.css.sass */
+h1 a, h2 a, h3 a, h4 a {
+  border-bottom: none; }
+
+/* line 67, basic.css.sass */
+a:visited {
+  color: #555666; }
+
+/* line 71, basic.css.sass */
+a:hover,
+a:focus {
+  color: #224466;
+  background-color: white; }
+
+/* line 77, basic.css.sass */
+a:active {
+  color: #224466; }
+
+/* line 81, basic.css.sass */
+pre {
+  background-color: white;
+  margin: 10px 0;
+  padding: 10px; }
+
+/* line 86, basic.css.sass */
+img {
+  float: left;
+  margin: 10px 10px 10px 0px; }
+
+/* line 92, basic.css.sass */
+ol ol li {
+  list-style: none; }
+/* line 95, basic.css.sass */
+ol ol ol li {
+  list-style: disc; }
+
+/* line 98, basic.css.sass */
+table {
+  border: 2px solid #999999; }
+
+/*  :background white*/
+ * :padding 1em
+ * :margin 0.5em
+ *
+ * td
+ *   :padding 0.5em */
+/* line 107, basic.css.sass */
+ol.nav {
+  height: 1.5em;
+  color: #cccccc; }
+  /* line 110, basic.css.sass */
+  ol.nav li {
+    float: left;
+    padding-right: 0.4em; }
+
+/* line 114, basic.css.sass */
+div.clear {
+  clear: both; }
+
+/* line 117, basic.css.sass */
+div.license {
+  font-size: 0.5em;
+  width: 33em;
+  position: fixed;
+  bottom: 0px;
+  left: 10px;
+  background-color: beige; }
