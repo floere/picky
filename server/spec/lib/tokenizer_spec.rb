@@ -137,6 +137,30 @@ ERROR
           tokenizer.normalize_with_patterns('alice & bob').should == 'alice and bob'
         end
       end
+      context 'with a normalizer' do
+        let(:normalizer) {
+          Class.new do
+            def normalize_with_patterns text
+              text.reverse
+            end
+          end.new
+        }
+        before(:each) do
+          tokenizer.normalizes_words normalizer
+        end
+        it "has normalize_with_patterns" do
+          expect { tokenizer.normalize_with_patterns('a b/c.d') }.to_not raise_error
+        end
+        it "normalizes, but just the first one" do
+          tokenizer.normalize_with_patterns('1234567890').should == '0987654321'
+        end
+        it "works correctly" do
+          tokenizer.normalize_with_patterns('camera +').should == '+ aremac'
+        end
+        it "works correctly" do
+          tokenizer.normalize_with_patterns('alice & bob').should == 'bob & ecila'
+        end
+      end
     end
 
     describe "splits_text_on" do
