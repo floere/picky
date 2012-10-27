@@ -9,6 +9,6 @@ git checkout master -- web/build     # checkout just the web/build folder from m
 cp -r web/build/* .                  # TODO Make elegant
 git add .                            # commit the changes
 git commit -m "Picky website update" # commit the changes
-git push                             # 
+git push origin/gh-pages             # 
 
 git checkout master                  # go back to the master branch

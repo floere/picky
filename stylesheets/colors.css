@@ -1,0 +1,24 @@
+/* line 1, colors.css.sass */
+body {
+  background-color: beige; }
+
+/* line 6, colors.css.sass */
+.container_2 div.index {
+  background-color: white; }
+/* line 9, colors.css.sass */
+.container_2 .grid_1 {
+  background-color: #f5f5ea; }
+/* line 12, colors.css.sass */
+.container_2 .grid_2 {
+  background-color: #f5f5ea; }
+
+/* line 15, colors.css.sass */
+.header {
+  background-color: #199399;
+  background: -moz-radial-gradient(50% 100%, circle, beige 90px, #199399 600px);
+  background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(beige), to(#199399)); }
+
+/* line 21, colors.css.sass */
+div.navigation a.current {
+  color: black;
+  background-color: white; }
