@@ -1,8 +1,9 @@
 #!/bin/bash
+cd web
 bundle exec middleman build --verbose 
-
 echo
 echo 'middleman finished'
+cd ..
 
 git checkout gh-pages                # switch to gh-pages branch
 git checkout master -- web/build     # checkout just the web/build folder from master
