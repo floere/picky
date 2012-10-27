@@ -1,6 +1,11 @@
 #!/bin/bash
 bundle exec middleman build --verbose 
-# doc_sha=$(git ls-tree -d HEAD build | awk '{print $3}')
-# git cat-file -p $doc_sha
-# new_commit=$(echo "Auto-update docs." | git commit-tree $doc_sha -p refs/heads/gh-pages)
-# git update-ref refs/heads/gh-pages $new_commit
+
+echo
+echo 'middleman finished'
+
+git checkout gh-pages                # switch to gh-pages branch
+git checkout master -- web/build     # checkout just the web/build folder from master
+git commit -m "Picky website update" # commit the changes
+git push -n                          # 
+git checkout master                  # go back to the master branch
