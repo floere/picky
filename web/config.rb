@@ -53,7 +53,7 @@ helpers do
   end
 end
 
-set :build_dir, '.'
+set :build_dir, 'build'
 set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
