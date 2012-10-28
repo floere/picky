@@ -1,14 +1,18 @@
 ## Single Page Help Index
 
-This is the one page help document for Picky. Simply search for anything in this page.
+This is the one page help document for Picky.
+
+Search for things using your browser (eg. ⌘F).
 
 Edit typos directly in the [github page](#todo) using the edit button.
 
 ### Getting started
 
-It's [All Ruby](#allruby). [Transparency](#transparency) matters.
+It's [All Ruby](#all_ruby). [Transparency](#transparency) matters.
 
 #### Generating an app
+
+Creating an example app to get you up and running fast.
 
 [Generators](#generators)
     * [Servers](#generators-servers)
@@ -24,12 +28,16 @@ It's [All Ruby](#allruby). [Transparency](#transparency) matters.
 
 #### Integration in Rails/Sinatra etc.
 
+Picky in various environments.
+
 [Rails](#rails)
 [Sinatra](#sinatra)
 [DRb](#drb)
 [Ruby Script](#rubyscript)
 
-### Tokenizing
+### Tokenizing{#index-tokenizing}
+
+How data is cut into little pieces for the index and when searching.
 
 [Tokenizing](#tokenizing)
 [Options](#tokenizing-options)
@@ -72,6 +80,8 @@ There are four different [types](#indexes-types):
 
 ### Searching
 
+How to search over indexes.
+
 * [Search](#search)
     * [Options](#search-options)
         * [Searching / Tokenizing](#search-options-searching)
@@ -82,7 +92,8 @@ There are four different [types](#indexes-types):
         * [Early Termination](#search-options-terminateearly)
 
 #### Results
-        
+
+What a picky search returns.
 
 [Results](#results)
     * [Logging](#results-logging)
