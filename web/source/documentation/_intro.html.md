@@ -9,21 +9,27 @@ Even though we only describe examples of classic and Sinatra style servers, Pick
 
 To drive the point home, remember that Picky is mainly two pieces working together: An index, and a search interface on indexes.
 
-The index normally has a source, knows how to tokenize data, and has a few data categories. And the search interface normally knows how to tokenize incoming queries. That's it:
+The index normally has a source, knows how to tokenize data, and has a few data categories. And the search interface normally knows how to tokenize incoming queries. That's it (copy and run in a script):
 
+    require 'picky'
+    
+    Person = Struct.new :id, :first, :last
+     
     index = Picky::Index.new :people do
-      source { People.all } 
-      indexing splits_text_on: /[\s,-]/
+      source { People.all }
+      indexing splits_text_on: /[\s-]/
       category :first
       category :last
-      category :age, partial: Picky::Partial::None.new
     end
+    index.add Person.new(1, 'Florian', 'Hanke')
+    index.add Person.new(2, 'Peter', 'Mayer-Miller')
     
     people = Picky::Search.new index do
       searching splits_text_on: /[\s,-]/
     end
-    results = people.search 'joe'
-    puts results
+    
+    results = people.search 'Miller'
+    p results.ids # => [2]
 
 You can put these pieces anywhere, independently.
 

@@ -32,78 +32,77 @@ q:before, q:after {
 
 /* line 29, basic.css.sass */
 h1, h2, h3, h4 {
-  font-family: Futura, "Century Gothic", "URW Gothic L", Helvetica, sans-serif;
   font-weight: normal;
   border-bottom: 1px solid #777777; }
 
-/* line 35, basic.css.sass */
+/* line 34, basic.css.sass */
 h2, h3, h4, p, ul, ol {
   margin-top: 1em;
   font-size: 0.9em; }
 
-/* line 39, basic.css.sass */
+/* line 38, basic.css.sass */
 ul, ol {
   margin-top: 0.5em; }
 
-/* line 42, basic.css.sass */
+/* line 41, basic.css.sass */
 h1 {
   font-size: 2em; }
 
-/* line 46, basic.css.sass */
+/* line 45, basic.css.sass */
 h2 {
   font-size: 1.5em; }
 
-/* line 50, basic.css.sass */
+/* line 49, basic.css.sass */
 h3 {
   font-size: 1.25em; }
 
-/* line 54, basic.css.sass */
+/* line 53, basic.css.sass */
 h4 {
   font-size: 1.05em; }
 
-/* line 57, basic.css.sass */
+/* line 56, basic.css.sass */
 a {
   color: #224466;
   text-decoration: none;
   border-bottom: 1px solid; }
 
-/* line 63, basic.css.sass */
+/* line 62, basic.css.sass */
 h1 a, h2 a, h3 a, h4 a {
   border-bottom: none; }
 
-/* line 67, basic.css.sass */
+/* line 66, basic.css.sass */
 a:visited {
   color: #555666; }
 
-/* line 71, basic.css.sass */
+/* line 70, basic.css.sass */
 a:hover,
 a:focus {
   color: #224466;
   background-color: white; }
 
-/* line 77, basic.css.sass */
+/* line 76, basic.css.sass */
 a:active {
   color: #224466; }
 
-/* line 81, basic.css.sass */
+/* line 80, basic.css.sass */
 pre {
   background-color: white;
   margin: 10px 0;
   padding: 10px; }
 
-/* line 86, basic.css.sass */
+/* line 85, basic.css.sass */
 img {
   float: left;
   margin: 10px 10px 10px 0px; }
 
-/* line 92, basic.css.sass */
+/* line 91, basic.css.sass */
 ol ol li {
   list-style: none; }
-/* line 95, basic.css.sass */
+/* line 94, basic.css.sass */
 ol ol ol li {
   list-style: disc; }
 
-/* line 98, basic.css.sass */
+/* line 97, basic.css.sass */
 table {
   border: 2px solid #999999; }
 
@@ -113,20 +112,20 @@ table {
  *
  * td
  *   :padding 0.5em */
-/* line 107, basic.css.sass */
+/* line 106, basic.css.sass */
 ol.nav {
   height: 1.5em;
   color: #cccccc; }
-  /* line 110, basic.css.sass */
+  /* line 109, basic.css.sass */
   ol.nav li {
     float: left;
     padding-right: 0.4em; }
 
-/* line 114, basic.css.sass */
+/* line 113, basic.css.sass */
 div.clear {
   clear: both; }
 
-/* line 117, basic.css.sass */
+/* line 116, basic.css.sass */
 div.license {
   font-size: 0.5em;
   width: 33em;

@@ -3,12 +3,11 @@
   %head
     = partial 'layouts/meta'
     = partial 'layouts/links'
-    %script{ :type => "text/javascript", :src => "javascripts/sh.min.js" }
-    %script{ :type => "text/javascript", :src => "javascripts/sh-ruby.min.js" }
+    %script{ :type => "text/javascript", :src => "javascripts/highlight.bash.ruby.js" }
     = partial 'layouts/scripts'
     = partial 'layouts/title'
     = partial 'layouts/analytics'
-  %body{ :onload => "sh_highlightDocument();" }
+  %body{ :onload => "hljs.initHighlighting();" }
     = partial 'layouts/header'
     = partial 'layouts/logo'
     .container_2
