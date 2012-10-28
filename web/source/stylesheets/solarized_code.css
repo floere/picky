@@ -6,8 +6,9 @@ pre {
   padding: 1em;
   display: block;
   background: black;
-  color: white;
-  font-weight: bolder;
+  color: #F7F8F0;
+  font-family: "andale mono", "lucida console", monospace;
+  font-size: 90%;
 }
 
 pre .comment,
