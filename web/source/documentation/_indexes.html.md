@@ -97,7 +97,7 @@ This is all you can do to configure an index:
     books_index = Index.new :books do
       source   { Book.order("isbn ASC") }
     
-      indexing removes_characters:                 /[^a-zA-Z0-9\s\:\"\&\.\|]/i,                    # Default: nil
+      indexing removes_characters:                 /[^a-z0-9\s\:\"\&\.\|]/i,                       # Default: nil
                stopwords:                          /\b(and|the|or|on|of|in)\b/i,                   # Default: nil
                splits_text_on:                     /[\s\/\-\_\:\"\&\/]/,                           # Default: /\s/
                removes_characters_after_splitting: /[\.]/,                                         # Default: nil
@@ -189,7 +189,7 @@ If you define the source directly in the index block, it will be evaluated insta
       source Book.order('title ASC')
     end
 
-This works with ActiveRecord and other similar ORMs since @Book.order@ returns a proxy object that will only be evaluated when the server is indexing.
+This works with ActiveRecord and other similar ORMs since `Book.order` returns a proxy object that will only be evaluated when the server is indexing.
 
 For example, this would instantly get the records, since `#all` is a kicker method:
 
@@ -342,7 +342,7 @@ Searching in multiple categories can also be done. If you have:
     category :some,  :qualifier => :s
     category :other, :qualifier => :o
 
-Then searching with "s,o:bla" will search for bla in both @:some@ and @:other@. Neat, eh?
+Then searching with "s,o:bla" will search for bla in both `:some` and `:other`. Neat, eh?
 
 #### Option from{#indexes-categories-from}
 
