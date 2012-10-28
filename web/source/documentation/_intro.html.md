@@ -1,4 +1,7 @@
-## All Ruby{#allruby}
+## All Ruby
+
+{.edit}
+[Edit](http://github.com/floere/picky/blob/master/web/source/documentation/_intro.html.md)
 
 Never forget this: *Picky is all Ruby, all the time*!
 
@@ -24,7 +27,7 @@ The index normally has a source, knows how to tokenize data, and has a few data 
 
 You can put these pieces anywhere, independently.
 
-## Transparency{#transparency}
+## Transparency
 
 Picky tries its best to be *transparent* so you can go have a look if something goes wrong. It wants you to *never feel powerless*.
 

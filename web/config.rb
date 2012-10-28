@@ -58,6 +58,8 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
+set :markdown_engine, :maruku
+
 # Build-specific configuration
 #
 configure :build do
