@@ -44,6 +44,6 @@ Picky currently offers an example Sinatra client that you can adapt for your pro
 
 This client is generated with
 
-    picky generate sinatra_client target_directory
+    picky generate client target_directory
 
 and generates a full Sinatra client (including Javascript etc.) that you can try immediately. Just follow the instructions.
