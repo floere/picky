@@ -4,11 +4,12 @@ In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://
 
 h2. The Ruby semantic text search engine.
 
-Take a dive with Picky in "the Getting Started section":http://florianhanke.com/picky/getting_started.html on "http://florianhanke.com/picky":http://florianhanke.com/picky.
-Ask questions in the "Picky Mailing List":http://groups.google.com/group/picky-ruby.
-See the "changelog":http://github.com/floere/picky/blob/master/history.textile.
-Follow for updates on "@picky_rb":http://twitter.com/picky_rb.
-Find everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
+* "Main web site":http://florianhanke.com/picky
+* "Documentation":http://florianhanke.com/picky/documentation.html
+* "Getting Started":http://florianhanke.com/picky/getting_started.html
+* Ask questions in the "Picky Mailing List":http://groups.google.com/group/picky-ruby.
+* Tentacly tweets on "@picky_rb":http://twitter.com/picky_rb.
+* Find everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
 
 h1. System Requirements
 
