@@ -4,42 +4,34 @@ This is the one page help document for Picky.
 
 Search for things using your browser (use ⌘F).
 
-Edit typos directly in the [github page](http://github.com/floere/picky/tree/master/web/source/documentation) of a section using the [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_linkage.html.md) button.
+Edit typos directly in the [github page](http://github.com/floere/picky/tree/master/web/source/documentation) of a section using the [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_index.html.md) button.
 
 ### Getting started{#index-getting-started}
 
-It's [All Ruby](#all_ruby). [Transparency](#transparency) matters.
+It's [All Ruby](#all_ruby). You'll never feel powerless. [Look at your index data](#transparency) anytime.
 
 #### Generating an app{#index-generating}
 
-Creating an example app to get you up and running fast.
+Creating an [example app](#generators) to get you up and running fast, [Servers](#generators-servers) or [Clients](#generators-clients).
 
-Picky offers a number of [Generators](#generators).
+Generating them:
 
-Two [Servers](#generators-servers):
-[Sinatra](#generators-servers-sinatra) &
-[Server+Client in one](#generators-servers-allinone)
+* [Sinatra Server](#generators-servers-sinatra) and [Client](#generators-clients-sinatra)
+* [Sinatra Server+Client in one](#generators-servers-allinone)
 
-One [Client](#generators-clients):
-[Sinatra](#generators-clients-sinatra)
+More infos on the [applications](#servers):
 
-The three example [Applications](#servers) are:
-[Sinatra](#servers-sinatra)
-(
-[Routing](#servers-sinatra-routing),
-[Logging](#servers-sinatra-logging)
-)
-&
-[All In One (Client/Server)](#servers-allinone)
+* [Sinatra](#servers-sinatra)([Routing](#servers-sinatra-routing), [Logging](#servers-sinatra-logging))
+* [All In One (Client/Server)](#servers-allinone)
 
 #### Integration in Rails/Sinatra etc.{#index-integration}
 
-Picky in various environments.
+How to [integrate](#integration) Picky in:
 
 * [Rails](#rails)
 * [Sinatra](#sinatra)
 * [DRb](#drb)
-* [Ruby Script](#rubyscript)
+* [Ruby Script](#ruby_script)
 
 ### Tokenizing{#index-tokenizing}
 
@@ -64,7 +56,7 @@ How does data get in there?
 * [Indexing](#indexes-indexing)
 * [Data Source Overview](#indexes-sources)
 * [Source responding to #each](#indexes-sources-each)
-* [Classic Picky sources (soon deprecated)](#indexes-sources-classic)
+* [_Classic Picky sources_](#indexes-sources-classic) _(deprecated from 5.0)_
 * [When is the data for indexing loaded?](#indexes-sources-delayed)
 
 How is the data categorized?
