@@ -79,7 +79,7 @@ Just call `to_json` on the returned results to get the results in JSON format.
       results.to_json
     end
 
-The above example search can be called using for example @curl@:
+The above example search can be called using for example `curl`:
 
     curl 'localhost:8080/books?query=test'
 

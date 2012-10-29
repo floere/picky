@@ -24,34 +24,43 @@ title: Features
           %li Flexibly configure indexing
           %li
             Easily configure handling query text, e.g.
-            %code splits_text_on:&nbsp;/[\s\/\-\"\&]/
+            %pre
+              %code splits_text_on:&nbsp;/[\s\/\-\"\&]/
           %li Multiple data sources (DB, CSV, ...)
           %li Choice of in-memory or Redis indexes.
           %li
-            Partial searching,
-            %code pick*
+            Partial searching
+            %pre
+              %code pick*
           %li
-            Phonetic similarity,
-            %code pecky~
+            Phonetic similarity
+            %pre
+              %code pecky~
           %li
-            Categorized searching,
-            %code napoleon, title:war
+            Categorized searching
+            %pre
+              %code napoleon, title:war
           %li
             Weighing not only categories, but combinations!
-            %code {&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}
+            %pre
+              %code {&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}
           %li
             Range queries
           %li
-            Comfortable routing,
-            %code route %r{/books} => book_query
+            Comfortable routing
+            %pre
+              %code
+                :preserve
+                  get %r{/books} do
+                    books.search params[:query]
+                  end
         %p
           … and much more.
     .grid_1
       %h4 Getting Started
-      %p
+      %pre
         %code
-          %pre
-            gem install picky
+          gem install picky
       %p
         There's a whole section devoted to getting started with Picky!
         See
@@ -65,8 +74,8 @@ title: Features
         Offers a Ruby client that connects to the Server's JSON interface and provides a clever (in a helpful way) and easily configurable Javascript interface.
       %p
         Including the interface in your views is as easy as
-        %code
-          %pre
+        %pre
+          %code
             \= Picky::Client.interface
       %p
         and adding the
@@ -81,10 +90,9 @@ title: Features
         The gem also contains useful methods to render results into the JSON that is sent to the Javascript interface, extracting just the ids, and much more.
     .grid_1
       %h4 Getting Started
-      %p
+      %pre
         %code
-          %pre
-            gem install picky-client
+          gem install picky-client
       %p
         There's a whole section devoted to getting started with the Picky client!
         See
@@ -110,26 +118,23 @@ title: Features
         and other things.
     .grid_1
       %h4 Getting Started
-      %p
+      %pre
         %code
-          %pre
-            gem install picky-statistics
+          gem install picky-statistics
       %p Then run:
-      %p
+      %pre
         %code
-          %pre
-            picky stats path/to/pickys/log/search.log
+          picky stats path/to/pickys/log/search.log
       %p
         If you are in the Picky server directory, the path is probably
         %code log/search.log
         \.
       %p You should see a message like:
-      %p
+      %pre
         %code
-          %pre
-            :preserve
-              Clam, Picky's friend, is looking at Picky's logfile.
-              ... and showing results on port 4567.
+          :preserve
+            Clam, Picky's friend, is looking at Picky's logfile.
+            ... and showing results on port 4567.
       %p
         Go to
         %a{ :href => 'localhost:4567' } localhost:4567
@@ -155,30 +160,26 @@ title: Features
         Note: Only works with multiprocessing servers, like Unicorn.
     .grid_1
       %h4 Getting Started
-      %p
+      %pre
         %code
-          %pre
-            gem install picky-live
+          gem install picky-live
       %p
         Add this to
         %code app/application.rb
         in the server:
-      %p
+      %pre
         %code
-          %pre
-            \%r{/admin} => LiveParameters.new
+          \%r{/admin} => LiveParameters.new
       %p Start the server and enter:
-      %p
+      %pre
         %code
-          %pre
-            picky live
+          picky live
       %p You should see a message like:
-      %p
+      %pre
         %code
-          %pre
-            :preserve
-              Suckerfish has sucked onto Picky at localhost:8080/admin.
-              Sinatra has taken the stage on port 4568...
+          :preserve
+            Suckerfish has sucked onto Picky at localhost:8080/admin.
+            Sinatra has taken the stage on port 4568...
       %p
         Go to
         %a{ :href => 'localhost:4568' } localhost:4568

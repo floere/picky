@@ -1,27 +1,51 @@
-/*
-Adapted heavily from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
-*/
-
-
-pre {
-  padding: 1em;
-  display: block;
+/* line 3, solarized_code.css.sass */
+pre, code, tt, samp {
   background: black;
-  color: #F7F8F0;
-  font-family: "andale mono", "lucida console", monospace;
-  font-size: 90%;
-}
+  color: #f7f8f0;
+  font-weight: 500; }
 
+/* line 10, solarized_code.css.sass */
+p code {
+  padding: 0.2em 0.5em;
+  -webkit-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  -moz-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px; }
+
+/* line 20, solarized_code.css.sass */
+pre {
+  -webkit-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  -moz-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  padding: 0.5em 1em;
+  margin: 1.5em 0;
+  overflow: auto;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  padding: 1em;
+  display: block; }
+
+/* line 36, solarized_code.css.sass */
 pre .comment,
 pre .template_comment,
 pre .diff .header,
 pre .doctype,
 pre .lisp .string,
-pre .javadoc {
+pre .javadoc, code .comment,
+code .template_comment,
+code .diff .header,
+code .doctype,
+code .lisp .string,
+code .javadoc {
   color: #93a1a1;
-  font-style: italic;
-}
-
+  font-style: italic; }
+/* line 45, solarized_code.css.sass */
 pre .keyword,
 pre .css .rule .keyword,
 pre .winutils,
@@ -29,10 +53,16 @@ pre .javascript .title,
 pre .method,
 pre .addition,
 pre .css .tag,
-pre .lisp .title {
-  color: #D98A64;
-}
-
+pre .lisp .title, code .keyword,
+code .css .rule .keyword,
+code .winutils,
+code .javascript .title,
+code .method,
+code .addition,
+code .css .tag,
+code .lisp .title {
+  color: #d98a64; }
+/* line 55, solarized_code.css.sass */
 pre .number,
 pre .command,
 pre .string,
@@ -40,14 +70,16 @@ pre .tag .value,
 pre .phpdoc,
 pre .tex .formula,
 pre .regexp,
-pre .hexcolor {
-  color: #61B042;
-}
-
-/*pre .number {
-  color: #3187CB;
-}*/
-
+pre .hexcolor, code .number,
+code .command,
+code .string,
+code .tag .value,
+code .phpdoc,
+code .tex .formula,
+code .regexp,
+code .hexcolor {
+  color: #61b042; }
+/* line 65, solarized_code.css.sass */
 pre .title,
 pre .localvars,
 pre .function .title,
@@ -58,10 +90,19 @@ pre .built_in,
 pre .lisp .title,
 pre .identifier,
 pre .title .keymethods,
-pre .id {
-  color: #89BDFF;
-}
-
+pre .id, code .title,
+code .localvars,
+code .function .title,
+code .chunk,
+code .decorator,
+code .builtin,
+code .built_in,
+code .lisp .title,
+code .identifier,
+code .title .keymethods,
+code .id {
+  color: #89bdff; }
+/* line 78, solarized_code.css.sass */
 pre .attribute,
 pre .variable,
 pre .instancevar,
@@ -70,10 +111,17 @@ pre .smalltalk .number,
 pre .constant,
 pre .class .title,
 pre .parent,
-pre .haskell .label {
-  color: #9B859C;
-}
-
+pre .haskell .label, code .attribute,
+code .variable,
+code .instancevar,
+code .lisp .body,
+code .smalltalk .number,
+code .constant,
+code .class .title,
+code .parent,
+code .haskell .label {
+  color: #9b859c; }
+/* line 89, solarized_code.css.sass */
 pre .preprocessor,
 pre .pi,
 pre .shebang,
@@ -84,14 +132,21 @@ pre .keymethods,
 pre .attr_selector,
 pre .important,
 pre .subst,
-pre .cdata {
-  color: #3187CB;
-}
-
-pre .deletion {
-  color: #dc322f;
-}
-
-pre .tex .formula {
-  background: #eee8d5;
-}
+pre .cdata, code .preprocessor,
+code .pi,
+code .shebang,
+code .symbol,
+code .diff .change,
+code .special,
+code .keymethods,
+code .attr_selector,
+code .important,
+code .subst,
+code .cdata {
+  color: #3187cb; }
+/* line 102, solarized_code.css.sass */
+pre .deletion, code .deletion {
+  color: #dc322f; }
+/* line 105, solarized_code.css.sass */
+pre .tex .formula, code .tex .formula {
+  background: #eee8d5; }

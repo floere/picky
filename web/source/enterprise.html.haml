@@ -148,18 +148,17 @@ layout: business
       Queries are often just one word searches and not very complex. Picky can usually serve the request in under a millisecond. A "like %"-based SQLite search on the same data took around 2~3 seconds.
     %p
       Indexing is very fast, too. The server is an Xserve3,1 with a Quad-Core Xeon with 2.26 Ghz.
-    %p
+    %pre
       %code
-        %pre
-          :preserve
-            edv@rokuhara:~/Sites/picky_speed_test$ time bundle exec rake index
-            Loaded picky with environment 'development' in /Users/edv/Sites/picky_s
-            peed_test on Ruby 1.9.2.
-            Application  loaded.
-            [...]
-            real    8m39.234s
-            user    11m46.977s
-            sys     1m11.744s
+        :preserve
+          edv@rokuhara:~/picky_speed_test$ time bundle exec rake index
+          Loaded picky with environment 'development' in /Users/[…]
+          peed_test on Ruby 1.9.2.
+          Application  loaded.
+          […]
+          real    8m39.234s
+          user    11m46.977s
+          sys     1m11.744s
     %h3 Final remarks
     %p
       Using Picky is one of the things that makes wadoku.eu good and easy to use. Having just one search field instead of the usual "advanced search" is great and we expect it to be a great advantage. This still has to be tested by our users, though.
