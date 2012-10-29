@@ -44,8 +44,11 @@
 # Methods defined in the helpers block are available in templates
 #
 helpers do
+  @@mapping = { '/' => '/index.html' }
   def class_for url, klass = ''
-    if current_page.url == url
+    current_url = current_page.url
+    current_url = @@mapping[current_url] || current_url
+    if current_url == url
       "current #{klass}"
     else
       klass
