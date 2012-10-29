@@ -10,12 +10,12 @@
     <meta content='index, follow' name='robots' />
     <meta content='3 days' name='revisit-after' />
     <link href='favicon.ico' rel='shortcut icon' />
-    <link href='stylesheets/basic.css' rel='stylesheet' type='text/css' />
-    <link href='stylesheets/specific.css' rel='stylesheet' type='text/css' />
-    <link href='stylesheets/grid.css' rel='stylesheet' type='text/css' />
-    <link href='stylesheets/colors.css' rel='stylesheet' type='text/css' />
-    <script src='javascripts/sh.min.js' type='text/javascript'></script>
-    <script src='javascripts/sh-ruby.min.js' type='text/javascript'></script>
+<link href='stylesheets/basic.css' rel='stylesheet' type='text/css' />
+<link href='stylesheets/specific.css' rel='stylesheet' type='text/css' />
+<link href='stylesheets/grid.css' rel='stylesheet' type='text/css' />
+<link href='stylesheets/colors.css' rel='stylesheet' type='text/css' />
+<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css' />
+    <script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     <script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
     <title>
@@ -36,7 +36,7 @@
       //]]>
     </script>
   </head>
-  <body onload='sh_highlightDocument();'>
+  <body onload='hljs.initHighlighting();'>
     <div class='header'>
       <a href='http://github.com/floere/picky'>
         <img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;' />
@@ -50,10 +50,10 @@
         <a class='' href='details.html'>semantic text?</a>
         <a class='' href='getting_started.html'>get started</a>
         <a class='' href='features.html'>features</a>
-        <a class='right' href='enterprise.html'>enterprise?</a>
-        <a class='right' href='status.html'>status/contributions</a>
+        <a class='right' href='enterprise.html'>business</a>
+        <a class='right' href='status.html'>contribute</a>
         <a class='right' href='videos.html'>videos</a>
-        <a class='current right' href='documentation.html'>docs</a>
+        <a class='current right' href='documentation.html'>documentation</a>
       </div>
     </div>
     <div class='container_2'>
@@ -71,123 +71,227 @@
     <!-- This file puts all sections together in a nice one page documentation. -->
 <div class='container_2'>
   <div class='grid_1 index'>
-    <h2>Single Page Help Index</h2>
-    
-    <p>This is the one page help document for Picky. Simply search for anything in this page.</p>
-    
-    <p>Edit typos directly in the <a href="#todo">github page</a> using the edit button.</p>
-    
-    <h3>Getting started</h3>
-    
-    <p>It&#39;s <a href="#allruby">All Ruby</a>. <a href="#transparency">Transparency</a> matters.</p>
-    
-    <h4>Generating an app</h4>
-    
-    <p><a href="#generators">Generators</a>
-        * <a href="#generators-servers">Servers</a>
-            * <a href="#generators-servers-sinatra">Sinatra</a>
-            * <a href="#generators-servers-allinone">All In One</a>
-        * <a href="#generators-clients">Clients</a>
-            * <a href="#generators-clients-sinatra">Sinatra</a>
-    * <a href="#servers">Servers / Applications</a>
-        * <a href="#servers-sinatra">Sinatra Style</a>
-            * <a href="#servers-sinatra-routing">Routing</a>
-            * <a href="#servers-sinatra-logging">Logging</a>
-        * <a href="#servers-allinone">All In One (Client + Server)</a></p>
-    
-    <h4>Integration in Rails/Sinatra etc.</h4>
-    
-    <p><a href="#rails">Rails</a>
-    <a href="#sinatra">Sinatra</a>
-    <a href="#drb">DRb</a>
-    <a href="#rubyscript">Ruby Script</a></p>
-    
-    <h3>Tokenizing</h3>
-    
-    <p><a href="#tokenizing">Tokenizing</a>
-    <a href="#tokenizing-options">Options</a>
-    <a href="#tokenizing-tokenizer">Tokenizer</a>
-    <a href="#tokenizing-examples">Examples</a>
-    <a href="tokenizing-notes">Notes</a></p>
-    
-    <h3>Indexes</h3>
-    
-    <p><a href="#indexes">Indexes</a></p>
-    
-    <p>There are four different <a href="#indexes-types">types</a>:
-    <a href="#indexes-types-memory">Memory</a>,
-    <a href="#indexes-types-redis">Redis</a>,
-    <a href="#indexes-types-sqlite">SQLite</a>, and
-    <a href="#indexes-types-file">File</a></p>
-    
-    <p><a href="#indexes-acessing">Accessing</a>
-        * <a href="#indexes-configuration">Configuration</a>
-        * <a href="#indexes-sources">Data Sources</a>
-            * <a href="#indexes-sources-each">Responding to #each</a>
-            * <a href="#indexes-sources-delayed">Delayed</a>
-            * <a href="#indexes-sources-classic">Classic Style</a>
-        * <a href="#indexes-indexing">Indexing / Tokenizing</a>
-        * <a href="#indexes-categories">Categories</a>
-            * <a href="#indexes-categories-partial">Option partial</a>
-            * <a href="#indexes-categories-weights">Option weights</a>
-            * <a href="#indexes-categories-similarity">Option similarity</a>
-            * <a href="#indexes-categories-qualifiers">Option qualifier / qualifiers (categorizing)</a>
-            * <a href="#indexes-categories-from">Option from</a>
-            * <a href="#indexes-categories-keyformat">Option key_format</a>
-            * <a href="#indexes-categories-source">Option source</a>
-            * <a href="#indexes-categories-searching">Searching</a>
-        * <a href="#indexes-keyformat">Key Format (Format of the indexed Ids)</a>
-        * <a href="#indexes-results">Identifying in Results</a>
-        * <a href="#indexes-indexing">Indexing</a>
-        * <a href="#indexes-reloading">Reloading</a>
-            * <a href="#indexes-reloading-signals">Using signals</a>
-        * <a href="#indexes-reindexing">Reindex</a></p>
-    
-    <h3>Searching</h3>
-    
-    <ul>
-    <li><a href="#search">Search</a>
-    
-    <ul>
-    <li><a href="#search-options">Options</a>
-    
-    <ul>
-    <li><a href="#search-options-searching">Searching / Tokenizing</a></li>
-    <li><a href="#search-options-boost">Boost</a></li>
-    <li><a href="#search-options-ignore">Ignore Categories</a></li>
-    <li><a href="#search-options-unassigned">Ignore Unassigned Tokens</a></li>
-    <li><a href="#search-options-maxallocations">Maximum Allocations</a></li>
-    <li><a href="#search-options-terminateearly">Early Termination</a></li>
-    </ul></li>
-    </ul></li>
-    </ul>
-    
-    <h4>Results</h4>
-    
-    <p><a href="#results">Results</a>
-        * <a href="#results-logging">Logging</a>
-        * <a href="#results-sorting">Sorting</a></p>
+    <h2 id='single_page_help_index'>Single Page Help Index</h2>
+
+<p>This is the one page help document for Picky.</p>
+
+<p>Search for things using your browser (use ⌘F).</p>
+
+<p>Edit typos directly in the <a href='http://github.com/floere/picky/tree/master/web/source/documentation'>github page</a> of a section using the <a href='http://github.com/floere/picky/blob/master/web/source/documentation/_index.html.md'>edit</a> button.</p>
+
+<h3 id='index-getting-started'>Getting started</h3>
+
+<p>It&#8217;s <a href='#all_ruby'>All Ruby</a>. You&#8217;ll never feel powerless. <a href='#transparency'>Look at your index data</a> anytime.</p>
+
+<h4 id='index-generating'>Generating an app</h4>
+
+<p>Creating an <a href='#generators'>example app</a> to get you up and running fast, <a href='#generators-servers'>Servers</a> or <a href='#generators-clients'>Clients</a>.</p>
+
+<p>Generating them:</p>
+
+<ul>
+<li><a href='#generators-servers-sinatra'>Sinatra Server</a> and <a href='#generators-clients-sinatra'>Client</a></li>
+
+<li><a href='#generators-servers-allinone'>Sinatra Server+Client in one</a></li>
+</ul>
+
+<p>More infos on the <a href='#servers'>applications</a>:</p>
+
+<ul>
+<li><a href='#servers-sinatra'>Sinatra</a>(<a href='#servers-sinatra-routing'>Routing</a>, <a href='#servers-sinatra-logging'>Logging</a>)</li>
+
+<li><a href='#servers-allinone'>All In One (Client/Server)</a></li>
+</ul>
+
+<h4 id='index-integration'>Integration in Rails/Sinatra etc.</h4>
+
+<p>How to <a href='#integration'>integrate</a> Picky in:</p>
+
+<ul>
+<li><a href='#rails'>Rails</a></li>
+
+<li><a href='#sinatra'>Sinatra</a></li>
+
+<li><a href='#drb'>DRb</a></li>
+
+<li><a href='#ruby_script'>Ruby Script</a></li>
+</ul>
+
+<h3 id='index-tokenizing'>Tokenizing</h3>
+
+<p>How data is cut into little pieces for the index and when searching.</p>
+
+<ul>
+<li><a href='#tokenizing'>What is tokenizing?</a></li>
+
+<li><a href='#tokenizing-options'>Options</a></li>
+
+<li><a href='#tokenizing-tokenizer'>Using a custom tokenizer</a></li>
+
+<li><a href='#tokenizing-examples'>Examples</a></li>
+
+<li><a href='#tokenizing-notes'>Advanced tokenizing</a></li>
+</ul>
+
+<h3 id='index-indexes'>Indexes</h3>
+
+<p>How the data is stored and what you can do with <a href='#indexes'>Indexes</a>.</p>
+
+<p>Configuring an index:</p>
+
+<ul>
+<li><a href='#indexes-configuration'>Configuration</a></li>
+</ul>
+
+<p>How does data get in there?</p>
+
+<ul>
+<li><a href='#indexes-indexing'>Indexing</a></li>
+
+<li><a href='#indexes-sources'>Data Source Overview</a></li>
+
+<li><a href='#indexes-sources-each'>Source responding to #each</a></li>
+
+<li><a href='#indexes-sources-classic'><em>Classic Picky sources</em></a> <em>(deprecated from 5.0)</em></li>
+
+<li><a href='#indexes-sources-delayed'>When is the data for indexing loaded?</a></li>
+</ul>
+
+<p>How is the data categorized?</p>
+
+<ul>
+<li><a href='#indexes-categories'>Categories</a></li>
+
+<li><a href='#indexes-categories-partial'>Option partial</a></li>
+
+<li><a href='#indexes-categories-weights'>Option weights</a></li>
+
+<li><a href='#indexes-categories-similarity'>Option similarity</a></li>
+
+<li><a href='#indexes-categories-qualifiers'>Option qualifier / qualifiers (categorizing)</a></li>
+
+<li><a href='#indexes-categories-from'>Option from</a></li>
+
+<li><a href='#indexes-categories-keyformat'>Option key_format</a></li>
+
+<li><a href='#indexes-categories-source'>Option source</a></li>
+</ul>
+
+<p>How is the data prepared?</p>
+
+<ul>
+<li><a href='#indexes-indexing'>Indexing / Tokenizing</a></li>
+</ul>
+
+<p>Getting at the data:</p>
+
+<ul>
+<li><a href='#indexes-acessing'>Accessing indexes and categories</a></li>
+</ul>
+
+<p>There are four different <a href='#indexes-types'>store types</a>:</p>
+
+<ul>
+<li><a href='#indexes-types-memory'>Memory</a></li>
+
+<li><a href='#indexes-types-redis'>Redis</a></li>
+
+<li><a href='#indexes-types-sqlite'>SQLite</a></li>
+
+<li><a href='#indexes-types-file'>File</a></li>
+</ul>
+
+<p>Advanced topics:</p>
+
+<ul>
+<li><a href='#indexes-keyformat'>Format of the indexed ids</a></li>
+
+<li><a href='#indexes-reloading'>Reloading</a></li>
+
+<li><a href='#indexes-reindexing'>Reindexing</a></li>
+
+<li><a href='#indexes-reloading-signals'>Using signals</a></li>
+
+<li><a href='#indexes-results'>Which index did a result come from?</a></li>
+</ul>
+
+<h3 id='index-searching'>Searching</h3>
+
+<p>How to configure a search interface over an index (or multiple).</p>
+
+<ul>
+<li><a href='#search'>Search Interface Overview</a></li>
+
+<li><a href='#search-options'>Search Options</a></li>
+
+<li><a href='#search-options-searching'>Searching / Tokenizing</a></li>
+</ul>
+
+<p>What <a href='#indexes-categories-searching'>options</a> does a user have when searching?</p>
+
+<p>Advanced topics:</p>
+
+<ul>
+<li><a href='#search-options-boost'>Boosting</a> (<a href='#indexes-categories-weights'>boosting a single category</a>)</li>
+
+<li><a href='#search-options-ignore'>Ignoring a category</a></li>
+
+<li><a href='#search-options-unassigned'>Ignoring query words that are not found</a></li>
+
+<li><a href='#search-options-maxallocations'>Maximum Allocations</a></li>
+
+<li><a href='#search-options-terminateearly'>Stopping a search early</a></li>
+</ul>
+
+<h4 id='facets-index'>Facets</h4>
+
+<p>When you need a slice over a category&#8217;s data.</p>
+
+<ul>
+<li><a href='#facets'>Facets</a></li>
+
+<li><a href='#index_facets'>Index Facets</a></li>
+
+<li><a href='#search_facets'>Search Facets</a> (Using a query to filter your index facets)</li>
+</ul>
+
+<h4 id='index-results'>Results</h4>
+
+<p>What a picky search returns.</p>
+
+<ul>
+<li><a href='#results'>Results Overview</a></li>
+
+<li><a href='#results-logging'>Logging</a></li>
+
+<li><a href='#results-sorting'>Sorting</a></li>
+
+<li><a href='#indexes-results'>Identification</a></li>
+</ul>
+
+<h3 id='index-thanks'>Thanks</h3>
+
+<p>A bit of <a href='#thanks'>thanks</a>!</p>
   </div>
   <div class='grid_1 help'>
     <!-- = partial 'documentation/help' -->
     <!-- = partial 'documentation/api' -->
-    <h2>All Ruby</h2>
+    <h2 id='all_ruby'>All Ruby</h2>
 
-<p>{.edit}
-<a href="http://github.com/floere/picky/blob/master/web/source/documentation/_intro.html.md">Edit</a></p>
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_intro.html.md'>edit</a></p>
 
 <p>Never forget this: <em>Picky is all Ruby, all the time</em>!</p>
 
-<p>Even though we only describe examples of classic and Sinatra style servers, Picky can be included directly in Rails, as a client or server. Or in DRb. Or in your simple script without HTTP. Anywhere you like, as long as it&#39;s Ruby, really.</p>
+<p>Even though we only describe examples of classic and Sinatra style servers, Picky can be included directly in Rails, as a client or server. Or in DRb. Or in your simple script without HTTP. Anywhere you like, as long as it&#8217;s Ruby, really.</p>
 
 <p>To drive the point home, remember that Picky is mainly two pieces working together: An index, and a search interface on indexes.</p>
 
-<p>The index normally has a source, knows how to tokenize data, and has a few data categories. And the search interface normally knows how to tokenize incoming queries. That&#39;s it (copy and run in a script):</p>
+<p>The index normally has a source, knows how to tokenize data, and has a few data categories. And the search interface normally knows how to tokenize incoming queries. That&#8217;s it (copy and run in a script):</p>
 
 <pre><code>require &#39;picky&#39;
 
 Person = Struct.new :id, :first, :last
-
+ 
 index = Picky::Index.new :people do
   source { People.all }
   indexing splits_text_on: /[\s-]/
@@ -195,89 +299,82 @@ index = Picky::Index.new :people do
   category :last
 end
 index.add Person.new(1, &#39;Florian&#39;, &#39;Hanke&#39;)
-index.add Person.new(2, &#39;Peter&#39;, &#39;Mayer-Miller&#39; 
+index.add Person.new(2, &#39;Peter&#39;, &#39;Mayer-Miller&#39;)
 
 people = Picky::Search.new index do
   searching splits_text_on: /[\s,-]/
 end
 
-results = people.search &#39;Mayer&#39;
-puts results.ids
-</code></pre>
+results = people.search &#39;Miller&#39;
+p results.ids # =&gt; [2]</code></pre>
 
 <p>You can put these pieces anywhere, independently.</p>
 
-<h2>Transparency</h2>
+<h2 id='transparency'>Transparency</h2>
 
 <p>Picky tries its best to be <em>transparent</em> so you can go have a look if something goes wrong. It wants you to <em>never feel powerless</em>.</p>
 
-<p>All the indexes can be viewed in the <code>/index</code> directory of the project. They are waiting for you to inspect their JSONy goodness.
-Should anything not work with your search, you can see how it is indexed in the actual indexes and change your indexing parameters accordingly.</p>
+<p>All the indexes can be viewed in the <code>/index</code> directory of the project. They are waiting for you to inspect their JSONy goodness. Should anything not work with your search, you can see how it is indexed in the actual indexes and change your indexing parameters accordingly.</p>
 
-<p>Since all is Ruby, you can log as much data as you want to help you improve your search application until it&#39;s working perfectly.</p>
-    <h2>Generators{#generators}</h2>
+<p>Since all is Ruby, you can log as much data as you want to help you improve your search application until it&#8217;s working perfectly.</p>
+    <h2 id='generators'>Generators</h2>
 
-<p>Picky offers a few generators to have a running server and client up in 5 minutes. Please follow the <a href="getting_started.html">Getting Started</a>.</p>
+<p>Picky offers a few generators to have a running server and client up in 5 minutes. Please follow the <a href='getting_started.html'>Getting Started</a>.</p>
 
 <p>Or, run gem install</p>
 
-<pre><code>gem install picky-generators
-</code></pre>
+<pre><code>gem install picky-generators</code></pre>
 
 <p>and simply enter</p>
 
-<pre><code>picky generate
-</code></pre>
+<pre><code>picky generate</code></pre>
 
 <p>This will raise an <code>Picky::Generators::NotFoundException</code> and show you the possibilities.</p>
 
-<p>The &quot;All In One&quot; Client/Server is interested for Heroku projects, as it is a bit complicated to set up two servers that interact with each other.</p>
+<p>The &#8220;All In One&#8221; Client/Server is interested for Heroku projects, as it is a bit complicated to set up two servers that interact with each other.</p>
 
-<h3>Servers{#generators-servers}</h3>
+<h3 id='generators-servers'>Servers</h3>
 
 <p>Currently, Picky offers two generated example projects that you can adapt to your project: <em>Separate Client and Server</em> (suggested) and <em>All In One</em>.</p>
 
 <p>If this is your first time with Picky, we suggest to start out with these even if you have a project where you want to integrate Picky already.</p>
 
-<h4>Sinatra{#generators-servers-sinatra}</h4>
+<h4 id='generators-servers-sinatra'>Sinatra</h4>
 
 <p>This server is generated with</p>
 
-<pre><code>picky generate server target_directory
-</code></pre>
+<pre><code>picky generate server target_directory</code></pre>
 
 <p>and generates a full sinatra server that you can try immediately. Just follow the instructions.</p>
 
-<h4>All In One{#generators-servers-allinone}</h4>
+<h4 id='generators-servers-allinone'>All In One</h4>
 
 <p>All In One is actually a single Sinatra server containing the Server AND the client. This server is generated with</p>
 
-<pre><code>picky generate all_in_one target_directory
-</code></pre>
+<pre><code>picky generate all_in_one target_directory</code></pre>
 
 <p>and generates a full Sinatra Picky server and client that you can try immediately. Just follow the instructions.</p>
 
-<h3>Clients{#generators-clients}</h3>
+<h3 id='generators-clients'>Clients</h3>
 
 <p>Picky currently offers an example Sinatra client that you can adapt for your project (or look at it how to use in Rails).</p>
 
-<h4>Sinatra{#generators-clients-sinatra}</h4>
+<h4 id='generators-clients-sinatra'>Sinatra</h4>
 
 <p>This client is generated with</p>
 
-<pre><code>picky generate sinatra_client target_directory
-</code></pre>
+<pre><code>picky generate client target_directory</code></pre>
 
 <p>and generates a full Sinatra client (including Javascript etc.) that you can try immediately. Just follow the instructions.</p>
-    <h2>Servers / Applications{#servers}</h2>
+    <h2 id='servers'>Servers / Applications</h2>
 
 <p>Picky, from version 3.0 onwards, is designed to run <em>anywhere</em>, <em>in anything</em>.</p>
 
 <p>This means you can have a Picky server running in a DRb instance if you want to. Or in irb, for example.</p>
 
-<p>We do run and test the Picky server in two styles, <a href="#servers-classicvssinatra">Classic and Sinatra</a>.</p>
+<p>We do run and test the Picky server in two styles, <a href='#servers-classicvssinatra'>Classic and Sinatra</a>.</p>
 
-<p>But don&#39;t let that stop you from just using it in a class or just a script. This is a perfectly ok way to use Picky:</p>
+<p>But don&#8217;t let that stop you from just using it in a class or just a script. This is a perfectly ok way to use Picky:</p>
 
 <pre><code>require &#39;picky&#39;
 
@@ -300,19 +397,17 @@ results = books.search &quot;test&quot;
 results = books.search &quot;alan turing&quot;
 
 require &#39;pp&#39;
-pp results.to_hash
-</code></pre>
+pp results.to_hash</code></pre>
 
 <p>More <em>Ruby</em>, more <em>power</em> to you!</p>
 
-<h3>Sinatra Style{#servers-sinatra}</h3>
+<h3 id='servers-sinatra'>Sinatra Style</h3>
 
-<p>A <a href="http://sinatrarb.com">Sinatra</a> server is usually just a single file. In Picky, it is a top-level file named</p>
+<p>A <a href='http://sinatrarb.com'>Sinatra</a> server is usually just a single file. In Picky, it is a top-level file named</p>
 
-<pre><code>app.rb
-</code></pre>
+<pre><code>app.rb</code></pre>
 
-<p>We recommend to use the <a href="http://www.sinatrarb.com/intro#Serving%20a%20Modular%20Application">modular Sinatra style</a> as opposed to the <a href="http://www.sinatrarb.com/intro#Using%20a%20Classic%20Style%20Application%20with%20a%20config.ru">classic style</a>. It&#39;s possible to write a Picky server in the classic style, but using the modular style offers more options.</p>
+<p>We recommend to use the <a href='http://www.sinatrarb.com/intro#Serving%20a%20Modular%20Application'>modular Sinatra style</a> as opposed to the <a href='http://www.sinatrarb.com/intro#Using%20a%20Classic%20Style%20Application%20with%20a%20config.ru'>classic style</a>. It&#8217;s possible to write a Picky server in the classic style, but using the modular style offers more options.</p>
 
 <pre><code>require &#39;sinatra/base&#39;
 require &#39;picky&#39;
@@ -336,30 +431,26 @@ class BookSearch &lt; Sinatra::Application
     results.to_json
   end
 
-end
-</code></pre>
+end</code></pre>
 
 <p>This is already a complete Sinatra server.</p>
 
-<h4>Routing{#servers-sinatra-routing}</h4>
+<h4 id='servers-sinatra-routing'>Routing</h4>
 
-<p>The Sinatra Picky server uses the same routing as Sinatra (of course). <a href="http://www.sinatrarb.com/intro#Routes">More information on Sinara routing</a>.</p>
+<p>The Sinatra Picky server uses the same routing as Sinatra (of course). <a href='http://www.sinatrarb.com/intro#Routes'>More information on Sinara routing</a>.</p>
 
-<p>If you use the server with the picky client software (provided with the picky-client gem), you should return JSON from the Sinatra <code>get</code>.
-Just call <code>to_json</code> on the returned results to get the results in JSON format.</p>
+<p>If you use the server with the picky client software (provided with the picky-client gem), you should return JSON from the Sinatra <code>get</code>. Just call <code>to_json</code> on the returned results to get the results in JSON format.</p>
 
 <pre><code>get &#39;/books&#39; do
   results = books.search params[:query], params[:ids] || 20, params[:offset] ||  0
   results.to_json
-end
-</code></pre>
+end</code></pre>
 
 <p>The above example search can be called using for example @curl@:</p>
 
-<pre><code>curl &#39;localhost:8080/books?query=test&#39;
-</code></pre>
+<pre><code>curl &#39;localhost:8080/books?query=test&#39;</code></pre>
 
-<h4>Logging{#servers-sinatra-logging}</h4>
+<h4 id='servers-sinatra-logging'>Logging</h4>
 
 <p>TODO Update this section.</p>
 
@@ -373,31 +464,49 @@ get &#39;/books&#39; do
   results = books.search &quot;test&quot;
   MyLogger.info results
   results.to_json
-end
-</code></pre>
+end</code></pre>
 
 <p>or set it up in separate files for different environments:</p>
 
-<pre><code>require &quot;logging/#{PICKY_ENVIRONMENT}&quot;
-</code></pre>
+<pre><code>require &quot;logging/#{PICKY_ENVIRONMENT}&quot;</code></pre>
 
 <p>Note that this is not Rack logging, but Picky search engine logging. The resulting file can be used with the picky-statistics gem.</p>
 
-<h3>All In One (Client + Server){#servers-allinone}</h3>
+<h3 id='servers-allinone'>All In One (Client + Server)</h3>
 
 <p>The All In One server is a Sinatra server and a Sinatra client rolled in one.</p>
 
-<p>It&#39;s best to just generate one and look at it:</p>
+<p>It&#8217;s best to just generate one and look at it:</p>
 
-<pre><code>picky generate all_in_one all_in_one_test
-</code></pre>
+<pre><code>picky generate all_in_one all_in_one_test</code></pre>
 
 <p>and then follow the instructions.</p>
 
-<p>When would you use an All In One server? One place is <a href="http://heroku.com">Heroku</a>, since it is a bit more complicated to set up two servers that interact with each other.</p>
+<p>When would you use an All In One server? One place is <a href='http://heroku.com'>Heroku</a>, since it is a bit more complicated to set up two servers that interact with each other.</p>
 
-<p>It&#39;s nice for small convenient searches. For production setups we recommend to use a separate server to make everything separately cacheable etc.</p>
-    <h2>Tokenizing{#tokenizing}</h2>
+<p>It&#8217;s nice for small convenient searches. For production setups we recommend to use a separate server to make everything separately cacheable etc.</p>
+    <h2 id='integration'>Integration</h2>
+    
+    <p>How do you integrate Picky in…?</p>
+    
+    <h3 id='rails'>Rails</h3>
+    
+    <p>TODO</p>
+    
+    <h3 id='sinatra'>Sinatra</h3>
+    
+    <p>TODO</p>
+    
+    <p>TODO Also mention Padrino.</p>
+    
+    <h3 id='drb'>DRb</h3>
+    
+    <p>TODO</p>
+    
+    <h3 id='ruby_script'>Ruby Script</h3>
+    
+    <p>TODO</p>
+    <h2 id='tokenizing'>Tokenizing</h2>
 
 <p>The <code>indexing</code> method in an <code>Index</code> describes how <em>index data</em> is handled.</p>
 
@@ -411,25 +520,33 @@ end
 
 Search.new *indexes do
   searching options_hash_or_tokenizer
-end
-</code></pre>
+end</code></pre>
 
 <p>Both take either an options hash, your hand-rolled tokenizer, or a <code>Picky::Tokenizer</code> instance initialized with the options hash.</p>
 
-<h3>Options{#tokenizing-options}</h3>
+<h3 id='tokenizing-options'>Options</h3>
 
 <p>Picky by default goes through the following list, in order:</p>
 
 <ol>
-<li><em>substitutes<em>characters</em>with</em>: A character substituter that responds to <code>#substitute(text) #=&gt; substituted text</code></li>
+<li><em>substitutes_characters_with</em>: A character substituter that responds to <code>#substitute(text) #=&gt; substituted text</code></li>
+
 <li><em>removes_characters</em>: Regexp of characters to remove.</li>
+
 <li><em>stopwords</em>: Regexp of stopwords to remove.</li>
-<li><em>splits<em>text</em>on</em>: Regexp on where to split the query text, including category qualifiers.</li>
-<li><em>removes<em>characters</em>after_splitting</em>: Regexp on which characters to remove after the splitting.</li>
+
+<li><em>splits_text_on</em>: Regexp on where to split the query text, including category qualifiers.</li>
+
+<li><em>removes_characters_after_splitting</em>: Regexp on which characters to remove after the splitting.</li>
+
 <li><em>normalizes_words</em>: <code>[[/matching_regexp/, &#39;replace match \1&#39;]]</code></li>
-<li><em>max_words</em>: How many words will be passed into the core engine. Default: <code>Infinity</code> (Don&#39;t go there, ok?).</li>
-<li><em>rejects<em>token</em>if</em>: <code>-&gt;(token){ token == &#39;hello&#39; }</code></li>
+
+<li><em>max_words</em>: How many words will be passed into the core engine. Default: <code>Infinity</code> (Don&#8217;t go there, ok?).</li>
+
+<li><em>rejects_token_if</em>: <code>-&gt;(token){ token == &#39;hello&#39; }</code></li>
+
 <li><em>case_sensitive</em>: <code>true</code> or <code>false</code>, <code>false</code> is default.</li>
+
 <li><em>stems_with</em>: A stemmer, ie. an object that responds to <code>stem(text)</code> that returns stemmed text.</li>
 </ol>
 
@@ -437,39 +554,35 @@ end
 
 <pre><code>Search.new *indexes do
   searching options_hash
-end
-</code></pre>
+end</code></pre>
 
 <p>You can provide your own tokenizer:</p>
 
 <pre><code>Search.new books_index do
   searching MyTokenizer.new
-end
-</code></pre>
+end</code></pre>
 
 <p>TODO Update what the tokenizer needs to return.</p>
 
-<p>The tokenizer needs to respond to the method <code>#tokenize(text)</code>, returning a <code>Picky::Query::Tokens</code> object. If you have an array of tokens, e.g. <code>[:my, :nice, :tokens]</code>,
-you can pass it into <code>Picky::Query::Tokens.process(my_tokens)</code> to get the tokens and return these.</p>
+<p>The tokenizer needs to respond to the method <code>#tokenize(text)</code>, returning a <code>Picky::Query::Tokens</code> object. If you have an array of tokens, e.g. <code>[:my, :nice, :tokens]</code>, you can pass it into <code>Picky::Query::Tokens.process(my_tokens)</code> to get the tokens and return these.</p>
 
 <p><code>rake &#39;try[text,some_index,some_category]&#39;</code> (<code>some_index</code>, <code>some_category</code> optional) tells you how a given text is indexed.</p>
 
 <p>It needs to be programmed in a performance efficient way if you want your search engine to be fast.</p>
 
-<h3>Tokenizer{#tokenizing-tokenizer}</h3>
+<h3 id='tokenizing-tokenizer'>Tokenizer</h3>
 
 <p>Even though you usually provide options (see below), you can provide your own:</p>
 
 <pre><code>Picky::Index.new :books do
   indexing MyTokenizer.new
-end
-</code></pre>
+end</code></pre>
 
 <p>The tokenizer must respond to <code>tokenize(text)</code> and return <code>[tokens, words]</code>, where <code>tokens</code> is an Array of processed tokens and <code>words</code> is an Array of words that represent the original words in the query (or as close as possible to the original words).</p>
 
 <p>It is also possible to return <code>[tokens]</code>, where tokens is the Array of processed query words. (Picky will then just use the tokens as words)</p>
 
-<h4>Examples{#tokenizing-examples}</h4>
+<h4 id='tokenizing-examples'>Examples</h4>
 
 <p>A very simple tokenizer that just splits the input on commas:</p>
 
@@ -484,17 +597,15 @@ MyTokenizer.new.tokenize &quot;Hello, world!&quot; # =&gt; [[&quot;Hello&quot;, 
 
 Picky::Index.new :books do
   indexing MyTokenizer.new
-end
-</code></pre>
+end</code></pre>
 
 <p>The same could have been achieved with this:</p>
 
 <pre><code>Picky::Index.new :books do
   indexing splits_text_on: &#39;,&#39;
-end
-</code></pre>
+end</code></pre>
 
-<h3>Notes{#tokenizing-notes}</h3>
+<h3 id='tokenizing-notes'>Notes</h3>
 
 <p>Usually, you use the same options for indexing and searching:</p>
 
@@ -503,17 +614,12 @@ end
 index = Picky::Index.new :example do
   indexing tokenizer_options
 end
-
+    
 Search.new index do
   searching tokenizer_options
-end
-</code></pre>
+end</code></pre>
 
-<p>However, consider this example.
-Let&#39;s say your data has lots of words in them that look like this: <code>all-data-are-tokenized-by-dashes</code>.
-And people would search for them using spaces to keep words apart: <code>searching for data</code>.
-In this case it&#39;s a good idea to split the data and the query differently.
-Split the data on dashes, and queries on <code>\s</code>:</p>
+<p>However, consider this example. Let&#8217;s say your data has lots of words in them that look like this: <code>all-data-are-tokenized-by-dashes</code>. And people would search for them using spaces to keep words apart: <code>searching for data</code>. In this case it&#8217;s a good idea to split the data and the query differently. Split the data on dashes, and queries on <code>\s</code>:</p>
 
 <pre><code>index = Picky::Index.new :example do
   indexing splits_text_on: /-/
@@ -521,49 +627,51 @@ end
 
 Search.new index do
   searching splits_text_on: /\s/
-end
-</code></pre>
+end</code></pre>
 
-<p>The rule number one to remember when tokenizing is:
-<em>Tokenized query text needs to match the text that is in the index.</em></p>
+<p>The rule number one to remember when tokenizing is: <em>Tokenized query text needs to match the text that is in the index.</em></p>
 
 <p>So both the index and the query need to tokenize to the same string:</p>
 
 <ul>
 <li><code>all-data-are-tokenized-by-dashes</code> =&gt; <code>[&quot;all&quot;, &quot;data&quot;, &quot;are&quot;, &quot;tokenized&quot;, &quot;by&quot;, &quot;dashes&quot;]</code></li>
+
 <li><code>searching for data</code> =&gt; <code>[&quot;searching&quot;, &quot;for&quot;, &quot;data&quot;]</code></li>
 </ul>
 
-<p>Either look in the <code>/index</code> directory (the &quot;prepared&quot; files is the tokenized data), or use Picky&#39;s <code>try</code> rake task:</p>
+<p>Either look in the <code>/index</code> directory (the &#8220;prepared&#8221; files is the tokenized data), or use Picky&#8217;s <code>try</code> rake task:</p>
 
 <pre><code>$ rake try[test]
 &quot;test&quot; is saved in the Picky::Indexes index as [&quot;test&quot;]
-&quot;test&quot; as a search will be tokenized as [&quot;test&quot;]
-</code></pre>
+&quot;test&quot; as a search will be tokenized as [&quot;test&quot;]</code></pre>
 
-<p>You can tell Picky which index, or even category to use: </p>
+<p>You can tell Picky which index, or even category to use:</p>
 
 <pre><code>$ rake try[test,books]
-$ rake try[test,books,title]
-</code></pre>
-    <h2>Indexes{#indexes}</h2>
+$ rake try[test,books,title]</code></pre>
+    <h2 id='indexes'>Indexes</h2>
 
 <p>Indexes do three things:</p>
 
 <ul>
 <li>Define where the data comes from.</li>
+
 <li>Define how data is handled before it enters the index.</li>
+
 <li>Hold index categories.</li>
 </ul>
 
-<h3>Types{#indexes-types}</h3>
+<h3 id='indexes-types'>Types</h3>
 
 <p>Picky offers a choice of four index types:</p>
 
 <ul>
 <li>Memory: Saves its indexes in JSON on disk and loads them into memory.</li>
+
 <li>Redis: Saves its indexes in Redis.</li>
+
 <li>SQLite: Saves its indexes in rows of a SQLite DB.</li>
+
 <li>File: Saves its indexes in JSON in files.</li>
 </ul>
 
@@ -576,8 +684,7 @@ end
 books_redis_index = Index.new :books do
   backend Backends::Redis.new
   # Configuration goes here.
-end
-</code></pre>
+end</code></pre>
 
 <p>Both save the preprocessed data from the data source in the <code>/index</code> directory so you can go look if the data is preprocessed correctly.</p>
 
@@ -585,17 +692,15 @@ end
 
 <p>Searching over one index:</p>
 
-<pre><code>books = Search.new books_index
-</code></pre>
+<pre><code>books = Search.new books_index</code></pre>
 
 <p>Searching over multiple indexes:</p>
 
-<pre><code>media = Search.new books_index, dvd_index, mp3_index
-</code></pre>
+<pre><code>media = Search.new books_index, dvd_index, mp3_index</code></pre>
 
 <p>The resulting ids should be from the same id space to be useful – or the ids should be exclusive, such that eg. a book id does not collide with a dvd id.</p>
 
-<h4>In-Memory / File-based{#indexes-types-memory}</h4>
+<h4 id='indexes-types-memory'>In-Memory / File-based</h4>
 
 <p>The in-memory index saves its indexes as files transparently in the form of JSON files that reside in the <code>/index</code> directory.</p>
 
@@ -603,7 +708,7 @@ end
 
 <p>Indexing regenerates the JSON index files and can be reloaded into memory, even in the running server (see below).</p>
 
-<h4>Redis{#indexes-types-redis}</h4>
+<h4 id='indexes-types-redis'>Redis</h4>
 
 <p>The Redis index saves its indexes in the Redis server on the default port, using database 15.</p>
 
@@ -611,52 +716,48 @@ end
 
 <p>Indexing regenerates the indexes in the Redis server – you do not have to restart the server for that.</p>
 
-<h4>SQLite{#indexes-types-sqlite}</h4>
+<h4 id='indexes-types-sqlite'>SQLite</h4>
 
 <p>TODO</p>
 
-<h4>File{#indexes-types-file}</h4>
+<h4 id='indexes-types-file'>File</h4>
 
 <p>TODO</p>
 
-<h3>Accessing{#indexes-acessing}</h3>
+<h3 id='indexes-acessing'>Accessing</h3>
 
-<p>If you don&#39;t have access to your indexes directly, like so</p>
+<p>If you don&#8217;t have access to your indexes directly, like so</p>
 
 <pre><code>books_index = Index.new(:books) do
   # ...
 end
 
-books_index.do_something_with_the_index
-</code></pre>
+books_index.do_something_with_the_index</code></pre>
 
-<p>and for example you&#39;d like to access the index from a rake task, you can use</p>
+<p>and for example you&#8217;d like to access the index from a rake task, you can use</p>
 
-<pre><code>Picky::Indexes
-</code></pre>
+<pre><code>Picky::Indexes</code></pre>
 
 <p>to get <em>all indexes</em>.</p>
 
 <p>To get a <em>single index</em> use</p>
 
-<pre><code>Picky::Indexes[:index_name]
-</code></pre>
+<pre><code>Picky::Indexes[:index_name]</code></pre>
 
 <p>and to get a <em>single category</em>, use</p>
 
-<pre><code>Picky::Indexes[:index_name][:category_name]
-</code></pre>
+<pre><code>Picky::Indexes[:index_name][:category_name]</code></pre>
 
-<p>That&#39;s it.</p>
+<p>That&#8217;s it.</p>
 
-<h3>Configuration{#indexes-configuration}</h3>
+<h3 id='indexes-configuration'>Configuration</h3>
 
 <p>This is all you can do to configure an index:</p>
 
 <pre><code>books_index = Index.new :books do
   source   { Book.order(&quot;isbn ASC&quot;) }
 
-  indexing removes_characters:                 /[^a-zA-Z0-9\s\:\&quot;\&amp;\.\|]/i,                    # Default: nil
+  indexing removes_characters:                 /[^a-z0-9\s\:\&quot;\&amp;\.\|]/i,                       # Default: nil
            stopwords:                          /\b(and|the|or|on|of|in)\b/i,                   # Default: nil
            splits_text_on:                     /[\s\/\-\_\:\&quot;\&amp;\/]/,                           # Default: /\s/
            removes_characters_after_splitting: /[\.]/,                                         # Default: nil
@@ -678,16 +779,15 @@ books_index.do_something_with_the_index
            qualifiers: [:y, :year, :annee]
 
   result_identifier &#39;boooookies&#39;
-end
-</code></pre>
+end</code></pre>
 
-<p>Usually you don&#39;t need to configure all that.</p>
+<p>Usually you don&#8217;t need to configure all that.</p>
 
 <p>But if your boss comes in the door and asks why X is not found… you know. And you can improve the search engine relatively <em>quickly and painless</em>.</p>
 
 <p>More power to you.</p>
 
-<h3>Data Sources{#indexes-sources}</h3>
+<h3 id='indexes-sources'>Data Sources</h3>
 
 <p>Data sources define where the data for an index comes from.</p>
 
@@ -699,24 +799,22 @@ end
 
 Index.new :books do
   source { Book.all } # Loads on indexing. Preferred.
-end
-</code></pre>
+end</code></pre>
 
 <p>Or even a <em>single category</em>:</p>
 
 <pre><code>Index.new :books do
   category :title,
            source: lambda { Book.all }
-end
-</code></pre>
+end</code></pre>
 
-<p>At the moment there are two possibilities: <a href="#indexes-sources-each">Objects responding to #each</a> and <a href="#indexes-sources-classic">Picky classic style sources</a>.</p>
+<p>At the moment there are two possibilities: <a href='#indexes-sources-each'>Objects responding to #each</a> and <a href='#indexes-sources-classic'>Picky classic style sources</a>.</p>
 
-<h4>Responding to #each{#indexes-sources-each}</h4>
+<h4 id='indexes-sources-each'>Responding to #each</h4>
 
 <p>Picky supports any data source as long as it supports <code>#each</code>.</p>
 
-<p>See <a href="http://florianhanke.com/blog/2011/04/14/picky-two-point-two-point-oh.html">under Flexible Sources</a> how you can use this.</p>
+<p>See <a href='http://florianhanke.com/blog/2011/04/14/picky-two-point-two-point-oh.html'>under Flexible Sources</a> how you can use this.</p>
 
 <p>In short. Model:</p>
 
@@ -725,8 +823,7 @@ end
   def initialize id, name, color
     @id, @name, @color = id, name, color
   end
-end
-</code></pre>
+end</code></pre>
 
 <p>The data:</p>
 
@@ -734,8 +831,7 @@ end
   Monkey.new(1, &#39;pete&#39;, &#39;red&#39;),
   Monkey.new(2, &#39;joey&#39;, &#39;green&#39;),
   Monkey.new(3, &#39;hans&#39;, &#39;blue&#39;)
-]
-</code></pre>
+]</code></pre>
 
 <p>Setting the array as a source</p>
 
@@ -743,44 +839,39 @@ end
   source   { monkeys }
   category :name
   category :couleur, :from =&gt; :color # The couleur category will take its data from the #color method.
-end
-</code></pre>
+end</code></pre>
 
-<h4>Delayed{#indexes-sources-delayed}</h4>
+<h4 id='indexes-sources-delayed'>Delayed</h4>
 
 <p>If you define the source directly in the index block, it will be evaluated instantly:</p>
 
 <pre><code>Index::Memory.new :books do
   source Book.order(&#39;title ASC&#39;)
-end
-</code></pre>
+end</code></pre>
 
-<p>This works with ActiveRecord and other similar ORMs since @Book.order@ returns a proxy object that will only be evaluated when the server is indexing.</p>
+<p>This works with ActiveRecord and other similar ORMs since <code>Book.order</code> returns a proxy object that will only be evaluated when the server is indexing.</p>
 
 <p>For example, this would instantly get the records, since <code>#all</code> is a kicker method:</p>
 
 <pre><code>Index::Memory.new :books do
   source Book.all # Not the best idea.
-end
-</code></pre>
+end</code></pre>
 
 <p>In this case, you can give the <code>source</code> method a block:</p>
 
 <pre><code>Index::Memory.new :books do
   source { Book.all }
-end
-</code></pre>
+end</code></pre>
 
 <p>This block will be executed as soon as the indexing is running, but not earlier.</p>
 
-<h4>Classic Style{#indexes-sources-classic}</h4>
+<h4 id='indexes-sources-classic'>Classic Style</h4>
 
-<p>The classic style uses Picky&#39;s own <code>Picky::Sources</code> to load the data into the index.</p>
+<p>The classic style uses Picky&#8217;s own <code>Picky::Sources</code> to load the data into the index.</p>
 
 <pre><code>Index.new :books do
   source Sources::CSV.new(:title, :author, file: &#39;app/library.csv&#39;)
-end
-</code></pre>
+end</code></pre>
 
 <p>Use this one if you want to use a simple CSV file.</p>
 
@@ -788,16 +879,15 @@ end
 
 <pre><code>Index.new :books do
   source Sources::DB.new(&#39;SELECT id, title, author, isbn13 as isbn FROM books&#39;, file: &#39;app/db.yml&#39;)
-end
-</code></pre>
+end</code></pre>
 
 <p>Use this one if you want to use a database source with very custom SQL statements. If not, we suggest you use an ORM as an <code>#each</code> source (see above).</p>
 
-<h3>Indexing / Tokenizing{#indexes-indexing}</h3>
+<h3 id='indexes-indexing'>Indexing / Tokenizing</h3>
 
-<p>See <a href="#tokenizing">Tokenizing</a> for tokenizer options.</p>
+<p>See <a href='#tokenizing'>Tokenizing</a> for tokenizer options.</p>
 
-<h3>Categories{#indexes-categories}</h3>
+<h3 id='indexes-categories'>Categories</h3>
 
 <p>Categories – usually what other search engines call fields – define <em>categorized data</em>. For example, book data might have a <code>title</code>, an <code>author</code> and an <code>isbn</code>.</p>
 
@@ -809,76 +899,67 @@ end
   category :title
   category :author
   category :isbn
-end
-</code></pre>
+end</code></pre>
 
 <p>(The example assumes that a <code>Book</code> has readers for <code>title</code>, <code>author</code>, and <code>isbn</code>)</p>
 
-<p>This already works and a search will return categorized results. For example, a search for &quot;Alan Tur&quot; might categorize both words as <code>author</code>, but it might also at the same time categorize both as <code>title</code>. Or one as <code>title</code> and the other as <code>author</code>.</p>
+<p>This already works and a search will return categorized results. For example, a search for &#8220;Alan Tur&#8221; might categorize both words as <code>author</code>, but it might also at the same time categorize both as <code>title</code>. Or one as <code>title</code> and the other as <code>author</code>.</p>
 
-<p>That&#39;s a great starting point. So how can I customize the categories?</p>
+<p>That&#8217;s a great starting point. So how can I customize the categories?</p>
 
-<h4>Option partial{#indexes-categories-partial}</h4>
+<h4 id='indexes-categories-partial'>Option partial</h4>
 
-<p>The partial option defines if a word is also found when it is only <em>partially entered</em>. So, &quot;Picky&quot; might be already found when typing &quot;Pic&quot;.</p>
+<p>The partial option defines if a word is also found when it is only <em>partially entered</em>. So, &#8220;Picky&#8221; might be already found when typing &#8220;Pic&#8221;.</p>
 
 <p>You define this by this:</p>
 
-<pre><code>category :some, partial: Partial::Substring.new(from: -3)
-</code></pre>
+<pre><code>category :some, partial: Partial::Substring.new(from: -3)</code></pre>
 
-<p>(This is also the default)
-The option <code>from: 1</code> will make a word completely partially findable.</p>
+<p>(This is also the default) The option <code>from: 1</code> will make a word completely partially findable.</p>
 
-<p>If you don&#39;t want any partial finds to occur, use:</p>
+<p>If you don&#8217;t want any partial finds to occur, use:</p>
 
-<pre><code>category :some, partial: Partial::None.new
-</code></pre>
+<pre><code>category :some, partial: Partial::None.new</code></pre>
 
-<p>You can also pass in your own partial generators. See <a href="http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html">this article</a> to learn more.</p>
+<p>You can also pass in your own partial generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
 
-<h4>Option weights{#indexes-categories-weights}</h4>
+<h4 id='indexes-categories-weights'>Option weights</h4>
 
 <p>The weights option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be slightly higher weighed.</p>
 
 <p>You define this by this:</p>
 
-<pre><code>category :some, weights: MyWeights.new
-</code></pre>
+<pre><code>category :some, weights: MyWeights.new</code></pre>
 
 <p>The default is <code>Weights::Logarithmic.new</code>.</p>
 
-<p>You can also pass in your own weights generators. See <a href="http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html">this article</a> to learn more.</p>
+<p>You can also pass in your own weights generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
 
-<p>If you don&#39;t want Picky to calculate weights for your indexed entries, you can use constant or dynamic weights.</p>
+<p>If you don&#8217;t want Picky to calculate weights for your indexed entries, you can use constant or dynamic weights.</p>
 
 <p>With 0.0 as default weight:</p>
 
-<pre><code>category :some, weights: Weights::Constant.new # Returns 0.0 for all results.
-</code></pre>
+<pre><code>category :some, weights: Weights::Constant.new # Returns 0.0 for all results.</code></pre>
 
 <p>With 3.14 as set weight:</p>
 
-<pre><code>category :some, weights: Weights::Constant.new(3.14) # Returns 3.14 for all results.
-</code></pre>
+<pre><code>category :some, weights: Weights::Constant.new(3.14) # Returns 3.14 for all results.</code></pre>
 
 <p>Or with a dynamically calculated weight:</p>
 
 <pre><code>Weights::Dynamic.new do |str_or_sym|
   sym_or_str.length # Uses the length of the symbol as weight.
-end
-</code></pre>
+end</code></pre>
 
 <p>You almost never need to use your specific weights. More often than not, you can fiddle with boosting combinations of categories, via the <code>boost</code> method in searches.</p>
 
-<h4>Option similarity{#indexes-categories-similarity}</h4>
+<h4 id='indexes-categories-similarity'>Option similarity</h4>
 
-<p>The similarity option defines if a word is also found when it is typed wrong, or <em>close</em> to another word. So, &quot;Picky&quot; might be already found when typing &quot;Pocky~&quot;. (Picky will search for similar word when you use the tilde, ~)</p>
+<p>The similarity option defines if a word is also found when it is typed wrong, or <em>close</em> to another word. So, &#8220;Picky&#8221; might be already found when typing &#8220;Pocky~&#8221;. (Picky will search for similar word when you use the tilde, ~)</p>
 
 <p>You define this by this:</p>
 
-<pre><code>category :some, similarity: Similarity::None.new
-</code></pre>
+<pre><code>category :some, similarity: Similarity::None.new</code></pre>
 
 <p>(This is also the default)</p>
 
@@ -886,48 +967,43 @@ end
 
 <pre><code>category :some, similarity: Similarity::Soundex.new
 category :this, similarity: Similarity::Metaphone.new
-category :that, similarity: Similarity::DoubleMetaphone.new
-</code></pre>
+category :that, similarity: Similarity::DoubleMetaphone.new</code></pre>
 
-<p>You can also pass in your own similarity generators. See <a href="http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html">this article</a> to learn more.</p>
+<p>You can also pass in your own similarity generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
 
-<h4>Option qualifier/qualifiers (categorizing){#indexes-categories-qualifiers}</h4>
+<h4 id='indexes-categories-qualifiers'>Option qualifier/qualifiers (categorizing)</h4>
 
-<p>Usually, when you search for <code>title:wizard</code> you will only find books with &quot;wizard&quot; in their title.</p>
+<p>Usually, when you search for <code>title:wizard</code> you will only find books with &#8220;wizard&#8221; in their title.</p>
 
-<p>Maybe your client would like to be able to only enter &quot;t:wizard&quot;. In that case you would use this option:</p>
-
-<pre><code>category :some,
-         :qualifier =&gt; :t
-</code></pre>
-
-<p>Or if you&#39;d like more to match:</p>
+<p>Maybe your client would like to be able to only enter &#8220;t:wizard&#8221;. In that case you would use this option:</p>
 
 <pre><code>category :some,
-         qualifiers: [:t, :title, :titulo]
-</code></pre>
+         :qualifier =&gt; :t</code></pre>
 
-<p>(This matches &quot;t&quot;, &quot;title&quot;, and also the italian &quot;titulo&quot;)</p>
+<p>Or if you&#8217;d like more to match:</p>
 
-<p>Picky will warn you if on one index the qualifiers are ambiguous (Picky will assume that the last &quot;t&quot; for example is the one you want to use).</p>
+<pre><code>category :some,
+         qualifiers: [:t, :title, :titulo]</code></pre>
+
+<p>(This matches &#8220;t&#8221;, &#8220;title&#8221;, and also the italian &#8220;titulo&#8221;)</p>
+
+<p>Picky will warn you if on one index the qualifiers are ambiguous (Picky will assume that the last &#8220;t&#8221; for example is the one you want to use).</p>
 
 <p>This means that:</p>
 
 <pre><code>category :some,  :qualifier =&gt; :t
-category :other, :qualifier =&gt; :t
-</code></pre>
+category :other, :qualifier =&gt; :t</code></pre>
 
-<p>Picky will assume that if you enter &quot;t:bla&quot;, you want to search in the :other category.</p>
+<p>Picky will assume that if you enter &#8220;t:bla&#8221;, you want to search in the :other category.</p>
 
 <p>Searching in multiple categories can also be done. If you have:</p>
 
 <pre><code>category :some,  :qualifier =&gt; :s
-category :other, :qualifier =&gt; :o
-</code></pre>
+category :other, :qualifier =&gt; :o</code></pre>
 
-<p>Then searching with &quot;s,o:bla&quot; will search for bla in both @:some@ and @:other@. Neat, eh?</p>
+<p>Then searching with &#8220;s,o:bla&#8221; will search for bla in both <code>:some</code> and <code>:other</code>. Neat, eh?</p>
 
-<h4>Option from{#indexes-categories-from}</h4>
+<h4 id='indexes-categories-from'>Option from</h4>
 
 <p>Usually, the categories will take their data from the reader or field that is the same as their name.</p>
 
@@ -939,52 +1015,53 @@ category :other, :qualifier =&gt; :o
   category :title,  :from =&gt; :titulo
   category :author, :from =&gt; :autore
   category :isbn
-end
-</code></pre>
+end</code></pre>
 
-<h4>Option key_format{#indexes-categories-keyformat}</h4>
+<h4 id='indexes-categories-keyformat'>Option key_format</h4>
 
-<p>You almost never use this, as the key format will usually be the same for all categories, which is when you would define it on the index, <a href="#indexes-keyformat">like so</a>.</p>
+<p>You almost never use this, as the key format will usually be the same for all categories, which is when you would define it on the index, <a href='#indexes-keyformat'>like so</a>.</p>
 
 <p>But if you need to, use as with the index.</p>
 
 <pre><code>Index.new :books do
   category :title,
            :key_format =&gt; :to_sym
-end
-</code></pre>
+end</code></pre>
 
-<h4>Option source{#indexes-categories-source}</h4>
+<h4 id='indexes-categories-source'>Option source</h4>
 
-<p>You almost never use this, as the source will usually be the same for all categories, which is when you would define it on the index, &quot;like so&quot;:#indexes-sources.</p>
+<p>You almost never use this, as the source will usually be the same for all categories, which is when you would define it on the index, &#8220;like so&#8221;:#indexes-sources.</p>
 
 <p>But if you need to, use as with the index.</p>
 
 <pre><code>Index.new :books do
   category :title,
            source: some_source
-end
-</code></pre>
+end</code></pre>
 
-<h4>Searching{#indexes-categories-searching}</h4>
+<h4 id='indexes-categories-searching'>Searching</h4>
 
 <p>Users can use some special features when searching. They are:</p>
 
 <ul>
 <li>Partial: <code>something*</code> (By default, the last word is implicitly partial)</li>
+
 <li>Non-Partial: <code>&quot;something&quot;</code> (The quotes make the query on this word explicitly non-partial)</li>
+
 <li>Similarity: <code>something~</code> (The tilde makes this word eligible for similarity search)</li>
+
 <li>Categorized: <code>title:something</code> (Picky will only search in the category designated as title, in each index of the search)</li>
+
 <li>Multi-categorized: <code>title,author:something</code> (Picky will search in title <em>and</em> author categories, in each index of the search)</li>
 </ul>
 
-<p>These options can be combined (e.g. <code>title,author:&quot;funky~&quot;</code>): This will try to find similar words to funky (like &quot;fonky&quot;), but no partials of them (like &quot;fonk&quot;), in both title and author. </p>
+<p>These options can be combined (e.g. <code>title,author:&quot;funky~&quot;</code>): This will try to find similar words to funky (like &#8220;fonky&#8221;), but no partials of them (like &#8220;fonk&#8221;), in both title and author.</p>
 
 <p>Non-partial will win over partial, if you use both, as in <code>&quot;test*&quot;</code>.</p>
 
-<p>Also note that these options need to make it through the <a href="#tokenizing">tokenizing</a>, so don&#39;t remove any of <code>*&quot;:,</code>.</p>
+<p>Also note that these options need to make it through the <a href='#tokenizing'>tokenizing</a>, so don&#8217;t remove any of <code>*&quot;:,</code>.</p>
 
-<h3>Key Format (Format of the indexed Ids){#indexes-keyformat}</h3>
+<h3 id='indexes-keyformat'>Key Format (Format of the indexed Ids)</h3>
 
 <p>By default, the indexed data points to keys that are integers, or differently said, are formatted using <code>to_i</code>.</p>
 
@@ -994,89 +1071,76 @@ end
 
 <pre><code>Index.new :books do
   key_format :to_sym
-end
-</code></pre>
+end</code></pre>
 
 <p>The <code>Picky::Sources</code> already set this correctly. However, if you use an <code>#each</code> source that supplies Picky with symbol ids, you should tell it what format the keys are in, eg. <code>key_format :to_sym</code>.</p>
 
-<h3>Identifying in Results{#indexes-results}</h3>
+<h3 id='indexes-results'>Identifying in Results</h3>
 
 <p>By default, an index is identified by its <em>name</em> in the results. This index is identified by <code>:books</code>:</p>
 
 <pre><code>Index.new :books do
   # ...
-end
-</code></pre>
+end</code></pre>
 
 <p>This index is identified by <code>:media</code> in the results:</p>
 
 <pre><code>Index.new :books do
   # ...
   result_identifier :media
-end
-</code></pre>
+end</code></pre>
 
-<p>You still refer to it as <code>:books</code> in e.g. Rake tasks, <code>Picky::Indexes[:books].reload</code>. It&#39;s just for the results.</p>
+<p>You still refer to it as <code>:books</code> in e.g. Rake tasks, <code>Picky::Indexes[:books].reload</code>. It&#8217;s just for the results.</p>
 
-<h3>Indexing{#indexes-indexing}</h3>
+<h3 id='indexes-indexing'>Indexing</h3>
 
 <p>Indexing can be done programmatically, at any time. Even while the server is running.</p>
 
 <p>Indexing <em>all indexes</em> is done with</p>
 
-<pre><code>Picky::Indexes.index
-</code></pre>
+<pre><code>Picky::Indexes.index</code></pre>
 
 <p>Indexing a <em>single index</em> can be done either with</p>
 
-<pre><code>Picky::Indexes[:index_name].index
-</code></pre>
+<pre><code>Picky::Indexes[:index_name].index</code></pre>
 
 <p>or</p>
 
-<pre><code>index_instance.index
-</code></pre>
+<pre><code>index_instance.index</code></pre>
 
 <p>Indexing a <em>single category</em> of an index can be done either with</p>
 
-<pre><code>Picky::Indexes[:index_name][:category_name].index
-</code></pre>
+<pre><code>Picky::Indexes[:index_name][:category_name].index</code></pre>
 
 <p>or</p>
 
-<pre><code>category_instance.index
-</code></pre>
+<pre><code>category_instance.index</code></pre>
 
-<h3>Loading{#indexes-reloading}</h3>
+<h3 id='indexes-reloading'>Loading</h3>
 
 <p>Loading (or reloading) your indexes in a running application is possible.</p>
 
 <p>Loading <em>all indexes</em> is done with</p>
 
-<pre><code>Picky::Indexes.load
-</code></pre>
+<pre><code>Picky::Indexes.load</code></pre>
 
 <p>Loading a <em>single index</em> can be done either with</p>
 
-<pre><code>Picky::Indexes[:index_name].load
-</code></pre>
+<pre><code>Picky::Indexes[:index_name].load</code></pre>
 
 <p>or</p>
 
-<pre><code>index_instance.load
-</code></pre>
+<pre><code>index_instance.load</code></pre>
 
 <p>Loading a <em>single category</em> of an index can be done either with</p>
 
-<pre><code>Picky::Indexes[:index_name][:category_name].load
-</code></pre>
+<pre><code>Picky::Indexes[:index_name][:category_name].load</code></pre>
 
 <p>or</p>
 
-<pre><code>category_instance.load
-</code></pre>
+<pre><code>category_instance.load</code></pre>
 
-<h4>Using signals{#indexes-reloading-signals}</h4>
+<h4 id='indexes-reloading-signals'>Using signals</h4>
 
 <p>To communicate with your server using signals:</p>
 
@@ -1086,73 +1150,62 @@ end
 
 Signal.trap(&quot;USR1&quot;) do
   books_index.reindex
-end
-</code></pre>
+end</code></pre>
 
 <p>This reindexes the books_index when you call</p>
 
-<pre><code>kill -USR1 &lt;server_process_id&gt;
-</code></pre>
+<pre><code>kill -USR1 &lt;server_process_id&gt;</code></pre>
 
 <p>You can refer to the index like so if want to define the trap somewhere else:</p>
 
 <pre><code>Signal.trap(&quot;USR1&quot;) do
   Picky::Indexes[:books].reindex
-end
-</code></pre>
+end</code></pre>
 
-<h3>Reindexing{#indexes-reindexing}</h3>
+<h3 id='indexes-reindexing'>Reindexing</h3>
 
 <p>Reindexing your indexes is just indexing followed by reloading (see above).</p>
 
 <p>Reindexing <em>all indexes</em> is done with</p>
 
-<pre><code>Picky::Indexes.reindex
-</code></pre>
+<pre><code>Picky::Indexes.reindex</code></pre>
 
 <p>Reindexing a <em>single index</em> can be done either with</p>
 
-<pre><code>Picky::Indexes[:index_name].reindex
-</code></pre>
+<pre><code>Picky::Indexes[:index_name].reindex</code></pre>
 
 <p>or</p>
 
-<pre><code>index_instance.reindex
-</code></pre>
+<pre><code>index_instance.reindex</code></pre>
 
 <p>Reindexing a <em>single category</em> of an index can be done either with</p>
 
-<pre><code>Picky::Indexes[:index_name][:category_name].reindex
-</code></pre>
+<pre><code>Picky::Indexes[:index_name][:category_name].reindex</code></pre>
 
 <p>or</p>
 
-<pre><code>category_instance.reindex
-</code></pre>
-    <h2>Search{#search}</h2>
+<pre><code>category_instance.reindex</code></pre>
+    <h2 id='search'>Search</h2>
 
 <p>Picky offers a <code>Search</code> interface for the indexes. You instantiate it as follows.</p>
 
 <p>Just searching over one index:</p>
 
-<pre><code>books = Search.new books_index # searching over one index
-</code></pre>
+<pre><code>books = Search.new books_index # searching over one index</code></pre>
 
 <p>Searching over multiple indexes:</p>
 
-<pre><code>media = Search.new books_index, dvd_index, mp3_index
-</code></pre>
+<pre><code>media = Search.new books_index, dvd_index, mp3_index</code></pre>
 
 <p>Such an instance can then search over all its indexes and returns a <code>Picky::Results</code> object:</p>
 
 <pre><code>results = media.search &quot;query&quot;, # the query text
                             20, # number of ids
-                             0  # offset (for pagination)
-</code></pre>
+                             0  # offset (for pagination)</code></pre>
 
-<p>Please see the part about <a href="#results">Results</a> to know more about that.</p>
+<p>Please see the part about <a href='#results'>Results</a> to know more about that.</p>
 
-<h3>Options{#search-options}</h3>
+<h3 id='search-options'>Options</h3>
 
 <p>You use a block to set search options:</p>
 
@@ -1160,76 +1213,69 @@ end
   searching tokenizer_options_or_tokenizer
   boost [:title, :author] =&gt; +2,
         [:author, :title] =&gt; -1
-end
-</code></pre>
+end</code></pre>
 
-<h4>Searching / Tokenizing{#search-options-searching}</h4>
+<h4 id='search-options-searching'>Searching / Tokenizing</h4>
 
-<p>See <a href="#tokenizing">Tokenizing</a> for tokenizer options.</p>
+<p>See <a href='#tokenizing'>Tokenizing</a> for tokenizer options.</p>
 
-<h4>Boost{#search-options-boost}</h4>
+<h4 id='search-options-boost'>Boost</h4>
 
 <p>The <code>boost</code> option defines what combinations to boost.</p>
 
-<p>This is unlike boosting in most other search engines, where you can only boost a given field. I&#39;ve found it much more useful to boost combinations.</p>
+<p>This is unlike boosting in most other search engines, where you can only boost a given field. I&#8217;ve found it much more useful to boost combinations.</p>
 
-<p>For example, you have an index of addresses. The usual case is that someone is looking for a street and a number. So if Picky encounters that combination (in that order), it should move these results to a more prominent spot.
-But if it thinks it&#39;s a street number, followed by a street, it is probably wrong, since usually you search for &quot;Road 10&quot;, instead of &quot;10 Road&quot; (assuming this is the case where you come from).</p>
+<p>For example, you have an index of addresses. The usual case is that someone is looking for a street and a number. So if Picky encounters that combination (in that order), it should move these results to a more prominent spot. But if it thinks it&#8217;s a street number, followed by a street, it is probably wrong, since usually you search for &#8220;Road 10&#8221;, instead of &#8220;10 Road&#8221; (assuming this is the case where you come from).</p>
 
-<p>So let&#39;s boost <code>street, streetnumber</code>, while at the same time deboost <code>streetnumber, street</code>:</p>
+<p>So let&#8217;s boost <code>street, streetnumber</code>, while at the same time deboost <code>streetnumber, street</code>:</p>
 
 <pre><code>addresses = Picky::Search.new address_index do
   boost [:street, :streetnumber] =&gt; +2,
         [:streetnumber, :street] =&gt; -1
-end
-</code></pre>
+end</code></pre>
 
-<p>If you still want to boost a single category, check out the <a href="#indexes-categories-weights">category weights option</a>.
-For example:</p>
+<p>If you still want to boost a single category, check out the <a href='#indexes-categories-weights'>category weights option</a>. For example:</p>
 
 <pre><code>Picky::Index.new :addresses do
   category :street, weights: Picky::Weights::Logarithmic.new(+4)
   category :streetnumber
-end
-</code></pre>
+end</code></pre>
 
 <p>This boosts the weight of the street category alone.</p>
 
-<h4>Ignore Categories{#search-options-ignore}</h4>
+<h4 id='search-options-ignore'>Ignore Categories</h4>
 
-<p>There&#39;s a <a href="http://florianhanke.com/blog/2011/09/01/picky-case-study-location-based-ads.html">full blog post</a> devoted to this topic.</p>
+<p>There&#8217;s a <a href='http://florianhanke.com/blog/2011/09/01/picky-case-study-location-based-ads.html'>full blog post</a> devoted to this topic.</p>
 
 <p>In short, the <code>ignore :category_name</code> option makes Picky throw away any result combinations that have the named category in it.</p>
 
-<p>If Picky finds the tokens &quot;florian hanke&quot; in both <code>:first_name, :last_name</code> and <code>:last_name, :last_name</code>, and we&#39;ve instructed it to ignore <code>first_name</code>,</p>
+<p>If Picky finds the tokens &#8220;florian hanke&#8221; in both <code>:first_name, :last_name</code> and <code>:last_name, :last_name</code>, and we&#8217;ve instructed it to ignore <code>first_name</code>,</p>
 
 <pre><code>names = Picky::Search.new name_index do
   ignore :first_name
-end
-</code></pre>
+end</code></pre>
 
-<p>then it will throw away the solutions for <code>:first_name, :last_name</code> (eg. &quot;Peter Miller&quot;) and only use <code>:last_name, :last_name</code> (eg. &quot;Smith Miller&quot;).</p>
+<p>then it will throw away the solutions for <code>:first_name, :last_name</code> (eg. &#8220;Peter Miller&#8221;) and only use <code>:last_name, :last_name</code> (eg. &#8220;Smith Miller&#8221;).</p>
 
-<h4>Ignore Unassigned Tokens{#search-options-unassigned}</h4>
+<h4 id='search-options-unassigned'>Ignore Unassigned Tokens</h4>
 
-<p>There&#39;s a <a href="http://florianhanke.com/blog/2011/09/05/picky-ignoring-unassigned-tokens.html">full blog post</a> devoted to this topic.</p>
+<p>There&#8217;s a <a href='http://florianhanke.com/blog/2011/09/05/picky-ignoring-unassigned-tokens.html'>full blog post</a> devoted to this topic.</p>
 
-<p>In short, the <code>ignore_unassigned_tokens true/false</code> option makes Picky be very lenient with your queries. Usually, if one of the search words is not found, say in a query &quot;aston martin cockadoodledoo&quot;, Picky will return an empty result set, because &quot;cockadoodledoo&quot; is not in any index, in a car search, for example.</p>
+<p>In short, the <code>ignore_unassigned_tokens true/false</code> option makes Picky be very lenient with your queries. Usually, if one of the search words is not found, say in a query &#8220;aston martin cockadoodledoo&#8221;, Picky will return an empty result set, because &#8220;cockadoodledoo&#8221; is not in any index, in a car search, for example.</p>
 
-<p>By ignoring the &quot;cockadoodledoo&quot; that can&#39;t be assigned sensibly, you will still get results.</p>
+<p>By ignoring the &#8220;cockadoodledoo&#8221; that can&#8217;t be assigned sensibly, you will still get results.</p>
 
 <p>This could be used in a search for advertisements that are shown next to the results.</p>
 
-<p>If you&#39;ve defined an ads search like so:</p>
+<p>If you&#8217;ve defined an ads search like so:</p>
 
 <pre><code>ads_search = Search.new cars_index do
   ignore_unassigned_tokens true
-end
-</code></pre>
+end</code></pre>
 
-<p>then even if Picky does not find anything for &quot;aston martin cockadoodledoo&quot;, it will find an ad, simply ignoring the unassigned token.</p>
+<p>then even if Picky does not find anything for &#8220;aston martin cockadoodledoo&#8221;, it will find an ad, simply ignoring the unassigned token.</p>
 
-<h4>Maximum Allocations{#search-options-maxallocations}</h4>
+<h4 id='search-options-maxallocations'>Maximum Allocations</h4>
 
 <p>The <code>max_allocations(integer)</code> option cuts off calculation of allocations.</p>
 
@@ -1237,19 +1283,21 @@ end
 
 <pre><code>phone_search = Search.new phonebook do
   max_allocations 1
-end
-</code></pre>
+end</code></pre>
 
-<p>And someone searches for &quot;peter thomas&quot;.</p>
+<p>And someone searches for &#8220;peter thomas&#8221;.</p>
 
 <p>Picky then generates all possible allocations and sorts them.</p>
 
 <p>It might get</p>
 
 <ul>
-<li>[first<em>name, last</em>name]</li>
-<li>[last<em>name, first</em>name]</li>
-<li>[first<em>name, first</em>name]</li>
+<li><span>first_name, last_name</span></li>
+
+<li><span>last_name, first_name</span></li>
+
+<li><span>first_name, first_name</span></li>
+
 <li>etc.</li>
 </ul>
 
@@ -1259,13 +1307,13 @@ end
 
 <p>It will only go through the first one and calculate only results for that one. This can be used to speed up Picky in case of exploding amounts of allocations.</p>
 
-<h4>Early Termination{#search-options-terminateearly}</h4>
+<h4 id='search-options-terminateearly'>Early Termination</h4>
 
 <p>The <code>terminate_early(integer)</code> or <code>terminate_early(with_extra_allocations: integer)</code> option stops Picky from calculate all ids of all allocations.</p>
 
 <p>However, this will also return a wrong total.</p>
 
-<p>So, important note: Only use when you don&#39;t display a total.</p>
+<p>So, important note: Only use when you don&#8217;t display a total.</p>
 
 <p>Examples:</p>
 
@@ -1273,25 +1321,22 @@ end
 
 <pre><code>phone_search = Search.new phonebook do
   terminate_early # The default uses 0.
-end
-</code></pre>
+end</code></pre>
 
 <p>Stop as soon as you have calculated enough ids for the allocation, and then calculate 3 allocations more (for example, to show to the user).</p>
 
 <pre><code>phone_search = Search.new phonebook do
   terminate_early 3
-end
-</code></pre>
+end</code></pre>
 
-<p>There&#39;s also a hash form to be more explicit. So the next coder knows what it does. (However, us cool Picky hackers <em>know</em> ;) )</p>
+<p>There&#8217;s also a hash form to be more explicit. So the next coder knows what it does. (However, us cool Picky hackers <em>know</em> ;) )</p>
 
 <pre><code>phone_search = Search.new phonebook do
   terminate_early with_extra_allocations: 5
-end
-</code></pre>
+end</code></pre>
 
-<p>This option speeds up Picky if you don&#39;t need a correct total.</p>
-    <h2>Results{#results}</h2>
+<p>This option speeds up Picky if you don&#8217;t need a correct total.</p>
+    <h2 id='results'>Results</h2>
 
 <p>Results are returned by the <code>Search</code> instance.</p>
 
@@ -1304,10 +1349,9 @@ results = books.search &quot;test&quot;
 
 p results         # Returns results in log form.
 p results.to_hash # Returns results as a hash.
-p results.to_json # Returns results as JSON.
-</code></pre>
+p results.to_json # Returns results as JSON.</code></pre>
 
-<h3>Logging{#results-logging}</h3>
+<h3 id='results-logging'>Logging</h3>
 
 <p>TODO Update with latest logging style and ideas on how to separately log searches.</p>
 
@@ -1323,20 +1367,17 @@ get &#39;/books&#39; do
   results = books.search &quot;test&quot;
   MyLogger.info results
   results.to_json
-end
-</code></pre>
+end</code></pre>
 
 <p>or set it up in separate files for different environments:</p>
 
-<pre><code>require &quot;logging/#{PICKY_ENVIRONMENT}&quot;
-</code></pre>
+<pre><code>require &quot;logging/#{PICKY_ENVIRONMENT}&quot;</code></pre>
 
 <p>A Picky classic server logs to the logger defined with the <code>Picky.logger=</code> writer.</p>
 
 <p>Set it up in a separate <code>logging.rb</code> file (or directly in the <code>app/application.rb</code> file).</p>
 
-<pre><code>Picky.logger = Picky::Loggers::Concise.new STDOUT
-</code></pre>
+<pre><code>Picky.logger = Picky::Loggers::Concise.new STDOUT</code></pre>
 
 <p>and the Picky classic server will log the results into it, if it is defined.</p>
 
@@ -1344,7 +1385,7 @@ end
 
 <p>More power to you.</p>
 
-<h3>Sorting{#results-sorting}</h3>
+<h3 id='results-sorting'>Sorting</h3>
 
 <p>Picky results are always <em>sorted in the order of the data provided</em> by the data source.</p>
 
@@ -1353,17 +1394,17 @@ end
 <p>Why? This was a conscious design decision on my part. Usually, we do not need multiple sortings in a search application (I reckon around 95% of the cases). However, if you need it, you can.</p>
 
 <p>TODO Example that shows how to have different result sorting depending on the category a result is found.</p>
-    <h2>Facets</h2>
+    <h2 id='facets'>Facets</h2>
 
-<p>Here&#39;s <a href="http://en.wikipedia.org/wiki/Faceted_classification">the Wikipedia entry on facets</a>. I fell asleep after about 5 words. Twice.</p>
+<p>Here&#8217;s <a href='http://en.wikipedia.org/wiki/Faceted_classification'>the Wikipedia entry on facets</a>. I fell asleep after about 5 words. Twice.</p>
 
 <p>In Picky, categories are explicit slices over your index data. Picky facets are implicit slices over your category data.</p>
 
-<p>What does &quot;implicit&quot; mean here?</p>
+<p>What does &#8220;implicit&#8221; mean here?</p>
 
-<p>It means that you didn&#39;t explicitly say, &quot;My data is shoes, and I have these four brands: Nike, Adidas, Puma, and Vibram&quot;. </p>
+<p>It means that you didn&#8217;t explicitly say, &#8220;My data is shoes, and I have these four brands: Nike, Adidas, Puma, and Vibram&#8221;.</p>
 
-<p>No, instead you told Picky that your data is shoes, and there is a category &quot;brand&quot;. Let&#39;s make this simple:</p>
+<p>No, instead you told Picky that your data is shoes, and there is a category &#8220;brand&#8221;. Let&#8217;s make this simple:</p>
 
 <pre><code>index = Picky::Index.new :shoes do
   category :brand
@@ -1373,30 +1414,29 @@ end
 
 index.add Shoe.new(1, &#39;nike&#39;, &#39;zoom&#39;, &#39;sports&#39;)
 index.add Shoe.new(2, &#39;adidas&#39;, &#39;speed&#39;, &#39;sports&#39;)
-index.add Shoe.new(3, &#39;nike&#39;, &#39;barefoot&#39;, &#39;casual&#39;)
-</code></pre>
+index.add Shoe.new(3, &#39;nike&#39;, &#39;barefoot&#39;, &#39;casual&#39;)</code></pre>
 
-<p>With this data in mind, let&#39;s look at the possibilities:</p>
+<p>With this data in mind, let&#8217;s look at the possibilities:</p>
 
-<h3>Index facets</h3>
+<h3 id='index_facets'>Index facets</h3>
 
 <p>Index facets are very straightforward.</p>
 
 <p>You ask the index for facets and it will give you all the facets it has and how many:</p>
 
-<pre><code>index.facets :brand # =&gt; { &#39;nike&#39; =&gt; 2, &#39;adidas&#39; =&gt; 1 }
-</code></pre>
+<pre><code>index.facets :brand # =&gt; { &#39;nike&#39; =&gt; 2, &#39;adidas&#39; =&gt; 1 }</code></pre>
 
 <p>The category type is a good candidate also:</p>
 
-<pre><code>index.facets :type # =&gt; { &#39;sports&#39; =&gt; 2, &#39;casual&#39; =&gt; 1 }
-</code></pre>
+<pre><code>index.facets :type # =&gt; { &#39;sports&#39; =&gt; 2, &#39;casual&#39; =&gt; 1 }</code></pre>
 
 <p>What are the options?</p>
 
 <ul>
 <li><code>at_least</code>: <code>index.facets :brand, at_least: 2 # =&gt; { &#39;nike&#39; =&gt; 2 }</code></li>
+
 <li><code>counts</code>: <code>index.facets :brand, counts: false # =&gt; [&#39;nike&#39;, &#39;adidas&#39;]</code></li>
+
 <li>both options: <code>index.facets :brand, at_least: 2, counts: false # =&gt; [&#39;nike&#39;]</code></li>
 </ul>
 
@@ -1406,7 +1446,7 @@ index.add Shoe.new(3, &#39;nike&#39;, &#39;barefoot&#39;, &#39;casual&#39;)
 
 <p>Search facets are quite similar:</p>
 
-<h3>Search facets</h3>
+<h3 id='search_facets'>Search facets</h3>
 
 <p>Search facets work the exact same way as index facets and you can use them in the same way:</p>
 
@@ -1414,67 +1454,58 @@ index.add Shoe.new(3, &#39;nike&#39;, &#39;barefoot&#39;, &#39;casual&#39;)
 search_interface.facets :type # =&gt; { &#39;sports&#39; =&gt; 2, &#39;casual&#39; =&gt; 1 }
 search_interface.facets :brand, at_least: 2 # =&gt; { &#39;nike&#39; =&gt; 2 }
 search_interface.facets :brand, counts: false # =&gt; [&#39;nike&#39;, &#39;adidas&#39;]
-search_interface.facets :brand, at_least: 2, counts: false # =&gt; [&#39;nike&#39;]
-</code></pre>
+search_interface.facets :brand, at_least: 2, counts: false # =&gt; [&#39;nike&#39;]</code></pre>
 
 <p>However, you can also filter the facets with a filter query option.</p>
 
-<pre><code>shoes.facets :brand, filter: &#39;some filter query&#39;
-</code></pre>
+<pre><code>shoes.facets :brand, filter: &#39;some filter query&#39;</code></pre>
 
 <p>What does that mean?</p>
 
-<p>Usually you want to use multiple facets in your interface.
-For example, a customer might already have filtered by type &quot;sports&quot; because they are only interested in sports shoes.
-Now you&#39;d like to show them the remaining brands, so that they can filter on the remaining facets.</p>
+<p>Usually you want to use multiple facets in your interface. For example, a customer might already have filtered by type &#8220;sports&#8221; because they are only interested in sports shoes. Now you&#8217;d like to show them the remaining brands, so that they can filter on the remaining facets.</p>
 
 <p>How do you do this?</p>
 
-<p>Let&#39;s say we have an index as above, and a search interface to the index:</p>
+<p>Let&#8217;s say we have an index as above, and a search interface to the index:</p>
 
-<pre><code>shoes = Picky::Search.new index
-</code></pre>
+<pre><code>shoes = Picky::Search.new index</code></pre>
 
 <p>Now, if the customer has already filtered for sports, you simply add the <code>filter</code> option:</p>
 
-<pre><code>shoes.facets :brand, filter: &#39;type:sports&#39; # =&gt; { &#39;nike&#39; =&gt; 1, &#39;adidas&#39; =&gt; 1 }
-</code></pre>
+<pre><code>shoes.facets :brand, filter: &#39;type:sports&#39; # =&gt; { &#39;nike&#39; =&gt; 1, &#39;adidas&#39; =&gt; 1 }</code></pre>
 
-<p>This will give you only 1 &quot;nike&quot; facet. If the customer filtered for &quot;casual&quot;:</p>
+<p>This will give you only 1 &#8220;nike&#8221; facet. If the customer filtered for &#8220;casual&#8221;:</p>
 
-<pre><code>shoes.facets :brand, filter: &#39;type:casual&#39; # =&gt; { &#39;nike&#39; =&gt; 1 }
-</code></pre>
+<pre><code>shoes.facets :brand, filter: &#39;type:casual&#39; # =&gt; { &#39;nike&#39; =&gt; 1 }</code></pre>
 
-<p>then we&#39;d only get the casual nike facet (from that one &quot;barefoot&quot; shoe).</p>
+<p>then we&#8217;d only get the casual nike facet (from that one &#8220;barefoot&#8221; shoe).</p>
 
-<p>If the customer has filtered for brand &quot;nike&quot; and type &quot;sports&quot;, you&#39;d get:</p>
+<p>If the customer has filtered for brand &#8220;nike&#8221; and type &#8220;sports&#8221;, you&#8217;d get:</p>
 
 <pre><code>shoes.facets :brand, filter: &#39;brand:nike type:sports&#39; # =&gt; { &#39;nike&#39; =&gt; 1 }
-shoes.facets :name, filter: &#39;brand:nike type:sports&#39; # =&gt; { &#39;zoom&#39; =&gt; 1 }
-</code></pre>
+shoes.facets :name, filter: &#39;brand:nike type:sports&#39; # =&gt; { &#39;zoom&#39; =&gt; 1 }</code></pre>
 
 <p>Playing with it is fun :)</p>
 
 <p>See below for testing and performance tips.</p>
 
-<h3>Testing How To</h3>
+<h3 id='testing_how_to'>Testing How To</h3>
 
-<p>Let&#39;s say we have an index with some data:</p>
+<p>Let&#8217;s say we have an index with some data:</p>
 
 <pre><code>index = Picky::Index.new :people do
   category :name
   category :surname
 end
-
+    
 person = Struct.new :id, :name, :surname
 index.add person.new(1, &#39;tom&#39;, &#39;hanke&#39;)
 index.add person.new(2, &#39;kaspar&#39;, &#39;schiess&#39;)
-index.add person.new(3, &#39;florian&#39;, &#39;hanke&#39;)
-</code></pre>
+index.add person.new(3, &#39;florian&#39;, &#39;hanke&#39;)</code></pre>
 
 <p>This is how you test facets:</p>
 
-<h4>Index Facets</h4>
+<h4 id='index_facets'>Index Facets</h4>
 
 <pre><code># We should find two surname facets. 
 #
@@ -1487,10 +1518,9 @@ index.facets(:surname).should == {
 #
 index.facets(:surname, at_least: 2).should == {
   &#39;hanke&#39; =&gt; 2
-}
-</code></pre>
+}</code></pre>
 
-<h4>Search Facets</h4>
+<h4 id='search_facets'>Search Facets</h4>
 
 <pre><code># Passing in no filter query just returns the facets
 #
@@ -1511,25 +1541,23 @@ finder.facets(:name, filter: &#39;surname:hanke&#39;).should == {
 finder.facets(:name, filter: &#39;surname:hank*&#39;).should == {
   &#39;fritz&#39; =&gt; 1,
   &#39;florian&#39; =&gt; 1
-}
-</code></pre>
+}</code></pre>
 
-<h3>Performance</h3>
+<h3 id='performance'>Performance</h3>
 
 <p>Two rules:</p>
 
 <ol>
-<li>Index facets are faster than filtered search facets. If you don&#39;t filter though, search facets are as fast as index facets.</li>
-<li>Only use facets on data which are a good fit for facets – where there aren&#39;t many facets to the data.</li>
+<li>Index facets are faster than filtered search facets. If you don&#8217;t filter though, search facets are as fast as index facets.</li>
+
+<li>Only use facets on data which are a good fit for facets – where there aren&#8217;t many facets to the data.</li>
 </ol>
 
-<p>A good example for a good fit would be brands of shoes.
-There aren&#39;t many different brands (usually less than 100).</p>
+<p>A good example for a good fit would be brands of shoes. There aren&#8217;t many different brands (usually less than 100).</p>
 
 <p>So this facet query</p>
 
-<pre><code>finder.facets(:brand, filter: &#39;type:sports&#39;)
-</code></pre>
+<pre><code>finder.facets(:brand, filter: &#39;type:sports&#39;)</code></pre>
 
 <p>does not return thousands of facets.</p>
 
@@ -1538,11 +1566,10 @@ There aren&#39;t many different brands (usually less than 100).</p>
 <pre><code>category = :name
 filter   = &#39;age_bracket:40&#39;
 
-some_cache[[category, filter]] ||= finder.facets(category, filter: filter)
-</code></pre>
-    <h3>Thanks!</h3>
+some_cache[[category, filter]] ||= finder.facets(category, filter: filter)</code></pre>
+    <h3 id='thanks'>Thanks!</h3>
     
-    <p>Thanks to whoever made the <a href="http://www.sinatrarb.com/intro">Sinatra README page</a> for the inspiration.</p>
+    <p>Thanks to whoever made the <a href='http://www.sinatrarb.com/intro'>Sinatra README page</a> for the inspiration.</p>
   </div>
 </div>
     <div class='license'>

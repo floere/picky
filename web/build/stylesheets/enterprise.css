@@ -11,3 +11,7 @@ body {
   background-color: #a79c8e;
   background: -moz-radial-gradient(50% 100%, circle, white 90px, #a79c8e 600px);
   background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(white), to(#a79c8e)); }
+
+/* line 12, enterprise.css.sass */
+body .navigation a.current {
+  background-color: #f5f5ea; }
