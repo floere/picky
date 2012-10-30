@@ -12,7 +12,7 @@ and simply enter
 
 This will raise an `Picky::Generators::NotFoundException` and show you the possibilities.
 
-The "All In One" Client/Server is interested for Heroku projects, as it is a bit complicated to set up two servers that interact with each other.
+The "All In One" Client/Server is interesting for Heroku projects, as it is a bit complicated to set up two servers that interact with each other.
 
 ### Servers{#generators-servers}
 

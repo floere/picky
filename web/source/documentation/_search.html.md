@@ -106,9 +106,9 @@ Picky then generates all possible allocations and sorts them.
 
 It might get
 
-* [first_name, last_name]
-* [last_name, first_name]
-* [first_name, first_name]
+* `[first_name, last_name]`
+* `[last_name, first_name]`
+* `[first_name, first_name]`
 * etc.
 
 with the first allocation being the most probable one.
