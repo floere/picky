@@ -342,7 +342,7 @@ Searching in multiple categories can also be done. If you have:
     category :some,  :qualifier => :s
     category :other, :qualifier => :o
 
-Then searching with "s,o:bla" will search for bla in both `:some` and `:other`. Neat, eh?
+Then searching with `s,o:bla` will search for `bla` in both `:some` and `:other`. Neat, eh?
 
 #### Option from{#indexes-categories-from}
 

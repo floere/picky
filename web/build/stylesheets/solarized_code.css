@@ -5,7 +5,7 @@ pre, code, tt, samp {
   font-weight: 500; }
 
 /* line 10, solarized_code.css.sass */
-p code {
+p code, li code {
   padding: 0.2em 0.5em;
   -webkit-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
   -moz-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
@@ -22,7 +22,6 @@ pre {
   box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
   padding: 0.5em 1em;
   margin: 1.5em 0;
-  overflow: auto;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -31,7 +30,7 @@ pre {
   padding: 1em;
   display: block; }
 
-/* line 36, solarized_code.css.sass */
+/* line 35, solarized_code.css.sass */
 pre .comment,
 pre .template_comment,
 pre .diff .header,
@@ -45,7 +44,7 @@ code .lisp .string,
 code .javadoc {
   color: #93a1a1;
   font-style: italic; }
-/* line 45, solarized_code.css.sass */
+/* line 44, solarized_code.css.sass */
 pre .keyword,
 pre .css .rule .keyword,
 pre .winutils,
@@ -62,7 +61,7 @@ code .addition,
 code .css .tag,
 code .lisp .title {
   color: #d98a64; }
-/* line 55, solarized_code.css.sass */
+/* line 54, solarized_code.css.sass */
 pre .number,
 pre .command,
 pre .string,
@@ -79,7 +78,7 @@ code .tex .formula,
 code .regexp,
 code .hexcolor {
   color: #61b042; }
-/* line 65, solarized_code.css.sass */
+/* line 64, solarized_code.css.sass */
 pre .title,
 pre .localvars,
 pre .function .title,
@@ -102,7 +101,7 @@ code .identifier,
 code .title .keymethods,
 code .id {
   color: #89bdff; }
-/* line 78, solarized_code.css.sass */
+/* line 77, solarized_code.css.sass */
 pre .attribute,
 pre .variable,
 pre .instancevar,
@@ -121,7 +120,7 @@ code .class .title,
 code .parent,
 code .haskell .label {
   color: #9b859c; }
-/* line 89, solarized_code.css.sass */
+/* line 88, solarized_code.css.sass */
 pre .preprocessor,
 pre .pi,
 pre .shebang,
@@ -144,9 +143,9 @@ code .important,
 code .subst,
 code .cdata {
   color: #3187cb; }
-/* line 102, solarized_code.css.sass */
+/* line 101, solarized_code.css.sass */
 pre .deletion, code .deletion {
   color: #dc322f; }
-/* line 105, solarized_code.css.sass */
+/* line 104, solarized_code.css.sass */
 pre .tex .formula, code .tex .formula {
   background: #eee8d5; }
