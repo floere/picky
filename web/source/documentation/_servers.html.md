@@ -1,5 +1,8 @@
 ## Servers / Applications{#servers}
 
+{.edit}
+[edit](http://github.com/floere/picky/blob/master/web/source/documentation/_servers.html.md)
+
 Picky, from version 3.0 onwards, is designed to run *anywhere*, *in anything*.
 
 This means you can have a Picky server running in a DRb instance if you want to. Or in irb, for example.

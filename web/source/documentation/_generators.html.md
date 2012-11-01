@@ -1,5 +1,8 @@
 ## Generators{#generators}
 
+{.edit}
+[edit](http://github.com/floere/picky/blob/master/web/source/documentation/_generators.html.md)
+
 Picky offers a few generators to have a running server and client up in 5 minutes. Please follow the [Getting Started](getting_started.html).
 
 Or, run gem install

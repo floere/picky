@@ -1,5 +1,8 @@
 ## Search{#search}
 
+{.edit}
+[edit](http://github.com/floere/picky/blob/master/web/source/documentation/_search.html.md)
+
 Picky offers a `Search` interface for the indexes. You instantiate it as follows.
 
 Just searching over one index:

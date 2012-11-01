@@ -1,5 +1,8 @@
 ## Single Page Help Index
 
+{.edit}
+[edit](http://github.com/floere/picky/blob/master/web/source/documentation/_index.html.md)
+
 This is the one page help document for Picky.
 
 Search for things using your browser (use ⌘F).

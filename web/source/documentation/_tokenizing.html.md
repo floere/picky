@@ -1,5 +1,8 @@
 ## Tokenizing{#tokenizing}
 
+{.edit}
+[edit](http://github.com/floere/picky/blob/master/web/source/documentation/_tokenizing.html.md)
+
 The `indexing` method in an `Index` describes how *index data* is handled.
 
 The `searching` method in a `Search` describes how *queries* are handled.

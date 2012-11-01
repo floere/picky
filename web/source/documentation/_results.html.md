@@ -1,5 +1,8 @@
 ## Results{#results}
 
+{.edit}
+[edit](http://github.com/floere/picky/blob/master/web/source/documentation/_results.html.md)
+
 Results are returned by the `Search` instance.
 
     books = Search.new books_index do
