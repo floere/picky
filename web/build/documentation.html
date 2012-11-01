@@ -73,6 +73,8 @@
   <div class='grid_1 index'>
     <h2 id='single_page_help_index'>Single Page Help Index</h2>
 
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_index.html.md'>edit</a></p>
+
 <p>This is the one page help document for Picky.</p>
 
 <p>Search for things using your browser (use ⌘F).</p>
@@ -319,6 +321,8 @@ p results.ids # =&gt; [2]</code></pre>
 <p>Since all is Ruby, you can log as much data as you want to help you improve your search application until it&#8217;s working perfectly.</p>
     <h2 id='generators'>Generators</h2>
 
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_generators.html.md'>edit</a></p>
+
 <p>Picky offers a few generators to have a running server and client up in 5 minutes. Please follow the <a href='getting_started.html'>Getting Started</a>.</p>
 
 <p>Or, run gem install</p>
@@ -367,6 +371,8 @@ p results.ids # =&gt; [2]</code></pre>
 
 <p>and generates a full Sinatra client (including Javascript etc.) that you can try immediately. Just follow the instructions.</p>
     <h2 id='servers'>Servers / Applications</h2>
+
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_servers.html.md'>edit</a></p>
 
 <p>Picky, from version 3.0 onwards, is designed to run <em>anywhere</em>, <em>in anything</em>.</p>
 
@@ -487,6 +493,8 @@ end</code></pre>
 <p>It&#8217;s nice for small convenient searches. For production setups we recommend to use a separate server to make everything separately cacheable etc.</p>
     <h2 id='integration'>Integration</h2>
     
+    <p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_integration.html.md'>edit</a></p>
+    
     <p>How do you integrate Picky in…?</p>
     
     <h3 id='rails'>Rails</h3>
@@ -507,6 +515,8 @@ end</code></pre>
     
     <p>TODO</p>
     <h2 id='tokenizing'>Tokenizing</h2>
+
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_tokenizing.html.md'>edit</a></p>
 
 <p>The <code>indexing</code> method in an <code>Index</code> describes how <em>index data</em> is handled.</p>
 
@@ -650,6 +660,8 @@ end</code></pre>
 <pre><code>$ rake try[test,books]
 $ rake try[test,books,title]</code></pre>
     <h2 id='indexes'>Indexes</h2>
+
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_indexes.html.md'>edit</a></p>
 
 <p>Indexes do three things:</p>
 
@@ -1187,6 +1199,8 @@ end</code></pre>
 <pre><code>category_instance.reindex</code></pre>
     <h2 id='search'>Search</h2>
 
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_search.html.md'>edit</a></p>
+
 <p>Picky offers a <code>Search</code> interface for the indexes. You instantiate it as follows.</p>
 
 <p>Just searching over one index:</p>
@@ -1338,6 +1352,8 @@ end</code></pre>
 <p>This option speeds up Picky if you don&#8217;t need a correct total.</p>
     <h2 id='results'>Results</h2>
 
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_results.html.md'>edit</a></p>
+
 <p>Results are returned by the <code>Search</code> instance.</p>
 
 <pre><code>books = Search.new books_index do
@@ -1395,6 +1411,8 @@ end</code></pre>
 
 <p>TODO Example that shows how to have different result sorting depending on the category a result is found.</p>
     <h2 id='facets'>Facets</h2>
+
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_facets.html.md'>edit</a></p>
 
 <p>Here&#8217;s <a href='http://en.wikipedia.org/wiki/Faceted_classification'>the Wikipedia entry on facets</a>. I fell asleep after about 5 words. Twice.</p>
 
@@ -1568,6 +1586,8 @@ filter   = &#39;age_bracket:40&#39;
 
 some_cache[[category, filter]] ||= finder.facets(category, filter: filter)</code></pre>
     <h3 id='thanks'>Thanks!</h3>
+    
+    <p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_thanks.html.md'>edit</a></p>
     
     <p>Thanks to whoever made the <a href='http://www.sinatrarb.com/intro'>Sinatra README page</a> for the inspiration.</p>
   </div>
