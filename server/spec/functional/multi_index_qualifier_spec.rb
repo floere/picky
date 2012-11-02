@@ -23,7 +23,22 @@ describe 'Multi Index Qualifiers' do
 
     try = Picky::Search.new people, books
     
+    # We expect title to be mapped to:
+    #  * the title category in index people
+    #  * the title category in index books
+    #
+    # Resulting in mister being found in both.
+    #
     try.search('title:mister').ids.should == [1, 2]
+    
+    # This is a bit crazier.
+    #
+    # We expect name to be mapped to:
+    #  * the name category in index people
+    #  * the title category in index books
+    #
+    # Resulting in madrugada being found in both.
+    #
     try.search('name:madrugada').ids.should == [1, 2]
   end
   
