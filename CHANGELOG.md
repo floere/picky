@@ -1,5 +1,12 @@
 ## Upcoming Version
 
+## 4.11.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- If you have a search with multiple indexes, it will now map the same qualifier to different categories in multiple indexes. Example, if you search for "name:bla", then the name qualifier will be mapped to the respective category on each index. We do not recommend to use the same category names on different indexes if they are used in the same search.
+- Removed: Method `Picky::Search#only`. We will reinstate it in version 5+.
+
 ## 4.10.0 "Lumberjack know logging"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
