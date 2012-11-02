@@ -45,21 +45,6 @@ module Picky
         @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
         @ignored_categories.uniq!
       end
-      
-      # Restrict categories to the given ones.
-      #
-      # Functionally equivalent as if indexes didn't
-      # have the categories at all.
-      #
-      # Note: Probably only makes sense when an index
-      # is used in multiple searches. If not, why even
-      # have the categories?
-      #
-      # TODO Redesign.
-      #
-      def only *qualifiers
-        @mapper.restrict_to *qualifiers
-      end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #

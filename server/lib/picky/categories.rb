@@ -44,6 +44,7 @@ module Picky
     # Add the given category to the list of categories.
     #
     def << category
+      @mapper = nil # TODO Move. (Resets category mapping)
       categories << category
       category_hash[category.name] = category
     end

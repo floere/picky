@@ -13,9 +13,6 @@ module Picky
     # If yes, it puts together all solutions.
     #
     def possible_combinations token
-      # TODO Do we really need to set the category on the token?
-      # I have a feeling we could just pass it into possible_for etc.
-      token.categorize mapper
       token.similar? ? similar_possible_for(token) : possible_for(token)
     end
 
@@ -64,8 +61,10 @@ module Picky
     #
     # Note: Once I thought this was called too often. But it is not (18.01.2011).
     #
+    # TODO Called too often?
+    #
     def possible_categories token
-      token.predefined_categories || categories
+      token.predefined_categories(mapper) || categories
     end
 
   end

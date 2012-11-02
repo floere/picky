@@ -13,7 +13,7 @@ module Picky
 
       attr_reader :text, :original
       attr_writer :similar
-      attr_accessor :predefined_categories
+      attr_writer :predefined_categories
       
       delegate :blank?, :to => :@text
       
@@ -63,8 +63,8 @@ module Picky
       #
       # TODO Do we really need to set the predefined categories on the token?
       #
-      def categorize mapper
-        @predefined_categories ||= extract_predefined mapper
+      def predefined_categories mapper
+        @predefined_categories || extract_predefined(mapper)
       end
       def extract_predefined mapper
         user_qualified = categorize_with mapper, @qualifiers

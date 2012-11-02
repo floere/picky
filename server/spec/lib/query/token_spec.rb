@@ -27,7 +27,7 @@ describe Picky::Query::Token do
       let(:token) { described_class.processed 'category1:qualifier', 'category1:Qualifier' }
       context 'unrestricted' do
         it 'categorizes correctly' do
-          token.categorize(mapper).should == [@category1]
+          token.predefined_categories(mapper).should == [@category1]
         end
       end
       context 'restricted' do
@@ -35,7 +35,7 @@ describe Picky::Query::Token do
           mapper.restrict_to :category1
         end
         it 'categorizes correctly' do
-          token.categorize(mapper).should == [@category1]
+          token.predefined_categories(mapper).should == [@category1]
         end
       end
       context 'restricted' do
@@ -43,7 +43,7 @@ describe Picky::Query::Token do
           mapper.restrict_to :category2, :category3
         end
         it 'categorizes correctly' do
-          token.categorize(mapper).should == []
+          token.predefined_categories(mapper).should == []
         end
       end
     end
@@ -51,7 +51,7 @@ describe Picky::Query::Token do
       let(:token) { described_class.processed 'noqualifier', 'NoQualifier' }
       context 'unrestricted' do
         it 'categorizes correctly' do
-          token.categorize(mapper).should == nil
+          token.predefined_categories(mapper).should == nil
         end
       end
       context 'restricted' do
@@ -59,7 +59,7 @@ describe Picky::Query::Token do
           mapper.restrict_to :category1
         end
         it 'categorizes correctly' do
-          token.categorize(mapper).should == [@category1]
+          token.predefined_categories(mapper).should == [@category1]
         end
       end
       context 'restricted' do
@@ -67,7 +67,7 @@ describe Picky::Query::Token do
           mapper.restrict_to :category2, :category3
         end
         it 'categorizes correctly' do
-          token.categorize(mapper).should == [@category2, @category3]
+          token.predefined_categories(mapper).should == [@category2, @category3]
         end
       end
     end
@@ -97,7 +97,9 @@ describe Picky::Query::Token do
         token.similar_tokens_for(@category).map(&:original).should == ['array', 'of', 'similar']
       end
       it 'returns a list of tokens with the right categorization' do
-        token.similar_tokens_for(@category).map(&:predefined_categories).should == [[@category], [@category], [@category]]
+        token.similar_tokens_for(@category).map do |token|
+          token.predefined_categories nil # TODO Clean this up.
+        end.should == [[@category], [@category], [@category]]
       end
     end
     context 'without similar' do

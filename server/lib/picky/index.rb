@@ -196,6 +196,22 @@ module Picky
       new_category
     end
     
+    # Restrict categories to the given ones.
+    #
+    # Functionally equivalent as if indexes didn't
+    # have the categories at all.
+    #
+    # Note: Probably only makes sense when an index
+    # is used in multiple searches. If not, why even
+    # have the categories?
+    #
+    # TODO Redesign.
+    #
+    def only *qualifiers
+      raise "Sorry, Picky::Search#only has been removed in version."
+      # @mapper.restrict_to *qualifiers
+    end
+    
     # The directory used by this index.
     #
     # Note: Used @directory ||=, but needs to be dynamic.

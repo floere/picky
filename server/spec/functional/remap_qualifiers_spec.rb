@@ -28,15 +28,7 @@ describe 'qualifier remapping' do
     #
     try.search('b').ids.should == [2]
     
-    # But not with qualifier!
-    #
-    try.search('b:b').ids.should == []
-    
-    # So remap the qualifiers.
-    #
-    try.remap_qualifiers
-    
-    # Now it works!
+    # It already also finds it with a qualifier!
     #
     try.search('b:b').ids.should == [2]
   end
