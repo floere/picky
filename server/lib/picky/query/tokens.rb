@@ -65,12 +65,6 @@ module Picky
 
       #
       #
-      def categorize mapper
-        @tokens.each { |token| token.categorize mapper }
-      end
-
-      #
-      #
       def originals
         @tokens.map(&:original)
       end

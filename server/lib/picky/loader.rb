@@ -170,8 +170,6 @@ module Picky
         load_relative 'query/allocation',
                       'query/allocations'
 
-        load_relative 'query/qualifier_category_mapper'
-
         load_relative 'query/boosts'
 
         load_relative 'query/indexes',
@@ -219,6 +217,8 @@ module Picky
       end
       
       def load_inner_api
+        load_relative 'qualifier_mapper'
+        
         load_relative 'category',
                       'category_indexed',
                       'category_indexing',
@@ -235,7 +235,7 @@ module Picky
                       'indexes_indexed',
                       'indexes_indexing',
                       'indexes_convenience'
-
+        
         load_relative 'index',
                       'index_indexed',
                       'index_indexing',

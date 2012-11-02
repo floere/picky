@@ -29,6 +29,17 @@ module Picky
       @categories    = []
       @category_hash = {}
     end
+    
+    # Updates the qualifier ("qualifier:searchterm") mapping.
+    #
+    # Example:
+    #   You dynamically add a new category to an index.
+    #   To add the qualifiers to a search, you call this
+    #   method.
+    #
+    def mapper
+      @mapper ||= QualifierMapper.new self
+    end
 
     # Add the given category to the list of categories.
     #

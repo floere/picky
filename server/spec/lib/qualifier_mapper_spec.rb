@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Picky::Query::QualifierCategoryMapper do
+describe Picky::QualifierMapper do
   
-  let(:index) do
-    categories = Picky::Index.new :categories
-    @category1 = categories.category :category1, :qualifiers => ['t1', 'tt1', 'ttt1']
-    @category2 = categories.category :category2, :qualifiers => [:t2, :tt2, :ttt2]
-    @category3 = categories.category :category3, :qualifiers => [:t3, :tt3, :ttt3]
+  let(:categories) do
+    index      = Picky::Index.new :test
+    categories = Picky::Categories.new
+    @category1 = categories << Picky::Category.new(:category1, index, :qualifiers => ['t1', 'tt1', 'ttt1'])
+    @category2 = categories << Picky::Category.new(:category2, index, :qualifiers => [:t2, :tt2, :ttt2])
+    @category3 = categories << Picky::Category.new(:category3, index, :qualifiers => [:t3, :tt3, :ttt3])
     categories
   end
-  let(:indexes) { [index] }
-  let(:mapper) { described_class.new indexes }
+  let(:mapper) { described_class.new categories }
   
   def self.it_should_map(qualifier, expected)
     it "should map #{qualifier} to #{expected}" do

@@ -140,6 +140,23 @@ module Picky
         @backend ||= Backends::Memory.new
       end
     end
+    
+    # Ignore the categories with these qualifiers.
+    #
+    # Example:
+    #   search = Search.new(index1, index2, index3) do
+    #     ignore :name, :first_name
+    #   end
+    #
+    # Cleans up / optimizes after being called.
+    #
+    # TODO This needs to move to the index.
+    #
+    def ignore *qualifiers
+      @ignored_categories ||= []
+      @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
+      @ignored_categories.uniq!
+    end
 
     # SYMBOLS.
     #

@@ -83,7 +83,7 @@ describe Picky::Categories do
       end
       context "with similar token" do
         before(:each) do
-          @token.stub :similar? => true
+          @token.stub :similar? => true, :categorize => nil
         end
         it "calls the right method" do
           @categories.should_receive(:similar_possible_for).once.with @token
@@ -93,7 +93,7 @@ describe Picky::Categories do
       end
       context "with non-similar token" do
         before(:each) do
-          @token.stub :similar? => false
+          @token.stub :similar? => false, :categorize => nil
         end
         it "calls the right method" do
           @categories.should_receive(:possible_for).once.with @token

@@ -121,26 +121,17 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def normalizes_words regexp_replaces
       raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
       @normalizes_words_regexp_replaces = regexp_replaces
-      if regexp_replaces.respond_to?(:normalize_with_patterns)
-        def normalize_with_patterns text
-          @normalizes_words_regexp_replaces.normalize_with_patterns text
-        end
-      else
-        install_normalize_with_patterns_with_array
-      end
     end
-    def install_normalize_with_patterns_with_array
-      def normalize_with_patterns text
-        return text unless @normalizes_words_regexp_replaces # TODO Remove.
+    def normalize_with_patterns text
+      return text unless @normalizes_words_regexp_replaces # TODO Remove.
 
-        @normalizes_words_regexp_replaces.each do |regex, replace|
-          # This should be sufficient
-          #
-          text.gsub!(regex, replace) and break
-        end
-
-        text
+      @normalizes_words_regexp_replaces.each do |regex, replace|
+        # This should be sufficient
+        #
+        text.gsub!(regex, replace) and break
       end
+
+      text
     end
     def normalize_with_patterns?
       @normalizes_words_regexp_replaces

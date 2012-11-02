@@ -14,11 +14,14 @@ describe Picky::Query::Token do
   
   describe 'categorize' do
     let(:mapper) do
-      categories = Picky::Index.new :categories
-      @category1 = categories.category :category1
-      @category2 = categories.category :category2
-      @category3 = categories.category :category3
-      Picky::Query::QualifierCategoryMapper.new [categories]
+      # TODO Can we remove the index?
+      #
+      index      = Picky::Index.new :mapper
+      categories = Picky::Categories.new
+      @category1 = categories << Picky::Category.new(:category1, index)
+      @category2 = categories << Picky::Category.new(:category2, index)
+      @category3 = categories << Picky::Category.new(:category3, index)
+      Picky::QualifierMapper.new categories
     end
     context 'with qualifiers' do
       let(:token) { described_class.processed 'category1:qualifier', 'category1:Qualifier' }

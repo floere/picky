@@ -16,6 +16,8 @@ module Picky
     #   search.facets :name, filter: 'surname:peter', more_than: 0
     #
     def facets category_identifier, options = {}
+      # TODO Make it work. How should it work with multiple indexes?
+      #
       raise "#{__method__} cannot be used on searches with more than 1 index yet. Sorry!" if indexes.size > 1
       index = indexes.first
       
@@ -33,6 +35,8 @@ module Picky
       
       # Pre-tokenize key token – replace text below.
       # Note: The original is not important.
+      #
+      # TODO Don't use predefined.
       #
       key_token = Query::Token.new '', nil, predefined_categories
       

@@ -22,6 +22,8 @@ module Picky
       # Note:
       # Use this if you do not want a normalized token.
       #
+      # TODO Throw away @predefined_categories?
+      #
       def initialize text, original = nil, categories = nil
         @text     = text
         @original = original
@@ -58,6 +60,8 @@ module Picky
       #
       # Note: If this is not done, there is no mapping.
       # Note: predefined is an Array of mapped categories.
+      #
+      # TODO Do we really need to set the predefined categories on the token?
       #
       def categorize mapper
         @predefined_categories ||= extract_predefined mapper

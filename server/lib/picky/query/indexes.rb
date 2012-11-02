@@ -29,19 +29,6 @@ module Picky
         IndexesCheck.check_backends indexes
 
         @indexes = indexes
-        
-        remap_qualifiers
-      end
-      
-      # Updates the qualifier ("qualifier:searchterm") mapping.
-      #
-      # Example:
-      #   You dynamically add a new category to an index.
-      #   To add the qualifiers to a search, you call this
-      #   method.
-      #
-      def remap_qualifiers
-        @mapper = QualifierCategoryMapper.new @indexes # TODO Move into search?
       end
 
       # Ignore the categories with these qualifiers.
@@ -51,7 +38,7 @@ module Picky
       #     ignore :name, :first_name
       #   end
       #
-      # Cleans up / optimizes after being called.
+      # Note: Cleans up / optimizes after being called.
       #
       def ignore *qualifiers
         @ignored_categories ||= []
@@ -67,6 +54,8 @@ module Picky
       # Note: Probably only makes sense when an index
       # is used in multiple searches. If not, why even
       # have the categories?
+      #
+      # TODO Redesign.
       #
       def only *qualifiers
         @mapper.restrict_to *qualifiers
@@ -105,8 +94,6 @@ module Picky
       # Returns a number of possible allocations for the given tokens.
       #
       def allocations_for tokens
-        tokens.categorize @mapper
-
         Allocations.new allocations_ary_for(tokens)
       end
       def allocations_ary_for tokens
