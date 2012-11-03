@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.11.1
+
+###### [Generators](https://github.com/floere/picky/tree/master/generators)
+
+- Fix: Include a server Gemfile with the generator (thanks @mbajur for noticing!).
+
 ## 4.11.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
