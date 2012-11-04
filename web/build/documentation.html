@@ -492,28 +492,166 @@ end</code></pre>
 
 <p>It&#8217;s nice for small convenient searches. For production setups we recommend to use a separate server to make everything separately cacheable etc.</p>
     <h2 id='integration'>Integration</h2>
+
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_integration.html.md'>edit</a></p>
+
+<p>How do you integrate Picky in…?</p>
+
+<h3 id='rails'>Rails</h3>
+
+<p>There are basically two basic ways to integrate Picky in Rails:</p>
+
+<ul>
+<li>Inside your Rails app</li>
+
+<li>With an external server</li>
+</ul>
+
+<p>The advantage of the first setup is that you don&#8217;t need to manage an external server. However, having a separate search server is much cleaner: You don&#8217;t need to load the indexes on Rails startup as you just leave the search server running separately.</p>
+
+<h4 id='inside_your_rails_app'>Inside your Rails app</h4>
+
+<p>If you just want a small search engine inside your Rails app, this is the way to go.</p>
+
+<p>In <code>config/initializers/picky.rb</code>, add the following: (lots of comments to help you)</p>
+
+<pre><code># Set the Picky logger.
+#
+Picky.logger = Picky::Loggers::Silent.new
+# Picky.logger = Picky::Loggers::Concise.new
+# Picky.logger = Picky::Loggers::Verbose.new
+
+# Set up an index and store it in a constant.
+#
+BooksIndex = Picky::Index.new :books do
+  # Our keys are usually integers.
+  #
+  key_format :to_i
+  # key_format :to_s # From eg. Redis they are strings.
+  # key_format ... (whatever method needs to be called on
+  # the id of what you are indexing)
     
-    <p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_integration.html.md'>edit</a></p>
-    
-    <p>How do you integrate Picky in…?</p>
-    
-    <h3 id='rails'>Rails</h3>
-    
-    <p>TODO</p>
-    
-    <h3 id='sinatra'>Sinatra</h3>
-    
-    <p>TODO</p>
-    
-    <p>TODO Also mention Padrino.</p>
-    
-    <h3 id='drb'>DRb</h3>
-    
-    <p>TODO</p>
-    
-    <h3 id='ruby_script'>Ruby Script</h3>
-    
-    <p>TODO</p>
+  # Some indexing options to start with.
+  # Please see: http://florianhanke.com/picky/documentation.html#tokenizing
+  # on what the options are.
+  #
+  indexing removes_characters: /[^a-z0-9\s\/\-\_\:\&quot;\&amp;\.]/i,
+           stopwords:          /\b(and|the|of|it|in|for)\b/i,
+           splits_text_on:     /[\s\/\-\_\:\&quot;\&amp;\/]/,
+           rejects_token_if:   lambda { |token| token.size &lt; 2 }
+  
+  # Define categories on your data.
+  #
+  # They have a lot of options, see:
+  # http://florianhanke.com/picky/documentation.html#indexes-categories
+  #
+  category :title
+  category :subtitle
+  category :author
+  category :isbn,
+           :partial =&gt; Picky::Partial::None.new # Only full matches
+end
+
+# BookSearch is the search interface
+# on the books index. More info here:
+# http://florianhanke.com/picky/documentation.html#search
+# 
+BookSearch = Picky::Search.new BooksIndex
+
+# We are explicitly indexing the book data.
+#
+Book.all.each { |book| BooksIndex.add book }</code></pre>
+
+<p>That&#8217;s already a nice setup. Whenever Rails starts up, this will add all books to the index.</p>
+
+<p>From anywhere (if you have multiple, call <code>Picky::Indexes.index</code> to index all).</p>
+
+<p>Ok, this sets up the index and the indexing. What about the model?</p>
+
+<p>In the model, here <code>app/models/book.rb</code> add this:</p>
+
+<pre><code># Two callbacks.
+#
+after_save    :picky_index
+after_destroy :picky_index
+  
+# Updates the Picky index.
+#
+def picky_index
+  if destroyed?
+    BooksIndex.remove id
+  else        
+    BooksIndex.replace self
+  end
+end</code></pre>
+
+<p>I actually recommend to use after_commit since it that would be perfectly correct, but it did not work at the time of writing.</p>
+
+<p>Now, in the controller, you need to return some results to the user.</p>
+
+<pre><code># GET /books/search
+#
+def search
+  results = BookSearch.search query, params[:ids] || 20, params[:offset] || 0
+
+  # Render nicely as a partial.
+  #
+  results = results.to_hash
+  results.extend Picky::Convenience
+  results.populate_with Book do |book|
+    render_to_string :partial =&gt; &quot;book&quot;, :object =&gt; book
+  end
+
+  respond_to do |format|
+    format.html do
+      render :text =&gt; &quot;Book result ids: #{results.ids.to_s}&quot;
+    end
+    format.json do
+      render :text =&gt; results.to_json
+    end
+  end
+end</code></pre>
+
+<p>The first line executes the search using query params. You can try this using <code>curl</code>:</p>
+
+<pre><code>curl http://127.0.0.1:4567/books/search?query=test</code></pre>
+
+<p>The next few lines use the results as a hash, and populate the results with data loaded from the database, rendering a book partial.</p>
+
+<p>Then, we respond to html with a simple web page, or respond to json with the results.</p>
+
+<p>As you can see, you can do whatever you want with the results. You could use this in an API, or send simple text to the user, or whatever you want.</p>
+
+<p>TODO Using the Picky client JavaScript.</p>
+
+<h4 id='external_picky_server'>External Picky server</h4>
+
+<p>TODO</p>
+
+<h4 id='advanced_ideas'>Advanced Ideas</h4>
+
+<p>TODO Reloading indexes live</p>
+
+<p>TODO Prepending the current user to filter</p>
+
+<pre><code># Prepends the current user filter to
+# the current query.
+#
+query = &quot;user:#{current_user.id} #{params[:query]}&quot;</code></pre>
+
+<h3 id='sinatra'>Sinatra</h3>
+
+<p>TODO</p>
+
+<p>TODO Also mention Padrino.</p>
+
+<h3 id='drb'>DRb</h3>
+
+<p>TODO</p>
+
+<h3 id='ruby_script'>Ruby Script</h3>
+
+<p>TODO</p>
     <h2 id='tokenizing'>Tokenizing</h2>
 
 <p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_tokenizing.html.md'>edit</a></p>
