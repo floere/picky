@@ -64,53 +64,113 @@ describe Picky::Category do
   end
 
   describe 'weight' do
-    before(:each) do
-      @token = stub :token, :text => :some_text
-    end
-    context 'partial bundle' do
-      before(:each) do
-        @category.stub! :bundle_for => @partial
+    let(:token) { stub :token, :text => :some_text }
+    context 'without range' do
+      before :each do
+        token.stub! :range => nil
       end
-      it 'should receive weight with the token text' do
-        @partial.should_receive(:weight).once.with :some_text
+      context 'partial bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @partial
+        end
+        it 'should receive weight with the token text' do
+          @partial.should_receive(:weight).once.with :some_text
 
-        @category.weight @token
+          @category.weight token
+        end
+      end
+      context 'exact bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @exact
+        end
+        it 'should receive weight with the token text' do
+          @exact.should_receive(:weight).once.with :some_text
+
+          @category.weight token
+        end
       end
     end
-    context 'exact bundle' do
-      before(:each) do
-        @category.stub! :bundle_for => @exact
+    context 'with range' do
+      before :each do
+        token.stub! :range => (1..3)
       end
-      it 'should receive weight with the token text' do
-        @exact.should_receive(:weight).once.with :some_text
+      context 'partial bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @partial
+        end
+        it 'should receive weight with the token text' do
+          @partial.should_receive(:weight).once.times.with(1).and_return(1)
+          @partial.should_receive(:weight).once.times.with(2).and_return(2)
+          @partial.should_receive(:weight).once.times.with(3).and_return(3)
 
-        @category.weight @token
+          @category.weight(token).should == 6
+        end
+      end
+      context 'exact bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @exact
+        end
+        it 'should receive weight with the token text' do
+          @exact.should_receive(:weight).once.times.with(1).and_return(1)
+          @exact.should_receive(:weight).once.times.with(2).and_return(2)
+          @exact.should_receive(:weight).once.times.with(3).and_return(3)
+
+          @category.weight(token).should == 6
+        end
       end
     end
   end
 
   describe 'ids' do
-    before(:each) do
-      @token = stub :token, :text => :some_text
-    end
-    context 'partial bundle' do
-      before(:each) do
-        @category.stub! :bundle_for => @partial
-      end
-      it 'should receive ids with the token text' do
-        @partial.should_receive(:ids).once.with :some_text
+    let(:token) { stub :token, :text => :some_text }
+    context 'without range' do
+      before(:each) { token.stub! :range => nil }
+      context 'partial bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @partial
+        end
+        it 'should receive ids with the token text' do
+          @partial.should_receive(:ids).once.with :some_text
 
-        @category.ids @token
+          @category.ids token
+        end
+      end
+      context 'exact bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @exact
+        end
+        it 'should receive ids with the token text' do
+          @exact.should_receive(:ids).once.with :some_text
+
+          @category.ids token
+        end
       end
     end
-    context 'exact bundle' do
-      before(:each) do
-        @category.stub! :bundle_for => @exact
-      end
-      it 'should receive ids with the token text' do
-        @exact.should_receive(:ids).once.with :some_text
+    context 'with range' do
+      before(:each) { token.stub! :range => (1..3) }
+      context 'partial bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @partial
+        end
+        it 'should receive ids with the token text' do
+          @partial.should_receive(:ids).once.with(1).and_return [1]
+          @partial.should_receive(:ids).once.with(2).and_return [2]
+          @partial.should_receive(:ids).once.with(3).and_return [3]
 
-        @category.ids @token
+          @category.ids(token).should == [1,2,3]
+        end
+      end
+      context 'exact bundle' do
+        before(:each) do
+          @category.stub! :bundle_for => @exact
+        end
+        it 'should receive ids with the token text' do
+          @exact.should_receive(:ids).once.with(1).and_return [1]
+          @exact.should_receive(:ids).once.with(2).and_return [2]
+          @exact.should_receive(:ids).once.with(3).and_return [3]
+
+          @category.ids(token).should == [1,2,3]
+        end
       end
     end
   end

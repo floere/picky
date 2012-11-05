@@ -15,14 +15,31 @@ module Picky
 
     # Gets the weight for this token's text.
     #
+    # TODO Make range query code faster.
+    #
     def weight token
-      bundle_for(token).weight token.text
+      bundle = bundle_for token
+      if range = token.range
+        # The math is not perfectly correct, but you
+        # get my idea. Also, we could return early.
+        #
+        range.inject(0) { |sum, text| sum + (bundle.weight(text) || 0) }
+      else
+        bundle.weight token.text
+      end
     end
 
     # Gets the ids for this token's text.
     #
+    # TODO Make range query code faster.
+    #
     def ids token
-      bundle_for(token).ids token.text
+      bundle = bundle_for token
+      if range = token.range
+        range.inject([]) { |result, text| result + bundle.ids(text) }.flatten
+      else
+        bundle.ids token.text
+      end
     end
 
     # Returns the right index bundle for this token.

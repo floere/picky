@@ -43,6 +43,7 @@ module Picky
         qualify
         partialize
         similarize
+        rangify
         remove_illegals
         self
       end
@@ -184,6 +185,18 @@ module Picky
         @@similar_character = character
         @@similar = %r{#{character}\z}
         redefine_illegals
+      end
+      
+      # TODO Improve experimental code. Make it fast and snazzy.
+      # TODO Parametrize range character/text.
+      #
+      def rangify
+        if @text.include? '-'
+          @range = Range.new *@text.split('-')
+        end
+      end
+      def range
+        @range
       end
       
       # Is this a "similar" character?
