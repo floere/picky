@@ -37,6 +37,20 @@ describe 'range queries' do
     #
     try.search('year:1980-2001').ids.should == [8,3,1]
     try.search('alphabet:f-u').ids.should == [2,1,8,7,4]
+    
+    # With other search words.
+    #
+    try.search('1980-2001 a').ids.should == [3]
+    try.search('f-u 881').ids.should == [7]
+    
+    # With other range queries!
+    #
+    try.search('1980-2001 a-h').ids.should == [3,1]
+    try.search('f-u 881-1977').ids.should == [2,7]
+    
+    # With partial queries.
+    #
+    try.search('198* a-h').ids.should == [3]
   end
   
 end
