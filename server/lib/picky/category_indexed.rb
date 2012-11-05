@@ -34,6 +34,8 @@ module Picky
     # Returns a combination for the token,
     # or nil, if there is none.
     #
+    # TODO Don't throw away the weight, instead store it in the combination?
+    #
     def combination_for token
       weight(token) && Query::Combination.new(token, self)
     end
