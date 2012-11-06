@@ -187,12 +187,21 @@ module Picky
         redefine_illegals
       end
       
-      # TODO Improve experimental code. Make it fast and snazzy.
-      # TODO Parametrize range character/text.
+      # Define a character which makes a token a range token.
       #
+      # Default is '-'.
+      #
+      # Example:
+      #   Picky::Query::Token.range_character = "…"
+      #   try.search("year:2000…2008") # Will find results in a range.
+      #
+      @@range_character = '-'
+      def self.range_character= character
+        @@range_character = character
+      end
       def rangify
-        if @text.include? '-'
-          @range = Range.new *@text.split('-')
+        if @text.include? @@range_character
+          @range = Range.new *@text.split(@@range_character, 2)
         end
       end
       def range
