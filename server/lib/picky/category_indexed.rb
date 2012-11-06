@@ -23,6 +23,9 @@ module Picky
         # The math is not perfectly correct, but you
         # get my idea. Also, we could return early.
         #
+        # TODO This should return nil if none hit.
+        # TODO Speed up.
+        #
         range.inject(0) { |sum, text| sum + (bundle.weight(text) || 0) }
       else
         bundle.weight token.text
@@ -31,12 +34,19 @@ module Picky
 
     # Gets the ids for this token's text.
     #
-    # TODO Make range query code faster.
-    #
     def ids token
       bundle = bundle_for token
       if range = token.range
-        range.inject([]) { |result, text| result + bundle.ids(text) }.flatten
+        # Adding all to an array, then flattening
+        # is faster than using ary + ary.
+        #
+        range.inject([]) do |result, text|
+          # It is 30% faster using the empty check
+          # than just << [].
+          #
+          ids = bundle.ids text
+          ids.empty? ? result : result << ids
+        end.flatten
       else
         bundle.ids token.text
       end
