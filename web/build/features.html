@@ -96,32 +96,32 @@
           <li>Flexibly configure indexing</li>
           <li>
             Easily configure handling query text, e.g.
-            <pre><code>splits_text_on:&nbsp;/[\s\/\-\"\&]/</code></pre>
+            <code><pre>splits_text_on:&nbsp;/[\s\/\-\"\&]/</pre></code>
           </li>
           <li>Multiple data sources (DB, CSV, ...)</li>
           <li>Choice of in-memory or Redis indexes.</li>
           <li>
             Partial searching
-            <pre><code>pick*</code></pre>
+            <code><pre>pick*</pre></code>
           </li>
           <li>
             Phonetic similarity
-            <pre><code>pecky~</code></pre>
+            <code><pre>pecky~</pre></code>
           </li>
           <li>
             Categorized searching
-            <pre><code>napoleon, title:war</code></pre>
+            <code><pre>napoleon, title:war</pre></code>
           </li>
           <li>
             Weighing not only categories, but combinations!
-            <pre><code>{&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}</code></pre>
+            <code><pre>{&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}</pre></code>
           </li>
           <li>
             Range queries
           </li>
           <li>
             Comfortable routing
-            <pre><code>get %r{/books} do&#x000A;  books.search params[:query]&#x000A;end</code></pre>
+            <code><pre>get %r{/books} do&#x000A;  books.search params[:query]&#x000A;end</pre></code>
           </li>
         </ul>
         <p>
@@ -131,7 +131,7 @@
     </div>
     <div class='grid_1'>
       <h4>Getting Started</h4>
-      <pre><code>gem install picky</code></pre>
+      <code><pre>gem install picky</pre></code>
       <p>
         There's a whole section devoted to getting started with Picky!
         See
@@ -149,7 +149,7 @@
       </p>
       <p>
         Including the interface in your views is as easy as
-        <pre><code>= Picky::Client.interface</code></pre>
+        <code><pre>= Picky::Client.interface</pre></code>
       </p>
       <p>
         and adding the
@@ -169,7 +169,7 @@
     </div>
     <div class='grid_1'>
       <h4>Getting Started</h4>
-      <pre><code>gem install picky-client</code></pre>
+      <code><pre>gem install picky-client</pre></code>
       <p>
         There's a whole section devoted to getting started with the Picky client!
         See
@@ -204,16 +204,16 @@
     </div>
     <div class='grid_1'>
       <h4>Getting Started</h4>
-      <pre><code>gem install picky-statistics</code></pre>
+      <code><pre>gem install picky-statistics</pre></code>
       <p>Then run:</p>
-      <pre><code>picky stats path/to/pickys/log/search.log</code></pre>
+      <code><pre>picky stats path/to/pickys/log/search.log</pre></code>
       <p>
         If you are in the Picky server directory, the path is probably
         <code>log/search.log</code>
         .
       </p>
       <p>You should see a message like:</p>
-      <pre><code>Clam, Picky's friend, is looking at Picky's logfile.&#x000A;... and showing results on port 4567.</code></pre>
+      <code><pre>Clam, Picky's friend, is looking at Picky's logfile.&#x000A;... and showing results on port 4567.</pre></code>
       <p>
         Go to
         <a href='localhost:4567'>localhost:4567</a>
@@ -249,17 +249,17 @@
     </div>
     <div class='grid_1'>
       <h4>Getting Started</h4>
-      <pre><code>gem install picky-live</code></pre>
+      <code><pre>gem install picky-live</pre></code>
       <p>
         Add this to
         <code>app/application.rb</code>
         in the server:
       </p>
-      <pre><code>%r{/admin} => LiveParameters.new</code></pre>
+      <code><pre>%r{/admin} => LiveParameters.new</pre></code>
       <p>Start the server and enter:</p>
-      <pre><code>picky live</code></pre>
+      <code><pre>picky live</pre></code>
       <p>You should see a message like:</p>
-      <pre><code>Suckerfish has sucked onto Picky at localhost:8080/admin.&#x000A;Sinatra has taken the stage on port 4568...</code></pre>
+      <code><pre>Suckerfish has sucked onto Picky at localhost:8080/admin.&#x000A;Sinatra has taken the stage on port 4568...</pre></code>
       <p>
         Go to
         <a href='localhost:4568'>localhost:4568</a>
