@@ -105,6 +105,13 @@ describe Picky::Category do
 
           @category.weight(token).should == 6
         end
+        it 'returns nil if none hit' do
+          @partial.should_receive(:weight).once.times.with(1).and_return(nil)
+          @partial.should_receive(:weight).once.times.with(2).and_return(nil)
+          @partial.should_receive(:weight).once.times.with(3).and_return(nil)
+
+          @category.weight(token).should == nil
+        end
       end
       context 'exact bundle' do
         before(:each) do
