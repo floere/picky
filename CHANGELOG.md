@@ -1,12 +1,20 @@
 ## Upcoming Version
 
-## 4.11.1
+## 4.11.2 "A range of features"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Experimental feature: Range query over natural ranges, ie. numeric or alphabetical.
+- Examples: `2000-2008`, `year:2000-2008` (adding a qualifier is recommended, faster and usually known). Though: Use `year:200*` if you want fixed ranges `2000-2009`, `2010-2019`, etc.
+- Be clever in your use of ranges. If they are not flexibly chooseable by the user, don't use them. Be also wary in this initial version of huge range: `0-1000000` is a bad idea. If your range encompasses all values, simply don't use a range query.
+
+## 4.11.1 "Whoops"
 
 ###### [Generators](https://github.com/floere/picky/tree/master/generators)
 
 - Fix: Include a server Gemfile with the generator (thanks @mbajur for noticing!).
 
-## 4.11.0
+## 4.11.0 "Separate Qualifiers"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
