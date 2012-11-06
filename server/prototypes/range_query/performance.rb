@@ -26,9 +26,23 @@ end
 p [:exc, :include?, (Time.now - t)]
 
 
+ary = []
+add = []
+
+t = Time.now
+1000.times do
+  ary + add unless add.empty?
+end
+p ['+ [] unless empty?', (Time.now - t)]
+t = Time.now
+1000.times do
+  ary + add
+end
+p ['+ []', (Time.now - t)]
+
+
 # Splitting the text should only split on the first.
 #
-
 raise if "a-b-c".split('-', 2) != ['a', 'b-c']
 
 s = "a-b-c"
