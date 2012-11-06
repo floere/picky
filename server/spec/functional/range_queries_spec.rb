@@ -29,6 +29,27 @@ describe 'range queries' do
     try.search('1980').ids.should == []
     try.search('1989').ids.should == [3]
   end
+  
+  it 'works with misses' do
+    try.search('900-1200').ids.should == []
+  end
+  
+  it 'survives huge ranges' do
+    try.search('0-10000 a').ids.should == [3]
+    
+    # Quote to make it non-partial.
+    #
+    try.search('0-3000"').ids.should == [7,6,2,8,3,1,4,5]
+  end
+  it 'is semi-reasonably fast with huge ranges' do
+    # Quote to make it non-partial.
+    #
+    performance_of { try.search('0-3000"') }.should < 0.32
+    
+    # Note it is much much faster with an additional token.
+    #
+    performance_of { try.search('0-3000 a') }.should < 0.015
+  end
     
   it 'handles basic range queries' do
     try.search('1980-2001').ids.should == [8,3,1]
@@ -52,6 +73,7 @@ describe 'range queries' do
   
   it 'can be combined with partial queries' do
     try.search('198* a-h').ids.should == [3]
+    try.search('a-h 198').ids.should == [3]
   end
   
   it 'works with nonsensical ranges' do
