@@ -15,18 +15,18 @@ module Picky
 
     # Gets the weight for this token's text.
     #
-    # TODO Make range query code faster.
-    #
     def weight token
       bundle = bundle_for token
       if range = token.range
         # The math is not perfectly correct, but you
         # get my idea. Also, we could return early.
         #
-        # TODO This should return nil if none hit.
-        # TODO Speed up.
+        # TODO Possible to speed up more?
         #
-        range.inject(0) { |sum, text| sum + (bundle.weight(text) || 0) }
+        range.inject(nil) do |sum, text|
+          weight = bundle.weight(text)
+          weight && (weight + (sum || 0)) || sum
+        end
       else
         bundle.weight token.text
       end
