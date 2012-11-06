@@ -44,11 +44,11 @@ describe 'range queries' do
   it 'is semi-reasonably fast with huge ranges' do
     # Quote to make it non-partial.
     #
-    performance_of { try.search('0-3000"') }.should < 0.32
+    performance_of { try.search('0-3000"') }.should < 0.21
     
     # Note it is much much faster with an additional token.
     #
-    performance_of { try.search('0-3000 a') }.should < 0.015
+    performance_of { try.search('0-3000 a') }.should < 0.0085
   end
     
   it 'handles basic range queries' do
