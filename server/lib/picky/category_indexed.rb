@@ -23,7 +23,9 @@ module Picky
         #
         # TODO Possible to speed up more?
         #
-        range.inject(nil) do |sum, text|
+        ranger = @ranger.new *range
+
+        ranger.inject(nil) do |sum, text|
           weight = bundle.weight(text)
           weight && (weight + (sum || 0)) || sum
         end
@@ -40,7 +42,9 @@ module Picky
         # Adding all to an array, then flattening
         # is faster than using ary + ary.
         #
-        range.inject([]) do |result, text|
+        ranger = @ranger.new *range
+
+        ranger.inject([]) do |result, text|
           # It is 30% faster using the empty check
           # than just << [].
           #
