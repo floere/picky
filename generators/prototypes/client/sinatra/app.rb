@@ -13,7 +13,7 @@ set :haml, { :format => :html5 }
 BooksSearch = Picky::Client.new :host => 'localhost', :port => 8080, :path => '/books'
 
 set :static, true
-set :public, File.dirname(__FILE__)
+set :public_folder, File.dirname(__FILE__)
 set :views,  File.expand_path('views', File.dirname(__FILE__))
 
 # Root, the search interface.
