@@ -48,6 +48,7 @@ module Picky
       #
       @source    = Source.from options[:source], true, @index.name
       @tokenizer = Tokenizer.from options[:indexing], @index.name, name
+      @ranger    = options[:ranging] || Range
 
       @key_format = options.delete :key_format
       @backend    = options.delete :backend

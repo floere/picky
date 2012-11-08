@@ -201,7 +201,7 @@ module Picky
       end
       def rangify
         if @text.include? @@range_character
-          @range = Range.new *@text.split(@@range_character, 2)
+          @range = @text.split(@@range_character, 2)
         end
       end
       def range
