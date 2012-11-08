@@ -92,7 +92,7 @@ describe Picky::Category do
     end
     context 'with range' do
       before :each do
-        token.stub! :range => (1..3)
+        token.stub! :range => [1, 3]
       end
       context 'partial bundle' do
         before(:each) do
@@ -154,7 +154,7 @@ describe Picky::Category do
       end
     end
     context 'with range' do
-      before(:each) { token.stub! :range => (1..3) }
+      before(:each) { token.stub! :range => [1, 3] }
       context 'partial bundle' do
         before(:each) do
           @category.stub! :bundle_for => @partial
