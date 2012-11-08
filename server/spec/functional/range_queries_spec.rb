@@ -79,29 +79,36 @@ describe 'range queries' do
   it 'works with nonsensical ranges' do
     try.search('h-a').ids.should == []
   end
+  
+  # it 'handles combined range/partial queries' do
+  #   # TODO This still needs to be refined. It is madness.
+  #   #
+  #   try.search('198-200*').ids.should == [8,3,1,4,5,7,6,2]
+  # end
 
   describe 'custom ranges' do
-    let(:index) do
-      class WrappingHourRange
-        include Enumerable
-
-        def initialize(min, max)
-          @modulus = 12
-          @min = min.to_i % @modulus
-          @top = (max.to_i + 1) % @modulus
-        end
-
-        def each
-          i = @min
-          while i != @top
-            yield i.to_s
-            i = (i + 1) % @modulus
-          end
-        end
+    class Wrap12Hours
+      include Enumerable
+        
+      def initialize(min, max)
+        @hours = 12
+        @min   = min.to_i
+        @top   = max.to_i
+        @top   += @hours if @top < @min
       end
 
+      def each
+        @min.upto(@top).each do |i|
+          yield (i % @hours).to_s
+        end
+      end
+    end
+    
+    let(:index) do
       index = Picky::Index.new :range_queries do
-        category :hour, ranging: WrappingHourRange, partial: Picky::Partial::None.new
+        category :hour,
+                 ranging: Wrap12Hours,
+                 partial: Picky::Partial::None.new
       end
     
       rangy = Struct.new :id, :hour
@@ -121,12 +128,10 @@ describe 'range queries' do
     it 'allows injection of custom range classes' do
       try.search('hour:10-2').ids.should == [6, 5, 1, 2, 7]
     end
+    
+    it 'allows injection of custom range classes' do
+      try.search('hour:0-11').ids.should == [1, 2, 7, 8, 3, 4, 6, 5]
+    end
   end
-  
-  # it 'handles combined range/partial queries' do
-  #   # TODO This still needs to be refined. It is madness.
-  #   #
-  #   try.search('198-200*').ids.should == [8,3,1,4,5,7,6,2]
-  # end
   
 end
