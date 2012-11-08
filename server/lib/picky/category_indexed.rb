@@ -18,14 +18,9 @@ module Picky
     def weight token
       bundle = bundle_for token
       if range = token.range
-        # The math is not perfectly correct, but you
-        # get my idea. Also, we could return early.
+        # TODO We might be able to return early?
         #
-        # TODO Possible to speed up more?
-        #
-        ranger = @ranger.new *range
-
-        ranger.inject(nil) do |sum, text|
+        @ranger.new(*range).inject(nil) do |sum, text|
           weight = bundle.weight(text)
           weight && (weight + (sum || 0)) || sum
         end
@@ -42,9 +37,7 @@ module Picky
         # Adding all to an array, then flattening
         # is faster than using ary + ary.
         #
-        ranger = @ranger.new *range
-
-        ranger.inject([]) do |result, text|
+        @ranger.new(*range).inject([]) do |result, text|
           # It is 30% faster using the empty check
           # than just << [].
           #
