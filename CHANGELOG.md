@@ -1,5 +1,12 @@
 ## Upcoming Version
 
+## 4.11.3 "A range of customizations"
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Experimental feature: Ranges can now be customized. Pass a category an option `ranging: CustomRanger`. That class has to initialize like `Range.new(min, max)`, but can offer a specialized `#inject` method which can yield a custom order. (Alternatively, implement `#each` and `include Enumerable`)
+- Thanks to @andykitchen for this one.
+
 ## 4.11.2 "A range of features"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
