@@ -1,12 +1,2 @@
-# require 'rake'
-#
-# task :default => :rspec
-#
-# all_rake_files = File.expand_path '../tasks/*.rake', __FILE__
-#
-# Dir[all_rake_files].each do |rakefile|
-#   load rakefile
-# end
-
 load File.expand_path '../tasks/specs.rake', __FILE__
 load File.expand_path '../tasks/stats.rake', __FILE__
