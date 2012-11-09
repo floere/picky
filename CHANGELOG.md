@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.11.4
+
+###### [Generators](https://github.com/floere/picky/tree/master/generators)
+
+- Removed unnecessary jQuery History.js adapter file.
+
 ## 4.11.3 "A range of customizations"
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
