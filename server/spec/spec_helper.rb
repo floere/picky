@@ -6,11 +6,9 @@ if ENV['COV']
   end
   SimpleCov.start 'picky'
 end
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
-#
+
 ENV['PICKY_ENV'] = 'test'
-require File.expand_path '../../lib/picky', __FILE__
+require_relative '../lib/picky'
 
 # Set some spec preconditions.
 #
@@ -20,7 +18,7 @@ Picky.logger = Picky::Loggers::Silent.new
 begin
   # Remove this file for the default.
   #
-  require File.expand_path '../performance_ratio', __FILE__
+  require_relative 'performance_ratio'
 rescue LoadError => e
   # Default is for slower computers and
   # collaborators who don't need to check
