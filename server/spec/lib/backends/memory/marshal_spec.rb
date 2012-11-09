@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Backends::Memory::Marshal do
 
   context 'hash-based indexes' do
-    let(:marshal) { described_class.new 'some/cache/path/to/file' }
+    let(:marshal) { described_class.new 'spec/temp/some/cache/path/to/file' }
 
     describe 'extension' do
       it 'is correct' do
@@ -37,7 +37,7 @@ describe Picky::Backends::Memory::Marshal do
 
     describe 'to_s' do
       it 'returns the cache path with the default file extension' do
-        marshal.to_s.should == 'Picky::Backends::Memory::Marshal(some/cache/path/to/file.memory.dump)'
+        marshal.to_s.should == 'Picky::Backends::Memory::Marshal(spec/temp/some/cache/path/to/file.memory.dump)'
       end
     end
   end

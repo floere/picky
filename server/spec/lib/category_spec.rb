@@ -27,7 +27,7 @@ describe Picky::Category do
   context 'directories' do
     let(:category) { described_class.new :some_category, index }
     it 'is correct' do
-      category.prepared_index_path.should == 'spec/test_directory/index/test/some_index/some_category'
+      category.prepared_index_path.should == 'spec/temp/index/test/some_index/some_category'
     end
   end
 

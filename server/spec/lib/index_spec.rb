@@ -58,7 +58,7 @@ describe Picky::Index do
     
     describe 'directory' do
       it 'is correct' do
-        api.directory.should == 'spec/test_directory/index/test/some_index_name'
+        api.directory.should == 'spec/temp/index/test/some_index_name'
       end
     end
 

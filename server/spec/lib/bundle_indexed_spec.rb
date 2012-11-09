@@ -119,7 +119,7 @@ describe Picky::Bundle do
       it "uses the right file" do
         MultiJson.stub! :decode
 
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
 
         @bundle.load_inverted
       end
@@ -128,7 +128,7 @@ describe Picky::Bundle do
       it "uses the right file" do
         MultiJson.stub! :decode
 
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
 
         @bundle.load_weights
       end
@@ -137,7 +137,7 @@ describe Picky::Bundle do
       it "uses the right file" do
         Marshal.stub! :load
 
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
 
         @bundle.load_similarity
       end
@@ -146,7 +146,7 @@ describe Picky::Bundle do
       it "uses the right file" do
         MultiJson.stub! :decode
 
-        File.should_receive(:open).once.with 'spec/test_directory/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'
 
         @bundle.load_configuration
       end

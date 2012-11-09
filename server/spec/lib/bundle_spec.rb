@@ -22,10 +22,10 @@ describe Picky::Bundle do
 
   describe 'index_path' do
     it 'is correct' do
-      bundle.index_path(:some_type).should == 'spec/test_directory/index/test/some_index/some_category_some_name_some_type'
+      bundle.index_path(:some_type).should == 'spec/temp/index/test/some_index/some_category_some_name_some_type'
     end
     it 'is correct' do
-      bundle.index_path.should == 'spec/test_directory/index/test/some_index/some_category_some_name'
+      bundle.index_path.should == 'spec/temp/index/test/some_index/some_category_some_name'
     end
   end
 

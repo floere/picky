@@ -14,7 +14,7 @@ require File.expand_path '../../lib/picky', __FILE__
 
 # Set some spec preconditions.
 #
-Picky.root   = 'spec/test_directory'
+Picky.root   = 'spec/temp'
 Picky.logger = Picky::Loggers::Silent.new
 
 begin

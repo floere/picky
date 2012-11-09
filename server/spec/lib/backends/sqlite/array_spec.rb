@@ -5,7 +5,7 @@ require 'sqlite3'
 describe Picky::Backends::SQLite::Array do
 
   context 'hash-based indexes' do
-    let(:db) { described_class.new 'some/cache/path/to/file' }
+    let(:db) { described_class.new 'spec/temp/some/cache/path/to/file' }
 
     describe 'dump' do
       it 'delegates to the given hash' do
@@ -67,13 +67,13 @@ describe Picky::Backends::SQLite::Array do
 
     describe 'to_s' do
       it 'returns the cache path with the default file extension' do
-        db.to_s.should == 'Picky::Backends::SQLite::Array(some/cache/path/to/file.sqlite3)'
+        db.to_s.should == 'Picky::Backends::SQLite::Array(spec/temp/some/cache/path/to/file.sqlite3)'
       end
     end
   end
 
   context 'hash-based indexes' do
-    let(:db) { described_class.new 'some/cache/path/to/file', realtime: true }
+    let(:db) { described_class.new 'spec/temp/some/cache/path/to/file', realtime: true }
 
     describe 'dump' do
       it 'delegates to the given hash' do
@@ -135,7 +135,7 @@ describe Picky::Backends::SQLite::Array do
 
     describe 'to_s' do
       it 'returns the cache path with the default file extension' do
-        db.to_s.should == 'Picky::Backends::SQLite::Array(some/cache/path/to/file.sqlite3)'
+        db.to_s.should == 'Picky::Backends::SQLite::Array(spec/temp/some/cache/path/to/file.sqlite3)'
       end
     end
   end

@@ -1,0 +1,17 @@
+TODO s for version 5
+====================
+
+Loggers as modules?
+-------------------
+
+Picky.logger = STDOUT
+Picky.logger = Logger.new('log/picky.log')
+Picky.logger = STDOUT.extend Picky::Loggers::Silent # <= Problematic.
+Picky.logger = Logger.new('log/picky.log').extend Picky::Loggers::Verbose
+...
+
+def logger= loggy_thing
+  loggy_thing.extend Picky::Loggers::Concise # This then decides how to extend.
+  @logger = loggy_thing
+end
+

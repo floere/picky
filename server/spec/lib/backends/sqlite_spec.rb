@@ -23,7 +23,7 @@ describe Picky::Backends::SQLite do
   #     ].each do |type, kind|
   #       it "creates and returns a(n) #{type} index" do
   #         @backend.send(:"create_#{type}",
-  #                       stub(type, :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}")
+  #                       stub(type, :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
   #         ).should be_kind_of(kind)
   #       end
   #     end
@@ -49,7 +49,7 @@ describe Picky::Backends::SQLite do
   #     ].each do |type, kind|
   #       it "creates and returns a(n) #{type} index" do
   #         to_a_able_stub = Object.new
-  #         to_a_able_stub.stub! :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}"
+  #         to_a_able_stub.stub! :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}"
   #         @backend.send(:"create_#{type}", to_a_able_stub).should be_kind_of(kind)
   #       end
   #     end
@@ -72,7 +72,7 @@ describe Picky::Backends::SQLite do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        stub(type, :index_path => "spec/test_directory/index/test/some_index/some_category_some_bundle_#{type}")
+                        stub(type, :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
           ).should be_kind_of(kind)
         end
       end
