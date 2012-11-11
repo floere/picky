@@ -99,16 +99,25 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     def splits_text_on thing
       raise ArgumentError.new "#{__method__} takes a Regexp or String or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
-      @splits_text_on = thing
-      if thing.respond_to? :split
-        def split text
-          @splits_text_on.split text
-        end
+      @splits_text_on = if thing.respond_to? :split
+        thing
       else
-        def split text
-          text.split @splits_text_on
-        end
+        RegexpWrapper.new thing
       end
+    end
+    class RegexpWrapper
+      def initialize regexp
+        @regexp = regexp
+      end
+      def split text
+        text.split @regexp
+      end
+      def source
+        @regexp.source
+      end
+    end
+    def split text
+      @splits_text_on.split text
     end
 
     # Normalizing.
