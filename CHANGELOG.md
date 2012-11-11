@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.11.5
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Experimental feature: Automatic input splitting. Use when you can't use eg. space. Initialize as `Picky::Splitters::Automatic.new(index_category)`. Offers the method `#split(text) # => ['split', 'text']`. This means you can use this for the option `splits_text_on` instead of a `Regexp`.
+
 ## 4.11.4
 
 ###### [Generators](https://github.com/floere/picky/tree/master/generators)
