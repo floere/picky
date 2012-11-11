@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe "automatic splitting" do
-
-  it 'can split text automatically' do
+  
+  let(:index) do
     index = Picky::Index.new :automatic_text_splitting do
       indexing removes_characters: /[^a-z\s]/i,
                stopwords: /\b(in|a)\b/
@@ -19,6 +19,10 @@ describe "automatic splitting" do
     index.add OpenStruct.new(id: 5, text: 'Sun and rain.')
     index.add OpenStruct.new(id: 6, text: 'The king is in Spain.')
     
+    index
+  end
+  
+  it 'can split text automatically' do
     automatic_splitter = Picky::Splitters::Automatic.new index[:text]
     
     # It splits the text correctly.
@@ -56,6 +60,14 @@ describe "automatic splitting" do
     try.search('colorpurple').ids.should == [4,1]
     try.search('bownew').ids.should      == [3,1]
     try.search('spainisking').ids.should == [6,1]
+  end
+  
+  it 'is fast enough' do
+    automatic_splitter = Picky::Splitters::Automatic.new index[:text]
+    
+    performance_of do
+      automatic_splitter.split('purplerainbow')
+    end.should < 0.0002
   end
 
 end
