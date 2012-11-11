@@ -24,16 +24,18 @@ describe "automatic splitting" do
     # It splits the text correctly.
     #
     automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow']
+    automatic_splitter.split('purplerain').should == ['purple', 'rain']
+    automatic_splitter.split('purple').should == ['purple']
     
     # When it can't, it splits it using the partial index (correctly).
     #
     automatic_splitter.split('purplerainbo').should == ['purple', 'rain', 'bo']
     automatic_splitter.split('purplerainb').should == ['purple', 'rain', 'b']
-    automatic_splitter.split('purplerain').should == ['purple', 'rain']
+    #
     automatic_splitter.split('purplerai').should == ['purple', 'rai']
     automatic_splitter.split('purplera').should == ['purple', 'ra']
     automatic_splitter.split('purpler').should == ['purple', 'r']
-    automatic_splitter.split('purple').should == ['purple']
+    #
     automatic_splitter.split('purpl').should == ['purpl']
     automatic_splitter.split('purp').should == ['purp']
     automatic_splitter.split('pur').should == ['pur']
