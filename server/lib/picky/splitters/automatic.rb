@@ -4,6 +4,15 @@ module Picky
     
     # Automatic Splitter.
     #
+    # Use as a splitter for the splits_text_on option
+    # for Searches. You need to give it an index category
+    # to use for the splitting.
+    #
+    # Example:
+    #   Picky::Search.new index do
+    #     searching splits_text_on: Picky::Splitters::Automatic.new(index[:name])
+    #   end
+    #
     # Will split most queries correctly.
     # However, has the following problems:
     #   * "cannot" is usually split as ['can', 'not']
@@ -19,11 +28,18 @@ module Picky
       def initialize category
         @exact   = category.exact
         @partial = category.partial
-        @memo    = {}
+        
+        reset_memoization
       end
       
       def split text
-        segment(text).first
+        result = segment(text).first
+        reset_memoization
+        result
+      end
+      
+      def reset_memoization
+        @memo = {}
       end
       
       def splits text
