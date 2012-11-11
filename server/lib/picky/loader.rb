@@ -268,6 +268,7 @@ module Picky
         load_relative 'tokenizer'
         # load_relative 'rack/harakiri' # Needs to be explicitly loaded/required.
         load_relative 'character_substituters/west_european'
+        load_relative 'splitters/automatic'
         load_generators
         load_inner_api
         load_results
