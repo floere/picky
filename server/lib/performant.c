@@ -1,17 +1,5 @@
 #include "ruby.h"
 
-// Copying internal ruby methods.
-//
-static inline VALUE rb_ary_elt(ary, offset)
-    VALUE ary;
-    long offset;
-{
-    if (RARRAY_LEN(ary) == 0) return Qnil;
-    if (offset < 0 || RARRAY_LEN(ary) <= offset) {
-        return Qnil;
-    }
-    return RARRAY_PTR(ary)[offset];
-}
 static inline VALUE ary_make_hash(ary1, ary2)
     VALUE ary1, ary2;
 {
@@ -19,11 +7,11 @@ static inline VALUE ary_make_hash(ary1, ary2)
     long i;
 
     for (i=0; i<RARRAY_LEN(ary1); i++) {
-        rb_hash_aset(hash, RARRAY_PTR(ary1)[i], Qtrue);
+        rb_hash_aset(hash, rb_ary_entry(ary1,i), Qtrue);
     }
     if (ary2) {
         for (i=0; i<RARRAY_LEN(ary2); i++) {
-            rb_hash_aset(hash, RARRAY_PTR(ary2)[i], Qtrue);
+            rb_hash_aset(hash, rb_ary_entry(ary2, i), Qtrue);
         }
     }
     return hash;
@@ -44,19 +32,19 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
 
   // Vars.
   //
-  struct RArray *rb_array_of_arrays;
+  VALUE rb_array_of_arrays;
   VALUE smallest_array;
   VALUE current_array;
   VALUE hash;
 
   // Temps.
   //
-  VALUE v, vv;
+  VALUE v;
 
   // Conversions & presorting.
   //
-  rb_array_of_arrays = (struct RArray*) rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
-  smallest_array     = (VALUE) RARRAY(rb_ary_dup(RARRAY_PTR(rb_array_of_arrays)[0]));
+  rb_array_of_arrays = rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
+  smallest_array     = rb_ary_dup(rb_ary_entry(rb_array_of_arrays, 0));
 
   // Iterate through all arrays.
   //
@@ -77,10 +65,10 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
 
     // Iterate through all array elements.
     //
-    current_array = RARRAY_PTR(rb_array_of_arrays)[i];
+    current_array = rb_ary_entry(rb_array_of_arrays, i);
     for (j = 0; j < RARRAY_LEN(current_array); j++) {
-      v = vv = rb_ary_elt(current_array, j);
-      if (st_delete(RHASH_TBL(hash), (unsigned long*)&vv, 0)) {
+      v = rb_ary_entry(current_array, j);
+      if (rb_hash_delete(hash, v) != Qnil) {
         rb_ary_push(smallest_array, v);
       }
     }
