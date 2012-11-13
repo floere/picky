@@ -22,8 +22,33 @@ describe "automatic splitting" do
     index
   end
   
-  it 'can split text automatically' do
+  it 'can split the text automatically' do
     automatic_splitter = Picky::Splitters::Automatic.new index[:text]
+    
+    # It splits the text correctly.
+    #
+    automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow']
+    automatic_splitter.split('purplerain').should == ['purple', 'rain']
+    automatic_splitter.split('purple').should == ['purple']
+    # 
+    # # When it can't, it splits it using the partial index (correctly).
+    # #
+    automatic_splitter.split('purplerainbo').should == ['purple', 'rain']
+    automatic_splitter.split('purplerainb').should  == ['purple', 'rain']
+    #
+    automatic_splitter.split('purplerai').should == ['purple']
+    automatic_splitter.split('purplera').should  == ['purple']
+    automatic_splitter.split('purpler').should   == ['purple']
+    #
+    automatic_splitter.split('purpl').should == []
+    automatic_splitter.split('purp').should  == []
+    automatic_splitter.split('pur').should   == []
+    automatic_splitter.split('pu').should    == []
+    automatic_splitter.split('p').should     == []
+  end
+  
+  it 'can split text automatically (with partial)' do
+    automatic_splitter = Picky::Splitters::Automatic.new index[:text], partial: true
     
     # It splits the text correctly.
     #
@@ -38,13 +63,13 @@ describe "automatic splitting" do
     #
     automatic_splitter.split('purplerai').should == ['purple', 'rai']
     automatic_splitter.split('purplera').should == ['purple', 'ra']
-    automatic_splitter.split('purpler').should == ['purple', 'r']
+    automatic_splitter.split('purpler').should == ['purple'] # No 'r' in partial index.
     #
     automatic_splitter.split('purpl').should == ['purpl']
     automatic_splitter.split('purp').should == ['purp']
-    automatic_splitter.split('pur').should == ['pur']
-    automatic_splitter.split('pu').should == ['pu']
-    automatic_splitter.split('p').should == ['p']
+    automatic_splitter.split('pur').should == [] # No 'pur' in partial index etc.
+    automatic_splitter.split('pu').should == []
+    automatic_splitter.split('p').should == []
     
     try = Picky::Search.new index do
       searching splits_text_on: automatic_splitter

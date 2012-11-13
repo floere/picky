@@ -25,9 +25,10 @@ module Picky
     #
     class Automatic
       
-      def initialize category
-        @exact   = category.exact
-        @partial = category.partial
+      def initialize category, options = {}
+        @exact        = category.exact
+        @partial      = category.partial
+        @with_partial = options[:partial]
         
         reset_memoization
       end
@@ -49,17 +50,24 @@ module Picky
       end
 
       def segment text
-        @memo[text] ||= splits(text).inject([[], -1]) do |(current, heaviest), (head, tail)|
-          segments, tailweight = if tail == ''
-            [[], @partial.weight(head) || -1]
+        @memo[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
+          weight, segments = if tail == ''
+            [
+              (@exact.weight(head) || @with_partial && @partial.weight(head)),
+              []
+            ]
           else
-            segment tail
+            segments, tailweight = segment tail
+            headweight = @exact.weight head
+            
+            [
+              (headweight && tailweight &&
+              (headweight + tailweight) ||
+              tailweight || headweight),
+              segments
+            ]
           end
-          headweight = @exact.weight head
-          weight = headweight && tailweight &&
-                   (headweight + tailweight) ||
-                   headweight || tailweight
-          if heaviest <= (weight || -1)
+          if (heaviest || 0) <= (weight || -1)
             [[head] + segments, weight]
           else
             [current, heaviest]
