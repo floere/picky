@@ -17,3 +17,5 @@ spec/test_directory
 /spec/temp
 
 unimportant.sqlite3
+
+.rbx
