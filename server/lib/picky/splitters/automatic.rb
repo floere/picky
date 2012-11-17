@@ -56,7 +56,7 @@ module Picky
         end
       end
       
-      #
+      # Segments the given text recursively.
       #
       def segment text, use_partial = false
         (use_partial ? @partial_memo : @exact_memo)[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
