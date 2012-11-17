@@ -30,9 +30,9 @@ describe "automatic splitting" do
     automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow']
     automatic_splitter.split('purplerain').should == ['purple', 'rain']
     automatic_splitter.split('purple').should == ['purple']
-    # 
-    # # When it can't, it splits it using the partial index (correctly).
-    # #
+    
+    # When it can't, it splits it using the partial index (correctly).
+    #
     automatic_splitter.split('purplerainbo').should == ['purple', 'rain']
     automatic_splitter.split('purplerainb').should  == ['purple', 'rain']
     #
@@ -63,7 +63,7 @@ describe "automatic splitting" do
     #
     automatic_splitter.split('purplerai').should == ['purple', 'rai']
     automatic_splitter.split('purplera').should == ['purple', 'ra']
-    automatic_splitter.split('purpler').should == ['purple'] # No 'r' in partial index.
+    automatic_splitter.split('purpler').should == ['purple', 'r'] # No 'r' in partial index.
     #
     automatic_splitter.split('purpl').should == ['purpl']
     automatic_splitter.split('purp').should == ['purp']

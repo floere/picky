@@ -33,42 +33,64 @@ module Picky
         reset_memoization
       end
       
+      # Split the given text into its most
+      # likely constituents.
+      #
       def split text
-        result = segment(text).first
+        result = if @with_partial
+          partial_segment text
+        else
+          exact_segment text
+        end.first
         reset_memoization
         result
       end
       
+      # Reset the memoization.
+      #
       def reset_memoization
         @memo = {}
       end
       
+      # Return all splits of a given string.
+      #
       def splits text
-        (0..text.length-1).map do |x|
-          [text[0..x], text[x+1..-1]]
+        l = text.length
+        (0..l-1).map do |x|
+          [text.slice(0,x), text.slice(x,l)]
         end
       end
-
-      def segment text
+      
+      #
+      #
+      def partial_segment text
         @memo[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
-          weight, segments = if tail == ''
-            [
-              (@exact.weight(head) || @with_partial && @partial.weight(head)),
-              []
-            ]
+          tail_weight = @partial.weight tail
+          segments, head_weight = exact_segment head
+
+          weight = (head_weight && tail_weight &&
+                   (head_weight + tail_weight) ||
+                   tail_weight || head_weight)
+          if (weight || -1) > (heaviest || 0)
+            [segments + [tail], weight]
           else
-            segments, tailweight = segment tail
-            headweight = @exact.weight head
-            
-            [
-              (headweight && tailweight &&
-              (headweight + tailweight) ||
-              tailweight || headweight),
-              segments
-            ]
+            [current, heaviest]
           end
-          if (heaviest || 0) <= (weight || -1)
-            [[head] + segments, weight]
+        end
+      end
+      
+      #
+      #
+      def exact_segment text
+        @memo[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
+          tail_weight = @exact.weight tail
+          segments, head_weight = exact_segment head
+          
+          weight = (head_weight && tail_weight &&
+                   (head_weight + tail_weight) ||
+                   tail_weight || head_weight)
+          if (weight || -1) > (heaviest || 0)
+            [tail_weight ? segments + [tail] : segments, weight]
           else
             [current, heaviest]
           end
