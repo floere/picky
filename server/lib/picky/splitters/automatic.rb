@@ -33,19 +33,18 @@ module Picky
         reset_memoization
       end
       
+      # Reset the memoization.
+      #
+      def reset_memoization
+        @exact_memo = {}
+        @partial_memo = {}
+      end
+      
       # Split the given text into its most
       # likely constituents.
       #
       def split text
-        result = segment text, @with_partial
-        reset_memoization
-        result.first
-      end
-      
-      # Reset the memoization.
-      #
-      def reset_memoization
-        @memo = {}
+        segment(text, @with_partial).first
       end
       
       # Return all splits of a given string.
@@ -60,7 +59,7 @@ module Picky
       #
       #
       def segment text, use_partial = false
-        @memo[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
+        (use_partial ? @partial_memo : @exact_memo)[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
           tail_weight = use_partial ? @partial.weight(tail) : @exact.weight(tail)
           
           segments, head_weight = segment head
