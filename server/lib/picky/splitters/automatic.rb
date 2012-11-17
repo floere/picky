@@ -37,13 +37,9 @@ module Picky
       # likely constituents.
       #
       def split text
-        result = if @with_partial
-          partial_segment text
-        else
-          exact_segment text
-        end.first
+        result = segment text, @with_partial
         reset_memoization
-        result
+        result.first
       end
       
       # Reset the memoization.
@@ -63,28 +59,11 @@ module Picky
       
       #
       #
-      def partial_segment text
+      def segment text, use_partial = false
         @memo[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
-          tail_weight = @partial.weight tail
-          segments, head_weight = exact_segment head
-
-          weight = (head_weight && tail_weight &&
-                   (head_weight + tail_weight) ||
-                   tail_weight || head_weight)
-          if (weight || -1) > (heaviest || 0)
-            [segments + [tail], weight]
-          else
-            [current, heaviest]
-          end
-        end
-      end
-      
-      #
-      #
-      def exact_segment text
-        @memo[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
-          tail_weight = @exact.weight tail
-          segments, head_weight = exact_segment head
+          tail_weight = use_partial ? @partial.weight(tail) : @exact.weight(tail)
+          
+          segments, head_weight = segment head
           
           weight = (head_weight && tail_weight &&
                    (head_weight + tail_weight) ||

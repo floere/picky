@@ -63,7 +63,7 @@ describe "automatic splitting" do
     #
     automatic_splitter.split('purplerai').should == ['purple', 'rai']
     automatic_splitter.split('purplera').should == ['purple', 'ra']
-    automatic_splitter.split('purpler').should == ['purple', 'r'] # No 'r' in partial index.
+    automatic_splitter.split('purpler').should == ['purple'] # No 'r' in partial index.
     #
     automatic_splitter.split('purpl').should == ['purpl']
     automatic_splitter.split('purp').should == ['purp']
