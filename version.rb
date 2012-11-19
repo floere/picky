@@ -1,3 +1,3 @@
 module Picky
-  VERSION = '4.11.5'
+  VERSION = '4.12.0'
 end
