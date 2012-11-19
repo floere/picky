@@ -1,11 +1,11 @@
 ## Upcoming Version
 
-## 4.11.5
+## 4.12.0
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
 
 - `Picky::Convenience#populate_with` offers a new option `finder_method` where you can the object finding method. It will be given an array of ids and options given to `#populate_with` (minus `up_to` and `finder_method`), thanks @joho!
-- By default, `#populate_with` uses `.find_by_id` instead of `.find` on the given (model class) instance.
+- Breaking: By default, `#populate_with` uses `.find_by_id` instead of `.find` on the given (model class) instance. This will simply continue to work if you use `ActiveRecord`.
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
