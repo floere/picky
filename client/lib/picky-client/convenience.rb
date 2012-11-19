@@ -69,7 +69,7 @@ module Picky
       #
       objects = the_ids.map { |id| mapped_entries[id] }
 
-      objects.collect! &block if block_given?
+      objects.collect!(&block) if block
 
       amend_ids_with objects
 
