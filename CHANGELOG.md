@@ -2,6 +2,11 @@
 
 ## 4.11.5
 
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- `Picky::Convenience#populate_with` offers a new option `finder_method` where you can the object finding method. It will be given an array of ids and options given to `#populate_with` (minus `up_to` and `finder_method`), thanks @joho!
+- By default, `#populate_with` uses `.find_by_id` instead of `.find` on the given (model class) instance.
+
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
 - Experimental feature: Automatic input splitting. Use when you can't use eg. space. Initialize as `Picky::Splitters::Automatic.new(index_category)`. Offers the method `#split(text) # => ['split', 'text']`. This means you can use this for the option `splits_text_on` instead of a `Regexp`.
