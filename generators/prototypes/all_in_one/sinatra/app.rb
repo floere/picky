@@ -78,10 +78,10 @@ class BookSearch < Sinatra::Application
   # Client.
   #
 
-  set :static, true
-  set :public, File.dirname(__FILE__)
-  set :views,  File.expand_path('../views', __FILE__)
-  set :haml,   :format => :html5
+  set :static,        true
+  set :public_folder, File.dirname(__FILE__)
+  set :views,         File.expand_path('../views', __FILE__)
+  set :haml,          :format => :html5
 
   # Root, the search page.
   #

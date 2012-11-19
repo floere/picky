@@ -57,7 +57,7 @@ module Picky
     def populate_with model_class, options = {}, &block
       the_ids       = ids options.delete(:up_to)
       finder_method = options.delete(:finder_method) || :find_by_id
-
+      
       # Call finder method.
       #
       objects = model_class.send finder_method, the_ids, options
