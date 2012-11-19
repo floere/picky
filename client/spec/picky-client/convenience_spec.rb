@@ -113,6 +113,10 @@ describe Picky::Convenience do
       @results.populate_with(ARClass) { |ar_instance| ar_instance.id.to_s }
       @results.ids.should_not be_empty
     end
+    it "should allow you to override the finder method you use" do
+      ARClass.should_receive(:find_by_id).and_return((1..20).map { |id| ARClass.new(id) })
+      @results.populate_with ARClass, :finder_method => :find_by_id
+    end
   end
 
   describe 'replace_ids_with' do

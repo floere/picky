@@ -49,12 +49,14 @@ module Picky
     #
     # === Options
     # * up_to: Amount of results to populate. All of them by default.
+    # * finder_method: Specify which AR finder method you want to load the model with. Default is #find (which raises ActiveRecord::RecordNotFound if items are in the index but no longer in your database. Use :find_by_id if you want it to be more forgiving.
     # * The rest of the options are directly passed through to the ModelClass.find(ids, options) method. Default is {}.
     #
     def populate_with model_class, options = {}, &block
       the_ids  = ids options.delete(:up_to)
+      finder_method = options.delete(:finder_method) || :find
 
-      objects = model_class.find the_ids, options
+      objects = model_class.send finder_method, the_ids, options
 
       # Put together a mapping.
       #
@@ -67,7 +69,7 @@ module Picky
       #
       objects = the_ids.map { |id| mapped_entries[id] }
 
-      objects.collect! &block if block_given?
+      objects.collect!(&block) if block
 
       amend_ids_with objects
 
