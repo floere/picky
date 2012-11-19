@@ -36,7 +36,9 @@ module Picky
 
     # Populates the ids with (rendered) model instances.
     #
-    # Give it an AR class and options for the find and it
+    # It does this by calling #find_by_id on the given model class.
+    #
+    # Give it eg. an ActiveRecord class and options for the find_by_id and it
     # will yield each found result for you to render.
     #
     # If you don't pass it a block, it will just use the AR results.
@@ -50,12 +52,14 @@ module Picky
     # === Options
     # * up_to: Amount of results to populate. All of them by default.
     # * finder_method: Specify which AR finder method you want to load the model with. Default is #find_by_id.
-    # * The rest of the options are directly passed through to the ModelClass.find(ids, options) method. Default is {}.
+    # * The rest of the options are directly passed through to the ModelClass.find_by_id(ids, options) method. Default is {}.
     #
     def populate_with model_class, options = {}, &block
       the_ids       = ids options.delete(:up_to)
       finder_method = options.delete(:finder_method) || :find_by_id
 
+      # Call finder method.
+      #
       objects = model_class.send finder_method, the_ids, options
 
       # Put together a mapping.
@@ -68,9 +72,13 @@ module Picky
       # Preserves the order
       #
       objects = the_ids.map { |id| mapped_entries[id] }
-
-      objects.collect!(&block) if block
-
+      
+      # Replace objects with rendered versions if a block is given.
+      #
+      objects.collect! &block if block
+      
+      # Enhance the allocations with the objects or rendered objects.
+      #
       amend_ids_with objects
 
       objects

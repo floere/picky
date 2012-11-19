@@ -93,7 +93,7 @@ describe Picky::Convenience do
         def initialize id
           @id = id
         end
-        def self.find ids, options = {}
+        def self.find_by_id ids, options = {}
           ids.map { |id| new(id) }
         end
         def == other
