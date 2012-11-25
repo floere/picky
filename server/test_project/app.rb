@@ -42,171 +42,35 @@ class BookSearch < Sinatra::Application
   
   require_relative 'models/each'
   
-  require_relative 'indexes/books_index'
-  require_relative 'indexes/book_each_index'
-  require_relative 'indexes/isbn_index'
-  require_relative 'indexes/rss_index'
-  require_relative 'indexes/isbn_each_index'
+  require_relative 'indexes/books'
+  require_relative 'indexes/book_each'
+  require_relative 'indexes/isbn'
+  require_relative 'indexes/rss'
+  require_relative 'indexes/isbn_each'
   
-  require_relative 'indexes/mgeo_index'
-  require_relative 'indexes/real_geo_index'
+  require_relative 'indexes/mgeo'
+  require_relative 'indexes/real_geo'
+  require_relative 'indexes/iphone_locations'
 
-  require_relative 'models/iphone_data'
-  iphone_locations = Index.new :iphone do
-    source { IphoneData.all('data/iphone_locations.csv') }
-    ranged_category :timestamp, 86_400, precision: 5, qualifiers: [:ts, :timestamp]
-    geo_categories  :latitude, :longitude, 25, precision: 3
-  end
+  require_relative 'indexes/underscore_regression'
 
-  Index.new :underscore_regression do
-    source   { SwissLocations.all('data/ch.csv', col_sep: ",") }
-    category :some_place, :from => :location
-  end
+  require_relative 'indexes/csv_test'
 
-  require_relative 'models/csv_book'
-  csv_test_index = Index.new :csv_test do
-    source   { CSVBook.all('data/books.csv') }
+  require_relative 'indexes/indexing'
 
-    category :title,
-             qualifiers: [:t, :title, :titre],
-             partial:    Partial::Substring.new(from: 1),
-             similarity: Similarity::DoubleMetaphone.new(2)
-    category :author,
-             qualifiers: [:a, :author, :auteur],
-             partial:    Partial::Substring.new(from: -2)
-    category :year,
-             qualifiers: [:y, :year, :annee],
-             partial:    Partial::None.new
-    category :publisher, qualifiers: [:p, :publisher]
-    category :subjects, qualifiers: [:s, :subject]
-
-    result_identifier :Books
-  end
-
-  indexing_index = Index.new(:special_indexing) do
-    source   { CSVBook.all('data/books.csv') }
-    indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-\"\&\.]/i, # a-c, A-C are removed
-             splits_text_on:     /[\s\/\-\"\&\/]/
-    category :title,
-             qualifiers: [:t, :title, :titre],
-             partial:    Partial::Substring.new(from: 1),
-             similarity: Similarity::DoubleMetaphone.new(2)
-  end
-
-  redis_index = Index.new(:redis) do
-    backend  Backends::Redis.new
-    source   { CSVBook.all('data/books.csv') }
-    category :title,
-             qualifiers: [:t, :title, :titre],
-             partial:    Partial::Substring.new(from: 1),
-             similarity: Similarity::DoubleMetaphone.new(2)
-    category :author,
-             qualifiers: [:a, :author, :auteur],
-             partial:    Partial::Substring.new(from: -2)
-    category :year,
-             qualifiers: [:y, :year, :annee],
-             partial:    Partial::None.new
-    category :publisher, qualifiers: [:p, :publisher]
-    category :subjects,  qualifiers: [:s, :subject]
-  end
-
-  require_relative 'models/symbol_keys'
-  sym_keys_index = Index.new :symbol_keys do
-    key_format :strip
-    source   { SymbolKeys.all("data/#{PICKY_ENVIRONMENT}/symbol_keys.csv") }
-    category :text, partial: Partial::Substring.new(from: 1)
-  end
-
-  memory_changing_index = Index.new(:memory_changing) do
-    source [
-      ChangingItem.new("1", 'first entry'),
-      ChangingItem.new("2", 'second entry'),
-      ChangingItem.new("3", 'third entry')
-    ]
-    category :name
-  end
-
-  redis_changing_index = Index.new(:redis_changing) do
-    backend Backends::Redis.new
-    source [
-      ChangingItem.new("1", 'first entry'),
-      ChangingItem.new("2", 'second entry'),
-      ChangingItem.new("3", 'third entry')
-    ]
-    category :name
-  end
-
-  file_index = Picky::Index.new(:file) do
-    backend  Picky::Backends::File.new
-    source [
-      ChangingItem.new("1", 'first entry'),
-      ChangingItem.new("2", 'second entry'),
-      ChangingItem.new("3", 'third entry')
-    ]
-    category :name,
-             partial: Picky::Partial::Infix.new(min: -3)
-  end
-
-  require_relative 'models/japanese'
-  japanese_index = Picky::Index.new(:japanese) do
-    source   { Japanese.all('data/japanese.tab', col_sep: "\t") }
-
-    indexing :removes_characters => /[^\p{Han}\p{Katakana}\p{Hiragana}\s;]/,
-             :stopwords =>         /\b(and|the|of|it|in|for)\b/i,
-             :splits_text_on =>    /[\s;]/
-
-    category :japanese,
-             :partial => Picky::Partial::Substring.new(from: 1)
-  end
-
-  # This checks that we can use a funky customized tokenizer.
-  #
-  NonStringDataSource = Struct.new :id, :nonstring
-  class NonStringTokenizer < Picky::Tokenizer
-    def tokenize nonstring
-      [nonstring.map(&:to_sym)]
-    end
-  end
-  nonstring_data_index = Picky::Index.new(:nonstring) do
-    source {
-      [
-        NonStringDataSource.new(1, ['gaga', :blabla, 'haha']),
-        NonStringDataSource.new(2, [:meow, 'moo', :bang, 'zap'])
-      ]
-    }
-    indexing NonStringTokenizer.new
-    category :nonstring
-  end
-
-  PartialItem = Struct.new :id, :substring, :postfix, :infix, :none
-  partial_index = Picky::Index.new(:partial) do
-    source do
-      [
-        PartialItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
-        PartialItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
-      ]
-    end
-    category :substring, partial: Picky::Partial::Substring.new(from: -5, to: -3)
-    category :postfix, partial: Picky::Partial::Postfix.new(from: -5)
-    category :infix, partial: Picky::Partial::Infix.new
-    category :none, partial: Picky::Partial::None.new
-  end
-
-  # This just tests indexing.
-  #
-  WeightsItem = Struct.new :id, :logarithmic, :constant_default, :constant, :dynamic
-  Picky::Index.new(:weights) do
-    source do
-      [
-        WeightsItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
-        WeightsItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
-      ]
-    end
-    category :logarithmic,      weight: Picky::Weights::Logarithmic.new
-    category :constant_default, weight: Picky::Weights::Constant.new
-    category :constant,         weight: Picky::Weights::Constant.new(3.14)
-    category :dynamic,          weight: Picky::Weights::Dynamic.new { |token| token.size }
-  end
+  require_relative 'indexes/redis'
+  
+  require_relative 'indexes/sym_keys'
+  
+  require_relative 'indexes/memory_changing'
+  require_relative 'indexes/redis_changing'
+  require_relative 'indexes/file'
+  
+  require_relative 'indexes/japanese'
+  
+  require_relative 'indexes/nonstring_data'
+  require_relative 'indexes/partial'
+  require_relative 'indexes/weights'
 
   # SQLiteItem = Struct.new :id, :first_name, :last_name
   # sqlite_index = Picky::Index.new :sqlite do
@@ -228,7 +92,7 @@ class BookSearch < Sinatra::Application
   }
 
   # This looks horrible – but usually you have it only once or twice.
-  # It's flexible.
+  # It's more flexible.
   #
   require 'logger'
   AppLogger = Logger.new File.expand_path('log/search.log', Picky.root)
@@ -252,19 +116,19 @@ class BookSearch < Sinatra::Application
   get %r{\A/book_each\z} do
     book_each_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  redis_search = Search.new redis_index do boost weights end
+  redis_search = Search.new RedisIndex do boost weights end
   get %r{\A/redis\z} do
     redis_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  memory_changing_search = Search.new memory_changing_index
+  memory_changing_search = Search.new MemoryChangingIndex
   get %r{\A/memory_changing\z} do
     memory_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  redis_changing_search = Search.new redis_changing_index
+  redis_changing_search = Search.new RedisChangingIndex
   get %r{\A/redis_changing\z} do
     redis_changing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  csv_test_search = Search.new csv_test_index do boost weights end
+  csv_test_search = Search.new CSVTestIndex do boost weights end
   get %r{\A/csv\z} do
     csv_test_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
@@ -272,7 +136,7 @@ class BookSearch < Sinatra::Application
   get %r{\A/isbn\z} do
     isbn_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  sym_keys_search = Search.new sym_keys_index
+  sym_keys_search = Search.new SymKeysIndex
   get %r{\A/sym\z} do
     sym_keys_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
@@ -284,19 +148,19 @@ class BookSearch < Sinatra::Application
   get %r{\A/simple_geo\z} do
     mgeo_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  iphone_search = Search.new iphone_locations
+  iphone_search = Search.new IphoneLocations
   get %r{\A/iphone\z} do
     iphone_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  indexing_search = Search.new indexing_index
+  indexing_search = Search.new IndexingIndex
   get %r{\A/indexing\z} do
     indexing_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  file_search = Search.new file_index
+  file_search = Search.new FileIndex
   get %r{\A/file\z} do
     file_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  japanese_search = Search.new japanese_index do
+  japanese_search = Search.new JapaneseIndex do
     searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/
@@ -304,11 +168,11 @@ class BookSearch < Sinatra::Application
   get %r{\A/japanese\z} do
     japanese_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  nonstring_search = Search.new nonstring_data_index
+  nonstring_search = Search.new NonstringDataIndex
   get %r{\A/nonstring\z} do
     nonstring_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
-  partial_search = Search.new partial_index
+  partial_search = Search.new PartialIndex
   get %r{\A/partial\z} do
     partial_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
@@ -316,7 +180,7 @@ class BookSearch < Sinatra::Application
   # get %r{\A/sqlite\z} do
   #   sqlite_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   # end
-  all_search = Search.new BooksIndex, csv_test_index, ISBNIndex, MgeoIndex do boost weights end
+  all_search = Search.new BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex do boost weights end
   get %r{\A/all\z} do
     all_search.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
   end
