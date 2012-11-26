@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.12.1
+
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- Reverted last change, and uses `.find_all_by_id` instead of `.find_by_id` (thanks to @prami).
+
 ## 4.12.0
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
