@@ -117,6 +117,25 @@ module Picky
         puts something
       end
       
+      def generate_for type, prototype_paths, steps
+        exclaim "Setting up Picky #{type} \"#{name}\"."
+        
+        create_target_directory
+        copy_all_files
+        
+        prototype_paths.each do |path|
+          copy_all_files expand_prototype_path(path)
+        end
+        
+        exclaim "\"#{name}\" is a great project name! Have fun :)\n"
+        exclaim ""
+        exclaim "Next steps:"
+        
+        steps.each.with_index do |step, i|
+          exclaim "#{i}. #{step}"
+        end
+      end
+      
     end
     
   end
