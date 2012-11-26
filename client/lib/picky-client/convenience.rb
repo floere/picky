@@ -51,7 +51,7 @@ module Picky
     #
     # === Options
     # * up_to: Amount of results to populate. All of them by default.
-    # * finder_method: Specify which AR finder method you want to load the model with. Default is #find_by_id.
+    # * finder_method: Specify which AR finder method you want to load the model with. Default is #find_all_by_id.
     # * The rest of the options are directly passed through to the ModelClass.find_by_id(ids, options) method. Default is {}.
     #
     def populate_with model_class, options = {}, &block
