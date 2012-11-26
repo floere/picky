@@ -30,21 +30,23 @@ module Picky
 
         @indexes = indexes
       end
-
-      # Ignore the categories with these qualifiers.
+      
+      # TODO Reinstate.
       #
-      # Example:
-      #   search = Search.new(index1, index2, index3) do
-      #     ignore :name, :first_name
-      #   end
-      #
-      # Note: Cleans up / optimizes after being called.
-      #
-      def ignore *qualifiers
-        @ignored_categories ||= []
-        @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
-        @ignored_categories.uniq!
-      end
+      # # Ignore the categories with these qualifiers.
+      # #
+      # # Example:
+      # #   search = Search.new(index1, index2, index3) do
+      # #     ignore :name, :first_name
+      # #   end
+      # #
+      # # Note: Cleans up / optimizes after being called.
+      # #
+      # def ignore *qualifiers
+      #   @ignored_categories ||= []
+      #   @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
+      #   @ignored_categories.uniq!
+      # end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #
