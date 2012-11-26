@@ -19,9 +19,9 @@ class Book
     @@books_mapping[row.shift.to_i] = row
   end
   
-  # Find_by_id uses a lookup table.
+  # Find_all_by_id uses a lookup table.
   #
-  def self.find_by_id ids, _ = {}
+  def self.find_all_by_id ids, _ = {}
     ids.map { |id| new(id, *@@books_mapping[id]) }
   end
   
