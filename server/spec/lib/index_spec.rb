@@ -103,6 +103,27 @@ describe Picky::Index do
         end
       end
     end
+    
+    describe '#to_stats' do
+      let(:index) do
+        the_source = some_source
+        described_class.new :some_index_name do
+          source the_source
+          category :text1
+          category :text2
+          result_identifier :foobar
+        end
+      end
+      
+      it 'outputs the stats correctly' do
+        index.to_stats.should == <<-EXPECTED
+some_index_name (Picky::Index):
+  source:            some_source
+  categories:        text1, text2
+  result identifier: "foobar"
+EXPECTED
+      end
+    end
   end
 
 end

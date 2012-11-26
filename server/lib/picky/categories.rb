@@ -58,6 +58,10 @@ module Picky
     def raise_not_found category_name
       raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
     end
+    
+    def to_stats
+      map(&:name).join(', ')
+    end
 
     def to_s
       "#{self.class}(#{categories.join(', ')})"

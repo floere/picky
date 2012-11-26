@@ -362,9 +362,10 @@ module Picky
       stats = <<-INDEX
 #{name} (#{self.class}):
 #{"source:            #{source}".indented_to_s}
-#{"categories:        #{categories.map(&:name).join(', ')}".indented_to_s}
+#{"categories:        #{categories.to_stats}".indented_to_s}
 INDEX
-      stats << "  result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
+      stats << "result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
+      stats << "\n"
       stats
     end
 
