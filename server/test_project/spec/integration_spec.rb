@@ -27,7 +27,8 @@ describe BookSearch do
   let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
   let(:partial)         { Picky::TestClient.new(described_class, :path => '/partial')         }
   let(:sqlite)          { Picky::TestClient.new(described_class, :path => '/sqlite')          }
-
+  let(:commas)          { Picky::TestClient.new(described_class, :path => '/commas')          }
+  
   describe "dump" do
     it "simply works" do
       Thing = Struct.new :id, :name
@@ -339,6 +340,10 @@ describe BookSearch do
   # TODO Find the problem with the SQlite gem and reinstate this.
   #
   # it { sqlite.search("hello sqlite").ids.should == [1] }
+  
+  # Commas in ids.
+  #
+  it { commas.search("text:with").ids.should == ['a,b', 'c,d'] }
 
   # Database index reloading.
   #

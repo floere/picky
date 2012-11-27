@@ -86,6 +86,7 @@ class BookSearch < Sinatra::Application
   map 'nonstring', Search.new(NonstringDataIndex)
   map 'partial', Search.new(PartialIndex)
   # map 'sqlite', Search.new(SQLiteIndex) # TODO Fix, reinstate.
+  map 'commas', Search.new(CommaIdsIndex)
   map 'all', Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
     boost weights
   }
