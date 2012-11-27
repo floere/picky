@@ -22,11 +22,9 @@ module Picky
   #
   require 'active_support/core_ext/logger'
   require 'active_support/core_ext/object/blank'
-  require 'active_support/core_ext/enumerable'
   require 'active_support/multibyte'
   require 'multi_json'
   require 'rack_fast_escape' if defined? Rack
-  require 'fileutils'
   
   # Check if platform specific modifiers need to be installed.
   #
