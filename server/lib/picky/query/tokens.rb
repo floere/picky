@@ -10,9 +10,9 @@ module Picky
 
       attr_reader :tokens, :ignore_unassigned
 
-      # Basically delegates to its internal tokens array.
+      # Basically forwards to its internal tokens array.
       #
-      self.delegate *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, { :to => :@tokens }].flatten
+      forward *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, :to => :@tokens].flatten
 
       # Create a new Tokens object with the array of tokens passed in.
       #

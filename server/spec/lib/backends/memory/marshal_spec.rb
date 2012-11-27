@@ -18,7 +18,7 @@ describe Picky::Backends::Memory::Marshal do
     end
 
     describe "dump" do
-      it "delegates to the given hash" do
+      it "forwards to the given hash" do
         hash = stub :hash
 
         marshal.should_receive(:dump_marshal).once.with hash

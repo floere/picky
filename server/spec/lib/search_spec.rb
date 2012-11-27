@@ -14,7 +14,7 @@ describe Picky::Search do
 
   describe 'tokenized' do
     let(:search) { described_class.new }
-    it 'delegates to the tokenizer' do
+    it 'forwards to the tokenizer' do
       tokenizer = stub :tokenizer
       search.stub! :tokenizer => tokenizer
 
@@ -88,21 +88,21 @@ describe Picky::Search do
     before(:each) do
       @search = described_class.new
     end
-    it "delegates to search_with correctly" do
+    it "forwards to search_with correctly" do
       @search.stub! :tokenized => :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 10, :text, nil
 
       @search.search :text, 20, 10
     end
-    it "delegates to search_with correctly" do
+    it "forwards to search_with correctly" do
       @search.stub! :tokenized => :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, nil
 
       @search.search :text, 20, 0
     end
-    it "delegates to search_with correctly" do
+    it "forwards to search_with correctly" do
       @search.stub! :tokenized => :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, true

@@ -48,7 +48,7 @@ describe Picky::Query::Combinations do
   end
 
   # describe 'hash' do
-  #   it "delegates to the combinations array" do
+  #   it "forwards to the combinations array" do
   #     @combinations_ary.should_receive(:hash).once.with
   # 
   #     @combinations.hash

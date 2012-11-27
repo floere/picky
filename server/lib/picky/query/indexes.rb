@@ -13,9 +13,7 @@ module Picky
     #
     class Indexes
       
-      delegate :size,
-               :first,
-               :to => :@indexes
+      forward :size, :first, :to => :@indexes
       
       attr_reader :indexes,
                   :ignored_categories

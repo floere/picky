@@ -21,12 +21,12 @@ describe Picky::Sinatra do
     it 'has Picky specific methods' do
       extendee.send :searching, splits_text_on: /something/
     end
-    it 'gets delegated correctly' do
+    it 'gets forwardd correctly' do
       Picky::Tokenizer.should_receive(:default_indexing_with).once.with some: 'option'
 
       extendee.send :indexing, some: 'option'
     end
-    it 'gets delegated correctly' do
+    it 'gets forwardd correctly' do
       Picky::Tokenizer.should_receive(:default_searching_with).once.with some: 'option'
 
       extendee.send :searching, some: 'option'

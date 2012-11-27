@@ -31,14 +31,14 @@ describe Picky::Index do
     end
 
     describe "load" do
-      it "delegates to each category" do
+      it "forwards to each category" do
         @categories.should_receive(:load).once.with
 
         @index.load
       end
     end
     describe "possible_combinations" do
-      it "delegates to the combinator" do
+      it "forwards to the combinator" do
         @categories.should_receive(:possible_combinations).once.with :some_token
 
         @index.possible_combinations :some_token

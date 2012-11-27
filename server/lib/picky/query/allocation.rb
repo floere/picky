@@ -108,7 +108,7 @@ module Picky
 
       # Json representation of this allocation.
       #
-      # Note: Delegates to to_result.
+      # Note: Forwards to to_result.
       #
       def to_json options = {}
         MultiJson.encode to_result, options

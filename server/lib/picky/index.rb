@@ -89,12 +89,12 @@ module Picky
     attr_reader :name,
                 :categories
 
-    delegate :[],
-             :dump,
-             :each,
-             :inject,
-             :reset_backend,
-             :to => :categories
+    forward :[],
+            :dump,
+            :each,
+            :inject,
+            :reset_backend,
+            :to => :categories
 
     # Create a new index with a given source.
     #

@@ -6,7 +6,7 @@ module Picky
     #
     module Bundle
 
-      # Base wrapper. Just delegates all methods to the bundle.
+      # Base wrapper. Just forwards all methods to the bundle.
       #
       class Wrapper
 

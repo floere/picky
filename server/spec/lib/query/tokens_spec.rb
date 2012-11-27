@@ -226,13 +226,13 @@ describe Picky::Query::Tokens do
     end
   end
 
-  def self.it_should_delegate name
+  def self.it_should_forward name
     describe name do
       before(:each) do
         @internal_tokens = mock :internal_tokens
         @tokens = described_class.new @internal_tokens
       end
-      it "should delegate #{name} to the internal tokens" do
+      it "should forward #{name} to the internal tokens" do
         proc_stub = lambda {}
 
         @internal_tokens.should_receive(name).once.with &proc_stub
@@ -244,17 +244,17 @@ describe Picky::Query::Tokens do
   # Reject is tested separately.
   #
   (Enumerable.instance_methods - [:reject]).each do |name|
-    it_should_delegate name
+    it_should_forward name
   end
-  it_should_delegate :slice!
-  it_should_delegate :[]
-  it_should_delegate :uniq!
-  it_should_delegate :last
-  it_should_delegate :length
-  it_should_delegate :reject!
-  it_should_delegate :size
-  it_should_delegate :empty?
-  it_should_delegate :each
-  it_should_delegate :exit
+  it_should_forward :slice!
+  it_should_forward :[]
+  it_should_forward :uniq!
+  it_should_forward :last
+  it_should_forward :length
+  it_should_forward :reject!
+  it_should_forward :size
+  it_should_forward :empty?
+  it_should_forward :each
+  it_should_forward :exit
 
 end

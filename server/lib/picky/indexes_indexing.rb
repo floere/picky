@@ -7,13 +7,9 @@ module Picky
     extend Helpers::Indexing
     include Helpers::Indexing
 
-    instance_delegate :clear,
-                      :tokenizer
+    instance_forward :clear, :tokenizer
 
-    each_delegate :cache,
-                  :clear,
-                  :prepare,
-                  :to => :indexes
+    each_forward :cache, :clear, :prepare, :to => :indexes
 
     # Overrides index from the helper.
     #

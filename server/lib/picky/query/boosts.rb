@@ -25,8 +25,7 @@ module Picky
 
       attr_reader :boosts
 
-      delegate :empty?,
-               :to => :boosts
+      forward :empty?, :to => :boosts
 
       # Needs a Hash of
       #   [:category_name1, :category_name2] => +3

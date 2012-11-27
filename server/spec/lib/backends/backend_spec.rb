@@ -5,7 +5,7 @@ describe Picky::Backends::Backend do
   let(:backend) { described_class.new }
 
   describe 'weight' do
-    it 'delegates to the parameter' do
+    it 'forwards to the parameter' do
       combinations = stub :combinations
 
       combinations.should_receive(:score).once.with()

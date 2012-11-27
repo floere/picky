@@ -19,12 +19,12 @@ describe Picky::Results do
       @allocations = stub :allocations
       @results = described_class.new :unimportant, :amount, :unimportant, @allocations
     end
-    it "delegates" do
+    it "forwards" do
       @allocations.should_receive(:ids).once.with :anything
 
       @results.ids :anything
     end
-    it "delegates and uses amount if nothing given" do
+    it "forwards and uses amount if nothing given" do
       @allocations.should_receive(:ids).once.with :amount
 
       @results.ids

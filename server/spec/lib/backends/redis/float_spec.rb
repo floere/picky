@@ -17,7 +17,7 @@ describe Picky::Backends::Redis::Float do
   end
 
   describe 'member' do
-    it 'delegates to the backend' do
+    it 'forwards to the backend' do
       client.should_receive(:hget).once.with 'some_namespace', 'some'
 
       backend['some']

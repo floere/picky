@@ -17,7 +17,7 @@ describe Picky::Backends::Redis::String do
   end
   
   describe 'member' do
-    it 'delegates to the backend' do
+    it 'forwards to the backend' do
       client.should_receive(:hget).once.with :some_namespace, :some_symbol
       
       backend[:some_symbol]

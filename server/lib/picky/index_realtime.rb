@@ -4,13 +4,13 @@ module Picky
   #
   class Index
 
-    delegate :remove,  # aka "delete".
-             :add,     # aka "insert".
-             :replace, # aka "insert or update". Thus, not called update.
-             :replace_from,
-             :clear_realtime,
-             :build_realtime_mapping,
-             :to => :categories
+    forward :remove,  # aka "delete".
+            :add,     # aka "insert".
+            :replace, # aka "insert or update". Thus, not called update.
+            :replace_from,
+            :clear_realtime,
+            :build_realtime_mapping,
+            :to => :categories
 
     # Add at the end.
     #

@@ -18,7 +18,7 @@ describe Picky::Backends::Memory::JSON do
     end
 
     describe "dump" do
-      it "delegates to the given hash" do
+      it "forwards to the given hash" do
         hash = stub :hash
 
         json.should_receive(:dump_json).once.with hash

@@ -23,10 +23,10 @@ module Picky
     attr_accessor :tokenizer,
                   :boosts
 
-    delegate :ignore,
-             :only,
-             :remap_qualifiers,
-             :to => :indexes
+    forward :ignore,
+            :only,
+            :remap_qualifiers,
+            :to => :indexes
 
     # Takes:
     # * A number of indexes
@@ -213,7 +213,7 @@ module Picky
                    unique
     end
 
-    # Delegates the tokenizing to the query tokenizer.
+    # Forwards the tokenizing to the query tokenizer.
     #
     # Parameters:
     # * text: The string to tokenize.

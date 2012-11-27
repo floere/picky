@@ -4,18 +4,18 @@ module Picky
 
     attr_reader :categories, :category_hash
 
-    delegate :each,
-             :first,
-             :map,
-             :to => :categories
+    forward :each,
+            :first,
+            :map,
+            :to => :categories
 
-    each_delegate :cache,
-                  :dump,
-                  :empty,
-                  :inject,
-                  :reindex,
-                  :reset_backend,
-                  :to => :categories
+    each_forward :cache,
+                 :dump,
+                 :empty,
+                 :inject,
+                 :reindex,
+                 :reset_backend,
+                 :to => :categories
 
     # A list of indexed categories.
     #

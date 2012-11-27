@@ -4,11 +4,11 @@ module Picky
   #
   class Index
 
-    delegate :load,
-             :analyze,
-             :reindex,
-             :possible_combinations,
-             :to => :categories
+    forward :load,
+            :analyze,
+            :reindex,
+            :possible_combinations,
+            :to => :categories
 
     # Define how the results of this index are identified.
     # (Shown in the client, for example)

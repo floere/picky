@@ -10,7 +10,7 @@ describe Picky::Query::Allocation do
   end
 
   # describe "hash" do
-  #   it "delegates to the combinations" do
+  #   it "forwards to the combinations" do
   #     @combinations.should_receive(:hash).once.with
   # 
   #     @allocation.hash
@@ -34,7 +34,7 @@ describe Picky::Query::Allocation do
   end
 
   describe 'remove' do
-    it 'should delegate to the combinations' do
+    it 'should forward to the combinations' do
       @combinations.should_receive(:remove).once.with [:some_categories]
 
       @allocation.remove [:some_categories]
@@ -205,7 +205,7 @@ describe Picky::Query::Allocation do
 
   describe "calculate_score" do
     context 'non-empty combinations' do
-      it 'should delegate to backend and combinations' do
+      it 'should forward to backend and combinations' do
         @backend.should_receive(:weight).once.with(@combinations).and_return 1
         @combinations.should_receive(:boost_for).once.with(:some_boosts).and_return 2
 

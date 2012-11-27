@@ -5,11 +5,7 @@ module Picky
   class Index
     include Helpers::Indexing
 
-    # Delegators for indexing.
-    #
-    delegate :cache,
-             :clear,
-             :to => :categories
+    forward :cache, :clear, :to => :categories
 
     # Define an index tokenizer on the index.
     #
@@ -23,7 +19,7 @@ module Picky
     # on every category.
     #
     # Decides whether to use a parallel indexer or whether to
-    # delegate to each category to prepare themselves.
+    # forward to each category to prepare themselves.
     #
     def prepare scheduler = Scheduler.new
       if source.respond_to?(:each)

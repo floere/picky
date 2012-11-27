@@ -41,7 +41,7 @@ module Picky
         allocations.process!(amount, offset, extra_allocations)
     end
 
-    # Delegates to allocations.
+    # Forwards to allocations.
     #
     # Note that this is an expensive call and
     # should not be done repeatedly. Just keep
@@ -51,7 +51,7 @@ module Picky
       allocations.ids only
     end
 
-    # The total results. Delegates to the allocations.
+    # The total results. Forwards to the allocations.
     #
     def total
       @total ||= allocations.total || 0

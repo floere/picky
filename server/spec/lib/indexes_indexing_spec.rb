@@ -44,7 +44,7 @@ describe Picky::Indexes do
         indexes.indexes.should == []
       end
     end
-    def self.it_delegates_each name
+    def self.it_forwards_each name
       describe name do
         it "calls #{name} on each in order" do
           @index1.should_receive(name).once.with.ordered
@@ -54,7 +54,7 @@ describe Picky::Indexes do
         end
       end
     end
-    it_delegates_each :clear
+    it_forwards_each :clear
   end
 
 end

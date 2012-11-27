@@ -4,11 +4,8 @@ module Picky
   #
   class Indexes
 
-    instance_delegate :load,
-                      :analyze
-
-    each_delegate :load,
-                  :to => :indexes
+    instance_forward :load, :analyze
+    each_forward :load, :to => :indexes
 
   end
 

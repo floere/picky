@@ -3,7 +3,7 @@ module Picky
   # Holds all indexes and provides operations
   # for extracting and working on them.
   #
-  # Delegates a number of operations to the
+  # Forwards a number of operations to the
   # indexes.
   #
   class Indexes
@@ -11,12 +11,17 @@ module Picky
     attr_reader :indexes,
                 :index_mapping
 
-    delegate :size,
-             :each,
-             :to => :indexes
-
-    each_delegate :reindex,
-                  :to => :indexes
+    forward :size, :each, :to => :indexes
+    each_forward :reindex, :to => :indexes
+    instance_forward :clear,
+                     :clear_indexes,
+                     :register,
+                     :reindex,
+                     :[],
+                     :to_s,
+                     :size,
+                     :each,
+                     :each_category
 
     def initialize *indexes
       clear_indexes
@@ -31,16 +36,6 @@ module Picky
     def self.identifier
       name
     end
-
-    instance_delegate :clear,
-                      :clear_indexes,
-                      :register,
-                      :reindex,
-                      :[],
-                      :to_s,
-                      :size,
-                      :each,
-                      :each_category
 
     # Clears the indexes and the mapping.
     #

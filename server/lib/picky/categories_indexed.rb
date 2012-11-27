@@ -2,9 +2,7 @@ module Picky
 
   class Categories
 
-    each_delegate :load,
-                  :analyze,
-                  :to => :categories
+    each_forward :load, :analyze, :to => :categories
 
     # Return all possible combinations for the given token.
     #

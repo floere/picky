@@ -63,7 +63,7 @@ describe Picky::Index do
     end
 
     describe 'geo_categories' do
-      it 'delegates correctly' do
+      it 'forwards correctly' do
         api.should_receive(:ranged_category).once.with :some_lat, 0.00898312, from: :some_lat_from
         api.should_receive(:ranged_category).once.with :some_lng, 0.01796624, from: :some_lng_from
 

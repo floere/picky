@@ -287,7 +287,7 @@ describe Picky::Query::Allocations do
         @allocation = stub :allocation
         @allocations = described_class.new [@allocation, @allocation, @allocation]
       end
-      it 'should delegate to each allocation with no params' do
+      it 'should forward to each allocation with no params' do
         @allocation.should_receive(:to_result).exactly(3).times.with
 
         @allocations.to_result
@@ -299,7 +299,7 @@ describe Picky::Query::Allocations do
         @no_result_allocation = stub :no_results, :to_result => nil
         @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
       end
-      it 'should delegate to each allocation with the same params' do
+      it 'should forward to each allocation with the same params' do
         @allocations.to_result.should == [:some_result, :some_result]
       end
     end
@@ -337,7 +337,7 @@ describe Picky::Query::Allocations do
       @internal_allocations = mock :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
-    it "should delegate to the internal allocations" do
+    it "should forward to the internal allocations" do
       stub_proc = lambda {}
       @internal_allocations.should_receive(:each).once.with &stub_proc
 
@@ -349,7 +349,7 @@ describe Picky::Query::Allocations do
       @internal_allocations = mock :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
-    it "should delegate to the internal allocations" do
+    it "should forward to the internal allocations" do
       stub_proc = lambda {}
       @internal_allocations.should_receive(:inject).once.with &stub_proc
 
@@ -361,7 +361,7 @@ describe Picky::Query::Allocations do
       @internal_allocations = mock :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
-    it "should delegate to the internal allocations array" do
+    it "should forward to the internal allocations array" do
       @internal_allocations.should_receive(:empty?).once
       @allocations.empty?
     end
@@ -373,7 +373,7 @@ describe Picky::Query::Allocations do
       @no_result_allocation = stub :no_results, :to_result => nil
       @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
     end
-    it "should delegate to the internal allocations array" do
+    it "should forward to the internal allocations array" do
       @allocations.to_s.should == "[:some_result, :some_result]"
     end
   end

@@ -41,8 +41,8 @@ module Picky
                   :partial_strategy,
                   :similarity_strategy
 
-    delegate :[], :[]=,        :to => :configuration
-    delegate :index_directory, :to => :category
+    forward :[], :[]=,        :to => :configuration
+    forward :index_directory, :to => :category
     
     # TODO Move the strategies into options.
     #
@@ -142,7 +142,7 @@ module Picky
       end
     end
 
-    # If a key format is set, use it, else delegate to the category.
+    # If a key format is set, use it, else forward to the category.
     #
     def key_format
       @key_format || @category.key_format

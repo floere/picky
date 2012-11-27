@@ -10,8 +10,8 @@ module Picky
 
       attr_reader :index_or_category
 
-      delegate :source,
-               :to => :index_or_category
+      forward :source,
+              :to => :index_or_category
 
       def initialize index_or_category
         @index_or_category = index_or_category

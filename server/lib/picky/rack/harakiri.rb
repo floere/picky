@@ -28,7 +28,7 @@ module Rack
 
     # #call interface method.
     #
-    # Harakiri is a middleware, so it delegates the the app or
+    # Harakiri is a middleware, so it forwards the the app or
     # the next middleware after checking if it is time to honorably retire.
     #
     def call env

@@ -4,10 +4,10 @@ module Picky
 
     include Helpers::Indexing
 
-    each_delegate :cache,
-                  :clear,
-                  :prepare,
-                  :to => :categories
+    each_forward :cache,
+                 :clear,
+                 :prepare,
+                 :to => :categories
   end
 
 end

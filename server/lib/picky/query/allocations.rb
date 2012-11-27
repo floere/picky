@@ -14,13 +14,13 @@ module Picky
     #
     class Allocations
 
-      delegate :each,
-               :empty?,
-               :first,
-               :inject,
-               :size,
-               :map,
-               :to => :@allocations
+      forward :each,
+              :empty?,
+              :first,
+              :inject,
+              :size,
+              :map,
+              :to => :@allocations
 
       def initialize allocations = []
         @allocations = allocations

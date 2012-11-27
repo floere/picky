@@ -13,7 +13,7 @@ describe Picky::Category do
     let(:partial) { category.partial }
 
     describe 'clear' do
-      it 'delegates to both bundles' do
+      it 'forwards to both bundles' do
         exact.should_receive(:clear).once.with()
         partial.should_receive(:clear).once.with()
 

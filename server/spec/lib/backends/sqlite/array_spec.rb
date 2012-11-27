@@ -8,7 +8,7 @@ describe Picky::Backends::SQLite::Array do
     let(:db) { described_class.new 'spec/temp/some/cache/path/to/file' }
 
     describe 'dump' do
-      it 'delegates to the given hash' do
+      it 'forwards to the given hash' do
         hash = stub :hash
 
         db.should_receive(:dump_sqlite).once.with hash
@@ -76,7 +76,7 @@ describe Picky::Backends::SQLite::Array do
     let(:db) { described_class.new 'spec/temp/some/cache/path/to/file', realtime: true }
 
     describe 'dump' do
-      it 'delegates to the given hash' do
+      it 'forwards to the given hash' do
         hash = stub :hash
 
         db.should_receive(:dump_sqlite).never
