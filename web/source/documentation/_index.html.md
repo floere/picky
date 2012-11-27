@@ -104,7 +104,9 @@ How to configure a search interface over an index (or multiple).
 * [Search Options](#search-options)
 * [Searching / Tokenizing](#search-options-searching)
 
-What [options](#indexes-categories-searching) does a user have when searching?
+What options does a user have when searching?
+
+* [User Search Options](#indexes-categories-searching)
 
 Advanced topics:
 
