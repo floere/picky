@@ -229,7 +229,11 @@
 <li><a href='#search-options-searching'>Searching / Tokenizing</a></li>
 </ul>
 
-<p>What <a href='#indexes-categories-searching'>options</a> does a user have when searching?</p>
+<p>What options does a user have when searching?</p>
+
+<ul>
+<li><a href='#indexes-categories-searching'>User Search Options</a></li>
+</ul>
 
 <p>Advanced topics:</p>
 
@@ -1044,12 +1048,12 @@ end</code></pre>
 
 <p>So you define that:</p>
 
-<pre><code>Index.new &quot;books&quot; do
+<pre><code>Index.new :books do
   source { Book.order(&#39;author DESC&#39;) }
 
-  category &quot;title&quot;
-  category &quot;author&quot;
-  category &quot;isbn&quot;
+  category :title
+  category :author
+  category :isbn
 end</code></pre>
 
 <p>(The example assumes that a <code>Book</code> has readers for <code>title</code>, <code>author</code>, and <code>isbn</code>)</p>
@@ -1073,26 +1077,26 @@ end</code></pre>
 <p>By default, the partial marker is <code>*</code> and the non-partial marker is <code>&quot;</code>. You change the markers by setting</p>
 
 <ul>
-<li><code>Picky:&quot;Query&quot;:&quot;Token&quot;.partial_character = &#39;\*&#39;</code></li>
+<li><code>Picky::Query::Token.partial_character = &#39;\*&#39;</code></li>
 
-<li><code>Picky:&quot;Query&quot;:&quot;Token&quot;.no_partial_character = &#39;&quot;&#39;</code></li>
+<li><code>Picky::Query::Token.no_partial_character = &#39;&quot;&#39;</code></li>
 </ul>
 
 <h4 id='default'>Default</h4>
 
 <p>You define this by this:</p>
 
-<pre><code>category &quot;some&quot;, partial: (some generator which generates partial words)</code></pre>
+<pre><code>category :some, partial: (some generator which generates partial words)</code></pre>
 
 <p>The Picky default is</p>
 
-<pre><code>category &quot;some&quot;, partial: Partial:&quot;Substring&quot;.new(from: -3)</code></pre>
+<pre><code>category :some, partial: Picky::Partial::Substring.new(from: -3)</code></pre>
 
 <p>You get this one by defining no partial option:</p>
 
-<pre><code>category &quot;some&quot;</code></pre>
+<pre><code>category :some</code></pre>
 
-<p>The option <code>Partial:&quot;Substring&quot;.new(from: 1)</code> will make a word completely partially findable.</p>
+<p>The option <code>Partial::Substring.new(from: 1)</code> will make a word completely partially findable.</p>
 
 <p>So the word <code>Picky</code> would be findable by entering <code>Picky</code>, <code>Pick</code>, <code>Pic</code>, <code>Pi</code>, or <code>P</code>.</p>
 
@@ -1100,7 +1104,7 @@ end</code></pre>
 
 <p>If you don&#8217;t want any partial finds to occur, use:</p>
 
-<pre><code>category &quot;some&quot;, partial: Partial:&quot;None&quot;.new</code></pre>
+<pre><code>category :some, partial: Partial::None.new</code></pre>
 
 <h4 id='other_partials'>Other partials</h4>
 
@@ -1178,9 +1182,9 @@ end</code></pre>
 
 <p>You define this by this:</p>
 
-<pre><code>category &quot;some&quot;, weights: MyWeights.new</code></pre>
+<pre><code>category :some, weights: MyWeights.new</code></pre>
 
-<p>The default is <code>Weights:&quot;Logarithmic&quot;.new</code>.</p>
+<p>The default is <code>Weights::Logarithmic.new</code>.</p>
 
 <p>You can also pass in your own weights generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
 
@@ -1188,15 +1192,15 @@ end</code></pre>
 
 <p>With 0.0 as default weight:</p>
 
-<pre><code>category &quot;some&quot;, weights: Weights:&quot;Constant&quot;.new # Returns 0.0 for all results.</code></pre>
+<pre><code>category :some, weights: Weights::Constant.new # Returns 0.0 for all results.</code></pre>
 
 <p>With 3.14 as set weight:</p>
 
-<pre><code>category &quot;some&quot;, weights: Weights:&quot;Constant&quot;.new(3.14) # Returns 3.14 for all results.</code></pre>
+<pre><code>category :some, weights: Weights::Constant.new(3.14) # Returns 3.14 for all results.</code></pre>
 
 <p>Or with a dynamically calculated weight:</p>
 
-<pre><code>Weights:&quot;Dynamic&quot;.new do |str_or_sym|
+<pre><code>Weights::Dynamic.new do |str_or_sym|
   sym_or_str.length # Uses the length of the symbol as weight.
 end</code></pre>
 
@@ -1208,30 +1212,29 @@ end</code></pre>
 
 <p>You define this by this:</p>
 
-<pre><code>category &quot;some&quot;, similarity: Similarity:&quot;None&quot;.new</code></pre>
+<pre><code>category :some, similarity: Similarity::None.new</code></pre>
 
 <p>(This is also the default)</p>
 
 <p>There are several built-in similarity options, like</p>
 
-<pre><code>category &quot;some&quot;, similarity: Similarity:&quot;Soundex&quot;.new
-category &quot;this&quot;, similarity: Similarity:&quot;Metaphone&quot;.new
-category &quot;that&quot;, similarity: Similarity:&quot;DoubleMetaphone&quot;.new</code></pre>
+<pre><code>category :some, similarity: Similarity::Soundex.new
+category :this, similarity: Similarity::Metaphone.new
+category :that, similarity: Similarity::DoubleMetaphone.new</code></pre>
 
 <p>You can also pass in your own similarity generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
 
 <h3 id='indexes-categories-qualifiers'>Option qualifier/qualifiers (categorizing)</h3>
 
-<p>Usually, when you search for <code>title&quot;wizard&quot;</code> you will only find books with &#8220;wizard&#8221; in their title.</p>
+<p>Usually, when you search for <code>title:wizard</code> you will only find books with &#8220;wizard&#8221; in their title.</p>
 
 <p>Maybe your client would like to be able to only enter &#8220;t&#8221;wizard&#8221;&#8220;. In that case you would use this option:</p>
 
-<pre><code>category &quot;some&quot;,
-         &quot;qualifier&quot; =&gt; &quot;t&quot;</code></pre>
+<pre><code>category :some, qualifier: &quot;t&quot;</code></pre>
 
 <p>Or if you&#8217;d like more to match:</p>
 
-<pre><code>category &quot;some&quot;,
+<pre><code>category :some,
          qualifiers: [&quot;t&quot;, &quot;title&quot;, &quot;titulo&quot;]</code></pre>
 
 <p>(This matches &#8220;t&#8221;, &#8220;title&#8221;, and also the italian &#8220;titulo&#8221;)</p>
@@ -1240,17 +1243,17 @@ category &quot;that&quot;, similarity: Similarity:&quot;DoubleMetaphone&quot;.ne
 
 <p>This means that:</p>
 
-<pre><code>category &quot;some&quot;,  &quot;qualifier&quot; =&gt; &quot;t&quot;
-category &quot;other&quot;, &quot;qualifier&quot; =&gt; &quot;t&quot;</code></pre>
+<pre><code>category :some,  qualifier: &quot;t&quot;
+category :other, qualifier: &quot;t&quot;</code></pre>
 
-<p>Picky will assume that if you enter &#8220;t&#8221;bla&#8221;&#8220;, you want to search in the &#8220;other&#8221; category.</p>
+<p>Picky will assume that if you enter <code>t:bla</code>, you want to search in the <code>other</code> category.</p>
 
 <p>Searching in multiple categories can also be done. If you have:</p>
 
-<pre><code>category &quot;some&quot;,  &quot;qualifier&quot; =&gt; &quot;s&quot;
-category &quot;other&quot;, &quot;qualifier&quot; =&gt; &quot;o&quot;</code></pre>
+<pre><code>category :some,  :qualifier =&gt; &#39;s&#39;
+category :other, :qualifier =&gt; &#39;o&#39;</code></pre>
 
-<p>Then searching with <code>s,o&quot;bla&quot;</code> will search for <code>bla</code> in both <code>&quot;some&quot;</code> and <code>&quot;other&quot;</code>. Neat, eh?</p>
+<p>Then searching with <code>s,o:bla</code> will search for <code>bla</code> in both <code>:some</code> and <code>:other</code>. Neat, eh?</p>
 
 <h3 id='indexes-categories-from'>Option from</h3>
 
@@ -1258,12 +1261,12 @@ category &quot;other&quot;, &quot;qualifier&quot; =&gt; &quot;o&quot;</code></pr
 
 <p>Sometimes though, the model has not the right names. Say, you have an italian book model, <code>Libro</code>. But you still want to use english category names.</p>
 
-<pre><code>Index.new &quot;books&quot; do
+<pre><code>Index.new :books do
   source { Libro.order(&#39;autore DESC&#39;) }
 
-  category &quot;title&quot;,  &quot;from&quot; =&gt; &quot;titulo&quot;
-  category &quot;author&quot;, &quot;from&quot; =&gt; &quot;autore&quot;
-  category &quot;isbn&quot;
+  category :title,  :from =&gt; :titulo
+  category :author, :from =&gt; :autore
+  category :isbn
 end</code></pre>
 
 <h3 id='indexes-categories-keyformat'>Option key_format</h3>
@@ -1273,8 +1276,8 @@ end</code></pre>
 <p>But if you need to, use as with the index.</p>
 
 <pre><code>Index.new &quot;books&quot; do
-  category &quot;title&quot;,
-           &quot;key_format&quot; =&gt; &quot;to_sym&quot;
+  category :title,
+           :key_format =&gt; :to_s
 end</code></pre>
 
 <h3 id='indexes-categories-source'>Option source</h3>
@@ -1283,12 +1286,12 @@ end</code></pre>
 
 <p>But if you need to, use as with the index.</p>
 
-<pre><code>Index.new &quot;books&quot; do
-  category &quot;title&quot;,
+<pre><code>Index.new :books do
+  category :title,
            source: some_source
 end</code></pre>
 
-<h3 id='indexes-categories-searching'>Searching</h3>
+<h3 id='indexes-categories-searching'>User Search Options</h3>
 
 <p>Users can use some special features when searching. They are:</p>
 
@@ -1299,47 +1302,49 @@ end</code></pre>
 
 <li>Similarity: <code>something~</code> (The tilde makes this word eligible for similarity search)</li>
 
-<li>Categorized: <code>title&quot;something&quot;</code> (Picky will only search in the category designated as title, in each index of the search)</li>
+<li>Categorized: <code>title:something</code> (Picky will only search in the category designated as title, in each index of the search)</li>
 
-<li>Multi-categorized: <code>title,author&quot;something&quot;</code> (Picky will search in title <em>and</em> author categories, in each index of the search)</li>
+<li>Multi-categorized: <code>title,author:something</code> (Picky will search in title <em>and</em> author categories, in each index of the search)</li>
+
+<li>Range: <code>year:1999-2012</code> (Picky will search all values in <code>Range.new(1999..2012)</code>)</li>
 </ul>
 
-<p>These options can be combined (e.g. <code>title,author:&quot;funky~&quot;</code>): This will try to find similar words to funky (like &#8220;fonky&#8221;), but no partials of them (like &#8220;fonk&#8221;), in both title and author.</p>
+<p>These options can be combined (e.g. <code>title,author:funky~&quot;</code>): This will try to find similar words to funky (like &#8220;fonky&#8221;), but no partials of them (like &#8220;fonk&#8221;), in both title and author.</p>
 
-<p>Non-partial will win over partial, if you use both, as in <code>&quot;test*&quot;</code>.</p>
+<p>Non-partial will win over partial, if you use both, as in <code>test*&quot;</code>.</p>
 
-<p>Also note that these options need to make it through the <a href='#tokenizing'>tokenizing</a>, so don&#8217;t remove any of <code>*&quot;:,</code>.</p>
+<p>Also note that these options need to make it through the <a href='#tokenizing'>tokenizing</a>, so don&#8217;t remove any of <code>*&quot;:,-</code>.</p>
 
 <h3 id='indexes-keyformat'>Key Format (Format of the indexed Ids)</h3>
 
 <p>By default, the indexed data points to keys that are integers, or differently said, are formatted using <code>to_i</code>.</p>
 
-<p>If you are indexing keys that are strings, use <code>to_sym</code> – a good example are MongoDB BSON keys, or UUID keys.</p>
+<p>If you are indexing keys that are strings, use <code>to_s</code> – a good example are MongoDB BSON keys, or UUID keys.</p>
 
 <p>The <code>key_format</code> method lets you define the format:</p>
 
-<pre><code>Index.new &quot;books&quot; do
-  key_format &quot;to_sym&quot;
+<pre><code>Index.new :books do
+  key_format :to_s
 end</code></pre>
 
-<p>The <code>Picky:&quot;Sources&quot;</code> already set this correctly. However, if you use an <code>#each</code> source that supplies Picky with symbol ids, you should tell it what format the keys are in, eg. <code>key_format &quot;to_sym&quot;</code>.</p>
+<p>The <code>Picky::Sources</code> already set this correctly. However, if you use an <code>#each</code> source that supplies Picky with symbol ids, you should tell it what format the keys are in, eg. <code>key_format :to_s</code>.</p>
 
 <h3 id='indexes-results'>Identifying in Results</h3>
 
-<p>By default, an index is identified by its <em>name</em> in the results. This index is identified by <code>&quot;books&quot;</code>:</p>
+<p>By default, an index is identified by its <em>name</em> in the results. This index is identified by <code>:books</code>:</p>
 
-<pre><code>Index.new &quot;books&quot; do
+<pre><code>Index.new :books do
   # ...
 end</code></pre>
 
-<p>This index is identified by <code>&quot;media&quot;</code> in the results:</p>
+<p>This index is identified by <code>media</code> in the results:</p>
 
-<pre><code>Index.new &quot;books&quot; do
+<pre><code>Index.new :books do
   # ...
-  result_identifier &quot;media&quot;
+  result_identifier &#39;media&#39;
 end</code></pre>
 
-<p>You still refer to it as <code>&quot;books&quot;</code> in e.g. Rake tasks, <code>Picky:&quot;Indexes&quot;[&quot;books&quot;].reload</code>. It&#8217;s just for the results.</p>
+<p>You still refer to it as <code>:books</code> in e.g. Rake tasks, <code>Picky::Indexes[:books].reload</code>. It&#8217;s just for the results.</p>
     <h3 id='indexes-indexing'>Indexing</h3>
 
 <p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_indexing.html.md'>edit</a></p>
