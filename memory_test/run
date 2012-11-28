@@ -1,11 +1,34 @@
-PICKY_VERSION=4.7.0 bundle exec ruby run.rb
-PICKY_VERSION=4.6.6 bundle exec ruby run.rb
-PICKY_VERSION=4.6.0 bundle exec ruby run.rb
-PICKY_VERSION=4.5.0 bundle exec ruby run.rb
-PICKY_VERSION=4.4.2 bundle exec ruby run.rb
-PICKY_VERSION=4.4.0 bundle exec ruby run.rb
-PICKY_VERSION=4.3.0 bundle exec ruby run.rb
-PICKY_VERSION=4.2.0 bundle exec ruby run.rb
-PICKY_VERSION=4.1.0 bundle exec ruby run.rb
-PICKY_VERSION=4.0.0 bundle exec ruby run.rb
-PICKY_VERSION=3.6   bundle exec ruby run.rb
+INDEX_NAME=memory                      bundle exec ruby run.rb
+INDEX_NAME=file                        bundle exec ruby run.rb
+
+# INDEX_NAME=memory PICKY_VERSION=4.11.0 bundle exec ruby run.rb
+# INDEX_NAME=file   PICKY_VERSION=4.11.0 bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.10.0 bundle exec ruby run.rb
+# INDEX_NAME=file   PICKY_VERSION=4.10.0 bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.9.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.8.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.7.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.6.6  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.6.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.5.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.4.2  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.4.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.3.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.2.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.1.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=4.0.0  bundle exec ruby run.rb
+# 
+# INDEX_NAME=memory PICKY_VERSION=3.6    bundle exec ruby run.rb

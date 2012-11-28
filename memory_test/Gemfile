@@ -1,2 +1,3 @@
 gem 'picky', ENV['PICKY_VERSION']
 gem 'yajl-ruby', :require => 'yajl'
+gem 'procrastinate'
