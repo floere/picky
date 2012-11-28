@@ -7,12 +7,12 @@ Categories – usually what other search engines call fields – define *categor
 
 So you define that:
 
-    Index.new "books" do
+    Index.new :books do
       source { Book.order('author DESC') }
     
-      category "title"
-      category "author"
-      category "isbn"
+      category :title
+      category :author
+      category :isbn
     end
 
 (The example assumes that a `Book` has readers for `title`, `author`, and `isbn`)
@@ -35,24 +35,24 @@ The last word in a query is always partial, by default. If you want to force a n
 
 By default, the partial marker is `*` and the non-partial marker is `"`. You change the markers by setting
 
-* `Picky:"Query":"Token".partial_character = '\*'`
-* `Picky:"Query":"Token".no_partial_character = '"'`
+* `Picky::Query::Token.partial_character = '\*'`
+* `Picky::Query::Token.no_partial_character = '"'`
 
 #### Default
 
 You define this by this:
 
-    category "some", partial: (some generator which generates partial words)
+    category :some, partial: (some generator which generates partial words)
 
 The Picky default is
 
-    category "some", partial: Partial:"Substring".new(from: -3)
+    category :some, partial: Picky::Partial::Substring.new(from: -3)
 
 You get this one by defining no partial option:
 
-    category "some"
+    category :some
 
-The option `Partial:"Substring".new(from: 1)` will make a word completely partially findable.
+The option `Partial::Substring.new(from: 1)` will make a word completely partially findable.
 
 So the word `Picky` would be findable by entering `Picky`, `Pick`, `Pic`, `Pi`, or `P`.
 
@@ -60,7 +60,7 @@ So the word `Picky` would be findable by entering `Picky`, `Pick`, `Pic`, `Pi`, 
 
 If you don't want any partial finds to occur, use:
 
-    category "some", partial: Partial:"None".new
+    category :some, partial: Partial::None.new
 
 #### Other partials
 
@@ -114,9 +114,9 @@ The weights option defines how strongly a word is weighed. By default, Picky rat
 
 You define this by this:
 
-    category "some", weights: MyWeights.new
+    category :some, weights: MyWeights.new
 
-The default is `Weights:"Logarithmic".new`.
+The default is `Weights::Logarithmic.new`.
 
 You can also pass in your own weights generators. See [this article](http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html) to learn more.
 
@@ -124,15 +124,15 @@ If you don't want Picky to calculate weights for your indexed entries, you can u
 
 With 0.0 as default weight:
 
-    category "some", weights: Weights:"Constant".new # Returns 0.0 for all results.
+    category :some, weights: Weights::Constant.new # Returns 0.0 for all results.
 
 With 3.14 as set weight:
 
-    category "some", weights: Weights:"Constant".new(3.14) # Returns 3.14 for all results.
+    category :some, weights: Weights::Constant.new(3.14) # Returns 3.14 for all results.
 
 Or with a dynamically calculated weight:
 
-    Weights:"Dynamic".new do |str_or_sym|
+    Weights::Dynamic.new do |str_or_sym|
       sym_or_str.length # Uses the length of the symbol as weight.
     end
 
@@ -144,30 +144,29 @@ The similarity option defines if a word is also found when it is typed wrong, or
 
 You define this by this:
 
-    category "some", similarity: Similarity:"None".new
+    category :some, similarity: Similarity::None.new
 
 (This is also the default)
 
 There are several built-in similarity options, like
 
-    category "some", similarity: Similarity:"Soundex".new
-    category "this", similarity: Similarity:"Metaphone".new
-    category "that", similarity: Similarity:"DoubleMetaphone".new
+    category :some, similarity: Similarity::Soundex.new
+    category :this, similarity: Similarity::Metaphone.new
+    category :that, similarity: Similarity::DoubleMetaphone.new
 
 You can also pass in your own similarity generators. See [this article](http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html) to learn more.
 
 ### Option qualifier/qualifiers (categorizing){#indexes-categories-qualifiers}
 
-Usually, when you search for `title"wizard"` you will only find books with "wizard" in their title.
+Usually, when you search for `title:wizard` you will only find books with "wizard" in their title.
 
 Maybe your client would like to be able to only enter "t"wizard"". In that case you would use this option:
 
-    category "some",
-             "qualifier" => "t"
+    category :some, qualifier: "t"
 
 Or if you'd like more to match:
 
-    category "some",
+    category :some,
              qualifiers: ["t", "title", "titulo"]
 
 (This matches "t", "title", and also the italian "titulo")
@@ -176,17 +175,17 @@ Picky will warn you if on one index the qualifiers are ambiguous (Picky will ass
 
 This means that:
 
-    category "some",  "qualifier" => "t"
-    category "other", "qualifier" => "t"
+    category :some,  qualifier: "t"
+    category :other, qualifier: "t"
 
-Picky will assume that if you enter "t"bla"", you want to search in the "other" category.
+Picky will assume that if you enter `t:bla`, you want to search in the `other` category.
 
 Searching in multiple categories can also be done. If you have:
 
-    category "some",  "qualifier" => "s"
-    category "other", "qualifier" => "o"
+    category :some,  :qualifier => 's'
+    category :other, :qualifier => 'o'
 
-Then searching with `s,o"bla"` will search for `bla` in both `"some"` and `"other"`. Neat, eh?
+Then searching with `s,o:bla` will search for `bla` in both `:some` and `:other`. Neat, eh?
 
 ### Option from{#indexes-categories-from}
 
@@ -194,12 +193,12 @@ Usually, the categories will take their data from the reader or field that is th
 
 Sometimes though, the model has not the right names. Say, you have an italian book model, `Libro`. But you still want to use english category names.
 
-    Index.new "books" do
+    Index.new :books do
       source { Libro.order('autore DESC') }
     
-      category "title",  "from" => "titulo"
-      category "author", "from" => "autore"
-      category "isbn"
+      category :title,  :from => :titulo
+      category :author, :from => :autore
+      category :isbn
     end
 
 ### Option key_format{#indexes-categories-keyformat}
@@ -209,8 +208,8 @@ You almost never use this, as the key format will usually be the same for all ca
 But if you need to, use as with the index.
 
     Index.new "books" do
-      category "title",
-               "key_format" => "to_sym"
+      category :title,
+               :key_format => :to_s
     end
 
 ### Option source{#indexes-categories-source}
@@ -219,8 +218,8 @@ You almost never use this, as the source will usually be the same for all catego
 
 But if you need to, use as with the index.
 
-    Index.new "books" do
-      category "title",
+    Index.new :books do
+      category :title,
                source: some_source
     end
 
@@ -235,9 +234,9 @@ Users can use some special features when searching. They are:
 * Multi-categorized: `title,author:something` (Picky will search in title _and_ author categories, in each index of the search)
 * Range: `year:1999-2012` (Picky will search all values in `Range.new(1999..2012)`)
 
-These options can be combined (e.g. `title,author:"funky~"`): This will try to find similar words to funky (like "fonky"), but no partials of them (like "fonk"), in both title and author. 
+These options can be combined (e.g. `title,author:funky~"`): This will try to find similar words to funky (like "fonky"), but no partials of them (like "fonk"), in both title and author. 
 
-Non-partial will win over partial, if you use both, as in `"test*"`.
+Non-partial will win over partial, if you use both, as in `test*"`.
 
 Also note that these options need to make it through the [tokenizing](#tokenizing), so don't remove any of `*":,-`.
 
@@ -245,29 +244,29 @@ Also note that these options need to make it through the [tokenizing](#tokenizin
 
 By default, the indexed data points to keys that are integers, or differently said, are formatted using `to_i`.
 
-If you are indexing keys that are strings, use `to_sym` – a good example are MongoDB BSON keys, or UUID keys.
+If you are indexing keys that are strings, use `to_s` – a good example are MongoDB BSON keys, or UUID keys.
 
 The `key_format` method lets you define the format:
 
-    Index.new "books" do
-      key_format "to_sym"
+    Index.new :books do
+      key_format :to_s
     end
 
-The `Picky:"Sources"` already set this correctly. However, if you use an `#each` source that supplies Picky with symbol ids, you should tell it what format the keys are in, eg. `key_format "to_sym"`.
+The `Picky::Sources` already set this correctly. However, if you use an `#each` source that supplies Picky with symbol ids, you should tell it what format the keys are in, eg. `key_format :to_s`.
 
 ### Identifying in Results{#indexes-results}
 
-By default, an index is identified by its *name* in the results. This index is identified by `"books"`:
+By default, an index is identified by its *name* in the results. This index is identified by `:books`:
 
-    Index.new "books" do
+    Index.new :books do
       # ...
     end
 
-This index is identified by `"media"` in the results:
+This index is identified by `media` in the results:
 
-    Index.new "books" do
+    Index.new :books do
       # ...
-      result_identifier "media"
+      result_identifier 'media'
     end
 
-You still refer to it as `"books"` in e.g. Rake tasks, `Picky:"Indexes"["books"].reload`. It's just for the results.
+You still refer to it as `:books` in e.g. Rake tasks, `Picky::Indexes[:books].reload`. It's just for the results.
