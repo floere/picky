@@ -1306,7 +1306,7 @@ end</code></pre>
 
 <li>Multi-categorized: <code>title,author:something</code> (Picky will search in title <em>and</em> author categories, in each index of the search)</li>
 
-<li>Range: <code>year:1999-2012</code> (Picky will search all values in <code>Range.new(1999..2012)</code>)</li>
+<li>Range: <code>year:1999-2012</code> (Picky will search all values in a Ruby <code>Range</code>: <code>(1999..2012)</code>)</li>
 </ul>
 
 <p>These options can be combined (e.g. <code>title,author:funky~&quot;</code>): This will try to find similar words to funky (like &#8220;fonky&#8221;), but no partials of them (like &#8220;fonk&#8221;), in both title and author.</p>
