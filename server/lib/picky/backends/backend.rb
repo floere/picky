@@ -9,6 +9,8 @@ module Picky
       # This is the default behaviour and should be overridden
       # for different backends.
       #
+      # TODO Push down.
+      #
       
       # Returns an object that on #initial, #load returns
       # an object that responds to:
@@ -21,9 +23,9 @@ module Picky
       # an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
-      def create_weights bundle
-        json bundle.index_path(:weights)
-      end
+      # def create_weights bundle
+      #   json bundle.index_path(:weights)
+      # end
       # # Returns an object that on #initial, #load returns
       # # an object that responds to:
       # #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)

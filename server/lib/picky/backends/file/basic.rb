@@ -27,7 +27,7 @@ module Picky
           # This is the mapping file with the in-memory hash for the
           # file position/offset mappings.
           #
-          @mapping_file = Memory::JSON.new "#{cache_path}.file_mapping.#{extension}"
+          @mapping_file = Memory::JSON.new "#{cache_path}.file_mapping"
 
           @empty   = options[:empty]
           @initial = options[:initial]

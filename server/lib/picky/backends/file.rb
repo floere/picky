@@ -9,10 +9,11 @@ module Picky
     #   ...[1,2,3,21,7,4,13,15]...
     #
     class File < Backend
-
-      # Returns an object that on #initial, #load returns an object that responds to:
-      #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
-      #
+      
+      def create_weights bundle
+        Memory::JSON.new bundle.index_path(:weights)
+      end
+      
       def create_similarity bundle
         json bundle.index_path(:similarity)
       end

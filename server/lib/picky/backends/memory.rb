@@ -4,10 +4,10 @@ module Picky
 
     class Memory < Backend
       
-      # Returns an object that on #initial, #load returns
-      # an object that responds to:
-      #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
-      #
+      def create_weights bundle
+        JSON.new bundle.index_path(:weights)
+      end
+      
       def create_similarity bundle
         Marshal.new bundle.index_path(:similarity)
       end
