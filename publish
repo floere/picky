@@ -15,7 +15,7 @@ git checkout master -- web/build     # checkout just the web/build folder from m
 cp -r web/build/* .                  # TODO Make elegant
 git add .                            # commit the changes
 git commit -m "Picky website update" # commit the changes
-git push -f origin gh-pages             # 
+git push -f origin gh-pages          # 
 git checkout master                  # go back to the master branch
 
 # New picky page.
@@ -23,6 +23,7 @@ git checkout master                  # go back to the master branch
 cd ../pickyrb.com
 cp -r ../picky/web/build/* .
 git checkout master
+echo 'pickyrb.com' > CNAME           # Add CNAME file. 
 git add .
 git commit -m "Picky website update"
 git push origin master
