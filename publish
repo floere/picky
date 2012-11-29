@@ -22,8 +22,8 @@ git checkout master                  # go back to the master branch
 #
 cd ../pickyrb.com
 cp -r ../picky/web/build/* .
-git checkout gh-pages                # switch to gh-pages branch
-git add .                            # commit the changes
-git commit -m "Picky website update" # commit the changes
-git push origin gh-pages             #
+git checkout master
+git add .
+git commit -m "Picky website update"
+git push origin master
 cd ../picky
