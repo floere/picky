@@ -49,6 +49,8 @@ module Picky
         #
         # Yields an id string and a token.
         #
+        # TODO Think about the comma - what if you have commas in the id?
+        #
         def retrieve
           id    = nil
           token = nil

@@ -4,8 +4,6 @@ require 'spec_helper'
 
 describe 'custom delimiters' do
   
-  # TODO Add range query delimiter.
-  #
   after(:each) do
     Picky::Query::Token.partial_character = '\*'
     Picky::Query::Token.no_partial_character = '"'
