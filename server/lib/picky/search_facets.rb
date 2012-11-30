@@ -8,12 +8,12 @@ module Picky
     #   category: The category whose facets to return.
     # 
     # Options
-    #   counts: Whether you want counts (returns a Hash) or not (returns an Array).
-    #   at_least: A minimum count a facet needs to have (inclusive). 
+    #   counts: Whether you want counts (returns a Hash) or not (returns an Array). (Default true)
+    #   at_least: A minimum count a facet needs to have (inclusive). (Default 1)
     #   filter: A query to filter the facets with.
     #
     # Usage:
-    #   search.facets :name, filter: 'surname:peter', more_than: 0
+    #   search.facets :name, filter: 'surname:peter', at_least: 2
     #
     def facets category_identifier, options = {}
       # TODO Make it work. How should it work with multiple indexes?
