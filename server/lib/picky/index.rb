@@ -154,7 +154,7 @@ module Picky
     # #
     # def ignore *qualifiers
     #   @ignored_categories ||= []
-    #   @ignored_categories += qualifiers.map { |qualifier| @mapper.map qualifier }.compact
+    #   @ignored_categories += qualifiers.map { |qualifier| @qualifier_mapper.map qualifier }.compact
     #   @ignored_categories.uniq!
     # end
 
@@ -209,7 +209,7 @@ module Picky
     #
     def only *qualifiers
       raise "Sorry, Picky::Search#only has been removed in version."
-      # @mapper.restrict_to *qualifiers
+      # @qualifier_mapper.restrict_to *qualifiers
     end
     
     # The directory used by this index.

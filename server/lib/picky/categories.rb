@@ -37,14 +37,20 @@ module Picky
     #   To add the qualifiers to a search, you call this
     #   method.
     #
-    def mapper
-      @mapper ||= QualifierMapper.new self
+    def qualifier_mapper
+      @qualifier_mapper ||= QualifierMapper.new self
+    end
+    
+    # Resets the qualifier mapper used.
+    #
+    def reset_qualifier_mapper
+      @qualifier_mapper = nil
     end
 
     # Add the given category to the list of categories.
     #
     def << category
-      @mapper = nil # TODO Move. (Resets category mapping)
+      reset_qualifier_mapper # TODO Have an add method on QualifierMapper?
       categories << category
       category_hash[category.name] = category
     end

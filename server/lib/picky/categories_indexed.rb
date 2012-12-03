@@ -62,7 +62,7 @@ module Picky
     # TODO Called too often?
     #
     def possible_categories token
-      token.predefined_categories(mapper) || categories
+      token.predefined_categories(qualifier_mapper) || categories
     end
 
   end
