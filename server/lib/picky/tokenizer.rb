@@ -105,17 +105,6 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         RegexpWrapper.new thing
       end
     end
-    class RegexpWrapper
-      def initialize regexp
-        @regexp = regexp
-      end
-      def split text
-        text.split @regexp
-      end
-      def source
-        @regexp.source
-      end
-    end
     def split text
       @splits_text_on.split text
     end
@@ -124,8 +113,8 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     # We only allow arrays.
     #
-    # TODO 5.0 Rename to normalizes(config)
-    # TODO 5.0 Rename to normalize(text)
+    # TODO 5.0 Rename to normalizes(config) or normalizes_words
+    # TODO 5.0 Rename to normalize(text) or normalize_words
     #
     def normalizes_words regexp_replaces
       raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
