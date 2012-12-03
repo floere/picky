@@ -28,7 +28,7 @@ class BookSearch < Sinatra::Application
     [:author, :year]  => +2
   }
 
-  routes = {
+  {
     books: Picky::Search.new(BooksIndex, ISBNIndex) {
       boost weights
     },
@@ -67,8 +67,7 @@ class BookSearch < Sinatra::Application
     all: Picky::Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
       boost weights
     }
-  }
-  routes.each do |(path, things)|
+  }.each do |(path, things)|
     get %r{\A/#{path}\z} do
       things.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
     end
