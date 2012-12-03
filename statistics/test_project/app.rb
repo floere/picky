@@ -14,7 +14,7 @@ require File.expand_path '../logging', __FILE__
 # inside a web app. However, if you really need performance
 # and easy caching, this is not recommended.
 #
-class BookSearch < Sinatra::Application
+class StatisticsBookSearch < Sinatra::Application
 
   # We do this so we don't have to type
   # Picky:: in front of everything.

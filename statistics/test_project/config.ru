@@ -13,4 +13,4 @@ Picky::Indexes.load
 # Rack::Harakiri.after = 1000
 # use Rack::Harakiri
 
-run BookSearch
+run StatisticsBookSearch
