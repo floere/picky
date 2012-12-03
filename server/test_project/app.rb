@@ -28,46 +28,50 @@ class BookSearch < Sinatra::Application
     [:author, :year]  => +2
   }
 
-  {
-    books: Picky::Search.new(BooksIndex, ISBNIndex) {
-      boost weights
-    },
-    books_ignoring: Picky::Search.new(BooksIndex, ISBNIndex) {
-      boost weights
-      ignore_unassigned_tokens true
-    },
-    book_each: Picky::Search.new(BookEachIndex) {
-      boost weights
-      # ignore :title
-    },
-    redis: Picky::Search.new(RedisIndex) {
-      boost weights
-    },
-    memory_changing: Picky::Search.new(MemoryChangingIndex),
-    redis_changing: Picky::Search.new(RedisChangingIndex),
-    csv: Picky::Search.new(CSVTestIndex) {
-      boost weights
-    },
-    isbn: Picky::Search.new(ISBNIndex),
-    sym: Picky::Search.new(SymKeysIndex),
-    geo: Picky::Search.new(RealGeoIndex),
-    simple_geo: Picky::Search.new(MgeoIndex),
-    iphone: Picky::Search.new(IphoneLocations),
-    indexing: Picky::Search.new(IndexingIndex),
-    file: Picky::Search.new(FileIndex),
-    japanese: Picky::Search.new(JapaneseIndex) {
-      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
-                stopwords:          /\b(and|the|of|it|in|for)\b/i,
-                splits_text_on:     /[\s\/\-\&]+/
-    },
-    nonstring: Picky::Search.new(NonstringDataIndex),
-    partial: Picky::Search.new(PartialIndex),
-    # sqlite: Picky::Search.new(SQLiteIndex), # TODO Fix, reinstate.
-    commas: Picky::Search.new(CommaIdsIndex),
-    all: Picky::Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
-      boost weights
+  def self.routes
+    {
+      books: Picky::Search.new(BooksIndex, ISBNIndex) {
+        boost weights
+      },
+      books_ignoring: Picky::Search.new(BooksIndex, ISBNIndex) {
+        boost weights
+        ignore_unassigned_tokens true
+      },
+      book_each: Picky::Search.new(BookEachIndex) {
+        boost weights
+        # ignore :title
+      },
+      redis: Picky::Search.new(RedisIndex) {
+        boost weights
+      },
+      memory_changing: Picky::Search.new(MemoryChangingIndex),
+      redis_changing: Picky::Search.new(RedisChangingIndex),
+      csv: Picky::Search.new(CSVTestIndex) {
+        boost weights
+      },
+      isbn: Picky::Search.new(ISBNIndex),
+      sym: Picky::Search.new(SymKeysIndex),
+      geo: Picky::Search.new(RealGeoIndex),
+      simple_geo: Picky::Search.new(MgeoIndex),
+      iphone: Picky::Search.new(IphoneLocations),
+      indexing: Picky::Search.new(IndexingIndex),
+      file: Picky::Search.new(FileIndex),
+      japanese: Picky::Search.new(JapaneseIndex) {
+        searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
+                  stopwords:          /\b(and|the|of|it|in|for)\b/i,
+                  splits_text_on:     /[\s\/\-\&]+/
+      },
+      nonstring: Picky::Search.new(NonstringDataIndex),
+      partial: Picky::Search.new(PartialIndex),
+      # sqlite: Picky::Search.new(SQLiteIndex), # TODO Fix, reinstate.
+      commas: Picky::Search.new(CommaIdsIndex),
+      all: Picky::Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
+        boost weights
+      }
     }
-  }.each do |(path, things)|
+  end
+  
+  routes.each do |(path, things)|
     get %r{\A/#{path}\z} do
       things.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
     end
