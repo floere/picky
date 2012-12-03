@@ -50,11 +50,3 @@ end
 get '/search/live' do
   BooksSearch.search_unparsed params[:query], :offset => params[:offset]
 end
-
-helpers do
-
-  def js path
-    "<script src='javascripts/#{path}.js' type='text/javascript'></script>"
-  end
-
-end

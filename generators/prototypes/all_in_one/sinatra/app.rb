@@ -6,24 +6,16 @@ require 'haml'
 require 'csv'
 require 'picky'
 require 'picky-client'
-
-require File.expand_path '../book',    __FILE__
-require File.expand_path '../logging', __FILE__
+require_relative 'book'
+require_relative 'logging'
+require_relative 'books_index'
+require_relative 'books_search'
 
 # This app shows how to integrate the Picky server directly
 # inside a web app. However, if you really need performance
 # and easy caching, this is not recommended.
 #
 class BookSearch < Sinatra::Application
-
-  # Server.
-  #
-
-  require_relative 'books_index'
-  require_relative 'books_search'
-
-  # Client.
-  #
 
   set :static,        true
   set :public_folder, File.dirname(__FILE__)
@@ -68,14 +60,6 @@ class BookSearch < Sinatra::Application
   get '/search/live' do
     results = BooksSearch.search params[:query], params[:ids] || 20, params[:offset] || 0
     results.to_json
-  end
-
-  helpers do
-
-    def js path
-      "<script src='javascripts/#{path}.js' type='text/javascript'></script>"
-    end
-
   end
 
 end

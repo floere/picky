@@ -3,12 +3,11 @@
 require 'sinatra/base'
 require 'csv'
 require 'picky'
-require File.expand_path '../logging', __FILE__
+require_relative 'logging'
+require_relative 'books_index'
+require_relative 'books_search'
 
 class BookSearch < Sinatra::Application
-
-  require_relative 'books_index'
-  require_relative 'books_search'
 
   # Route /books to the books search and log when searching.
   #
