@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.12.2
+
+###### [Generators](https://github.com/floere/picky/tree/master/generators)
+
+- Extracted index/search into separate files, like most people seem to like it.
+
 ## 4.12.1
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
