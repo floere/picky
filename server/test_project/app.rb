@@ -18,27 +18,11 @@ require File.expand_path '../../lib/picky', __FILE__ # Use the current state of 
 require_relative 'models'
 require_relative 'indexes'
 require_relative 'logging'
+require_relative 'defaults'
 
 class BookSearch < Sinatra::Application
 
   include Picky
-
-  extend Picky::Sinatra
-
-  indexing substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
-           removes_characters:          /[^äöüa-zA-Z0-9\s\/\-\_\:\"\&\|]/i,
-           stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-           splits_text_on:              /[\s\/\-\_\:\"\&\/]/,
-           normalizes_words:            [[/\$(\w+)/i, '\1 dollars']],
-           rejects_token_if:            lambda { |token| token.blank? || token == 'Amistad' },
-           case_sensitive:              false
-
-  searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
-            removes_characters:          /[^ïôåñëäöüa-zA-Z0-9\s\/\-\_\,\&\.\"\~\*\:]/i,
-            stopwords:                   /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
-            splits_text_on:              /[\s\/\&\/]/,
-            case_sensitive:              true,
-            max_words:                   5
   
   def self.map url, things
     self.get %r{\A/#{url}\z} do
