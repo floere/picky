@@ -2,7 +2,7 @@
 #
 require_relative 'sinatra/index_actions'
 
-# TODO Remove for 5.0.
+# TODO Remove for 5.0 (or rename to Tokenizer.indexing, ...).
 #
 module Picky
 
