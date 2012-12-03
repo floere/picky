@@ -38,7 +38,7 @@ describe Picky::Backends::File do
     describe 'create_...' do
       [
         [:inverted,      Picky::Backends::File::JSON],
-        [:weights,       Picky::Backends::File::JSON],
+        [:weights,       Picky::Backends::Memory::JSON],
         [:similarity,    Picky::Backends::File::JSON],
         [:configuration, Picky::Backends::File::JSON]
       ].each do |type, kind|
