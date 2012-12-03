@@ -125,7 +125,7 @@ describe Picky::Bundle do
     end
   end
 
-  # TODO Add symbols.
+  # SYMBOLS
   #
   # context 'symbols' do
   #   describe 'combined' do
