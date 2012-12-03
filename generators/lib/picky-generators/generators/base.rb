@@ -132,7 +132,7 @@ module Picky
         exclaim "Next steps:"
         
         steps.each.with_index do |step, i|
-          exclaim "#{i}. #{step}"
+          exclaim "#{i+1}. #{step}"
         end
       end
       
