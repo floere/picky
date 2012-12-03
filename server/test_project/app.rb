@@ -15,20 +15,17 @@ require 'active_record'
 require 'csv'
 require File.expand_path '../../lib/picky', __FILE__ # Use the current state of Picky.
 
-require_relative 'models'
-require_relative 'indexes'
-require_relative 'logging'
-require_relative 'defaults'
+require_relative 'project'
 
 class BookSearch < Sinatra::Application
   
-  weights = {
-    [:author]         => +6,
-    [:title, :author] => +5,
-    [:author, :year]  => +2
-  }
-
   def self.routes
+    weights = {
+      [:author]         => +6,
+      [:title, :author] => +5,
+      [:author, :year]  => +2
+    }
+    
     {
       books: Picky::Search.new(BooksIndex, ISBNIndex) {
         boost weights
