@@ -1,3 +1,6 @@
+# encoding: utf-8
+#
+
 # Data source.
 #
 class Books
@@ -17,16 +20,16 @@ end
 
 # Define an index.
 #
-BooksIndex = Index.new :books do
+BooksIndex = Picky::Index.new :books do
   source { Books.new }
   indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
            stopwords:          /\b(and|the|of|it|in|for)\b/i,
            splits_text_on:     /[\s\/\-\_\:\"\&\.]/
   category :title,
-           similarity: Similarity::DoubleMetaphone.new(3),
-           partial: Partial::Substring.new(from: 1) # Default is from: -3.
-  category :author, partial: Partial::Substring.new(from: 1)
-  category :year, partial: Partial::None.new
+           similarity: Picky::Similarity::DoubleMetaphone.new(3),
+           partial: Picky::Partial::Substring.new(from: 1) # Default is from: -3.
+  category :author, partial: Picky::Partial::Substring.new(from: 1)
+  category :year, partial: Picky::Partial::None.new
 end
 
 # Index and load on USR1 signal.

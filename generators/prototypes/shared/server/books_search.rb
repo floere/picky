@@ -1,6 +1,9 @@
+# encoding: utf-8
+#
+
 # Define a search over the books index.
 #
-books = Picky::Search.new BooksIndex do
+BooksSearch = Picky::Search.new BooksIndex do
             # Normalizes special user input, Ä -> Ae, ñ -> n etc.
   searching substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
             # Picky needs control chars *"~:, to pass through.
