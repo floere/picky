@@ -47,7 +47,6 @@ describe Picky::CharacterSubstituters::Polish do
   describe "situations" do
     it_should_substitute 'Michał Prawda', 'Michal Prawda'
     it_should_substitute 'Brzęczyszczykiewicz', 'Brzeczyszczykiewicz'
-    # it_should_substitute 'LÜCHINGER', 'LUECHINGER'
   end
 
   describe "diacritics" do
