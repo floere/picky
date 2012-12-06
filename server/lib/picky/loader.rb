@@ -268,6 +268,7 @@ module Picky
         load_relative 'tokenizer/regexp_wrapper'
         load_relative 'tokenizer'
         # load_relative 'rack/harakiri' # Needs to be explicitly loaded/required.
+        load_relative 'character_substituters/base'
         load_relative 'character_substituters/west_european'
         load_relative 'character_substituters/polish'
         load_relative 'splitters/automatic'

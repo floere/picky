@@ -10,11 +10,7 @@ module Picky
     # ä, ö, ü => ae, oe, ue.
     # (and more, see specs)
     #
-    class WestEuropean
-
-      def initialize
-        @chars = ActiveSupport::Multibyte.proxy_class
-      end
+    class WestEuropean < Base
 
       # Substitutes occurrences of certain characters
       # (like Umlauts) with ASCII representations of them.
@@ -43,10 +39,6 @@ module Picky
         trans.unpack('U*').select { |cp|
           cp < 0x0300 || cp > 0x035F
         }.pack 'U*'
-      end
-
-      def to_s
-        self.class.name
       end
 
     end
