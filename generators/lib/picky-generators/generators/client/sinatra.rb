@@ -26,7 +26,6 @@ module Picky
           [
             "cd #{name}",
             "bundle install",
-            "rake index",
             "unicorn -p 3000 # (optional) Or use your favorite web server.",
             "open http://localhost:3000/",
             "rake todo # (optional) Shows you where Picky needs input from you."
