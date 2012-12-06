@@ -1,4 +1,4 @@
-source :gemcutter
+source :rubygems
 
 # Gems required by the Picky client.
 #
@@ -10,4 +10,5 @@ gem 'haml'
 
 group :development do
   gem 'sinatra-reloader'
+  gem 'rake'
 end
