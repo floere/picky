@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.12.4
+
+###### [Generators](https://github.com/floere/picky/tree/master/generators)
+
+- Removed `rake index` from generated client (thanks @kschiess!).
+
 ## 4.12.3
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
