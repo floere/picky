@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.12.3
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Added `CharacterSubstituters::Polish` (thanks @prami!) – substitutes various Polish characters with their ascii counterparts.
+
 ## 4.12.2
 
 ###### [Generators](https://github.com/floere/picky/tree/master/generators)
