@@ -38,9 +38,11 @@ The variable pickyClient has the following functions:
 
 When creating the client itself, you have many more options, dewscribed here: 
 
-### Options
+### Javascript Options
 
 #### Search options
+
+Search options are about configuring the search itself.
 
 There are four different callbacks that you can use. The part after the `||` describes the default, which is an empty function.
 
@@ -64,6 +66,10 @@ This will cause the interface to search even if the input field is empty:
 
     var searchOnEmpty = config.searchOnEmpty || false;
 
+If you want to tell the server you need more than 0 live search results, use `liveResults`:
+
+    var liveResults = config.liveResults || 0;
+
 If the live results need to be rendered, set this to be true. Usually used when full results need to be rendered even for live searches (search as you type):
 
     var liveRendered = config.liveRendered || false;
@@ -78,11 +84,11 @@ You can completely exchange the backend used to make calls to the server – in 
 
 #### Text options
 
-If you want to, you can change the text that is displayed.
+With these options, you can change the text that is displayed in the interface.
 
 These options can be locale dependent.
 
-Qualifiers are used when you have a category that uses a different qualifier name than the category. That is, if you have a category in the index that is named differently from its qualifiers. Eg. `category :application, qualifiers: ['app', 'program']`. You'd then have to tellthe Picky interface to map the category correctly to a qualifier.
+Qualifiers are used when you have a category that uses a different qualifier name than the category. That is, if you have a category in the index that is named differently from its qualifiers. Eg. `category :application, qualifiers: ['app']`. You'd then have to tell the Picky interface to map the category correctly to a qualifier.
 
     qualifiers: {
       en:{

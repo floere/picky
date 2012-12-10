@@ -135,7 +135,7 @@ What a picky search returns.
 
 ### JavaScript{#index-javascript}
 
-We include a [JavaScript library](#javascript) to make writing snazzy interfaces easier.
+We include a [JavaScript library](#javascript) to make writing snazzy interfaces easier – see the [options](#javascript_options).
 
 ### Thanks{#index-thanks}
 
