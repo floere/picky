@@ -133,6 +133,10 @@ What a picky search returns.
 * [Sorting](#results-sorting)
 * [Identification](#indexes-results)
 
+### JavaScript{#index-javascript}
+
+We include a [JavaScript library](#javascript) to make writing snazzy interfaces easier.
+
 ### Thanks{#index-thanks}
 
 A bit of [thanks](#thanks)!
