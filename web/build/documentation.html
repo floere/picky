@@ -275,6 +275,10 @@
 <li><a href='#indexes-results'>Identification</a></li>
 </ul>
 
+<h3 id='index-javascript'>JavaScript</h3>
+
+<p>We include a <a href='#javascript'>JavaScript library</a> to make writing snazzy interfaces easier – see the <a href='#javascript_options'>options</a>.</p>
+
 <h3 id='index-thanks'>Thanks</h3>
 
 <p>A bit of <a href='#thanks'>thanks</a>!</p>
@@ -1828,6 +1832,203 @@ finder.facets(:name, filter: &#39;surname:hank*&#39;).should == {
 filter   = &#39;age_bracket:40&#39;
 
 some_cache[[category, filter]] ||= finder.facets(category, filter: filter)</code></pre>
+    <h2 id='javascript'>JavaScript</h2>
+
+<p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_javascript.html.md'>edit</a></p>
+
+<p>Picky offers a standard HTML interface that works well with its JavaScript. Render this into your HTML (needs the <code>picky-client</code> gem):</p>
+
+<pre><code>Picky::Helper.cached_interface</code></pre>
+
+<p>Adding a JS interface:</p>
+
+<pre><code>$(window).load(function() {
+  pickyClient = new PickyClient({
+    // A full query displays the rendered results.
+    //
+    full: &#39;/search/full&#39;,
+    
+    // More options...
+  
+  });
+});</code></pre>
+
+<p>See the options described and listed below.</p>
+
+<p>The variable pickyClient has the following functions:</p>
+
+<pre><code>// Params are params for the controller action. Full is either true or false.
+//
+pickyClient.insert(query, params, full);
+
+// Resends the last query.
+//
+pickyClient.resend;
+
+// If not given a query, will use query from the URL (needs history.js).
+//
+pickyClient.insertFromURL(overrideQuery);</code></pre>
+
+<p>When creating the client itself, you have many more options, dewscribed here:</p>
+
+<h3 id='javascript_options'>Javascript Options</h3>
+
+<h4 id='search_options'>Search options</h4>
+
+<p>Search options are about configuring the search itself.</p>
+
+<p>There are four different callbacks that you can use. The part after the <code>||</code> describes the default, which is an empty function.</p>
+
+<p>The <code>beforeInsert</code> is executed before a call to <code>pickyClient.beforeInsert</code>. Use this to sanitize queries coming from URLs:</p>
+
+<pre><code>var beforeInsertCallback = config.beforeInsert || function(query) { };</code></pre>
+
+<p>The <code>before</code> is executed before a call to the server. Use this to add any filters you might have from radio buttons or other interface elements:</p>
+
+<pre><code>var beforeCallback = config.before || function(query, params) { };</code></pre>
+
+<p>The <code>success</code> is executed just after a successful response. Use this to modify returned results before Picky renders them:</p>
+
+<pre><code>var successCallback = config.success || function(data, query) { };</code></pre>
+
+<p>The <code>after</code> callback is called just after Picky has finished rendering results – use it to make any changes to the interface (like update an advertisement or similar).</p>
+
+<pre><code>var afterCallback = config.after || function(data, query) { };</code></pre>
+
+<p>This will cause the interface to search even if the input field is empty:</p>
+
+<pre><code>var searchOnEmpty = config.searchOnEmpty || false;</code></pre>
+
+<p>If you want to tell the server you need more than 0 live search results, use <code>liveResults</code>:</p>
+
+<pre><code>var liveResults = config.liveResults || 0;</code></pre>
+
+<p>If the live results need to be rendered, set this to be true. Usually used when full results need to be rendered even for live searches (search as you type):</p>
+
+<pre><code>var liveRendered = config.liveRendered || false;</code></pre>
+
+<p>After each keystroke, Picky waits for a designated interval (default is 180ms) for the next keystroke. If no key is hit, it will send a &#8220;live&#8221; query to the search server. This option lets you change that interval time:</p>
+
+<pre><code>var liveSearchTimerInterval = config.liveSearchInterval || 180;</code></pre>
+
+<p>You can completely exchange the backend used to make calls to the server – in this case I trust you to read the JS code of Picky yourself:</p>
+
+<pre><code>var backends = config.backends;</code></pre>
+
+<h4 id='text_options'>Text options</h4>
+
+<p>With these options, you can change the text that is displayed in the interface.</p>
+
+<p>These options can be locale dependent.</p>
+
+<p>Qualifiers are used when you have a category that uses a different qualifier name than the category. That is, if you have a category in the index that is named differently from its qualifiers. Eg. <code>category :application, qualifiers: [&#39;app&#39;]</code>. You&#8217;d then have to tell the Picky interface to map the category correctly to a qualifier.</p>
+
+<pre><code>qualifiers: {
+  en:{
+    application: &#39;app&#39;
+  }
+},</code></pre>
+
+<p>Remember that you only need this if you do funky stuff. Keep to the defaults and you&#8217;ll be fine.</p>
+
+<p>Explanations are the small headings over allocations (grouped results). Picky just writes &#8220;with author soandso&#8221; – if you want a better explanation, use the explanations option:</p>
+
+<pre><code>explanations: {
+  en:{
+    title:     &#39;titled&#39;,
+    author:    &#39;written by&#39;,
+    year:      &#39;published in&#39;,
+    publisher: &#39;published by&#39;,
+    subjects:  &#39;with subjects&#39;
+  }
+}</code></pre>
+
+<p>Picky would now write &#8220;written by soandso&#8221;, making it much nicer to read.</p>
+
+<p>Choices describe the choices that are given to a user when Picky would like to know what the user was searching. This is done when Picky gets too many results in too many allocations. It is very unclear what the user was looking for.</p>
+
+<p>In this example:</p>
+
+<pre><code>choices: {
+  en:{
+    &#39;title&#39;: {
+      format: &quot;Called &lt;strong&gt;%1$s&lt;/strong&gt;&quot;,
+      filter: function(text) { return text.toUpperCase(); },
+      ignoreSingle: true
+    },
+    &#39;author&#39;: &#39;Written by %1$s&#39;,
+    &#39;subjects&#39;: &#39;Being about %1$s&#39;,
+    &#39;publisher&#39;: &#39;Published by %1$s&#39;,
+    &#39;author,title&#39;:    &#39;Called %1$s, written by %2$s&#39;,
+    &#39;title,author&#39;:    &#39;Called %2$s, written by %1$s&#39;,
+    &#39;title,subjects&#39;:  &#39;Called %1$s, about %2$s&#39;,
+    &#39;author,subjects&#39;: &#39;%1$s who wrote about %2$s&#39;
+  }
+},</code></pre>
+
+<p>Was the user just looking for a title? (Displayed as eg. &#8220;ULYSSES – because of the filter and format) Or was he looking for an author? (Displayed as &#8220;Written by Ulysses&#8221;)</p>
+
+<p>Multicategory combinations are possible. If the user searches for Ulysses Joyce, then Picky will most likely as if this is a title and an author: &#8220;Called Ulysses, written by Joyce&#8221;.</p>
+
+<p>This is a much nicer way to ask the user, don&#8217;t you think?</p>
+
+<p>The last option just describes which categories should not show ellipses <code>…</code> behind the text (eg. ) if the user searched for it in a partial way. Use this when the categories are not partially findable on the server.</p>
+
+<pre><code>nonPartial: [&#39;year&#39;, &#39;id&#39;]</code></pre>
+
+<p>When searching for &#8220;1977&#8221;, this will result in the text being &#8220;written in 1977&#8221; instead of &#8220;written in 1977…&#8221;, where the ellipses don&#8217;t make much sense.</p>
+
+<p>The last option describes how to group the choices in a text. Play with this to see the effects (I know, am tired ;) ).</p>
+
+<pre><code>groups: [&#39;title&#39;, &#39;author&#39;];</code></pre>
+
+<h4 id='modifying_the_interface_itself_selectors'>Modifying the interface itself: Selectors</h4>
+
+<p>There are quite a few selector options – you only need those if you heavily customise the interface. You tell Picky where to find the results div or the search form etc.</p>
+
+<p>The selector that contains the search input and the result:</p>
+
+<pre><code>config[&#39;enclosingSelector&#39;] || &#39;.picky&#39;;</code></pre>
+
+<p>The selector that describes the form the input field is in:</p>
+
+<pre><code>var formSelector = config[&#39;formSelector&#39;] || (enclosingSelector + &#39; form&#39;);</code></pre>
+
+<p>The <code>formSelector</code> (short <code>fs</code>) is used to find the input etc.:</p>
+
+<pre><code>config[&#39;input&#39;]   = $(config[&#39;inputSelector&#39;]   || (fs + &#39; input[type=search]&#39;));
+config[&#39;reset&#39;]   = $(config[&#39;resetSelector&#39;]   || (fs + &#39; div.reset&#39;));
+config[&#39;button&#39;]  = $(config[&#39;buttonSelector&#39;]  || (fs + &#39; input[type=button]&#39;));
+config[&#39;counter&#39;] = $(config[&#39;counterSelector&#39;] || (fs + &#39; div.status&#39;));</code></pre>
+
+<p>The <code>enclosingSelector</code> (short <code>es</code>) is used to find the results</p>
+
+<pre><code>config[&#39;results&#39;]      = $(config[&#39;resultsSelector&#39;]   || (es + &#39; div.results&#39;));
+config[&#39;noResults&#39;]    = $(config[&#39;noResultsSelector&#39;] || (es + &#39; div.no_results&#39;));
+config[&#39;moreSelector&#39;] =   config[&#39;moreSelector&#39;] ||
+  es + &#39; div.results div.addination:last&#39;;</code></pre>
+
+<p>The moreSelector refers to the clickable &#8220;more results&#8221; pagination/addination.</p>
+
+<p>The result allocations are selected on by these options:</p>
+
+<pre><code>config[&#39;allocations&#39;]         = $(config[&#39;allocationsSelector&#39;] ||
+  (es + &#39; .allocations&#39;));
+config[&#39;shownAllocations&#39;]    = config[&#39;allocations&#39;].find(&#39;.shown&#39;);
+config[&#39;showMoreAllocations&#39;] = config[&#39;allocations&#39;].find(&#39;.more&#39;);
+config[&#39;hiddenAllocations&#39;]   = config[&#39;allocations&#39;].find(&#39;.hidden&#39;);
+config[&#39;maxSuggestions&#39;]      = config[&#39;maxSuggestions&#39;] || 3;</code></pre>
+
+<p>Results rendering is controlled by:</p>
+
+<pre><code>config[&#39;results&#39;]        = $(config[&#39;resultsSelector&#39;] ||
+  (enclosingSelector + &#39; div.results&#39;));
+config[&#39;resultsDivider&#39;] = config[&#39;resultsDivider&#39;]    || &#39;&#39;;
+config[&#39;nonPartial&#39;]     = config[&#39;nonPartial&#39;]        || [];
+  // e.g. [&#39;category1&#39;, &#39;category2&#39;]
+config[&#39;wrapResults&#39;]    = config[&#39;wrapResults&#39;]       || &#39;&lt;ol&gt;&lt;/ol&gt;&#39;;</code></pre>
+
+<p>The option <code>wrapResults</code> refers to what the results are wrapped in, by default <code>&lt;ol&gt;&lt;/ol&gt;</code>.</p>
     <h3 id='thanks'>Thanks!</h3>
     
     <p class='edit'><a href='http://github.com/floere/picky/blob/master/web/source/documentation/_thanks.html.md'>edit</a></p>
