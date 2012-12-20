@@ -7,6 +7,8 @@ module Picky
     #   * index_name: An index that exists in the Picky server.
     #   * data: A hash in the form of { :id => 1234, :attr1 => 'attr1', :attr2 => 'attr2', ... }.
     #
+    # TODO This should be a PUT.
+    #
     def replace index_name, data
       send_off Net::HTTP::Post.new(self.path), index_name, data
     end
