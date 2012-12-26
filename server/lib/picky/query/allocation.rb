@@ -37,10 +37,10 @@ module Picky
       # ignored (ie. removed).
       #
       def calculate_score weights
-        @score ||= if @combinations.empty?                                                                                                     
+        @score ||= if @combinations.empty?
           0 # Optimization.
-        else                                                                                                                                   
-          @backend.weight(@combinations) + @combinations.boost_for(weights)                                                                                                   
+        else
+          @backend.weight(@combinations) + @combinations.boost_for(weights)
         end 
       end
 
