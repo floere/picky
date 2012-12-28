@@ -1,5 +1,17 @@
 ## Upcoming Version
 
+## 4.12.5
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Added experimental options `Search#only` and `Search#ignore`.
+  
+  Example:
+    people = Search.new(people_index) do
+      only [:first_name, :last_name],
+           [:last_name, :first_name]
+    end
+
 ## 4.12.4
 
 ###### [Generators](https://github.com/floere/picky/tree/master/generators)
