@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Query::Indexes do
 
   before(:each) do
-    Picky::Query::IndexesCheck.stub! :check_backends
+    Picky::Query::Indexes::Check.stub! :check_backends
   end
 
   3.times do |i|

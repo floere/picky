@@ -113,6 +113,12 @@ module Picky
       def to_json options = {}
         MultiJson.encode to_result, options
       end
+      
+      #
+      #
+      def to_qualifiers
+        @combinations.to_qualifiers
+      end
 
       #
       #

@@ -28,7 +28,7 @@ describe Picky::Query::Allocations do
         @allocation1.should_receive(:remove).never
         @allocation2.should_receive(:remove).never
 
-        @allocations.remove
+        @allocations.remove_categories
       end
     end
     context 'categories not empty' do
@@ -37,7 +37,7 @@ describe Picky::Query::Allocations do
         @allocation2.should_receive(:remove).once.with :some_category
         @allocation3.should_receive(:remove).once.with :some_category
 
-        @allocations.remove :some_category
+        @allocations.remove_categories :some_category
       end
     end
   end

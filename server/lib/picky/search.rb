@@ -23,9 +23,7 @@ module Picky
     attr_accessor :tokenizer,
                   :boosts
 
-    forward :ignore,
-            :only,
-            :remap_qualifiers,
+    forward :remap_qualifiers,
             :to => :indexes
 
     # Takes:
@@ -140,7 +138,40 @@ module Picky
     def boost boosts
       @boosts = extract_boosts boosts
     end
-
+    
+    # Ignore given categories and/or combinations of
+    # categories.
+    #
+    # Example:
+    #   search = Search.new(people) do
+    #     ignore :name,
+    #            :first_name
+    #            [:last_name, :street]
+    #   end
+    #
+    def ignore *allocations_and_categories
+      allocations_and_categories.each do |allocation_or_category|
+        if allocation_or_category.respond_to? :to_sym
+          indexes.ignore_categories allocation_or_category
+        else
+          indexes.ignore_allocations allocation_or_category
+        end
+      end
+    end
+    
+    # Exclusively keep combinations of
+    # categories.
+    #
+    # Example:
+    #   search = Search.new(people) do
+    #     only [:last_name, :street],
+    #          [:last_name, :first_name]
+    #   end
+    #
+    def only *allocations_and_categories
+      indexes.keep_allocations *allocations_and_categories
+    end
+    
     # Ignore the given token if it cannot be matched to a category.
     # The default behaviour is that if a token does not match to
     # any category, the query will not return anything (since a

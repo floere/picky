@@ -46,12 +46,45 @@ module Picky
         @allocations = @allocations.shift amount
       end
 
-      # Removes combinations.
+      # Removes categories from allocations.
       #
       # Only those passed in are removed.
       #
-      def remove categories = []
+      def remove_categories categories = []
         @allocations.each { |allocation| allocation.remove categories } unless categories.empty?
+      end
+      
+      # Removes allocations.
+      #
+      # Only those passed in are removed.
+      #
+      # TODO Rewrite, speed up.
+      #
+      def remove_allocations qualifiers_array = []
+        return if qualifiers_array.empty?
+        @allocations.select! do |allocation|
+          allocation_qualifiers = allocation.combinations.to_qualifiers
+          next(false) if qualifiers_array.any? do |qualifiers|
+            allocation_qualifiers == qualifiers
+          end
+          allocation
+        end
+      end
+      
+      # Keeps allocations.
+      #
+      # Only those passed in are kept.
+      #
+      # TODO Rewrite, speed up.
+      #
+      def keep_allocations qualifiers_array = []
+        return if qualifiers_array.empty?
+        @allocations.select! do |allocation|
+          allocation_qualifiers = allocation.combinations.to_qualifiers
+          next(true) if qualifiers_array.any? do |qualifiers|
+            allocation_qualifiers == qualifiers
+          end
+        end
       end
 
       # Returns the top amount ids.

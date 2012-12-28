@@ -173,7 +173,7 @@ module Picky
         load_relative 'query/boosts'
 
         load_relative 'query/indexes',
-                      'query/indexes_check'
+                      'query/indexes/check'
       end
       
       # Loads the internal parts of the framework.

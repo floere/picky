@@ -16,7 +16,9 @@ module Picky
       forward :size, :first, :to => :@indexes
       
       attr_reader :indexes,
-                  :ignored_categories
+                  :ignored_categories,
+                  :ignored_allocations,
+                  :exclusive_allocations
 
       # Creates a new Query::Indexes.
       #
@@ -24,27 +26,39 @@ module Picky
       # Note: We cannot mix memory and redis indexes just yet.
       #
       def initialize *indexes
-        IndexesCheck.check_backends indexes
+        Check.check_backends indexes
 
         @indexes = indexes
       end
       
-      # TODO Reinstate.
+      # Ignore the categories with the given qualifiers.
       #
-      # # Ignore the categories with these qualifiers.
-      # #
-      # # Example:
-      # #   search = Search.new(index1, index2, index3) do
-      # #     ignore :name, :first_name
-      # #   end
-      # #
-      # # Note: Cleans up / optimizes after being called.
-      # #
-      # def ignore *qualifiers
-      #   @ignored_categories ||= []
-      #   @ignored_categories += qualifiers.map { |qualifier| @qualifier_mapper.map qualifier }.compact
-      #   @ignored_categories.uniq!
-      # end
+      def ignore_categories *qualifiers
+        @ignored_categories ||= []
+        # @ignored_categories += qualifiers.map { |qualifier| @qualifier_mapper.map qualifier }.compact
+        @ignored_categories += qualifiers
+        @ignored_categories.uniq!
+      end
+      
+      # Ignore the allocations with the given qualifiers.
+      #
+      def ignore_allocations *qualifier_arrays
+        @ignored_allocations ||= []
+        @ignored_allocations += qualifier_arrays #.map do |qualifier_array|
+          # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
+        # end.compact
+        @ignored_allocations.uniq!
+      end
+      
+      # Exclusively keep the allocations with the given qualifiers.
+      #
+      def keep_allocations *qualifier_arrays
+        @exclusive_allocations ||= []
+        @exclusive_allocations += qualifier_arrays #.map do |qualifier_array|
+          # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
+        # end.compact
+        @exclusive_allocations.uniq!
+      end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #
@@ -57,13 +71,20 @@ module Picky
         #
         allocations.calculate_score weights
 
+        # Filter the allocations – ignore/only.
+        #
+        allocations.keep_allocations exclusive_allocations if exclusive_allocations
+        allocations.remove_allocations ignored_allocations if ignored_allocations
+
         # Sort the allocations.
         # (allocations are sorted according to score, highest to lowest)
         #
         # Before we can chop off unimportant allocations, we need to sort them.
         #
         allocations.sort!
-
+        
+        # allocations.remove_allocations ignored_allocations if ignored_allocations
+        
         # Reduce the amount of allocations.
         #
         # Before we remove categories, we should reduce the amount of allocations.
@@ -72,7 +93,7 @@ module Picky
 
         # Remove categories from allocations.
         #
-        allocations.remove ignored_categories if ignored_categories
+        allocations.remove_categories ignored_categories if ignored_categories
 
         allocations
       end

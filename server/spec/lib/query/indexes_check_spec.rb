@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Query::IndexesCheck do
+describe Picky::Query::Indexes::Check do
 
   describe 'check_backend_types' do
     backends = [
@@ -25,7 +25,7 @@ describe Picky::Query::IndexesCheck do
       it 'raises on multiple types' do
         expect do
           described_class.check_backends [index1, index2]
-        end.to raise_error(Picky::Query::DifferentBackendsError)
+        end.to raise_error(Picky::Query::Indexes::DifferentBackendsError)
       end
       it 'raises with the right message on multiple types' do
         expect do
@@ -41,7 +41,7 @@ describe Picky::Query::IndexesCheck do
       it 'raises on multiple types' do
         expect do
           described_class.check_backends [index1, index2, index3]
-        end.to raise_error(Picky::Query::DifferentBackendsError)
+        end.to raise_error(Picky::Query::Indexes::DifferentBackendsError)
       end
       it 'raises with the right message on multiple types' do
         expect do

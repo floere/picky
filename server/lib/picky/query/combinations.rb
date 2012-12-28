@@ -49,6 +49,10 @@ module Picky
       def to_result
         @combinations.map &:to_result
       end
+      
+      def to_qualifiers
+        @combinations.map &:category_name
+      end
 
       #
       #
