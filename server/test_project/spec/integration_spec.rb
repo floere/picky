@@ -333,7 +333,7 @@ describe BookSearch do
   #
   # TODO Removed in 4.9+. Reintroduce!
   #
-  # it { book_each.search("alan history").ids.should == ["259", "307"] } # Ignores History or Alan in title.
+  it { book_each.search("alan history").ids.should == ["259", "307"] } # Ignores History or Alan in title.
 
   # SQLite backend.
   #

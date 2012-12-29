@@ -41,7 +41,9 @@ module Picky
       # ids that have an associated identifier that is nil.
       #
       def remove categories = []
-        @combinations.reject! { |combination| categories.include?(combination.category) }
+        # TODO Do not use the name, but the category. 
+        #
+        @combinations.reject! { |combination| categories.include?(combination.category.name) }
       end
 
       #

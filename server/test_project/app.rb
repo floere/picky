@@ -35,7 +35,7 @@ class BookSearch < Sinatra::Application
     },
     book_each: Picky::Search.new(BookEachIndex) {
       boost weights
-      # ignore :title
+      ignore :title
     },
     redis: Picky::Search.new(RedisIndex) {
       boost weights
