@@ -27,8 +27,8 @@ module Picky
           [
             "cd #{name}",
             "bundle install",
-            "rake index",
-            "unicorn -c unicorn.rb",
+            "bundle exec rake index",
+            "bundle exec unicorn -c unicorn.rb",
             "open http://localhost:8080/",
             "rake todo # (optional) Shows you where Picky needs input from you."
           ]

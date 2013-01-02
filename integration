@@ -62,8 +62,8 @@ def install_sinatra_server
   #
   puts "Installing the Sinatra/Unicorn server."
   system "picky generate server sandbox/server"
-  system "cd sandbox/server; rake index"
-  system "cd sandbox/server; unicorn -c unicorn.rb &"
+  system "cd sandbox/server; bundle exec rake index"
+  system "cd sandbox/server; bundle exec unicorn -c unicorn.rb &"
 
   sleep 8 # loading
 end
