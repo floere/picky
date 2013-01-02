@@ -1,5 +1,12 @@
 ## Upcoming Version
 
+## 4.12.6
+
+###### [Generators](https://github.com/floere/picky/tree/master/generators)
+
+- Reimplemented `Search#ignore` for single categories (see 4.12.5 and use a single category name symbol).
+- Removed generator file duplication.
+
 ## 4.12.5
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
