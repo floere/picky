@@ -227,3 +227,12 @@
         with modifications by
         = succeed('.') do
           %a{ :href => 'http://twitter.com/hanke' } Florian Hanke
+      :javascript
+        $(window).load(function() {
+         // An initial search text, prefilled
+         // this one is passed through the query param q.
+         //
+         // Example: www.mysearch.com/?q=example
+         //
+         pickyClient.insertFromURL('#{@query}');
+        });

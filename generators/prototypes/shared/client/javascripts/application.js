@@ -72,11 +72,4 @@ $(window).load(function() {
       }
     }
   });
-
-  // An initial search text, prefilled
-  // this one is passed through the query param q.
-  //
-  // Example: www.mysearch.com/?q=example
-  //
-  pickyClient.insertFromURL('#{@query}');
 });
