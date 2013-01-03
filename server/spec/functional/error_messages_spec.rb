@@ -11,7 +11,7 @@ describe "Error messages for" do
         category :title
       end
     end
-    let(:thing) { Struct.new :id, :author }
+    let(:thing) { Struct.new :id, :author } # It is missing the title.
     it 'is informative when dynamic indexing' do
       this = thing.new 1, "ohai"
       
