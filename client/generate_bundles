@@ -28,7 +28,7 @@ system compiler_command
 
 # Copy the latest javascripts into the generators' js directory.
 #
-min_js_copy_command = "cp javascripts/*.min.js ../generators/prototypes/client/sinatra/javascripts/"
+min_js_copy_command = "cp javascripts/*.min.js ../generators/prototypes/shared/client/javascripts/"
 puts min_js_copy_command
 system min_js_copy_command
 
