@@ -2,33 +2,31 @@
 #
 require 'spec_helper'
 
-describe "Error Messages" do
+describe "Error messages for" do
 
-  context 'missing category methods' do
+  context 'missing category method' do
     let(:index) do
       Picky::Index.new :error_messages do
         category :author
         category :title
-        category :text
       end
     end
     let(:thing) { Struct.new :id, :author }
-    it 'throws good ones when dynamic indexing' do
+    it 'is informative when dynamic indexing' do
       this = thing.new 1, "ohai"
-      that = thing.new 2, "blah"
-
-      index.add this
-      index.add that
+      
+      # For now, a NoMethodError is enough.
+      #
+      expect { index.add this }.to raise_error(NoMethodError)
     end
-    it 'throws good ones when static indexing' do
+    it 'is informative when static indexing' do
       thing = Struct.new :id, :author
     
-      things = []
-      things << thing.new(1, "ohai")
-      things << thing.new(2, "blah")
+      index.source [thing.new(1, "ohai")]
 
-      index.source things
-      index.index
+      # For now, a NoMethodError is enough.
+      #
+      expect { index.index }.to raise_error(NoMethodError)
     end
   end
 
