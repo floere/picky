@@ -47,7 +47,7 @@ var PickyResultsRenderer = function(addination, config) {
   //
   //
   var strongify = function(category, joinedTokens) {
-    return [category.replace(/([\w\sÄäÖöÜüéèà\,]+)/, "<strong>$1</strong>"), joinedTokens].join(' ');
+    return ['<strong>' + category + '</strong>', joinedTokens].join(' ');
   };
   this.strongify = strongify; // Note: Only exposed for testing.
   

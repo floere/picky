@@ -22,7 +22,8 @@ describe(
         results: results,
         explanations: {
           en: {
-            cat1: 'done by'
+            cat1: 'done by',
+            cat3: 'with m/z'
           }
         },
         explanation_delimiters: {
@@ -91,6 +92,11 @@ describe(
 	        return renderer.explain("type1", [
             ['cat1', 'Orig1', 'parsed1']
           ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1*</span>';
+	      });
+	      it("is correct", function() {
+	        return renderer.explain("type3", [
+            ['cat3', 'Orig3', 'parsed3']
+          ]) == '<span class="explanation">type3 <strong>with m/z</strong> Orig3*</span>';
 	      });
 	      it("is correct", function() {
 	        return renderer.explain("type1", [
