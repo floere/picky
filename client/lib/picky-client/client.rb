@@ -47,6 +47,7 @@ require 'net/http'
 module Picky
 
   class Client
+    
     attr_accessor :host, :port, :path
 
     def initialize hash_or_uri = {}
@@ -122,6 +123,10 @@ module Picky
     def send_search params = {}
       params = defaultize params
       ::Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port
+    end
+    
+    def to_s
+      "#{self.class}(http://#{host}:#{port}#{path})"
     end
 
   end

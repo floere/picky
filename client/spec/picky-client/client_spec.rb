@@ -2,6 +2,25 @@ require 'spec_helper'
 
 describe Picky::Client do
   
+  describe 'to_s' do
+    context 'default' do
+      let(:client) { described_class.new }
+      it 'spits out an informative string' do
+        client.to_s.should == 'Picky::Client(http://localhost:8080/searches)'
+      end
+    end
+    context 'customized' do
+      let(:client) do
+        described_class.new :host => 'somehost.com',
+                            :port => '1234',
+                            :path => '/hello/this/is/path'
+      end
+      it 'spits out an informative string' do
+        client.to_s.should == 'Picky::Client(http://somehost.com:1234/hello/this/is/path)'
+      end
+    end
+  end
+  
   describe 'defaultize' do
     context 'no default params' do
       before(:each) do
