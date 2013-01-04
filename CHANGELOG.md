@@ -1,5 +1,12 @@
 ## Upcoming Version
 
+## 4.12.7
+
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- Added `Picky::Client#to_s` method.
+- Cleaned JS source code, fixed header allocation information.
+
 ## 4.12.6
 
 ###### [Generators](https://github.com/floere/picky/tree/master/generators)
