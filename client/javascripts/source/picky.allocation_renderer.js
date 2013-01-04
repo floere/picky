@@ -3,8 +3,6 @@ function AllocationRenderer(config) {
 
   var locale = config.locale;
   
-  // TODO Maybe make dynamic.
-  //
   var qualifiers   = config.qualifiers && config.qualifiers[locale] || {};
   var explanations = config.explanations && config.explanations[locale] || {};
   var choiceGroups = config.groups || [];
