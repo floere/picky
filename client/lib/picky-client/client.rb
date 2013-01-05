@@ -125,6 +125,8 @@ module Picky
       ::Net::HTTP.get self.host, "#{self.path}?#{params.to_query}", self.port
     end
     
+    #
+    #
     def to_s
       "#{self.class}(http://#{host}:#{port}#{path})"
     end

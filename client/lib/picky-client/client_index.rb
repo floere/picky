@@ -1,19 +1,17 @@
 module Picky
   class Client
     
-    # TODO Rename?
+    # Replaces an item in the index (adds it if not indexed yet).
     #
     # Parameters:
     #   * index_name: An index that exists in the Picky server.
     #   * data: A hash in the form of { :id => 1234, :attr1 => 'attr1', :attr2 => 'attr2', ... }.
     #
-    # TODO This should be a PUT.
-    #
     def replace index_name, data
-      send_off Net::HTTP::Post.new(self.path), index_name, data
+      send_off Net::HTTP::Put.new(self.path), index_name, data
     end
     
-    # TODO Rename?
+    # Removes an item from the index.
     #
     # Parameters:
     #   * index_name: An index that exists in the Picky server.
