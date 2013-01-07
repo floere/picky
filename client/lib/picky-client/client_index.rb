@@ -25,7 +25,7 @@ module Picky
     #
     # Note: Data is JSON encoded.
     #
-    def send_off request, index_name, data
+    def send_off request, index_name, data = {}
       request.form_data = { :index => index_name, :data => ActiveSupport::JSON.encode(data) }
       Net::HTTP.new(self.host, self.port).start { |http| http.request request }
     end
