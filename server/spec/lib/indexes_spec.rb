@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Picky::Indexes do
 
-  let(:index) { stub :some_index, :name => :some_index }
+  let(:index) { stub :some_index,   :name => :some_index }
+  let(:index2) { stub :some_index2, :name => :some_index }
 
   context 'with instance' do
     let(:indexes) { Picky::Indexes.new }
@@ -44,6 +45,14 @@ describe Picky::Indexes do
 
         indexes.indexes.should == [index]
       end
+      it 'does remove duplicates (with same name)' do
+        indexes.clear_indexes
+
+        indexes.register index
+        indexes.register index2
+
+        indexes.indexes.should == [index2]
+      end 
     end
   end
 
