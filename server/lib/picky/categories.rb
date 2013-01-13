@@ -7,6 +7,8 @@ module Picky
     forward :each,
             :first,
             :map,
+            :map!,
+            :include?,
             :to => :categories
 
     each_forward :cache,
@@ -51,7 +53,7 @@ module Picky
     #
     def << category
       reset_qualifier_mapper # TODO Have an add method on QualifierMapper?
-      categories << category
+      categories << category unless categories.include? category # This is wrong, and needs to be handled in index.rb
       category_hash[category.name] = category
     end
 

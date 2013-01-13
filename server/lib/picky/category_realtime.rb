@@ -32,7 +32,7 @@ module Picky
     #
     # Note: Takes a hash as opposed to the add/replace method.
     #
-    def replace_from hash
+    def replace_from hash #, id = (hash[:id] || hash['id'] || raise(IdNotGivenException.new)).send(key_format)
       return unless text = hash[from] || hash[from.to_s]
       
       raise IdNotGivenException.new unless id = hash[:id] || hash['id']

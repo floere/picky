@@ -6,7 +6,8 @@ module Picky
 
     forward :remove,  # aka "delete".
             :add,     # aka "insert".
-            :replace, # aka "insert or update". Thus, not called update.
+            :replace, # aka "delete then insert".
+            :update,
             :replace_from,
             :clear_realtime,
             :build_realtime_mapping,

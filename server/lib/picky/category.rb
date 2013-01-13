@@ -167,6 +167,13 @@ module Picky
     def identifier
       :"#{@index.identifier}:#{name}"
     end
+    
+    # Uniquely identified by index name and name.
+    #
+    def == other
+      index_name == other.index_name &&
+      name       == other.name
+    end
 
     #
     #

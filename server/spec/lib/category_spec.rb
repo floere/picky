@@ -22,6 +22,21 @@ describe Picky::Category do
 
       category.instance_variable_get(:@symbols).should == nil
     end
+    
+    context '#==' do
+      it 'is identical on the same thing' do
+        category.should == category
+      end
+      it 'looks only at index name and category name' do
+        category.should == described_class.new(:some_category, index)
+      end
+      it 'looks only at index name and category name' do
+        category.should_not == described_class.new(:some_other_category, index)
+      end
+      it 'results in a correct #include?' do
+        [category].include?(described_class.new(:some_category, index)).should == true
+      end
+    end
   end
   
   context 'directories' do
