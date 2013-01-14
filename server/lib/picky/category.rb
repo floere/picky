@@ -171,6 +171,7 @@ module Picky
     # Uniquely identified by index name and name.
     #
     def == other
+      return false unless other
       index_name == other.index_name &&
       name       == other.name
     end
