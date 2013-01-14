@@ -45,14 +45,14 @@ describe Picky::Indexes do
 
         indexes.indexes.should == [index]
       end
-      it 'does remove duplicates (with same name)' do
-        indexes.clear_indexes
-
-        indexes.register index
-        indexes.register index2
-
-        indexes.indexes.should == [index2]
-      end 
+      # it 'does remove duplicates (with same name)' do
+      #   indexes.clear_indexes
+      # 
+      #   indexes.register index
+      #   indexes.register index2
+      # 
+      #   indexes.indexes.should == [index2]
+      # end
     end
   end
 
