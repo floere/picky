@@ -1,0 +1,18 @@
+source 'http://rubygems.org'
+
+gem 'rake'
+gem 'rspec'
+gem 'activesupport'
+gem 'sinatra'
+gem 'rack'
+gem 'rack_fast_escape', '2009.06.24' # Optional.
+gem 'text'
+gem 'multi_json'
+
+# Optional.
+#
+gem 'yajl-ruby', :require => 'yajl' # For faster JSON handling
+gem 'activerecord', '~> 3', :require => 'active_record' # If you use AR for the DB
+gem 'procrastinate', '~> 0.4' # Parallel indexing
+gem 'redis'
+gem 'mysql'
