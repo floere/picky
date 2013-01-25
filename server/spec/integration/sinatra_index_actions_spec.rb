@@ -36,28 +36,28 @@ describe 'Sinatra Index Actions' do
     context 'return values' do
       describe 'update' do
         it 'returns a correct code after updating without problems' do
-          result = request.post('/', params: {
+          result = request.put('/', params: {
             index: 'some_index',
             data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
           })
           result.status.should == 200
         end
         it 'returns a correct code after updating with just the id' do
-          result = request.post('/', params: {
+          result = request.put('/', params: {
             index: 'some_index',
             data: %Q{{ "id":"1" }}
           })
           result.status.should == 200
         end
         it 'returns a correct code after updating without id' do
-          result = request.post('/', params: {
+          result = request.put('/', params: {
             index: 'some_index',
             data: %Q{{ "name":"Florian", "surname":"Hanke" }}
           })
           result.status.should == 400
         end
         it 'returns a correct code after updating with the wrong index' do
-          result = request.post('/', params: {
+          result = request.put('/', params: {
             index: 'some_wrong_index',
             data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
           })
@@ -107,7 +107,7 @@ describe 'Sinatra Index Actions' do
     end
     context '' do
       it 'updates the index correctly' do
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
         })
@@ -115,7 +115,7 @@ describe 'Sinatra Index Actions' do
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 1
       
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"2", "name":"Florian", "surname":"Meier" }}
         })
@@ -124,7 +124,7 @@ describe 'Sinatra Index Actions' do
         results['total'].should == 2
       end
       it 'updates the index correctly' do
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"1", "name":"Flarian", "surname":"Hanke" }}
         })
@@ -137,7 +137,7 @@ describe 'Sinatra Index Actions' do
       
         # Whoops, typo. Let's fix it.
         #
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
         })
@@ -152,11 +152,11 @@ describe 'Sinatra Index Actions' do
         results['total'].should == 1
       end
       it 'deletes entries from the index correctly' do
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
         })
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"2", "name":"Florian", "surname":"Meier" }}
         })
@@ -184,7 +184,7 @@ describe 'Sinatra Index Actions' do
       it 'works with the (test) client' do
         client = Picky::TestClient.new MyIndexActionsPickyServer, :path => '/people'
       
-        request.post('/', params: {
+        request.put('/', params: {
           index: 'some_index',
           data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
         })
