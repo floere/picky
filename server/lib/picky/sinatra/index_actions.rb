@@ -11,7 +11,7 @@ module Picky
         #
         # Note: 200 returns no data yet.
         #
-        base.post '/' do
+        base.put '/' do
           index_name = params['index']
           begin
             index = Picky::Indexes[index_name.to_sym]
