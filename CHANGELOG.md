@@ -1,5 +1,11 @@
 ## Upcoming Version
 
+## 4.12.8
+
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- Fix: use PUT instead of POST for replace action (thanks @rogerbraun).
+
 ## 4.12.7
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
