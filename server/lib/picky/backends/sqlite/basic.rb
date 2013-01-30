@@ -47,7 +47,7 @@ module Picky
         end
 
         def lazily_initialize_client
-          @db ||= SQLite3::Database.new cache_path
+          @db ||= begin create_directory cache_path; SQLite3::Database.new cache_path end
         end
 
         def dump_sqlite internal
