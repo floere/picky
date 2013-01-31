@@ -1,4 +1,8 @@
-## Upcoming Version
+## 4.12.9
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Fix: Directory creation (thanks @rogerbraun).
 
 ## 4.12.8
 

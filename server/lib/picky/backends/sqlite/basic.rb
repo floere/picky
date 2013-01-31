@@ -18,11 +18,11 @@ module Picky
 
           lazily_initialize_client
         
-        # Note: If on OSX, too many files get opened during
-        #       the specs -> ulimit -n 3000
-        #  
-        # rescue SQLite3::CantOpenException => e
-        #  
+          # Note: If on OSX, too many files get opened during
+          #       the specs -> ulimit -n 3000
+          #  
+          # rescue SQLite3::CantOpenException => e
+          #  
         end
 
         def initial
@@ -45,9 +45,11 @@ module Picky
         def clear
           db.execute 'delete from key_value'
         end
-
+        
+        # TODO Replace with db method?
+        #
         def lazily_initialize_client
-          @db ||= begin create_directory cache_path; SQLite3::Database.new cache_path end
+          @db ||= (create_directory cache_path; SQLite3::Database.new cache_path)
         end
 
         def dump_sqlite internal
@@ -65,6 +67,8 @@ module Picky
         end
 
         def reset
+          # TODO Still necessary?
+          #
           create_directory cache_path
           lazily_initialize_client
 
