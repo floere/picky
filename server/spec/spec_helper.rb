@@ -1,3 +1,5 @@
+`rm -r spec/temp/*`
+
 if ENV['COV']
   require 'simplecov'
   SimpleCov.adapters.define 'picky' do
