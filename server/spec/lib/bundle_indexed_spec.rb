@@ -102,6 +102,9 @@ describe Picky::Bundle do
   end
 
   describe 'load' do
+    before(:each) do
+      @bundle.dump # Create an index first.
+    end
     it 'should trigger loads' do
       @bundle.should_receive(:load_inverted).once.with
       @bundle.should_receive(:load_weights).once.with
