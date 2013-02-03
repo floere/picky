@@ -19,3 +19,5 @@ spec/test_directory
 unimportant.sqlite3
 
 .rbx
+
+performance_ratio.rb
