@@ -31,78 +31,82 @@ q:before, q:after {
   content: none; }
 
 /* line 29, basic.css.sass */
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   font-weight: normal;
   border-bottom: 1px solid #777777; }
 
-/* line 34, basic.css.sass */
-h2, h3, h4, p, ul, ol {
+/* line 33, basic.css.sass */
+h2, h3, h4, h5, p, ul, ol {
   margin-top: 1em;
   font-size: 0.9em; }
 
-/* line 38, basic.css.sass */
+/* line 37, basic.css.sass */
 ul, ol {
   margin-top: 0.5em; }
 
-/* line 41, basic.css.sass */
+/* line 40, basic.css.sass */
 h1 {
   font-size: 2em; }
 
-/* line 45, basic.css.sass */
+/* line 43, basic.css.sass */
 h2 {
   font-size: 1.5em; }
 
-/* line 49, basic.css.sass */
+/* line 46, basic.css.sass */
 h3 {
   font-size: 1.25em; }
 
-/* line 53, basic.css.sass */
+/* line 49, basic.css.sass */
 h4 {
   font-size: 1.05em; }
 
-/* line 56, basic.css.sass */
+/* line 52, basic.css.sass */
+h5 {
+  font-size: 1em; }
+
+/* line 55, basic.css.sass */
 a {
   color: #224466;
   text-decoration: none;
   border-bottom: 1px solid gray; }
 
-/* line 62, basic.css.sass */
-h1 a, h2 a, h3 a, h4 a {
+/* line 60, basic.css.sass */
+h1 a, h2 a, h3 a, h4 a, h5 a {
   border-bottom: none; }
 
-/* line 66, basic.css.sass */
+/* line 63, basic.css.sass */
 a:visited {
   color: #555666; }
 
-/* line 70, basic.css.sass */
+/* line 66, basic.css.sass */
 a:hover,
 a:focus {
   color: #224466;
   background-color: white; }
 
-/* line 76, basic.css.sass */
+/* line 71, basic.css.sass */
 a:active {
   color: #224466; }
 
-/* line 80, basic.css.sass */
+/* line 74, basic.css.sass */
 pre {
   background-color: white;
   margin: 10px 0;
   padding: 10px; }
 
-/* line 85, basic.css.sass */
+/* line 79, basic.css.sass */
 img {
   float: left;
   margin: 10px 10px 10px 0px; }
 
-/* line 91, basic.css.sass */
+/* line 85, basic.css.sass */
 ol ol li {
   list-style: none; }
-/* line 94, basic.css.sass */
+/* line 88, basic.css.sass */
 ol ol ol li {
   list-style: disc; }
 
-/* line 97, basic.css.sass */
+/* line 91, basic.css.sass */
 table {
   border: 2px solid #999999; }
 
@@ -112,20 +116,20 @@ table {
  *
  * td
  *   :padding 0.5em */
-/* line 106, basic.css.sass */
+/* line 100, basic.css.sass */
 ol.nav {
   height: 1.5em;
   color: #cccccc; }
-  /* line 109, basic.css.sass */
+  /* line 103, basic.css.sass */
   ol.nav li {
     float: left;
     padding-right: 0.4em; }
 
-/* line 113, basic.css.sass */
+/* line 107, basic.css.sass */
 div.clear {
   clear: both; }
 
-/* line 116, basic.css.sass */
+/* line 110, basic.css.sass */
 div.license {
   font-size: 0.5em;
   width: 33em;
