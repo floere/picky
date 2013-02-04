@@ -1208,7 +1208,7 @@ end</code></pre>
   sym_or_str.length # Uses the length of the symbol as weight.
 end</code></pre>
 
-<p>You almost never need to use your specific weights. More often than not, you can fiddle with boosting combinations of categories, via the <code>boost</code> method in searches.</p>
+<p>You almost never need to use your specific weights. More often than not, you can fiddle with <a href='#search-options-boost'>boosting combinations of categories</a> , via the <code>boost</code> method in searches.</p>
 
 <h4 id='why_choose_fiddling_with_weights_rather_than_boosts'>Why choose fiddling with weights rather than boosts?</h4>
 
@@ -1222,7 +1222,7 @@ end</code></pre>
 
 <pre><code>category :title, weights: Weights::Logarithmic.new # The default.</code></pre>
 
-<p>The <code>Logarithmic</code> initializer accepts a constant to be added to the result. Adding the constant is like multiplying the weight by <code>Math::E</code> (e is Euler&#8217;s constant). If you don&#8217;t understand, don&#8217;t worry, just know that by adding a constant you multiply by a fixed value.</p>
+<p>The <code>Logarithmic</code> initializer accepts a constant to be added to the result. Adding the constant <code>+1</code> is like multiplying the weight by <code>Math::E</code> (e is Euler&#8217;s constant). If you don&#8217;t understand, don&#8217;t worry, just know that by adding a constant you multiply by a certain value.</p>
 
 <p>In short: Use <code>weights</code> on the index, if you need a category to be boosted everywhere, wherever it occurs, and use <a href='#search-options-boost'>boosting</a> if you need to boost specific combinations of categories only for a specific search.</p>
 

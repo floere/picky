@@ -136,7 +136,7 @@ Or with a dynamically calculated weight:
       sym_or_str.length # Uses the length of the symbol as weight.
     end
 
-You almost never need to use your specific weights. More often than not, you can fiddle with boosting combinations of categories, via the `boost` method in searches.
+You almost never need to use your specific weights. More often than not, you can fiddle with [boosting combinations of categories](#search-options-boost) , via the `boost` method in searches.
 
 #### Why choose fiddling with weights rather than boosts?
 
@@ -150,7 +150,7 @@ This adds +1 to all weights. Why the logarithmic? By default, Picky weighs categ
 
     category :title, weights: Weights::Logarithmic.new # The default.
 
-The `Logarithmic` initializer accepts a constant to be added to the result. Adding the constant is like multiplying the weight by `Math::E` (e is Euler's constant). If you don't understand, don't worry, just know that by adding a constant you multiply by a fixed value.
+The `Logarithmic` initializer accepts a constant to be added to the result. Adding the constant `+1` is like multiplying the weight by `Math::E` (e is Euler's constant). If you don't understand, don't worry, just know that by adding a constant you multiply by a certain value.
 
 In short: Use `weights` on the index, if you need a category to be boosted everywhere, wherever it occurs, and use [boosting](#search-options-boost) if you need to boost specific combinations of categories only for a specific search.
 
