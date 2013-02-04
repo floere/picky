@@ -1210,9 +1210,25 @@ end</code></pre>
 
 <p>You almost never need to use your specific weights. More often than not, you can fiddle with boosting combinations of categories, via the <code>boost</code> method in searches.</p>
 
+<h4 id='why_choose_fiddling_with_weights_rather_than_boosts'>Why choose fiddling with weights rather than boosts?</h4>
+
+<p>Usually it is preferable to boost specific search results, say &#8220;florian hanke&#8221; mapped to <span>:first_name, :last_name</span>, but sometimes you want a specific category boosted wherever it occurs.</p>
+
+<p>For example, the title in a movie search engine would need to be boosted in all searches it occurs. Do this:</p>
+
+<pre><code>category :title, weights: Weights::Logarithmic.new(+1)</code></pre>
+
+<p>This adds +1 to all weights. Why the logarithmic? By default, Picky weighs categories using the logarithm of occurrences. So the default would be:</p>
+
+<pre><code>category :title, weights: Weights::Logarithmic.new # The default.</code></pre>
+
+<p>The <code>Logarithmic</code> initializer accepts a constant to be added to the result. Adding the constant is like multiplying the weight by <code>Math::E</code> (e is Euler&#8217;s constant). If you don&#8217;t understand, don&#8217;t worry, just know that by adding a constant you multiply by a fixed value.</p>
+
+<p>In short: Use <code>weights</code> on the index, if you need a category to be boosted everywhere, wherever it occurs, and use <a href='#search-options-boost'>boosting</a> if you need to boost specific combinations of categories only for a specific search.</p>
+
 <h3 id='indexes-categories-similarity'>Option similarity</h3>
 
-<p>The similarity option defines if a word is also found when it is typed wrong, or <em>close</em> to another word. So, &#8220;Picky&#8221; might be already found when typing &#8220;Pocky~&#8221;. (Picky will search for similar word when you use the tilde, ~)</p>
+<p>The similarity option defines if a word is also found when it is typed wrong, or <em>close</em> to another word. So, &#8220;Picky&#8221; might be already found when typing &#8220;Pocky~&#8221; (Picky will search for similar word when you use the tilde, ~).</p>
 
 <p>You define this by this:</p>
 
@@ -1503,6 +1519,14 @@ end</code></pre>
 end</code></pre>
 
 <p>This boosts the weight of the street category alone.</p>
+
+<h5 id='note_on_boosting'>Note on Boosting</h5>
+
+<p>Picky combines consecutive categories in searches for boosting. So if you search for &#8220;star wars empire strikes back&#8221;, when you defined <code>[:title] =&gt; +1</code>, then that boosting is applied.</p>
+
+<p>Why? In earlier versions of Picky we found that boosting specific combinations is less useful than boosting a specific <em>order</em> of categories.</p>
+
+<p>Let me give you an example from a movie search engine. instead of having to say <code>boost [:title] =&gt; +1, [:title, :title] =&gt; +1, [:title, :title, :title] =&gt; +1</code>, it is far more useful to say &#8220;If you find any number of title words in a row, boost it&#8221;. So, when searching for &#8220;star wars empire strikes back 1979&#8221;, it is less important that it is exactly 5 title categories in a row that a title followed by the release year. In this case, the boost <code>[:title, :release_year] =&gt; +3</code> would be applied.</p>
 
 <h4 id='search-options-ignore'>Ignore Categories</h4>
 
