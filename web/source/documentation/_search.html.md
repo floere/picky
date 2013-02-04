@@ -59,7 +59,7 @@ For example:
       category :streetnumber
     end
 
-This boosts the weight of the street category alone.
+This boosts the weight of the street category, for all searches using the index with this category. So whenever the street category is found in the results, it will boost these results.
 
 ##### Note on Boosting
 
