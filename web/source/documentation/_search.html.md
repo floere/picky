@@ -60,7 +60,15 @@ For example:
     end
 
 This boosts the weight of the street category alone.
- 
+
+##### Note on Boosting
+
+Picky combines consecutive categories in searches for boosting. So if you search for "star wars empire strikes back", when you defined `[:title] => +1`, then that boosting is applied.
+
+Why? In earlier versions of Picky we found that boosting specific combinations is less useful than boosting a specific _order_ of categories.
+
+Let me give you an example from a movie search engine. instead of having to say `boost [:title] => +1, [:title, :title] => +1, [:title, :title, :title] => +1`, it is far more useful to say "If you find any number of title words in a row, boost it". So, when searching for "star wars empire strikes back 1979", it is less important that it is exactly 5 title categories in a row that a title followed by the release year. In this case, the boost `[:title, :release_year] => +3` would be applied.
+
 #### Ignore Categories{#search-options-ignore}
 
 There's a [full blog post](http://florianhanke.com/blog/2011/09/01/picky-case-study-location-based-ads.html) devoted to this topic.

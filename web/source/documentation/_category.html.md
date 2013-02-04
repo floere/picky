@@ -138,9 +138,25 @@ Or with a dynamically calculated weight:
 
 You almost never need to use your specific weights. More often than not, you can fiddle with boosting combinations of categories, via the `boost` method in searches.
 
+#### Why choose fiddling with weights rather than boosts?
+
+Usually it is preferable to boost specific search results, say "florian hanke" mapped to [:first\_name, :last\_name], but sometimes you want a specific category boosted wherever it occurs.
+
+For example, the title in a movie search engine would need to be boosted in all searches it occurs. Do this:
+
+    category :title, weights: Weights::Logarithmic.new(+1)
+   
+This adds +1 to all weights. Why the logarithmic? By default, Picky weighs categories using the logarithm of occurrences. So the default would be:
+
+    category :title, weights: Weights::Logarithmic.new # The default.
+
+The `Logarithmic` initializer accepts a constant to be added to the result. Adding the constant is like multiplying the weight by `Math::E` (e is Euler's constant). If you don't understand, don't worry, just know that by adding a constant you multiply by a fixed value.
+
+In short: Use `weights` on the index, if you need a category to be boosted everywhere, wherever it occurs, and use [boosting](#search-options-boost) if you need to boost specific combinations of categories only for a specific search.
+
 ### Option similarity{#indexes-categories-similarity}
 
-The similarity option defines if a word is also found when it is typed wrong, or _close_ to another word. So, "Picky" might be already found when typing "Pocky~". (Picky will search for similar word when you use the tilde, ~)
+The similarity option defines if a word is also found when it is typed wrong, or _close_ to another word. So, "Picky" might be already found when typing "Pocky~" (Picky will search for similar word when you use the tilde, ~).
 
 You define this by this:
 
