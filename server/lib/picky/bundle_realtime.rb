@@ -49,7 +49,6 @@ module Picky
         # Update the realtime index.
         #
         str_or_syms << str_or_sym
-
         ids = @inverted[str_or_sym] ||= []
         ids.send where, id
       end
