@@ -19,7 +19,7 @@ module Picky
         @@append_index = 0
         def << value
           super
-          zadd value, @@append_index+=1
+          zadd value, @@append_index += 1
         end
 
         # THINK Current implementation is very brittle.
