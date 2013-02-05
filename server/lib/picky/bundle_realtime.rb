@@ -1,7 +1,12 @@
 module Picky
 
   class Bundle
-
+    
+    # TODO Push methods back into the backend, so that we
+    #      can apply more efficient methods tailored for
+    #      each specific backends.
+    #
+    
     # Removes the given id from the indexes.
     #
     def remove id
