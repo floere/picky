@@ -38,16 +38,14 @@ module Picky
         def dump hash
           unless @realtime
             clear
-            # client.pipelined do
-              hash.each_pair do |key, values|
-                redis_key = "#{namespace}:#{key}"
-                i = 0
-                values.each do |value|
-                  i += 1
-                  client.zadd redis_key, i, value
-                end
+            hash.each_pair do |key, values|
+              redis_key = "#{namespace}:#{key}"
+              i = 0
+              values.each do |value|
+                i += 1
+                client.zadd redis_key, i, value
               end
-            # end
+            end
           end
         end
 
@@ -72,7 +70,6 @@ module Picky
             i += 1
             client.zadd redis_key, i, value
           end
-
           DirectlyManipulable.make self, values, key
           values
         end
