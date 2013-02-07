@@ -79,6 +79,8 @@ module Picky
 
     # Extract specific indexes from backend.
     #
+    # TODO Move @backend_ into the backend?
+    #
     def create_backends
       @backend_inverted      = backend.create_inverted self
       @backend_weights       = backend.create_weights self
