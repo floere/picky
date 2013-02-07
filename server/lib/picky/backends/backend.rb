@@ -291,10 +291,11 @@ module Picky
           ids = @inverted[str_or_sym] ||= []
           ids.send where, id
         end
-
+        
         # Weights.
         #
-        @weights[str_or_sym] = weight_strategy.weight_for ids.size
+        @weights[str_or_sym] = weight_strategy.respond_to?(:[]) && weight_strategy[str_or_sym] ||
+                               weight_strategy.weight_for(ids.size)
 
         # Similarity.
         #
