@@ -6,6 +6,9 @@ module Picky
     #
     class Backend
       
+      attr_reader :inverted,
+                  :similarity
+      
       # Get the ids for the given symbol.
       #
       # Returns a (potentially empty) array of ids.
