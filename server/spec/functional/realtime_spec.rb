@@ -473,5 +473,229 @@ describe "Realtime Indexing" do
       end
     end
   end
+  
+  context 'special index' do
+    let(:index) do
+      Picky::Index.new(:books) do
+        backend Picky::Backends::Redis.new(realtime: true)
+        key_format :to_s # TODO Make key format dependent on backend?
+        category :title
+        category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
+      end
+    end
+    let(:books) { Picky::Search.new index }
+
+    before(:each) do
+      index.add Book.new('one', 'Title', 'Author')
+    end
+
+    context 'single category updating' do
+      it 'finds the first entry' do
+        books.search('title:Titl').ids.should == ['one']
+      end
+
+      it 'allows removing a single category and leaving the others alone' do
+        index[:title].remove 'one'
+
+        books.search('Title').ids.should == []
+        books.search('Author').ids.should == ['one']
+      end
+
+      it 'allows adding a single category and leaving the others alone' do
+        index[:title].add Book.new('two', 'Newtitle', 'Newauthor')
+
+        books.search('Title').ids.should == ['one']
+        books.search('Newtitle').ids.should == ['two']
+
+        books.search('Author').ids.should == ['one']
+        books.search('Newauthor').ids.should == []
+      end
+
+      it 'allows replacing a single category and leaving the others alone' do
+        index[:title].replace Book.new('one', 'Replaced', 'Notindexed')
+
+        books.search('Title').ids.should == []
+        books.search('Replaced').ids.should == ['one']
+
+        books.search('Notindexed').ids.should == []
+        books.search('Author').ids.should == ['one']
+      end
+    end
+
+    context 'with partial' do
+      it 'finds the first entry' do
+        books.search('Titl').ids.should == ['one']
+      end
+
+      it 'allows removing something' do
+        index.remove "one"
+      end
+      it 'is not findable anymore after removing' do
+        books.search('Titl').ids.should == ['one']
+
+        index.remove "one"
+
+        books.search('Titl').ids.should == []
+      end
+
+      it 'allows adding something' do
+        index.add Book.new('two', 'Title2', 'Author2')
+      end
+      it 'is findable after adding' do
+        books.search('Titl').ids.should == ['one']
+
+        index.add Book.new('two', 'Title New', 'Author New')
+
+        books.search('Titl').ids.should == ['two', 'one']
+      end
+
+      it 'allows replacing something' do
+        index.replace Book.new('one', 'Title New', 'Author New')
+      end
+      it 'is findable after replacing' do
+        books.search('Ne').ids.should == []
+
+        index.replace Book.new('one', 'Title New', 'Author New')
+
+        books.search('Ne').ids.should == ['one', 'one']
+      end
+      it 'handles more complex cases' do
+        books.search('Ne').ids.should == []
+
+        index.replace Book.new('one', 'Title New', 'Author New')
+
+        books.search('title:Ne').ids.should == ['one']
+      end
+      it 'handles more complex cases' do
+        index.remove "one"
+
+        books.search('Titl').ids.should == []
+
+        index.replace Book.new('one', 'Title New', 'Author New')
+
+        books.search('title:Ne').ids.should == ['one']
+      end
+    end
+
+    context 'non-partial' do
+      it 'finds the first entry' do
+        books.search('Titl').ids.should == ['one']
+      end
+
+      it 'allows removing something' do
+        index.remove "one"
+      end
+      it 'is not findable anymore after removing' do
+        books.search('Titl').ids.should == ['one']
+
+        index.remove :one
+
+        books.search('Titl').ids.should == []
+      end
+
+      it 'allows adding something' do
+        index.add Book.new("two", "Title2", "Author2")
+      end
+      it 'is findable after adding' do
+        books.search('Titl').ids.should == ['one']
+
+        index.add Book.new("two", "Title New", "Author New")
+
+        books.search('Titl').ids.should == ['two', 'one']
+      end
+
+      it 'allows replacing something' do
+        index.replace Book.new("one", "Title New", "Author New")
+      end
+      it 'is findable after replacing' do
+        books.search('Ne').ids.should == []
+
+        index.replace Book.new("one", "Title New", "Author New")
+
+        books.search('Ne').ids.should == ['one', 'one']
+      end
+      it 'handles more complex cases' do
+        books.search('Ne').ids.should == []
+
+        index.replace Book.new("one", "Title New", "Author New")
+
+        books.search('title:Ne').ids.should == ['one']
+      end
+      it 'handles more complex cases' do
+        index.remove "one"
+
+        books.search('Titl').ids.should == []
+
+        index.replace Book.new("one", "Title New", "Author New")
+
+        books.search('title:Ne').ids.should == ['one']
+      end
+    end
+
+    context 'similarity' do
+      it 'finds the first entry' do
+        books.search('Authr~').ids.should == ['one']
+      end
+
+      it 'allows removing something' do
+        index.remove "one"
+      end
+      it 'is not findable anymore after removing' do
+        books.search('Authr~').ids.should == ['one']
+
+        index.remove "one"
+
+        books.search('Authr~').ids.should == []
+      end
+
+      it 'allows adding something' do
+        index.add Book.new("two", "Title2", "Author2")
+      end
+      it 'is findable after adding' do
+        books.search('Authr~').ids.should == ['one']
+
+        index.add Book.new("two", "Title New", "Author New")
+
+        books.search('Authr~').ids.should == ['two', 'one']
+      end
+
+      it 'allows replacing something' do
+        index.replace Book.new("one", "Title New", "Author New")
+      end
+      it 'is findable after replacing' do
+        books.search('Nuw~').ids.should == []
+
+        index.replace Book.new("one", "Title New", "Author New")
+
+        books.search('Nuw~').ids.should == ['one']
+      end
+      it 'handles more complex cases' do
+        books.search('Now~').ids.should == []
+
+        index.replace Book.new("one", "Title New", "Author New")
+
+        books.search('author:Now~').ids.should == ['one']
+      end
+      it 'handles more complex cases' do
+        index.remove "one"
+
+        books.search('Athr~').ids.should == []
+
+        index.replace Book.new("one", "Title New", "Author New")
+
+        books.search('author:Athr~').ids.should == ['one']
+      end
+      it 'handles more complex cases' do
+        books.search('Athr~').ids.should == ['one']
+
+        index.replace Book.new("two", "Title New", "Author New")
+        index.add Book.new("three", "TTL", "AUTHR")
+
+        # Note: Allocations are [:two, :one], then [:three].
+        #
+        books.search('author:Athr~').ids.should == ['two', 'one', 'three']
+      end
+    end
+  end
 
 end

@@ -61,7 +61,7 @@ module Picky
       #   [id] # => [:sym1, :sym2]
       #
       def create_realtime bundle
-        List.new client, "#{bundle.identifier}:realtime", realtime: realtime
+        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:realtime", realtime: realtime
       end
 
       # Does the Redis version already include
@@ -137,7 +137,7 @@ module Picky
         # else
         #   class << self
         #     def weight combinations
-              combinations.score
+            combinations.score
         #     end
         #   end
         # end
@@ -217,7 +217,7 @@ module Picky
       module Scripting
         def ids combinations, amount, offset
           identifiers = combinations.inject([]) do |identifiers, combination|
-            identifiers << "#{combination.identifier}"
+            identifiers << "#{PICKY_ENVIRONMENT}:#{combination.identifier}"
           end
 
           # Assume it's using EVALSHA.
