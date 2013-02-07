@@ -1,3 +1,9 @@
+## 4.12.10
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Fix: Redis searching, realtime mode (thanks for pushing @andi and @rogerbraun).
+
 ## 4.12.9
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
