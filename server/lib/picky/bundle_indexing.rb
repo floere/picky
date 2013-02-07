@@ -28,18 +28,6 @@ module Picky
   #
   class Bundle
 
-    # Saves the indexes in a dump file.
-    #
-    def dump
-      @backend_inverted.dump @inverted
-      # THINK about this. Perhaps the strategies should implement the backend methods? Or only the internal index ones?
-      #
-      @backend_weights.dump @weights if @weight_strategy.respond_to?(:saved?) && @weight_strategy.saved?
-      @backend_similarity.dump @similarity if @similarity_strategy.respond_to?(:saved?) && @similarity_strategy.saved?
-      @backend_configuration.dump @configuration
-      @backend_realtime.dump @realtime
-    end
-
   end
 
 end

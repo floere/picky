@@ -61,11 +61,13 @@ module Picky
       #   [id] # => [:sym1, :sym2]
       #
       def create_realtime bundle
-        List.new client, "#{bundle.identifier}:realtime", realtime: realtime
+        List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:realtime", realtime: realtime
       end
 
       # Does the Redis version already include
       # scripting support?
+      #
+      # TODO Picky only runs with scripting support.
       #
       def redis_with_scripting?
         at_least_version redis_version, [2, 6, 0]

@@ -40,7 +40,7 @@ module Picky
         @score ||= if @combinations.empty?
           0 # Optimization.
         else
-          @backend.weight(@combinations) + @combinations.boost_for(weights)
+          @backend.weight_for(@combinations) + @combinations.boost_for(weights)
         end 
       end
 
@@ -52,7 +52,7 @@ module Picky
       #
       def calculate_ids amount, offset
         return [] if @combinations.empty? # Checked here to avoid checking in each backend.
-        @backend.ids @combinations, amount, offset
+        @backend.ids_for @combinations, amount, offset
       end
 
       # Ids return by default [].

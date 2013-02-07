@@ -25,24 +25,28 @@ module Picky
     attr_reader :name,
                 :category
 
-    attr_accessor :inverted,
-                  :weights,
-                  :similarity,
-                  :configuration,
-                  :realtime,
-
-                  :backend_inverted,
-                  :backend_weights,
-                  :backend_similarity,
-                  :backend_configuration,
-                  :backend_realtime,
-
-                  :weight_strategy,
+    attr_accessor :weight_strategy,
                   :partial_strategy,
                   :similarity_strategy
 
-    forward :[], :[]=,        :to => :configuration
-    forward :index_directory, :to => :category
+    forward :[],
+            :[]=,
+            :to => :configuration
+            
+    forward :index_directory,
+            :to => :category
+    
+    forward :add,
+            :configuration,
+            :dump,
+            :ids,
+            :inverted,
+            :realtime,
+            :remove,
+            :similarity,
+            :weight,
+            :weights,
+            :to => :backend
     
     # TODO Move the strategies into options.
     #
@@ -57,7 +61,7 @@ module Picky
       @key_format = options.delete :key_format
       @backend    = options.delete :backend
 
-      reset_backend
+      backend.reset self, @weight_strategy
     end
     def identifier
       @identifier ||= :"#{category.identifier}:#{name}"
@@ -69,60 +73,9 @@ module Picky
     def backend
       @backend || category.backend
     end
-
-    # Initializes all necessary indexes from the backend.
-    #
-    def reset_backend
-      create_backends
-      initialize_backends
-    end
-
-    # Extract specific indexes from backend.
-    #
-    def create_backends
-      @backend_inverted      = backend.create_inverted self
-      @backend_weights       = backend.create_weights self
-      @backend_similarity    = backend.create_similarity self
-      @backend_configuration = backend.create_configuration self
-      @backend_realtime      = backend.create_realtime self
-    end
-
-    # Initial indexes.
-    #
-    # Note that if the weights strategy doesn't need to be saved,
-    # the strategy itself pretends to be an index.
-    #
-    def initialize_backends
-      on_all_indexes_call :initial
-    end
-
-    # "Empties" the index(es) by getting a new empty
-    # internal backend instance.
-    #
-    def empty
-      on_all_indexes_call :empty
-    end
     
-    # Extracted to avoid duplicate code.
-    #
-    def on_all_indexes_call method_name
-      @inverted      = @backend_inverted.send method_name
-      @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.send(method_name)
-      @similarity    = @backend_similarity.send method_name
-      @configuration = @backend_configuration.send method_name
-      @realtime      = @backend_realtime.send method_name
-    end
-
-    # Delete all index files.
-    #
-    def delete
-      @backend_inverted.delete       if @backend_inverted.respond_to? :delete
-      # THINK about this. Perhaps the strategies should implement the backend methods?
-      #
-      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.respond_to?(:saved?) && @weight_strategy.saved?
-      @backend_similarity.delete     if @backend_similarity.respond_to? :delete
-      @backend_configuration.delete  if @backend_configuration.respond_to? :delete
-      @backend_realtime.delete       if @backend_realtime.respond_to? :delete
+    def empty
+      backend.empty weight_strategy
     end
 
     # Get a list of similar texts.
@@ -132,7 +85,7 @@ module Picky
     def similar text
       code = similarity_strategy.encode text
       return [] unless code
-      similar_codes = @similarity[code]
+      similar_codes = similarity[code]
       if similar_codes.blank?
         [] # Return a simple array.
       else
