@@ -33,6 +33,9 @@ module Picky
           @similarity.delete self.similarity_strategy.encode(str_or_sym)
         else
           @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
+          # @weights[str_or_sym] = self.weight_strategy.respond_to?(:[]) &&
+          #                        self.weight_strategy[str_or_sym] ||
+          #                        self.weight_strategy.weight_for(ids.size)
         end
       end
 
@@ -42,6 +45,8 @@ module Picky
     # Returns a reference to the array where the id has been added.
     #
     def add id, str_or_sym, where = :unshift
+      # Use a generalized strategy.
+      #
       str_or_syms = @realtime[id] ||= []
 
       # Inverted.
