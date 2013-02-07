@@ -144,6 +144,8 @@ module Picky
 
     # If a key format is set, use it, else forward to the category.
     #
+    # TODO What about setting the key_format per category?
+    #
     def key_format
       @key_format || @category.key_format
     end
