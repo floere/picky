@@ -1,3 +1,9 @@
+## 4.12.13
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Make use of Redis' SCRIPT LOAD feature.
+
 ## 4.12.12
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
