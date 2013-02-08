@@ -4,6 +4,10 @@
 
 - Fix: Redis searching, realtime mode (thanks for pushing @andi and @rogerbraun).
 
+###### [Generators](https://github.com/floere/picky/tree/master/generators)
+
+- Removed i18n from client Gemfile.
+
 ## 4.12.9
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
