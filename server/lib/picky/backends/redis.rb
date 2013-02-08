@@ -190,15 +190,6 @@ module Picky
         #
         ids combinations, amount, offset
       end
-      
-      # # TODO
-      # #
-      # def add id, str_or_sym, weight_strategy, similarity_strategy, where
-      #   
-      #   
-      #   weight  = weight_strategy.weight_for ids.size
-      #   similar = similarity_strategy.encode str_or_sym
-      # end
 
       # Generate a multiple host/process safe result id.
       #
@@ -235,7 +226,7 @@ module Picky
             if identifiers.size > 1
               # Reuse script already installed in Redis.
               #
-              # Note: This may raise an error in Redis,
+              # Note: This raises an error in Redis,
               # when the script is not installed.
               #
               client.evalsha @ids_script_hash,
@@ -252,19 +243,11 @@ module Picky
                             offset,
                             (offset + amount)
             end
-          rescue RuntimeError => e # Redis::CommandError
+          rescue ::Redis::CommandError => e
             # Install script in Redis.
             #
-            # TODO Use SCRIPT LOAD, then retry?
-            #
-            @ids_script_hash = Digest::SHA1.hexdigest @ids_script
-            client.eval @ids_script,
-                        identifiers,
-                        [
-                          generate_intermediate_result_id,
-                          offset,
-                          (offset + amount)
-                        ]
+            @ids_script_hash = client.script 'load', @ids_script
+            retry
           end
         end
       end
