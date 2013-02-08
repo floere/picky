@@ -255,6 +255,8 @@ module Picky
           rescue RuntimeError => e # Redis::CommandError
             # Install script in Redis.
             #
+            # TODO Use SCRIPT LOAD, then retry?
+            #
             @ids_script_hash = Digest::SHA1.hexdigest @ids_script
             client.eval @ids_script,
                         identifiers,
