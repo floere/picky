@@ -164,10 +164,10 @@ module Picky
           # Just checked once on the first call.
           #
           if redis_with_scripting?
-            @@ids_script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
+            @ids_script = "local intersected = redis.call('zinterstore', ARGV[1], #(KEYS), unpack(KEYS)); if intersected == 0 then redis.call('del', ARGV[1]); return {}; end local results = redis.call('zrange', ARGV[1], tonumber(ARGV[2]), tonumber(ARGV[3])); redis.call('del', ARGV[1]); return results;"
 
             require 'digest/sha1'
-            @@ids_sent_once = nil
+            @ids_script_hash = nil
 
             # Overrides _this_ method.
             #
@@ -190,6 +190,15 @@ module Picky
         #
         ids combinations, amount, offset
       end
+      
+      # # TODO
+      # #
+      # def add id, str_or_sym, weight_strategy, similarity_strategy, where
+      #   
+      #   
+      #   weight  = weight_strategy.weight_for ids.size
+      #   similar = similarity_strategy.encode str_or_sym
+      # end
 
       # Generate a multiple host/process safe result id.
       #
@@ -224,27 +233,35 @@ module Picky
           #
           begin
             if identifiers.size > 1
-              client.evalsha @@ids_sent_once,
-                             identifiers.size,
-                             *identifiers,
-                             generate_intermediate_result_id,
-                             offset,
-                             (offset + amount)
+              if @ids_script_hash
+                # Reuse script already installed in Redis.
+                #
+                client.evalsha @ids_script_hash,
+                               identifiers,
+                               [
+                                 generate_intermediate_result_id,
+                                 offset,
+                                 (offset + amount)
+                               ]
+              else
+                # Install script in Redis.
+                #
+                @ids_script_hash = Digest::SHA1.hexdigest @ids_script
+                client.eval @ids_script,
+                            identifiers,
+                            [
+                              generate_intermediate_result_id,
+                              offset,
+                              (offset + amount)
+                            ]
+              end
             else
+              # No complex calculation necessary.
+              #
               client.zrange identifiers.first,
                             offset,
                             (offset + amount)
             end
-          rescue RuntimeError => e
-            # Make the server have a SHA-1 for the script.
-            #
-            @@ids_sent_once = Digest::SHA1.hexdigest @@ids_script
-            client.eval @@ids_script,
-                        identifiers.size,
-                        *identifiers,
-                        generate_intermediate_result_id,
-                        offset,
-                        (offset + amount)
           end
         end
       end

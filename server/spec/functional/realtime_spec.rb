@@ -474,7 +474,7 @@ describe "Realtime Indexing" do
     end
   end
   
-  context 'special index' do
+  context 'with Redis backend' do
     let(:index) do
       Picky::Index.new(:books) do
         backend Picky::Backends::Redis.new(realtime: true)
@@ -492,6 +492,20 @@ describe "Realtime Indexing" do
     context 'single category updating' do
       it 'finds the first entry' do
         books.search('title:Titl').ids.should == ['one']
+      end
+      
+      it 'finds the first entry' do
+        books.search('author:author title:Titl').ids.should == ['one']
+      end
+      
+      it 'finds the first entry' do
+        books.search('Author Titl').ids.should == ['one']
+      end
+      
+      it 'finds the first entry the second time, too' do
+        books.search('author:author title:Titl')
+        
+        books.search('author:author title:Titl').ids.should == ['one']
       end
 
       it 'allows removing a single category and leaving the others alone' do
