@@ -26,6 +26,7 @@ group :test do
   gem 'highline'
   gem 'picky-client'
   gem 'activerecord'
+  gem 'hiredis'
   gem 'redis'
   gem 'sqlite3'
   
