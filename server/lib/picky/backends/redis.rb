@@ -233,28 +233,18 @@ module Picky
           #
           begin
             if identifiers.size > 1
-              if @ids_script_hash
-                # Reuse script already installed in Redis.
-                #
-                client.evalsha @ids_script_hash,
-                               identifiers,
-                               [
-                                 generate_intermediate_result_id,
-                                 offset,
-                                 (offset + amount)
-                               ]
-              else
-                # Install script in Redis.
-                #
-                @ids_script_hash = Digest::SHA1.hexdigest @ids_script
-                client.eval @ids_script,
-                            identifiers,
-                            [
-                              generate_intermediate_result_id,
-                              offset,
-                              (offset + amount)
-                            ]
-              end
+              # Reuse script already installed in Redis.
+              #
+              # Note: This may raise an error in Redis,
+              # when the script is not installed.
+              #
+              client.evalsha @ids_script_hash,
+                             identifiers,
+                             [
+                               generate_intermediate_result_id,
+                               offset,
+                               (offset + amount)
+                             ]
             else
               # No complex calculation necessary.
               #
@@ -262,6 +252,17 @@ module Picky
                             offset,
                             (offset + amount)
             end
+          rescue RuntimeError => e # Redis::CommandError
+            # Install script in Redis.
+            #
+            @ids_script_hash = Digest::SHA1.hexdigest @ids_script
+            client.eval @ids_script,
+                        identifiers,
+                        [
+                          generate_intermediate_result_id,
+                          offset,
+                          (offset + amount)
+                        ]
           end
         end
       end

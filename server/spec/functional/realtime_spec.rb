@@ -507,6 +507,16 @@ describe "Realtime Indexing" do
         
         books.search('author:author title:Titl').ids.should == ['one']
       end
+      
+      it 'finds the first entry the second time, even if the Redis script cache is flushed' do
+        books.search('author:author title:Titl')
+        
+        books.search('author:author title:Titl').ids.should == ['one']
+        
+        index.backend.client.script 'flush'
+        
+        books.search('author:author title:Titl').ids.should == ['one']
+      end
 
       it 'allows removing a single category and leaving the others alone' do
         index[:title].remove 'one'

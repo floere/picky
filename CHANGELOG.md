@@ -1,4 +1,10 @@
-## 4.12.10
+## 4.12.12
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Handle script flush in Redis backend (if SCRIPT FLUSH is called, EVALSHA will raise an error).
+
+## 4.12.11
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
