@@ -53,7 +53,7 @@ module Picky
     #
     def << category
       reset_qualifier_mapper # TODO Have an add method on QualifierMapper?
-      categories << category unless categories.include? category # This is wrong, and needs to be handled in index.rb
+      categories << category unless categories.include? category # TODO This is wrong, and needs to be handled in index.rb
       category_hash[category.name] = category
     end
 

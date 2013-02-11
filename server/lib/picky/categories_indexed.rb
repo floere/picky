@@ -59,8 +59,6 @@ module Picky
     #
     # Note: Once I thought this was called too often. But it is not (18.01.2011).
     #
-    # TODO Called too often?
-    #
     def possible_categories token
       token.predefined_categories(qualifier_mapper) || categories
     end

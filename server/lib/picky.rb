@@ -18,7 +18,7 @@ module Picky
 
   # External libraries.
   #
-  # TODO Remove active support.
+  # TODO Remove active support, as a goal.
   #
   require 'active_support/core_ext/logger'
   require 'active_support/core_ext/object/blank'
