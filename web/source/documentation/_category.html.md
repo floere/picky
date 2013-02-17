@@ -114,7 +114,7 @@ The weights option defines how strongly a word is weighed. By default, Picky rat
 
 You define this by this:
 
-    category :some, weights: MyWeights.new
+    category :some, weight: MyWeights.new
 
 The default is `Weights::Logarithmic.new`.
 
@@ -124,11 +124,11 @@ If you don't want Picky to calculate weights for your indexed entries, you can u
 
 With 0.0 as default weight:
 
-    category :some, weights: Weights::Constant.new # Returns 0.0 for all results.
+    category :some, weight: Weights::Constant.new # Returns 0.0 for all results.
 
 With 3.14 as set weight:
 
-    category :some, weights: Weights::Constant.new(3.14) # Returns 3.14 for all results.
+    category :some, weight: Weights::Constant.new(3.14) # Returns 3.14 for all results.
 
 Or with a dynamically calculated weight:
 
@@ -144,15 +144,15 @@ Usually it is preferable to boost specific search results, say "florian hanke" m
 
 For example, the title in a movie search engine would need to be boosted in all searches it occurs. Do this:
 
-    category :title, weights: Weights::Logarithmic.new(+1)
+    category :title, weight: Weights::Logarithmic.new(+1)
    
 This adds +1 to all weights. Why the logarithmic? By default, Picky weighs categories using the logarithm of occurrences. So the default would be:
 
-    category :title, weights: Weights::Logarithmic.new # The default.
+    category :title, weight: Weights::Logarithmic.new # The default.
 
 The `Logarithmic` initializer accepts a constant to be added to the result. Adding the constant `+1` is like multiplying the weight by `Math::E` (e is Euler's constant). If you don't understand, don't worry, just know that by adding a constant you multiply by a certain value.
 
-In short: Use `weights` on the index, if you need a category to be boosted everywhere, wherever it occurs, and use [boosting](#search-options-boost) if you need to boost specific combinations of categories only for a specific search.
+In short: Use `weight` on the index, if you need a category to be boosted everywhere, wherever it occurs, and use [boosting](#search-options-boost) if you need to boost specific combinations of categories only for a specific search.
 
 ### Option similarity{#indexes-categories-similarity}
 
