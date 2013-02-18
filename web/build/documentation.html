@@ -1186,7 +1186,7 @@ end</code></pre>
 
 <p>You define this by this:</p>
 
-<pre><code>category :some, weights: MyWeights.new</code></pre>
+<pre><code>category :some, weight: MyWeights.new</code></pre>
 
 <p>The default is <code>Weights::Logarithmic.new</code>.</p>
 
@@ -1196,11 +1196,11 @@ end</code></pre>
 
 <p>With 0.0 as default weight:</p>
 
-<pre><code>category :some, weights: Weights::Constant.new # Returns 0.0 for all results.</code></pre>
+<pre><code>category :some, weight: Weights::Constant.new # Returns 0.0 for all results.</code></pre>
 
 <p>With 3.14 as set weight:</p>
 
-<pre><code>category :some, weights: Weights::Constant.new(3.14) # Returns 3.14 for all results.</code></pre>
+<pre><code>category :some, weight: Weights::Constant.new(3.14) # Returns 3.14 for all results.</code></pre>
 
 <p>Or with a dynamically calculated weight:</p>
 
@@ -1216,15 +1216,15 @@ end</code></pre>
 
 <p>For example, the title in a movie search engine would need to be boosted in all searches it occurs. Do this:</p>
 
-<pre><code>category :title, weights: Weights::Logarithmic.new(+1)</code></pre>
+<pre><code>category :title, weight: Weights::Logarithmic.new(+1)</code></pre>
 
 <p>This adds +1 to all weights. Why the logarithmic? By default, Picky weighs categories using the logarithm of occurrences. So the default would be:</p>
 
-<pre><code>category :title, weights: Weights::Logarithmic.new # The default.</code></pre>
+<pre><code>category :title, weight: Weights::Logarithmic.new # The default.</code></pre>
 
 <p>The <code>Logarithmic</code> initializer accepts a constant to be added to the result. Adding the constant <code>+1</code> is like multiplying the weight by <code>Math::E</code> (e is Euler&#8217;s constant). If you don&#8217;t understand, don&#8217;t worry, just know that by adding a constant you multiply by a certain value.</p>
 
-<p>In short: Use <code>weights</code> on the index, if you need a category to be boosted everywhere, wherever it occurs, and use <a href='#search-options-boost'>boosting</a> if you need to boost specific combinations of categories only for a specific search.</p>
+<p>In short: Use <code>weight</code> on the index, if you need a category to be boosted everywhere, wherever it occurs, and use <a href='#search-options-boost'>boosting</a> if you need to boost specific combinations of categories only for a specific search.</p>
 
 <h3 id='indexes-categories-similarity'>Option similarity</h3>
 
