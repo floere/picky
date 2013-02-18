@@ -1,3 +1,9 @@
+## 4.13.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Warn on erroneous category options, eg. :weights instead of :weight (thanks @rogerbraun).
+
 ## 4.12.13
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
