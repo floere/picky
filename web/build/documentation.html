@@ -166,7 +166,7 @@
 
 <li><a href='#indexes-categories-partial'>Option partial</a></li>
 
-<li><a href='#indexes-categories-weights'>Option weights</a></li>
+<li><a href='#indexes-categories-weight'>Option weight</a></li>
 
 <li><a href='#indexes-categories-similarity'>Option similarity</a></li>
 
@@ -238,7 +238,7 @@
 <p>Advanced topics:</p>
 
 <ul>
-<li><a href='#search-options-boost'>Boosting</a> (<a href='#indexes-categories-weights'>boosting a single category</a>)</li>
+<li><a href='#search-options-boost'>Boosting</a> (<a href='#indexes-categories-weight'>boosting a single category</a>)</li>
 
 <li><a href='#search-options-ignore'>Ignoring a category</a></li>
 
@@ -1180,9 +1180,9 @@ end</code></pre>
 
 <p>Pretty straightforward, right?</p>
 
-<h3 id='indexes-categories-weights'>Option weights</h3>
+<h3 id='indexes-categories-weight'>Option weight</h3>
 
-<p>The weights option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be slightly higher weighed.</p>
+<p>The weight option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be slightly higher weighed.</p>
 
 <p>You define this by this:</p>
 
@@ -1190,7 +1190,7 @@ end</code></pre>
 
 <p>The default is <code>Weights::Logarithmic.new</code>.</p>
 
-<p>You can also pass in your own weights generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
+<p>You can also pass in your own weight generators. See <a href='http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html'>this article</a> to learn more.</p>
 
 <p>If you don&#8217;t want Picky to calculate weights for your indexed entries, you can use constant or dynamic weights.</p>
 
@@ -1210,7 +1210,7 @@ end</code></pre>
 
 <p>You almost never need to use your specific weights. More often than not, you can fiddle with <a href='#search-options-boost'>boosting combinations of categories</a> , via the <code>boost</code> method in searches.</p>
 
-<h4 id='why_choose_fiddling_with_weights_rather_than_boosts'>Why choose fiddling with weights rather than boosts?</h4>
+<h4 id='why_choose_fiddling_with_weight_rather_than_boosts'>Why choose fiddling with weight rather than boosts?</h4>
 
 <p>Usually it is preferable to boost specific search results, say &#8220;florian hanke&#8221; mapped to <span>:first_name, :last_name</span>, but sometimes you want a specific category boosted wherever it occurs.</p>
 
@@ -1511,10 +1511,10 @@ end</code></pre>
         [:streetnumber, :street] =&gt; -1
 end</code></pre>
 
-<p>If you still want to boost a single category, check out the <a href='#indexes-categories-weights'>category weights option</a>. For example:</p>
+<p>If you still want to boost a single category, check out the <a href='#indexes-categories-weight'>category weight option</a>. For example:</p>
 
 <pre><code>Picky::Index.new :addresses do
-  category :street, weights: Picky::Weights::Logarithmic.new(+4)
+  category :street, weight: Picky::Weights::Logarithmic.new(+4)
   category :streetnumber
 end</code></pre>
 

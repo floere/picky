@@ -108,9 +108,9 @@ This will result in "A" and "Andy" being in the index for "Andy".
 
 Pretty straightforward, right?
 
-### Option weights{#indexes-categories-weights}
+### Option weight{#indexes-categories-weight}
 
-The weights option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be slightly higher weighed.
+The weight option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be slightly higher weighed.
 
 You define this by this:
 
@@ -118,7 +118,7 @@ You define this by this:
 
 The default is `Weights::Logarithmic.new`.
 
-You can also pass in your own weights generators. See [this article](http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html) to learn more.
+You can also pass in your own weight generators. See [this article](http://florianhanke.com/blog/2011/08/15/picky-30-its-all-ruby-part-1.html) to learn more.
 
 If you don't want Picky to calculate weights for your indexed entries, you can use constant or dynamic weights.
 
@@ -138,7 +138,7 @@ Or with a dynamically calculated weight:
 
 You almost never need to use your specific weights. More often than not, you can fiddle with [boosting combinations of categories](#search-options-boost) , via the `boost` method in searches.
 
-#### Why choose fiddling with weights rather than boosts?
+#### Why choose fiddling with weight rather than boosts?
 
 Usually it is preferable to boost specific search results, say "florian hanke" mapped to [:first\_name, :last\_name], but sometimes you want a specific category boosted wherever it occurs.
 

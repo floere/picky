@@ -66,7 +66,7 @@ How is the data categorized?
 
 * [Categories](#indexes-categories)
 * [Option partial](#indexes-categories-partial)
-* [Option weights](#indexes-categories-weights)
+* [Option weight](#indexes-categories-weight)
 * [Option similarity](#indexes-categories-similarity)
 * [Option qualifier / qualifiers (categorizing)](#indexes-categories-qualifiers)
 * [Option from](#indexes-categories-from)
@@ -110,7 +110,7 @@ What options does a user have when searching?
 
 Advanced topics:
 
-* [Boosting](#search-options-boost) ([boosting a single category](#indexes-categories-weights))
+* [Boosting](#search-options-boost) ([boosting a single category](#indexes-categories-weight))
 * [Ignoring a category](#search-options-ignore)
 * [Ignoring query words that are not found](#search-options-unassigned)
 * [Maximum Allocations](#search-options-maxallocations)

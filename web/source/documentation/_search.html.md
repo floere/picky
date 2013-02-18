@@ -51,11 +51,11 @@ So let's boost `street, streetnumber`, while at the same time deboost `streetnum
             [:streetnumber, :street] => -1
     end
 
-If you still want to boost a single category, check out the [category weights option](#indexes-categories-weights).
+If you still want to boost a single category, check out the [category weight option](#indexes-categories-weight).
 For example:
 
     Picky::Index.new :addresses do
-      category :street, weights: Picky::Weights::Logarithmic.new(+4)
+      category :street, weight: Picky::Weights::Logarithmic.new(+4)
       category :streetnumber
     end
 
