@@ -45,6 +45,24 @@ describe Picky::Category do
       category.prepared_index_path.should == 'spec/temp/index/test/some_index/some_category'
     end
   end
+  
+  describe 'options' do
+    let(:category) { described_class.new :some_category, index }
+    it 'warns on wrong options' do
+      category.should_receive(:warn).once.with <<-WARNING
+
+Warning: Category options {:weights=>:some_weight} for category some_category contain an unknown option.
+         Working options are: [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :weight].
+WARNING
+      
+      category.warn_if_unknown :weights => :some_weight
+    end
+    it 'does not warn on right options' do
+      category.should_receive(:warn).never
+      
+      category.warn_if_unknown :weight => :some_weight
+    end
+  end
 
   context 'tokenizer' do
     context 'options hash' do

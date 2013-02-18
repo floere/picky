@@ -42,7 +42,7 @@ module Picky
     end
     
     def configure_from options
-      @from      = options[:from]
+      @from      = options.delete :from
       
       # Instantly extracted to raise an error instantly.
       #
@@ -72,8 +72,19 @@ module Picky
 
       @prepared  = Backends::Prepared::Text.new prepared_index_path
     end
+    # Since the options hash might contain options that do not exist,
+    # we should warn people if they use the wrong options.
+    # (Problem is that if the option is not found, then Picky will use the default)
+    #
+    # TODO Rewrite it such that this does not need to be maintained separately.
+    #
+    @@known_keys = [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :weight]
     def warn_if_unknown options
-      
+      warn <<-WARNING if options && (options.keys - @@known_keys).size > 0
+
+Warning: Category options #{options} for category #{name} contain an unknown option.
+         Working options are: #{@@known_keys}.
+WARNING
     end
     def weights_from options
       Generators::Weights.from options[:weight], index_name, name
