@@ -7,14 +7,14 @@ describe Picky::Category do
       source []
     end
     @partial_strategy    = stub :partial, :each_partial => nil, :use_exact_for_partial? => false
-    @weight_strategy    = stub :weights, :saved? => true
+    @weight_strategy     = stub :weights, :saved? => true, :weight_for => :some_weight
     @similarity_strategy = stub :similarity, :encode => nil, :prioritize => nil
 
     @exact   = stub :exact, :dump => nil
     @partial = stub :partial, :dump => nil
 
     @category = described_class.new :some_name, @index, :partial    => @partial_strategy,
-                                                        :weights    => @weight_strategy,
+                                                        :weight     => @weight_strategy,
                                                         :similarity => @similarity_strategy,
                                                         :qualifiers => [:q, :qualifier]
 
