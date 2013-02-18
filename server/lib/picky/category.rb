@@ -61,6 +61,8 @@ module Picky
     # TODO I do a lot of helper method calls here. Refactor?
     #
     def configure_indexes_from options
+      warn_if_unknown options
+      
       weights    = weights_from options
       partial    = partial_from options
       similarity = similarity_from options
@@ -69,6 +71,9 @@ module Picky
       @partial   = partial_for @exact, partial, weights, options
 
       @prepared  = Backends::Prepared::Text.new prepared_index_path
+    end
+    def warn_if_unknown options
+      
     end
     def weights_from options
       Generators::Weights.from options[:weight], index_name, name
