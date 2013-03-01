@@ -152,12 +152,12 @@ end
 
 def kill_server
   puts "Killing server (if there)"
-  system "ps ax | grep 'unicorn master -c unicorn.rb' | awk '{print $1}' | xargs kill"
+  system "ps ax | grep '/\\bunicorn' | awk '{print $1}' | xargs kill"
 end
 
 def kill_client
   puts "Killing client (if there)"
-  system "ps ax | grep 'unicorn master -p 3210' | awk '{print $1}' | xargs kill"
+  system "ps ax | grep '/\bunicorn -p 3210' | awk '{print $1}' | xargs kill"
 end
 
 def delete_server_directory
