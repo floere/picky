@@ -4,6 +4,10 @@ require 'spec_helper'
 
 describe Picky::Tokenizer do
   describe 'examples' do
+    it 'leaves a dash alone by default' do
+      tokenizer = described_class.new
+      tokenizer.tokenize('title1-').should == [['title1-'], ['title1-']]
+    end
     it 'works correctly' do
       tokenizer = described_class.new(normalizes_words: [[/\&/, 'and']])
       
