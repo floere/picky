@@ -16,7 +16,7 @@ describe 'Search#only' do
     index.add thing.new(2, 'some name', 'some title', 'some text')
     
     try = Picky::Search.new index do
-      only [:author, :text] #,
+      only [:author, :text],
            [:text]
     end
     
