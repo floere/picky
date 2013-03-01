@@ -9,14 +9,6 @@ describe Picky::Query::Allocation do
     @allocation   = described_class.new @index, @combinations
   end
 
-  # describe "hash" do
-  #   it "forwards to the combinations" do
-  #     @combinations.should_receive(:hash).once.with
-  # 
-  #     @allocation.hash
-  #   end
-  # end
-
   describe "to_s" do
     before(:each) do
       @combinations.stub! :to_result => 'combinations_result'
@@ -186,20 +178,6 @@ describe Picky::Query::Allocation do
 
         @allocation.to_result.should == nil
       end
-    end
-  end
-
-  describe 'to_json' do
-    before(:each) do
-      @allocation = described_class.new @index, stub(:combination, :empty? => false, :to_result => [:some_result1, :some_result2])
-      @allocation.instance_variable_set :@score, :some_score
-    end
-    it 'should output the correct json string' do
-      @backend.stub! :ids => [1,2,3,4,5,6,7]
-
-      @allocation.process! 20, 0
-
-      @allocation.to_json.should == '["some_result_identifier","some_score",7,["some_result1","some_result2"],[1,2,3,4,5,6,7]]'
     end
   end
 

@@ -105,14 +105,6 @@ module Picky
       def to_result
         [self.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count && self.count > 0
       end
-
-      # Json representation of this allocation.
-      #
-      # Note: Forwards to to_result.
-      #
-      def to_json options = {}
-        MultiJson.encode to_result, options
-      end
       
       #
       #
