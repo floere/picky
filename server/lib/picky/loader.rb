@@ -63,8 +63,7 @@ module Picky
                       'extensions/symbol',
                       'extensions/string',
                       'extensions/module',
-                      'extensions/class',
-                      'extensions/hash'
+                      'extensions/class'
       end
       def load_helpers
         load_relative 'helpers/measuring',
