@@ -19,7 +19,7 @@ describe 'ignoring allocations' do
     
     try = Picky::Search.new index do
       ignore [:author, :text],
-             [:text, :text]
+             [:text]
     end
     
     # These allocations are now removed.
