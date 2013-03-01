@@ -1,3 +1,10 @@
+## 4.13.1
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- The `#only` and `#ignore` options on `Search` now work as expected (`Array`s describe order of categories in allocations – so `[:title, :author]` will also match `[:title, :title, :author, :author, :author]`).
+- Removed `#to_json` from `Hash` and `Allocation`.
+
 ## 4.13.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
