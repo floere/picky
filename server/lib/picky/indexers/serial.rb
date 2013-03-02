@@ -54,12 +54,25 @@ module Picky
       def index_flush datas, file, cache, tokenizer
         comma   = ?,
         newline = ?\n
-
-        datas.each do |indexed_id, text|
-          tokens, _ = tokenizer.tokenize text # Note: Originals not needed.
-          tokens.each do |token_text|
-            next unless token_text
-            cache << indexed_id << comma << token_text << newline
+        
+        # Optimized, therefore duplicate code.
+        #
+        # TODO Deoptimize?
+        #
+        if tokenizer
+          datas.each do |indexed_id, text|
+            tokens, _ = tokenizer.tokenize text # Note: Originals not needed.
+            tokens.each do |token_text|
+              next unless token_text
+              cache << indexed_id << comma << token_text << newline
+            end
+          end
+        else
+          datas.each do |indexed_id, tokens|
+            tokens.each do |token_text|
+              next unless token_text
+              cache << indexed_id << comma << token_text << newline
+            end
           end
         end
 

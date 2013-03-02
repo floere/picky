@@ -28,6 +28,7 @@ module Picky
     #
     # Advanced Options:
     #  * source: Use if the category should use a different source.
+    #  * tokenize: Whether to use the tokenizer (default is true).
     #  * tokenizer: Use a subclass of Tokenizers::Base that implements #tokens_for and #empty_tokens.
     #  * weight: Weights::Logarithmic.new, Weights::Constant.new(int = 0),
     #  Weights::Dynamic.new(&block) or an object that responds
@@ -47,6 +48,7 @@ module Picky
       # Instantly extracted to raise an error instantly.
       #
       @source    = Source.from options[:source], true, @index.name
+      @tokenize  = options[:tokenize] != false
       @tokenizer = Tokenizer.from options[:indexing], @index.name, name
       @ranger    = options[:ranging] || Range
 
@@ -78,7 +80,7 @@ module Picky
     #
     # TODO Rewrite it such that this does not need to be maintained separately.
     #
-    @@known_keys = [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :weight]
+    @@known_keys = [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight]
     def warn_if_unknown options
       warn <<-WARNING if options && (options.keys - @@known_keys).size > 0
 

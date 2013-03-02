@@ -95,8 +95,10 @@ module Picky
     # If one isn't set on this category, will try the index,
     # and finally the default index tokenizer.
     #
+    # Will return nil if tokenize is set to false.
+    #
     def tokenizer
-      @tokenizer || @index.tokenizer
+      @tokenizer || @index.tokenizer if @tokenize
     end
 
     # Clears the caches.

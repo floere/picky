@@ -57,10 +57,17 @@ module Picky
     # For the given id, adds the list of
     # strings to the index for the given id.
     #
-    def add_text id, text, where = :unshift
+    def add_text id, text_or_tokens, where = :unshift
       # text = text.to_sym if @symbols # SYMBOLS.
-      tokens, _ = tokenizer.tokenize text
+      tokens = nil
+      if tokenizer
+        tokens, _ = tokenizer.tokenize text_or_tokens
+      else
+        tokens = text_or_tokens
+      end
       tokens.each { |text| add_tokenized_token id.send(key_format), text, where, false }
+    rescue NoMethodError
+      raise %Q{You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
     end
 
     #
