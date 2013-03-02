@@ -1,3 +1,9 @@
+## 4.14.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Add `tokenize` option on category. Set to `false` when you already pre-tokenize the category (default is `true`).
+
 ## 4.13.1
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
