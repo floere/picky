@@ -69,19 +69,70 @@ Why? In earlier versions of Picky we found that boosting specific combinations i
 
 Let me give you an example from a movie search engine. instead of having to say `boost [:title] => +1, [:title, :title] => +1, [:title, :title, :title] => +1`, it is far more useful to say "If you find any number of title words in a row, boost it". So, when searching for "star wars empire strikes back 1979", it is less important that it is exactly 5 title categories in a row that a title followed by the release year. In this case, the boost `[:title, :release_year] => +3` would be applied.
 
-#### Ignore Categories{#search-options-ignore}
+#### Ignoring Categories{#search-options-ignore}
 
 There's a [full blog post](http://florianhanke.com/blog/2011/09/01/picky-case-study-location-based-ads.html) devoted to this topic.
 
-In short, the `ignore :category_name` option makes Picky throw away any result combinations that have the named category in it.
+In short, an `ignore :name` option makes that Search throw away (ignore) any tokens (words) that map to category `name`.
 
-If Picky finds the tokens "florian hanke" in both `:first_name, :last_name` and `:last_name, :last_name`, and we've instructed it to ignore `first_name`,
+Let's say we have a search defined:
 
     names = Picky::Search.new name_index do
       ignore :first_name
     end
 
-then it will throw away the solutions for `:first_name, :last_name` (eg. "Peter Miller") and only use `:last_name, :last_name` (eg. "Smith Miller").
+Now, if Picky finds the tokens "florian hanke" in both `:first_name, :last_name` and `:last_name, :last_name`, then it will throw away the solutions for `:first_name` ("florian" will be thrown away) leaving only "hanke", since that is a last name. The `[:last_name, :last_name]` combinations will be left alone – ie. if "florian" and "hanke" are both found in `last_name`.
+
+#### Ignoring Combinations of Categories{#search-options-ignore-combination}
+
+The `ignore` option also takes arrays. If you give it an array, it will throw away all solutions where that _order_ of categories occurs.
+
+Let's say you want to throw away results where last name is found before first name, because your search form is in order: `[first_name last_name]`.
+
+    names = Picky::Search.new name_index do
+      ignore [:last_name, :first_name]
+    end
+
+So if somebody searches for "peter paul han" (each a last name as well as a first name), and Picky finds the following combinations:
+
+    [:first_name, :first_name, :first_name]
+    [:last_name, :first_name, :last_name]
+    [:first_name, :last_name, :first_name]
+    [:last_name, :first_name, :first_name]
+    [:last_name, :last_name, :first_name]
+
+then the combinations
+
+    [:last_name, :first_name, :first_name]
+    [:last_name, :last_name, :first_name]
+
+will be thrown away, since they are in the order `[last_name, first_name]`. Note that `[:last_name, :first_name, :last_name]` is not thrown away since it is last-first-last.
+
+#### Keeping Combinations of Categories{#search-options-only-combination}
+
+This is the opposite of the `ignore` option above.
+
+Almost. The `only` option only takes arrays. If you give it an array, it will keep only solutions where that _order_ of categories occurs.
+
+Let's say you want to keep only results where first name is found before last name, because your search form is in order: `[first_name last_name]`.
+
+    names = Picky::Search.new name_index do
+      only [:first_name, :last_name]
+    end
+
+So if somebody searches for "peter paul han" (each a last name as well as a first name), and Picky finds the following combinations:
+
+    [:first_name, :first_name, :last_name]
+    [:last_name, :first_name, :last_name]
+    [:first_name, :last_name, :first_name]
+    [:last_name, :first_name, :first_name]
+    [:last_name, :last_name, :first_name]
+
+then only the combination
+
+    [:first_name, :first_name, :last_name]
+
+will be kept, since it is the only one where first comes before last, in that order.
 
 #### Ignore Unassigned Tokens{#search-options-unassigned}
 

@@ -111,9 +111,11 @@ What options does a user have when searching?
 Advanced topics:
 
 * [Boosting](#search-options-boost) ([boosting a single category](#indexes-categories-weight))
-* [Ignoring a category](#search-options-ignore)
+* [Ignoring categories](#search-options-ignore)
+* [Ignoring combinations of categories](#search-options-ignore-combination)
+* [Keeping only specific combinations of categories](#search-options-only-combination)
 * [Ignoring query words that are not found](#search-options-unassigned)
-* [Maximum Allocations](#search-options-maxallocations)
+* [Maximum allocations (of tokens to categories)](#search-options-maxallocations)
 * [Stopping a search early](#search-options-terminateearly)
 
 #### Facets{#facets-index}
