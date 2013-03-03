@@ -10,14 +10,12 @@ describe 'Category#tokenize(false)' do
     end
 
     thing = Struct.new :id, :text
-    # expect do # Does not fail – because #to_s is called on the Array.
-    index.add thing.new(1, ['already', 'tokenized'])
-    # end.to raise_error
+    index.add thing.new(1, ['already', 'tokenized']) # Does not fail – because #to_s is called on the Array.
     index.add thing.new(2, 'this should not fail')
     
     try = Picky::Search.new index
-    
-    try.search('already').ids.should == [] # Not found because ['already', is indexed.
+    try.search('already').ids.should == [] # Not found because ["already", is indexed.
+    try.search('should').ids.should == [2]
   end
   it 'does tokenize (default)' do
     index = Picky::Index.new :thing do
