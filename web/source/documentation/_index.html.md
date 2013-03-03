@@ -72,6 +72,7 @@ How is the data categorized?
 * [Option from](#indexes-categories-from)
 * [Option key_format](#indexes-categories-keyformat)
 * [Option source](#indexes-categories-source)
+* [Option tokenize](#indexes-categories-tokenize)
 
 How is the data prepared?
 

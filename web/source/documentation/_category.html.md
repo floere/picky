@@ -239,6 +239,26 @@ But if you need to, use as with the index.
                source: some_source
     end
 
+### Option tokenize{#indexes-categories-tokenize}
+
+Set this option to `false` when you give Picky already tokenized data (an Array, or generally an Enumerator).
+
+    Index.new :people do
+      category :names, tokenize: false
+    end
+
+And Person has a method `#names` which returns this array:
+
+    class Person
+      
+      def names
+        ['estaban', 'julio', 'ricardo', 'montoya', 'larosa', 'ramirez']
+      end
+      
+    end
+
+Then Picky will simply use the tokens in that array without (pre-)processing them. Of course, this means you need to really do all the tokenizing work. If you leave the tokens uppercase, then nothing will be found, unless you set the Search to be case-sensitive, for example.
+
 ### User Search Options{#indexes-categories-searching}
 
 Users can use some special features when searching. They are:
