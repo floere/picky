@@ -177,6 +177,8 @@
 <li><a href='#indexes-categories-keyformat'>Option key_format</a></li>
 
 <li><a href='#indexes-categories-source'>Option source</a></li>
+
+<li><a href='#indexes-categories-tokenize'>Option tokenize</a></li>
 </ul>
 
 <p>How is the data prepared?</p>
@@ -240,11 +242,15 @@
 <ul>
 <li><a href='#search-options-boost'>Boosting</a> (<a href='#indexes-categories-weight'>boosting a single category</a>)</li>
 
-<li><a href='#search-options-ignore'>Ignoring a category</a></li>
+<li><a href='#search-options-ignore'>Ignoring categories</a></li>
+
+<li><a href='#search-options-ignore-combination'>Ignoring combinations of categories</a></li>
+
+<li><a href='#search-options-only-combination'>Keeping only specific combinations of categories</a></li>
 
 <li><a href='#search-options-unassigned'>Ignoring query words that are not found</a></li>
 
-<li><a href='#search-options-maxallocations'>Maximum Allocations</a></li>
+<li><a href='#search-options-maxallocations'>Maximum allocations (of tokens to categories)</a></li>
 
 <li><a href='#search-options-terminateearly'>Stopping a search early</a></li>
 </ul>
@@ -1311,6 +1317,26 @@ end</code></pre>
            source: some_source
 end</code></pre>
 
+<h3 id='indexes-categories-tokenize'>Option tokenize</h3>
+
+<p>Set this option to <code>false</code> when you give Picky already tokenized data (an Array, or generally an Enumerator).</p>
+
+<pre><code>Index.new :people do
+  category :names, tokenize: false
+end</code></pre>
+
+<p>And Person has a method <code>#names</code> which returns this array:</p>
+
+<pre><code>class Person
+  
+  def names
+    [&#39;estaban&#39;, &#39;julio&#39;, &#39;ricardo&#39;, &#39;montoya&#39;, &#39;larosa&#39;, &#39;ramirez&#39;]
+  end
+  
+end</code></pre>
+
+<p>Then Picky will simply use the tokens in that array without (pre-)processing them. Of course, this means you need to really do all the tokenizing work. If you leave the tokens uppercase, then nothing will be found, unless you set the Search to be case-sensitive, for example.</p>
+
 <h3 id='indexes-categories-searching'>User Search Options</h3>
 
 <p>Users can use some special features when searching. They are:</p>
@@ -1528,19 +1554,70 @@ end</code></pre>
 
 <p>Let me give you an example from a movie search engine. instead of having to say <code>boost [:title] =&gt; +1, [:title, :title] =&gt; +1, [:title, :title, :title] =&gt; +1</code>, it is far more useful to say &#8220;If you find any number of title words in a row, boost it&#8221;. So, when searching for &#8220;star wars empire strikes back 1979&#8221;, it is less important that it is exactly 5 title categories in a row that a title followed by the release year. In this case, the boost <code>[:title, :release_year] =&gt; +3</code> would be applied.</p>
 
-<h4 id='search-options-ignore'>Ignore Categories</h4>
+<h4 id='search-options-ignore'>Ignoring Categories</h4>
 
 <p>There&#8217;s a <a href='http://florianhanke.com/blog/2011/09/01/picky-case-study-location-based-ads.html'>full blog post</a> devoted to this topic.</p>
 
-<p>In short, the <code>ignore :category_name</code> option makes Picky throw away any result combinations that have the named category in it.</p>
+<p>In short, an <code>ignore :name</code> option makes that Search throw away (ignore) any tokens (words) that map to category <code>name</code>.</p>
 
-<p>If Picky finds the tokens &#8220;florian hanke&#8221; in both <code>:first_name, :last_name</code> and <code>:last_name, :last_name</code>, and we&#8217;ve instructed it to ignore <code>first_name</code>,</p>
+<p>Let&#8217;s say we have a search defined:</p>
 
 <pre><code>names = Picky::Search.new name_index do
   ignore :first_name
 end</code></pre>
 
-<p>then it will throw away the solutions for <code>:first_name, :last_name</code> (eg. &#8220;Peter Miller&#8221;) and only use <code>:last_name, :last_name</code> (eg. &#8220;Smith Miller&#8221;).</p>
+<p>Now, if Picky finds the tokens &#8220;florian hanke&#8221; in both <code>:first_name, :last_name</code> and <code>:last_name, :last_name</code>, then it will throw away the solutions for <code>:first_name</code> (&#8220;florian&#8221; will be thrown away) leaving only &#8220;hanke&#8221;, since that is a last name. The <code>[:last_name, :last_name]</code> combinations will be left alone – ie. if &#8220;florian&#8221; and &#8220;hanke&#8221; are both found in <code>last_name</code>.</p>
+
+<h4 id='search-options-ignore-combination'>Ignoring Combinations of Categories</h4>
+
+<p>The <code>ignore</code> option also takes arrays. If you give it an array, it will throw away all solutions where that <em>order</em> of categories occurs.</p>
+
+<p>Let&#8217;s say you want to throw away results where last name is found before first name, because your search form is in order: <code>[first_name last_name]</code>.</p>
+
+<pre><code>names = Picky::Search.new name_index do
+  ignore [:last_name, :first_name]
+end</code></pre>
+
+<p>So if somebody searches for &#8220;peter paul han&#8221; (each a last name as well as a first name), and Picky finds the following combinations:</p>
+
+<pre><code>[:first_name, :first_name, :first_name]
+[:last_name, :first_name, :last_name]
+[:first_name, :last_name, :first_name]
+[:last_name, :first_name, :first_name]
+[:last_name, :last_name, :first_name]</code></pre>
+
+<p>then the combinations</p>
+
+<pre><code>[:last_name, :first_name, :first_name]
+[:last_name, :last_name, :first_name]</code></pre>
+
+<p>will be thrown away, since they are in the order <code>[last_name, first_name]</code>. Note that <code>[:last_name, :first_name, :last_name]</code> is not thrown away since it is last-first-last.</p>
+
+<h4 id='search-options-only-combination'>Keeping Combinations of Categories</h4>
+
+<p>This is the opposite of the <code>ignore</code> option above.</p>
+
+<p>Almost. The <code>only</code> option only takes arrays. If you give it an array, it will keep only solutions where that <em>order</em> of categories occurs.</p>
+
+<p>Let&#8217;s say you want to keep only results where first name is found before last name, because your search form is in order: <code>[first_name last_name]</code>.</p>
+
+<pre><code>names = Picky::Search.new name_index do
+  only [:first_name, :last_name]
+end</code></pre>
+
+<p>So if somebody searches for &#8220;peter paul han&#8221; (each a last name as well as a first name), and Picky finds the following combinations:</p>
+
+<pre><code>[:first_name, :first_name, :last_name]
+[:last_name, :first_name, :last_name]
+[:first_name, :last_name, :first_name]
+[:last_name, :first_name, :first_name]
+[:last_name, :last_name, :first_name]</code></pre>
+
+<p>then only the combination</p>
+
+<pre><code>[:first_name, :first_name, :last_name]</code></pre>
+
+<p>will be kept, since it is the only one where first comes before last, in that order.</p>
 
 <h4 id='search-options-unassigned'>Ignore Unassigned Tokens</h4>
 
