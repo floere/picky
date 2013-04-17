@@ -72,7 +72,7 @@ This is already a complete Sinatra server.
 
 #### Routing{#servers-sinatra-routing}
 
-The Sinatra Picky server uses the same routing as Sinatra (of course). [More information on Sinara routing](http://www.sinatrarb.com/intro#Routes).
+The Sinatra Picky server uses the same routing as Sinatra (of course). [More information on Sinatra routing](http://www.sinatrarb.com/intro#Routes).
 
 If you use the server with the picky client software (provided with the picky-client gem), you should return JSON from the Sinatra `get`.
 Just call `to_json` on the returned results to get the results in JSON format.
