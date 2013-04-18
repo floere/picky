@@ -17,4 +17,5 @@ config
 
 coverage
 .rbenv*
+.ruby-version
 sandbox/
