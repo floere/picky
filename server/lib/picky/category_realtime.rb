@@ -17,7 +17,11 @@ module Picky
     # given object.
     #
     def add object, where = :unshift
-      add_text object.id, object.send(from), where
+      if from.respond_to? :call
+        add_text object.id, from.call(object), where
+      else
+        add_text object.id, object.send(from), where
+      end
     end
 
     # Removes the object's id, and then
