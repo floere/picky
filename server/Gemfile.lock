@@ -36,6 +36,8 @@ GEM
     rack_fast_escape (2009.06.24)
       url_escape
     rake (0.9.2.2)
+    rake-compiler (0.8.3)
+      rake
     redis (3.0.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -81,6 +83,7 @@ DEPENDENCIES
   rack-mount
   rack_fast_escape
   rake
+  rake-compiler
   redis
   rest-client
   rspec

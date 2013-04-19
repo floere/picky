@@ -18,12 +18,13 @@ Gem::Specification.new do |s|
   s.executables = ['picky']
   s.default_executable = "picky"
 
-  s.files = Dir["aux/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "lib/performant.c"]
+  s.files = Dir["aux/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "ext/picky/picky.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
 
-  s.extensions << 'lib/extconf.rb'
+  s.extensions << 'ext/picky/extconf.rb'
 
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rake-compiler'
   s.add_development_dependency 'picky-client', "~> #{Picky::VERSION}"
 
   s.add_runtime_dependency 'text' # TODO Make optional?
