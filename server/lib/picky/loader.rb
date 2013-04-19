@@ -55,7 +55,7 @@ module Picky
       # when installing the gem.
       #
       def load_c_code
-        require_relative '../maybe_compile'
+        require_relative '../try_compile'
       end
       def load_extensions
         load_relative 'extensions/object',
