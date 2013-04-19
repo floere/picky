@@ -79,7 +79,7 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
 
 VALUE p_mPerformant, p_cArray;
 
-void Init_performant() {
+void Init_picky() {
   p_mPerformant = rb_define_module("Performant");
   p_cArray = rb_define_class_under(p_mPerformant, "Array", rb_cObject);
   rb_define_singleton_method(p_cArray, "memory_efficient_intersect", memory_efficient_intersect, 1);

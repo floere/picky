@@ -1,32 +1,16 @@
-# Note: This is handled toplevel (in the file
-# structure) to not confuse compilers.
-#
-failed = 0
-
 begin
-  require ::File.expand_path '../performant', __FILE__
+  require ::File.expand_path '../picky/picky', __FILE__
 rescue LoadError => e
-  failed += 1
-  
-  # Have Makefile built.
-  #
-  require ::File.expand_path '../extconf', __FILE__
-  
-  # Run make in the right gem directory.
-  #
-  Dir.chdir(::File.expand_path '..', __FILE__) do
-    puts %x(make)
-  end
-  
-  # Try again.
-  #
-  retry if failed < 2
-  
   # Give up and inform the user.
   #
   puts <<-NOTE
 
 Picky tried to compile its source on your system but failed.
+
+If you are trying to develop for it, please run the specs first:
+bundle exec rake
+(You might need to set ulimit -n 3000 for the tests to run)
+
 Please add an issue: https://github.com/floere/picky/issues/
 and copy anything into it that you think is helpful. Thanks!
 
