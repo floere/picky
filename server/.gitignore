@@ -1,23 +1,20 @@
-/index
+/tmp
 
-/test_project/index
-/test_project/log/*.log
-/test_project/tmp
+/lib/picky/picky.bundle
 
 /experimental/sinatra/index
 /experimental/sinatra_unicorn/index
 
-test_project_sinatra/index
-test_project_sinatra/tmp
-
-performance_tests/index
-
-spec/test_directory
-
+/spec/test_directory
 /spec/temp
+/performance_tests/index
+performance_ratio.rb
+
+/test_project/index
+/test_project/log/*.log
+/test_project/tmp
+/test_project_sinatra/index
+/test_project_sinatra/tmp
 
 unimportant.sqlite3
-
 .rbx
-
-performance_ratio.rb
