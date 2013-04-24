@@ -3,35 +3,33 @@
 class Module
   
   def forward *methods
-    to = extract_to_from_options methods,
-           "Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, :to => :an_array_reader)."
-    forwarding methods do |method|
-      "def #{method}(*args, &block)\n#{to}.__send__(#{method.inspect}, *args, &block)\nend\n"
-    end
+    forwarding methods,
+      'def %{method}(*args, &block); %{to}.__send__(:%{method}, *args, &block); end',
+      'Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, :to => :a_reader).'
   end
   
   def each_forward *methods
-    to = extract_to_from_options methods,
-           "Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, :to => :an_array_reader)."
-    forwarding methods do |method|
-      "def #{method}(*args, &block)\n#{to}.each{ |t| t.__send__(#{method.inspect}, *args, &block) }\nend\n"
-    end
+    forwarding methods,
+      'def %{method}(*args, &block); %{to}.each{ |t| t.__send__(:%{method}, *args, &block) }; end',
+      'Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, :to => :an_array_reader).'
   end
   
   private
   
-    def extract_to_from_options args, error_string
+    def forwarding methods, method_definition_template, error_message = nil
+      to = extract_to_from_options methods, error_message
+      methods.each do |method|
+        method_definition = method_definition_template % { to: to, method: method }
+        module_eval method_definition, "(__FORWARDING__)", 1
+      end
+    end
+    
+    def extract_to_from_options args, error_message
       options = args.pop
       unless options.is_a?(Hash) && to = options[:to]
-        raise ArgumentError, "Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, :to => :an_array_reader)."
+        raise ArgumentError, error_message
       end
       to
-    end
-  
-    def forwarding methods, &method_definition
-      methods.each do |method|
-        module_eval method_definition[method], "(__FORWARDING__)", 1
-      end
     end
 
 end
