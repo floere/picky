@@ -212,13 +212,17 @@ module Picky
         @intermediate_result_id ||= "#{host}:#{pid}:picky:result"
       end
       
+      def identifiers_for combinations
+        combinations.inject([]) do |identifiers, combination|
+          identifiers << "#{PICKY_ENVIRONMENT}:#{combination.identifier}"
+        end
+      end
+      
       # Uses Lua scripting on Redis 2.6.
       #
       module Scripting
         def ids combinations, amount, offset
-          identifiers = combinations.inject([]) do |identifiers, combination|
-            identifiers << "#{PICKY_ENVIRONMENT}:#{combination.identifier}"
-          end
+          identifiers = identifiers_for combinations
 
           # Assume it's using EVALSHA.
           #
@@ -256,9 +260,7 @@ module Picky
       #
       module NonScripting
         def ids combinations, amount, offset
-          identifiers = combinations.inject([]) do |identifiers, combination|
-            identifiers << "#{combination.identifier}"
-          end
+          identifiers = identifiers_for combinations
 
           result_id = generate_intermediate_result_id
 
