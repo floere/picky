@@ -61,23 +61,12 @@ module Picky
         
         # Optimized, therefore duplicate code.
         #
-        # TODO Deoptimize?
-        #
-        if tokenizer
-          objects.each do |object|
-            tokens, _ = tokenizer.tokenize object.send(category.from) # Note: Originals not needed.
-            tokens.each do |token_text|
-              next unless token_text
-              cache << object.id << comma << token_text << newline
-            end
-          end
-        else
-          objects.each do |object|
-            tokens = object.send(category.from) # Note: Originals not needed.
-            tokens.each do |token_text|
-              next unless token_text
-              cache << object.id << comma << token_text << newline
-            end
+        objects.each do |object|
+          tokens = object.send category.from
+          tokens, _ = tokenizer.tokenize tokens if tokenizer # Note: Originals not needed. TODO Optimize?
+          tokens.each do |token_text|
+            next unless token_text
+            cache << object.id << comma << token_text << newline
           end
         end
 
