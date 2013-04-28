@@ -28,7 +28,7 @@ describe 'GC stats: searching' do
   end
   let(:search) { Picky::Search.new data }
 
-  # TODO Study what the problem is.
+  # TODO Why are both versions almost equally fast?
   #
   context 'without pool' do
     it 'runs the GC more' do
@@ -40,14 +40,14 @@ describe 'GC stats: searching' do
       query = 'abracadabra mirgel'
       gc_runs_of do
         amount.times { try.search query }
-      end.should <= 13
+      end.should >= 10
     end
     it 'is less (?) performant' do
       try = search
       query = 'abracadabra mirgel'
       performance_of do
         amount.times { try.search query }
-      end.should <= 0.42
+      end.should >= 0.15
     end
   end
   context 'with pool' do
@@ -67,7 +67,10 @@ describe 'GC stats: searching' do
       try = search
       query = 'abracadabra mirgel'
       gc_runs_of do
-        amount.times { try.search query; Picky::Pool.release_all }
+        amount.times do
+          try.search query
+          Picky::Pool.release_all
+        end
       end.should <= 1 # Definitely less GC runs.
     end
     it 'is more (?) performant' do
@@ -75,7 +78,7 @@ describe 'GC stats: searching' do
       query = 'abracadabra mirgel'
       performance_of do
         amount.times { try.search query }
-      end.should <= 0.42
+      end.should <= 0.2
     end
   end
   
