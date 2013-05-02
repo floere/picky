@@ -1,3 +1,5 @@
+"use strict";
+
 // Add PickyResults?
 var PickyView = function(picky_controller, config) {
   

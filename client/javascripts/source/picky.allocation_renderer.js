@@ -1,3 +1,5 @@
+"use strict";
+
 function AllocationRenderer(config) {
   var self = this;
 
@@ -35,6 +37,7 @@ function AllocationRenderer(config) {
 	  
     // Combine the values.
     //
+		var l;
     for (i = 0, l = zipped.length; i < l; i++) {
       var key = zipped[i][0];
       if (key in originals) {

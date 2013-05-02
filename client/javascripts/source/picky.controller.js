@@ -1,3 +1,5 @@
+"use strict";
+
 var PickyController = function(config) {
   
   var view = new PickyView(this, config);

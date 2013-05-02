@@ -1,3 +1,5 @@
+"use strict";
+
 var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;

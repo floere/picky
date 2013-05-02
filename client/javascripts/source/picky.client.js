@@ -1,3 +1,5 @@
+"use strict";
+
 var PickyI18n = { };
 
 // The client handles parameters and
