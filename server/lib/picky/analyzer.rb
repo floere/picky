@@ -42,8 +42,8 @@ class Analyzer
     return if index.size.zero?
     return unless index.respond_to?(:each_pair)
 
-    key_length_average = 0
-    ids_length_average = 0
+    key_length_sum = 0
+    ids_length_sum = 0
 
     min_ids_length = 1.0/0 # Infinity
     max_ids_length =     0
@@ -58,7 +58,7 @@ class Analyzer
       else
         max_key_length = key_size if key_size > max_key_length
       end
-      key_length_average += key_size
+      key_length_sum += key_size
 
       ids_size = ids.size
       if ids_size < min_ids_length
@@ -66,17 +66,14 @@ class Analyzer
       else
         max_ids_length = ids_size if ids_size > max_ids_length
       end
-      ids_length_average += ids_size
+      ids_length_sum += ids_size
     end
-    index_size = index.size
-    key_length_average = key_length_average.to_f / index_size
-    ids_length_average = ids_length_average.to_f / index_size
 
     analysis[identifier] ||= {}
     analysis[identifier][:key_length]         = (min_key_length..max_key_length)
     analysis[identifier][:ids_length]         = (min_ids_length..max_ids_length)
-    analysis[identifier][:key_length_average] = key_length_average
-    analysis[identifier][:ids_length_average] = ids_length_average
+    analysis[identifier][:key_length_average] = key_length_sum.to_f / index.size
+    analysis[identifier][:ids_length_average] = ids_length_sum.to_f / index.size
   end
   def index_analysis
     return unless analysis[:index]
@@ -133,18 +130,24 @@ class Analyzer
   end
   def index_to_s
     return if analysis[:__keys].zero?
-    ary = ["index key cardinality:                #{"%10d" % analysis[:__keys]}"]
+    ary = ["index key cardinality:                #{"%9d" % analysis[:__keys]}"]
     return ary.join "\n" unless analysis[:index]
-    ary << formatted('',        :key_length)
+    ary << formatted(nil,       :key_length)
     ary << formatted('ids per', :ids_length)
     ary.join "\n"
   end
   def formatted description, key, index = :index
-    "index #{description} key length range (avg): #{"%10s" % analysis[index][key]} (#{analysis[index][:"#{key}_average"].round(2)})"
+    what    = "%-40s" % ["index", description, "key length range (avg):"].compact.join(' ')
+    range   = "%7s" % analysis[index][key]
+    average = "%8s" % "(#{analysis[index][:"#{key}_average"].round(2)})"
+    what + range + average
   end
   def weights_to_s
     return unless analysis[:weights]
-    %Q{weights range (avg):                  #{"%10s" % analysis[:weights][:weight_range]} (#{analysis[:weights][:weight_average].round(2)})}
+    what    = "%-30s" % "weights range (avg):"
+    range   = "%17s" % analysis[:weights][:weight_range]
+    average = "%8s" % "(#{analysis[:weights][:weight_average].round(2)})"
+    what + range + average
   end
   def similarity_to_s
     return unless analysis[:similarity]
