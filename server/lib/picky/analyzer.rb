@@ -39,8 +39,7 @@ class Analyzer
     self
   end
   def cardinality identifier, index
-    return if index.size.zero?
-    return unless index.respond_to?(:each_pair)
+    return unless can_calculate_cardinality? index
 
     key_length_sum = 0
     ids_length_sum = 0
@@ -74,6 +73,11 @@ class Analyzer
     analysis[identifier][:ids_length]         = (min_ids_length..max_ids_length)
     analysis[identifier][:key_length_average] = key_length_sum.to_f / index.size
     analysis[identifier][:ids_length_average] = ids_length_sum.to_f / index.size
+  end
+  def can_calculate_cardinality? index
+    return if index.size.zero?
+    return unless index.respond_to? :each_pair
+    true
   end
   def index_analysis
     return unless analysis[:index]
