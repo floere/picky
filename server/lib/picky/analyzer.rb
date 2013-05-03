@@ -66,11 +66,14 @@ class Analyzer
       ids_length_sum += ids.size
     end
 
-    analysis[identifier] ||= {}
-    analysis[identifier][:key_length]         = key_length
-    analysis[identifier][:ids_length]         = ids_length
-    analysis[identifier][:key_length_average] = key_length_sum.to_f / index.size
-    analysis[identifier][:ids_length_average] = ids_length_sum.to_f / index.size
+    report_cardinality identifier, index, key_length, ids_length, key_length_sum, ids_length_sum
+  end
+  def report_cardinality identifier, index, key_length, ids_length, key_length_sum, ids_length_sum
+    analysis_identifier = analysis[identifier] ||= {}
+    analysis_identifier[:key_length]         = key_length
+    analysis_identifier[:ids_length]         = ids_length
+    analysis_identifier[:key_length_average] = key_length_sum.to_f / index.size
+    analysis_identifier[:ids_length_average] = ids_length_sum.to_f / index.size    
   end
   
   def can_calculate_cardinality? index
