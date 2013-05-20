@@ -1,7 +1,5 @@
 h1. Picky
 
-"!http://codeclimate.com/github/floere/picky.png!":https://codeclimate.com/github/floere/picky
-
 In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://goodfil.ms, "cocoapods.org":http://cocoapods.org, "wadoku.eu":http://wadoku.eu, "twixtel.ch":http://twixtel.ch, "wilmaa.com":http://wilmaa.com, "paatle.com":http://www.paatle.com, and many more…
 
 h2. The Ruby semantic text search engine.
