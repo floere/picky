@@ -1,0 +1,29 @@
+# encoding: utf-8
+#
+require 'spec_helper'
+
+describe "Array IDs" do
+
+  # This tests the weights option.
+  #
+  it 'can use Arrays as IDs' do
+    index = Picky::Index.new :arrays do
+      key_format :to_a
+      
+      category :text1
+    end
+
+    require 'ostruct'
+
+    thing = OpenStruct.new id: ['id1', 'thing1'], text1: "ohai"
+    other = OpenStruct.new id: ['id2', 'thing2'], text1: "kthxbye"
+
+    index.add thing
+    index.add other
+
+    try = Picky::Search.new index
+
+    try.search("text1:ohai").ids.should == [['id1', 'thing1']] # WAT
+  end
+
+end
