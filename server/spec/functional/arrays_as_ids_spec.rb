@@ -16,14 +16,17 @@ describe "Array IDs" do
     require 'ostruct'
 
     thing = OpenStruct.new id: ['id1', 'thing1'], text1: "ohai"
-    other = OpenStruct.new id: ['id2', 'thing2'], text1: "kthxbye"
+    other = OpenStruct.new id: ['id2', 'thing2'], text1: "ohai kthxbye"
 
     index.add thing
     index.add other
 
     try = Picky::Search.new index
 
-    try.search("text1:ohai").ids.should == [['id1', 'thing1']] # WAT
+    try.search("text1:ohai").ids.should == [
+      ["id2", "thing2"],
+      ["id1", "thing1"]
+    ] # WAT
   end
 
 end
