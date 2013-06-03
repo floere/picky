@@ -5,7 +5,9 @@ module Picky
   class Index
     include Helpers::Indexing
 
-    forward :cache, :clear, :to => :categories
+    forward :cache,
+            :clear,
+            :to => :categories
 
     # Define an index tokenizer on the index.
     #
@@ -20,6 +22,8 @@ module Picky
     #
     # Decides whether to use a parallel indexer or whether to
     # forward to each category to prepare themselves.
+    #
+    # TODO Do a critical reading of this on the blog.
     #
     def prepare scheduler = Scheduler.new
       if source.respond_to?(:each)
@@ -79,7 +83,7 @@ module Picky
       some_source ? (@source = Source.from(some_source, false, name)) : unblock_source
     end
     # Get the actual source if it is wrapped in a time
-    # capsule, i.e. a block/lambda.
+    # capsule, ie. a block/lambda.
     #
     def unblock_source
       @source.respond_to?(:call) ? @source.call : @source

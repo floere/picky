@@ -65,8 +65,13 @@ module Picky
       else
         tokens = text_or_tokens
       end
+      
+      # TODO Have an "as is" key_format?
+      #
       tokens.each { |text| add_tokenized_token id.send(key_format), text, where, false }
     rescue NoMethodError
+      # TODO This also is raised on a wrong key_format.
+      # TODO Improve error message by pointing out what exactly goes wrong: thing xy does not have an #each method.
       raise %Q{You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
     end
 
