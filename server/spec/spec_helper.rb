@@ -3,6 +3,7 @@
 # Start Redis if not yet running.
 #
 # TODO Code reading.
+# TODO Clean up – perhaps make it a block and only run it if block is called.
 #
 fork do
   print "Starting redis-server... "
