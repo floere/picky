@@ -1,5 +1,15 @@
 `rm -r spec/temp/*`
 
+# Start Redis if not yet running.
+#
+# TODO Code reading.
+#
+fork do
+  print "Starting redis-server... "
+  `redis-server` # Gets stuck or fails, continuing.
+  puts "Redis already running (exitstatus #{$?.exitstatus})." unless $?.success?
+end
+
 if ENV['COV']
   require 'simplecov'
   SimpleCov.adapters.define 'picky' do
