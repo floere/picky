@@ -87,7 +87,9 @@ module Picky
 
     # Define a key_format on the index.
     #
-    # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip).
+    # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip, :split).
+    #
+    # TODO Rename id_format?
     #
     def key_format key_format = nil
       key_format ? (@key_format = key_format) : @key_format
