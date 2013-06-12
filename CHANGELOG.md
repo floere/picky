@@ -1,3 +1,17 @@
+## 4.15.1
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- The `from` category option accepts anything that can be called. For example, `category :authors, :from => lambda { |book| book.authors.map(&:name).join(" ") }`.
+- Key format `:split` can be used, in case of a string id. This results in an array be stored as IDs.
+- Arrays can be used as IDs if you use the in-memory backend.
+
+## 4.15.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Completely rewritten and more standard C code compilation/inclusion.
+
 ## 4.14.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
