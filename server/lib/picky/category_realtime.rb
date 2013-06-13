@@ -16,6 +16,8 @@ module Picky
     # Adds and indexes this category of the
     # given object.
     #
+    # TODO Don't do this super-dynamically.
+    #
     def add object, where = :unshift
       if from.respond_to? :call
         add_text object.id, from.call(object), where

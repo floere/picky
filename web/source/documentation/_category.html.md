@@ -217,7 +217,7 @@ Sometimes though, the model has not the right names. Say, you have an italian bo
       category :isbn
     end
 
-You can also populate the index at runtime using a lambda. The required argument inside the lambda is the object being added to the index.
+You can also populate the index at runtime (eg. with `index.add`) using a lambda. The required argument inside the lambda is the object being added to the index.
 
     Index.new :books do
       category :authors, :from => lambda { |book| book.authors.map(&:name) }
