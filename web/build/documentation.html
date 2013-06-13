@@ -1295,6 +1295,12 @@ category :other, :qualifier =&gt; &#39;o&#39;</code></pre>
   category :isbn
 end</code></pre>
 
+<p>You can also populate the index at runtime (eg. with <code>index.add</code>) using a lambda. The required argument inside the lambda is the object being added to the index.</p>
+
+<pre><code>Index.new :books do
+  category :authors, :from =&gt; lambda { |book| book.authors.map(&amp;:name) }
+end</code></pre>
+
 <h3 id='indexes-categories-keyformat'>Option key_format</h3>
 
 <p>You almost never use this, as the key format will usually be the same for all categories, which is when you would define it on the index, <a href='#indexes-keyformat'>like so</a>.</p>
