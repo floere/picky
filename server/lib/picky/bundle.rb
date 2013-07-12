@@ -54,7 +54,6 @@ module Picky
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
 
-      @key_format = options.delete :key_format
       @backend    = options.delete :backend
 
       reset_backend
@@ -146,10 +145,10 @@ module Picky
 
     # If a key format is set, use it, else forward to the category.
     #
-    # TODO What about setting the key_format per category?
+    # TODO Removed optimisation: @key_format ||= @category.key_format
     #
     def key_format
-      @key_format || @category.key_format
+      @category.key_format
     end
 
     # Path and partial filename of a specific subindex.
