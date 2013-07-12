@@ -1,3 +1,9 @@
+## 4.16.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Search facets do not report duplicate entries under 1000 facets.
+
 ## 4.15.1
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
