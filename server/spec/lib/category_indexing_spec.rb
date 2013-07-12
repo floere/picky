@@ -59,11 +59,11 @@ describe Picky::Category do
                                           .and_yield(5, :some_token)
         category.stub! :prepared => prepared
 
-        category.should_receive(:add_tokenized_token).once.with(1, :some_token, :<<)
-        category.should_receive(:add_tokenized_token).once.with(2, :some_token, :<<)
-        category.should_receive(:add_tokenized_token).once.with(3, :some_token, :<<)
-        category.should_receive(:add_tokenized_token).once.with(4, :some_token, :<<)
-        category.should_receive(:add_tokenized_token).once.with(5, :some_token, :<<)
+        category.should_receive(:add_tokenized_token).once.with(1, :some_token, :<<, nil)
+        category.should_receive(:add_tokenized_token).once.with(2, :some_token, :<<, nil)
+        category.should_receive(:add_tokenized_token).once.with(3, :some_token, :<<, nil)
+        category.should_receive(:add_tokenized_token).once.with(4, :some_token, :<<, nil)
+        category.should_receive(:add_tokenized_token).once.with(5, :some_token, :<<, nil)
 
         category.retrieve
       end

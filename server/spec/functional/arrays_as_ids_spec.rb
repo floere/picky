@@ -8,7 +8,7 @@ describe "Array IDs" do
   #
   it 'can use Arrays as IDs' do
     index = Picky::Index.new :arrays do
-      key_format :to_a
+      # key_format :to_a
       
       category :text1
     end

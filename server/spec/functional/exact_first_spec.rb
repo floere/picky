@@ -54,6 +54,8 @@ describe "exact first" do
     require 'ostruct'
 
     data = Picky::Index.new :exact_first do
+      key_format :to_i
+      
       source { [
         OpenStruct.new(id: 1, text: "discofox"),
         OpenStruct.new(id: 2, text: "disco")

@@ -56,7 +56,8 @@ module Picky
     # generates the necessary derived indexes.
     #
     def retrieve
-      prepared.retrieve { |id, token| add_tokenized_token id, token, :<< }
+      format = key_format?
+      prepared.retrieve { |id, token| add_tokenized_token id, token, :<<, format }
     end
 
     # Return the key format.
@@ -65,10 +66,11 @@ module Picky
     # and the source has no key format, ask
     # the index for one.
     #
-    # Default is to_i.
-    #
     def key_format
-      @key_format ||= @index.key_format || :to_i
+      @key_format ||= @index.key_format
+    end
+    def key_format?
+      key_format
     end
 
     # Where the data is taken from.

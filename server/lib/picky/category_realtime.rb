@@ -8,7 +8,7 @@ module Picky
     # given id.
     #
     def remove id
-      id = id.send key_format
+      id = id.send key_format if key_format?
       exact.remove id
       partial.remove id
     end
@@ -42,7 +42,7 @@ module Picky
       return unless text = hash[from] || hash[from.to_s]
       
       raise IdNotGivenException.new unless id = hash[:id] || hash['id']
-      id = id.send key_format
+      id = id.send key_format if key_format?
       
       remove id
       add_text id, text
@@ -72,11 +72,9 @@ module Picky
         tokens = text_or_tokens
       end
       
-      # TODO Have an "as is" key_format?
-      #
-      tokens.each { |text| add_tokenized_token id.send(key_format), text, where, false }
+      format = self.key_format?
+      tokens.each { |text| add_tokenized_token id, text, where, format }
     rescue NoMethodError
-      # TODO This also is raised on a wrong key_format.
       # TODO Improve error message by pointing out what exactly goes wrong: thing xy does not have an #each method.
       raise %Q{You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
     end
@@ -85,12 +83,14 @@ module Picky
     #
     def add_tokenized_token id, text, where = :unshift, format = true
       return unless text
-
+      
       id = id.send key_format if format
       # text = text.to_sym if @symbols # SYMBOLS.
 
       exact.add id, text, where
       partial.add_partialized id, text, where
+    rescue NoMethodError
+      raise %Q{The object id with text "#{text}" does not respond to method #{key_format}.}
     end
 
     # Clears the realtime mapping.

@@ -12,6 +12,8 @@ describe "special sorting" do
 
   it 'returns exact results first' do
     data = Picky::Index.new :sorted do
+      key_format :to_i
+      
       category :first, partial: Picky::Partial::Substring.new(from: 1)
       category :last, partial: Picky::Partial::Substring.new(from: 1)
     end
