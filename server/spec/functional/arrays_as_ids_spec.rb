@@ -8,8 +8,6 @@ describe "Array IDs" do
   #
   it 'can use Arrays as IDs' do
     index = Picky::Index.new :arrays do
-      # key_format :to_a
-      
       category :text1
     end
 
@@ -26,7 +24,7 @@ describe "Array IDs" do
     try.search("text1:ohai").ids.should == [
       ["id2", "thing2"],
       ["id1", "thing1"]
-    ] # WAT
+    ]
   end
 
   # This tests the weights option.
@@ -51,7 +49,7 @@ describe "Array IDs" do
     try.search("text1:ohai").ids.should == [
       ["id2", "thing2"],
       ["id1", "thing1"]
-    ] # WAT
+    ]
   end
 
 end
