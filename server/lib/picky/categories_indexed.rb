@@ -45,11 +45,10 @@ module Picky
     # Note: Returns [] if no categories matched (will produce no result).
     #
     def possible_for token, preselected_categories = nil
-      possible = (preselected_categories || possible_categories(token)).inject([]) do |combinations, category|
+      (preselected_categories || possible_categories(token)).inject([]) do |combinations, category|
         combination = category.combination_for token
         combination ? combinations << combination : combinations
       end
-      possible
     end
 
     # This returns the possible categories for this token.
