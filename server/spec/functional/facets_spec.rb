@@ -189,5 +189,41 @@ describe 'facets' do
       end
     end
     
+    describe 'Search#facets with identical category text/filter text' do
+      it 'does not report the same thing multiple times up to a limit' do
+        require 'picky'
+ 
+        shoe = Struct.new(:id, :color, :name)
+ 
+        shoes_index = Picky::Index.new(:shoes) do
+          category :color
+          category :name
+        end
+ 
+        shoes_search = Picky::Search.new shoes_index
+        
+        shoes_index.add shoe.new(1, 'black', 'Outdoor Black')
+        
+        shoes_search.facets(:color).should == { 'black' => 1 }
+        shoes_search.facets(:color, filter: 'black').should == { 'black' => 1 }
+        
+        999.times do |i|
+          shoes_index.add shoe.new(i+2, 'black', 'Outdoor Black')
+        end
+ 
+        shoes_search.facets(:color).should == { 'black' => 1000 }
+        shoes_search.facets(:color, filter: 'black').should == { 'black' => 1000 }
+        
+        # But then, over 1000 the count is only a very rough estimate.
+        #
+        500.times do |i|
+          shoes_index.add shoe.new(i+1001, 'black', 'Outdoor Black')
+        end
+        
+        shoes_search.facets(:color).should == { 'black' => 1500 }
+        shoes_search.facets(:color, filter: 'black').should == { 'black' => 2000 }
+      end
+    end
+    
   end
 end

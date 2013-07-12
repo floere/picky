@@ -53,32 +53,40 @@ module Picky
       # Get actual counts.
       #
       if no_counts
-        facets_without_counts counts, minimal_counts, tokenized_filter_query, key_token.text
+        facets_without_counts counts, minimal_counts, tokenized_filter_query, key_token.text, options
       else
-        facets_with_counts    counts, minimal_counts, tokenized_filter_query, key_token.text
+        facets_with_counts    counts, minimal_counts, tokenized_filter_query, key_token.text, options
       end
     end
-    def facets_without_counts counts, minimal_counts, tokenized_filter_query, last_token_text
+    def facets_without_counts counts, minimal_counts, tokenized_filter_query, last_token_text, options = {}
       counts.inject([]) do |result, (key, _)|
         # Replace only the key token text because that
         # is the only information that changes in between
         # queries.
         #
         last_token_text.replace key
-        total = search_with(tokenized_filter_query, 0, 0).total
+        
+        # Calculate up to 1000 facets using unique to show correct facet counts.
+        # TODO Redesign and deoptimize the whole process.
+        #
+        total = search_with(tokenized_filter_query, 1000, 0, nil, true).total
         
         next result unless total >= minimal_counts
         result << key
       end
     end
-    def facets_with_counts counts, minimal_counts, tokenized_filter_query, last_token_text
+    def facets_with_counts counts, minimal_counts, tokenized_filter_query, last_token_text, options = {}
       counts.inject({}) do |result, (key, _)|
         # Replace only the key token text because that
         # is the only information that changes in between
         # queries.
         #
         last_token_text.replace key
-        total = search_with(tokenized_filter_query, 0, 0).total
+        
+        # Calculate up to 1000 facets using unique to show correct facet counts.
+        # TODO Redesign and deoptimize the whole process.
+        #
+        total = search_with(tokenized_filter_query, 1000, 0, nil, true).total
         
         next result unless total >= minimal_counts
         result[key] = total
