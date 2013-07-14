@@ -132,7 +132,11 @@ More power to you.
 
 ### Data Sources{#indexes-sources}
 
-Data sources define where the data for an index comes from.
+Data sources define where the data for an index comes from. There are [explicit data sources](#indexes-sources-explicit) and [implicit data sources](#indexes-sources-implicit).
+
+#### Explicit Data Sources{#indexes-sources-explicit}
+
+Explicit data sources are mentioned in the index definition using the `#source` method.
 
 You define them on an *index*:
 
@@ -151,9 +155,9 @@ Or even a *single category*:
                source: lambda { Book.all }
     end
 
-At the moment there are two possibilities: [Objects responding to #each](#indexes-sources-each) and [Picky classic style sources](#indexes-sources-classic).
+Explicit data sources must [respond to #each](#indexes-sources-each), for example, an Array.
 
-#### Responding to #each{#indexes-sources-each}
+##### Responding to #each{#indexes-sources-each}
 
 Picky supports any data source as long as it supports `#each`.
 
@@ -184,7 +188,7 @@ Setting the array as a source
       category :couleur, :from => :color # The couleur category will take its data from the #color method.
     end
 
-#### Delayed{#indexes-sources-delayed}
+##### Delayed{#indexes-sources-delayed}
 
 If you define the source directly in the index block, it will be evaluated instantly:
 
@@ -208,23 +212,34 @@ In this case, you can give the `source` method a block:
 
 This block will be executed as soon as the indexing is running, but not earlier.
 
-#### Classic Style{#indexes-sources-classic}
+#### Implicit Data Sources{#indexes-sources-implicit}
 
-The classic style uses Picky's own `Picky::Sources` to load the data into the index.
+Implicit data sources are not mentioned in the index definition, but rather, the data is added (or removed) via *realtime* methods on an index, like `#add`, `#<<`, `#unshift`, `#remove`, `#replace`, and a special form, `#replace_from`.
 
-    Index.new :books do
-      source Sources::CSV.new(:title, :author, file: 'app/library.csv')
+So, you *don't* define them on an index or category as in the explicit data source, but instead add to either like so:
+
+    index = Index.new :books do
+      category :example
     end
+    
+    Book = Struct.new :id, :example
+    index.add Book.new(1, "Hello!")
+    index.add Book.new(2, "World!")
 
-Use this one if you want to use a simple CSV file.
+Or to a specific category:
 
-However, you could also use the built-in Ruby `CSV` class and use it as an `#each` source (see above).
+    index[:example].add Book.new(3, "Only add to a single category")
 
-    Index.new :books do
-      source Sources::DB.new('SELECT id, title, author, isbn13 as isbn FROM books', file: 'app/db.yml')
-    end
+##### Methods to change index or category data{#indexes-sources-implicit-methods}
 
-Use this one if you want to use a database source with very custom SQL statements. If not, we suggest you use an ORM as an `#each` source (see above).
+Currently, there are 7 methods to change an index:
+
+* `#add`: Adds the thing to the end of the index (even if already there). `index.add thing`
+* `#<<`: Adds the thing to the end of the index (shows up last in sorting). `index << thing`
+* `#unshift`: Adds the thing to the beginning of the index (shows up first in sorting). `index.unshift thing`
+* `#remove`: Removes the thing from the index (if there). `index.remove thing`
+* `#replace`: Replaces the thing in the index (if there, otherwise like `#add`). Equal to `#remove` followed by `#add`. `index.replace thing`
+* `#replace_from`: Pass in a Hash. Replaces the thing in the index (if there, otherwise like `#add`). Equal to `#remove` followed by `#add`. `index.replace id: 1, example: "Hello, I am Hash!"`
 
 ### Indexing / Tokenizing{#indexes-indexing}
 

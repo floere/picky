@@ -58,9 +58,11 @@ How does data get in there?
 
 * [Indexing](#indexes-indexing)
 * [Data Source Overview](#indexes-sources)
+* [Source defined explicitly](#indexes-sources-explicit)
 * [Source responding to #each](#indexes-sources-each)
-* [_Classic Picky sources_](#indexes-sources-classic) _(deprecated from 5.0)_
 * [When is the data for indexing loaded?](#indexes-sources-delayed)
+* [Source not explicitly defined](#indexes-sources-implicit)
+* [Methods to add data to an index](#indexes-sources-implicit-methods)
 
 How is the data categorized?
 
