@@ -152,11 +152,15 @@
 
 <li><a href='#indexes-sources'>Data Source Overview</a></li>
 
+<li><a href='#indexes-sources-explicit'>Source defined explicitly</a></li>
+
 <li><a href='#indexes-sources-each'>Source responding to #each</a></li>
 
-<li><a href='#indexes-sources-classic'><em>Classic Picky sources</em></a> <em>(deprecated from 5.0)</em></li>
-
 <li><a href='#indexes-sources-delayed'>When is the data for indexing loaded?</a></li>
+
+<li><a href='#indexes-sources-implicit'>Source not explicitly defined</a></li>
+
+<li><a href='#indexes-sources-implicit-methods'>Methods to add data to an index</a></li>
 </ul>
 
 <p>How is the data categorized?</p>
@@ -953,7 +957,11 @@ end</code></pre>
 
 <h3 id='indexes-sources'>Data Sources</h3>
 
-<p>Data sources define where the data for an index comes from.</p>
+<p>Data sources define where the data for an index comes from. There are <a href='#indexes-sources-explicit'>explicit data sources</a> and <a href='#indexes-sources-implicit'>implicit data sources</a>.</p>
+
+<h4 id='indexes-sources-explicit'>Explicit Data Sources</h4>
+
+<p>Explicit data sources are mentioned in the index definition using the <code>#source</code> method.</p>
 
 <p>You define them on an <em>index</em>:</p>
 
@@ -972,9 +980,9 @@ end</code></pre>
            source: lambda { Book.all }
 end</code></pre>
 
-<p>At the moment there are two possibilities: <a href='#indexes-sources-each'>Objects responding to #each</a> and <a href='#indexes-sources-classic'>Picky classic style sources</a>.</p>
+<p>Explicit data sources must <a href='#indexes-sources-each'>respond to #each</a>, for example, an Array.</p>
 
-<h4 id='indexes-sources-each'>Responding to #each</h4>
+<h5 id='indexes-sources-each'>Responding to #each</h5>
 
 <p>Picky supports any data source as long as it supports <code>#each</code>.</p>
 
@@ -1005,7 +1013,7 @@ end</code></pre>
   category :couleur, :from =&gt; :color # The couleur category will take its data from the #color method.
 end</code></pre>
 
-<h4 id='indexes-sources-delayed'>Delayed</h4>
+<h5 id='indexes-sources-delayed'>Delayed</h5>
 
 <p>If you define the source directly in the index block, it will be evaluated instantly:</p>
 
@@ -1029,23 +1037,41 @@ end</code></pre>
 
 <p>This block will be executed as soon as the indexing is running, but not earlier.</p>
 
-<h4 id='indexes-sources-classic'>Classic Style</h4>
+<h4 id='indexes-sources-implicit'>Implicit Data Sources</h4>
 
-<p>The classic style uses Picky&#8217;s own <code>Picky::Sources</code> to load the data into the index.</p>
+<p>Implicit data sources are not mentioned in the index definition, but rather, the data is added (or removed) via <em>realtime</em> methods on an index, like <code>#add</code>, <code>#&lt;&lt;</code>, <code>#unshift</code>, <code>#remove</code>, <code>#replace</code>, and a special form, <code>#replace_from</code>.</p>
 
-<pre><code>Index.new :books do
-  source Sources::CSV.new(:title, :author, file: &#39;app/library.csv&#39;)
-end</code></pre>
+<p>So, you <em>don&#8217;t</em> define them on an index or category as in the explicit data source, but instead add to either like so:</p>
 
-<p>Use this one if you want to use a simple CSV file.</p>
+<pre><code>index = Index.new :books do
+  category :example
+end
 
-<p>However, you could also use the built-in Ruby <code>CSV</code> class and use it as an <code>#each</code> source (see above).</p>
+Book = Struct.new :id, :example
+index.add Book.new(1, &quot;Hello!&quot;)
+index.add Book.new(2, &quot;World!&quot;)</code></pre>
 
-<pre><code>Index.new :books do
-  source Sources::DB.new(&#39;SELECT id, title, author, isbn13 as isbn FROM books&#39;, file: &#39;app/db.yml&#39;)
-end</code></pre>
+<p>Or to a specific category:</p>
 
-<p>Use this one if you want to use a database source with very custom SQL statements. If not, we suggest you use an ORM as an <code>#each</code> source (see above).</p>
+<pre><code>index[:example].add Book.new(3, &quot;Only add to a single category&quot;)</code></pre>
+
+<h5 id='indexes-sources-implicit-methods'>Methods to change index or category data</h5>
+
+<p>Currently, there are 7 methods to change an index:</p>
+
+<ul>
+<li><code>#add</code>: Adds the thing to the end of the index (even if already there). <code>index.add thing</code></li>
+
+<li><code>#&lt;&lt;</code>: Adds the thing to the end of the index (shows up last in sorting). <code>index &lt;&lt; thing</code></li>
+
+<li><code>#unshift</code>: Adds the thing to the beginning of the index (shows up first in sorting). <code>index.unshift thing</code></li>
+
+<li><code>#remove</code>: Removes the thing from the index (if there). <code>index.remove thing</code></li>
+
+<li><code>#replace</code>: Replaces the thing in the index (if there, otherwise like <code>#add</code>). Equal to <code>#remove</code> followed by <code>#add</code>. <code>index.replace thing</code></li>
+
+<li><code>#replace_from</code>: Pass in a Hash. Replaces the thing in the index (if there, otherwise like <code>#add</code>). Equal to <code>#remove</code> followed by <code>#add</code>. <code>index.replace id: 1, example: &quot;Hello, I am Hash!&quot;</code></li>
+</ul>
 
 <h3 id='indexes-indexing'>Indexing / Tokenizing</h3>
 
