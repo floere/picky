@@ -27,9 +27,9 @@ module Picky
       #
       def self.processed words, originals, ignore_unassigned = false
         new(words.zip(originals).collect! do |word, original|
-          w, rest = word.split(/\|/)
+          w, *middle, rest  = word.split(/\|/)
           if rest
-            Or.new processed [w, rest], original.split(/\|/)
+            Or.new processed [w, *middle, rest], original.split(/\|/)
           else
             Token.processed w, original
           end

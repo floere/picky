@@ -74,5 +74,26 @@ describe "OR token" do
     try.search("hello text,other:ohai|text:kthxbye").ids.should == [1, 2]
     try.search("hello something,other:ohai|kthxbye").ids.should == [1, 2]
   end
+  
+  it 'handles multi-ORs' do
+    index = Picky::Index.new :or do
+      category :text, similarity: Picky::Similarity::DoubleMetaphone.new(3)
+    end
+
+    thing     = OpenStruct.new id: 1, text: "that thing"
+    something = OpenStruct.new id: 2, text: "and something"
+    other     = OpenStruct.new id: 3, text: "or other"
+
+    index.add thing
+    index.add something
+    index.add other
+
+    try = Picky::Search.new index
+    
+    # With or, or |.
+    #
+    try.search("thing|something|other").ids.should == [1, 2, 3]
+    try.search("something|other").ids.should == [2, 3]
+  end
 
 end
