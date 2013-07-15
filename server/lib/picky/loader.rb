@@ -190,6 +190,7 @@ module Picky
         load_wrappers
         load_relative 'query/token' # Token related.
         load_relative 'query/tokens'
+        load_relative 'query/or'
         load_query
       end
       

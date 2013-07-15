@@ -21,17 +21,20 @@ module Picky
         # TODO We might be able to return early?
         #
         @ranger.new(*range).inject(nil) do |sum, text|
-          weight = bundle.weight(text)
+          weight = token.weight bundle
           weight && (weight + (sum || 0)) || sum
         end
       else
-        bundle.weight token.text
+        token.weight bundle
       end
     end
 
     # Gets the ids for this token's text.
     #
+    # TODO Invert again? token.ids(bundle)
+    #
     def ids token
+      p [:ci_ids, token]
       bundle = bundle_for token
       if range = token.range
         # Adding all to an array, then flattening
@@ -41,11 +44,11 @@ module Picky
           # It is 30% faster using the empty check
           # than just << [].
           #
-          ids = bundle.ids text
+          ids = token.ids bundle
           ids.empty? ? result : result << ids
         end.flatten
       else
-        bundle.ids token.text
+        token.ids bundle
       end
     end
 

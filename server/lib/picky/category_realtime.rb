@@ -89,7 +89,8 @@ module Picky
 
       exact.add id, text, where
       partial.add_partialized id, text, where
-    rescue NoMethodError
+    rescue NoMethodError => e
+      puts e.message
       raise %Q{The object id with text "#{text}" does not respond to method #{key_format}.}
     end
 

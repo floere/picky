@@ -225,7 +225,20 @@ module Picky
         @@illegals = %r{[#{@@no_similar_character}#{@@partial_character}#{@@similar_character}]}
       end
       redefine_illegals
-
+      
+      # TODO 
+      #
+      def ids bundle
+        p [:token_ids, bundle, self]
+        bundle.ids @text
+      end
+      
+      # TODO 
+      #
+      def weight bundle
+        bundle.weight @text
+      end
+      
       # Returns an array of possible combinations.
       #
       def possible_combinations_in index

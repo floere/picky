@@ -13,6 +13,8 @@ module Picky
       # Basically forwards to its internal tokens array.
       #
       forward *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, :to => :@tokens].flatten
+      each_forward :partial=,
+                   :to => :@tokens
 
       # Create a new Tokens object with the array of tokens passed in.
       #
@@ -24,7 +26,14 @@ module Picky
       # Creates a new Tokens object from a number of Strings.
       #
       def self.processed words, originals, ignore_unassigned = false
-        new words.zip(originals).collect! { |word, original| Token.processed word, original }, ignore_unassigned
+        new(words.zip(originals).collect! do |word, original|
+          w, rest = word.split(/\|/)
+          if rest
+            Or.new processed [w, rest], original.split(/\|/)
+          else
+            Token.processed w, original
+          end
+        end, ignore_unassigned)
       end
 
       # Generates an array in the form of
@@ -37,7 +46,7 @@ module Picky
       def possible_combinations_in index
         @tokens.inject([]) do |combinations, token|
           possible_combinations = token.possible_combinations_in index
-
+          
           # Note: Optimization for ignoring tokens that allocate to nothing and
           # can be ignored.
           # For example in a special search, where "florian" is not
@@ -66,6 +75,9 @@ module Picky
       #
       #
       def originals
+        @tokens.map(&:original)
+      end
+      def original
         @tokens.map(&:original)
       end
       
