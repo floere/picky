@@ -11,7 +11,7 @@ describe "OR token" do
     end
 
     thing = OpenStruct.new id: 1, text: "hello ohai"
-    other = OpenStruct.new id: 2, text: "hello ohai kthxbye"
+    other = OpenStruct.new id: 2, text: "hello kthxbye"
 
     index.add thing
     index.add other
@@ -20,10 +20,10 @@ describe "OR token" do
     
     # With or, or |.
     #
-    try.search("hello text:ohai|text:kthxbye").ids.should == [2, 1]
-    try.search("hello text:ohai|kthxbye").ids.should == [2, 1]
-    try.search("hello ohai|text:kthxbye").ids.should == [2, 1]
-    try.search("hello ohai|kthxbye").ids.should == [2, 1]
+    try.search("hello text:ohai|text:kthxbye").ids.should == [1, 2]
+    try.search("hello text:ohai|kthxbye").ids.should == [1, 2]
+    try.search("hello ohai|text:kthxbye").ids.should == [1, 2]
+    try.search("hello ohai|kthxbye").ids.should == [1, 2]
   end
   
   it 'handles more complex cases' do
@@ -57,7 +57,7 @@ describe "OR token" do
     end
 
     thing = OpenStruct.new id: 1, text: "hello ohai tester 3"
-    other = OpenStruct.new id: 2, text: "hello ohai kthxbye"
+    other = OpenStruct.new id: 2, text: "hello kthxbye"
 
     index.add thing
     index.add other
@@ -71,8 +71,8 @@ describe "OR token" do
     # try.search("text:testor~|text:kthxbye hello").ids.should == [2, 1]
     # try.search("text:test*|kthxbye hello").ids.should == [2, 1]
     # try.search("text:1-5|kthxbye hello").ids.should == [2, 1]
-    try.search("hello text,other:ohai|text:kthxbye").ids.should == [2, 1]
-    try.search("hello something,other:ohai|kthxbye").ids.should == [2, 1]
+    try.search("hello text,other:ohai|text:kthxbye").ids.should == [1, 2]
+    try.search("hello something,other:ohai|kthxbye").ids.should == [1, 2]
   end
 
 end
