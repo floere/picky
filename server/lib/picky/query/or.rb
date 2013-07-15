@@ -12,7 +12,7 @@ module Picky
       #
       class Or < Tokens
       
-        def initialize *processed_tokens
+        def initialize processed_tokens
           @tokens = processed_tokens
         end
         
@@ -20,17 +20,17 @@ module Picky
         # TODO Uniq?
         #
         def ids bundle
-          p [:or_ids, bundle]
           @tokens.inject([]) do |total, token|
             total + token.ids(bundle)
-          end
+          end.uniq
         end
         
         # TODO How to combine these?
         #
         def weight bundle
-          @tokens.inject(0) do |total, token|
-            total + token.weight(bundle)
+          @tokens.inject(nil) do |sum, token|
+            weight = token.weight bundle
+            weight && (weight + (sum || 0)) || sum
           end
         end
         
@@ -39,9 +39,26 @@ module Picky
         def similar?
           false
         end
+        def partial?
+          @tokens.all?(&:partial?)
+        end
+        def range
+          nil
+        end
         
-        def predefined_categories
-          @tokens.inject([]) { |categories, token| categories + token.predefined_categories }
+        # TODO Clean and rewrite!
+        # TODO Remove uniq?
+        #
+        def predefined_categories mapper
+          r = @tokens.inject([]) do |categories, token|
+            if predefined = token.predefined_categories(mapper)
+              categories + predefined
+            else
+              categories
+            end
+          end.uniq
+          r = r.empty? ? nil : r
+          r
         end
         
         # Returns an array of possible combinations.
@@ -50,31 +67,12 @@ module Picky
           index.possible_combinations self
         end
         
-        # # Generates an array in the form of
-        # # [
-        # #  [combination],                           # of token 1
-        # #  [combination, combination, combination], # of token 2
-        # #  [combination, combination]               # of token 3
-        # # ]
-        # #
-        # def possible_combinations_in index
-        #   @tokens.inject([]) do |combinations, token|
-        #     possible_combinations = token.inject([]) do |total, token|
-        #       total + token.possible_combinations_in(index)
-        #     end
-        #     
-        #     # Note: Optimization for ignoring tokens that allocate to nothing and
-        #     # can be ignored.
-        #     # For example in a special search, where "florian" is not
-        #     # mapped to any category.
-        #     #
-        #     if ignore_unassigned && possible_combinations.empty?
-        #       combinations
-        #     else
-        #       combinations << possible_combinations
-        #     end
-        #   end.flatten # TODO Remove fudge and clean up interface.
-        # end
+        # Returns the token in the form
+        #   ['original:Text', 'processedtext']
+        #
+        def to_result
+          [originals.join('|'), texts.join('|')]
+        end
         
         # Just join the token original texts.
         #

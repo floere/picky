@@ -42,7 +42,6 @@ module Picky
       # Note: Caching is most of the time useful.
       #
       def ids
-        p [:combination_ids, token]
         @ids ||= category.ids(token)
       end
 

@@ -72,13 +72,18 @@ module Picky
         @tokens.last.partial = true unless empty?
       end
 
-      #
+      # TODO
       #
       def originals
         @tokens.map(&:original)
       end
       def original
         @tokens.map(&:original)
+      end
+      # TODO
+      #
+      def texts
+        @tokens.map(&:text)
       end
       
       #

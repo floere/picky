@@ -229,7 +229,6 @@ module Picky
       # TODO 
       #
       def ids bundle
-        p [:token_ids, bundle, self]
         bundle.ids @text
       end
       

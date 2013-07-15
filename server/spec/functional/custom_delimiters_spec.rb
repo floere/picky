@@ -73,9 +73,9 @@ describe 'custom delimiters' do
     Picky::Query::Token.qualifier_text_delimiter = '?'
     try.search("text1?hello text2?world").ids.should == [1]
     
-    try.search("text1|text2?hello text2?world").ids.should == []
-    Picky::Query::Token.qualifiers_delimiter = '|'
-    try.search("text1|text2?hello text2?world").ids.should == [1]
+    try.search("text1!text2?hello text2?world").ids.should == []
+    Picky::Query::Token.qualifiers_delimiter = '!'
+    try.search("text1!text2?hello text2?world").ids.should == [1]
   end
   
   it 'offers custom range characters to be set' do
