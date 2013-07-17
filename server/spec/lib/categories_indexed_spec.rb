@@ -77,31 +77,31 @@ describe Picky::Categories do
       @categories << @category3
     end
 
-    describe "possible_combinations" do
-      before(:each) do
-        @token = stub :token
-      end
-      context "with similar token" do
-        before(:each) do
-          @token.stub :similar? => true, :categorize => nil
-        end
-        it "calls the right method" do
-          @categories.should_receive(:similar_possible_for).once.with @token
-
-          @categories.possible_combinations @token
-        end
-      end
-      context "with non-similar token" do
-        before(:each) do
-          @token.stub :similar? => false, :categorize => nil
-        end
-        it "calls the right method" do
-          @categories.should_receive(:possible_for).once.with @token
-
-          @categories.possible_combinations @token
-        end
-      end
-    end
+    # describe "possible_combinations" do
+    #   before(:each) do
+    #     @token = stub :token
+    #   end
+    #   context "with similar token" do
+    #     before(:each) do
+    #       @token.stub :similar? => true, :categorize => nil
+    #     end
+    #     it "calls the right method" do
+    #       @categories.should_receive(:similar_possible_for).once.with @token
+    # 
+    #       @categories.possible_combinations @token
+    #     end
+    #   end
+    #   context "with non-similar token" do
+    #     before(:each) do
+    #       @token.stub :similar? => false, :categorize => nil
+    #     end
+    #     it "calls the right method" do
+    #       @categories.should_receive(:possible_for).once.with @token
+    # 
+    #       @categories.possible_combinations @token
+    #     end
+    #   end
+    # end
 
     describe 'possible_for' do
       context 'without preselected categories' do

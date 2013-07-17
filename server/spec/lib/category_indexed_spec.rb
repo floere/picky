@@ -182,30 +182,30 @@ describe Picky::Category do
     end
   end
 
-  describe 'combination_for' do
-    context 'no weight for token' do
-      before(:each) do
-        @category.stub! :weight => nil
-      end
-      it 'should return nil' do
-        @category.combination_for(:anything).should == nil
-      end
-    end
-    context 'weight for token' do
-      before(:each) do
-        @token = stub :token, :text => :some_text
-        @category.stub! :weight => :some_weight, :bundle_for => :bundle
-      end
-      it 'should return a new combination' do
-        @category.combination_for(@token).should be_kind_of(Picky::Query::Combination)
-      end
-      it 'should create the combination correctly' do
-        Picky::Query::Combination.should_receive(:new).once.with @token, @category
-
-        @category.combination_for @token
-      end
-    end
-  end
+  # describe 'combination_for' do
+  #   context 'no weight for token' do
+  #     before(:each) do
+  #       @category.stub! :weight => nil
+  #     end
+  #     it 'should return nil' do
+  #       @category.combination_for(:anything).should == nil
+  #     end
+  #   end
+  #   context 'weight for token' do
+  #     before(:each) do
+  #       @token = stub :token, :text => :some_text
+  #       @category.stub! :weight => :some_weight, :bundle_for => :bundle
+  #     end
+  #     it 'should return a new combination' do
+  #       @category.combination_for(@token).should be_kind_of(Picky::Query::Combination)
+  #     end
+  #     it 'should create the combination correctly' do
+  #       Picky::Query::Combination.should_receive(:new).once.with @token, @category
+  # 
+  #       @category.combination_for @token
+  #     end
+  #   end
+  # end
 
   context 'stubbed exact/partial' do
     before(:each) do
