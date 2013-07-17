@@ -49,6 +49,7 @@ describe "OR token" do
     try.search("hello ohai|kthxbye").ids.should == [1]
     try.search("hello nonexisting|not").ids.should == [2]
     try.search("hello nonexisting|alsononexisting").ids.should == []
+    try.search("hello text1:world|text2:not|text2:kthxbye").ids.should == [1, 2]
   end
   
   it 'handles even more complex cases' do
@@ -56,7 +57,7 @@ describe "OR token" do
       category :text, similarity: Picky::Similarity::DoubleMetaphone.new(3)
     end
 
-    thing = OpenStruct.new id: 1, text: "hello ohai tester 3"
+    thing = OpenStruct.new id: 1, text: "hello ohai tester 13"
     other = OpenStruct.new id: 2, text: "hello kthxbye"
 
     index.add thing
@@ -66,13 +67,12 @@ describe "OR token" do
     
     # With or, or |.
     #
-    # TODO Similarity, partial, and range.
-    #
-    # try.search("text:testor~|text:kthxbye hello").ids.should == [2, 1]
-    # try.search("text:test*|kthxbye hello").ids.should == [2, 1]
-    # try.search("text:1-5|kthxbye hello").ids.should == [2, 1]
+    try.search("something,other:ohai").ids.should == []
+    try.search("text:taster~|text:kthxbye hello").ids.should == [2, 1]
+    try.search("text:test*|kthxbye hello").ids.should == [2, 1]
+    try.search("text:11-15|kthxbye hello").ids.should == [2, 1]
     try.search("hello text,other:ohai|text:kthxbye").ids.should == [1, 2]
-    try.search("hello something,other:ohai|kthxbye").ids.should == [1, 2]
+    try.search("hello something,other:ohai|kthxbye").ids.should == [2]
   end
   
   it 'handles multi-ORs' do

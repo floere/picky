@@ -148,8 +148,8 @@ module Picky
       #
       @@no_similar_character = '"'
       @@similar_character = '~'
-      @@no_similar = %r{#{@@no_similar_character}\z}
-      @@similar    = %r{#{@@similar_character}\z}
+      @@no_similar = %r{#@@no_similar_character\z}
+      @@similar    = %r{#@@similar_character\z}
       def similarize
         self.similar = false or return unless @text !~ @@no_similar
         self.similar = true unless @text !~ @@similar
@@ -222,26 +222,25 @@ module Picky
         @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
       def self.redefine_illegals
-        @@illegals = %r{[#{@@no_similar_character}#{@@partial_character}#{@@similar_character}]}
+        @@illegals = %r{[#@@no_similar_character#@@partial_character#@@similar_character]}
       end
       redefine_illegals
       
-      # TODO 
+      # Return all possible combinations.
       #
-      def ids bundle
-        bundle.ids @text
+      # This checks if it needs to also search through similar
+      # tokens, if for example, the token is one with ~.
+      # If yes, it puts together all solutions.
+      #
+      def possible_combinations categories
+        similar? ? categories.similar_possible_for(self) : categories.possible_for(self)
       end
       
-      # TODO 
+      # TODO
       #
-      def weight bundle
-        bundle.weight @text
-      end
-      
-      # Returns an array of possible combinations.
-      #
-      def possible_combinations_in index
-        index.possible_combinations self
+      def combination_for category
+        weight = category.weight self
+        weight && Query::Combination.new(self, category, weight)
       end
 
       # Returns all similar tokens for the token.
@@ -322,7 +321,7 @@ module Picky
       # Note: Used in many backends.
       #
       def identifier
-        "#{similar?? :similarity : :inverted}:#{@text}"
+        "#{similar?? :similarity : :inverted}:#@text"
       end
 
       # If the originals & the text are the same, they are the same.

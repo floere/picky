@@ -85,7 +85,7 @@ module Picky
       warn <<-WARNING if options && (options.keys - @@known_keys).size > 0
 
 Warning: Category options #{options} for category #{name} contain an unknown option.
-         Working options are: #{@@known_keys}.
+         Working options are: #@@known_keys.
 WARNING
     end
     def weights_from options

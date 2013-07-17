@@ -164,7 +164,8 @@ module Picky
       #
       def load_query
         load_relative 'query/combination',
-                      'query/combinations'
+                      'query/combinations',
+                      'query/combination/or'
 
         load_relative 'query/allocation',
                       'query/allocations'

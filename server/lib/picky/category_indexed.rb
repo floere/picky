@@ -25,13 +25,11 @@ module Picky
           weight && (weight + (sum || 0)) || sum
         end
       else
-        token.weight bundle
+        bundle.weight token.text
       end
     end
 
     # Gets the ids for this token's text.
-    #
-    # TODO Invert again? token.ids(bundle)
     #
     def ids token
       bundle = bundle_for token
@@ -47,7 +45,7 @@ module Picky
           ids.empty? ? result : result << ids
         end.flatten
       else
-        token.ids bundle
+        bundle.ids token.text
       end
     end
 
@@ -55,15 +53,6 @@ module Picky
     #
     def bundle_for token
       token.partial? ? partial : exact
-    end
-
-    # Returns a combination for the token,
-    # or nil, if there is none.
-    #
-    # TODO Don't throw away the weight, instead store it in the combination?
-    #
-    def combination_for token
-      weight(token) && Query::Combination.new(token, self)
     end
 
   end

@@ -2,17 +2,9 @@ module Picky
 
   class Categories
 
-    each_forward :load, :analyze, :to => :categories
-
-    # Return all possible combinations for the given token.
-    #
-    # This checks if it needs to also search through similar
-    # tokens, if for example, the token is one with ~.
-    # If yes, it puts together all solutions.
-    #
-    def possible_combinations token
-      token.similar? ? similar_possible_for(token) : possible_for(token)
-    end
+    each_forward :load,
+                 :analyze,
+                 :to => :categories
 
     # Gets all similar tokens and puts together the possible combinations
     # for each found similar token.
@@ -46,7 +38,7 @@ module Picky
     #
     def possible_for token, preselected_categories = nil
       (preselected_categories || possible_categories(token)).inject([]) do |combinations, category|
-        combination = category.combination_for token
+        combination = token.combination_for category
         combination ? combinations << combination : combinations
       end
     end

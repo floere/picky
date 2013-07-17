@@ -378,7 +378,7 @@ INDEX
     #
     #
     def to_s
-      "#{self.class}(#{name}, result_id: #{result_identifier}, source: #{@source}, categories: #{categories})"
+      "#{self.class}(#{name}, result_id: #{result_identifier}, source: #@source, categories: #{categories})"
     end
 
   end

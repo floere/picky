@@ -2,22 +2,27 @@ module Picky
 
   module Query
 
-    # Describes the Combination of a Token (the text) and
-    # the index (the bundle): [text, index_bundle].
+    # Describes the Combination of:
+    #  * a token
+    #  * a category
+    #  * the weight of the token in the category (cached)
     #
     # An Allocation consists of an ordered number of Combinations.
     #
     class Combination
 
       attr_reader :token,
-                  :category
+                  :category,
+                  :weight
 
-      def initialize token, category
+      def initialize token, category, weight
         @token    = token
         @category = category
+        @weight   = weight
       end
 
       # Returns the category's name.
+      # Used in boosting.
       #
       def category_name
         @category_name ||= category.name
@@ -31,10 +36,8 @@ module Picky
 
       # Returns the weight of this combination.
       #
-      # Note: Caching is most of the time useful.
-      #
       def weight
-        @weight ||= category.weight(token)
+        @weight
       end
 
       # Returns an array of ids for the given text.
@@ -65,7 +68,7 @@ module Picky
       #   "exact title:Peter*:peter"
       #
       def to_s
-        "#{category.bundle_for(token).identifier}(#{to_result.join(':')})"
+        "(#{category.bundle_for(token).identifier},#{to_result.join(':')})"
       end
 
     end

@@ -7,7 +7,6 @@ module Picky
     forward :load,
             :analyze,
             :reindex,
-            :possible_combinations,
             :to => :categories
 
     # Define how the results of this index are identified.

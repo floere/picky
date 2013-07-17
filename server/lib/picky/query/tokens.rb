@@ -43,9 +43,9 @@ module Picky
       #  [combination, combination]               # of token 3
       # ]
       #
-      def possible_combinations_in index
+      def possible_combinations_in categories
         @tokens.inject([]) do |combinations, token|
-          possible_combinations = token.possible_combinations_in index
+          possible_combinations = token.possible_combinations categories
           
           # Note: Optimization for ignoring tokens that allocate to nothing and
           # can be ignored.

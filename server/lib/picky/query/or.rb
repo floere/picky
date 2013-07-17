@@ -16,69 +16,27 @@ module Picky
           @tokens = processed_tokens
         end
         
-        # TODO Combine correctly.
-        # TODO Uniq?
+        # TODO
         #
-        def ids bundle
-          @tokens.inject([]) do |total, token|
-            total + token.ids(bundle)
-          end.uniq
-        end
-        
-        # TODO How to combine these?
-        #
-        def weight bundle
-          @tokens.inject(nil) do |sum, token|
-            weight = token.weight bundle
-            weight && (weight + (sum || 0)) || sum
+        def possible_combinations categories
+          combinations = @tokens.inject([]) do |result, token|
+            result + token.possible_combinations(categories)
           end
+          combinations.empty? && combinations || [Query::Combination::Or.new(combinations)]
         end
         
-        # TODO Currently not possible.
-        #
-        def similar?
-          false
-        end
-        def partial?
-          @tokens.all?(&:partial?)
-        end
-        def range
-          nil
-        end
+        # # Returns the token in the form
+        # #   ['original:Text', 'processedtext']
+        # #
+        # def to_result
+        #   [originals.join('|'), texts.join('|')]
+        # end
         
-        # TODO Clean and rewrite!
-        # TODO Remove uniq?
-        #
-        def predefined_categories mapper
-          r = @tokens.inject([]) do |categories, token|
-            if predefined = token.predefined_categories(mapper)
-              categories + predefined
-            else
-              categories
-            end
-          end.uniq
-          r = r.empty? ? nil : r
-          r
-        end
-        
-        # Returns an array of possible combinations.
-        #
-        def possible_combinations_in index
-          index.possible_combinations self
-        end
-        
-        # Returns the token in the form
-        #   ['original:Text', 'processedtext']
-        #
-        def to_result
-          [originals.join('|'), texts.join('|')]
-        end
-        
-        # Just join the token original texts.
-        #
-        def to_s
-          originals.join '|'
-        end
+        # # Just join the token original texts.
+        # #
+        # def to_s
+        #   "#{self.class}(#{originals.join '|'})"
+        # end
       
       end
       

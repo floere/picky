@@ -275,7 +275,7 @@ module Picky
       s = "#{self.class}("
       ary = []
       ary << @indexes.indexes.map(&:name).join(', ') unless @indexes.indexes.empty?
-      ary << "boosts: #{@boosts}" if @boosts
+      ary << "boosts: #@boosts" if @boosts
       s << ary.join(', ')
       s << ")"
       s

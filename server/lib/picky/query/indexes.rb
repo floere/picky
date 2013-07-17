@@ -110,7 +110,7 @@ module Picky
       def allocation_for tokens, index
         # Expand the combinations.
         #
-        possible_combinations = tokens.possible_combinations_in index
+        possible_combinations = tokens.possible_combinations_in index.categories
 
         # Generate all possible combinations.
         #
