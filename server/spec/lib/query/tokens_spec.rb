@@ -26,9 +26,9 @@ describe Picky::Query::Tokens do
         @tokens = described_class.new [@token1, @token2, @token3], true
       end
       it 'should work correctly' do
-        @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
-        @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination21]
-        @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+        @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+        @token2.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination21]
+        @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
 
         @tokens.possible_combinations_in(:some_index).should == [
           [:combination11, :combination12],
@@ -37,9 +37,9 @@ describe Picky::Query::Tokens do
         ]
       end
       it 'should work correctly' do
-        @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
-        @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return []
-        @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+        @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+        @token2.should_receive(:possible_combinations).once.with(:some_index).and_return []
+        @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
 
         @tokens.possible_combinations_in(:some_index).should == [
           [:combination11, :combination12],
@@ -171,9 +171,9 @@ describe Picky::Query::Tokens do
       @tokens = described_class.new [@token1, @token2, @token3]
     end
     it 'should work correctly' do
-      @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
-      @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination21]
-      @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+      @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+      @token2.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination21]
+      @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
 
       @tokens.possible_combinations_in(:some_index).should == [
         [:combination11, :combination12],
@@ -182,9 +182,9 @@ describe Picky::Query::Tokens do
       ]
     end
     it 'should work correctly' do
-      @token1.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination11, :combination12]
-      @token2.should_receive(:possible_combinations_in).once.with(:some_index).and_return nil
-      @token3.should_receive(:possible_combinations_in).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+      @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+      @token2.should_receive(:possible_combinations).once.with(:some_index).and_return nil
+      @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
 
       @tokens.possible_combinations_in(:some_index).should == [
         [:combination11, :combination12],

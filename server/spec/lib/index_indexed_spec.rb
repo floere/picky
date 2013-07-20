@@ -37,13 +37,6 @@ describe Picky::Index do
         @index.load
       end
     end
-    describe "possible_combinations" do
-      it "forwards to the combinator" do
-        @categories.should_receive(:possible_combinations).once.with :some_token
-
-        @index.possible_combinations :some_token
-      end
-    end
   end
 
   context 'result_identifier' do
