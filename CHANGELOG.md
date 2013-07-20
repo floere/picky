@@ -1,3 +1,9 @@
+## 4.17.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Added OR mode to Picky search terms, e.g. `hello world|florian`. This will find results for "hello world" and "hello florian". This works with similarity, partial, etc. For example `hello text:wor*|text:flarian~`.
+
 ## 4.16.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
