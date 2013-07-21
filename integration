@@ -221,6 +221,7 @@ begin
   puts "SUCCESS! #{@tests} tests run without a hitch :)"
   puts
 rescue Exception => e
+  puts system 'cd sandbox/server; cat log/unicorn.stderr.log'
   puts e.message
   puts e.backtrace
 ensure
