@@ -8,6 +8,8 @@ Gem::Specification.new do |s|
 
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky-live@gmail.com'
+  
+  s.licenses = ['MIT', 'LGPL']
 
   s.homepage = 'http://floere.github.com/picky'
   s.rubyforge_project = 'http://rubyforge.org/projects/picky'
