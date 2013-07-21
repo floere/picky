@@ -1,5 +1,7 @@
 require_relative '../models/csv_book'
 CSVTestIndex = Picky::Index.new :csv_test do
+  key_format :to_i
+  
   source   { CSVBook.all('data/books.csv') }
 
   category :title,

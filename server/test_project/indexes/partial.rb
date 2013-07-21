@@ -1,5 +1,6 @@
 PartialItem = Struct.new :id, :substring, :postfix, :infix, :none
 PartialIndex = Picky::Index.new(:partial) do
+  key_format :to_i
   source do
     [
       PartialItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),

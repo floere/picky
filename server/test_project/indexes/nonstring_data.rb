@@ -7,6 +7,7 @@ class NonStringTokenizer < Picky::Tokenizer
   end
 end
 NonstringDataIndex = Picky::Index.new(:nonstring) do
+  key_format :to_i
   source {
     [
       NonStringDataSource.new(1, ['gaga', :blabla, 'haha']),

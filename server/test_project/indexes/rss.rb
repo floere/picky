@@ -17,6 +17,7 @@ class EachRSSItemProxy
 end
 
 RSSIndex = Picky::Index.new :rss do
+  key_format :to_i
   source     EachRSSItemProxy.new
   key_format :to_s
 

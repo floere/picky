@@ -1,4 +1,6 @@
 FileIndex = Picky::Index.new(:file) do
+  key_format :to_i
+  
   backend  Picky::Backends::File.new
   source [
     ChangingItem.new("1", 'first entry'),

@@ -1,4 +1,5 @@
 RedisIndex = Picky::Index.new(:redis) do
+  key_format :to_i
   backend  Picky::Backends::Redis.new
   source   { CSVBook.all('data/books.csv') }
   category :title,

@@ -1,6 +1,7 @@
 require_relative '../models/book'
 
 BooksIndex = Picky::Index.new :books do
+  key_format :to_i
   source   { Book.all }
   category :id
   category :title,
