@@ -24,6 +24,10 @@ describe "OR token" do
     try.search("hello text:ohai|kthxbye").ids.should == [1, 2]
     try.search("hello ohai|text:kthxbye").ids.should == [1, 2]
     try.search("hello ohai|kthxbye").ids.should == [1, 2]
+    
+    # Still works.
+    #
+    try.search("hello text:ohai").ids.should == [1]
   end
   
   it 'handles more complex cases' do
@@ -73,6 +77,7 @@ describe "OR token" do
     try.search("text:11-15|kthxbye hello").ids.should == [2, 1]
     try.search("hello text,other:ohai|text:kthxbye").ids.should == [1, 2]
     try.search("hello something,other:ohai|kthxbye").ids.should == [2]
+    try.search("hello text:oh*|text:kthxbya~").ids.should == [1, 2]
   end
   
   it 'handles multi-ORs' do
