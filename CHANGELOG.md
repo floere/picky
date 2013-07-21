@@ -2,12 +2,13 @@
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
-- Added OR mode to Picky search terms, e.g. `hello world|florian`. This will find results for "hello world" and "hello florian". This works with similarity, partial, etc. For example `hello text:wor*|text:flarian~`.
+- Added OR mode to Picky search terms, e.g. `hello world|florian`. This will find results for "hello world" and "hello florian". This works with similarity, partial, etc. For example `hello text:wor*|text:flarian~`. (Note that you will have to NOT `remove_characters` "|")
 
 ## 4.16.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
+- `key_format` is now explicitly needed unless the keys do not need to be converted.
 - Search facets do not report duplicate entries under 1000 facets.
 
 ## 4.15.1
