@@ -24,7 +24,7 @@ BooksIndex = Picky::Index.new :books do
   key_format :to_i
   
   source { Books.new }
-  indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.\|]/i,
+  indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
            stopwords:          /\b(and|the|of|it|in|for)\b/i,
            splits_text_on:     /[\s\/\-\_\:\"\&\.]/
   category :title,
