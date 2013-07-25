@@ -19,7 +19,7 @@ module Picky
         # Prepare a combined object - array.
         #
         combined = categories.map do |category|
-          [category, category.prepared_index_file, [], (category.tokenizer || tokenizer)]
+          [category, category.prepared_index_file, [], category.tokenizer]
         end
 
         # Go through each object in the source.

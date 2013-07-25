@@ -1,3 +1,9 @@
+## 4.17.1
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Fix for parallel tokenizing when option `tokenize` is set to false on a category.
+
 ## 4.17.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
