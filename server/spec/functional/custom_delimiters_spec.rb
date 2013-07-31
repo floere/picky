@@ -14,26 +14,34 @@ describe 'custom delimiters' do
     Picky::Query::Token.qualifiers_delimiter = ','
   end
 
-  it 'offers custom partial delimiters to be set' do
-    index = Picky::Index.new :custom_delimiters do
-      category :text1
-      category :text2
+  context 'offers custom partial delimiters to be set' do
+    let(:index) do
+      index = Picky::Index.new :custom_delimiters do
+        category :text1
+        category :text2
+      end
+      
+      index.add Struct.new(:id, :text1, :text2).new(1, 'hello', 'world')
+      
+      index
     end
-
-    index.add Struct.new(:id, :text1, :text2).new(1, 'hello', 'world')
-
-    try = Picky::Search.new index
-    try.search("hell world").ids.should == []
-    try.search("hell* world").ids.should == [1]
-    try.search("hello world").ids.should == [1]
+    let(:try) { Picky::Search.new index }
     
-    try.search("hell! world").ids.should == []
-    Picky::Query::Token.partial_character = '!'
-    try.search("hell! world").ids.should == [1]
+    it { try.search("hell world").ids.should == [] }
+    it { try.search("hell* world").ids.should == [1] }
+    it { try.search("hello world").ids.should == [1] }
     
-    try.search('hell!" world').ids.should == []
-    Picky::Query::Token.no_partial_character = '\?'
-    try.search('hell!? world').ids.should == []
+    it 'with changed partial character' do
+      try.search("hell! world").ids.should == []
+      Picky::Query::Token.partial_character = '!'
+      try.search("hell! world").ids.should == [1]
+    end
+    
+    it 'with changed no-partial character' do
+      try.search('hell!" world').ids.should == []
+      Picky::Query::Token.no_partial_character = '\?'
+      try.search('hell!? world').ids.should == []
+    end
   end
   
   it 'offers custom similar delimiters to be set' do

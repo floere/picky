@@ -22,69 +22,72 @@ describe "automatic splitting" do
     index
   end
   
-  it 'can split the text automatically' do
-    automatic_splitter = Picky::Splitters::Automatic.new index[:text]
+  context 'splitting the text automatically' do
+    let(:automatic_splitter) { Picky::Splitters::Automatic.new index[:text] }
     
     # It splits the text correctly.
     #
-    automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow']
-    automatic_splitter.split('purplerain').should == ['purple', 'rain']
-    automatic_splitter.split('purple').should == ['purple']
+    it { automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow'] }
+    it { automatic_splitter.split('purplerain').should == ['purple', 'rain'] }
+    it { automatic_splitter.split('purple').should == ['purple'] }
     
     # When it can't, it splits it using the partial index (correctly).
     #
-    automatic_splitter.split('purplerainbo').should == ['purple', 'rain']
-    automatic_splitter.split('purplerainb').should  == ['purple', 'rain']
+    it { automatic_splitter.split('purplerainbo').should == ['purple', 'rain'] }
+    it { automatic_splitter.split('purplerainb').should  == ['purple', 'rain'] }
     #
-    automatic_splitter.split('purplerai').should == ['purple']
-    automatic_splitter.split('purplera').should  == ['purple']
-    automatic_splitter.split('purpler').should   == ['purple']
+    it { automatic_splitter.split('purplerai').should == ['purple'] }
+    it { automatic_splitter.split('purplera').should  == ['purple'] }
+    it { automatic_splitter.split('purpler').should   == ['purple'] }
     #
-    automatic_splitter.split('purpl').should == []
-    automatic_splitter.split('purp').should  == []
-    automatic_splitter.split('pur').should   == []
-    automatic_splitter.split('pu').should    == []
-    automatic_splitter.split('p').should     == []
+    it { automatic_splitter.split('purpl').should == [] }
+    it { automatic_splitter.split('purp').should  == [] }
+    it { automatic_splitter.split('pur').should   == [] }
+    it { automatic_splitter.split('pu').should    == [] }
+    it { automatic_splitter.split('p').should     == [] }
   end
   
-  it 'can split text automatically (with partial)' do
-    automatic_splitter = Picky::Splitters::Automatic.new index[:text], partial: true
+  context 'splitting text automatically (with partial)' do
+    let(:automatic_splitter) { Picky::Splitters::Automatic.new index[:text], partial: true }
     
     # It splits the text correctly.
     #
-    automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow']
-    automatic_splitter.split('purplerain').should == ['purple', 'rain']
-    automatic_splitter.split('purple').should == ['purple']
+    it { automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow'] }
+    it { automatic_splitter.split('purplerain').should == ['purple', 'rain'] }
+    it { automatic_splitter.split('purple').should == ['purple'] }
     
     # When it can't, it splits it using the partial index (correctly).
     #
-    automatic_splitter.split('purplerainbo').should == ['purple', 'rain', 'bo']
-    automatic_splitter.split('purplerainb').should == ['purple', 'rain', 'b']
+    it { automatic_splitter.split('purplerainbo').should == ['purple', 'rain', 'bo'] }
+    it { automatic_splitter.split('purplerainb').should == ['purple', 'rain', 'b'] }
     #
-    automatic_splitter.split('purplerai').should == ['purple', 'rai']
-    automatic_splitter.split('purplera').should == ['purple', 'ra']
-    automatic_splitter.split('purpler').should == ['purple'] # No 'r' in partial index.
+    it { automatic_splitter.split('purplerai').should == ['purple', 'rai'] }
+    it { automatic_splitter.split('purplera').should == ['purple', 'ra'] }
+    it { automatic_splitter.split('purpler').should == ['purple'] } # No 'r' in partial index.
     #
-    automatic_splitter.split('purpl').should == ['purpl']
-    automatic_splitter.split('purp').should == ['purp']
-    automatic_splitter.split('pur').should == [] # No 'pur' in partial index etc.
-    automatic_splitter.split('pu').should == []
-    automatic_splitter.split('p').should == []
+    it { automatic_splitter.split('purpl').should == ['purpl'] }
+    it { automatic_splitter.split('purp').should == ['purp'] }
+    it { automatic_splitter.split('pur').should == [] } # No 'pur' in partial index etc.
+    it { automatic_splitter.split('pu').should == [] }
+    it { automatic_splitter.split('p').should == [] }
     
-    try = Picky::Search.new index do
-      searching splits_text_on: automatic_splitter
+    let(:try) do
+      splitter = automatic_splitter
+      Picky::Search.new index do
+        searching splits_text_on: splitter
+      end
     end
     
     # Should find the one with all parts.
     #
-    try.search('purplerainbow').ids.should == [1]
-    try.search('sunandrain').ids.should == [5]
+    it { try.search('purplerainbow').ids.should == [1] }
+    it { try.search('sunandrain').ids.should == [5] }
     
     # Common parts are found in multiple examples.
     #
-    try.search('colorpurple').ids.should == [4,1]
-    try.search('bownew').ids.should      == [3,1]
-    try.search('spainisking').ids.should == [6,1]
+    it { try.search('colorpurple').ids.should == [4,1] }
+    it { try.search('bownew').ids.should      == [3,1] }
+    it { try.search('spainisking').ids.should == [6,1] }
   end
   
   it 'is fast enough' do
