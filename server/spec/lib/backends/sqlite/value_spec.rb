@@ -25,7 +25,7 @@ describe Picky::Backends::SQLite::Value do
       it 'initializes the client' do
         client.stub! :execute
 
-        db.should_receive(:lazily_initialize_client).once.with
+        db.should_receive(:db).exactly(4).times.with
 
         db.dump_sqlite Hash.new
       end
@@ -37,7 +37,7 @@ describe Picky::Backends::SQLite::Value do
         db.dump_sqlite Hash.new
       end
       it 'inserts keys and values' do
-        db.stub! :lazily_initialize_client
+        # db.stub! :db
         client.stub! :execute # We only want to test the insert statements.
 
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', 'a', '[1,2,3]'

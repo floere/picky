@@ -15,8 +15,6 @@ module Picky
           @empty      = options[:empty]
           @initial    = options[:initial]
           @realtime   = options[:realtime]
-
-          lazily_initialize_client
         
           # Note: If on OSX, too many files get opened during
           #       the specs -> ulimit -n 3000
@@ -46,9 +44,10 @@ module Picky
           db.execute 'delete from key_value'
         end
         
-        # TODO Replace with db method?
+        # Lazily creates SQLite client.
+        # Note: Perhaps it would be advisable to create only one, when initialising.
         #
-        def lazily_initialize_client
+        def db
           @db ||= (create_directory cache_path; SQLite3::Database.new cache_path)
         end
 
@@ -70,10 +69,8 @@ module Picky
           # TODO Still necessary?
           #
           create_directory cache_path
-          lazily_initialize_client
-
           truncate_db
-
+          
           self
         end
 
