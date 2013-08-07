@@ -82,11 +82,13 @@ module Picky
     #
     @@known_keys = [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight]
     def warn_if_unknown options
-      warn <<-WARNING if options && (options.keys - @@known_keys).size > 0
+      if options && (options.keys - @@known_keys).size > 0
+        warn <<-WARNING
 
 Warning: Category options #{options} for category #{name} contain an unknown option.
          Working options are: #@@known_keys.
 WARNING
+      end
     end
     def weights_from options
       Generators::Weights.from options[:weight], index_name, name
