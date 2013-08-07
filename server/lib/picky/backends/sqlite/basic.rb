@@ -66,11 +66,7 @@ module Picky
         end
 
         def reset
-          # TODO Still necessary?
-          #
-          create_directory cache_path
           truncate_db
-          
           self
         end
 
