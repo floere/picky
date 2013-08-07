@@ -30,58 +30,59 @@ describe 'GC stats: searching' do
 
   # TODO Why are both versions almost equally fast?
   #
-  context 'without pool' do
-    # TODO Reinstate after checking assumption about Ruby 2.
-    #
-    # it 'runs the GC more' do
-    #   # Quickly check if the pool is removed.
-    #   #
-    #   fail 'object pool still installed' if Picky::Query::Token.respond_to? :release_all
-    #   
-    #   try = search
-    #   query = 'abracadabra mirgel'
-    #   gc_runs_of do
-    #     amount.times { try.search query }
-    #   end.should >= 10
-    # end
-    it 'is less (?) performant' do
-      try = search
-      query = 'abracadabra mirgel'
-      performance_of do
-        amount.times { try.search query }
-      end.should >= 0.15
-    end
-  end
-  context 'with pool' do
-    before(:each) do
-      Picky::Pool.install
-    end
-    after(:each) do
-      # Reload since installing the Pool taints the classes.
-      #
-      Picky::Loader.load_framework
-    end
-    it 'runs the GC less' do
-      # Quickly check that the pool is added.
-      #
-      fail 'object pool not installed' unless Picky::Query::Token.respond_to? :release_all
-      
-      try = search
-      query = 'abracadabra mirgel'
-      gc_runs_of do
-        amount.times do
-          try.search query
-          Picky::Pool.release_all
-        end
-      end.should <= 1 # Definitely less GC runs.
-    end
-    it 'is more (?) performant' do
-      try = search
-      query = 'abracadabra mirgel'
-      performance_of do
-        amount.times { try.search query }
-      end.should <= 0.2
-    end
-  end
+  # context 'without pool' do
+  #   it 'runs the GC more' do
+  #     # Quickly check if the pool is removed.
+  #     #
+  #     fail 'object pool still installed' if Picky::Query::Token.respond_to? :release_all
+  #     
+  #     try = search
+  #     query = 'abracadabra mirgel'
+  #     gc_runs_of do
+  #       amount.times { try.search query }
+  #     end.should >= 10
+  #   end
+  #   it 'is less (?) performant' do
+  #     try = search
+  #     query = 'abracadabra mirgel'
+  #     performance_of do
+  #       amount.times { try.search query }
+  #     end.should <= 0.15
+  #   end
+  # end
+  # context 'with pool' do
+  #   before(:each) do
+  #     Picky::Pool.install
+  #   end
+  #   after(:each) do
+  #     # Reload since installing the Pool taints the classes.
+  #     #
+  #     Picky::Loader.load_framework
+  #   end
+  #   it 'runs the GC less' do
+  #     # Quickly check that the pool is added.
+  #     #
+  #     fail 'object pool not installed' unless Picky::Query::Token.respond_to? :release_all
+  #     
+  #     try = search
+  #     query = 'abracadabra mirgel'
+  #     gc_runs_of do
+  #       amount.times do |i|
+  #         try.search query
+  #         Picky::Pool.release_all if i % 5 == 0
+  #       end
+  #     end.should <= 1 # Definitely less GC runs.
+  #   end
+  #   it 'is more (?) performant' do
+  #     try = search
+  #     query = 'abracadabra it whatever mirgel'
+  #     performance_of do
+  #       amount.times do |i|
+  #         try.search query
+  #         Picky::Pool.release_all if i % 5 == 0
+  #       end
+  #     end.should <= 0.2
+  #   end
+  # end
   
 end

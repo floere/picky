@@ -7,7 +7,6 @@ module Picky
     attr_accessor :exact,
                   :partial
     attr_reader :name,
-                :prepared,
                 :backend
     attr_writer :source
 
@@ -71,10 +70,6 @@ module Picky
 
       @exact     = exact_for weights, similarity, options
       @partial   = partial_for @exact, partial, weights, options
-
-      # TODO Is creating a prepared always necessary here? Not really.
-      #
-      @prepared  = Backends::Prepared::Text.new prepared_index_path
     end
     # Since the options hash might contain options that do not exist,
     # we should warn people if they use the wrong options.
@@ -114,6 +109,12 @@ WARNING
       else
         Bundle.new :partial, self, weights, partial_options, Generators::Similarity::None.new, options
       end
+    end
+    
+    # Lazily create a prepared index proxy.
+    #
+    def prepared
+      @prepared ||= Backends::Prepared::Text.new prepared_index_path
     end
     
     # Indexes and loads the category.

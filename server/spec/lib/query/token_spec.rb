@@ -14,8 +14,6 @@ describe Picky::Query::Token do
   
   describe 'categorize' do
     let(:mapper) do
-      # TODO Can we remove the index?
-      #
       index      = Picky::Index.new :mapper
       categories = Picky::Categories.new
       @category1 = categories << Picky::Category.new(:category1, index)
@@ -98,7 +96,7 @@ describe Picky::Query::Token do
       end
       it 'returns a list of tokens with the right categorization' do
         token.similar_tokens_for(@category).map do |token|
-          token.predefined_categories nil # TODO Clean this up.
+          token.predefined_categories
         end.should == [[@category], [@category], [@category]]
       end
     end

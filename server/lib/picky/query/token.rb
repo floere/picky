@@ -64,8 +64,8 @@ module Picky
       #
       # TODO Do we really need to set the predefined categories on the token?
       #
-      def predefined_categories mapper
-        @predefined_categories || extract_predefined(mapper)
+      def predefined_categories mapper = nil
+        @predefined_categories || mapper && extract_predefined(mapper)
       end
       def extract_predefined mapper
         user_qualified = categorize_with mapper, @qualifiers
