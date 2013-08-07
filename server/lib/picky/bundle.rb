@@ -145,10 +145,10 @@ module Picky
 
     # If a key format is set, use it, else forward to the category.
     #
-    # TODO Removed optimisation: @key_format ||= @category.key_format
+    # TODO Remove optimisation? @category.key_format
     #
     def key_format
-      @category.key_format
+      @key_format ||= @category.key_format
     end
 
     # Path and partial filename of a specific subindex.

@@ -2,13 +2,10 @@
 
 # Start Redis if not yet running.
 #
-# TODO Code reading.
-# TODO Clean up – perhaps make it a block and only run it if block is called.
-#
 fork do
   print "Starting redis-server... "
   `redis-server` # Gets stuck or fails, continuing.
-  puts "Redis already running (exitstatus #{$?.exitstatus})." unless $?.success?
+  puts "(already running, redis-server returned #{$?.exitstatus})." unless $?.success?
 end
 
 if ENV['COV']

@@ -478,7 +478,7 @@ describe "Realtime Indexing" do
     let(:index) do
       Picky::Index.new(:books) do
         backend Picky::Backends::Redis.new(realtime: true)
-        key_format :to_s # TODO Make key format dependent on backend?
+        key_format :to_s
         category :title
         category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
       end

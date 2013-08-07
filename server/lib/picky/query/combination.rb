@@ -5,7 +5,7 @@ module Picky
     # Describes the Combination of:
     #  * a token
     #  * a category
-    #  * the weight of the token in the category (cached)
+    #  * the weight of the token in the category (cached from earlier)
     #
     # An Allocation consists of an ordered number of Combinations.
     #
