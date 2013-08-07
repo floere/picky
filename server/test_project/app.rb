@@ -59,7 +59,7 @@ class BookSearch < Sinatra::Application
     },
     nonstring: Picky::Search.new(NonstringDataIndex),
     partial: Picky::Search.new(PartialIndex),
-    # sqlite: Picky::Search.new(SQLiteIndex), # TODO Fix, reinstate.
+    sqlite: Picky::Search.new(SQLiteIndex),
     commas: Picky::Search.new(CommaIdsIndex),
     all: Picky::Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
       boost weights

@@ -337,9 +337,7 @@ describe BookSearch do
 
   # SQLite backend.
   #
-  # TODO Find the problem with the SQlite gem and reinstate this.
-  #
-  # it { sqlite.search("hello sqlite").ids.should == [1] }
+  it { sqlite.search("hello sqlite").ids.should == [1] }
   
   # Commas in ids.
   #
