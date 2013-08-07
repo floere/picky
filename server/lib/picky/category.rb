@@ -72,13 +72,15 @@ module Picky
       @exact     = exact_for weights, similarity, options
       @partial   = partial_for @exact, partial, weights, options
 
+      # TODO Is creating a prepared always necessary here? Not really.
+      #
       @prepared  = Backends::Prepared::Text.new prepared_index_path
     end
     # Since the options hash might contain options that do not exist,
     # we should warn people if they use the wrong options.
     # (Problem is that if the option is not found, then Picky will use the default)
     #
-    # TODO Rewrite it such that this does not need to be maintained separately.
+    # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
     #
     @@known_keys = [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight]
     def warn_if_unknown options

@@ -74,9 +74,16 @@ module Picky
       
       format = self.key_format?
       tokens.each { |text| add_tokenized_token id, text, where, format }
-    rescue NoMethodError
-      # TODO Improve error message by pointing out what exactly goes wrong: thing xy does not have an #each method.
-      raise %Q{You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
+    rescue NoMethodError => e
+      show_informative_add_text_error_message_for e
+    end
+    
+    def show_informative_add_text_error_message_for e
+      if e.name == :each
+        raise %Q{#{e.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
+      else
+        raise e
+      end
     end
 
     #
