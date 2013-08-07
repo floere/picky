@@ -36,7 +36,9 @@ module Picky
       # Pre-tokenize key token – replace text below.
       # Note: The original is not important.
       #
-      # TODO Don't use predefined.
+      # TODO Don't use predefined. Perhaps do:
+      # key_token = Query::Token.new ''
+      # key_token.predefined_categories = [index[category_identifier]]
       #
       key_token = Query::Token.new '', nil, predefined_categories
       
