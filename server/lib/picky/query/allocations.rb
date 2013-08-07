@@ -60,7 +60,7 @@ module Picky
       #
       # TODO Rewrite, speed up.
       #
-      def remove_allocations qualifiers_array = []
+      def remove_allocations qualifiers_array
         return if qualifiers_array.empty?
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
@@ -77,7 +77,7 @@ module Picky
       #
       # TODO Rewrite, speed up.
       #
-      def keep_allocations qualifiers_array = []
+      def keep_allocations qualifiers_array
         return if qualifiers_array.empty?
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
