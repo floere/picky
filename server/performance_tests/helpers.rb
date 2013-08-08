@@ -48,3 +48,11 @@ end
 def runs
   GC::Profiler.result.match(/\d+/)[0].to_i
 end
+
+class Array
+  
+  def sum
+    inject(0) { |result, value| result + value }
+  end
+  
+end

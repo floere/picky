@@ -43,19 +43,19 @@ backends = [
 
 definitions = []
 
-# definitions << [Proc.new do
-#   category :text1, weight: Picky::Weights::Constant.new
-#   category :text2, weight: Picky::Weights::Constant.new
-#   category :text3, weight: Picky::Weights::Constant.new
-#   category :text4, weight: Picky::Weights::Constant.new
-# end, :no_weights]
-
 definitions << [Proc.new do
-  category :text1
-  category :text2
-  category :text3
-  category :text4
-end, :normal]
+  category :text1, weight: Picky::Weights::Constant.new
+  category :text2, weight: Picky::Weights::Constant.new
+  category :text3, weight: Picky::Weights::Constant.new
+  category :text4, weight: Picky::Weights::Constant.new
+end, :no_weights]
+
+# definitions << [Proc.new do
+#   category :text1
+#   category :text2
+#   category :text3
+#   category :text4
+# end, :normal]
 
 # definitions << [Proc.new do
 #   category :text1, partial: Picky::Partial::Postfix.new(from: 1)
@@ -75,8 +75,8 @@ definitions.each do |definition, description|
   xs.source  { with[100] }
   s   = Index.new :s,   &definition
   s.source   { with[1_000] }
-  m   = Index.new :m,   &definition
-  m.source   { with[10_000] }
+  # m   = Index.new :m,   &definition
+  # m.source   { with[10_000] }
   # l   = Index.new :l,   &definition
   # l.source   { with[100_000] }
   # xl  = Index.new :xl,  &definition
