@@ -7,10 +7,10 @@ module Picky
 
       # Returns a duration in seconds.
       #
-      def timed *args, &block_to_be_measured
+      def timed
         time_begin = Time.new
 
-        block_to_be_measured.call *args
+        yield
 
         (Time.new - time_begin).to_f
       end
