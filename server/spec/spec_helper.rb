@@ -1,4 +1,4 @@
-`rm -r spec/temp/*`
+system 'rm -r spec/temp/*'
 
 # Start Redis if not yet running.
 #
