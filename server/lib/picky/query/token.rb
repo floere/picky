@@ -90,6 +90,8 @@ module Picky
       #
       # It can't be similar and partial at the same time.
       #
+      # TODO We can set this at create time.
+      #
       def partial?
         !@similar && @partial
       end
