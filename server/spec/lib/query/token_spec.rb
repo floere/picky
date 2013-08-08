@@ -201,8 +201,8 @@ describe Picky::Query::Token do
     end
     it 'should have an order' do
       token.should_receive(:qualify).once.ordered
-      token.should_receive(:partialize).once.ordered
       token.should_receive(:similarize).once.ordered
+      token.should_receive(:partialize).once.ordered
       token.should_receive(:remove_illegals).once.ordered
 
       token.process

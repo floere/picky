@@ -41,8 +41,8 @@ module Picky
       end
       def process
         qualify
-        partialize
         similarize
+        partialize
         rangify
         remove_illegals
         self
@@ -90,10 +90,11 @@ module Picky
       #
       # It can't be similar and partial at the same time.
       #
-      # TODO We can set this at create time.
+      # Note: @partial is calculated at processing time (see Token#process).
       #
       def partial?
-        !@similar && @partial
+        # !@similar && @partial
+        @partial
       end
 
       # If the text ends with *, partialize it. If with ",
@@ -108,6 +109,12 @@ module Picky
       @@no_partial = /\"\z/
       @@partial    = /\*\z/
       def partialize
+        # A token is partial? only if it not similar
+        # and is partial.
+        #
+        # It can't be similar and partial at the same time.
+        #
+        self.partial = false or return if @similar
         self.partial = false or return unless @text !~ @@no_partial
         self.partial = true unless @text !~ @@partial
       end
