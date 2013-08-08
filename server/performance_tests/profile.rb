@@ -21,10 +21,6 @@ require_relative 'searches'
 data.clear
 data.load
 
-require 'ruby-prof'
-RubyProf.start
-RubyProf.pause
-
 # Run queries.
 #
 Searches.series_for(amount).each do |queries|
@@ -34,11 +30,17 @@ Searches.series_for(amount).each do |queries|
   run = Picky::Search.new data
   run.terminate_early
   
+  # Required here to avoid RubyProf early start.
+  #
+  require 'ruby-prof'
+  RubyProf.start rescue "RubyProf docs for the fail!"
+  RubyProf.pause # Does not work.
+  
   queries.each do |query|
-    RubyProf.resume
     run.search query
-    RubyProf.pause
   end
+  
+  RubyProf.pause
   
 end
 
