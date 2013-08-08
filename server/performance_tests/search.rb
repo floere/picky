@@ -33,6 +33,7 @@ queries  = ->(complexity, amount) do
 end
 
 backends = [
+  Backends::Memory.new, # Pre-run.
   Backends::Memory.new,
   # Backends::File.new,
   # Backends::SQLite.new,
@@ -43,19 +44,19 @@ backends = [
 
 definitions = []
 
-definitions << [Proc.new do
-  category :text1, weight: Picky::Weights::Constant.new
-  category :text2, weight: Picky::Weights::Constant.new
-  category :text3, weight: Picky::Weights::Constant.new
-  category :text4, weight: Picky::Weights::Constant.new
-end, :no_weights]
-
 # definitions << [Proc.new do
-#   category :text1
-#   category :text2
-#   category :text3
-#   category :text4
-# end, :normal]
+#   category :text1, weight: Picky::Weights::Constant.new
+#   category :text2, weight: Picky::Weights::Constant.new
+#   category :text3, weight: Picky::Weights::Constant.new
+#   category :text4, weight: Picky::Weights::Constant.new
+# end, :no_weights]
+
+definitions << [Proc.new do
+  category :text1
+  category :text2
+  category :text3
+  category :text4
+end, :normal]
 
 # definitions << [Proc.new do
 #   category :text1, partial: Picky::Partial::Postfix.new(from: 1)
@@ -66,6 +67,7 @@ end, :no_weights]
 
 GC.enable
 GC::Profiler.enable
+Picky.logger = Picky::Loggers::Silent.new
 
 definitions.each do |definition, description|
 
@@ -75,8 +77,8 @@ definitions.each do |definition, description|
   xs.source  { with[100] }
   s   = Index.new :s,   &definition
   s.source   { with[1_000] }
-  # m   = Index.new :m,   &definition
-  # m.source   { with[10_000] }
+  m   = Index.new :m,   &definition
+  m.source   { with[10_000] }
   # l   = Index.new :l,   &definition
   # l.source   { with[100_000] }
   # xl  = Index.new :xl,  &definition
@@ -89,9 +91,9 @@ definitions.each do |definition, description|
   backends.each do |backend|
 
     puts
-    puts "All measurements in ms! (Strings/Symbols per search request)"
     puts backend.class
-
+    puts " Amount,  1wQ/s,  2wQ/s,  3wQ/s,  4wQ/s,  5wQ/s    Memory etc."
+    
     Indexes.each do |data|
 
       data.prepare if backend == backends.first
@@ -101,7 +103,7 @@ definitions.each do |definition, description|
       data.cache
       data.load
 
-      amount = 50
+      amount = 1000
 
       print "%7d" % data.source.amount
 
@@ -131,11 +133,9 @@ definitions.each do |definition, description|
         duration = performance_of do
 
           # compare_strings do
-
             queries.each do |query|
               run.search query
             end
-
           # end
 
         end
@@ -146,7 +146,7 @@ definitions.each do |definition, description|
         gc_runs << (runs - last_gc)
 
         print ", "
-        print "%2.4f" % (duration*1000/amount)
+        print "%6d" % (amount/duration) # "%2.4f" % (duration*1000/amount)
 
       end
 
