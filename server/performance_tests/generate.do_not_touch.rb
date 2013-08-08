@@ -39,7 +39,7 @@ class IndexGenerator
 
 end
 
-generator = IndexGenerator.new 1_000_000
+generator = IndexGenerator.new 100_000
 
 File.open('data.csv', 'w') do |file|
   generator.each do |things|
