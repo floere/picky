@@ -212,18 +212,6 @@ describe Picky::Category do
       @category.stub! :exact => (@exact = stub :exact)
       @category.stub! :partial => (@partial = stub :partial)
     end
-    describe 'bundle_for' do
-      it 'should return the right bundle' do
-        token = stub :token, :partial? => false
-
-        @category.bundle_for(token).should == @exact
-      end
-      it 'should return the right bundle' do
-        token = stub :token, :partial? => true
-
-        @category.bundle_for(token).should == @partial
-      end
-    end
 
     describe 'load' do
       it 'should call two methods' do

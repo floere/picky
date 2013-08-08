@@ -72,17 +72,11 @@ module Picky
       # unfortunately.
       #
       def ids combinations, _, _
-        # Get the ids for each combination.
-        #
-        id_arrays = combinations.inject([]) do |total, combination|
-          total << combination.ids
-        end
-
-        # Call the optimized C algorithm.
+        # Get the ids for each combination and pass to the optimized C algorithm.
         #
         # Note: It orders the passed arrays by size.
         #
-        Performant::Array.memory_efficient_intersect id_arrays
+        Performant::Array.memory_efficient_intersect combinations.map { |combination| combination.ids }
       end
 
       #

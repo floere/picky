@@ -16,6 +16,7 @@ module Picky
 
       forward :empty?,
               :inject,
+              :map,
               :to => :@combinations
 
       def initialize combinations = []

@@ -11,7 +11,7 @@ module Picky
     attr_reader :indexes,
                 :index_mapping
 
-    forward :size, :each, :to => :indexes
+    forward :size, :each, :map, :to => :indexes
     each_forward :reindex, :to => :indexes
     instance_forward :clear,
                      :clear_indexes,

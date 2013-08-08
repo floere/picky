@@ -34,7 +34,7 @@ end
 
 backends = [
   Backends::Memory.new, # Pre-run.
-  Backends::Memory.new,
+  # Backends::Memory.new,
   # Backends::File.new,
   # Backends::SQLite.new,
   # Backends::Redis.new,
@@ -44,12 +44,12 @@ backends = [
 
 definitions = []
 
-# definitions << [Proc.new do
-#   category :text1, weight: Picky::Weights::Constant.new
-#   category :text2, weight: Picky::Weights::Constant.new
-#   category :text3, weight: Picky::Weights::Constant.new
-#   category :text4, weight: Picky::Weights::Constant.new
-# end, :no_weights]
+definitions << [Proc.new do
+  category :text1, weight: Picky::Weights::Constant.new
+  category :text2, weight: Picky::Weights::Constant.new
+  category :text3, weight: Picky::Weights::Constant.new
+  category :text4, weight: Picky::Weights::Constant.new
+end, :no_weights]
 
 definitions << [Proc.new do
   category :text1
@@ -58,12 +58,12 @@ definitions << [Proc.new do
   category :text4
 end, :normal]
 
-# definitions << [Proc.new do
-#   category :text1, partial: Picky::Partial::Postfix.new(from: 1)
-#   category :text2, partial: Picky::Partial::Postfix.new(from: 1)
-#   category :text3, partial: Picky::Partial::Postfix.new(from: 1)
-#   category :text4, partial: Picky::Partial::Postfix.new(from: 1)
-# end, :full_partial]
+definitions << [Proc.new do
+  category :text1, partial: Picky::Partial::Postfix.new(from: 1)
+  category :text2, partial: Picky::Partial::Postfix.new(from: 1)
+  category :text3, partial: Picky::Partial::Postfix.new(from: 1)
+  category :text4, partial: Picky::Partial::Postfix.new(from: 1)
+end, :full_partial]
 
 GC.enable
 GC::Profiler.enable
@@ -79,10 +79,10 @@ definitions.each do |definition, description|
   s.source   { with[1_000] }
   m   = Index.new :m,   &definition
   m.source   { with[10_000] }
-  # l   = Index.new :l,   &definition
-  # l.source   { with[100_000] }
-  # xl  = Index.new :xl,  &definition
-  # xl.source  { with[1_000_000] }
+  l   = Index.new :l,   &definition
+  l.source   { with[100_000] }
+  xl  = Index.new :xl,  &definition
+  xl.source  { with[1_000_000] }
 
   puts
   puts

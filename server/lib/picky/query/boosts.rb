@@ -59,6 +59,8 @@ module Picky
       # Note: Cache this if more complicated weighings become necessary.
       # Note: Maybe make combinations comparable to Symbols?
       #
+      # TODO Push into categories? Store boosts in categories?
+      #
       def boost_for combinations
         boost_for_categories combinations.map { |combination| combination.category_name }
       end

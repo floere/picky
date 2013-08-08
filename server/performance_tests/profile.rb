@@ -2,7 +2,7 @@ require 'csv'
 require 'sinatra/base'
 require_relative '../lib/picky'
 
-# ruby search_only.rb xxs (index size) 100 (amount of queries)
+# ruby profile.rb xxs (index size) 100 (amount of queries)
 #
 size   = ARGV[0].to_sym rescue puts("This script needs an index size as first argument.") && exit(1)
 amount = ARGV[1] && ARGV[1].to_i || 10
@@ -44,14 +44,24 @@ end
 
 result = RubyProf.stop
 
-filename = "#{Dir.pwd}/20#{Time.now.strftime("%y%m%d%H%M")}-ruby-prof-results-#{size}-#{amount}.html"
-File.open filename, 'w' do |file|
-  RubyProf::GraphHtmlPrinter.new(result).print(file)
+filename = "#{Dir.pwd}/20#{Time.now.strftime("%y%m%d%H%M")}-ruby-prof-results-#{size}-#{amount}"
+html = filename + '.html'
+viz  = filename + '.viz'
+File.open html, 'w' do |file|
+  RubyProf::CallStackPrinter.new(result).print file
+  # RubyProf::GraphHtmlPrinter.new(result).print file
+end
+File.open viz, 'w' do |file|
+  RubyProf::DotPrinter.new(result).print file
 end
 
-printer = RubyProf::GraphPrinter.new(result)
-printer.print(STDOUT, :min_percent => 2)
+printer = RubyProf::GraphPrinter.new result
+printer.print STDOUT, :min_percent => 2
 
-command = "open #{filename}"
+command = "open #{html}"
+puts command
+`#{command}`
+
+command = "twopi -Tsvg -Goverlap=scale -orendered.svg #{viz}; open -a 'Google Chrome' rendered.svg"
 puts command
 `#{command}`

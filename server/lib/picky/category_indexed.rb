@@ -52,7 +52,8 @@ module Picky
     # Returns the right index bundle for this token.
     #
     def bundle_for token
-      token.partial? ? partial : exact
+      # token.partial? ? partial : exact
+      token.select_bundle exact, partial
     end
 
   end

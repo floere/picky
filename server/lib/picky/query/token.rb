@@ -76,6 +76,12 @@ module Picky
           mapper.map qualifier
         end.compact
       end
+      
+      # Selects the bundle to be used.
+      #
+      def select_bundle exact, partial
+        @partial ? partial : exact
+      end
 
       # Partial is a conditional setter.
       #
@@ -115,15 +121,15 @@ module Picky
         # It can't be similar and partial at the same time.
         #
         self.partial = false or return if @similar
-        self.partial = false or return unless @text !~ @@no_partial
-        self.partial = true unless @text !~ @@partial
+        self.partial = false or return if @text =~ @@no_partial
+        self.partial = true if @text =~ @@partial
       end
       # Define a character which stops a token from
       # being a partial token, even if it is the last token.
       #
       # Default is '"'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
       # so escape the character.
       #
       # Example:
@@ -138,7 +144,7 @@ module Picky
       #
       # Default is '*'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
       # so escape the character.
       #
       # Example:
@@ -160,15 +166,15 @@ module Picky
       @@no_similar = %r{#@@no_similar_character\z}
       @@similar    = %r{#@@similar_character\z}
       def similarize
-        self.similar = false or return unless @text !~ @@no_similar
-        self.similar = true unless @text !~ @@similar
+        self.similar = false or return if @text =~ @@no_similar
+        self.similar = true if @text =~ @@similar
       end
       # Define a character which stops a token from
       # being a similar token, even if it is the last token.
       #
       # Default is '"'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
       # so escape the character.
       #
       # Example:
@@ -183,7 +189,7 @@ module Picky
       #
       # Default is '~'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#!~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
       # so escape the character.
       #
       # Example:
@@ -245,7 +251,9 @@ module Picky
         similar? ? categories.similar_possible_for(self) : categories.possible_for(self)
       end
       
-      # TODO
+      # If the Token has weight for the given category,
+      # it will return a new combination for the tuple
+      # (self, category, weight).
       #
       def combination_for category
         weight = category.weight self

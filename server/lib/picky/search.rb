@@ -265,6 +265,8 @@ module Picky
 
     # Gets sorted allocations for the tokens.
     #
+    # TODO Remove and just call prepared (and rename to sorted)?
+    #
     def sorted_allocations tokens, amount = nil
       indexes.prepared_allocations_for tokens, boosts, amount
     end
