@@ -22,7 +22,7 @@ data.clear
 data.load
 
 require 'ruby-prof'
-RubyProf.start # TODO Remove?
+RubyProf.start
 RubyProf.pause
 
 # Run queries.
