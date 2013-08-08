@@ -1,0 +1,705 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>ruby-prof call tree</title>
+<style type="text/css">
+<!--
+body {
+    font-size:70%;
+    padding:0px;
+    margin:5px;
+    margin-right:0px;
+    margin-left:0px;
+    background: #ffffff;
+}
+ul {
+    margin-left:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding-left:0px;
+    list-style-type:none;
+}
+li {
+    margin-left:11px;
+    padding:0px;
+    white-space:nowrap;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+.thread {
+    margin-left:11px;
+    background:#708090;
+    padding-top:3px;
+    padding-left:12px;
+    padding-bottom:2px;
+    border-left:1px solid #CCCCCC;
+    border-top:1px solid #CCCCCC;
+    font-weight:bold;
+}
+.hidden {
+    display:none;
+    width:0px;
+    height:0px;
+    margin:0px;
+    padding:0px;
+    border-style:none;
+}
+.color01 { background:#adbdeb }
+.color05 { background:#9daddb }
+.color0 { background:#8d9dcb }
+.color1 { background:#89bccb }
+.color2 { background:#56e3e7 }
+.color3 { background:#32cd70 }
+.color4 { background:#a3d53c }
+.color5 { background:#c4cb34 }
+.color6 { background:#dcb66d }
+.color7 { background:#cda59e }
+.color8 { background:#be9d9c }
+.color9 { background:#cf947a }
+#commands {
+    font-size:10pt;
+    padding:10px;
+    margin-left:11px;
+    margin-bottom:0px;
+    margin-top:0px;
+    background:#708090;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+#titlebar {
+    font-size:10pt;
+    padding:10px;
+    margin-left:11px;
+    margin-bottom:0px;
+    margin-top:10px;
+    background:#8090a0;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+#help {
+    font-size:10pt;
+    padding:10px;
+    margin-left:11px;
+    margin-bottom:0px;
+    margin-top:0px;
+    background:#8090a0;
+    display:none;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+}
+#sentinel {
+    height: 400px;
+    margin-left:11px;
+    background:#8090a0;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-bottom:none;
+ }
+input { margin-left:10px; }
+-->
+</style>
+<script type="text/javascript">
+/*
+   Copyright (C) 2005,2009  Stefan Kaes
+   skaes@railsexpress.de
+*/
+
+function rootNode() {
+  return currentThread;
+}
+
+function hideUL(node) {
+  var lis = node.childNodes
+  var l = lis.length;
+  for (var i=0; i < l ; i++ ) {
+    hideLI(lis[i]);
+  }
+}
+
+function showUL(node) {
+  var lis = node.childNodes;
+  var l = lis.length;
+  for (var i=0; i < l ; i++ ) {
+    showLI(lis[i]);
+  }
+}
+
+function findUlChild(li){
+  var ul = li.childNodes[2];
+  while (ul && ul.nodeName != "UL") {
+    ul = ul.nextSibling;
+  }
+  return ul;
+}
+
+function isLeafNode(li) {
+  var img = li.firstChild;
+  return (img.src.indexOf('empty.png') > -1);
+}
+
+function hideLI(li) {
+  if (isLeafNode(li))
+    return;
+
+  var img = li.firstChild;
+  img.src = 'plus.png';
+
+  var ul = findUlChild(li);
+  if (ul) {
+    ul.style.display = 'none';
+    hideUL(ul);
+  }
+}
+
+function showLI(li) {
+  if (isLeafNode(li))
+    return;
+
+  var img = li.firstChild;
+  img.src = 'minus.png';
+
+  var ul = findUlChild(li);
+  if (ul) {
+    ul.style.display = 'block';
+    showUL(ul);
+  }
+}
+
+function toggleLI(li) {
+  var img = li.firstChild;
+  if (img.src.indexOf("minus.png")>-1)
+    hideLI(li);
+  else {
+    if (img.src.indexOf("plus.png")>-1)
+      showLI(li);
+  }
+}
+
+function aboveThreshold(text, threshold) {
+  var match = text.match(/\d+[.,]\d+/);
+  return (match && parseFloat(match[0].replace(/,/, '.'))>=threshold);
+}
+
+function setThresholdLI(li, threshold) {
+  var img = li.firstChild;
+  var text = img.nextSibling;
+  var ul = findUlChild(li);
+
+  var visible = aboveThreshold(text.nodeValue, threshold) ? 1 : 0;
+
+  var count = 0;
+  if (ul) {
+    count = setThresholdUL(ul, threshold);
+  }
+  if (count>0) {
+    img.src = 'minus.png';
+  }
+  else {
+    img.src = 'empty.png';
+  }
+  if (visible) {
+    li.style.display = 'block'
+  }
+  else {
+    li.style.display = 'none'
+  }
+  return visible;
+}
+
+function setThresholdUL(node, threshold) {
+  var lis = node.childNodes;
+  var l = lis.length;
+
+  var count = 0;
+  for ( var i = 0; i < l ; i++ ) {
+    count = count + setThresholdLI(lis[i], threshold);
+  }
+
+  var visible = (count > 0) ? 1 : 0;
+  if (visible) {
+    node.style.display = 'block';
+  }
+  else {
+    node.style.display = 'none';
+  }
+  return visible;
+}
+
+function toggleChildren(img, event) {
+  event.cancelBubble=true;
+
+  if (img.src.indexOf('empty.png') > -1)
+    return;
+
+  var minus = (img.src.indexOf('minus.png') > -1);
+
+  if (minus) {
+    img.src = 'plus.png';
+  }
+  else
+    img.src = 'minus.png';
+
+  var li = img.parentNode;
+  var ul = findUlChild(li);
+  if (ul) {
+    if (minus)
+      ul.style.display = 'none';
+    else
+      ul.style.display = 'block';
+  }
+  if (minus)
+    moveSelectionIfNecessary(li);
+}
+
+function showChildren(li) {
+  var img = li.firstChild;
+  if (img.src.indexOf('empty.png') > -1)
+    return;
+  img.src = 'minus.png';
+
+  var ul = findUlChild(li);
+  if (ul) {
+    ul.style.display = 'block';
+  }
+}
+
+function setThreshold() {
+ var tv = document.getElementById("threshold").value;
+ if (tv.match(/[0-9]+([.,][0-9]+)?/)) {
+   var f = parseFloat(tv.replace(/,/, '.'));
+   var threads = document.getElementsByName("thread");
+   var l = threads.length;
+   for ( var i = 0; i < l ; i++ ) {
+     setThresholdUL(threads[i], f);
+   }
+   var p = selectedNode;
+   while (p && p.style.display=='none')
+     p=p.parentNode.parentNode;
+   if (p && p.nodeName=="LI")
+    selectNode(p);
+ }
+ else {
+   alert("Please specify a decimal number as threshold value!");
+ }
+}
+
+function collapseAll(event) {
+  event.cancelBubble=true;
+  var threads = document.getElementsByName("thread");
+  var l = threads.length;
+  for ( var i = 0; i < l ; i++ ) {
+    hideUL(threads[i]);
+  }
+  selectNode(rootNode(), null);
+}
+
+function expandAll(event) {
+  event.cancelBubble=true;
+  var threads = document.getElementsByName("thread");
+  var l = threads.length;
+  for ( var i = 0; i < l ; i++ ) {
+    showUL(threads[i]);
+  }
+}
+
+function toggleHelp(node) {
+  var help = document.getElementById("help");
+  if (node.value == "Show Help") {
+    node.value = "Hide Help";
+    help.style.display = 'block';
+  }
+  else {
+    node.value = "Show Help";
+    help.style.display = 'none';
+  }
+}
+
+var selectedNode = null;
+var selectedColor = null;
+var selectedThread = null;
+
+function descendentOf(a,b){
+  while (a!=b && b!=null)
+    b=b.parentNode;
+  return (a==b);
+}
+
+function moveSelectionIfNecessary(node){
+  if (descendentOf(node, selectedNode))
+    selectNode(node, null);
+}
+
+function selectNode(node, event) {
+  if (event) {
+    event.cancelBubble = true;
+    thread = findThread(node);
+    selectThread(thread);
+  }
+  if (selectedNode) {
+    selectedNode.style.background = selectedColor;
+  }
+  selectedNode = node;
+  selectedColor = node.style.background;
+  selectedNode.style.background = "red";
+  selectedNode.scrollIntoView();
+  window.scrollBy(0,-400);
+}
+
+function moveUp(){
+  var p = selectedNode.previousSibling;
+  while (p && p.style.display == 'none')
+    p = p.previousSibling;
+  if (p && p.nodeName == "LI") {
+    selectNode(p, null);
+  }
+}
+
+function moveDown(){
+  var p = selectedNode.nextSibling;
+  while (p && p.style.display == 'none')
+    p = p.nextSibling;
+  if (p && p.nodeName == "LI") {
+    selectNode(p, null);
+  }
+}
+
+function moveLeft(){
+  var p = selectedNode.parentNode.parentNode;
+  if (p && p.nodeName=="LI") {
+    selectNode(p, null);
+  }
+}
+
+function moveRight(){
+  if (!isLeafNode(selectedNode)) {
+    showChildren(selectedNode);
+    var ul = findUlChild(selectedNode);
+    if (ul) {
+      selectNode(ul.firstChild, null);
+    }
+  }
+}
+
+function moveForward(){
+  if (isLeafNode(selectedNode)) {
+    var p = selectedNode;
+    while ((p.nextSibling == null || p.nextSibling.style.display=='none') && p.nodeName=="LI") {
+      p = p.parentNode.parentNode;
+    }
+    if (p.nodeName=="LI")
+      selectNode(p.nextSibling, null);
+  }
+  else {
+    moveRight();
+  }
+}
+
+function isExpandedNode(li){
+  var img = li.firstChild;
+  return(img.src.indexOf('minus.png')>-1);
+}
+
+function moveBackward(){
+  var p = selectedNode;
+  var q = p.previousSibling;
+  while (q != null && q.style.display=='none')
+    q = q.previousSibling;
+  if (q == null) {
+    p = p.parentNode.parentNode;
+  } else {
+    while (!isLeafNode(q) && isExpandedNode(q)) {
+      q = findUlChild(q).lastChild;
+      while (q.style.display=='none')
+        q = q.previousSibling;
+    }
+    p = q;
+  }
+  if (p.nodeName=="LI")
+    selectNode(p, null);
+}
+
+function moveHome() {
+  selectNode(currentThread);
+}
+
+var currentThreadIndex = null;
+
+function findThread(node){
+  while (node && node.parentNode.nodeName!="BODY") {
+    node = node.parentNode;
+  }
+  return node.firstChild;
+}
+
+function selectThread(node){
+  var threads = document.getElementsByName("thread");
+  currentThread = node;
+  for (var i=0; i<threads.length; i++) {
+    if (threads[i]==currentThread.parentNode)
+      currentThreadIndex = i;
+  }
+}
+
+function nextThread(){
+  var threads = document.getElementsByName("thread");
+  if (currentThreadIndex==threads.length-1)
+    currentThreadIndex = 0;
+  else
+    currentThreadIndex += 1
+  currentThread = threads[currentThreadIndex].firstChild;
+  selectNode(currentThread, null);
+}
+
+function previousThread(){
+  var threads = document.getElementsByName("thread");
+  if (currentThreadIndex==0)
+    currentThreadIndex = threads.length-1;
+  else
+    currentThreadIndex -= 1
+  currentThread = threads[currentThreadIndex].firstChild;
+  selectNode(currentThread, null);
+}
+
+function switchThread(node, event){
+  event.cancelBubble = true;
+  selectThread(node.nextSibling.firstChild);
+  selectNode(currentThread, null);
+}
+
+function handleKeyEvent(event){
+  var code = event.charCode ? event.charCode : event.keyCode;
+  var str = String.fromCharCode(code);
+  switch (str) {
+    case "a": moveLeft();  break;
+    case "s": moveDown();  break;
+    case "d": moveRight(); break;
+    case "w": moveUp();    break;
+    case "f": moveForward(); break;
+    case "b": moveBackward(); break;
+    case "x": toggleChildren(selectedNode.firstChild, event); break;
+    case "*": toggleLI(selectedNode); break;
+    case "n": nextThread(); break;
+    case "h": moveHome(); break;
+    case "p": previousThread(); break;
+  }
+}
+document.onkeypress=function(event){ handleKeyEvent(event) };
+
+window.onload=function(){
+  var images = document.getElementsByTagName("img");
+  for (var i=0; i<images.length; i++) {
+    var img = images[i];
+    if (img.className == "toggle") {
+      img.onclick = function(event){ toggleChildren(this, event); };
+    }
+  }
+  var divs = document.getElementsByTagName("div");
+  for (i=0; i<divs.length; i++) {
+    var div = divs[i];
+    if (div.className == "thread")
+      div.onclick = function(event){ switchThread(this, event) };
+  }
+  var lis = document.getElementsByTagName("li");
+  for (var i=0; i<lis.length; i++) {
+    lis[i].onclick = function(event){ selectNode(this, event); };
+  }
+  var threads = document.getElementsByName("thread");
+  currentThreadIndex = 0;
+  currentThread = threads[0].firstChild;
+  selectNode(currentThread, null);
+}
+</script>
+</head><body><div style="display: inline-block;">
+<div id="titlebar">
+Call tree for application <b>profile.rb l 10000</b><br/>
+Generated on 2013-08-08 20:49:57 +1000 with options {}<br/>
+</div>
+<div id="commands">
+<span style="font-size: 11pt; font-weight: bold;">Threshold:</span>
+<input value="1.0" size="3" id="threshold" type="text">
+<input value="Apply" onclick="setThreshold();" type="submit">
+<input value="Expand All" onclick="expandAll(event);" type="submit">
+<input value="Collapse All" onclick="collapseAll(event);" type="submit">
+<input value="Show Help" onclick="toggleHelp(this);" type="submit">
+</div>
+<div style="display: none;" id="help">
+<img src="empty.png"> Enter a decimal value <i>d</i> into the threshold field and click "Apply"
+to hide all nodes marked with time values lower than <i>d</i>.<br>
+<img src="empty.png"> Click on "Expand All" for full tree expansion.<br>
+<img src="empty.png"> Click on "Collapse All" to show only top level nodes.<br>
+<img src="empty.png"> Use a, s, d, w as in Quake or Urban Terror to navigate the tree.<br>
+<img src="empty.png"> Use f and b to navigate the tree in preorder forward and backwards.<br>
+<img src="empty.png"> Use x to toggle visibility of a subtree.<br>
+<img src="empty.png"> Use * to expand/collapse a whole subtree.<br>
+<img src="empty.png"> Use h to navigate to thread root.<br>
+<img src="empty.png"> Use n and p to navigate between threads.<br>
+<img src="empty.png"> Click on background to move focus to a subtree.<br>
+</div>
+<div class="thread">Thread: 70195704366800, Fiber: 70195659998180 (100.00% ~ 18.276797000008074)</div><ul name="thread"><li class="color9" style="display:block"><img class="toggle" src="minus.png"> 100.00% (100.00%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/profile.rb&line=37">Global#[No method]</a> [1 calls, 2 total]
+<ul><li class="color8" style="display:block"><img class="toggle" src="minus.png"> 89.88% (89.88%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/searches.rb&line=11">Searches#each</a> [5 calls, 5 total]
+<ul><li class="color8" style="display:block"><img class="toggle" src="minus.png"> 89.88% (100.00%) Array#each [5 calls, 647463 total]
+<ul><li class="color8" style="display:block"><img class="toggle" src="minus.png"> 89.42% (99.48%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=215">Picky::Search#search</a> [50000 calls, 50000 total]
+<ul><li class="color6" style="display:block"><img class="toggle" src="minus.png"> 63.28% (70.77%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=223">Picky::Search#search_with</a> [50000 calls, 50000 total]
+<ul><li class="color6" style="display:block"><img class="toggle" src="minus.png"> 62.66% (99.02%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/helpers/measuring.rb&line=10">Picky::Helpers::Measuring#timed</a> [50000 calls, 50000 total]
+<ul><li class="color5" style="display:block"><img class="toggle" src="minus.png"> 59.70% (95.27%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=238">Picky::Search#execute</a> [50000 calls, 50000 total]
+<ul><li class="color4" style="display:block"><img class="toggle" src="minus.png"> 43.39% (72.67%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=270">Picky::Search#sorted_allocations</a> [50000 calls, 50000 total]
+<ul><li class="color4" style="display:block"><img class="toggle" src="minus.png"> 43.24% (99.67%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes.rb&line=65">Picky::Query::Indexes#prepared_allocations_for</a> [50000 calls, 50000 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 32.12% (74.29%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes.rb&line=102">Picky::Query::Indexes#allocations_for</a> [50000 calls, 50000 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 31.68% (98.62%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes.rb&line=105">Picky::Query::Indexes#allocations_ary_for</a> [50000 calls, 50000 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 31.54% (99.56%) Enumerable#inject [50000 calls, 395090 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 31.39% (99.50%) Array#each [50000 calls, 647463 total]
+<ul><li class="color3" style="display:block"><img class="toggle" src="minus.png"> 31.15% (99.24%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes.rb&line=110">Picky::Query::Indexes#allocation_for</a> [50000 calls, 50000 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 27.92% (89.63%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/tokens.rb&line=46">Picky::Query::Tokens#possible_combinations_in</a> [50000 calls, 50000 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 27.78% (99.50%) Enumerable#inject [50000 calls, 395090 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 27.62% (99.45%) Array#each [50000 calls, 647463 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 25.78% (93.31%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=250">Picky::Query::Token#possible_combinations</a> [150000 calls, 150000 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 24.41% (94.68%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/categories_indexed.rb&line=39">Picky::Categories#possible_for</a> [150000 calls, 150000 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.78% (85.14%) Enumerable#inject [150000 calls, 395090 total]
+<ul><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 20.29% (97.67%) Array#each [150000 calls, 647463 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.92% (73.53%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=258">Picky::Query::Token#combination_for</a> [600000 calls, 600000 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.54% (70.60%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/category_indexed.rb&line=18">Picky::Category#weight</a> [600000 calls, 600000 total]
+<ul><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.71% (16.25%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/category_indexed.rb&line=54">Picky::Category#bundle_for</a> [600000 calls, 618685 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.52% (3.46%) Class#new [164726 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.68% (10.99%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/categories_indexed.rb&line=53">Picky::Categories#possible_categories</a> [150000 calls, 150000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.73% (64.47%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=67">Picky::Query::Token#predefined_categories</a> [150000 calls, 150000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.32% (76.58%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=70">Picky::Query::Token#extract_predefined</a> [150000 calls, 150000 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.01%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/categories.rb&line=42">Picky::Categories#qualifier_mapper</a> [150000 calls, 150000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (96.15%) Class#new [1 calls, 762122 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (96.00%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/qualifier_mapper.rb&line=11">Picky::QualifierMapper#initialize</a> [1 calls, 1 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (100.00%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/(__FORWARDING__)&line=1">Picky::Categories#each</a> [1 calls, 1 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (95.83%) Array#each [1 calls, 647463 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (78.26%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/qualifier_mapper.rb&line=18">Picky::QualifierMapper#add</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (83.33%) Array#each [4 calls, 647463 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.62% (5.19%) Array#map! [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.01% (62.20%) Class#new [134020 calls, 762122 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.60% (59.38%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocation.rb&line=23">Picky::Query::Allocation#initialize</a> [67010 calls, 67010 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.88% (2.84%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes.rb&line=182">Picky::Query::Indexes#expand_combinations_from</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.43% (48.57%) Array#collect! [4554 calls, 104554 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.25% (58.84%) Enumerable#inject [6516 calls, 395090 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.23% (91.92%) Array#each [6516 calls, 647463 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.07% (28.88%) Class#new [23327 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.15% (16.70%) Enumerable#any? [50000 calls, 50000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.01% (1.54%) Enumerable#inject [4554 calls, 395090 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.16% (0.48%) Class#new [50000 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.43% (17.19%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocations.rb&line=31">Picky::Query::Allocations#calculate_score</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.30% (98.14%) Array#each [50000 calls, 647463 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.87% (94.16%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocation.rb&line=39">Picky::Query::Allocation#calculate_score</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.70% (53.79%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/combinations.rb&line=33">Picky::Query::Combinations#boost_for</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 3.52% (95.17%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/boosts.rb&line=64">Picky::Query::Boosts#boost_for</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.01% (57.12%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/boosts.rb&line=49">Picky::Query::Boosts#boost_for_categories</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.79% (89.07%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/extensions/array.rb&line=9">Array#clustered_uniq</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.41% (79.01%) Enumerable#inject [67010 calls, 395090 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.21% (85.51%) Array#each [67010 calls, 647463 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.12% (31.99%) Array#map [67010 calls, 129405 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.92% (27.95%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/backends/backend.rb&line=55">Picky::Backends::Backend#weight</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.73% (90.35%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/combinations.rb&line=30">Picky::Query::Combinations#score</a> [67010 calls, 67010 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.55% (89.31%) Enumerable#inject [67010 calls, 395090 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.35% (86.86%) Array#each [67010 calls, 647463 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.19% (2.80%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/(__FORWARDING__)&line=1">Picky::Query::Combinations#empty?</a> [67010 calls, 129369 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 2.18% (5.05%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocations.rb&line=39">Picky::Query::Allocations#sort!</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 2.04% (93.49%) Array#sort! [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.89% (43.56%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocation.rb&line=99">Picky::Query::Allocation#&lt;=&gt;</a> [325497 calls, 325497 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.98% (26.77%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/results.rb&line=27">&lt;Class::Picky::Results&gt;#from</a> [50000 calls, 50000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.22% (95.26%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/results.rb&line=38">Picky::Results#prepare!</a> [50000 calls, 50000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 15.09% (99.13%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocations.rb&line=116">Picky::Query::Allocations#process!</a> [50000 calls, 50000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.86% (98.51%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/(__FORWARDING__)&line=1">Picky::Query::Allocations#each</a> [50000 calls, 50000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 14.72% (99.01%) Array#each [50000 calls, 647463 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.53% (91.94%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocation.rb&line=72">Picky::Query::Allocation#process!</a> [62359 calls, 62359 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 12.70% (93.88%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/allocation.rb&line=53">Picky::Query::Allocation#calculate_ids</a> [62359 calls, 62359 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 11.85% (93.31%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/backends/backend.rb&line=74">Picky::Backends::Backend#ids</a> [62359 calls, 62359 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 9.77% (82.43%) &lt;Class::Performant::Array&gt;#memory_efficient_intersect [62359 calls, 62359 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.44% (14.77%) Array#sort_by! [62359 calls, 62359 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.18% (81.66%) Enumerable#sort_by [62359 calls, 62359 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.69% (14.29%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/(__FORWARDING__)&line=1">Picky::Query::Combinations#map</a> [62359 calls, 62359 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.51% (89.19%) Array#map [62359 calls, 129405 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.39% (25.50%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/combination.rb&line=47">Picky::Query::Combination#ids</a> [206529 calls, 206529 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.33% (85.86%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/category_indexed.rb&line=34">Picky::Category#ids</a> [18685 calls, 18685 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.05% (15.89%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/category_indexed.rb&line=54">Picky::Category#bundle_for</a> [18685 calls, 618685 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.18% (1.41%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/(__FORWARDING__)&line=1">Picky::Query::Combinations#empty?</a> [62359 calls, 129369 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.17% (1.03%) Class#new [50000 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.97% (1.55%) Time#- [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.14% (14.52%) Numeric#quo [50000 calls, 50000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.14% (14.17%) Rational#to_f [50000 calls, 50000 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.61% (0.97%) Class#new [100000 calls, 762122 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.32% (53.34%) Time#initialize [100000 calls, 100000 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color2" style="display:block"><img class="toggle" src="minus.png"> 25.47% (28.49%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=258">Picky::Search#tokenized</a> [50000 calls, 50000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 17.23% (67.66%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/tokens.rb&line=28">&lt;Class::Picky::Query::Tokens&gt;#processed</a> [50000 calls, 50000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 16.63% (96.48%) Array#collect! [50000 calls, 104554 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 13.96% (83.94%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=39">&lt;Class::Picky::Query::Token&gt;#processed</a> [150000 calls, 150000 total]
+<ul><li class="color1" style="display:block"><img class="toggle" src="minus.png"> 12.58% (90.13%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=42">Picky::Query::Token#process</a> [150000 calls, 150000 total]
+<ul><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 4.33% (34.40%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=278">Picky::Query::Token#qualify</a> [150000 calls, 150000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.52% (12.08%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=168">Picky::Query::Token#similarize</a> [150000 calls, 150000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.50% (11.89%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=117">Picky::Query::Token#partialize</a> [150000 calls, 150000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.50% (4.00%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=234">Picky::Query::Token#remove_illegals</a> [150000 calls, 150000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.42% (3.31%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=217">Picky::Query::Token#rangify</a> [150000 calls, 150000 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.48% (3.45%) Class#new [150000 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.16% (0.91%) Class#new [50000 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.23% (24.47%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer.rb&line=235">Picky::Tokenizer#tokenize</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 2.16% (34.61%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer.rb&line=269">Picky::Tokenizer#pretokenize</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.59% (27.42%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer.rb&line=163">Picky::Tokenizer#reject</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.45% (76.85%) Array#reject! [50000 calls, 50000 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.36% (16.79%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer.rb&line=108">Picky::Tokenizer#split</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.22% (60.73%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer/regexp_wrapper.rb&line=7">RegexpWrapper#split</a> [50000 calls, 50000 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="plus.png"> 1.80% (28.82%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer.rb&line=279">Picky::Tokenizer#tokens_for</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.19% (66.51%) Array#collect! [50000 calls, 104554 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.90% (14.37%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/tokenizer.rb&line=251">Picky::Tokenizer#preprocess</a> [50000 calls, 50000 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 1.03% (4.06%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/tokens.rb&line=71">Picky::Query::Tokens#partialize_last</a> [50000 calls, 50000 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.29% (28.47%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/token.rb&line=90">Picky::Query::Token#partial=</a> [50000 calls, 50000 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.14% (13.90%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/(__FORWARDING__)&line=1">Picky::Query::Tokens#empty?</a> [50000 calls, 50000 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.11% (10.11%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/performance_tests/searches.rb&line=15">Searches#prepare</a> [4 calls, 4 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="minus.png"> 10.11% (99.95%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=1714">CSV#each</a> [4 calls, 4 total]
+<ul><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 7.48% (74.02%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=1751">CSV#shift</a> [40000 calls, 40000 total]
+<ul style="display:none"><li class="color05" style="display:block"><img class="toggle" src="plus.png"> 6.67% (89.20%) Kernel#loop [40000 calls, 40000 total]
+<ul style="display:none"><li class="color01" style="display:block"><img class="toggle" src="empty.png"> 4.09% (61.26%) Array#each [40000 calls, 647463 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.12% (1.56%) Class#new [40000 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.54% (5.35%) Integer#times [40000 calls, 40000 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.05%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=1247">&lt;Class::CSV&gt;#open</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (92.60%) Class#new [8 calls, 762122 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (99.50%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=1483">CSV#initialize</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (34.00%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=1948">CSV#init_separators</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (13.65%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2254">CSV#encode_str</a> [8 calls, 32 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (64.86%) Array#map [8 calls, 129405 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (5.54%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2246">CSV#encode_re</a> [4 calls, 20 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (53.33%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2254">CSV#encode_str</a> [4 calls, 32 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (25.00%) Array#map [4 calls, 129405 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (13.33%) Class#new [4 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (4.43%) Array#include? [4 calls, 4 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (1.48%) Numeric#nonzero? [4 calls, 4 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.37%) String#== [4 calls, 4 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (25.22%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2047">CSV#init_parsers</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (65.67%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2246">CSV#encode_re</a> [16 calls, 20 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (79.55%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2254">CSV#encode_str</a> [16 calls, 32 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (89.52%) Array#map [16 calls, 129405 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (7.58%) Class#new [16 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (3.48%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2238">CSV#escape_re</a> [8 calls, 8 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (2.99%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2254">CSV#encode_str</a> [4 calls, 32 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (50.00%) Array#map [4 calls, 129405 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (8.91%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2108">CSV#init_headers</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (67.61%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2078">CSV#init_converters</a> [4 calls, 8 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (2.08%) Class#new [4 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (6.02%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2078">CSV#init_converters</a> [4 calls, 8 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (2.08%) Class#new [4 calls, 762122 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (2.01%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2264">CSV#raw_encoding</a> [4 calls, 4 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.63%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/csv.rb&line=2124">CSV#init_comments</a> [4 calls, 4 total]
+<ul style="display:none"></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.50%) Hash#merge [4 calls, 8 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (50.00%) Kernel#initialize_dup [4 calls, 8 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.69%) Hash#merge [4 calls, 8 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (33.33%) Kernel#initialize_dup [4 calls, 8 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.58%) &lt;Class::IO&gt;#open [4 calls, 4 total]
+<ul style="display:none"></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.00%) Class#new [4 calls, 762122 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (98.18%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=40">Picky::Search#initialize</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (61.11%) Class#new [8 calls, 762122 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (87.88%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes.rb&line=28">Picky::Query::Indexes#initialize</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (75.86%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/query/indexes/check.rb&line=21">&lt;Class::Picky::Query::Indexes::Check&gt;#check_backends</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (13.64%) Array#map [4 calls, 129405 total]
+<ul style="display:none"></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.00%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/rubygems/core_ext/kernel_require.rb&line=34">Kernel#require</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (22.58%) <a href="txmt://open?url=file:///opt/rubies/ruby-2.0.0-p247/lib/ruby/2.0.0/rubygems.rb&line=980">&lt;Module::Gem&gt;#find_unresolved_default_spec</a> [4 calls, 4 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.00%) Kernel#respond_to? [10 calls, 18 total]
+<ul style="display:none"><li class="color01" style="display:none"><img src="empty.png"> 0.00% (10.00%) Kernel#respond_to_missing? [10 calls, 18 total]
+</li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.00%) <a href="txmt://open?url=file:///Users/hanke/temp/picky/server/lib/picky/search.rb&line=109">Picky::Search#terminate_early</a> [4 calls, 4 total]
+<ul style="display:none"><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (14.29%) Kernel#respond_to? [4 calls, 18 total]
+<ul style="display:none"></ul></li></ul></li><li class="color01" style="display:none"><img class="toggle" src="empty.png"> 0.00% (0.00%) &lt;Class::Exception&gt;#exception [4 calls, 4 total]
+<ul style="display:none"></ul></li></ul></li></ul><div id="sentinel"></div></div></body></html>
