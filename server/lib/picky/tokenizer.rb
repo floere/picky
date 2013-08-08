@@ -212,7 +212,7 @@ A short overview:
   stopwords                   /regexp/
   splits_text_on              /regexp/ or "String", default /\s/
   normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
-  rejects_token_if            Proc/lambda, default :blank?.to_proc
+  rejects_token_if            Proc/lambda, default :empty?.to_proc
   substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
   stems_with                  Instance responds to #stem(String)
   case_sensitive              true/false
@@ -222,7 +222,7 @@ ERROR
     def default_options
       {
         splits_text_on: /\s/,
-        rejects_token_if: :blank?.to_proc
+        rejects_token_if: :empty?.to_proc
       }
     end
 
@@ -234,7 +234,7 @@ ERROR
     #
     def tokenize text
       text   = preprocess text.to_s # processing the text
-      return empty_tokens if text.blank?
+      return empty_tokens if text.empty? # TODO blank?
       words  = pretokenize text # splitting and preparations for tokenizing
       return empty_tokens if words.empty?
       tokens = tokens_for words # creating tokens / strings

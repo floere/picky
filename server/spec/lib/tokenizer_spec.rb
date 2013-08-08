@@ -16,7 +16,7 @@ A short overview:
   stopwords                   /regexp/
   splits_text_on              /regexp/ or "String", default /\s/
   normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
-  rejects_token_if            Proc/lambda, default :blank?.to_proc
+  rejects_token_if            Proc/lambda, default :empty?.to_proc
   substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
   stems_with                  Instance responds to #stem(String)
   case_sensitive              true/false
@@ -68,8 +68,8 @@ EXPECTED
         end
 
     describe 'rejects_token_if' do
-      it 'rejects empty tokens by default' do
-        tokenizer.reject(['a', nil, '', 'b']).should == ['a', 'b']
+      it 'rejects empty? tokens by default' do
+        tokenizer.reject(['a', '', 'b', '']).should == ['a', 'b']
       end
       it 'rejects tokens based on the given rejection criteria if set' do
         tokenizer.rejects_token_if :nil?.to_proc
