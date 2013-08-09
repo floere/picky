@@ -45,6 +45,7 @@ Searches.series_for(amount).each do |queries|
 end
 
 result = RubyProf.stop
+result.eliminate_methods!([/(Searches|CSV)#.+/])
 
 filename = "#{Dir.pwd}/20#{Time.now.strftime("%y%m%d%H%M")}-ruby-prof-results-#{size}-#{amount}"
 html = filename + '.html'
