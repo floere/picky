@@ -48,13 +48,13 @@ module Picky
         json bundle.index_path(:realtime)
       end
 
-      # Returns the total score of the combinations.
-      #
-      # Default implementation. Override to speed up.
-      #
-      def weight combinations
-        combinations.score
-      end
+      # # Returns the total score of the combinations.
+      # #
+      # # Default implementation. Override to speed up.
+      # #
+      # def score combinations
+      #   combinations.score
+      # end
 
       # Returns the result ids for the allocation.
       #

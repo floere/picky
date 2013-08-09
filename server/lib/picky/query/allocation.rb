@@ -40,8 +40,9 @@ module Picky
         @score ||= if @combinations.empty?
           0 # Optimization.
         else
-          @backend.weight(@combinations) + @combinations.boost_for(weights)
-        end 
+          # TODO Was @backend.score(@combinations)
+          @combinations.score + weights.boost_for(@combinations)
+        end
       end
 
       # Asks the backend for the (intersected) ids.

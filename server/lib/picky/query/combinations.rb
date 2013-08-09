@@ -30,9 +30,6 @@ module Picky
       def score
         @combinations.inject(0) { |total, combination| total + combination.weight }
       end
-      def boost_for weights
-        weights.boost_for @combinations
-      end
 
       # Filters the tokens and categories such that categories
       # that are passed in, are removed.
