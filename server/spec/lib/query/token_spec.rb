@@ -426,6 +426,13 @@ describe Picky::Query::Token do
         token.qualifiers.should == []
       end
     end
+    context 'with missing qualifier' do
+      let(:token) { described_class.processed ':missingqualifier' }
+      it 'is correct' do
+        token.qualifiers.should == []
+        token.text.should == 'missingqualifier'
+      end
+    end
   end
 
   describe 'partial=' do

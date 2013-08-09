@@ -215,9 +215,7 @@ module Picky
         @@range_character = character
       end
       def rangify
-        if @text.include? @@range_character
-          @range = @text.split(@@range_character, 2)
-        end
+        @range = @text.split(@@range_character, 2) if @text.include? @@range_character
       end
       def range
         @range
@@ -276,12 +274,16 @@ module Picky
       @@qualifier_text_delimiter = ':'
       @@qualifiers_delimiter     = ','
       def qualify
-        @qualifiers, @text = (@text || EMPTY_STRING).split(@@qualifier_text_delimiter, 2)
-        if @text
-          @qualifiers = @qualifiers.split @@qualifiers_delimiter
-        else
-          @text = @qualifiers || EMPTY_STRING
-          @qualifiers = nil
+        # TODO Is this actually an optimization?
+        # Check using include? + split, and split alone.
+        #
+        if @text.include? @@qualifier_text_delimiter
+          @qualifiers, @text = @text.split @@qualifier_text_delimiter, 2
+          if @text
+            @qualifiers = @qualifiers.split @@qualifiers_delimiter
+          else
+            @text, @qualifiers = @qualifiers, nil
+          end
         end
       end
       # Define a character which separates the qualifier
