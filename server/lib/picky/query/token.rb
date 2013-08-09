@@ -139,6 +139,7 @@ module Picky
       def self.no_partial_character= character
         @@no_partial_character = character
         @@no_partial = %r{#{character}\z}
+        redefine_illegals
       end
       # Define a character which makes a token a partial token.
       #
@@ -184,6 +185,7 @@ module Picky
       def self.no_similar_character= character
         @@no_similar_character = character
         @@no_similar = %r{#{character}\z}
+        redefine_illegals
       end
       # Define a character which makes a token a similar token.
       #
@@ -235,7 +237,7 @@ module Picky
         @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
       def self.redefine_illegals
-        @@illegals = %r{[#@@no_similar_character#@@partial_character#@@similar_character]}
+        @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
       end
       redefine_illegals
       

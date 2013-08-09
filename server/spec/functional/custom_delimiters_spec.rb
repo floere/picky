@@ -60,13 +60,15 @@ describe 'custom delimiters' do
     try.search("hell? world").ids.should == []
     Picky::Query::Token.similar_character = '\?'
     try.search("hell? world").ids.should == [1]
+    Picky::Query::Token.no_similar_character = '!'
+    try.search("hello?! world!").ids.should == [1]
     
     try.search('hell?" world').ids.should == []
-    Picky::Query::Token.no_partial_character = '!'
-    try.search('hell?! world').ids.should == []
+    Picky::Query::Token.no_partial_character = '\#'
+    try.search('hello?# world#').ids.should == [1]
   end
   
-  it 'offers custom similar delimiters to be set' do
+  it 'offers custom qualifiers delimiters to be set' do
     index = Picky::Index.new :custom_delimiters do
       category :text1, similarity: Picky::Similarity::Soundex.new
       category :text2
