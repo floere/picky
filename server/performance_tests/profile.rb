@@ -28,7 +28,8 @@ Searches.series_for(amount).each do |queries|
   queries.prepare
 
   run = Picky::Search.new data
-  run.terminate_early
+  # run.max_allocations 1
+  # run.terminate_early
   
   # Required here to avoid RubyProf early start.
   #

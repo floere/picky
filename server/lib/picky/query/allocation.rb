@@ -40,7 +40,7 @@ module Picky
         @score ||= if @combinations.empty?
           0 # Optimization.
         else
-          # TODO Was @backend.score(@combinations)
+          # TODO Was @backend.score(@combinations) - indirection for maximum flexibility.
           @combinations.score + weights.boost_for(@combinations)
         end
       end

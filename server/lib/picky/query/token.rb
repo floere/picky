@@ -99,7 +99,7 @@ module Picky
       # Note: @partial is calculated at processing time (see Token#process).
       #
       def partial?
-        # !@similar && @partial
+        # Was: !@similar && @partial
         @partial
       end
 
@@ -122,7 +122,7 @@ module Picky
         #
         self.partial = false or return if @similar
         self.partial = false or return if @text =~ @@no_partial
-        self.partial = true if @text =~ @@partial
+        self.partial = true if @text =~ @@partial # TODO Move this one line up since it occurs more often?
       end
       # Define a character which stops a token from
       # being a partial token, even if it is the last token.
