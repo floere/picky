@@ -1,3 +1,14 @@
+## 4.18.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Many code paths minimized: speedup of roughly 20% over last version (in standard cases).
+- Default lambda for Tokenizer#rejects\_token\_if is &:empty? instead of &:blank?.
+- Changes in how SQLite client is initialized. Method SQLite::Basic#lazily\_initialize\_client replaced by SQLite::Basic#db.
+- Token#partial? is calculated at create time, not dynamically.
+- Internal API changes in Allocation (indirection removed).
+- More informative error messages.
+
 ## 4.17.1
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
