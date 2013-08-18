@@ -1,5 +1,7 @@
 class Searches
   
+  include Enumerable
+  
   def self.series_for amount
     (1..5).map { |i| new i, amount }
   end

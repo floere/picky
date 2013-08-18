@@ -25,11 +25,14 @@ module Picky
 
       # Creates a new Tokens object from a number of Strings.
       #
+      @@or_splitting_pattern = '|'
       def self.processed words, originals, ignore_unassigned = false
         new(words.zip(originals).collect! do |word, original|
-          w, *middle, rest  = word.split(/\|/)
+          # TODO Shouldn't we just check if it includes?
+          #
+          w, *middle, rest = word.split @@or_splitting_pattern
           if rest
-            Or.new processed [w, *middle, rest], original.split(/\|/)
+            Or.new processed [w, *middle, rest], original.split(@@or_splitting_pattern)
           else
             Token.processed w, original
           end

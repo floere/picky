@@ -71,8 +71,8 @@ Picky.logger = Picky::Loggers::Silent.new
 
 definitions.each do |definition, description|
 
-  # xxs = Index.new :xxs, &definition
-  # xxs.source { with[10] }
+  xxs = Index.new :xxs, &definition
+  xxs.source { with[10] }
   # xs  = Index.new :xs,  &definition
   # xs.source  { with[100] }
   # s   = Index.new :s,   &definition
@@ -81,8 +81,8 @@ definitions.each do |definition, description|
   # m.source   { with[10_000] }
   # l   = Index.new :l,   &definition
   # l.source   { with[100_000] }
-  xl  = Index.new :xl,  &definition
-  xl.source  { with[1_000_000] }
+  # xl  = Index.new :xl,  &definition
+  # xl.source  { with[1_000_000] }
 
   puts
   puts
@@ -118,6 +118,33 @@ definitions.each do |definition, description|
 
         run = Search.new data
         run.terminate_early
+        
+        # What Strings are created newly?
+        #
+        # Picky::Query::Token
+        # GC.start
+        # type = String
+        # things = ObjectSpace.each_object(type).to_a
+        # # p strings # Interesting.
+        # 1.times {
+        #   # 1.times { run.search "text1:n" }
+        #   1.times { run.search "text1:o text2:p" }
+        # }
+        # new_strings = ObjectSpace.each_object(type).to_a
+        #    
+        # new_strings_hash = Hash.new 0
+        # new_strings.each { |word| new_strings_hash[word] += 1 }
+        # 
+        # things.each do |string|
+        #   new_strings_hash[string] -= 1
+        # end
+        # puts
+        # puts
+        # require 'pp'
+        # pp new_strings_hash.select { |k, v| v > 0 }
+        # exit
+        #
+        #
 
         # Quick sanity check.
         #

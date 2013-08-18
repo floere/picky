@@ -106,7 +106,13 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       end
     end
     def split text
-      @splits_text_on.split text
+      # TODO Can we have split not copy the string?
+      #
+      # if @splits_text_on === text # Match creates a new string!
+        @splits_text_on.split text
+      # else
+        # [text]
+      # end
     end
 
     # Normalizing.
@@ -233,7 +239,7 @@ ERROR
     #  [[:token1, :token2], ["Original1", "Original2"]]
     #
     def tokenize text
-      text   = preprocess text.to_s # processing the text
+      text = preprocess text.to_s # processing the text
       return empty_tokens if text.empty? # TODO blank?
       words  = pretokenize text # splitting and preparations for tokenizing
       return empty_tokens if words.empty?
