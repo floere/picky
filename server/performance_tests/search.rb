@@ -56,6 +56,7 @@ definitions << [Proc.new do
   category :text2
   category :text3
   category :text4
+  category :text5
 end, :normal]
 
 # definitions << [Proc.new do
@@ -69,25 +70,27 @@ GC.enable
 GC::Profiler.enable
 Picky.logger = Picky::Loggers::Silent.new
 
+Searches.prepare
+
 definitions.each do |definition, description|
 
   xxs = Index.new :xxs, &definition
   xxs.source { with[10] }
-  # xs  = Index.new :xs,  &definition
-  # xs.source  { with[100] }
-  # s   = Index.new :s,   &definition
-  # s.source   { with[1_000] }
-  # m   = Index.new :m,   &definition
-  # m.source   { with[10_000] }
-  # l   = Index.new :l,   &definition
-  # l.source   { with[100_000] }
+  xs  = Index.new :xs,  &definition
+  xs.source  { with[100] }
+  s   = Index.new :s,   &definition
+  s.source   { with[1_000] }
+  m   = Index.new :m,   &definition
+  m.source   { with[10_000] }
+  l   = Index.new :l,   &definition
+  l.source   { with[100_000] }
   # xl  = Index.new :xl,  &definition
   # xl.source  { with[1_000_000] }
 
   puts
   puts
   puts "Running tests with definition #{description}."
-
+  
   backends.each do |backend|
 
     puts
@@ -95,7 +98,7 @@ definitions.each do |definition, description|
     puts " Amount,  1wQ/s,  2wQ/s,  3wQ/s,  4wQ/s,  5wQ/s    Memory etc."
     
     Indexes.each do |data|
-
+      
       data.prepare if backend == backends.first
 
       data.backend backend
@@ -111,38 +114,40 @@ definitions.each do |definition, description|
       strings = []
       symbols = []
       gc_runs = []
-
-      Searches.series_for(amount).each do |queries|
-
-        queries.prepare
-
+      
+      # Run amount queries, but only chosen from searches that will return a result.
+      # (i.e. if the index is only 10 entries large, then 10 different queries will be run 100 times)
+      #
+      Searches.each(data.source.amount) do |queries|
+        
         run = Search.new data
-        run.terminate_early
+        # run.terminate_early
+        # run.max_allocations 1
         
         # What Strings are created newly?
         #
-        # Picky::Query::Token
-        # GC.start
-        # type = String
-        # things = ObjectSpace.each_object(type).to_a
-        # # p strings # Interesting.
-        # 1.times {
-        #   # 1.times { run.search "text1:n" }
-        #   1.times { run.search "text1:o text2:p" }
-        # }
-        # new_strings = ObjectSpace.each_object(type).to_a
-        #    
-        # new_strings_hash = Hash.new 0
-        # new_strings.each { |word| new_strings_hash[word] += 1 }
-        # 
-        # things.each do |string|
-        #   new_strings_hash[string] -= 1
-        # end
-        # puts
-        # puts
-        # require 'pp'
-        # pp new_strings_hash.select { |k, v| v > 0 }
-        # exit
+        GC.start
+        type = String
+        run.search "cleaning"
+        things = ObjectSpace.each_object(type).to_a
+        # p strings # Interesting.
+        1.times {
+          1.times { run.search "text1:n" }
+          # 1.times { run.search "text1:o text2:p" } # queries.to_a.first }
+        }
+        new_strings = ObjectSpace.each_object(type).to_a
+           
+        new_strings_hash = Hash.new 0
+        new_strings.each { |word| new_strings_hash[word] += 1 }
+        
+        things.each do |string|
+          new_strings_hash[string] -= 1
+        end
+        puts
+        puts
+        require 'pp'
+        pp new_strings_hash.select { |k, v| v > 0 }
+        exit
         #
         #
 
@@ -159,12 +164,10 @@ definitions.each do |definition, description|
 
         duration = performance_of do
 
-          # compare_strings do
-            queries.each do |query|
-              run.search query
-            end
-          # end
-
+          queries.first(amount) do |query|
+            run.search query
+          end
+          
         end
 
         strings << (string_count - initial_strings)
