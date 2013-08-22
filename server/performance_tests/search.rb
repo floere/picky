@@ -82,8 +82,8 @@ definitions.each do |definition, description|
   s.source   { with[1_000] }
   m   = Index.new :m,   &definition
   m.source   { with[10_000] }
-  l   = Index.new :l,   &definition
-  l.source   { with[100_000] }
+  # l   = Index.new :l,   &definition
+  # l.source   { with[100_000] }
   # xl  = Index.new :xl,  &definition
   # xl.source  { with[1_000_000] }
 
@@ -126,28 +126,31 @@ definitions.each do |definition, description|
         
         # What Strings are created newly?
         #
-        GC.start
-        type = String
-        run.search "cleaning"
-        things = ObjectSpace.each_object(type).to_a
+        # GC.start
+        # type = String
+        # run.search "cleaning"
+        # things = ObjectSpace.each_object(type).to_a
         # p strings # Interesting.
-        1.times {
-          1.times { run.search "text1:n" }
-          # 1.times { run.search "text1:o text2:p" } # queries.to_a.first }
-        }
-        new_strings = ObjectSpace.each_object(type).to_a
-           
-        new_strings_hash = Hash.new 0
-        new_strings.each { |word| new_strings_hash[word] += 1 }
-        
-        things.each do |string|
-          new_strings_hash[string] -= 1
-        end
-        puts
-        puts
-        require 'pp'
-        pp new_strings_hash.select { |k, v| v > 0 }
-        exit
+        # puts
+        # puts
+        # 1.times {
+        #   1.times { run.search "text1:n" }
+        #   1.times { run.search "text1:o text2:p" } # queries.to_a.first }
+        #   1.times { run.search "a"*20 + " " + "b"*20 + " " + "c"*20 } # queries.to_a.first }
+        # }
+        # new_strings = ObjectSpace.each_object(type).to_a
+        #    
+        # new_strings_hash = Hash.new 0
+        # new_strings.each { |word| new_strings_hash[word] += 1 }
+        # 
+        # things.each do |string|
+        #   new_strings_hash[string] -= 1
+        # end
+        # puts
+        # puts
+        # require 'pp'
+        # pp new_strings_hash.select { |k, v| v > 0 }
+        # exit
         #
         #
 

@@ -68,7 +68,8 @@ module Picky
       def load_helpers
         load_relative 'helpers/measuring',
                       'helpers/indexing',
-                      'helpers/identification'
+                      'helpers/identification',
+                      'splitter'
       end
       def load_index_generation_strategies
         load_relative 'indexers/base',

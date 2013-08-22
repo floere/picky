@@ -151,19 +151,19 @@ describe Picky::Query::Token do
     it_should_qualify 'with:qualifier',    [['with'],      'qualifier']
     it_should_qualify 'without qualifier', [nil,           'without qualifier']
     it_should_qualify 'name:',             [['name'],      '']
-    it_should_qualify ':broken qualifier', [[],            'broken qualifier'] # Unsure about that. Probably should recognize it as text.
+    it_should_qualify ':broken qualifier', [[''],          'broken qualifier'] # Unsure about that. Probably should recognize it as text.
     it_should_qualify '',                  [nil,           '']
     it_should_qualify 'sp:text',           [['sp'],        'text']
     it_should_qualify '""',                [nil,           '""']
     it_should_qualify 'name:',             [['name'],      '']
     it_should_qualify 'name:hanke',        [['name'],      'hanke']
     it_should_qualify 'g:gaga',            [['g'],         'gaga']
-    it_should_qualify ':nothing',          [[],            'nothing']
+    it_should_qualify ':nothing',          [[''],          'nothing']
     it_should_qualify 'hello',             [nil,           'hello']
     it_should_qualify 'a:b:c',             [['a'],         'b:c']
     it_should_qualify 'a,b:c',             [['a','b'],     'c']
     it_should_qualify 'a,b,c:d',           [['a','b','c'], 'd']
-    it_should_qualify ':',                 [[],           '']
+    it_should_qualify ':',                 [[''],          '']
     it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
   end
 
@@ -429,7 +429,7 @@ describe Picky::Query::Token do
     context 'with missing qualifier' do
       let(:token) { described_class.processed ':missingqualifier' }
       it 'is correct' do
-        token.qualifiers.should == []
+        token.qualifiers.should == ['']
         token.text.should == 'missingqualifier'
       end
     end

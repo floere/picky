@@ -10,7 +10,9 @@ module Picky
     # or whether it is a partial (bla*).
     #
     class Token
-
+      
+      @@splitter = Splitter.new
+      
       attr_reader :text, :original
       attr_writer :similar
       attr_writer :predefined_categories
@@ -273,44 +275,33 @@ module Picky
 
       # Splits text into a qualifier and text.
       #
-      @@qualifier_text_delimiter = ':'
-      @@qualifiers_delimiter     = ','
+      @@qualifier_text_delimiter = /:/
+      @@qualifiers_delimiter     = /,/
       def qualify
-        # TODO Is this actually an optimization?
-        # Check using include? + split, and split alone.
-        #
-        if @text.include? @@qualifier_text_delimiter
-          @qualifiers, @text = @text.split @@qualifier_text_delimiter, 2
-          if @text
-            @qualifiers = @qualifiers.split @@qualifiers_delimiter
-          else
-            @text, @qualifiers = @qualifiers, nil
-          end
+        @qualifiers, @text = @@splitter.single @text, @@qualifier_text_delimiter
+        if @qualifiers
+          @qualifiers = @@splitter.multi @qualifiers, @@qualifiers_delimiter
         end
       end
-      # Define a character which separates the qualifier
+      # Define a regexp which separates the qualifier
       # from the search text.
       #
-      # Default is ':'.
-      #
-      # This is used in a String#split.
+      # Default is /:/.
       #
       # Example:
-      #   Picky::Query::Token.qualifier_text_delimiter = '?'
+      #   Picky::Query::Token.qualifier_text_delimiter = /\?/
       #   try.search("text1?hello text2?world").ids.should == [1]
       #
       def self.qualifier_text_delimiter= character
         @@qualifier_text_delimiter = character
       end
-      # Define a character which separates the qualifiers
+      # Define a regexp which separates the qualifiers
       # (before the search text).
       #
-      # Default is ','.
-      #
-      # This is used in a String#split.
+      # Default is /,/.
       #
       # Example:
-      #   Picky::Query::Token.qualifiers_delimiter = '|'
+      #   Picky::Query::Token.qualifiers_delimiter = /|/
       #   try.search("text1|text2:hello").ids.should == [1]
       #
       

@@ -106,13 +106,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       end
     end
     def split text
-      # TODO Can we have split not copy the string?
-      #
-      # if @splits_text_on === text # Match creates a new string!
-        @splits_text_on.split text
-      # else
-        # [text]
-      # end
+      @splits_text_on.split text
     end
 
     # Normalizing.

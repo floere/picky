@@ -10,8 +10,8 @@ describe 'custom delimiters' do
     Picky::Query::Token.similar_character = '~'
     Picky::Query::Token.no_similar_character = '"'
     Picky::Query::Token.range_character = '-'
-    Picky::Query::Token.qualifier_text_delimiter = ':'
-    Picky::Query::Token.qualifiers_delimiter = ','
+    Picky::Query::Token.qualifier_text_delimiter = /:/
+    Picky::Query::Token.qualifiers_delimiter = /,/
   end
 
   context 'offers custom partial delimiters to be set' do
@@ -80,11 +80,11 @@ describe 'custom delimiters' do
     try.search("text1:hello text2:world").ids.should == [1]
     
     try.search("text1?hello text2?world").ids.should == []
-    Picky::Query::Token.qualifier_text_delimiter = '?'
+    Picky::Query::Token.qualifier_text_delimiter = /\?/
     try.search("text1?hello text2?world").ids.should == [1]
     
     try.search("text1!text2?hello text2?world").ids.should == []
-    Picky::Query::Token.qualifiers_delimiter = '!'
+    Picky::Query::Token.qualifiers_delimiter = /!/
     try.search("text1!text2?hello text2?world").ids.should == [1]
   end
   
