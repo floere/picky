@@ -60,3 +60,23 @@ def gc_runs_of
     raise '#gc_runs_of needs a block'
   end
 end
+
+def mark klass = String
+  $marked = ObjectSpace.each_object(klass).to_a
+  if block_given?
+    yield
+    diff klass 
+  end
+end
+def diff klass = String
+  return unless $marked
+  now_hash = Hash.new 0
+  now = ObjectSpace.each_object(klass).to_a
+  now.each { |thing| now_hash[thing] += 1 }
+  
+  $marked.each do |thing|
+    now_hash[thing] -= 1
+  end
+  
+  now_hash.select { |_, v| v > 0 }
+end
