@@ -7,7 +7,7 @@ module Picky
     # This class primarily handles switching through similar token constellations.
     #
     class Tokens
-
+      
       attr_reader :tokens, :ignore_unassigned
 
       # Basically forwards to its internal tokens array.
@@ -25,12 +25,11 @@ module Picky
 
       # Creates a new Tokens object from a number of Strings.
       #
-      @@or_splitting_pattern = '|'
+      @@or_splitting_pattern = /\|/
+      @@splitter = Splitter.new @@or_splitting_pattern
       def self.processed words, originals, ignore_unassigned = false
         new(words.zip(originals).collect! do |word, original|
-          # TODO Shouldn't we just check if it includes?
-          #
-          w, *middle, rest = word.split @@or_splitting_pattern
+          w, *middle, rest = @@splitter.multi word
           if rest
             Or.new processed [w, *middle, rest], original.split(@@or_splitting_pattern)
           else

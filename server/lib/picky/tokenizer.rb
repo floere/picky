@@ -106,6 +106,8 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       end
     end
     def split text
+      # Does not create a new string if nothing is split.
+      #
       @splits_text_on.split text
     end
 
@@ -235,7 +237,7 @@ ERROR
     def tokenize text
       text = preprocess text.to_s # processing the text
       return empty_tokens if text.empty? # TODO blank?
-      words  = pretokenize text # splitting and preparations for tokenizing
+      words = pretokenize text # splitting and preparations for tokenizing
       return empty_tokens if words.empty?
       tokens = tokens_for words # creating tokens / strings
       [tokens, words]

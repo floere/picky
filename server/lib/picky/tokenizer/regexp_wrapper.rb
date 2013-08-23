@@ -6,11 +6,11 @@ module Picky
       
       def initialize regexp
         @regexp = regexp
-        @@splitter = Splitter.new @regexp
+        @splitter = Splitter.new @regexp
       end
   
       def split text
-        @@splitter.multi text
+        @splitter.multi text
       end
   
       def source

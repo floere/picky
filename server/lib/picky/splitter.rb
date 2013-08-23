@@ -9,7 +9,7 @@ module Picky
     
     def single text
       self.string = text
-      scan_until @delimiter
+      skip_until @delimiter
       [pre_match, post_match || string]
     end
     

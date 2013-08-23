@@ -237,6 +237,8 @@ module Picky
         @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
       def self.redefine_illegals
+        # TODO Double no similar and no partial, both ".
+        #
         @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
       end
       redefine_illegals
@@ -280,7 +282,6 @@ module Picky
       def qualify
         @qualifiers, @text = @@qualifier_text_splitter.single @text
         if @qualifiers
-          # @qualifiers = @qualifiers.split @@qualifiers_delimiter
           @qualifiers = @@qualifiers_splitter.multi @qualifiers
         end
       end
