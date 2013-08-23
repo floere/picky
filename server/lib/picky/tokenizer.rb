@@ -98,7 +98,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     # Note: We do not test against to_str since symbols do not work with String#split.
     #
     def splits_text_on thing
-      raise ArgumentError.new "#{__method__} takes a Regexp or String or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
+      raise ArgumentError.new "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
       @splits_text_on = if thing.respond_to? :split
         thing
       else

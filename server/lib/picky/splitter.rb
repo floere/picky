@@ -1,28 +1,24 @@
 module Picky
   
-  class Splitter
+  class Splitter < StringScanner
     
-    def initialize
-      @scanner = StringScanner.new ''
+    def initialize delimiter
+      @delimiter = delimiter
+      super ''
     end
     
-    def single text, delimiter
-      @scanner.string = text
-      @scanner.scan_until delimiter
-      [@scanner.pre_match, @scanner.post_match || @scanner.string]
+    def single text
+      self.string = text
+      scan_until @delimiter
+      [pre_match, post_match || string]
     end
     
-    def multi text, delimiter
-      @scanner.string = text
-      result = []
-      loop do
-        scanned = @scanner.scan_until delimiter
-        result << (scanned && scanned[0..-2] || break)
-      end
-      if @scanner.pos.zero?
-        result << text
+    def multi text
+      self.string = text
+      if exist? @delimiter
+        text.split @delimiter
       else
-        result << @scanner.rest
+        [text]
       end
     end
     

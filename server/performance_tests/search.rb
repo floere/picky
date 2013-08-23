@@ -82,8 +82,8 @@ definitions.each do |definition, description|
   s.source   { with[1_000] }
   m   = Index.new :m,   &definition
   m.source   { with[10_000] }
-  # l   = Index.new :l,   &definition
-  # l.source   { with[100_000] }
+  l   = Index.new :l,   &definition
+  l.source   { with[100_000] }
   # xl  = Index.new :xl,  &definition
   # xl.source  { with[1_000_000] }
 

@@ -11,8 +11,6 @@ module Picky
     #
     class Token
       
-      @@splitter = Splitter.new
-      
       attr_reader :text, :original
       attr_writer :similar
       attr_writer :predefined_categories
@@ -277,10 +275,13 @@ module Picky
       #
       @@qualifier_text_delimiter = /:/
       @@qualifiers_delimiter     = /,/
+      @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
+      @@qualifiers_splitter      = Splitter.new @@qualifiers_delimiter
       def qualify
-        @qualifiers, @text = @@splitter.single @text, @@qualifier_text_delimiter
+        @qualifiers, @text = @@qualifier_text_splitter.single @text
         if @qualifiers
-          @qualifiers = @@splitter.multi @qualifiers, @@qualifiers_delimiter
+          # @qualifiers = @qualifiers.split @@qualifiers_delimiter
+          @qualifiers = @@qualifiers_splitter.multi @qualifiers
         end
       end
       # Define a regexp which separates the qualifier
@@ -294,6 +295,7 @@ module Picky
       #
       def self.qualifier_text_delimiter= character
         @@qualifier_text_delimiter = character
+        @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
       end
       # Define a regexp which separates the qualifiers
       # (before the search text).
@@ -307,6 +309,7 @@ module Picky
       
       def self.qualifiers_delimiter= character
         @@qualifiers_delimiter = character
+        @@qualifiers_splitter  = Splitter.new @@qualifiers_delimiter
       end
       
       # Returns the qualifiers as an array.
