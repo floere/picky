@@ -18,11 +18,11 @@ class Searches
     self.class.buffer[complexity].each &block
   end
   
-  def first queries, &block
+  def first queries
     if queries > data_size
-      self.class.buffer[complexity].first(data_size).cycle(queries/data_size).each &block
+      self.class.buffer[complexity].first(data_size).cycle(queries/data_size)
     else
-      self.class.buffer[complexity].first(queries).each &block
+      self.class.buffer[complexity].first(queries)
     end
   end
   

@@ -72,8 +72,10 @@ Picky.logger = Picky::Loggers::Silent.new
 
 Searches.prepare
 
-definitions.each do |definition, description|
+amount = 2_000
 
+definitions.each do |definition, description|
+  
   xxs = Index.new :xxs, &definition
   xxs.source { with[10] }
   xs  = Index.new :xs,  &definition
@@ -105,8 +107,6 @@ definitions.each do |definition, description|
       data.clear
       data.cache
       data.load
-
-      amount = 1000
 
       print "%7d" % data.source.amount
 
@@ -157,26 +157,38 @@ definitions.each do |definition, description|
         # Quick sanity check.
         #
         # fail if run.search(queries.each { |query| p query; break query }).ids.empty?
-
+        
+        searches = queries.first amount
+        
         GC.start
-        initial_ram = ram __FILE__
-        initial_symbols = Symbol.all_symbols.size
-
+        
         last_gc = runs
-        initial_strings = string_count
-
+        searches.each do |query|
+          run.search query
+        end
+        gc_runs << (runs - last_gc)
+        
         duration = performance_of do
-
-          queries.first(amount) do |query|
+          searches.each do |query|
             run.search query
           end
-          
         end
-
-        strings << (string_count - initial_strings)
+        
+        GC.disable
+        
+        initial_ram = ram __FILE__
+        searches.each do |query|
+          run.search query
+        end
         rams << (ram(__FILE__) - initial_ram)
-        symbols << (Symbol.all_symbols.size - initial_symbols)
-        gc_runs << (runs - last_gc)
+        
+        initial_strings = string_count
+        searches.each do |query|
+          run.search query
+        end
+        strings << (string_count - initial_strings)
+        
+        GC.enable
 
         print ", "
         print "%6d" % (amount/duration) # "%2.4f" % (duration*1000/amount)
@@ -193,11 +205,6 @@ definitions.each do |definition, description|
       print "Strings "
       print "("
       print strings.map { |s| "%4.1f" % (s/amount.to_f) }.join(', ')
-      print ")"
-      print " %6d " % (symbols.sum/amount.to_f)
-      print "Symbols  "
-      print "("
-      print symbols.map { |s| "%2.1f" % (s/amount.to_f) }.join(', ')
       print ")"
       print " %2d" % gc_runs.sum
       puts
