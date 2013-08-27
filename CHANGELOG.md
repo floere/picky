@@ -1,3 +1,10 @@
+## 4.19.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Picky uses `StringScanner` instead of `String#split` to reduce `String` usage. If only a single word is used in a query instead of a former 3, no new ones are created, reducing amount of GC runs (and enhancing performance). If two words are used, two new ones are created instead of 5, and so on. Thanks to @kasparschiess and @zmoazeni.
+- Picky core has been slightly optimised.
+
 ## 4.18.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
