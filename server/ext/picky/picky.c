@@ -33,9 +33,10 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
   // Vars.
   //
   VALUE rb_array_of_arrays;
-  VALUE smallest_array;
+  VALUE result_array;
   VALUE current_array;
   VALUE hash;
+  VALUE ary;
 
   // Temps.
   //
@@ -44,37 +45,71 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
   // Conversions & presorting.
   //
   rb_array_of_arrays = rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
-  smallest_array     = rb_ary_dup(rb_ary_entry(rb_array_of_arrays, 0));
+  
+  // Assume the smallest array is the result already.
+  //
+  result_array = rb_ary_dup(rb_ary_entry(rb_array_of_arrays, 0));
 
-  // Iterate through all arrays.
+  // Iterate through all other arrays.
   //
   for (i = 1; i < RARRAY_LEN(rb_array_of_arrays); i++) {
-    // Break if the smallest array is empty
+    // Break if the result array is empty.
+    // (Because intersecting anything with it will yield nothing)
     //
-    if (RARRAY_LEN(smallest_array) == 0) {
+    if (RARRAY_LEN(result_array) == 0) {
       break;
     }
-
-    // Make a hash from the currently smallest version.
+    
+    // If the result array is currently larger than 10
+    // entries, use a hash for intersection, else
+    // use an array.
     //
-    hash = ary_make_hash(smallest_array, 0);
+    if (RARRAY_LEN(result_array) > 10) {
+      // Make a hash from the currently smallest version.
+      //
+      hash = ary_make_hash(result_array, 0);
 
-    // Clear for use as temp array.
-    //
-    rb_ary_clear(smallest_array);
+      // Clear for use as temp array.
+      //
+      rb_ary_clear(result_array);
 
-    // Iterate through all array elements.
-    //
-    current_array = rb_ary_entry(rb_array_of_arrays, i);
-    for (j = 0; j < RARRAY_LEN(current_array); j++) {
-      v = rb_ary_entry(current_array, j);
-      if (rb_hash_delete(hash, v) != Qnil) {
-        rb_ary_push(smallest_array, v);
+      // Get the current array.
+      //
+      current_array = rb_ary_entry(rb_array_of_arrays, i);
+
+      // Iterate through all array elements.
+      //
+      for (j = 0; j < RARRAY_LEN(current_array); j++) {
+        v = rb_ary_entry(current_array, j);
+        if (rb_hash_delete(hash, v) != Qnil) {
+          rb_ary_push(result_array, v);
+        }
+      }
+    } else {
+      // Make a new array from the currently smallest version.
+      //
+      ary = rb_ary_dup(result_array);
+
+      // Clear for use as temp array.
+      //
+      rb_ary_clear(result_array);
+
+      // Get the current array.
+      //
+      current_array = rb_ary_entry(rb_array_of_arrays, i);
+
+      // Iterate through all array elements.
+      //
+      for (j = 0; j < RARRAY_LEN(current_array); j++) {
+        v = rb_ary_entry(current_array, j);
+        if (rb_ary_delete(ary, v) != Qnil) {
+          rb_ary_push(result_array, v);
+        }
       }
     }
   }
 
-  return smallest_array;
+  return result_array;
 }
 
 VALUE p_mPerformant, p_cArray;

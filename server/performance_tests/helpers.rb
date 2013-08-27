@@ -39,6 +39,7 @@ def ram file_name
 end
 def string_count
   i = 0
+  GC.start
   ObjectSpace.each_object(String) do |s|
     # puts s
     i += 1

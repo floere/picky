@@ -122,6 +122,13 @@ describe Performant::Array do
       #
       performance_of { Performant::Array.memory_efficient_intersect(arys) }.should < 0.0015
     end
+    it "should be optimal for many small arrays of length == 10" do
+      arys = [('1'..'10').to_a, ('10'..'20').to_a, ['10'] + ('10000'..'20000').to_a]
+
+      # Brute force - note that it is slower than the Symbols/Integers version.
+      #
+      performance_of { Performant::Array.memory_efficient_intersect(arys) }.should < 0.0015
+    end
     it "should be optimal for 2 small arrays of 50/10_000" do
       arys = [('1'..'50').to_a, ('10000'..'20000').to_a << 7]
 

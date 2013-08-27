@@ -13,7 +13,7 @@ describe "Object Use" do
       category :text4
     end
     try = Picky::Search.new index
-
+    
     thing = Struct.new(:id, :text1, :text2, :text3, :text4)
     index.add thing.new(1, 'one', 'two', 'three', 'four')
     
@@ -28,13 +28,12 @@ describe "Object Use" do
     # Actual tests.
     #
 
-    # s = :one
     s = 'one'
     result = mark do
       try.search s
     end
     result.should == {} # No new strings since nothing is split.
-
+    
     s = 'one two three'
     result = mark do
       try.search s
@@ -43,7 +42,7 @@ describe "Object Use" do
       "three" => 1,
       "two" => 1,
       "one" => 1,
-      'one two three' => 2 # TODO
+      'one two three' => 2 # TODO Is GC'd.
     }
      
     result = mark do

@@ -9,7 +9,7 @@ class Searches
   end
   
   def self.each data_size
-    (1..5).each do |complexity|
+    (5..5).each do |complexity|
       yield new(complexity, data_size)
     end
   end

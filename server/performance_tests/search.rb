@@ -51,6 +51,8 @@ definitions = []
 #   category :text4, weight: Picky::Weights::Constant.new
 # end, :no_weights]
 
+# TODO Why does the String count explode when using key_format :to_s?
+#
 definitions << [Proc.new do
   category :text1
   category :text2
@@ -58,6 +60,15 @@ definitions << [Proc.new do
   category :text4
   category :text5
 end, :normal]
+
+# definitions << [Proc.new do
+#   key_format :to_i
+#   category :text1
+#   category :text2
+#   category :text3
+#   category :text4
+#   category :text5
+# end, :normal]
 
 # definitions << [Proc.new do
 #   category :text1, partial: Picky::Partial::Postfix.new(from: 1)
@@ -74,18 +85,39 @@ Searches.prepare
 
 amount = 2_000
 
+def mark klass = String
+  GC.start
+  $marked = ObjectSpace.each_object(klass).to_a
+  if block_given?
+    yield
+    diff klass 
+  end
+end
+def diff klass = String
+  return unless $marked
+  now_hash = Hash.new 0
+  now = ObjectSpace.each_object(klass).to_a
+  now.each { |thing| now_hash[thing] += 1 }
+  
+  $marked.each do |thing|
+    now_hash[thing] -= 1
+  end
+  
+  now_hash.select { |_, v| v > 0 }
+end
+
 definitions.each do |definition, description|
   
-  xxs = Index.new :xxs, &definition
-  xxs.source { with[10] }
-  xs  = Index.new :xs,  &definition
-  xs.source  { with[100] }
-  s   = Index.new :s,   &definition
-  s.source   { with[1_000] }
+  # xxs = Index.new :xxs, &definition
+  # xxs.source { with[10] }
+  # xs  = Index.new :xs,  &definition
+  # xs.source  { with[100] }
+  # s   = Index.new :s,   &definition
+  # s.source   { with[1_000] }
   m   = Index.new :m,   &definition
   m.source   { with[10_000] }
-  l   = Index.new :l,   &definition
-  l.source   { with[100_000] }
+  # l   = Index.new :l,   &definition
+  # l.source   { with[100_000] }
   # xl  = Index.new :xl,  &definition
   # xl.source  { with[1_000_000] }
 
@@ -122,7 +154,7 @@ definitions.each do |definition, description|
         
         run = Search.new data
         # run.terminate_early
-        # run.max_allocations 1
+        # run.max_allocations 1 # Multiple allocations lead to the use of far more strings with larger indexes.
         
         # What Strings are created newly?
         #
@@ -159,6 +191,21 @@ definitions.each do |definition, description|
         # fail if run.search(queries.each { |query| p query; break query }).ids.empty?
         
         searches = queries.first amount
+        
+        GC.start
+        
+        searches.each do |query|
+          p query
+          # mark
+          r = run.search query
+          # GC.start
+          # d = diff
+          # unless d.empty?
+          #   p d
+          #   p r.to_hash
+          # end
+          puts '.'
+        end
         
         GC.start
         

@@ -62,6 +62,7 @@ def gc_runs_of
 end
 
 def mark klass = String
+  GC.start
   $marked = ObjectSpace.each_object(klass).to_a
   if block_given?
     yield
