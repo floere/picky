@@ -26,6 +26,7 @@ module Picky
   require 'multi_json'
   require 'rack_fast_escape' if defined? Rack
   require 'fileutils'
+  require 'strscan'
   
   # Check if platform specific modifiers need to be installed.
   #
