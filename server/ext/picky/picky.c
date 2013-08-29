@@ -42,7 +42,7 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
   //
   VALUE v;
 
-  // Conversions & presorting.
+  // Conversions and presorting.
   //
   rb_array_of_arrays = rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
   

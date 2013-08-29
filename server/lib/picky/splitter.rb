@@ -1,3 +1,5 @@
+require 'strscan'
+
 module Picky
   
   class Splitter < StringScanner
