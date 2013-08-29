@@ -1,3 +1,9 @@
+## 4.19.1
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Explicitly require 'strscan'.
+
 ## 4.19.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
