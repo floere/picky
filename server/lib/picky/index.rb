@@ -297,9 +297,9 @@ module Picky
       end
     end
 
-    # HIGHLY EXPERIMENTAL Not correctly working yet. Try it if you feel "beta".
+    # Geo search, searches in a rectangle (almost square) in the lat/long coordinate system.
     #
-    # Also a range search see #ranged_category, but on the earth's surface.
+    # Note: It uses #ranged_category.
     #
     # Parameters:
     # * lat_name: The latitude's name as used in #category.
@@ -331,7 +331,6 @@ module Picky
     # indexed simultaneously, since lat/lng are correlated.
     #
     def geo_categories lat_name, lng_name, radius, options = {}
-
       # Extract lat/lng specific options.
       #
       lat_from = options.delete :lat_from
@@ -355,7 +354,6 @@ module Picky
       # So a km on the 45 degree line is equal to 0.01796624 degrees.
       #
       ranged_category lng_name, radius*0.01796624, options.merge(from: lng_from)
-
     end
 
     def to_stats
