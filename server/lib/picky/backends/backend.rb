@@ -9,8 +9,6 @@ module Picky
       # This is the default behaviour and should be overridden
       # for different backends.
       #
-      # TODO Push down.
-      #
       
       # Returns an object that on #initial, #load returns
       # an object that responds to:
