@@ -122,7 +122,7 @@ module Picky
         #
         self.partial = false or return if @similar
         self.partial = false or return if @text =~ @@no_partial
-        self.partial = true if @text =~ @@partial # TODO Move this one line up since it occurs more often?
+        self.partial = true if @text =~ @@partial
       end
       # Define a character which stops a token from
       # being a partial token, even if it is the last token.
@@ -237,7 +237,7 @@ module Picky
         @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
       def self.redefine_illegals
-        # TODO Double no similar and no partial, both ".
+        # Note: By default, both no similar and no partial are ".
         #
         @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
       end
