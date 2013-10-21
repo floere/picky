@@ -62,14 +62,14 @@ module Picky
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #
-      def prepared_allocations_for tokens, weights = {}, amount = nil
+      def prepared_allocations_for tokens, boosts = {}, amount = nil
         allocations = allocations_for tokens
 
         # Score the allocations using weights as bias.
         #
         # Note: Before we can sort them we need to score them.
         #
-        allocations.calculate_score weights
+        allocations.calculate_score boosts
 
         # Filter the allocations – ignore/only.
         #

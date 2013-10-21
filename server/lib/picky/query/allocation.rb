@@ -36,12 +36,12 @@ module Picky
       # query "alan history" and category :title is
       # ignored (ie. removed).
       #
-      def calculate_score weights
+      def calculate_score boosts
         @score ||= if @combinations.empty?
           0 # Optimization.
         else
           # Note: Was @backend.score(@combinations) - indirection for maximum flexibility.
-          @combinations.score + weights.boost_for(@combinations)
+          @combinations.score + boosts.boost_for(@combinations)
         end
       end
 

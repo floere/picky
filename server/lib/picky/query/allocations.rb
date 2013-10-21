@@ -28,9 +28,9 @@ module Picky
 
       # Score each allocation.
       #
-      def calculate_score weights
+      def calculate_score boosts
         @allocations.each do |allocation|
-          allocation.calculate_score weights
+          allocation.calculate_score boosts
         end
       end
 

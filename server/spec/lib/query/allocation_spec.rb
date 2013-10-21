@@ -185,9 +185,9 @@ describe Picky::Query::Allocation do
     context 'non-empty combinations' do
       it 'should forward to backend and combinations' do
         @combinations.should_receive(:score).once.and_return 1
-        weights = stub :weights, :boost_for => 2
+        boosts = stub :weights, :boost_for => 2
 
-        @allocation.calculate_score(weights).should == 3
+        @allocation.calculate_score(boosts).should == 3
       end
     end
   end
