@@ -5,7 +5,7 @@ pre, code, tt, samp {
   font-weight: 500; }
 
 /* line 10, solarized_code.css.sass */
-p code, li code {
+p > code, li > code {
   padding: 0.2em 0.5em;
   -webkit-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
   -moz-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;

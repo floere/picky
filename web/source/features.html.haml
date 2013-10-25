@@ -24,32 +24,32 @@ title: Features
           %li Flexibly configure indexing
           %li
             Easily configure handling query text, e.g.
-            %code
-              %pre splits_text_on:&nbsp;/[\s\/\-\"\&]/
+            %pre
+              %code splits_text_on:&nbsp;/[\s\/\-\"\&]/
           %li Multiple data sources (DB, CSV, ...)
           %li Choice of in-memory or Redis indexes.
           %li
             Partial searching
-            %code
-              %pre pick*
+            %pre
+              %code pick*
           %li
             Phonetic similarity
-            %code
-              %pre pecky~
+            %pre
+              %code pecky~
           %li
             Categorized searching
-            %code
-              %pre napoleon, title:war
+            %pre
+              %code napoleon, title:war
           %li
             Weighing not only categories, but combinations!
-            %code
-              %pre {&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}
+            %pre
+              %code {&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}
           %li
             Range queries
           %li
             Comfortable routing
-            %code
-              %pre
+            %pre
+              %code
                 :preserve
                   get %r{/books} do
                     books.search params[:query]
@@ -58,8 +58,8 @@ title: Features
           … and much more.
     .grid_1
       %h4 Getting Started
-      %code
-        %pre
+      %pre
+        %code
           gem install picky
       %p
         There's a whole section devoted to getting started with Picky!
@@ -74,8 +74,8 @@ title: Features
         Offers a Ruby client that connects to the Server's JSON interface and provides a clever (in a helpful way) and easily configurable Javascript interface.
       %p
         Including the interface in your views is as easy as
-        %code
-          %pre
+        %pre
+          %code
             \= Picky::Client.interface
       %p
         and adding the
@@ -90,8 +90,8 @@ title: Features
         The gem also contains useful methods to render results into the JSON that is sent to the Javascript interface, extracting just the ids, and much more.
     .grid_1
       %h4 Getting Started
-      %code
-        %pre
+      %pre
+        %code
           gem install picky-client
       %p
         There's a whole section devoted to getting started with the Picky client!
@@ -118,20 +118,20 @@ title: Features
         and other things.
     .grid_1
       %h4 Getting Started
-      %code
-        %pre
+      %pre
+        %code
           gem install picky-statistics
       %p Then run:
-      %code
-        %pre
+      %pre
+        %code
           picky stats path/to/pickys/log/search.log
       %p
         If you are in the Picky server directory, the path is probably
         %code log/search.log
         \.
       %p You should see a message like:
-      %code
-        %pre
+      %pre
+        %code
           :preserve
             Clam, Picky's friend, is looking at Picky's logfile.
             ... and showing results on port 4567.
@@ -160,23 +160,23 @@ title: Features
         Note: Only works with multiprocessing servers, like Unicorn.
     .grid_1
       %h4 Getting Started
-      %code
-        %pre
+      %pre
+        %code
           gem install picky-live
       %p
         Add this to
         %code app/application.rb
         in the server:
-      %code
-        %pre
+      %pre
+        %code
           \%r{/admin} => LiveParameters.new
       %p Start the server and enter:
-      %code
-        %pre
+      %pre
+        %code
           picky live
       %p You should see a message like:
-      %code
-        %pre
+      %pre
+        %code
           :preserve
             Suckerfish has sucked onto Picky at localhost:8080/admin.
             Sinatra has taken the stage on port 4568...
