@@ -75,13 +75,13 @@ div.navigation a.right {
 /* line 71, specific.css.sass */
 .social {
   float: right;
-  width: 400px;
   height: 20px;
   margin-top: 6px; }
+  /* line 76, specific.css.sass */
+  .social div, .social iframe {
+    float: right;
+    margin-left: 7px; }
 
-/*  div, iframe
- * :float right
- * :margin-left 7px */
-/* line 81, specific.css.sass */
+/* line 80, specific.css.sass */
 .edit {
   float: right; }
