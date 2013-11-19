@@ -142,7 +142,7 @@
     </p>
     <p>
       and copy paste
-      <pre><code>require 'picky'&#x000A;&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;data = Picky::Index.new :people do&#x000A;  category :age, partial: Picky::Partial::None.new&#x000A;  category :name&#x000A;end&#x000A;&#x000A;data.replace Person.new(1, 34, 'Florian')&#x000A;data.replace Person.new(2, 77, 'Floris')&#x000A;&#x000A;people = Picky::Search.new data&#x000A;&#x000A;results = people.search '34 flori' # Takes around 0.0001s&#x000A;&#x000A;p results # For logging&#x000A;p results.allocations # => Returns ids, weight etc.</code></pre>
+      <pre><code>require 'picky'&#x000A;&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;data = Picky::Index.new :people do&#x000A;  category :age, partial: Picky::Partial::None.new&#x000A;  category :name&#x000A;end&#x000A;&#x000A;data.replace Person.new(1, 34, 'Florian')&#x000A;data.replace Person.new(2, 77, 'Floris')&#x000A;&#x000A;people = Picky::Search.new data&#x000A;&#x000A;results = people.search '34 flori' # Takes around 0.0001s&#x000A;&#x000A;puts results # For logging&#x000A;puts results.allocations # => Returns ids, weight etc.</code></pre>
     </p>
     <h3>Help / Feedback</h3>
     <p>
