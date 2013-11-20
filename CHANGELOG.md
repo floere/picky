@@ -1,3 +1,9 @@
+## 4.19.2
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Avoid Rails 4 logger deprecation warning (thanks @albandiguer).
+
 ## 4.19.1
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
