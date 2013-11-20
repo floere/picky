@@ -21,7 +21,7 @@ module Picky
   # TODO Remove active support, as a goal.
   #
   begin
-    require 'active_support/logger' # Require Rails 4 recommanded logger
+    require 'active_support/logger' # Require Rails 4 recommended logger.
   rescue LoadError
     require 'active_support/core_ext/logger'
   end
