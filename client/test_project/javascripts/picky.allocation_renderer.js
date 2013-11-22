@@ -1,10 +1,10 @@
+"use strict";
+
 function AllocationRenderer(config) {
   var self = this;
 
   var locale = config.locale;
   
-  // TODO Maybe make dynamic.
-  //
   var qualifiers   = config.qualifiers && config.qualifiers[locale] || {};
   var explanations = config.explanations && config.explanations[locale] || {};
   var choiceGroups = config.groups || [];
@@ -37,6 +37,7 @@ function AllocationRenderer(config) {
 	  
     // Combine the values.
     //
+		var l;
     for (i = 0, l = zipped.length; i < l; i++) {
       var key = zipped[i][0];
       if (key in originals) {

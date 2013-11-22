@@ -1,3 +1,5 @@
+"use strict";
+
 // The data is basically the model behind the search.
 //
 

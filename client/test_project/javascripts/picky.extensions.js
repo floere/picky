@@ -1,3 +1,5 @@
+"use strict";
+
 Array.prototype.index = function(val) {
   for(var i = 0, l = this.length; i < l; i++) {
     if(this[i] == val) return i;

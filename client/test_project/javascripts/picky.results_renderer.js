@@ -1,3 +1,5 @@
+"use strict";
+
 var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;
@@ -13,7 +15,7 @@ var PickyResultsRenderer = function(addination, config) {
   //
   var asteriskifyLastToken = function(combinations) {
     var last_part = combinations[combinations.length-1];
-	if (last_part === undefined) { return []; }
+	  if (last_part === undefined) { return []; }
     var parts = combinations.slice(0, combinations.length-1);
     if (parts == []) { parts = [parts]; }
     if (!nonPartial.include(last_part[0])) {
@@ -92,7 +94,7 @@ var PickyResultsRenderer = function(addination, config) {
       }
     });
     
-    // there might be something in the accumulator
+    // There might be something in the accumulator
     //
     replaced.push(strongify(lastCategory, tokenAccumulator.join(' ')));
     
@@ -114,7 +116,6 @@ var PickyResultsRenderer = function(addination, config) {
 	    // TODO Add the class to the link. Remove the div.
       //
       header_html += '<div class="tothetop"><a href="#" onclick="javascript:$(\'body\').animate({scrollTop: 0}, 500);">&uarr;</a></div>';
-      // searchEngine.focus();
     }
     header_html += '</div>';
     

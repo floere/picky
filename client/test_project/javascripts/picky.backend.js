@@ -1,3 +1,5 @@
+"use strict";
+
 // Core search backend.
 //
 var PickyBackend = function(url) {

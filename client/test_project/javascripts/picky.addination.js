@@ -1,3 +1,5 @@
+"use strict";
+
 var PickyAddination = function(view, results) {
   
   // Calculate the addination range.

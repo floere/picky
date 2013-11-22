@@ -1,3 +1,5 @@
+"use strict";
+
 var PickyAllocationsCloud = function(view, config) {
   
   var allocations         = config['allocations'];

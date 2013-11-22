@@ -1,3 +1,5 @@
+"use strict";
+
 // Translations
 //
 // TODO Still needed?

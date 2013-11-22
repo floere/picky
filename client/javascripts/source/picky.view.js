@@ -5,7 +5,8 @@ var PickyView = function(picky_controller, config) {
   
   var controller       = picky_controller;
   
-  var showResultsLimit = config.showResultsLimit || 10;
+  var showResultsLimit  = config.showResultsLimit  || 10;
+  var alwaysShowResults = config.alwaysShowResults || false;
   
   var searchField    = config['input'];
   var clearButton    = config['reset'];
@@ -112,15 +113,20 @@ var PickyView = function(picky_controller, config) {
   var showTooManyResults = function(data) {
     clean();
     showClearButton();
-    allocationsCloud.show(data);
     updateResultCounter(data.total);
+    if (alwaysShowResults) {
+      resultsRenderer.render(results, data);
+      results.show();
+    }
+    // FIXME data allocation is changed by rendering!
+    allocationsCloud.show(data);
   };
   var showResults = function(data) {
     clean();
+    showClearButton();
     updateResultCounter(data.total);
     resultsRenderer.render(results, data);
     results.show();
-    showClearButton();
   };
   
   var scrollTo = function(position) {

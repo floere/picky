@@ -15,7 +15,7 @@ var PickyResultsRenderer = function(addination, config) {
   //
   var asteriskifyLastToken = function(combinations) {
     var last_part = combinations[combinations.length-1];
-	if (last_part === undefined) { return []; }
+	  if (last_part === undefined) { return []; }
     var parts = combinations.slice(0, combinations.length-1);
     if (parts == []) { parts = [parts]; }
     if (!nonPartial.include(last_part[0])) {
