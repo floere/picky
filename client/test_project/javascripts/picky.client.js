@@ -90,9 +90,9 @@ var PickyClient = function(config) {
   // Allocations cloud.
   //
   config['allocations']         = $(config['allocationsSelector'] || (enclosingSelector + ' .allocations'));
-  config['shownAllocations']    = config['shownAllocations'] || config['allocations'].find('.shown');
-  config['showMoreAllocations'] = config['showMoreAllocations'] || config['allocations'].find('.more');
-  config['hiddenAllocations']   = config['hiddenAllocations'] || config['allocations'].find('.hidden');
+  config['shownAllocations']    = $(config['shownAllocations'] || config['allocations'].find('.shown'));
+  config['showMoreAllocations'] = $(config['showMoreAllocations'] || config['allocations'].find('.more'));
+  config['hiddenAllocations']   = $(config['hiddenAllocations'] || config['allocations'].find('.hidden'));
   config['maxSuggestions']      = config['maxSuggestions'] || 3; // How many are shown directly?
   
   // Results rendering.
