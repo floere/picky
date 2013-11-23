@@ -5,8 +5,9 @@ var PickyView = function(picky_controller, config) {
   
   var controller       = picky_controller;
   
-  var showResultsLimit  = config.showResultsLimit  || 10;
-  var alwaysShowResults = config.alwaysShowResults || false;
+  var showResultsLimit    = config.showResultsLimit  || 10;
+  var alwaysShowResults   = config.alwaysShowResults || false;
+  var alwaysShowSelection = config.alwaysShowSelection || false;
   
   var searchField    = config['input'];
   var clearButton    = config['reset'];
@@ -53,7 +54,6 @@ var PickyView = function(picky_controller, config) {
   //
   var clean = function() {
     allocationsCloud.hide();
-    clearResults();
     hideEmptyResults();
   };
   
@@ -104,35 +104,21 @@ var PickyView = function(picky_controller, config) {
     return text() == '';
   };
   
-  var showEmptyResults = function() {
-    clean();
-    updateResultCounter(0);
+  var showEmptyResults = function(data) {
+    clearResults();
     noResults.show();
-    showClearButton();
   };
-  var showTooManyResults = function(data) {
-    clean();
-    showClearButton();
-    updateResultCounter(data.total);
-    if (alwaysShowResults) {
-      resultsRenderer.render(results, data);
-      results.show();
-    }
-    // FIXME data allocation is changed by rendering!
+  var showCategorySelection = function(data) {
     allocationsCloud.show(data);
   };
   var showResults = function(data) {
-    clean();
-    showClearButton();
-    updateResultCounter(data.total);
+    clearResults();
     resultsRenderer.render(results, data);
     results.show();
   };
-  
   var scrollTo = function(position) {
     $("body").animate({scrollTop: position - 12}, 500);
   };
-  
   var appendResults = function(data) {
     var position = $(moreSelector).position().top;
     
@@ -141,6 +127,14 @@ var PickyView = function(picky_controller, config) {
     
     scrollTo(position);
   };
+  var appendOrShowResults = function(data) {
+    if (data.offset == 0) {
+      showResults(data);
+      focus();
+    } else {
+      appendResults(data);
+    }
+  }
   
   var updateResultCounter = function(total) {
     // ((total > 999) ? '999+' : total); // TODO Decide on this.
@@ -190,17 +184,22 @@ var PickyView = function(picky_controller, config) {
   var fullResultsCallback = function(data) {
     setSearchStatusFor(data);
     
+    clean();
+    showClearButton();
+    updateResultCounter(data.total);
+    
     if (data.isEmpty()) {
-      showEmptyResults();
+      showEmptyResults(data);
     } else if (tooManyResults(data)) {
-      showTooManyResults(data);
+      // FIXME data allocation is changed by rendering!
+      //
+      if (alwaysShowResults) { appendOrShowResults(data); }
+      showCategorySelection(data);
     } else {
-      if (data.offset == 0) {
-        showResults(data);
-        focus();
-      } else {
-        appendResults(data);
-      }
+      // FIXME data allocation is changed by rendering!
+      //
+      appendOrShowResults(data);
+      if (alwaysShowSelection) { showCategorySelection(data); }
     };
   };
   this.fullResultsCallback = fullResultsCallback;
