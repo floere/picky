@@ -1,3 +1,10 @@
+## 4.19.3
+
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- Updated Picky Javascript: The success callback gets (data, query) instead of (data). The query is the query of the request that resulted in the success callback.
+- Fix order of categories in example.
+
 ## 4.19.2
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
