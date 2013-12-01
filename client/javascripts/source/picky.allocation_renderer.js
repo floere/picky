@@ -89,9 +89,11 @@ function AllocationRenderer(config) {
     var zipped = contract(allocation);
     
     var key_ary = zipped;
-    key_ary.sort(function(zipped1, zipped2) {
-      return zipped1[0] < zipped2[0] ? -1 : 1;
-    });
+    // FIXME To remove or not to remove?
+    //
+    // key_ary.sort(function(zipped1, zipped2) {
+    //   return zipped1[0] < zipped2[0] ? -1 : 1;
+    // });
     
     // Now that it's sorted, get the right string.
     //
@@ -187,7 +189,7 @@ function AllocationRenderer(config) {
     for (var i = 0, m = zipped.length; i < m; i++) {
       var combination = zipped[i];
       var category    = combination[0];
-      
+
       var wasInGroups = false;
       
       for (var j = 0, n = choiceGroups.length; j < n; j++) {

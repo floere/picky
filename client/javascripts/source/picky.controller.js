@@ -5,10 +5,10 @@ var PickyController = function(config) {
   var view = new PickyView(this, config);
   
   var backends             = config.backends;
-  var beforeInsertCallback = config.beforeInsert || function(query) { };
-  var beforeCallback       = config.before       || function(query, params) { };
-  var successCallback      = config.success      || function(data, query) { };
-  var afterCallback        = config.after        || function(data, query) { };
+  var beforeInsertCallback = config.beforeInsert || function(query) { return query; };
+  var beforeCallback       = config.before       || function(query, params) { return query; };
+  var successCallback      = config.success      || function(data, query) { return data; };
+  var afterCallback        = config.after        || function(data, query) { return data; };
   
   var searchOnEmpty           = config.searchOnEmpty      || false;
   var liveRendered            = config.liveRendered       || false;
@@ -88,9 +88,9 @@ var PickyController = function(config) {
   this.resend = resend;
   
   var fullSearchCallback = function(data, query) {
-    data = successCallback(data, query) || data;
+    data = successCallback(data, query);
     
-    view.fullResultsCallback(data);
+    if (data) { view.fullResultsCallback(data); }
     
     afterCallback(data, query);
   };
@@ -101,9 +101,9 @@ var PickyController = function(config) {
   };
   
   var liveSearchCallback = function(data, query) {
-    data = successCallback(data, query) || data;
+    data = successCallback(data, query);
     
-    view.liveResultsCallback(data);
+    if (data) { view.liveResultsCallback(data); }
     
     afterCallback(data, query);
   };

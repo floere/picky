@@ -51,7 +51,7 @@ var LiveBackend = function(config, callback) {
     //
     var callback = function(timestamps, data) {
       if (!timestamps.live || timestamps.live == latestRequestTimestamp) {
-        if (controllerCallback) { controllerCallback(data); }
+        if (controllerCallback) { controllerCallback(data, query); }
       };
     };
     
@@ -84,7 +84,7 @@ var FullBackend = function(config) {
     //
     var callback = function(timestamps, data) {
       if (!timestamps.full || timestamps.full == latestRequestTimestamp) {
-        if (controllerCallback) { controllerCallback(data); }
+        if (controllerCallback) { controllerCallback(data, query); }
       };
     };
     
