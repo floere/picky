@@ -51,8 +51,8 @@ $(window).load(function() {
         'author': 'Written by %1$s',
         'subjects': 'Being about %1$s',
         'publisher': 'Published by %1$s',
-        'author,title':    'Called %1$s, written by %2$s',
-        'title,author':    'Called %2$s, written by %1$s',
+        'author,title':    'Called %2$s, written by %1$s',
+        'title,author':    'Called %1$s, written by %2$s',
         'title,subjects':  'Called %1$s, about %2$s',
         'author,subjects': '%1$s who wrote about %2$s'
       }
