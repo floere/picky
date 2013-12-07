@@ -1,14 +1,13 @@
 source 'https://rubygems.org'
 
-# Gems required by Picky.
-#
-gem 'rake'
-gem 'rack'
-gem 'multi_json'
-gem 'yajl-ruby', :require => 'yajl'
-gem 'text'
-gem 'rack_fast_escape'
-gem 'procrastinate'
+gemspec
+
+group :development do
+  gem 'rake'
+  gem 'rack'
+  gem 'text'
+  gem 'procrastinate'
+end
 
 group :test do
   # Needed for testing itself.

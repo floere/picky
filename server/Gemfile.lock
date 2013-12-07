@@ -1,3 +1,12 @@
+PATH
+  remote: .
+  specs:
+    picky (4.19.3)
+      activesupport (>= 3.0)
+      multi_json
+      rack_fast_escape
+      text
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -76,12 +85,11 @@ DEPENDENCIES
   fast-stemmer
   highline
   hiredis
-  multi_json
+  picky!
   picky-client
   procrastinate
   rack
   rack-mount
-  rack_fast_escape
   rake
   rake-compiler
   redis
@@ -95,4 +103,3 @@ DEPENDENCIES
   text
   uuidtools
   www-delicious
-  yajl-ruby
