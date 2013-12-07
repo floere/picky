@@ -1,3 +1,9 @@
+## 4.19.4
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Fixes made to the `Picky::Splitters::Automatic` algorithm.
+
 ## 4.19.3
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
