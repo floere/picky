@@ -21,6 +21,19 @@ describe "automatic splitting" do
     
     index
   end
+
+  context 'splitting the text automatically' do
+    let(:automatic_splitter) { Picky::Splitters::Automatic.new index[:text] }
+    
+    # It splits the text correctly.
+    #
+    it do
+      automatic_splitter.segment('purplerainbow').should == [
+        ['purple', 'rain', 'bow'],
+        2.078999999999999
+      ]
+    end
+  end
   
   context 'splitting the text automatically' do
     let(:automatic_splitter) { Picky::Splitters::Automatic.new index[:text] }
@@ -55,6 +68,12 @@ describe "automatic splitting" do
     it { automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow'] }
     it { automatic_splitter.split('purplerain').should == ['purple', 'rain'] }
     it { automatic_splitter.split('purple').should == ['purple'] }
+    
+    # Creates the right queries (see below).
+    #
+    it { automatic_splitter.split('colorpurple').should == ['color', 'purple'] }
+    it { automatic_splitter.split('bownew').should == ['bow', 'new'] }
+    it { automatic_splitter.split('spainisking').should == ['spain', 'is', 'king'] }
     
     # When it can't, it splits it using the partial index (correctly).
     #

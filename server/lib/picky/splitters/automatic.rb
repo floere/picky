@@ -56,18 +56,25 @@ module Picky
         end
       end
       
+      def segment text, use_partial = false
+        segments, score = segment_recursively text, use_partial
+        [segments, score && score-text.size+segments.size]
+      end
+      
       # Segments the given text recursively.
       #
-      def segment text, use_partial = false
+      def segment_recursively text, use_partial = false
         (use_partial ? @partial_memo : @exact_memo)[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
           tail_weight = use_partial ? @partial.weight(tail) : @exact.weight(tail)
+          tail_weight && tail_weight += (tail.size-1)
           
-          segments, head_weight = segment head
+          segments, head_weight = segment_recursively head, use_partial
           
           weight = (head_weight && tail_weight &&
                    (head_weight + tail_weight) ||
                    tail_weight || head_weight)
-          if (weight || -1) > (heaviest || 0)
+                   
+          if (weight || -1) >= (heaviest || 0)
             [tail_weight ? segments + [tail] : segments, weight]
           else
             [current, heaviest]
