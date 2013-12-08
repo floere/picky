@@ -42,7 +42,7 @@ var LiveBackend = function(config, callback) {
   var search = function(query, controllerCallback, specificParams, fullTimestamps) {
     var specificTimestamps = fullTimestamps || {};
     
-    latestRequestTimestamp = new Date();
+    var latestRequestTimestamp = new Date();
     specificTimestamps.live = latestRequestTimestamp;
     
     // Wrap the given callback.
@@ -75,7 +75,7 @@ var FullBackend = function(config) {
   var search = function(query, controllerCallback, specificParams, givenTimestamps) {
     var specificTimestamps = givenTimestamps || {};
     
-    latestRequestTimestamp = new Date();
+    var latestRequestTimestamp = new Date();
     specificTimestamps.full = latestRequestTimestamp;
     
     // Wrap the given callback.
