@@ -18,7 +18,8 @@ describe(
             ignoreSingle: true
           },
           'invisible': '', // Not visible.
-          'author,title': '%1$s, who wrote %2$s',
+          'title,author': '%2$s, who wrote %1$s',
+          'title,invisible': 'only %1$s is visible',
           'invisible,title': 'only %2$s is visible'
         }
       }
@@ -104,20 +105,12 @@ describe(
         ]) == "<em>author1&nbsp;author2</em>";
       });
       it("is correct", function() {
-        print(renderer.rendered([
-          ['title', 'Title1', 'title1'],
-          ['author', 'Author1', 'author1']
-        ]));
         return renderer.rendered([
           ['title', 'Title1', 'title1'],
           ['author', 'Author1', 'author1']
         ]) == "author1, who wrote title1";
       });
       it("is correct", function() {
-        print(renderer.rendered([
-          ['title', 'Title1', 'title:title1'],
-          ['author', 'Author1', 'author:author1']
-        ]));
         return renderer.rendered([
           ['title', 'Title1', 'title:title1'],
           ['author', 'Author1', 'author:author1']
@@ -137,11 +130,6 @@ describe(
         ]) == "only title1 is visible";
       });
       it("is correct", function() {
-        print(renderer.rendered([
-          ['title', 'Title1', 'title:title1'],
-          ['invisible', 'Invisible1', 'invisible:invisible1'],
-          ['invisible', 'Invisible2', 'invisible:invisible2']
-        ]));
         return renderer.rendered([
           ['title', 'Title1', 'title:title1'],
           ['invisible', 'Invisible1', 'invisible:invisible1'],
