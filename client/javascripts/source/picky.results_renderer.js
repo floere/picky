@@ -4,8 +4,9 @@ var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;
   
-  var explanations          = config.explanations || {};
-  var explanationDelimiters = config.explanationDelimiters || {};
+  var explanations              = config.explanations || {};
+  var explanationDelimiters     = config.explanationDelimiters || {};
+  var explanationTokenDelimiter = config.explanationTokenDelimiter || ' ';
   
   var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
@@ -58,7 +59,7 @@ var PickyResultsRenderer = function(addination, config) {
   // Note: Accumulates same categories using a whitespace.
   //
   var explain = function(type, combinations) {
-    var explanation_delimiter = explanationDelimiters[locale];
+    var explanationDelimiter = explanationDelimiters[locale];
     
     var parts = explainCategory(asteriskifyLastToken(combinations));
     var lastCategory     = '';
@@ -84,7 +85,7 @@ var PickyResultsRenderer = function(addination, config) {
         tokenAccumulator.push(token);
         lastCategory = category;
       } else {
-        var result = strongify(lastCategory, tokenAccumulator.join(' '));
+        var result = strongify(lastCategory, tokenAccumulator.join(explanationTokenDelimiter));
       
         tokenAccumulator = [];
         tokenAccumulator.push(token);
@@ -96,9 +97,9 @@ var PickyResultsRenderer = function(addination, config) {
     
     // There might be something in the accumulator
     //
-    replaced.push(strongify(lastCategory, tokenAccumulator.join(' ')));
+    replaced.push(strongify(lastCategory, tokenAccumulator.join(explanationTokenDelimiter)));
     
-    replaced = replaced.join(' ' + explanation_delimiter + ' ');
+    replaced = replaced.join(' ' + explanationDelimiter + ' ');
     replaced = '<span class="explanation">' + type + ' ' + replaced + '</span>';
 	
     return replaced;

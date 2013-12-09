@@ -27,7 +27,7 @@ describe(
           }
         },
         explanationDelimiters: {
-          en: 'and'
+          en: 'annnd'
         }
 		  }
 	  );
@@ -102,19 +102,19 @@ describe(
 	        return renderer.explain("type1", [
             ['cat1', 'Orig1', 'parsed1'],
             ['cat2', 'Orig2', 'parsed2']
-          ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1 and <strong>cat2</strong> Orig2*</span>';
+          ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1 annnd <strong>cat2</strong> Orig2*</span>';
 	      });
 	      it("is correct", function() {
 	        return renderer.explain("type1", [
             ['cat1', 'cat1:Orig1', 'parsed1'],
             ['cat2', 'cat2:Orig2', 'parsed2']
-          ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1 and <strong>cat2</strong> Orig2*</span>';
+          ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1 annnd <strong>cat2</strong> Orig2*</span>';
 	      });
 	      it("is correct", function() {
 	        return renderer.explain("type1", [
             ['cat1', 'cat1:Orig1', 'parsed1'],
             ['cat2', 'cat2,cat3:Orig2', 'parsed2']
-          ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1 and <strong>cat2</strong> Orig2*</span>';
+          ]) == '<span class="explanation">type1 <strong>done by</strong> Orig1 annnd <strong>cat2</strong> Orig2*</span>';
 	      });
 	    }
 	  );
@@ -139,7 +139,7 @@ describe(
                 ['cat2', 'Orig2', 'parsed2']
               ]
             }
-          ) == '<div class="header"><span class="explanation">type1 <strong>done by</strong> Orig1 and <strong>cat2</strong> Orig2*</span></div>';
+          ) == '<div class="header"><span class="explanation">type1 <strong>done by</strong> Orig1 annnd <strong>cat2</strong> Orig2*</span></div>';
 	      });
 	    }
 	  );
