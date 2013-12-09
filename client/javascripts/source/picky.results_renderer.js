@@ -4,8 +4,8 @@ var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;
   
-  var explanations           = config.explanations || {};
-  var explanation_delimiters = config.explanation_delimiters || {};
+  var explanations          = config.explanations || {};
+  var explanationDelimiters = config.explanationDelimiters || {};
   
   var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
@@ -58,7 +58,7 @@ var PickyResultsRenderer = function(addination, config) {
   // Note: Accumulates same categories using a whitespace.
   //
   var explain = function(type, combinations) {
-    var explanation_delimiter = explanation_delimiters[locale];
+    var explanation_delimiter = explanationDelimiters[locale];
     
     var parts = explainCategory(asteriskifyLastToken(combinations));
     var lastCategory     = '';

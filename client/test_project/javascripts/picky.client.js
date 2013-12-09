@@ -43,7 +43,7 @@ var PickyClient = function(config) {
   
   // Delimiters for connecting explanations.
   //
-  config['explanation_delimiters'] = {
+  config['explanationDelimiters'] = {
 	ch:'und',
     de:'und',
     en:'and',
