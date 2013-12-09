@@ -26,7 +26,7 @@ describe(
             cat3: 'with m/z'
           }
         },
-        explanationDelimiters: {
+        explanationDelimiter: {
           en: 'annnd'
         }
 		  }

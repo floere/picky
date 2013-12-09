@@ -4,9 +4,16 @@ var PickyResultsRenderer = function(addination, config) {
   
   var locale = config.locale;
   
-  var explanations              = config.explanations || {};
-  var explanationDelimiters     = config.explanationDelimiters || {};
-  var explanationTokenDelimiter = config.explanationTokenDelimiter || ' ';
+  var explanations         = config.explanations || {};
+  var explanationDelimiter = config.explanationDelimiter || {
+      ch: 'und',
+      de: 'und',
+      en: 'and',
+      fr: 'et',
+      it: 'e'
+    };
+  var explanationTokenDelimiter = config.explanationTokenDelimiter || {};
+  var explanationTokenCallback  = config.explanationTokenCallback;
   
   var resultsDivider    = config['resultsDivider'];
   var allocationWrapper = config['wrapResults'];
@@ -38,9 +45,9 @@ var PickyResultsRenderer = function(addination, config) {
     
     for (var i = 0, l = combination.length; i < l; i++) {
       combo = combination[i];
-      var explanation = combo[0];
-      explanation = localized_explanations[explanation] || explanation;
-      parts.push([explanation, combo[1]]);
+      var category = combo[0];
+      var explanation = localized_explanations[category] || category;
+      parts.push([category, explanation, combo[1]]);
     }
 	
     return parts;
@@ -54,12 +61,24 @@ var PickyResultsRenderer = function(addination, config) {
   };
   this.strongify = strongify; // Note: Only exposed for testing.
   
+  var joinExplanationTokens = function(category, explainedCategory, tokens) {
+    // TODO Slight speed issues here.
+    //
+    var explanation = explanationTokenCallback && explanationTokenCallback(category, tokens);
+    if (explanation) {
+      return explanation;
+    } else {
+      var localizedExplanationTokenDelimiter = explanationTokenDelimiter[locale] || {};
+      return strongify(explainedCategory,tokens.join(localizedExplanationTokenDelimiter[category] || ' '));
+    }
+  };
+  
   // Puts together an explanation.
   //
   // Note: Accumulates same categories using a whitespace.
   //
   var explain = function(type, combinations) {
-    var explanationDelimiter = explanationDelimiters[locale];
+    var localizedExplanationDelimiter = explanationDelimiter[locale] || '&';
     
     var parts = explainCategory(asteriskifyLastToken(combinations));
     var lastCategory     = '';
@@ -69,8 +88,9 @@ var PickyResultsRenderer = function(addination, config) {
     
     // Note: Was $.map
     parts.each(function(i, part) {
-      var category = part[0];
-      var token    = part[1];
+      var category          = part[0];
+      var explainedCategory = part[1];
+      var token             = part[2];
       
       // Remove categorization (including commas)
       // before the token.
@@ -83,13 +103,17 @@ var PickyResultsRenderer = function(addination, config) {
       //
       if (lastCategory == '' || category == lastCategory) {
         tokenAccumulator.push(token);
-        lastCategory = category;
+        
+        lastCategory          = category;
+        lastExplainedCategory = explainedCategory;
       } else {
-        var result = strongify(lastCategory, tokenAccumulator.join(explanationTokenDelimiter));
-      
+        var result = joinExplanationTokens(lastCategory, lastExplainedCategory, tokenAccumulator);
+        
         tokenAccumulator = [];
         tokenAccumulator.push(token);
-        lastCategory = category;
+        
+        lastCategory          = category;
+        lastExplainedCategory = explainedCategory;
       
         replaced.push(result);
       }
@@ -97,9 +121,9 @@ var PickyResultsRenderer = function(addination, config) {
     
     // There might be something in the accumulator
     //
-    replaced.push(strongify(lastCategory, tokenAccumulator.join(explanationTokenDelimiter)));
+    replaced.push(joinExplanationTokens(lastCategory, lastExplainedCategory, tokenAccumulator));
     
-    replaced = replaced.join(' ' + explanationDelimiter + ' ');
+    replaced = replaced.join(' ' + localizedExplanationDelimiter + ' ');
     replaced = '<span class="explanation">' + type + ' ' + replaced + '</span>';
 	
     return replaced;

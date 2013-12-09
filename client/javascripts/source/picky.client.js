@@ -41,16 +41,6 @@ var PickyClient = function(config) {
   //
   config['choices'] = config.choices || {};
   
-  // Delimiters for connecting explanations.
-  //
-  config['explanationDelimiters'] = {
-    ch:'und',
-    de:'und',
-    en:'and',
-    fr:'et',
-    it:'e'
-  };
-  
   // Either you pass it a backends hash with full and live,
   // or you pass it full and live (urls), which will then
   // be wrapped in appropriate backends. 
