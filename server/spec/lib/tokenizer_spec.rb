@@ -167,7 +167,7 @@ ERROR
 
     describe "splits_text_on" do
       it 'handles nonbroken arguments' do
-        expect { tokenizer.splits_text_on("hello") }.to_not raise_error(ArgumentError)
+        expect { tokenizer.splits_text_on("hello") }.to_not raise_error
       end
       it 'handles broken arguments' do
         expect { tokenizer.splits_text_on(:gnorf) }.to raise_error(ArgumentError)
