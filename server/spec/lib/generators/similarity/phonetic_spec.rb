@@ -9,7 +9,7 @@ describe Picky::Generators::Similarity::Phonetic do
   it "raises when you don't have the text gem" do
     instance = Class.new(described_class).allocate
 
-    instance.should_receive(:require).any_number_of_times.and_raise LoadError
+    instance.should_receive(:require).at_least(1).and_raise LoadError
     
     Picky.logger.should_receive(:warn).once.with <<-EXPECTED
 Warning: text gem missing!

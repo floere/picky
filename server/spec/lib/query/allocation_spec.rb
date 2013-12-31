@@ -135,7 +135,7 @@ describe Picky::Query::Allocation do
   describe 'to_result' do
     context 'with few combinations' do
       before(:each) do
-        @allocation = described_class.new @index, stub(:combinations, :empty? => false, :to_result => [:some_result])
+        @allocation = described_class.new @index, double(:combinations, :empty? => false, :to_result => [:some_result])
         @allocation.instance_variable_set :@score, :some_score
       end
       context 'with ids' do
@@ -168,7 +168,7 @@ describe Picky::Query::Allocation do
     end
     context 'without results' do
       before(:each) do
-        @allocation = described_class.new @index, stub(:combinations, :empty? => true)
+        @allocation = described_class.new @index, double(:combinations, :empty? => true)
         @allocation.instance_variable_set :@score, :some_score
       end
       it 'should return nil' do

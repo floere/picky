@@ -23,7 +23,7 @@ describe Picky::Backends::Redis::String do
       backend[:some_symbol]
     end
     it 'returns whatever it gets from the backend' do
-      client.should_receive(:hget).any_number_of_times.and_return :some_result
+      client.should_receive(:hget).at_least(1).and_return :some_result
       
       backend[:anything].should == :some_result
     end

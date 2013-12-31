@@ -36,7 +36,7 @@ describe Picky::Backends::Prepared::Text do
     before(:each) do
       @io = double :io
       @io.should_receive(:each_line).once.with.and_yield '123456,some_nice_token'
-      ::File.should_receive(:open).any_number_of_times.and_yield @io
+      ::File.should_receive(:open).at_least(1).and_yield @io
     end
     it "yields split lines and returns the id and token text" do
       text.retrieve do |id, token|

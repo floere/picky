@@ -18,7 +18,7 @@ describe Picky::Indexers::Base do
       indexer.source
     end
     it 'raises when none is there' do
-      some_index_or_category.should_receive(:source).any_number_of_times.and_return nil
+      some_index_or_category.should_receive(:source).at_least(1).and_return nil
 
       indexer.stub :process
 
@@ -30,7 +30,7 @@ describe Picky::Indexers::Base do
 
   describe 'prepare' do
     before(:each) do
-      some_index_or_category.should_receive(:source).any_number_of_times.and_return :some_source
+      some_index_or_category.should_receive(:source).at_least(1).and_return :some_source
     end
     it 'processes' do
       categories = double :categories, :empty => nil, :cache => nil

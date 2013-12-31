@@ -5,7 +5,7 @@ describe Picky::Indexers::Parallel do
   thing = Struct.new :id, :text
 
   before(:each) do
-    @index = Picky::Index.new(:test) # double :index, :name => :some_index, :source => @source, :backend => stub(:backend)
+    @index = Picky::Index.new(:test) # double :index, :name => :some_index, :source => @source, :backend => double(:backend)
     @indexer = described_class.new @index
     @indexer.stub :timed_exclaim
   end

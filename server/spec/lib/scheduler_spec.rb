@@ -59,7 +59,7 @@ describe Picky::Scheduler do
         scheduler.schedule { sleep 0.01 }
       end
       it 'works correctly' do
-        scheduler.scheduler.should_receive(:schedule).any_number_of_times.and_yield
+        scheduler.scheduler.should_receive(:schedule).at_least(1).and_yield
 
         called = 0
 

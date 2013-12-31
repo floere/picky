@@ -309,9 +309,9 @@ describe Picky::Query::Allocations do
     context 'with allocations' do
       before(:each) do
         @allocations = described_class.new [
-          stub(:allocation, :process! => (1..10).to_a, :count => 10),
-          stub(:allocation, :process! => (1..80).to_a, :count => 80),
-          stub(:allocation, :process! => (1..20).to_a, :count => 20)
+          double(:allocation, :process! => (1..10).to_a, :count => 10),
+          double(:allocation, :process! => (1..80).to_a, :count => 80),
+          double(:allocation, :process! => (1..20).to_a, :count => 20)
         ]
       end
       it 'should traverse the allocations and sum the counts' do
@@ -382,9 +382,9 @@ describe Picky::Query::Allocations do
     context 'some allocations' do
       before(:each) do
         @allocations = described_class.new [
-          stub(:allocation, :process! => (1..10).to_a, :count => 10),
-          stub(:allocation, :process! => (1..80).to_a, :count => 80),
-          stub(:allocation, :process! => (1..20).to_a, :count => 20)
+          double(:allocation, :process! => (1..10).to_a, :count => 10),
+          double(:allocation, :process! => (1..80).to_a, :count => 80),
+          double(:allocation, :process! => (1..20).to_a, :count => 20)
         ]
       end
       it 'should calculate the right total' do

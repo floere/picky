@@ -111,7 +111,7 @@ ERROR
       end
       context 'with categories' do
         before(:each) do
-          @index.category :some_name, :source => stub(:source)
+          @index.category :some_name, :source => double(:source)
         end
         it 'returns it if found' do
           @index[:some_name].should_not == nil

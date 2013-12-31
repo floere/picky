@@ -51,7 +51,7 @@ describe Picky::Category do
     describe 'retrieve' do
       it 'call the right thing' do
         prepared = double :prepared
-        prepared.should_receive(:retrieve).any_number_of_times
+        prepared.should_receive(:retrieve).at_least(1)
                                           .and_yield(1, :some_token)
                                           .and_yield(2, :some_token)
                                           .and_yield(3, :some_token)
@@ -84,7 +84,7 @@ describe Picky::Category do
         end
         context 'it has an index' do
           before(:each) do
-            category.instance_variable_set :@index, stub(:index, :key_format => :yet_another_key_format)
+            category.instance_variable_set :@index, double(:index, :key_format => :yet_another_key_format)
           end
           it 'returns that key_format' do
             category.key_format.should == :yet_another_key_format

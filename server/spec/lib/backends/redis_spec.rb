@@ -47,7 +47,7 @@ describe Picky::Backends::Redis do
   #     ].each do |type, kind|
   #       it "creates and returns a(n) #{type} index" do
   #         @backend.send(:"create_#{type}",
-  #                       stub(type, :identifier => "some_identifier:#{type}")
+  #                       double(type, :identifier => "some_identifier:#{type}")
   #         ).should be_kind_of(kind)
   #       end
   #     end
@@ -96,7 +96,7 @@ describe Picky::Backends::Redis do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        stub(type, :identifier => "some_identifier:#{type}")
+                        double(type, :identifier => "some_identifier:#{type}")
           ).should be_kind_of(kind)
         end
       end

@@ -40,9 +40,9 @@ describe Picky::Query::Combinations do
 
   describe 'remove' do
     before(:each) do
-      @combination1 = double :combination1, :category => stub(:other, :name => :other)
-      @combination2 = double :combination2, :category => stub(:to_remove, :name => :to_remove)
-      @combination3 = double :combination3, :category => stub(:to_remove, :name => :to_remove)
+      @combination1 = double :combination1, :category => double(:other, :name => :other)
+      @combination2 = double :combination2, :category => double(:to_remove, :name => :to_remove)
+      @combination3 = double :combination3, :category => double(:to_remove, :name => :to_remove)
 
       @combinations = described_class.new [@combination1, @combination2, @combination3]
     end
