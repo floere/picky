@@ -288,7 +288,7 @@ describe Picky::Query::Allocations do
         @allocations = described_class.new [@allocation, @allocation, @allocation]
       end
       it 'should forward to each allocation with no params' do
-        @allocation.should_receive(:to_result).exactly(3).times.with
+        @allocation.should_receive(:to_result).exactly(3).times.with no_args
 
         @allocations.to_result
       end
@@ -339,7 +339,7 @@ describe Picky::Query::Allocations do
     end
     it "should forward to the internal allocations" do
       stub_proc = lambda {}
-      @internal_allocations.should_receive(:each).once.with &stub_proc
+      @internal_allocations.should_receive(:each).once.with no_args, &stub_proc
 
       @allocations.each &stub_proc
     end
@@ -351,7 +351,7 @@ describe Picky::Query::Allocations do
     end
     it "should forward to the internal allocations" do
       stub_proc = lambda {}
-      @internal_allocations.should_receive(:inject).once.with &stub_proc
+      @internal_allocations.should_receive(:inject).once.with no_args, &stub_proc
 
       @allocations.inject &stub_proc
     end

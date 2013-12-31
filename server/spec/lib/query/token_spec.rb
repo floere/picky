@@ -375,12 +375,12 @@ describe Picky::Query::Token do
     it "should be blank if the token text itself is blank" do
       token = described_class.processed ''
 
-      token.blank?.should be_true
+      token.blank?.should be_truthy
     end
     it "should be non-blank if the token text itself is non-blank" do
       token = described_class.processed 'not empty'
 
-      token.blank?.should be_false
+      token.blank?.should be_falsy
     end
   end
 

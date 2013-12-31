@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Picky::Generators::Partial::Default do
+describe 'Picky::Generators::Partial::Default' do
   
   let(:default) { Picky::Generators::Partial::Default }
   

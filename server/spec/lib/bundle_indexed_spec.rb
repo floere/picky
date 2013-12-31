@@ -106,10 +106,10 @@ describe Picky::Bundle do
       @bundle.dump # Create an index first.
     end
     it 'should trigger loads' do
-      @bundle.should_receive(:load_inverted).once.with
-      @bundle.should_receive(:load_weights).once.with
-      @bundle.should_receive(:load_similarity).once.with
-      @bundle.should_receive(:load_configuration).once.with
+      @bundle.should_receive(:load_inverted).once.with no_args
+      @bundle.should_receive(:load_weights).once.with no_args
+      @bundle.should_receive(:load_similarity).once.with no_args
+      @bundle.should_receive(:load_configuration).once.with no_args
 
       @bundle.load
     end

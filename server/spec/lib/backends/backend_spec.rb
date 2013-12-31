@@ -8,7 +8,7 @@ describe Picky::Backends::Backend do
   #   it 'forwards to the parameter' do
   #     combinations = double :combinations
   # 
-  #     combinations.should_receive(:score).once.with()
+  #     combinations.should_receive(:score).once.with no_args
   # 
   #     backend.score combinations
   #   end

@@ -32,7 +32,7 @@ describe Picky::Index do
         end
       end
 
-      expector.should_receive(:call).twice.with()
+      expector.should_receive(:call).twice.with no_args
 
       data.prepare
     end

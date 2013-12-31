@@ -13,7 +13,7 @@ describe Picky::Indexers::Base do
 
   describe 'source' do
     it 'forwards it to the index or category' do
-      some_index_or_category.should_receive(:source).once.with
+      some_index_or_category.should_receive(:source).once.with no_args
 
       indexer.source
     end

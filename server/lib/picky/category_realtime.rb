@@ -72,7 +72,7 @@ module Picky
         tokens = text_or_tokens
       end
       
-      format = self.key_format?
+      format = key_format?
       tokens.each { |text| add_tokenized_token id, text, where, format }
     rescue NoMethodError => e
       show_informative_add_text_error_message_for e

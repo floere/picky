@@ -235,7 +235,7 @@ describe Picky::Query::Tokens do
       it "should forward #{name} to the internal tokens" do
         proc_double = lambda {}
 
-        @internal_tokens.should_receive(name).once.with &proc_double
+        @internal_tokens.should_receive(name).once.with no_args, &proc_double
 
         @tokens.send name, &proc_double
       end

@@ -33,7 +33,7 @@
 #       @generator.generate
 #     end
 #     it 'should extract the binding' do
-#       @generator.should_receive(:bound_field_names).once.with
+#       @generator.should_receive(:bound_field_names).once.with no_args
 # 
 #       @generator.generate
 #     end

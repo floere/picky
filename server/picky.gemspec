@@ -25,10 +25,6 @@ Gem::Specification.new do |s|
 
   s.extensions << 'ext/picky/extconf.rb'
 
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rake-compiler'
-  s.add_development_dependency 'picky-client', "~> #{Picky::VERSION}"
-
   s.add_runtime_dependency 'text' # TODO Make optional?
   s.add_runtime_dependency 'multi_json'
   s.add_runtime_dependency 'activesupport', '>= 3.0'

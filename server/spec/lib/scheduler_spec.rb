@@ -33,7 +33,7 @@ describe Picky::Scheduler do
     describe 'fork?' do
       context 'OS can fork' do
         it 'returns false' do
-          scheduler.fork?.should be_false
+          scheduler.fork?.should be_falsy
         end
       end
       context 'OS cannot fork' do
@@ -41,7 +41,7 @@ describe Picky::Scheduler do
           Process.stub :fork => nil
         end
         it 'returns false' do
-          scheduler.fork?.should be_false
+          scheduler.fork?.should be_falsy
         end
       end
     end

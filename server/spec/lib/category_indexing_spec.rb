@@ -14,8 +14,8 @@ describe Picky::Category do
 
     describe 'clear' do
       it 'forwards to both bundles' do
-        exact.should_receive(:clear).once.with()
-        partial.should_receive(:clear).once.with()
+        exact.should_receive(:clear).once.with no_args
+        partial.should_receive(:clear).once.with no_args
 
         category.clear
       end
@@ -27,12 +27,12 @@ describe Picky::Category do
         partial.stub :dump
       end
       it 'should dump the exact index' do
-        exact.should_receive(:dump).once.with
+        exact.should_receive(:dump).once.with no_args
 
         category.dump
       end
       it 'should dump the partial index' do
-        partial.should_receive(:dump).once.with
+        partial.should_receive(:dump).once.with no_args
 
         category.dump
       end
@@ -40,9 +40,9 @@ describe Picky::Category do
 
     describe 'cache' do
       it 'should call multiple methods in order' do
-        category.should_receive(:empty).once.with().ordered
-        category.should_receive(:retrieve).once.with().ordered
-        category.should_receive(:dump).once.with().ordered
+        category.should_receive(:empty).once.with(no_args).ordered
+        category.should_receive(:retrieve).once.with(no_args).ordered
+        category.should_receive(:dump).once.with(no_args).ordered
 
         category.cache
       end

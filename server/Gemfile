@@ -12,6 +12,9 @@ group :development do
 end
 
 group :test do
+  gem 'rspec', '~> 3.0.0.beta'
+  # gem 'rake-compiler'
+  
   # Needed for testing itself.
   #
   gem 'simplecov', :require => false # Will install simplecov-html as a dependency

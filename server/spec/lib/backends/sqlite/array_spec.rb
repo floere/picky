@@ -25,7 +25,7 @@ describe Picky::Backends::SQLite::Array do
       it 'initializes the client' do
         client.stub :execute
 
-        db.should_receive(:db).exactly(4).times.with
+        db.should_receive(:db).exactly(4).times.with no_args
 
         db.dump_sqlite Hash.new
       end
@@ -90,7 +90,7 @@ describe Picky::Backends::SQLite::Array do
       it 'initializes the client' do
         client.stub :execute
 
-        db.should_receive(:db).exactly(4).times.with
+        db.should_receive(:db).exactly(4).times.with no_args
 
         db.dump_sqlite Hash.new
       end

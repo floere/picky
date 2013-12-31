@@ -47,8 +47,8 @@ describe Picky::Indexes do
     def self.it_forwards_each name
       describe name do
         it "calls #{name} on each in order" do
-          @index1.should_receive(name).once.with.ordered
-          @index2.should_receive(name).once.with.ordered
+          @index1.should_receive(name).once.with(no_args).ordered
+          @index2.should_receive(name).once.with(no_args).ordered
 
           indexes.send name
         end

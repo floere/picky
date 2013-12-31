@@ -50,8 +50,8 @@ describe Picky::Indexes do
     end
     describe 'load' do
       it 'calls load on each in order' do
-        @index1.should_receive(:load).once.with.ordered
-        @index2.should_receive(:load).once.with.ordered
+        @index1.should_receive(:load).once.with(no_args).ordered
+        @index2.should_receive(:load).once.with(no_args).ordered
 
         indexes.load
       end

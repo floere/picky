@@ -6,8 +6,8 @@ describe Picky::Generators::Partial::Postfix do
     let(:generator) { described_class.new }
 
     describe 'use_exact_for_partial?' do
-      it 'returns false' do
-        described_class.new.use_exact_for_partial?.should == false
+      it 'is correct' do
+        generator.use_exact_for_partial?.should be_falsy
       end
     end
     describe 'from' do

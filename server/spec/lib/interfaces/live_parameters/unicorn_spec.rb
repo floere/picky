@@ -43,10 +43,10 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
   describe 'parameters' do
     context 'all goes well' do
       it 'does a few things in order' do
-        @parameters.should_receive(:close_child).once.with().ordered
+        @parameters.should_receive(:close_child).once.with(no_args).ordered
         @parameters.should_receive(:try_updating_configuration_with).once.with(:a => :b).ordered
         @parameters.should_receive(:write_parent).once.with(:a => :b).ordered
-        @parameters.should_receive(:extract_configuration).once.with().ordered
+        @parameters.should_receive(:extract_configuration).once.with(no_args).ordered
 
         @parameters.parameters :a => :b
       end
@@ -102,7 +102,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
         @child.stub :closed? => false
       end
       it 'does receives close' do
-        @child.should_receive(:close).once.with()
+        @child.should_receive(:close).once.with no_args
 
         @parameters.close_child
       end

@@ -48,7 +48,7 @@ describe Rack::Harakiri do
         @app.stub :harakiri
       end
       it "calls harakiri" do
-        @ronin.should_receive(:harakiri).once.with
+        @ronin.should_receive(:harakiri).once.with no_args
 
         @ronin.call :env
       end

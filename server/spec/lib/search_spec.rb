@@ -122,7 +122,7 @@ describe Picky::Search do
     let(:search) { described_class.new @index }
     context 'by default' do
       it 'is falsy' do
-        search.ignore_unassigned.should be_false
+        search.ignore_unassigned.should be_falsy
       end
     end
     context 'set to nothing' do
@@ -130,7 +130,7 @@ describe Picky::Search do
         search.ignore_unassigned_tokens
       end
       it 'is truey' do
-        search.ignore_unassigned.should be_true
+        search.ignore_unassigned.should be_truthy
       end
     end
     context 'set to true' do
@@ -138,7 +138,7 @@ describe Picky::Search do
         search.ignore_unassigned_tokens true
       end
       it 'is truey' do
-        search.ignore_unassigned.should be_true
+        search.ignore_unassigned.should be_truthy
       end
     end
     context 'set to false' do
@@ -146,7 +146,7 @@ describe Picky::Search do
         search.ignore_unassigned_tokens false
       end
       it 'is falsy' do
-        search.ignore_unassigned.should be_false
+        search.ignore_unassigned.should be_falsy
       end
     end
   end

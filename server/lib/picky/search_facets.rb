@@ -10,7 +10,7 @@ module Picky
     # Options
     #   counts: Whether you want counts (returns a Hash) or not (returns an Array). (Default true)
     #   at_least: A minimum count a facet needs to have (inclusive). (Default 1)
-    #   filter: A query to filter the facets with.
+    #   filter: A query to filter the facets with(no_args).
     #
     # Usage:
     #   search.facets :name, filter: 'surname:peter', at_least: 2

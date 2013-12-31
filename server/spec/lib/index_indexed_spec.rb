@@ -32,7 +32,7 @@ describe Picky::Index do
 
     describe "load" do
       it "forwards to each category" do
-        @categories.should_receive(:load).once.with
+        @categories.should_receive(:load).once.with no_args
 
         @index.load
       end

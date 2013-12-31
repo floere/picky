@@ -91,16 +91,16 @@ describe Picky::Query::Indexes do
       indexes.stub :allocations_for => @allocations
     end
     it 'calls the right method in order' do
-      # @allocations.should_receive(:uniq!).once.ordered.with()
+      # @allocations.should_receive(:uniq!).once.ordered.with no_args
       @allocations.should_receive(:calculate_score).once.ordered.with(:some_weights)
-      @allocations.should_receive(:sort!).once.ordered.with()
+      @allocations.should_receive(:sort!).once.ordered.with no_args
 
       indexes.prepared_allocations_for :some_tokens, :some_weights
     end
     it 'calls the right method in order' do
-      # @allocations.should_receive(:uniq!).once.ordered.with()
+      # @allocations.should_receive(:uniq!).once.ordered.with no_args
       @allocations.should_receive(:calculate_score).once.ordered.with({})
-      @allocations.should_receive(:sort!).once.ordered.with()
+      @allocations.should_receive(:sort!).once.ordered.with no_args
 
       indexes.prepared_allocations_for :some_tokens
     end
