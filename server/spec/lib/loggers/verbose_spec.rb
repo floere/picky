@@ -9,6 +9,13 @@ describe Picky::Loggers::Verbose do
   let(:logger) { described_class.new thing }
   context 'with Logger' do
     let(:thing) { Logger.new io }
+    before :each do
+      # Explicitly define formatting for these specs.
+      #
+      thing.formatter = proc do |severity, datetime, progname, msg|
+        "#{msg}\n"
+      end
+    end
     describe 'more complicated test case' do
       it 'is correct' do
         Time.stub! :now => Time.new('zeros')

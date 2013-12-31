@@ -14,7 +14,6 @@ end
 group :test do
   # Needed for testing itself.
   #
-  gem 'rspec-core'
   gem 'simplecov', :require => false # Will install simplecov-html as a dependency
 
   # Needed to test optional data sources etc.

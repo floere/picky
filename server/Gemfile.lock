@@ -103,7 +103,6 @@ DEPENDENCIES
   redis
   rest-client
   rspec
-  rspec-core
   ruby-stemmer
   simplecov
   sinatra
