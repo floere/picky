@@ -13,7 +13,7 @@ describe Picky::Backends::Redis do
   #   end
   #
   #   describe "redis_with_scripting?" do
-  #     let(:client) { stub :client}
+  #     let(:client) { double :client}
   #     let(:redis) { described_class.new client: client }
   #
   #     it "answers correctly" do
@@ -72,7 +72,7 @@ describe Picky::Backends::Redis do
   #       [:configuration, Picky::Backends::Redis::List]
   #     ].each do |type, kind|
   #       it "creates and returns a(n) #{type} index" do
-  #         to_a_able_stub = Object.new
+  #         to_a_able_double = Object.new
   #         to_a_able_stub.stub! :identifier => "some_identifier:#{type}"
   #         @backend.send(:"create_#{type}", to_a_able_stub).should be_kind_of(kind)
   #       end
@@ -106,9 +106,9 @@ describe Picky::Backends::Redis do
     #
     # describe "ids" do
     #   before(:each) do
-    #     @combination1 = stub :combination1
-    #     @combination2 = stub :combination2
-    #     @combination3 = stub :combination3
+    #     @combination1 = double :combination1
+    #     @combination2 = double :combination2
+    #     @combination3 = double :combination3
     #     @combinations = [@combination1, @combination2, @combination3]
     #   end
     #   it "should intersect correctly" do

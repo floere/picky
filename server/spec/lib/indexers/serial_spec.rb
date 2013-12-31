@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Picky::Indexers::Serial do
 
   before(:each) do
-    @tokenizer = stub :tokenizer
-    @source  = stub :source
-    @category  = stub :category,
+    @tokenizer = double :tokenizer
+    @source  = double :source
+    @category  = double :category,
                       :identifier => :some_identifier,
                       :tokenizer => @tokenizer,
                       :source => @source

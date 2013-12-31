@@ -5,15 +5,15 @@ require 'spec_helper'
 describe Picky::Query::Combinations do
 
   before(:each) do
-    @combinations_ary = stub :combinations_ary
+    @combinations_ary = double :combinations_ary
 
     @combinations = described_class.new @combinations_ary
   end
 
   describe "to_result" do
     before(:each) do
-      @combination1 = stub :combination1, :to_result => :result1
-      @combination2 = stub :combination2, :to_result => :result2
+      @combination1 = double :combination1, :to_result => :result1
+      @combination2 = double :combination2, :to_result => :result2
 
       @combinations_ary = [@combination1, @combination2]
 
@@ -26,8 +26,8 @@ describe Picky::Query::Combinations do
 
   describe "total_score" do
     before(:each) do
-      @combination1 = stub :combination1, :weight => 3.14
-      @combination2 = stub :combination2, :weight => 2.76
+      @combination1 = double :combination1, :weight => 3.14
+      @combination2 = double :combination2, :weight => 2.76
 
       @combinations_ary = [@combination1, @combination2]
 
@@ -40,9 +40,9 @@ describe Picky::Query::Combinations do
 
   describe 'remove' do
     before(:each) do
-      @combination1 = stub :combination1, :category => stub(:other, :name => :other)
-      @combination2 = stub :combination2, :category => stub(:to_remove, :name => :to_remove)
-      @combination3 = stub :combination3, :category => stub(:to_remove, :name => :to_remove)
+      @combination1 = double :combination1, :category => stub(:other, :name => :other)
+      @combination2 = double :combination2, :category => stub(:to_remove, :name => :to_remove)
+      @combination3 = double :combination3, :category => stub(:to_remove, :name => :to_remove)
 
       @combinations = described_class.new [@combination1, @combination2, @combination3]
     end

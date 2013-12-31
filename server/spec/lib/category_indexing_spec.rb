@@ -4,7 +4,7 @@ describe Picky::Category do
 
   before(:each) do
     @index  = Picky::Index.new :some_index
-    @source = stub :some_given_source, :each => nil
+    @source = double :some_given_source, :each => nil
   end
   let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }
 
@@ -50,7 +50,7 @@ describe Picky::Category do
 
     describe 'retrieve' do
       it 'call the right thing' do
-        prepared = stub :prepared
+        prepared = double :prepared
         prepared.should_receive(:retrieve).any_number_of_times
                                           .and_yield(1, :some_token)
                                           .and_yield(2, :some_token)
@@ -110,7 +110,7 @@ describe Picky::Category do
 
     describe "index" do
       before(:each) do
-        @indexer = stub :indexer, :index => nil
+        @indexer = double :indexer, :index => nil
         category.stub! :indexer => @indexer
       end
       it "tells the indexer to index" do

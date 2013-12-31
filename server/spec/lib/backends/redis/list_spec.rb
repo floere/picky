@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::List do
 
-  let(:client) { stub :client }
+  let(:client) { double :client }
   let(:index) { described_class.new client, :some_namespace }
 
   describe '[]' do

@@ -21,7 +21,7 @@ describe Picky::Index do
 
   context "with stubbed categories" do
     before(:each) do
-      @categories = stub :categories
+      @categories = double :categories
 
       @index = described_class.new :some_name
       @index.category :some_category_name1

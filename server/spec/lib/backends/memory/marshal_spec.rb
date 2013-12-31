@@ -19,7 +19,7 @@ describe Picky::Backends::Memory::Marshal do
 
     describe "dump" do
       it "forwards to the given hash" do
-        hash = stub :hash
+        hash = double :hash
 
         marshal.should_receive(:dump_marshal).once.with hash
 

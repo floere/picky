@@ -6,7 +6,7 @@ describe Picky::Backends::Backend do
 
   # describe 'score' do
   #   it 'forwards to the parameter' do
-  #     combinations = stub :combinations
+  #     combinations = double :combinations
   # 
   #     combinations.should_receive(:score).once.with()
   # 

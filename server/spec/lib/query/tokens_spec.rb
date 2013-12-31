@@ -19,9 +19,9 @@ describe Picky::Query::Tokens do
 
     describe 'possible_combinations_in' do
       before(:each) do
-        @token1 = stub :token1
-        @token2 = stub :token2
-        @token3 = stub :token3
+        @token1 = double :token1
+        @token2 = double :token2
+        @token3 = double :token3
 
         @tokens = described_class.new [@token1, @token2, @token3], true
       end
@@ -164,9 +164,9 @@ describe Picky::Query::Tokens do
 
   describe 'possible_combinations_in' do
     before(:each) do
-      @token1 = stub :token1
-      @token2 = stub :token2
-      @token3 = stub :token3
+      @token1 = double :token1
+      @token2 = double :token2
+      @token3 = double :token3
 
       @tokens = described_class.new [@token1, @token2, @token3]
     end
@@ -233,11 +233,11 @@ describe Picky::Query::Tokens do
         @tokens = described_class.new @internal_tokens
       end
       it "should forward #{name} to the internal tokens" do
-        proc_stub = lambda {}
+        proc_double = lambda {}
 
-        @internal_tokens.should_receive(name).once.with &proc_stub
+        @internal_tokens.should_receive(name).once.with &proc_double
 
-        @tokens.send name, &proc_stub
+        @tokens.send name, &proc_double
       end
     end
   end

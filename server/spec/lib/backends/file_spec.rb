@@ -52,9 +52,9 @@ describe Picky::Backends::File do
   
     describe "ids" do
       before(:each) do
-        @combination1 = stub :combination1
-        @combination2 = stub :combination2
-        @combination3 = stub :combination3
+        @combination1 = double :combination1
+        @combination2 = double :combination2
+        @combination3 = double :combination3
         @combinations = [@combination1, @combination2, @combination3]
       end
       it "should intersect correctly" do

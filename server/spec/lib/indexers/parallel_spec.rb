@@ -5,7 +5,7 @@ describe Picky::Indexers::Parallel do
   thing = Struct.new :id, :text
 
   before(:each) do
-    @index = Picky::Index.new(:test) # stub :index, :name => :some_index, :source => @source, :backend => stub(:backend)
+    @index = Picky::Index.new(:test) # double :index, :name => :some_index, :source => @source, :backend => stub(:backend)
     @indexer = described_class.new @index
     @indexer.stub! :timed_exclaim
   end
@@ -24,8 +24,8 @@ describe Picky::Indexers::Parallel do
 
     describe 'flush' do
       it 'flushes to joined cache to the file and clears it' do
-        cache = stub :cache
-        file  = stub :file
+        cache = double :cache
+        file  = double :file
 
         cache.should_receive(:join).once.and_return :joined
         file.should_receive(:write).once.with(:joined).and_return :joined
@@ -59,8 +59,8 @@ describe Picky::Indexers::Parallel do
 
     describe 'flush' do
       it 'flushes to joined cache to the file and clears it' do
-        cache = stub :cache
-        file  = stub :file
+        cache = double :cache
+        file  = double :file
 
         cache.should_receive(:join).once.and_return :joined
         file.should_receive(:write).once.with(:joined).and_return :joined

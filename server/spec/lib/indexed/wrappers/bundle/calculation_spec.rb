@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Wrappers::Bundle::Calculation do
 
   before(:each) do
-    @bundle = stub :bundle
+    @bundle = double :bundle
     @calculation = described_class.new @bundle
   end
 

@@ -34,7 +34,7 @@ describe Picky::Backends::Prepared::Text do
   end
   describe "retrieve" do
     before(:each) do
-      @io = stub :io
+      @io = double :io
       @io.should_receive(:each_line).once.with.and_yield '123456,some_nice_token'
       ::File.should_receive(:open).any_number_of_times.and_yield @io
     end

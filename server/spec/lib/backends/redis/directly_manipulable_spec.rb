@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::DirectlyManipulable do
 
-  let(:client) { stub :client }
-  let(:backend) { stub :backend, client: client, namespace: 'some:namespace' }
+  let(:client) { double :client }
+  let(:backend) { double :backend, client: client, namespace: 'some:namespace' }
   let(:list) do
     list = [1,2]
     described_class.make backend, list, 'some:key'

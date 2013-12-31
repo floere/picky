@@ -4,9 +4,9 @@ describe Picky::Query::Allocations do
 
   describe 'reduce_to' do
     before(:each) do
-      @allocation1 = stub :allocation1
-      @allocation2 = stub :allocation2
-      @allocation3 = stub :allocation3
+      @allocation1 = double :allocation1
+      @allocation2 = double :allocation2
+      @allocation3 = double :allocation3
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     it 'should do nothing' do
@@ -18,9 +18,9 @@ describe Picky::Query::Allocations do
 
   describe 'remove' do
     before(:each) do
-      @allocation1 = stub :allocation1
-      @allocation2 = stub :allocation2
-      @allocation3 = stub :allocation3
+      @allocation1 = double :allocation1
+      @allocation2 = double :allocation2
+      @allocation3 = double :allocation3
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     context 'identifiers empty' do
@@ -45,9 +45,9 @@ describe Picky::Query::Allocations do
   describe 'ids' do
     context 'integers' do
       before(:each) do
-        @allocation1 = stub :allocation1, :ids => [1, 2, 3, 4]
-        @allocation2 = stub :allocation2, :ids => [5, 6, 7]
-        @allocation3 = stub :allocation3, :ids => [8, 9]
+        @allocation1 = double :allocation1, :ids => [1, 2, 3, 4]
+        @allocation2 = double :allocation2, :ids => [5, 6, 7]
+        @allocation3 = double :allocation3, :ids => [8, 9]
         @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
@@ -62,9 +62,9 @@ describe Picky::Query::Allocations do
     end
     context 'symbols' do
       before(:each) do
-        @allocation1 = stub :allocation1, :ids => [:a, :b, :c, :d]
-        @allocation2 = stub :allocation2, :ids => [:e, :f, :g]
-        @allocation3 = stub :allocation3, :ids => [:h, :i]
+        @allocation1 = double :allocation1, :ids => [:a, :b, :c, :d]
+        @allocation2 = double :allocation2, :ids => [:e, :f, :g]
+        @allocation3 = double :allocation3, :ids => [:h, :i]
         @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
@@ -81,9 +81,9 @@ describe Picky::Query::Allocations do
 
   describe 'process!' do
     before(:each) do
-      @allocation1 = stub :allocation1, :count => 4, ids: [1, 2, 3, 4]
-      @allocation2 = stub :allocation2, :count => 3, ids: [5, 6, 7]
-      @allocation3 = stub :allocation3, :count => 2, ids: [8, 9]
+      @allocation1 = double :allocation1, :count => 4, ids: [1, 2, 3, 4]
+      @allocation2 = double :allocation2, :count => 3, ids: [5, 6, 7]
+      @allocation3 = double :allocation3, :count => 2, ids: [8, 9]
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     describe 'lazy evaluation' do
@@ -284,7 +284,7 @@ describe Picky::Query::Allocations do
   describe 'to_result' do
     context 'all allocations have results' do
       before(:each) do
-        @allocation = stub :allocation
+        @allocation = double :allocation
         @allocations = described_class.new [@allocation, @allocation, @allocation]
       end
       it 'should forward to each allocation with no params' do
@@ -295,8 +295,8 @@ describe Picky::Query::Allocations do
     end
     context 'one allocation has no results' do
       before(:each) do
-        @allocation           = stub :allocation, :to_result => :some_result
-        @no_result_allocation = stub :no_results, :to_result => nil
+        @allocation           = double :allocation, :to_result => :some_result
+        @no_result_allocation = double :no_results, :to_result => nil
         @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
       end
       it 'should forward to each allocation with the same params' do
@@ -369,8 +369,8 @@ describe Picky::Query::Allocations do
 
   describe "to_s" do
     before(:each) do
-      @allocation           = stub :allocation, :to_result => :some_result
-      @no_result_allocation = stub :no_results, :to_result => nil
+      @allocation           = double :allocation, :to_result => :some_result
+      @no_result_allocation = double :no_results, :to_result => nil
       @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
     end
     it "should forward to the internal allocations array" do

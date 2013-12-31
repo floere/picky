@@ -6,9 +6,9 @@ describe Picky::Bundle do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
 
-    @weights      = stub :weights, :saved? => true
-    @partial      = stub :partial, :saved? => true
-    @similarity   = stub :similarity, :saved? => true
+    @weights      = double :weights, :saved? => true
+    @partial      = double :partial, :saved? => true
+    @similarity   = double :similarity, :saved? => true
     @bundle       = described_class.new :some_name, @category, @weights, @partial, @similarity
   end
 
@@ -161,8 +161,8 @@ describe Picky::Bundle do
       @index    = Picky::Index.new :some_index
       @category = Picky::Category.new :some_category, @index
 
-      @weights = stub :weights, :saved? => true
-      @partial = stub :partial, :saved? => true
+      @weights = double :weights, :saved? => true
+      @partial = double :partial, :saved? => true
       @bundle = described_class.new :some_name, @category, @weights, @partial, :similarity
     end
     it 'should initialize the index correctly' do

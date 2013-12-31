@@ -16,7 +16,7 @@ describe Module do
         end
       end
       it 'should send each a bli' do
-        bli = stub :bli
+        bli = double :bli
         delegating = klass.new [bli, bli, bli, bli]
 
         bli.should_receive(:bli).exactly(4).times
@@ -49,7 +49,7 @@ describe Module do
         end
       end
       it 'should send each a bli' do
-        bli = stub :bli
+        bli = double :bli
         delegating = klass.new bli
 
         bli.should_receive(:bli).exactly(1).times

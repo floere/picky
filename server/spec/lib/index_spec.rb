@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Picky::Index do
 
-  let(:some_source) { stub :source, :each => nil, :inspect => 'some_source' }
+  let(:some_source) { double :source, :each => nil, :inspect => 'some_source' }
 
   context 'initializer' do
     it 'works' do
@@ -24,7 +24,7 @@ describe Picky::Index do
       expect { described_class.new :some_index_name do source { [] } end }.to_not raise_error
     end
     it 'evaluates the source every time' do
-      expector = stub :expector
+      expector = double :expector
 
       data = described_class.new :some_index_name do
         source do

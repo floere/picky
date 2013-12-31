@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::Basic do
 
-  let(:client) { stub :client }
+  let(:client) { double :client }
 
   context 'without options' do
     let(:backend) { described_class.new client, :some_namespace }

@@ -5,8 +5,8 @@ require 'spec_helper'
 describe Picky::Search do
 
   before(:each) do
-    @type      = stub :type
-    @index     = stub :some_index,
+    @type      = double :type
+    @index     = double :some_index,
                       :internal_indexed => @type,
                       :each_category    => [],
                       :backend          => Picky::Backends::Memory.new
@@ -15,7 +15,7 @@ describe Picky::Search do
   describe 'tokenized' do
     let(:search) { described_class.new }
     it 'forwards to the tokenizer' do
-      tokenizer = stub :tokenizer
+      tokenizer = double :tokenizer
       search.stub! :tokenizer => tokenizer
 
       tokenizer.should_receive(:tokenize).once.with(:some_text).and_return [['some_text'], [:some_original]]
@@ -154,7 +154,7 @@ describe Picky::Search do
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
-        tokenizer = stub :tokenizer, :tokenize => [['some_text'], ['some_original']]
+        tokenizer = double :tokenizer, :tokenize => [['some_text'], ['some_original']]
         @search = described_class.new @index do
           searching tokenizer
         end

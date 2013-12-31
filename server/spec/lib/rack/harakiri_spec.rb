@@ -8,7 +8,7 @@ require 'picky/rack/harakiri'
 
 describe Rack::Harakiri do
   before(:each) do
-    @app = stub :app
+    @app = double :app
     Process.stub! :kill # not taking any chances
   end
   context "defaults" do

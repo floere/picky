@@ -5,9 +5,9 @@ require 'spec_helper'
 describe Picky::Query::Combination do
 
   before(:each) do
-    @bundle      = stub :bundle, :identifier => :bundle_name
+    @bundle      = double :bundle, :identifier => :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
-    @category    = stub :category,
+    @category    = double :category,
                         :bundle_for => @bundle,
                         :name => :some_category_name,
                         :identifier => 'some_category_identifier'

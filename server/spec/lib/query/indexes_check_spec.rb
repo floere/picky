@@ -11,7 +11,7 @@ describe Picky::Query::Indexes::Check do
     ]
     backends.each do |backend|
       it 'does not raise on the same type' do
-        index = stub :index, backend: backend
+        index = double :index, backend: backend
         described_class.check_backends [index, index]
       end
     end
@@ -20,8 +20,8 @@ describe Picky::Query::Indexes::Check do
     #
     combinations = backends.combination 2
     combinations.each do |backend1, backend2|
-      let(:index1) { stub :index1, backend: backend1 }
-      let(:index2) { stub :index2, backend: backend2 }
+      let(:index1) { double :index1, backend: backend1 }
+      let(:index2) { double :index2, backend: backend2 }
       it 'raises on multiple types' do
         expect do
           described_class.check_backends [index1, index2]
@@ -35,9 +35,9 @@ describe Picky::Query::Indexes::Check do
     end
     combinations = backends.combination 3
     combinations.each do |backend1, backend2, backend3|
-      let(:index1) { stub :index1, backend: backend1 }
-      let(:index2) { stub :index2, backend: backend2 }
-      let(:index3) { stub :index2, backend: backend3 }
+      let(:index1) { double :index1, backend: backend1 }
+      let(:index2) { double :index2, backend: backend2 }
+      let(:index3) { double :index2, backend: backend3 }
       it 'raises on multiple types' do
         expect do
           described_class.check_backends [index1, index2, index3]

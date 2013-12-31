@@ -4,7 +4,7 @@ describe Picky::Loggers::Verbose do
   
   let(:index) { Picky::Index.new :some_index }
   let(:category) { Picky::Category.new :some_category, index }
-  let(:file) { stub :file, :path => 'some/path' }
+  let(:file) { double :file, :path => 'some/path' }
   let(:io) { StringIO.new }
   let(:logger) { described_class.new thing }
   context 'with Logger' do

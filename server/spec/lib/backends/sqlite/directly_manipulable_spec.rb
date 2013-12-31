@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Picky::Backends::SQLite::DirectlyManipulable do
 
-  let(:client) { stub :client }
-  let(:backend) { stub :backend, client: client, namespace: 'some:namespace' }
+  let(:client) { double :client }
+  let(:backend) { double :backend, client: client, namespace: 'some:namespace' }
   let(:array) do
     array = [1,2]
     described_class.make backend, array, 'some:key'

@@ -15,8 +15,8 @@ describe Picky::Indexes do
   describe 'methods' do
     let(:indexes) { described_class.new }
     before(:each) do
-      @index1 = stub :index1, :name => :index1
-      @index2 = stub :index2, :name => :index2
+      @index1 = double :index1, :name => :index1
+      @index2 = double :index2, :name => :index2
       indexes.register @index1
       indexes.register @index2
     end

@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Picky::Query::Allocation do
 
   before(:each) do
-    @backend      = stub :backend
-    @index        = stub :index, :result_identifier => :some_result_identifier, :backend => @backend
-    @combinations = stub :combinations, :empty? => false
+    @backend      = double :backend
+    @index        = double :index, :result_identifier => :some_result_identifier, :backend => @backend
+    @combinations = double :combinations, :empty? => false
     @allocation   = described_class.new @index, @combinations
   end
 
@@ -150,7 +150,7 @@ describe Picky::Query::Allocation do
     end
     context 'with results' do
       before(:each) do
-        combinations = stub :combinations,
+        combinations = double :combinations,
                             :empty? => false,
                             :to_result => [:some_result1, :some_result2]
         @allocation = described_class.new @index, combinations
@@ -185,7 +185,7 @@ describe Picky::Query::Allocation do
     context 'non-empty combinations' do
       it 'should forward to backend and combinations' do
         @combinations.should_receive(:score).once.and_return 1
-        boosts = stub :weights, :boost_for => 2
+        boosts = double :weights, :boost_for => 2
 
         @allocation.calculate_score(boosts).should == 3
       end
@@ -220,9 +220,9 @@ describe Picky::Query::Allocation do
 
   describe "process!" do
     before(:each) do
-      @amount = stub :amount
-      @offset = stub :offset
-      @ids    = stub :ids, :size => :some_original_size, :slice! => :some_sliced_ids
+      @amount = double :amount
+      @offset = double :offset
+      @ids    = double :ids, :size => :some_original_size, :slice! => :some_sliced_ids
       @allocation.stub! :calculate_ids => @ids
     end
     it 'should calculate_ids' do

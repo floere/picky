@@ -9,7 +9,7 @@ describe Picky::Backends::SQLite::Array do
 
     describe 'dump' do
       it 'forwards to the given hash' do
-        hash = stub :hash
+        hash = double :hash
 
         db.should_receive(:dump_sqlite).once.with hash
 
@@ -18,7 +18,7 @@ describe Picky::Backends::SQLite::Array do
     end
 
     describe 'dump_sqlite' do
-      let(:client) { stub :client }
+      let(:client) { double :client }
       before(:each) do
         db.stub! :db => client
       end
@@ -74,7 +74,7 @@ describe Picky::Backends::SQLite::Array do
 
     describe 'dump' do
       it 'forwards to the given hash' do
-        hash = stub :hash
+        hash = double :hash
 
         db.should_receive(:dump_sqlite).never
 
@@ -83,7 +83,7 @@ describe Picky::Backends::SQLite::Array do
     end
 
     describe 'dump_sqlite' do
-      let(:client) { stub :client }
+      let(:client) { double :client }
       before(:each) do
         db.stub! :db => client
       end

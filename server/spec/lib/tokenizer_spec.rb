@@ -110,7 +110,7 @@ ERROR
           expect { tokenizer.normalize_with_patterns('any') }.to_not raise_error
         end
         it 'should define a method normalize_with_patterns does nothing' do
-          unchanging = stub :unchanging
+          unchanging = double :unchanging
 
           tokenizer.normalize_with_patterns(unchanging).should == unchanging
         end
@@ -220,7 +220,7 @@ ERROR
           expect { tokenizer.remove_illegals('any') }.to_not raise_error
         end
         it 'should define a method remove_illegals that does nothing' do
-          unchanging = stub :unchanging
+          unchanging = double :unchanging
 
           tokenizer.remove_illegals unchanging
         end

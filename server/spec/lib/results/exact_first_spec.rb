@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Picky::Results::ExactFirst do
 
   before(:each) do
-    @exact    = stub :exact
-    @partial  = stub :partial
-    @category = stub :category, :exact => @exact, :partial => @partial
+    @exact    = double :exact
+    @partial  = double :partial
+    @category = double :category, :exact => @exact, :partial => @partial
     @category.extend described_class
   end
 

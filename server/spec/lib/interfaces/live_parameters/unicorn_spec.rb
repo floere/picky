@@ -5,8 +5,8 @@ require 'spec_helper'
 describe Picky::Interfaces::LiveParameters::Unicorn do
 
   before(:each) do
-    @parent = stub :parent
-    @child  = stub :child
+    @parent = double :parent
+    @child  = double :child
     IO.stub! :pipe => [@child, @parent]
     @parameters = described_class.new
     @parameters.stub! :exclaim

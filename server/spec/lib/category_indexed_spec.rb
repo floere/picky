@@ -6,12 +6,12 @@ describe Picky::Category do
     @index = Picky::Index.new :some_index do
       source []
     end
-    @partial_strategy    = stub :partial, :each_partial => nil, :use_exact_for_partial? => false
-    @weight_strategy     = stub :weights, :saved? => true, :weight_for => :some_weight
-    @similarity_strategy = stub :similarity, :encode => nil, :prioritize => nil
+    @partial_strategy    = double :partial, :each_partial => nil, :use_exact_for_partial? => false
+    @weight_strategy     = double :weights, :saved? => true, :weight_for => :some_weight
+    @similarity_strategy = double :similarity, :encode => nil, :prioritize => nil
 
-    @exact   = stub :exact, :dump => nil
-    @partial = stub :partial, :dump => nil
+    @exact   = double :exact, :dump => nil
+    @partial = double :partial, :dump => nil
 
     @category = described_class.new :some_name, @index, :partial    => @partial_strategy,
                                                         :weight     => @weight_strategy,
@@ -64,7 +64,7 @@ describe Picky::Category do
   end
 
   describe 'weight' do
-    let(:token) { stub :token, :text => :some_text }
+    let(:token) { double :token, :text => :some_text }
     context 'without range' do
       before :each do
         token.stub! :range => nil
@@ -129,7 +129,7 @@ describe Picky::Category do
   end
 
   describe 'ids' do
-    let(:token) { stub :token, :text => :some_text }
+    let(:token) { double :token, :text => :some_text }
     context 'without range' do
       before(:each) { token.stub! :range => nil }
       context 'partial bundle' do
@@ -193,7 +193,7 @@ describe Picky::Category do
   #   end
   #   context 'weight for token' do
   #     before(:each) do
-  #       @token = stub :token, :text => :some_text
+  #       @token = double :token, :text => :some_text
   #       @category.stub! :weight => :some_weight, :bundle_for => :bundle
   #     end
   #     it 'should return a new combination' do
@@ -209,8 +209,8 @@ describe Picky::Category do
 
   context 'stubbed exact/partial' do
     before(:each) do
-      @category.stub! :exact => (@exact = stub :exact)
-      @category.stub! :partial => (@partial = stub :partial)
+      @category.stub! :exact => (@exact = double :exact)
+      @category.stub! :partial => (@partial = double :partial)
     end
 
     describe 'load' do

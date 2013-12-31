@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Backends::Redis::Float do
 
-  let(:client) { stub :client }
+  let(:client) { double :client }
   let(:backend) { described_class.new client, 'some_namespace' }
 
   describe 'dump' do

@@ -26,7 +26,7 @@ describe Picky::Categories do
       end
       context 'with some similar' do
         before(:each) do
-          @bundle1 = stub :bundle1, :similar => ['similar', 'text'], :weight => 1, :identifier => ''
+          @bundle1 = double :bundle1, :similar => ['similar', 'text'], :weight => 1, :identifier => ''
           @category1.stub! :bundle_for => @bundle1
         end
         # it "returns possible categories" do
@@ -79,11 +79,11 @@ describe Picky::Categories do
 
     # describe "possible_combinations" do
     #   before(:each) do
-    #     @token = stub :token
+    #     @token = double :token
     #   end
     #   context "with similar token" do
     #     before(:each) do
-    #       @token.stub :similar? => true, :categorize => nil
+    #       @token.double :similar? => true, :categorize => nil
     #     end
     #     it "calls the right method" do
     #       @categories.should_receive(:similar_possible_for).once.with @token
@@ -93,7 +93,7 @@ describe Picky::Categories do
     #   end
     #   context "with non-similar token" do
     #     before(:each) do
-    #       @token.stub :similar? => false, :categorize => nil
+    #       @token.double :similar? => false, :categorize => nil
     #     end
     #     it "calls the right method" do
     #       @categories.should_receive(:possible_for).once.with @token
@@ -111,7 +111,7 @@ describe Picky::Categories do
     #       end
     #       context 'combination exists' do
     #         before(:each) do
-    #           @combination = stub :combination
+    #           @combination = double :combination
     #           @category2.stub! :combination_for => @combination
     #         end
     #         it 'should return the right combinations' do
@@ -139,7 +139,7 @@ describe Picky::Categories do
     describe 'possible_categories' do
       context 'user defined exists' do
         before(:each) do
-          @token = stub :token, :predefined_categories => [@category2]
+          @token = double :token, :predefined_categories => [@category2]
         end
         it 'should return the right categories' do
           @categories.possible_categories(@token).should == [@category2]
@@ -147,7 +147,7 @@ describe Picky::Categories do
       end
       context 'user defined does not exist' do
         before(:each) do
-          @token = stub :token, :predefined_categories => nil
+          @token = double :token, :predefined_categories => nil
         end
         it 'should return all categories' do
           @categories.possible_categories(@token).should == [@category1, @category2, @category3]

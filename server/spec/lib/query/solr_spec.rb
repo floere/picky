@@ -10,7 +10,7 @@
 #     describe 'execute' do
 #       context 'error cases' do
 #         before(:each) do
-#           @tokens = stub :tokens
+#           @tokens = double :tokens
 #         end
 #         context 'tokens are malformed' do
 # 
@@ -34,7 +34,7 @@
 # 
 #   context 'with connected Server' do
 #     before(:each) do
-#       @server = stub :server
+#       @server = double :server
 #       RSolr.stub! :connect => @server
 #     end
 #   end

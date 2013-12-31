@@ -4,8 +4,8 @@
 # describe Solr::SchemaGenerator do
 # 
 #   before(:each) do
-#     @types = stub :types
-#     @configuration = stub :configuration, :types => @types
+#     @types = double :types
+#     @configuration = double :configuration, :types => @types
 #     @generator = Solr::SchemaGenerator.new @configuration
 #   end
 # 

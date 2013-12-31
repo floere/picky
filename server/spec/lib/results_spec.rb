@@ -4,7 +4,7 @@ describe Picky::Results do
 
   describe "from" do
     before(:each) do
-      @results = stub :results
+      @results = double :results
       described_class.stub! :new => @results
 
       @results.stub! :prepare!
@@ -16,7 +16,7 @@ describe Picky::Results do
 
   describe "ids" do
     before(:each) do
-      @allocations = stub :allocations
+      @allocations = double :allocations
       @results = described_class.new :unimportant, :amount, :unimportant, @allocations
     end
     it "forwards" do
@@ -40,7 +40,7 @@ describe Picky::Results do
 
   describe 'to_s' do
     before(:each) do
-      time = stub :time, :strftime => '2011-08-16 10:07:33'
+      time = double :time, :strftime => '2011-08-16 10:07:33'
       Time.stub! :now => time
     end
     context 'without results' do
@@ -53,7 +53,7 @@ describe Picky::Results do
     end
     context 'with results' do
       before(:each) do
-        @allocations = stub :allocations,
+        @allocations = double :allocations,
                             :process! => nil,
                             :size => 12
 
@@ -80,7 +80,7 @@ describe Picky::Results do
 
   describe 'to_hash' do
     before(:each) do
-      @allocations = stub :allocations, :process! => nil, :to_result => :allocations, :total => :some_total
+      @allocations = double :allocations, :process! => nil, :to_result => :allocations, :total => :some_total
 
       @results = described_class.new :unimportant, :some_results_amount, :some_offset, @allocations
       @results.duration = :some_duration
