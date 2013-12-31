@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Query::Indexes do
 
   before(:each) do
-    Picky::Query::Indexes::Check.stub! :check_backends
+    Picky::Query::Indexes::Check.stub :check_backends
   end
 
   3.times do |i|
@@ -13,7 +13,7 @@ describe Picky::Query::Indexes do
 
   let(:indexes) do
     indexes = described_class.allocate
-    indexes.stub! :map_categories
+    indexes.stub :map_categories
     indexes.send :initialize, index1, index2, index3
     indexes
   end
@@ -88,7 +88,7 @@ describe Picky::Query::Indexes do
   describe 'prepared_allocations_for' do
     before(:each) do
       @allocations = double :allocations
-      indexes.stub! :allocations_for => @allocations
+      indexes.stub :allocations_for => @allocations
     end
     it 'calls the right method in order' do
       # @allocations.should_receive(:uniq!).once.ordered.with()

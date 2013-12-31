@@ -9,7 +9,7 @@ require 'picky/rack/harakiri'
 describe Rack::Harakiri do
   before(:each) do
     @app = double :app
-    Process.stub! :kill # not taking any chances
+    Process.stub :kill # not taking any chances
   end
   context "defaults" do
     before(:each) do
@@ -44,8 +44,8 @@ describe Rack::Harakiri do
     end
     describe "call" do
       before(:each) do
-        @app.stub! :call
-        @app.stub! :harakiri
+        @app.stub :call
+        @app.stub :harakiri
       end
       it "calls harakiri" do
         @ronin.should_receive(:harakiri).once.with

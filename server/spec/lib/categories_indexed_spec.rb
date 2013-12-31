@@ -27,7 +27,7 @@ describe Picky::Categories do
       context 'with some similar' do
         before(:each) do
           @bundle1 = double :bundle1, :similar => ['similar', 'text'], :weight => 1, :identifier => ''
-          @category1.stub! :bundle_for => @bundle1
+          @category1.stub :bundle_for => @bundle1
         end
         # it "returns possible categories" do
         #   @categories.similar_possible_for(@token).should == [
@@ -112,7 +112,7 @@ describe Picky::Categories do
     #       context 'combination exists' do
     #         before(:each) do
     #           @combination = double :combination
-    #           @category2.stub! :combination_for => @combination
+    #           @category2.stub :combination_for => @combination
     #         end
     #         it 'should return the right combinations' do
     #           @categories.possible_for(@token).should == [@combination]
@@ -120,7 +120,7 @@ describe Picky::Categories do
     #       end
     #       context 'combination does not exist' do
     #         before(:each) do
-    #           @category2.stub! :combination_for => nil
+    #           @category2.stub :combination_for => nil
     #         end
     #         it 'should return the right combinations' do
     #           @categories.possible_for(@token).should == []

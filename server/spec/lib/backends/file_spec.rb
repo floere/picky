@@ -9,7 +9,7 @@ describe Picky::Backends::File do
   #                                    similarity:    Picky::Backends::File::Basic.new(:unimportant),
   #                                    configuration: Picky::Backends::File::Basic.new(:unimportant)
   #
-  #     @backend.stub! :timed_exclaim
+  #     @backend.stub :timed_exclaim
   #   end
   #
   #   describe 'create_...' do
@@ -32,7 +32,7 @@ describe Picky::Backends::File do
     before(:each) do
       @backend = described_class.new
 
-      @backend.stub! :timed_exclaim
+      @backend.stub :timed_exclaim
     end
   
     describe 'create_...' do

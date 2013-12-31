@@ -16,7 +16,7 @@ describe Picky::Search do
     let(:search) { described_class.new }
     it 'forwards to the tokenizer' do
       tokenizer = double :tokenizer
-      search.stub! :tokenizer => tokenizer
+      search.stub :tokenizer => tokenizer
 
       tokenizer.should_receive(:tokenize).once.with(:some_text).and_return [['some_text'], [:some_original]]
 
@@ -89,28 +89,28 @@ describe Picky::Search do
       @search = described_class.new
     end
     it "forwards to search_with correctly" do
-      @search.stub! :tokenized => :tokens
+      @search.stub :tokenized => :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 10, :text, nil
 
       @search.search :text, 20, 10
     end
     it "forwards to search_with correctly" do
-      @search.stub! :tokenized => :tokens
+      @search.stub :tokenized => :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, nil
 
       @search.search :text, 20, 0
     end
     it "forwards to search_with correctly" do
-      @search.stub! :tokenized => :tokens
+      @search.stub :tokenized => :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, true
 
       @search.search :text, 20, 0, unique: true
     end
     it "uses the tokenizer" do
-      @search.stub! :search_with
+      @search.stub :search_with
 
       @search.should_receive(:tokenized).once.with :text
 
@@ -167,7 +167,7 @@ describe Picky::Search do
 
   describe 'to_s' do
     before(:each) do
-      @index.stub! :name => :some_index, :each_category => []
+      @index.stub :name => :some_index, :each_category => []
     end
     context 'without indexes' do
       before(:each) do

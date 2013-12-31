@@ -20,10 +20,10 @@
 #         end
 #         context 'server raises' do
 #           before(:each) do
-#             @server.stub! :select => lambda { raise Solr::RequestError }
+#             @server.stub :select => lambda { raise Solr::RequestError }
 #           end
 #           it 'should not fail' do
-#             @tokens.stub! :to_solr_query => ''
+#             @tokens.stub :to_solr_query => ''
 # 
 #             lambda { @server.execute(@tokens) }.should_not raise_error
 #           end
@@ -35,7 +35,7 @@
 #   context 'with connected Server' do
 #     before(:each) do
 #       @server = double :server
-#       RSolr.stub! :connect => @server
+#       RSolr.stub :connect => @server
 #     end
 #   end
 # 

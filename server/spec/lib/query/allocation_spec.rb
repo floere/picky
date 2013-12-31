@@ -11,13 +11,13 @@ describe Picky::Query::Allocation do
 
   describe "to_s" do
     before(:each) do
-      @combinations.stub! :to_result => 'combinations_result'
+      @combinations.stub :to_result => 'combinations_result'
     end
     context "allocation.count > 0" do
       before(:each) do
-        @allocation.stub! :count => 10
-        @allocation.stub! :score => :score
-        @allocation.stub! :ids => :ids
+        @allocation.stub :count => 10
+        @allocation.stub :score => :score
+        @allocation.stub :ids => :ids
       end
       it "represents correctly" do
         @allocation.to_s.should == "Allocation([:some_result_identifier, :score, 10, \"combinations_result\", :ids])"
@@ -36,7 +36,7 @@ describe Picky::Query::Allocation do
   describe 'process!' do
     context 'no ids' do
       before(:each) do
-        @allocation.stub! :calculate_ids => []
+        @allocation.stub :calculate_ids => []
       end
       it 'should process right' do
         @allocation.process!(0, 0).should == []
@@ -53,7 +53,7 @@ describe Picky::Query::Allocation do
     end
     context 'with ids' do
       before(:each) do
-        @allocation.stub! :calculate_ids => [1,2,3,4,5,6,7,8,9,10]
+        @allocation.stub :calculate_ids => [1,2,3,4,5,6,7,8,9,10]
       end
       it 'should process right' do
         @allocation.process!(0, 0).should == []
@@ -79,7 +79,7 @@ describe Picky::Query::Allocation do
     end
     context 'with symbol ids' do
       before(:each) do
-        @allocation.stub! :calculate_ids => [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j]
+        @allocation.stub :calculate_ids => [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j]
       end
       it 'should process right' do
         @allocation.process!(0, 0).should == []
@@ -107,7 +107,7 @@ describe Picky::Query::Allocation do
   
   describe "subject" do
     before(:each) do
-      @allocation.stub! :calculate_ids => [1,2,3,4,5,6,7,8,9,10]
+      @allocation.stub :calculate_ids => [1,2,3,4,5,6,7,8,9,10]
     end
     it 'should process right' do
       @allocation.process_with_illegals!(0, 0, [1,3,7]).should == []
@@ -140,7 +140,7 @@ describe Picky::Query::Allocation do
       end
       context 'with ids' do
         it 'should output an array of information' do
-          @backend.stub! :ids => [1,2,3]
+          @backend.stub :ids => [1,2,3]
 
           @allocation.process! 20, 0
 
@@ -158,7 +158,7 @@ describe Picky::Query::Allocation do
       end
       context 'with ids' do
         it 'should output an array of information' do
-          @backend.stub! :ids => [1,2,3]
+          @backend.stub :ids => [1,2,3]
 
           @allocation.process! 20, 0
 
@@ -172,7 +172,7 @@ describe Picky::Query::Allocation do
         @allocation.instance_variable_set :@score, :some_score
       end
       it 'should return nil' do
-        @backend.stub! :ids => []
+        @backend.stub :ids => []
 
         @allocation.process! 20, 0
 
@@ -223,7 +223,7 @@ describe Picky::Query::Allocation do
       @amount = double :amount
       @offset = double :offset
       @ids    = double :ids, :size => :some_original_size, :slice! => :some_sliced_ids
-      @allocation.stub! :calculate_ids => @ids
+      @allocation.stub :calculate_ids => @ids
     end
     it 'should calculate_ids' do
       @allocation.should_receive(:calculate_ids).once.with(@amount, @offset).and_return @ids

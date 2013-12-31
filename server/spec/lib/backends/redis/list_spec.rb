@@ -7,7 +7,7 @@ describe Picky::Backends::Redis::List do
 
   describe '[]' do
     it 'returns whatever comes back from the backend' do
-      client.stub! :zrange => [:some_lrange_result]
+      client.stub :zrange => [:some_lrange_result]
 
       index[:anything].should == [:some_lrange_result]
     end

@@ -20,10 +20,10 @@ describe Picky::Backends::SQLite::Array do
     describe 'dump_sqlite' do
       let(:client) { double :client }
       before(:each) do
-        db.stub! :db => client
+        db.stub :db => client
       end
       it 'initializes the client' do
-        client.stub! :execute
+        client.stub :execute
 
         db.should_receive(:db).exactly(4).times.with
 
@@ -35,7 +35,7 @@ describe Picky::Backends::SQLite::Array do
         db.dump_sqlite Hash.new
       end
       it 'inserts keys and values' do
-        client.stub! :execute # We only want to test the insert statements.
+        client.stub :execute # We only want to test the insert statements.
 
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', 'a', '[1,2,3]'
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', 'b', '[4,5,6]'
@@ -85,10 +85,10 @@ describe Picky::Backends::SQLite::Array do
     describe 'dump_sqlite' do
       let(:client) { double :client }
       before(:each) do
-        db.stub! :db => client
+        db.stub :db => client
       end
       it 'initializes the client' do
-        client.stub! :execute
+        client.stub :execute
 
         db.should_receive(:db).exactly(4).times.with
 
@@ -100,7 +100,7 @@ describe Picky::Backends::SQLite::Array do
         db.dump_sqlite Hash.new
       end
       it 'inserts keys and values' do
-        client.stub! :execute # We only want to test the insert statements.
+        client.stub :execute # We only want to test the insert statements.
 
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', 'a', '[1,2,3]'
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', 'b', '[4,5,6]'

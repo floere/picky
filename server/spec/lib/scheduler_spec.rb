@@ -8,7 +8,7 @@ describe Picky::Scheduler do
 
     context 'without forking' do
       before(:each) do
-        scheduler.stub! :fork? => false
+        scheduler.stub :fork? => false
       end
       context 'non-stubbed forking' do
         it 'works correctly' do
@@ -38,7 +38,7 @@ describe Picky::Scheduler do
       end
       context 'OS cannot fork' do
         before(:each) do
-          Process.stub! :fork => nil
+          Process.stub :fork => nil
         end
         it 'returns false' do
           scheduler.fork?.should be_false

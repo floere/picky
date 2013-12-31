@@ -24,7 +24,7 @@ describe Picky::Backends::Redis::DirectlyManipulable do
 
   context 'stubbed backend' do
     before(:each) do
-      backend.stub! :[]
+      backend.stub :[]
     end
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@append_index)
@@ -54,8 +54,8 @@ describe Picky::Backends::Redis::DirectlyManipulable do
 
   context 'stubbed client' do
     before(:each) do
-      client.stub! :zadd
-      client.stub! :zrem
+      client.stub :zadd
+      client.stub :zrem
     end
     it 'calls [] at the end of the method' do
       backend.should_receive(:[]).once.with 'some:key'
@@ -74,9 +74,9 @@ describe Picky::Backends::Redis::DirectlyManipulable do
 
   context 'stubbed client/backend' do
     before(:each) do
-      backend.stub! :[]
-      client.stub! :zadd
-      client.stub! :zrem
+      backend.stub :[]
+      client.stub :zadd
+      client.stub :zrem
     end
     it 'behaves like an ordinary Array' do
       list << 3

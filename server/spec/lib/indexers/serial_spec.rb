@@ -11,7 +11,7 @@ describe Picky::Indexers::Serial do
                       :source => @source
 
     @indexer = described_class.new @category
-    @indexer.stub! :timed_exclaim
+    @indexer.stub :timed_exclaim
   end
 
   describe "source" do

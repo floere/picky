@@ -229,7 +229,7 @@ describe Picky::Query::Tokens do
   def self.it_should_forward name
     describe name do
       before(:each) do
-        @internal_tokens = mock :internal_tokens
+        @internal_tokens = double :internal_tokens
         @tokens = described_class.new @internal_tokens
       end
       it "should forward #{name} to the internal tokens" do

@@ -11,7 +11,7 @@ describe Picky::Backends::SQLite do
   #                                    similarity:    Picky::Backends::SQLite::Value.new(:unimportant),
   #                                    configuration: Picky::Backends::SQLite::Array.new(:unimportant)
   #
-  #     @backend.stub! :timed_exclaim
+  #     @backend.stub :timed_exclaim
   #   end
   #
   #   describe 'create_...' do
@@ -37,7 +37,7 @@ describe Picky::Backends::SQLite do
   #                                    similarity:    ->(bundle){ Picky::Backends::SQLite::Value.new(bundle.index_path(:similarity)) },
   #                                    configuration: ->(bundle){ Picky::Backends::SQLite::Array.new(bundle.index_path(:configuration)) }
   #
-  #     @backend.stub! :timed_exclaim
+  #     @backend.stub :timed_exclaim
   #   end
   #
   #   describe 'create_...' do
@@ -49,7 +49,7 @@ describe Picky::Backends::SQLite do
   #     ].each do |type, kind|
   #       it "creates and returns a(n) #{type} index" do
   #         to_a_able_double = Object.new
-  #         to_a_able_stub.stub! :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}"
+  #         to_a_able_stub.stub :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}"
   #         @backend.send(:"create_#{type}", to_a_able_stub).should be_kind_of(kind)
   #       end
   #     end
@@ -60,7 +60,7 @@ describe Picky::Backends::SQLite do
     before(:each) do
       @backend = described_class.new
 
-      @backend.stub! :timed_exclaim
+      @backend.stub :timed_exclaim
     end
 
     describe 'create_...' do

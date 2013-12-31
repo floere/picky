@@ -334,7 +334,7 @@ describe Picky::Query::Allocations do
 
   describe "each" do
     before(:each) do
-      @internal_allocations = mock :internal_allocations
+      @internal_allocations = double :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
     it "should forward to the internal allocations" do
@@ -346,7 +346,7 @@ describe Picky::Query::Allocations do
   end
   describe "inject" do
     before(:each) do
-      @internal_allocations = mock :internal_allocations
+      @internal_allocations = double :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
     it "should forward to the internal allocations" do
@@ -358,7 +358,7 @@ describe Picky::Query::Allocations do
   end
   describe "empty?" do
     before(:each) do
-      @internal_allocations = mock :internal_allocations
+      @internal_allocations = double :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
     it "should forward to the internal allocations array" do

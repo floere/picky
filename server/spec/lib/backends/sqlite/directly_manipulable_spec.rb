@@ -12,7 +12,7 @@ describe Picky::Backends::SQLite::DirectlyManipulable do
 
   context 'stubbed backend' do
     before(:each) do
-      backend.stub! :[]
+      backend.stub :[]
     end
     it 'calls the right client method' do
       backend.should_receive(:[]=).once.with 'some:key', [1,2,3]
@@ -38,7 +38,7 @@ describe Picky::Backends::SQLite::DirectlyManipulable do
 
   context 'stubbed client/backend' do
     before(:each) do
-      backend.stub! :[]=
+      backend.stub :[]=
     end
     it 'behaves like an ordinary Array' do
       array << 3

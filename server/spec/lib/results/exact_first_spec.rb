@@ -37,14 +37,14 @@ describe Picky::Results::ExactFirst do
 
   describe 'ids' do
     it "uses first the exact, then the partial ids" do
-      @exact.stub!   :ids => [1,4,5,6]
-      @partial.stub! :ids => [2,3,7]
+      @exact.stub   :ids => [1,4,5,6]
+      @partial.stub :ids => [2,3,7]
 
       @category.ids(stub(:token, :text => :anything, :partial? => true)).should == [1,4,5,6,2,3,7]
     end
     it "uses only the exact ids" do
-      @exact.stub!   :ids => [1,4,5,6]
-      @partial.stub! :ids => [2,3,7]
+      @exact.stub   :ids => [1,4,5,6]
+      @partial.stub :ids => [2,3,7]
 
       @category.ids(stub(:token, :text => :anything, :partial? => false)).should == [1,4,5,6]
     end
@@ -53,11 +53,11 @@ describe Picky::Results::ExactFirst do
   describe 'weight' do
     context "exact with weight" do
       before(:each) do
-        @exact.stub! :weight => 0.12
+        @exact.stub :weight => 0.12
       end
       context "partial with weight" do
         before(:each) do
-          @partial.stub! :weight => 1.23
+          @partial.stub :weight => 1.23
         end
         it "uses the higher weight" do
           @category.weight(stub(:token, :text => :anything, :partial? => true)).should == 1.23
@@ -68,7 +68,7 @@ describe Picky::Results::ExactFirst do
       end
       context "partial without weight" do
         before(:each) do
-          @partial.stub! :weight => nil
+          @partial.stub :weight => nil
         end
         it "uses the exact weight" do
           @category.weight(stub(:token, :text => :anything, :partial? => true)).should == 0.12
@@ -80,11 +80,11 @@ describe Picky::Results::ExactFirst do
     end
     context "exact without weight" do
       before(:each) do
-        @exact.stub! :weight => nil
+        @exact.stub :weight => nil
       end
       context "partial with weight" do
         before(:each) do
-          @partial.stub! :weight => 0.12
+          @partial.stub :weight => 0.12
         end
         it "uses the partial weight" do
           @category.weight(stub(:token, :text => :anything, :partial? => true)).should == 0.12
@@ -95,7 +95,7 @@ describe Picky::Results::ExactFirst do
       end
       context "partial without weight" do
         before(:each) do
-          @partial.stub! :weight => nil
+          @partial.stub :weight => nil
         end
         it "is nil" do
           @category.weight(stub(:token, :text => :anything, :partial? => true)).should == nil

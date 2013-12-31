@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Loader do
 
   before(:each) do
-    described_class.stub! :exclaim
+    described_class.stub :exclaim
     @loader_path = File.absolute_path("#{File.dirname(__FILE__)}/../../lib/picky/loader.rb")
   end
 
@@ -36,7 +36,7 @@ describe Picky::Loader do
 
   describe 'load_framework' do
     before(:each) do
-      described_class.stub! :load_relative
+      described_class.stub :load_relative
     end
     it 'does ok' do
       lambda { described_class.load_framework }.should_not raise_error
@@ -45,7 +45,7 @@ describe Picky::Loader do
 
   describe 'load_self' do
     before(:each) do
-      described_class.stub! :load
+      described_class.stub :load
     end
     after(:each) do
       described_class.load_self
@@ -58,9 +58,9 @@ describe Picky::Loader do
   describe 'reload' do
     before(:each) do
       load @loader_path
-      described_class.stub! :load_framework
-      described_class.stub! :load_application
-      Dir.stub! :chdir
+      described_class.stub :load_framework
+      described_class.stub :load_application
+      Dir.stub :chdir
     end
     it 'should call the right methods in order' do
       described_class.should_receive(:load_self).ordered
@@ -84,9 +84,9 @@ describe Picky::Loader do
   describe 'load' do
     before(:each) do
       load @loader_path
-      described_class.stub! :load_framework
-      described_class.stub! :load_application
-      Dir.stub! :chdir
+      described_class.stub :load_framework
+      described_class.stub :load_application
+      Dir.stub :chdir
     end
     after(:each) do
       described_class.load

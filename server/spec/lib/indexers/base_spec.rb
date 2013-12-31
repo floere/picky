@@ -20,7 +20,7 @@ describe Picky::Indexers::Base do
     it 'raises when none is there' do
       some_index_or_category.should_receive(:source).any_number_of_times.and_return nil
 
-      indexer.stub! :process
+      indexer.stub :process
 
       expect {
         indexer.prepare Picky::Categories.new
@@ -40,7 +40,7 @@ describe Picky::Indexers::Base do
       indexer.prepare categories
     end
     it 'calls the right methods on the categories' do
-      indexer.stub! :process
+      indexer.stub :process
 
       categories = double :categories
 

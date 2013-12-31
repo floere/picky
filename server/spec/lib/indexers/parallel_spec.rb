@@ -7,7 +7,7 @@ describe Picky::Indexers::Parallel do
   before(:each) do
     @index = Picky::Index.new(:test) # double :index, :name => :some_index, :source => @source, :backend => stub(:backend)
     @indexer = described_class.new @index
-    @indexer.stub! :timed_exclaim
+    @indexer.stub :timed_exclaim
   end
   
   context 'with untokenized category' do

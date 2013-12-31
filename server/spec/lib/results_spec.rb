@@ -5,9 +5,9 @@ describe Picky::Results do
   describe "from" do
     before(:each) do
       @results = double :results
-      described_class.stub! :new => @results
+      described_class.stub :new => @results
 
-      @results.stub! :prepare!
+      @results.stub :prepare!
     end
     it "should generate a result" do
       described_class.from("some query", 20, 0, @allocations).should == @results
@@ -41,7 +41,7 @@ describe Picky::Results do
   describe 'to_s' do
     before(:each) do
       time = double :time, :strftime => '2011-08-16 10:07:33'
-      Time.stub! :now => time
+      Time.stub :now => time
     end
     context 'without results' do
       before(:each) do
@@ -58,7 +58,7 @@ describe Picky::Results do
                             :size => 12
 
         @results = described_class.new "some_query", 20, 1234, @allocations
-        @results.stub! :duration => 0.1234567890,
+        @results.stub :duration => 0.1234567890,
                        :total    => 12345678
       end
       it 'should output a specific log' do
@@ -72,7 +72,7 @@ describe Picky::Results do
       @results = described_class.new
     end
     it 'should do it correctly' do
-      @results.stub! :to_hash => :serialized
+      @results.stub :to_hash => :serialized
 
       @results.to_json.should == '"serialized"'
     end

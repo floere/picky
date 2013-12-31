@@ -6,7 +6,7 @@ describe Picky::Category do
     @index  = Picky::Index.new :some_index
     @source = double :some_given_source, :each => nil
   end
-  let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub! :timed_exclaim } }
+  let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub :timed_exclaim } }
 
   context "unit specs" do
     let(:exact) { category.exact }
@@ -23,8 +23,8 @@ describe Picky::Category do
 
     describe 'dump' do
       before(:each) do
-        exact.stub! :dump
-        partial.stub! :dump
+        exact.stub :dump
+        partial.stub :dump
       end
       it 'should dump the exact index' do
         exact.should_receive(:dump).once.with
@@ -57,7 +57,7 @@ describe Picky::Category do
                                           .and_yield(3, :some_token)
                                           .and_yield(4, :some_token)
                                           .and_yield(5, :some_token)
-        category.stub! :prepared => prepared
+        category.stub :prepared => prepared
 
         category.should_receive(:add_tokenized_token).once.with(1, :some_token, :<<, nil)
         category.should_receive(:add_tokenized_token).once.with(2, :some_token, :<<, nil)
@@ -101,7 +101,7 @@ describe Picky::Category do
         end
       end
       context 'without explicit source' do
-        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub! :source => :index_source }) }
+        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub :source => :index_source }) }
         it 'returns the right source' do
           category.source.should == :index_source
         end
@@ -111,7 +111,7 @@ describe Picky::Category do
     describe "index" do
       before(:each) do
         @indexer = double :indexer, :index => nil
-        category.stub! :indexer => @indexer
+        category.stub :indexer => @indexer
       end
       it "tells the indexer to index" do
         @indexer.should_receive(:prepare).once

@@ -11,7 +11,7 @@
 # 
 #   describe 'bound_field_names' do
 #     before(:each) do
-#       @generator.stub! :combine_field_names => :some_field_names
+#       @generator.stub :combine_field_names => :some_field_names
 #     end
 #     it 'should bind field_names' do
 #       b = @generator.bound_field_names
@@ -22,11 +22,11 @@
 # 
 #   describe 'generate' do
 #     before(:each) do
-#       @generator.stub! :bound_field_names
-#       @generator.stub! :generate_schema_for
+#       @generator.stub :bound_field_names
+#       @generator.stub :generate_schema_for
 #     end
 #     it 'should receive generate_schema_for once with the result of extract_binding' do
-#       @generator.stub! :bound_field_names => :some_binding
+#       @generator.stub :bound_field_names => :some_binding
 # 
 #       @generator.should_receive(:generate_schema_for).once.with :some_binding
 # 
