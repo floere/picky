@@ -9,6 +9,9 @@ group :development do
   gem 'rack'
   gem 'text'
   gem 'procrastinate'
+  
+  gem 'stackprof'
+  gem 'perfer'
 end
 
 group :test do
