@@ -7,8 +7,12 @@ data = Picky::Index.new :some_index do
   category :name
   category :surname
 end
-
+data.replace_from id: 1, name: 'florian', surname: 'hanke'
 people = Picky::Search.new data
+
+puts "Sanity check:"
+puts people.search 'florian'
+puts
 
 Perfer.session "Search#search" do |s|
   s.metadata do
