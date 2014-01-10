@@ -1,7 +1,8 @@
 TODO s for version 5
 ====================
 
-* Make key_format dependent on backend?
+* Make key_format default dependent on backend?
+* Enumerator for results?
 
 Loggers as modules?
 -------------------
