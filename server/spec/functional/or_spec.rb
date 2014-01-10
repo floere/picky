@@ -98,6 +98,7 @@ describe "OR token" do
     
     it { try.search("thing|something|other").ids.should == [1, 2, 3] }
     it { try.search("something|other").ids.should == [2, 3] }
+    it { try.search("other|something").ids.should == [3, 2] }
   end
 
 end

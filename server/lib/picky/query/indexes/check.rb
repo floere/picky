@@ -4,7 +4,9 @@ module Picky
 
     class Indexes
       
+      # Checks if multiple backends are used in the same search instance.
       #
+      # Using multiple backends for the same search are not yet possible.
       #
       class Check
 

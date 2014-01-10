@@ -24,19 +24,6 @@ module Picky
           end
           combinations.empty? && combinations || [Query::Combination::Or.new(combinations)]
         end
-        
-        # # Returns the token in the form
-        # #   ['original:Text', 'processedtext']
-        # #
-        # def to_result
-        #   [originals.join('|'), texts.join('|')]
-        # end
-        
-        # # Just join the token original texts.
-        # #
-        # def to_s
-        #   "#{self.class}(#{originals.join '|'})"
-        # end
       
       end
       

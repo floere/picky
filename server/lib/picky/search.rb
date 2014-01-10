@@ -274,13 +274,11 @@ module Picky
     # Display some nice information for the user.
     #
     def to_s
-      s = "#{self.class}("
-      ary = []
-      ary << @indexes.indexes.map(&:name).join(', ') unless @indexes.indexes.empty?
-      ary << "boosts: #@boosts" if @boosts
-      s << ary.join(', ')
-      s << ")"
-      s
+      s = [
+        (@indexes.indexes.map(&:name).join(', ') unless @indexes.indexes.empty?),
+        ("boosts: #@boosts" if @boosts)
+      ].compact
+      "#{self.class}(#{s.join(', ')})"
     end
 
   end

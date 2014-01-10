@@ -66,10 +66,12 @@ module Picky
     # Returns a hash with the allocations, offset, duration and total.
     #
     def to_hash
-      { allocations: allocations.to_result,
+      {
+        allocations: allocations.to_result,
         offset:      offset,
         duration:    duration,
-        total:       total }
+        total:       total
+      }
     end
 
     # Convert to json format.

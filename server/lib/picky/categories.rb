@@ -9,6 +9,7 @@ module Picky
             :map,
             :map!,
             :include?,
+            :empty?,
             :to => :categories
 
     each_forward :cache,

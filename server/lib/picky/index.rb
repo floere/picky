@@ -376,7 +376,13 @@ INDEX
     #
     #
     def to_s
-      "#{self.class}(#{name}, result_id: #{result_identifier}, source: #@source, categories: #{categories})"
+      s = [
+        name,
+        "result_id: #{result_identifier}",
+        ("source: #{source}" if @source),
+        ("categories: #{categories}" unless categories.empty?)
+      ].compact
+      "#{self.class}(#{s.join(', ')})"
     end
 
   end
