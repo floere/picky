@@ -1,3 +1,4 @@
+puts 'Run `ulimit -n 3000` if specs fail.'
 system 'rm -r spec/temp/*'
 
 # Start Redis if not yet running.

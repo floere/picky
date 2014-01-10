@@ -61,7 +61,7 @@ module Picky
     #   end
     #
     def searching options
-      @tokenizer = if options.respond_to?(:tokenize)
+      @tokenizer = if options.respond_to? :tokenize
         options
       else
         options && Tokenizer.new(options)
