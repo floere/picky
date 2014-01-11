@@ -18,6 +18,8 @@ if ENV['COV']
   SimpleCov.start 'picky'
 end
 
+RSpec.configure { |rspec| rspec.deprecation_stream = File.open '/dev/null', 'w' }
+
 ENV['PICKY_ENV'] = 'test'
 require_relative '../lib/picky'
 
