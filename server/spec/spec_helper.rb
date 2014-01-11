@@ -9,6 +9,8 @@ fork do
   puts "(already running, redis-server returned #{$?.exitstatus})." unless $?.success?
 end
 
+# Coverage report.
+#
 if ENV['COV']
   require 'simplecov'
   SimpleCov.adapters.define 'picky' do
@@ -18,7 +20,9 @@ if ENV['COV']
   SimpleCov.start 'picky'
 end
 
-RSpec.configure { |rspec| rspec.deprecation_stream = File.open '/dev/null', 'w' }
+# Make RSpec shut up about deprecations.
+#
+RSpec.configure { |rspec| rspec.deprecation_stream = StringIO.new }
 
 ENV['PICKY_ENV'] = 'test'
 require_relative '../lib/picky'
