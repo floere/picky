@@ -48,13 +48,13 @@ var PickyController = function(config) {
     // Note: If this query is the same as the last, we do not save it in the history.
     //
     if (query != lastFullQuery()) { // TODO Not full.
-      var url;
+      var path;
       if (!searchOnEmpty && query == '') {
-        url = '';
+        path = '/';
       } else {
-        url = "?q=" + escape(query).replace(/\*/g,'%2A');
+        path = "?q=" + escape(query).replace(/\*/g,'%2A');
       }
-      window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, url);
+      window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, path);
     }
   }
   
