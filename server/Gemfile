@@ -40,3 +40,7 @@ group :test do
 
   gem 'rack-mount'
 end
+
+group :coverage do
+  gem 'coverband'
+end
