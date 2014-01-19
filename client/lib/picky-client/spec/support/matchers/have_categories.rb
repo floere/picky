@@ -1,3 +1,4 @@
+require 'rspec/matchers' rescue nil
 if defined? RSpec::Matchers
   RSpec::Matchers.define :have_categories do |*expected|
 

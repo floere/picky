@@ -8,6 +8,6 @@ gem 'sinatra'
 gem 'haml'
 
 group :development do
-  gem 'sinatra-reloader'
+  gem 'sinatra-contrib', :require => 'sinatra/reloader'
   gem 'rake'
 end

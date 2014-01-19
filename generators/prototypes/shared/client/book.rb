@@ -14,7 +14,7 @@ class Book
   
   # Load the books on startup.
   #
-  file_name = File.expand_path "../both/data/#{PICKY_ENVIRONMENT}/library.csv", File.dirname(__FILE__)
+  file_name = File.expand_path "../data/#{PICKY_ENVIRONMENT}/library.csv", __FILE__
   CSV.open(file_name, 'r').each do |row|
     @@books_mapping[row.shift.to_i] = row
   end
