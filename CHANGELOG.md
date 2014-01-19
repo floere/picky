@@ -3,6 +3,7 @@
 ###### [Client](https://github.com/floere/picky/tree/master/client)
 
 - Only add have_categories matcher to client/spec helpers if RSpec::Matcher exists.
+- Various small bugfixes and refactorings.
 
 ## 4.19.4
 
