@@ -1,3 +1,7 @@
+## 4.19.6
+
+- Loosen gem restrictions on activesupport.
+
 ## 4.19.5
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
