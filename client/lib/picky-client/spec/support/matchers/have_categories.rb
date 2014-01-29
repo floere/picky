@@ -1,4 +1,9 @@
-require 'rspec/matchers' rescue nil
+begin
+  require 'rspec/matchers'
+rescue LoadError
+  
+end
+
 if defined? RSpec::Matchers
   RSpec::Matchers.define :have_categories do |*expected|
 

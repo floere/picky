@@ -1,3 +1,9 @@
+## 4.19.7
+
+###### [Client](https://github.com/floere/picky/tree/master/client)
+
+- Fix rspec matcher loading.
+
 ## 4.19.6
 
 - Loosen gem restrictions on activesupport.
