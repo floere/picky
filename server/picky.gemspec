@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
 
   s.extensions << 'ext/picky/extconf.rb'
 
-  s.add_runtime_dependency 'activesupport', '~> 4.0'
+  s.add_runtime_dependency 'activesupport', '~> 3'
   s.add_runtime_dependency 'multi_json', '~> 1.3'
   s.add_runtime_dependency 'rack_fast_escape', '~> 2009.0'
   s.add_runtime_dependency 'text', '~> 1.2'
