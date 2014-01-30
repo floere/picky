@@ -15,18 +15,21 @@ module Picky
 
       attr_reader :count,
                   :score,
-                  :combinations,
-                  :result_identifier
+                  :combinations
 
-      #
+      # An allocation is defined by:
+      #  * An index where the allocation was found, e.g. documents.
+      #  * A number of combinations, e.g. 1. author:eloy, 2. name:bla.
       #
       def initialize index, combinations
+        @index = index
         @combinations = combinations
-
-        # THINK Could this be rewritten?
-        #
-        @result_identifier = index.result_identifier
-        @backend           = index.backend
+      end
+      
+      #
+      #
+      def backend
+        @index.backend
       end
 
       # Asks the backend for the total score and
@@ -37,12 +40,12 @@ module Picky
       # ignored (ie. removed).
       #
       def calculate_score boosts
-        @score ||= if @combinations.empty?
+        @score ||= (if @combinations.empty?
           0 # Optimization.
         else
           # Note: Was @backend.score(@combinations) - indirection for maximum flexibility.
           @combinations.score + boosts.boost_for(@combinations)
-        end
+        end)
       end
 
       # Asks the backend for the (intersected) ids.
@@ -53,7 +56,10 @@ module Picky
       #
       def calculate_ids amount, offset
         return [] if @combinations.empty? # Checked here to avoid checking in each backend.
-        @backend.ids @combinations, amount, offset
+        
+        # TODO Redesign such that ids is only created (and cached) if requested.
+        #
+        backend.ids @combinations, amount, offset
       end
 
       # Ids return by default [].
@@ -104,7 +110,7 @@ module Picky
       # Transform the allocation into result form.
       #
       def to_result
-        [self.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count && self.count > 0
+        [@index.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count && self.count > 0
       end
       
       #
