@@ -24,6 +24,8 @@ module Picky
 
     # Create new results and calculate the ids.
     #
+    # TODO Remove and calculate lazily via results.ids (rewrite all references to use Result.new).
+    #
     def self.from query, amount, offset, allocations, extra_allocations = nil, unique = false
       results = new query, amount, offset, allocations
       results.prepare! extra_allocations, unique
