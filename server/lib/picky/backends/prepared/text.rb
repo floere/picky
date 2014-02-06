@@ -57,7 +57,7 @@ module Picky
           ::File.open(cache_path, 'r:utf-8') do |file|
             file.each_line do |line|
               id, token = line.split ?,, 2
-              yield id, (token.chomp! || token)
+              yield id.freeze, (token.chomp! || token).freeze
             end
           end
         end
