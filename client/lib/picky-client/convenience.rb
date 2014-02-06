@@ -69,7 +69,7 @@ module Picky
         mapped
       end
 
-      # Preserves the order
+      # Preserves the order.
       #
       objects = the_ids.map { |id| mapped_entries[id] }
       
