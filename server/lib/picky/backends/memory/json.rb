@@ -20,8 +20,12 @@ module Picky
 
         # Loads the index hash from json format.
         #
+        # Also ensures all hash keys are frozen.
+        #
         def load
           MultiJson.decode ::File.open(cache_path, 'r') # , symbolize_keys: true # SYMBOLS.
+          # index_hash && index_hash.each { |(key, value)| key.freeze }
+          # index_hash
         end
 
         # Dumps the index internal backend in json format.
