@@ -1,8 +1,11 @@
 TODO s for version 5
 ====================
 
+* Default: ids -> amount
+* Picky.root + Picky.index_path !
 * Make key_format default dependent on backend?
 * Enumerator for results?
+* name:jif~ should only look for similarity in the designated category as per usual.
 
 Loggers as modules?
 -------------------
