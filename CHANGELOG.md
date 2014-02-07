@@ -1,3 +1,9 @@
+## 4.20.0
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Added `Index#static` option, which will cause the realtime index not to be used when using a source on an index. We recommend to use this when you do not often change index data, but load the index once then run the engine for searches.
+
 ## 4.19.7
 
 ###### [Client](https://github.com/floere/picky/tree/master/client)
