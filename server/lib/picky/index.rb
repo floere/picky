@@ -126,6 +126,15 @@ module Picky
 
       instance_eval(&Proc.new) if block_given?
     end
+    
+    # TODO Doc.
+    #
+    def static
+      @static = true
+    end
+    def static?
+      @static
+    end
 
     # API method.
     #
@@ -139,6 +148,30 @@ module Picky
       else
         @backend ||= Backends::Memory.new
       end
+    end
+    
+    # The directory used by this index.
+    #
+    # Note: Used @directory ||=, but needs to be dynamic.
+    #
+    def directory
+      ::File.join(Picky.root, 'index', PICKY_ENVIRONMENT, name.to_s)
+    end
+    
+    # Restrict categories to the given ones.
+    #
+    # Functionally equivalent as if indexes didn't
+    # have the categories at all.
+    #
+    # Note: Probably only makes sense when an index
+    # is used in multiple searches. If not, why even
+    # have the categories?
+    #
+    # TODO Redesign.
+    #
+    def only *qualifiers
+      raise "Sorry, Picky::Search#only has been removed in version."
+      # @qualifier_mapper.restrict_to *qualifiers
     end
 
     # TODO Reinstate.
@@ -156,19 +189,6 @@ module Picky
     #   @ignored_categories ||= []
     #   @ignored_categories += qualifiers.map { |qualifier| @qualifier_mapper.map qualifier }.compact
     #   @ignored_categories.uniq!
-    # end
-
-    # SYMBOLS.
-    #
-    # # API method.
-    # #
-    # # Tells Picky to use Symbols internally.
-    # #
-    # def use_symbols
-    #   @symbols = true
-    # end
-    # def use_symbols?
-    #   @symbols
     # end
 
     # API method.
@@ -194,30 +214,6 @@ module Picky
       new_category = yield new_category if block_given?
 
       new_category
-    end
-    
-    # Restrict categories to the given ones.
-    #
-    # Functionally equivalent as if indexes didn't
-    # have the categories at all.
-    #
-    # Note: Probably only makes sense when an index
-    # is used in multiple searches. If not, why even
-    # have the categories?
-    #
-    # TODO Redesign.
-    #
-    def only *qualifiers
-      raise "Sorry, Picky::Search#only has been removed in version."
-      # @qualifier_mapper.restrict_to *qualifiers
-    end
-    
-    # The directory used by this index.
-    #
-    # Note: Used @directory ||=, but needs to be dynamic.
-    #
-    def directory
-      ::File.join(Picky.root, 'index', PICKY_ENVIRONMENT, name.to_s)
     end
 
     # Make this category range searchable with a fixed range. If you need other
@@ -383,6 +379,18 @@ INDEX
         ("categories: #{categories}" unless categories.empty?)
       ].compact
       "#{self.class}(#{s.join(', ')})"
+    end
+    
+    # Displays the structure as a tree.
+    #
+    def to_tree_s indent = 0
+      <<-TREE
+#{' ' * indent}Index(#{name})
+#{' ' * indent}  source: #{source.to_s[0..40]}
+#{' ' * indent}  result identifier: "#{result_identifier}"
+#{' ' * indent}  categories:
+#{' ' * indent}#{categories.to_tree_s(4)}
+TREE
     end
 
   end

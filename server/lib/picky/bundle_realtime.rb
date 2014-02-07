@@ -44,25 +44,36 @@ module Picky
 
     # Returns a reference to the array where the id has been added.
     #
-    def add id, str_or_sym, where = :unshift
-      # Use a generalized strategy.
+    # Does not add to realtime if static.
+    #
+    def add id, str_or_sym, where = :unshift, static = false
+      
+      # If static, indexing will be slower, but will use less
+      # space in the end.
       #
-      str_or_syms = @realtime[id] ||= []
-
-      # Inverted.
-      #
-      ids = if str_or_syms.include? str_or_sym
+      if static
         ids = @inverted[str_or_sym] ||= []
-        ids.delete id
-        ids.send where, id
+        ids.send where, id unless ids.include? id
       else
-        # Update the realtime index.
+        # Use a generalized strategy.
         #
-        str_or_syms << str_or_sym
-        ids = @inverted[str_or_sym] ||= []
-        ids.send where, id
-      end
+        str_or_syms = (@realtime[id] ||= []) # (static ? nil : []))
 
+        # Inverted.
+        #
+        ids = if str_or_syms && str_or_syms.include?(str_or_sym)
+          ids = @inverted[str_or_sym] ||= []
+          ids.delete id
+          ids.send where, id
+        else
+          # Update the realtime index.
+          #
+          str_or_syms << str_or_sym # unless static
+          ids = @inverted[str_or_sym] ||= []
+          ids.send where, id
+        end
+      end
+        
       # Weights.
       #
       @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
@@ -93,9 +104,9 @@ module Picky
 
     # Partializes the text and then adds each.
     #
-    def add_partialized id, text, where = :unshift
+    def add_partialized id, text, where = :unshift, static = false
       partialized text do |partial_text|
-        add id, partial_text, where
+        add id, partial_text, where, static
       end
     end
     def partialized text, &block

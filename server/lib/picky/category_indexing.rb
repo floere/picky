@@ -57,7 +57,8 @@ module Picky
     #
     def retrieve
       format = key_format?
-      prepared.retrieve { |id, token| add_tokenized_token id, token, :<<, format }
+      static = static?
+      prepared.retrieve { |id, token| add_tokenized_token id, token, :<<, format, static }
     end
 
     # Return the key format.
@@ -71,6 +72,10 @@ module Picky
     end
     def key_format?
       key_format
+    end
+    
+    def static?
+      @index.static? # || @static
     end
 
     # Where the data is taken from.

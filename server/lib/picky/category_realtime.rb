@@ -88,14 +88,15 @@ module Picky
 
     #
     #
-    def add_tokenized_token id, text, where = :unshift, format = true
+    def add_tokenized_token id, text, where = :unshift, format = true, static = false
       return unless text
       
       id = id.send key_format if format
       # text = text.to_sym if @symbols # SYMBOLS.
+      id.freeze
 
-      exact.add id, text, where
-      partial.add_partialized id, text, where
+      exact.add id, text, where, static
+      partial.add_partialized id, text, where, static
     rescue NoMethodError => e
       puts e.message
       raise %Q{The object id with text "#{text}" does not respond to method #{key_format}.}
