@@ -19,6 +19,10 @@ module Picky
         def empty; end
         def index; end
         def load; end
+        
+        def to_tree_s indent = 0
+          bundle.to_tree_s(indent) { "(reference)" }
+        end
 
       end
 

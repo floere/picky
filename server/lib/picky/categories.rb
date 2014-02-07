@@ -71,6 +71,10 @@ module Picky
     def to_stats
       map(&:name).join(', ')
     end
+    
+    def to_tree_s indent = 0
+      ([' ' * indent] * categories.size).zip(categories.map(&:to_tree_s)).map(&:join).join "\n"
+    end
 
     def to_s
       "#{self.class}(#{categories.join(', ')})"

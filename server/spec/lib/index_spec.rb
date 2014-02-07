@@ -124,6 +124,55 @@ some_index_name (Picky::Index):
 EXPECTED
       end
     end
+    
+    describe '#to_tree_s' do
+      let(:index) do
+        the_source = some_source
+        idx = described_class.new :some_index_name do
+          source { [1,2,3] }
+          category :text1
+          category :text2
+          result_identifier :foobar
+        end
+        idx.replace_from id: 1, text1: 'hello', text2: 'hoohoo'
+        idx
+      end
+      
+      it 'outputs the stats correctly' do
+        index.to_tree_s.should == <<-EXPECTED
+Index(some_index_name)
+  source: [1, 2, 3]
+  result identifier: "foobar"
+  categories:
+    Category(text1)
+      Bundle(exact)
+        Inverted(1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_exact_inverted.memory.json)]
+        Weights (1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_exact_weights.memory.json)]
+        Similari(0)[Picky::Backends::Memory::Marshal(spec/temp/index/test/some_index_name/text1_exact_similarity.memory.dump)]
+        Realtime(1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_exact_realtime.memory.json)]
+        Configur(0)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_exact_configuration.memory.json)]
+      Bundle(partial)
+        Inverted(3)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_partial_inverted.memory.json)]
+        Weights (3)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_partial_weights.memory.json)]
+        Similari(0)[Picky::Backends::Memory::Marshal(spec/temp/index/test/some_index_name/text1_partial_similarity.memory.dump)]
+        Realtime(1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_partial_realtime.memory.json)]
+        Configur(0)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text1_partial_configuration.memory.json)]
+    Category(text2)
+      Bundle(exact)
+        Inverted(1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_exact_inverted.memory.json)]
+        Weights (1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_exact_weights.memory.json)]
+        Similari(0)[Picky::Backends::Memory::Marshal(spec/temp/index/test/some_index_name/text2_exact_similarity.memory.dump)]
+        Realtime(1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_exact_realtime.memory.json)]
+        Configur(0)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_exact_configuration.memory.json)]
+      Bundle(partial)
+        Inverted(3)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_partial_inverted.memory.json)]
+        Weights (3)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_partial_weights.memory.json)]
+        Similari(0)[Picky::Backends::Memory::Marshal(spec/temp/index/test/some_index_name/text2_partial_similarity.memory.dump)]
+        Realtime(1)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_partial_realtime.memory.json)]
+        Configur(0)[Picky::Backends::Memory::JSON(spec/temp/index/test/some_index_name/text2_partial_configuration.memory.json)]
+EXPECTED
+      end
+    end
   end
 
 end

@@ -24,6 +24,8 @@ module Picky
                 :raise_unless_similarity_exists,
 
                 :similar,
+                
+                :to_tree_s,
 
                 :to => :bundle
 
