@@ -236,11 +236,22 @@ ERROR
           tokenizer.remove_illegals('abcdefghijklmnop').should == 'bcdeghijklmnp'
         end
       end
+      context "with removes_characters called using false" do
+        before(:each) do
+          tokenizer.removes_characters false
+        end
+        it "has remove_illegals" do
+          expect { tokenizer.remove_illegals('abcdefghijklmnop') }.to_not raise_error
+        end
+        it "removes illegal characters" do
+          tokenizer.remove_illegals('abcdefghijklmnop').should == 'abcdefghijklmnop'
+        end
+      end
     end
 
     describe 'stopwords' do
       it 'handles broken arguments' do
-        expect { tokenizer.stopwords("hello") }.to raise_error(ArgumentError)
+        expect { tokenizer.stopwords(1) }.to raise_error(ArgumentError)
       end
       context 'without stopwords given' do
         it 'should define a method remove_stopwords' do
@@ -251,6 +262,26 @@ ERROR
         end
         it 'should define a method remove_non_single_stopwords' do
           expect { tokenizer.remove_non_single_stopwords('from this text') }.to_not raise_error
+        end
+      end
+      context 'with stopwords given' do
+        before(:each) do
+          tokenizer.stopwords('t')
+        end
+        it 'should define a method remove_stopwords' do
+          lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error
+        end
+        it 'should define a method stopwords that removes stopwords' do
+          tokenizer.remove_stopwords('from this text').should == 'from his ex'
+        end
+        it 'should define a method remove_non_single_stopwords' do
+          expect { tokenizer.remove_non_single_stopwords('from this text') }.to_not raise_error
+        end
+        it 'should define a method remove_non_single_stopwords that removes non-single stopwords' do
+          tokenizer.remove_non_single_stopwords('rerere rerere').should == 'rerere rerere'
+        end
+        it 'should define a method remove_non_single_stopwords that does not single stopwords' do
+          tokenizer.remove_non_single_stopwords('rerere').should == 'rerere'
         end
       end
       context 'with stopwords given' do
@@ -268,6 +299,26 @@ ERROR
         end
         it 'should define a method remove_non_single_stopwords that removes non-single stopwords' do
           tokenizer.remove_non_single_stopwords('rerere rerere').should == ' '
+        end
+        it 'should define a method remove_non_single_stopwords that does not single stopwords' do
+          tokenizer.remove_non_single_stopwords('rerere').should == 'rerere'
+        end
+      end
+      context 'with stopwords explicitly not given' do
+        before(:each) do
+          tokenizer.stopwords(false)
+        end
+        it 'should define a method remove_stopwords' do
+          lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error
+        end
+        it 'should define a method stopwords that removes stopwords' do
+          tokenizer.remove_stopwords('from this text').should == 'from this text'
+        end
+        it 'should define a method remove_non_single_stopwords' do
+          expect { tokenizer.remove_non_single_stopwords('from this text') }.to_not raise_error
+        end
+        it 'should define a method remove_non_single_stopwords that removes non-single stopwords' do
+          tokenizer.remove_non_single_stopwords('rerere rerere').should == 'rerere rerere'
         end
         it 'should define a method remove_non_single_stopwords that does not single stopwords' do
           tokenizer.remove_non_single_stopwords('rerere').should == 'rerere'

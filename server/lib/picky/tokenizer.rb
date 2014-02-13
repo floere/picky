@@ -59,11 +59,10 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
 
     # Stopwords.
     #
-    # We only allow regexps (even if string would be okay
-    # too for gsub! - it's too hard to understand)
+    # We even allow Strings even if it's hard to understand.
     #
     def stopwords regexp
-      check_argument_in __method__, Regexp, regexp
+      check_argument_in __method__, [Regexp, String, FalseClass], regexp
       @remove_stopwords_regexp = regexp
     end
     def remove_stopwords text
@@ -83,7 +82,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     # too for gsub! - it's too hard to understand)
     #
     def removes_characters regexp
-      check_argument_in __method__, Regexp, regexp
+      check_argument_in __method__, [Regexp, FalseClass], regexp
       @removes_characters_regexp = regexp
     end
     def remove_illegals text
@@ -192,8 +191,11 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
 
     # Checks if the right argument type has been given.
     #
-    def check_argument_in method, type, argument, &condition
-      raise ArgumentError.new "Application##{method} takes a #{type} as argument, not a #{argument.class}." unless type === argument
+    def check_argument_in method, types, argument, &condition
+      types = [*types]
+      unless types.any? { |type| type === argument }
+        raise ArgumentError.new "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}."
+      end
     end
 
     attr_reader :substituter, :stemmer

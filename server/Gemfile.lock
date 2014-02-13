@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    picky (4.19.7)
+    picky (4.20.0)
       activesupport (~> 3)
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
