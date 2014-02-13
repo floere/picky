@@ -1,3 +1,10 @@
+## 4.20.1
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Explicitly allow `FalseClass` and `String` instances on `Index#stopwords` and `Search#stopwords`.
+- Explicitly allow `FalseClass` instances on `Index#remove_characters` and `Search#removes_characters`.
+
 ## 4.20.0
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
