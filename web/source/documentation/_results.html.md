@@ -58,4 +58,4 @@ So if you need different sort orders you have to define two indexes.
 
 Why? This was a conscious design decision on my part. Usually, we do not need multiple sortings in a search application (I reckon around 95% of the cases). However, if you need it, you can.
 
-TODO Example that shows how to have different result sorting depending on the category a result is found.
+TODO Example that shows how to have different result sorting depending on the category a result is found in.

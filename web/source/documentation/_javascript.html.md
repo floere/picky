@@ -7,9 +7,9 @@ Picky offers a standard HTML interface that works well with its JavaScript. Rend
 
     Picky::Helper.cached_interface
 
-Adding a JS interface:
+Adding a JS interface (written in [jQuery](http://jquery.com) for brevity):
 
-    $(window).load(function() {
+    $(document).ready(function() {
       pickyClient = new PickyClient({
         // A full query displays the rendered results.
         //
@@ -36,7 +36,7 @@ The variable pickyClient has the following functions:
     //
     pickyClient.insertFromURL(overrideQuery);
 
-When creating the client itself, you have many more options, dewscribed here: 
+When creating the client itself, you have many more options, as described here:
 
 ### Javascript Options
 
@@ -54,7 +54,7 @@ The `before` is executed before a call to the server. Use this to add any filter
 
     var beforeCallback = config.before || function(query, params) { };
 
-The `success` is executed just after a successful response. Use this to modify returned results before Picky renders them: 
+The `success` is executed just after a successful response. Use this to modify returned results before Picky renders them:
 
     var successCallback = config.success || function(data, query) { };
 
@@ -62,7 +62,7 @@ The `after` callback is called just after Picky has finished rendering results �
 
     var afterCallback = config.after || function(data, query) { };
 
-This will cause the interface to search even if the input field is empty: 
+This will cause the interface to search even if the input field is empty:
 
     var searchOnEmpty = config.searchOnEmpty || false;
 
@@ -112,9 +112,9 @@ Explanations are the small headings over allocations (grouped results). Picky ju
 
 Picky would now write "written by soandso", making it much nicer to read.
     
-Choices describe the choices that are given to a user when Picky would like to know what the user was searching. This is done when Picky gets too many results in too many allocations. It is very unclear what the user was looking for.
+Choices describe the choices that are given to a user when Picky would like to know what the user was searching. This is done when Picky gets too many results in too many allocations, e.g. it is very unclear what the user was looking for.
 
-In this example:
+An example for choices would be:
     
     choices: {
       en:{
@@ -133,7 +133,7 @@ In this example:
       }
     },
     
-Was the user just looking for a title? (Displayed as eg. "ULYSSES – because of the filter and format) Or was he looking for an author? (Displayed as "Written by Ulysses")
+Was the user just looking for a title? (Displayed as eg. "ULYSSES – because of the filter and format) or was he looking for an author? (Displayed as "Written by Ulysses")
 
 Multicategory combinations are possible. If the user searches for Ulysses Joyce, then Picky will most likely as if this is a title and an author: "Called Ulysses, written by Joyce".
 
@@ -151,17 +151,17 @@ The last option describes how to group the choices in a text. Play with this to 
 
 #### Modifying the interface itself: Selectors
 
-There are quite a few selector options – you only need those if you heavily customise the interface. You tell Picky where to find the results div or the search form etc.
+There are quite a few selector options – you only need those if you heavily customise the interface. You tell Picky where to find the div containing the results or the search form etc.
 
 The selector that contains the search input and the result:
 
     config['enclosingSelector'] || '.picky';
 
-The selector that describes the form the input field is in: 
+The selector that describes the form the input field is in:
 
     var formSelector = config['formSelector'] || (enclosingSelector + ' form');
     
-The `formSelector` (short `fs`) is used to find the input etc.: 
+The `formSelector` (short `fs`) is used to find the input etc.:
 
     config['input']   = $(config['inputSelector']   || (fs + ' input[type=search]'));
     config['reset']   = $(config['resetSelector']   || (fs + ' div.reset'));
@@ -195,4 +195,4 @@ Results rendering is controlled by:
       // e.g. ['category1', 'category2']
     config['wrapResults']    = config['wrapResults']       || '<ol></ol>';
 
-The option `wrapResults` refers to what the results are wrapped in, by default `<ol></ol>`. 
+The option `wrapResults` refers to what the results are wrapped in, by default `<ol></ol>`.

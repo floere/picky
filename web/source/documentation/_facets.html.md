@@ -9,7 +9,7 @@ In Picky, categories are explicit slices over your index data. Picky facets are 
 
 What does "implicit" mean here?
 
-It means that you didn't explicitly say, "My data is shoes, and I have these four brands: Nike, Adidas, Puma, and Vibram". 
+It means that you didn't explicitly say, "My data is shoes, and I have these four brands: Nike, Adidas, Puma, and Vibram".
 
 No, instead you told Picky that your data is shoes, and there is a category "brand". Let's make this simple:
 
@@ -29,11 +29,11 @@ With this data in mind, let's look at the possibilities:
 
 Index facets are very straightforward.
 
-You ask the index for facets and it will give you all the facets it has and how many:
+You ask the index for facets and it will give you all the facets it has and how many results there are within:
 
     index.facets :brand # => { 'nike' => 2, 'adidas' => 1 }
     
-The category type is a good candidate also:
+The category type is a good candidate for facets, too:
 
     index.facets :type # => { 'sports' => 2, 'casual' => 1 }
 
@@ -43,7 +43,7 @@ What are the options?
 * `counts`: `index.facets :brand, counts: false # => ['nike', 'adidas']`
 * both options: `index.facets :brand, at_least: 2, counts: false # => ['nike']`
 
-`at_least` only gives you facets which occur at least n times and `counts` tells the facets method whether you want the counts with the facets or not.
+`at_least` only gives you facets which occur at least n times and `counts` tells the facets method whether you want counts with the facets or not. If counts are omitted, you'll get an `Array` of facets instead of a `Hash`.
 
 Pretty straightforward, right?
 
@@ -51,7 +51,7 @@ Search facets are quite similar:
 
 ### Search facets
 
-Search facets work the exact same way as index facets and you can use them in the same way:
+Search facets work similarly to index facets. In fact, you can use them in the same way:
 
     search_interface.facets :brand # => { 'nike' => 2, 'adidas' => 1 }
     search_interface.facets :type # => { 'sports' => 2, 'casual' => 1 }
@@ -59,14 +59,14 @@ Search facets work the exact same way as index facets and you can use them in th
     search_interface.facets :brand, counts: false # => ['nike', 'adidas']
     search_interface.facets :brand, at_least: 2, counts: false # => ['nike']
 
-However, you can also filter the facets with a filter query option.
+However search facets are more powerful, as you can also filter the facets with a filter query option:
 
     shoes.facets :brand, filter: 'some filter query'
 
 What does that mean?
 
 Usually you want to use multiple facets in your interface.
-For example, a customer might already have filtered by type "sports" because they are only interested in sports shoes.
+For example, a customer might already have filtered results by type "sports" because they are only interested in sports shoes.
 Now you'd like to show them the remaining brands, so that they can filter on the remaining facets.
 
 How do you do this?
@@ -75,7 +75,7 @@ Let's say we have an index as above, and a search interface to the index:
 
     shoes = Picky::Search.new index
 
-Now, if the customer has already filtered for sports, you simply add the `filter` option:
+If the customer has already filtered for sports, you simply pass the query to the `filter` option:
 
     shoes.facets :brand, filter: 'type:sports' # => { 'nike' => 1, 'adidas' => 1 }
 
@@ -83,9 +83,9 @@ This will give you only 1 "nike" facet. If the customer filtered for "casual":
 
     shoes.facets :brand, filter: 'type:casual' # => { 'nike' => 1 }
 
-then we'd only get the casual nike facet (from that one "barefoot" shoe).
+then we'd only get the casual nike facet (from that one "barefoot" shoe picky loves so much).
 
-If the customer has filtered for brand "nike" and type "sports", you'd get:
+As said, filtering works like the query string passed to picky. So if the customer has filtered for brand "nike" and type "sports", you'd get:
 
     shoes.facets :brand, filter: 'brand:nike type:sports' # => { 'nike' => 1 }
     shoes.facets :name, filter: 'brand:nike type:sports' # => { 'zoom' => 1 }
@@ -112,7 +112,7 @@ This is how you test facets:
 
 #### Index Facets
     
-    # We should find two surname facets. 
+    # We should find two surname facets.
     #
     index.facets(:surname).should == {
       'hanke' => 2,  # hanke occurs twice
@@ -153,9 +153,9 @@ This is how you test facets:
 Two rules:
 
 1. Index facets are faster than filtered search facets. If you don't filter though, search facets are as fast as index facets.
-1. Only use facets on data which are a good fit for facets – where there aren't many facets to the data.
+2. Only use facets on data which are a good fit for facets – where there aren't many facets to the data.
 
-A good example for a good fit would be brands of shoes.
+A good example for a meaningful use of facets would be brands of shoes.
 There aren't many different brands (usually less than 100).
 
 So this facet query

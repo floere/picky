@@ -38,6 +38,6 @@ You can put these pieces anywhere, independently.
 Picky tries its best to be *transparent* so you can go have a look if something goes wrong. It wants you to *never feel powerless*.
 
 All the indexes can be viewed in the `/index` directory of the project. They are waiting for you to inspect their JSONy goodness.
-Should anything not work with your search, you can see how it is indexed in the actual indexes and change your indexing parameters accordingly.
+Should anything not work with your search, you can investigate how it is indexed by viewing the actual index files (remember, they are in readable JSON) and change your indexing parameters accordingly.
 
-Since all is Ruby, you can log as much data as you want to help you improve your search application until it's working perfectly.
+You can also log as much data as you want to help you improve your search application until it's working perfectly.

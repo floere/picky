@@ -47,7 +47,7 @@ The resulting ids should be from the same id space to be useful – or the ids s
 
 The in-memory index saves its indexes as files transparently in the form of JSON files that reside in the `/index` directory.
 
-When the server is started, they are loaded into memory. As soon as the server is stopped, the indexes are not in memory again.
+When the server is started, they are loaded into memory. As soon as the server is stopped, the indexes are deleted from memory.
 
 Indexing regenerates the JSON index files and can be reloaded into memory, even in the running server (see below).
 
@@ -57,7 +57,7 @@ The Redis index saves its indexes in the Redis server on the default port, using
 
 When the server is started, it connects to the Redis server and uses the indexes in the key-value store.
 
-Indexing regenerates the indexes in the Redis server – you do not have to restart the server for that.
+Indexing regenerates the indexes in the Redis server – you do not have to restart the server running Picky.
 
 #### SQLite{#indexes-types-sqlite}
 
@@ -87,7 +87,7 @@ To get a *single index* use
 
     Picky::Indexes[:index_name]
 
-and to get a *single category*, use
+and to get a *single category* of an index, use
 
     Picky::Indexes[:index_name][:category_name]
 
@@ -124,7 +124,7 @@ This is all you can do to configure an index:
       result_identifier 'boooookies'
     end
 
-Usually you don't need to configure all that.
+Usually you won't need to configure all that.
 
 But if your boss comes in the door and asks why X is not found… you know. And you can improve the search engine relatively *quickly and painless*.
 
@@ -148,12 +148,14 @@ You define them on an *index*:
       source { Book.all } # Loads on indexing. Preferred.
     end
 
-Or even a *single category*:
+Or even on a *single category*:
 
     Index.new :books do
       category :title,
                source: lambda { Book.all }
     end
+		
+TODO more explanation how index sources and single category sources might work together.
 
 Explicit data sources must [respond to #each](#indexes-sources-each), for example, an Array.
 
@@ -204,7 +206,7 @@ For example, this would instantly get the records, since `#all` is a kicker meth
       source Book.all # Not the best idea.
     end
 
-In this case, you can give the `source` method a block:
+In this case, it is better to give the `source` method a block:
 
     Index::Memory.new :books do
       source { Book.all }
@@ -235,8 +237,8 @@ Or to a specific category:
 Currently, there are 7 methods to change an index:
 
 * `#add`: Adds the thing to the end of the index (even if already there). `index.add thing`
-* `#<<`: Adds the thing to the end of the index (shows up last in sorting). `index << thing`
-* `#unshift`: Adds the thing to the beginning of the index (shows up first in sorting). `index.unshift thing`
+* `#<<`: Adds the thing to the end of the index (shows up last in results). `index << thing`
+* `#unshift`: Adds the thing to the beginning of the index (shows up first in results). `index.unshift thing`
 * `#remove`: Removes the thing from the index (if there). `index.remove thing`
 * `#replace`: Replaces the thing in the index (if there, otherwise like `#add`). Equal to `#remove` followed by `#add`. `index.replace thing`
 * `#replace_from`: Pass in a Hash. Replaces the thing in the index (if there, otherwise like `#add`). Equal to `#remove` followed by `#add`. `index.replace id: 1, example: "Hello, I am Hash!"`

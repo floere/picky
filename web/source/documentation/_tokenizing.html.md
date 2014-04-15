@@ -84,7 +84,7 @@ A very simple tokenizer that just splits the input on commas:
       indexing MyTokenizer.new
     end
 
-The same could have been achieved with this:
+The same can be achieved with this:
 
     Picky::Index.new :books do
       indexing splits_text_on: ','
@@ -132,7 +132,7 @@ Either look in the `/index` directory (the "prepared" files is the tokenized dat
     "test" is saved in the Picky::Indexes index as ["test"]
     "test" as a search will be tokenized as ["test"]
     
-You can tell Picky which index, or even category to use: 
+You can tell Picky which index, or even category to use:
     
     $ rake try[test,books]
     $ rake try[test,books,title]
