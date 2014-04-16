@@ -54,7 +54,7 @@ Configuring an index:
 
 * [Configuration](#indexes-configuration)
 
-How does data get in there?
+How does data get into an index?
 
 * [Indexing](#indexes-indexing)
 * [Data Source Overview](#indexes-sources)

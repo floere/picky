@@ -3,7 +3,7 @@
 {.edit}
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_search.html.md)
 
-Picky offers a `Search` interface for the indexes. You instantiate it as follows.
+Picky offers a `Search` interface for the indexes. You instantiate it as follows:
 
 Just searching over one index:
 
@@ -41,8 +41,8 @@ The `boost` option defines what combinations to boost.
 
 This is unlike boosting in most other search engines, where you can only boost a given field. I've found it much more useful to boost combinations.
 
-For example, you have an index of addresses. The usual case is that someone is looking for a street and a number. So if Picky encounters that combination (in that order), it should move these results to a more prominent spot.
-But if it thinks it's a street number, followed by a street, it is probably wrong, since usually you search for "Road 10", instead of "10 Road" (assuming this is the case where you come from).
+For example, you have an index of addresses. The usual case is that someone is looking for a street and a number. So if Picky encounters that combination (in that order), it should promote the results containing that combination to a more prominent spot.
+On the other hand, if picky encounters a street number followed by a street name, which is unlikely to be a search for an address (where I come from), you might want to demote that result.
 
 So let's boost `street, streetnumber`, while at the same time deboost `streetnumber, street`:
 
@@ -59,7 +59,7 @@ For example:
       category :streetnumber
     end
 
-This boosts the weight of the street category, for all searches using the index with this category. So whenever the street category is found in the results, it will boost these results.
+This boosts the weight of the street category for all searches using the index with this category. So whenever the street category is found in results, it will boost these.
 
 ##### Note on Boosting
 
@@ -67,7 +67,7 @@ Picky combines consecutive categories in searches for boosting. So if you search
 
 Why? In earlier versions of Picky we found that boosting specific combinations is less useful than boosting a specific _order_ of categories.
 
-Let me give you an example from a movie search engine. instead of having to say `boost [:title] => +1, [:title, :title] => +1, [:title, :title, :title] => +1`, it is far more useful to say "If you find any number of title words in a row, boost it". So, when searching for "star wars empire strikes back 1979", it is less important that it is exactly 5 title categories in a row that a title followed by the release year. In this case, the boost `[:title, :release_year] => +3` would be applied.
+Let me give you an example from a movie search engine. instead of having to say `boost [:title] => +1, [:title, :title] => +1, [:title, :title, :title] => +1`, it is far more useful to say "If you find any number of title words in a row, boost it". So, when searching for "star wars empire strikes back 1979", it is less important that the query contains 5 title words than that it contains a title followed by a release year. So in this particular case, a boost defined by `[:title, :release_year] => +3` would be applied.
 
 #### Ignoring Categories{#search-options-ignore}
 
@@ -106,7 +106,7 @@ then the combinations
     [:last_name, :first_name, :first_name]
     [:last_name, :last_name, :first_name]
 
-will be thrown away, since they are in the order `[last_name, first_name]`. Note that `[:last_name, :first_name, :last_name]` is not thrown away since it is last-first-last.
+will be thrown away, since they are in the order `[:last_name, :first_name]`. Note that `[:last_name, :first_name, :last_name]` is not thrown away since it is last-first-last.
 
 #### Keeping Combinations of Categories{#search-options-only-combination}
 
@@ -185,7 +185,7 @@ The `terminate_early(integer)` or `terminate_early(with_extra_allocations: integ
 
 However, this will also return a wrong total.
 
-So, important note: Only use when you don't display a total.
+So, important note: Only use when you don't display a total. Or you want to fool your users (not recommended).
 
 Examples:
 

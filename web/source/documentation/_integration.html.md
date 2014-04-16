@@ -60,7 +60,7 @@ In `config/initializers/picky.rb`, add the following: (lots of comments to help 
     # BookSearch is the search interface
     # on the books index. More info here:
     # http://florianhanke.com/picky/documentation.html#search
-    # 
+    #
     BookSearch = Picky::Search.new BooksIndex
 
     # We are explicitly indexing the book data.
@@ -69,7 +69,7 @@ In `config/initializers/picky.rb`, add the following: (lots of comments to help 
 
 That's already a nice setup. Whenever Rails starts up, this will add all books to the index.
 
-From anywhere (if you have multiple, call `Picky::Indexes.index` to index all). 
+From anywhere (if you have multiple, call `Picky::Indexes.index` to index all).
 
 Ok, this sets up the index and the indexing. What about the model?
 
@@ -85,12 +85,12 @@ In the model, here `app/models/book.rb` add this:
     def picky_index
       if destroyed?
         BooksIndex.remove id
-      else        
+      else
         BooksIndex.replace self
       end
     end
 
-I actually recommend to use after_commit since it that would be perfectly correct, but it did not work at the time of writing.
+I actually recommend to use `after_commit`, but it did not work at the time of writing.
 
 Now, in the controller, you need to return some results to the user.
 
@@ -123,11 +123,11 @@ The first line executes the search using query params. You can try this using `c
     
 The next few lines use the results as a hash, and populate the results with data loaded from the database, rendering a book partial.
 
-Then, we respond to html with a simple web page, or respond to json with the results.
+Then, we respond to HTML requests with a simple web page, or respond to JSON requests with the results rendered in JSON.
 
-As you can see, you can do whatever you want with the results. You could use this in an API, or send simple text to the user, or whatever you want.
+As you can see, you can do whatever you want with the results. You could use this in an API, or send simple text to the user, or...
 
-TODO Using the Picky client JavaScript. 
+TODO Using the Picky client JavaScript.
 
 #### External Picky server
 

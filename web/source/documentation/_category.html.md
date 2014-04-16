@@ -110,9 +110,9 @@ Pretty straightforward, right?
 
 ### Option weight{#indexes-categories-weight}
 
-The weight option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be slightly higher weighed.
+The weight option defines how strongly a word is weighed. By default, Picky rates a word according to the logarithm of its occurrence. This means that a word that occurs more often will be weighed slightly higher.
 
-You define this by this:
+You define a weight option like this:
 
     category :some, weight: MyWeights.new
 
@@ -122,11 +122,11 @@ You can also pass in your own weight generators. See [this article](http://flori
 
 If you don't want Picky to calculate weights for your indexed entries, you can use constant or dynamic weights.
 
-With 0.0 as default weight:
+With 0.0 as a constant weight:
 
     category :some, weight: Weights::Constant.new # Returns 0.0 for all results.
 
-With 3.14 as set weight:
+With 3.14 as a constant weight:
 
     category :some, weight: Weights::Constant.new(3.14) # Returns 3.14 for all results.
 
@@ -136,7 +136,7 @@ Or with a dynamically calculated weight:
       sym_or_str.length # Uses the length of the symbol as weight.
     end
 
-You almost never need to use your specific weights. More often than not, you can fiddle with [boosting combinations of categories](#search-options-boost) , via the `boost` method in searches.
+You almost never need to define weights. More often than not, you can fiddle with [boosting combinations of categories](#search-options-boost) , via the `boost` method in searches.
 
 #### Why choose fiddling with weight rather than boosts?
 
@@ -152,13 +152,15 @@ This adds +1 to all weights. Why the logarithmic? By default, Picky weighs categ
 
 The `Logarithmic` initializer accepts a constant to be added to the result. Adding the constant `+1` is like multiplying the weight by `Math::E` (e is Euler's constant). If you don't understand, don't worry, just know that by adding a constant you multiply by a certain value.
 
-In short: Use `weight` on the index, if you need a category to be boosted everywhere, wherever it occurs, and use [boosting](#search-options-boost) if you need to boost specific combinations of categories only for a specific search.
+In short:
+* Use `weight` on the index, if you need a category to be boosted everywhere, wherever it occurs
+* Use [boosting](#search-options-boost) if you need to boost specific combinations of categories only for a specific search.
 
 ### Option similarity{#indexes-categories-similarity}
 
 The similarity option defines if a word is also found when it is typed wrong, or _close_ to another word. So, "Picky" might be already found when typing "Pocky~" (Picky will search for similar word when you use the tilde, ~).
 
-You define this by this:
+You define a similarity option like this:
 
     category :some, similarity: Similarity::None.new
 
@@ -176,7 +178,7 @@ You can also pass in your own similarity generators. See [this article](http://f
 
 Usually, when you search for `title:wizard` you will only find books with "wizard" in their title.
 
-Maybe your client would like to be able to only enter "t"wizard"". In that case you would use this option:
+Maybe your client would like to be able to only enter `t:wizard`. In that case you would use this option:
 
     category :some, qualifier: "t"
 
@@ -225,7 +227,7 @@ You can also populate the index at runtime (eg. with `index.add`) using a lambda
 
 ### Option key_format{#indexes-categories-keyformat}
 
-You almost never use this, as the key format will usually be the same for all categories, which is when you would define it on the index, [like so](#indexes-keyformat).
+You will almost never need to use this, as the key format will usually be the same for all categories, which is when you would define it on the index, [like so](#indexes-keyformat).
 
 But if you need to, use as with the index.
 
@@ -236,7 +238,7 @@ But if you need to, use as with the index.
 
 ### Option source{#indexes-categories-source}
 
-You almost never use this, as the source will usually be the same for all categories, which is when you would define it on the index, "like so":#indexes-sources.
+You will almost never need to use this, as the source will usually be the same for all categories, which is when you would define it on the index, "like so":#indexes-sources.
 
 But if you need to, use as with the index.
 
@@ -263,7 +265,7 @@ And Person has a method `#names` which returns this array:
       
     end
 
-Then Picky will simply use the tokens in that array without (pre-)processing them. Of course, this means you need to really do all the tokenizing work. If you leave the tokens uppercase, then nothing will be found, unless you set the Search to be case-sensitive, for example.
+Then Picky will simply use the tokens in that array without (pre-)processing them. Of course, this means you need to do all the tokenizing work. If you leave the tokens in uppercase formatting, then nothing will be found, unless you set the Search to be case-sensitive, for example.
 
 ### User Search Options{#indexes-categories-searching}
 
@@ -276,11 +278,11 @@ Users can use some special features when searching. They are:
 * Multi-categorized: `title,author:something` (Picky will search in title _and_ author categories, in each index of the search)
 * Range: `year:1999-2012` (Picky will search all values in a Ruby `Range`: `(1999..2012)`)
 
-These options can be combined (e.g. `title,author:funky~"`): This will try to find similar words to funky (like "fonky"), but no partials of them (like "fonk"), in both title and author. 
+These options can be combined (e.g. `title,author:funky~"`): This will try to find similar words to funky (like "fonky"), but no partials of them (like "fonk"), in both title and author.
 
 Non-partial will win over partial, if you use both, as in `test*"`.
 
-Also note that these options need to make it through the [tokenizing](#tokenizing), so don't remove any of `*":,-`.
+Also note that these options need to make it through the [tokenizing](#tokenizing), so don't remove any of `*":,-`. TODO unclear
 
 ### Key Format (Format of the indexed Ids){#indexes-keyformat}
 
@@ -311,4 +313,4 @@ This index is identified by `media` in the results:
       result_identifier 'media'
     end
 
-You still refer to it as `:books` in e.g. Rake tasks, `Picky::Indexes[:books].reload`. It's just for the results.
+You still refer to it as `:books` in e.g. Rake tasks, `Picky::Indexes[:books].reload`. The `result_identifier` option is just for the results.
