@@ -20,7 +20,7 @@ var PickyController = function(config) {
   //
   var extractQuery = function(url) {
     var match = url && url.match(/q=([^&]+)/);
-    return match && decodeURIComponent(match[1]).replace(/\+/g, ' ').replace(/#/g, '') || "";
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' ')) || "";
   };
   this.extractQuery = extractQuery;
   
@@ -52,7 +52,7 @@ var PickyController = function(config) {
       if (!searchOnEmpty && query == '') {
         path = '/';
       } else {
-        path = "?q=" + escape(query).replace(/\*/g,'%2A');
+        path = "?q=" + encodeURIComponent(query);
       }
       window.History && window.History.getState() && window.History.pushState && window.History.pushState(null, null, path);
     }
@@ -145,20 +145,14 @@ var PickyController = function(config) {
   var searchTextCleared  = function() { clearInterval(liveSearchTimerId); };
   this.searchTextCleared = searchTextCleared;
   
+  var invalidTriggerKeys = [
+    1, 2, 3, 4, 5, 6, 7, //
+    9, 10, 11, 12, //
+    14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28, 29, 30, 31
+  ];
   var shouldTriggerSearch = function(event) {
-  var validTriggerKeys = [
-      0,  // special char (ä ö ü etc...)
-      8,  // backspace
-      13, // enter
-      32, // space
-      46, // delete
-      48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numbers
-      65, 66, 67, 68, 69, 70, 71, 72, 73, 74, // a-z
-      75, 76, 77, 78, 79, 80, 81, 82, 83, 84,
-      85, 86, 87, 88, 89, 90
-    ];
-                
-    return $.inArray(event.keyCode, validTriggerKeys) > -1;
+    return $.inArray(event.keyCode, invalidTriggerKeys) < 0;
   };
   var searchTextEntered = function(text, event) {
     if (shouldTriggerSearch(event)) {
