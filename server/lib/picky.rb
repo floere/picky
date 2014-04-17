@@ -33,7 +33,7 @@ module Picky
   # TODO Still required with Ruby 2.1?
   # 
   # require 'fileutils'
-  # require 'strscan'
+  require 'strscan'
   
   # Check if platform specific modifiers need to be installed.
   #
