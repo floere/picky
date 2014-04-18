@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'picky', '~> 4.0'
 gem 'sinatra'
+gem 'tilt', '~> 1.4.1'
 gem 'rake'
 gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.
