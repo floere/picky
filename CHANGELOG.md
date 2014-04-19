@@ -1,3 +1,9 @@
+## 4.20.2
+
+###### [Server](https://github.com/floere/picky/tree/master/server)
+
+- Still `require 'strscan'`.
+
 ## 4.20.1
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
@@ -182,7 +188,7 @@
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
 - Added experimental options `Search#only` and `Search#ignore`.
-  
+
   Example:
     people = Search.new(people_index) do
       only [:first_name, :last_name],
@@ -319,7 +325,7 @@
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
-- If you add categories dynamically _after_ using the index in a search, you have to call `search.remap_categories` to have the new category's qualifiers registered. 
+- If you add categories dynamically _after_ using the index in a search, you have to call `search.remap_categories` to have the new category's qualifiers registered.
 
 ## 4.6.3 "spermy operation"
 
@@ -485,7 +491,7 @@ Then you can search like so:
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
-- Require fileutils regardless of the Ruby version Picky is run in. 
+- Require fileutils regardless of the Ruby version Picky is run in.
 
 ## 4.2.3 "overbird"
 
@@ -545,7 +551,7 @@ Then you can search like so:
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
 
-- The Sinatra style server can now `extend Picky::Sinatra::IndexActions` to install index updating POST/DELETE methods on the "/" path (Note: Currently needs a `require 'picky/sinatra/index_actions'` beforehand). 
+- The Sinatra style server can now `extend Picky::Sinatra::IndexActions` to install index updating POST/DELETE methods on the "/" path (Note: Currently needs a `require 'picky/sinatra/index_actions'` beforehand).
 
 ## 4.0.6 "bug #57"
 
