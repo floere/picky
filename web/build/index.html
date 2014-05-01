@@ -133,18 +133,21 @@
   <div class='grid_1'>
     <p>
       <strong>Getting started</strong>:
-      Got 5 minutes?
-    </p>
-    <p>
-      <a href='getting_started.html'>Install and run Picky with a nice Sinatra interface</a>
-    </p>
-    <p>
-      Got 2 minutes? Run
+      Got 2 minutes?
       <pre><code>gem install picky</code></pre>
     </p>
     <p>
       and copy paste
-      <pre><code>require 'picky'&#x000A;&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;data = Picky::Index.new :people do&#x000A;  category :age, partial: Picky::Partial::None.new&#x000A;  category :name&#x000A;end&#x000A;&#x000A;data.replace Person.new(1, 34, 'Florian')&#x000A;data.replace Person.new(2, 77, 'Floris')&#x000A;&#x000A;people = Picky::Search.new data&#x000A;&#x000A;results = people.search '34 flori' # Takes around 0.0001s&#x000A;&#x000A;puts results # For logging&#x000A;puts results.allocations # => Returns ids, weight etc.</code></pre>
+      <pre><code>#!/usr/bin/env ruby&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
+    </p>
+    <p>
+      Have fun changing the code to suit your needs :)
+    </p>
+    <p>
+      Got 5 minutes and want Picky in a web server?
+    </p>
+    <p>
+      <a href='getting_started.html'>Install and run Picky with a nice Sinatra interface</a>
     </p>
     <h3>Help / Feedback</h3>
     <p>
