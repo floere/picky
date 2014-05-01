@@ -1,3 +1,7 @@
+## 4.21.0
+
+- Rename "aux" folder to "tools".
+
 ## 4.20.2
 
 ###### [Server](https://github.com/floere/picky/tree/master/server)
