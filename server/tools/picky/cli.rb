@@ -74,7 +74,7 @@ module Picky
         usage(name, params) || exit(1) unless url_or_path
 
         require 'picky-client'
-        require 'picky-client/auxiliary/terminal'
+        require 'picky-client/tools/terminal'
         terminal = Terminal.new url_or_path, ids
         terminal.run
       rescue LoadError => e

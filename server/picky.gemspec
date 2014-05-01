@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
 
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky@gmail.com'
-  
+
   s.licenses = ['MIT', 'LGPL']
 
   s.homepage = 'http://florianhanke.com/picky'
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.executables = ['picky']
   s.default_executable = "picky"
 
-  s.files = Dir["auxiliary/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "ext/picky/picky.c"]
+  s.files = Dir["tools/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "ext/picky/picky.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
 
   s.extensions << 'ext/picky/extconf.rb'
