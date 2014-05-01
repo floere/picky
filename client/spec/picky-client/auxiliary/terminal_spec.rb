@@ -5,7 +5,7 @@ require 'spec_helper'
 # We need to load the Statistics file explicitly as the Statistics
 # are not loaded with the Loader (not needed in the server, only for script runs).
 #
-require File.expand_path '../../../../lib/picky-client/aux/terminal', __FILE__
+require File.expand_path '../../../../lib/picky-client/auxiliary/terminal', __FILE__
 
 describe Picky::Terminal do
   

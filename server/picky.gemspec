@@ -20,12 +20,12 @@ Gem::Specification.new do |s|
   s.executables = ['picky']
   s.default_executable = "picky"
 
-  s.files = Dir["aux/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "ext/picky/picky.c"]
+  s.files = Dir["auxiliary/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "ext/picky/picky.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
 
   s.extensions << 'ext/picky/extconf.rb'
 
-  s.add_runtime_dependency 'activesupport', '~> 3'
+  s.add_runtime_dependency 'activesupport'
   s.add_runtime_dependency 'multi_json', '~> 1.3'
   s.add_runtime_dependency 'rack_fast_escape', '~> 2009.0'
   s.add_runtime_dependency 'text', '~> 1.2'

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 # We need to load the CLI file explicitly as the CLI is not loaded with the Loader (not needed in the server, only for script runs).
 #
-require_relative '../../../aux/picky/cli'
+require_relative '../../../auxiliary/picky/cli'
 
 describe Picky::CLI do
 
