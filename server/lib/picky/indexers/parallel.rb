@@ -58,15 +58,17 @@ module Picky
       def index_flush objects, file, category, cache, tokenizer
         comma   = ?,
         newline = ?\n
-        
+
         # Optimized, therefore duplicate code.
         #
+        id = category.id
+        from = category.from
         objects.each do |object|
-          tokens = object.send category.from
+          tokens = object.send from
           tokens, _ = tokenizer.tokenize tokens if tokenizer # Note: Originals not needed. TODO Optimize?
           tokens.each do |token_text|
             next unless token_text
-            cache << object.id << comma << token_text << newline
+            cache << object.send(id) << comma << token_text << newline
           end
         end
 

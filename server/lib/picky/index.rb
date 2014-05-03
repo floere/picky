@@ -126,7 +126,7 @@ module Picky
 
       instance_eval(&Proc.new) if block_given?
     end
-    
+
     # TODO Doc.
     #
     def static
@@ -149,7 +149,7 @@ module Picky
         @backend ||= Backends::Memory.new
       end
     end
-    
+
     # The directory used by this index.
     #
     # Note: Used @directory ||=, but needs to be dynamic.
@@ -157,7 +157,7 @@ module Picky
     def directory
       ::File.join(Picky.root, 'index', PICKY_ENVIRONMENT, name.to_s)
     end
-    
+
     # Restrict categories to the given ones.
     #
     # Functionally equivalent as if indexes didn't
@@ -380,7 +380,7 @@ INDEX
       ].compact
       "#{self.class}(#{s.join(', ')})"
     end
-    
+
     # Displays the structure as a tree.
     #
     def to_tree_s indent = 0

@@ -1,7 +1,7 @@
 module Picky
 
   class Category
-    
+
     class Picky::IdNotGivenException < StandardError; end
 
     # Removes an indexed object with the
@@ -20,9 +20,9 @@ module Picky
     #
     def add object, where = :unshift
       if from.respond_to? :call
-        add_text object.id, from.call(object), where
+        add_text object.send(id), from.call(object), where
       else
-        add_text object.id, object.send(from), where
+        add_text object.send(id), object.send(from), where
       end
     end
 
@@ -30,20 +30,20 @@ module Picky
     # adds it again.
     #
     def replace object, where = :unshift
-      remove object.id
+      remove object.send id
       add object, where
     end
-    
+
     # Replaces just part of the indexed data.
     #
     # Note: Takes a hash as opposed to the add/replace method.
     #
     def replace_from hash #, id = (hash[:id] || hash['id'] || raise(IdNotGivenException.new)).send(key_format)
       return unless text = hash[from] || hash[from.to_s]
-      
+
       raise IdNotGivenException.new unless id = hash[:id] || hash['id']
       id = id.send key_format if key_format?
-      
+
       remove id
       add_text id, text
     end
@@ -71,13 +71,13 @@ module Picky
       else
         tokens = text_or_tokens
       end
-      
+
       format = key_format?
       tokens.each { |text| add_tokenized_token id, text, where, format }
     rescue NoMethodError => e
       show_informative_add_text_error_message_for e
     end
-    
+
     def show_informative_add_text_error_message_for e
       if e.name == :each
         raise %Q{#{e.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
@@ -90,7 +90,7 @@ module Picky
     #
     def add_tokenized_token id, text, where = :unshift, format = true, static = false
       return unless text
-      
+
       id = id.send key_format if format
       # text = text.to_sym if @symbols # SYMBOLS.
       id.freeze

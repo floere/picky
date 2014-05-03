@@ -89,6 +89,17 @@ module Picky
       @source.respond_to?(:call) ? @source.call : @source
     end
 
+    # API method.
+    #
+    # Defines the name of the ID method to use on the indexed object.
+    #
+    # === Parameters
+    # * name: Method name of the ID.
+    #
+    def id name = nil
+      @id_name = name || @id_name || :id
+    end
+
     # Define a key_format on the index.
     #
     # Parameter is a method name to use on the key (e.g. :to_i, :to_s, :strip, :split).

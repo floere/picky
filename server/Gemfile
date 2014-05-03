@@ -9,7 +9,7 @@ group :development do
   gem 'rack'
   gem 'text'
   gem 'procrastinate'
-  
+
   gem 'stackprof'
   gem 'perfer'
 end
@@ -17,7 +17,7 @@ end
 group :test do
   gem 'rspec', '~> 3.0.0.beta'
   gem 'rake-compiler'
-  
+
   # Needed for testing itself.
   #
   gem 'simplecov', :require => false # Will install simplecov-html as a dependency
@@ -34,7 +34,7 @@ group :test do
   gem 'hiredis'
   gem 'redis'
   gem 'sqlite3'
-  
+
   gem 'fast-stemmer', :require => 'stemmer'
   gem 'ruby-stemmer', :require => 'lingua/stemmer'
 

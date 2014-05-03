@@ -73,7 +73,17 @@ module Picky
     def key_format?
       key_format
     end
-    
+
+    # Return the key format.
+    #
+    # If no key_format is defined on the category
+    # and the source has no key format, ask
+    # the index for one.
+    #
+    def id
+      @id ||= @index.id
+    end
+
     def static?
       @index.static? # || @static
     end
@@ -83,7 +93,7 @@ module Picky
     def from
       @from || name
     end
-    
+
     # Return an appropriate source.
     #
     # If we have no explicit source, we'll check the index for one.
