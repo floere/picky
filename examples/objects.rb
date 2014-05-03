@@ -1,5 +1,5 @@
-# Copy this into a Ruby file "objectsearch.rb", then:
-#   ruby objectsearch.rb
+# Copy this into a Ruby file "object_search.rb", then:
+#   ruby object_search.rb
 
 require 'picky'
 

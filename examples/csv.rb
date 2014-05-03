@@ -1,5 +1,5 @@
-# Copy this into a Ruby file "csvsearch.rb", then:
-#   ruby csvsearch.rb
+# Copy this into a Ruby file "csv_search.rb", then:
+#   ruby csv_search.rb
 
 require 'picky'
 require 'csv'

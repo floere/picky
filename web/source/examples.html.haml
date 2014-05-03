@@ -4,13 +4,21 @@ title: Code Examples
 
 .container_2
   .grid_2.plain
+    %p
+      These are a few simple examples that will get you into Picky quickly.
     %h4 Index & Search
     %ul
       %li
         %a{ :href => '#objects' } Ruby objects
       %li
         %a{ :href => '#csv' } CSV files
-  .grid_1
+      %li
+        %a{ :href => '#document' } Documents
+    %h4 Dump & Load
+    %ul
+      %li
+        %a{ :href => '#dump-load' } Index
+  .grid_2
     %h3#objects Index & Search Ruby objects
     %p
       %pre
@@ -56,7 +64,7 @@ title: Code Examples
             # Show the results.
             #
             p results.ids # => [2]
-  .grid_1
+  .grid_2
     %h3#csv Index & Search CSV files
     %p
       %pre
@@ -119,3 +127,145 @@ title: Code Examples
             # Show the results.
             #
             p results.ids # => ["2"]
+
+  .grid_2
+    %h3#document Index & Search Documents
+    %p
+      %pre
+        %code
+          gem install picky
+    %p
+      Copy the poem "The Raven" by E. A. Poe into ./story.txt. Here
+      is the ending (that's enough to run the example):
+    %p
+      %pre
+        :preserve
+          And the raven, never flitting, still is sitting, still is sitting
+          On the pallid bust of Pallas just above my chamber door;
+          And his eyes have all the seeming of a demon's that is dreaming,
+          And the lamp-light o'er him streaming throws his shadow on the floor;
+          And my soul from out that shadow that lies floating on the floor
+          Shall be lifted - nevermore!
+    %p
+      Then run this code:
+    %p
+      %pre
+        %code
+          :preserve
+            # Copy this into a Ruby file "document_search.rb", then:
+            #   ruby document_search.rb
+
+            require 'picky'
+
+            # Define an index.
+            #
+            data = Picky::Index.new :people do
+                       # Only keep alpha/blank characters.
+              indexing removes_characters: /[^\p{Alpha}\p{Blank}]/i
+
+                              # Only index full words.
+              category :text, partial: Picky::Partial::None.new
+            end
+
+            # Define a data input class. Any object that responds to
+            # :id, :age, :name can be added to the index.
+            #
+            Document = Struct.new :id, :text
+
+            # Add some data objects to the index.
+            # IDs can be any unique string or integer.
+            #
+            File.open 'story.txt' do |story|
+              data.add Document.new(1, story.read)
+            end
+
+            # Create a search interface object.
+            #
+            people = Picky::Search.new data
+
+            # Do two searches and remember the results.
+            #
+            found           = people.search 'nevermore'
+            only_full_words = people.search 'nevermor'
+            not_found       = people.search 'peter'
+
+            # Show the results.
+            #
+            p found.ids # => [1]
+            p only_full_words.ids # => []
+            p not_found.ids # => []
+  .grid_2
+    %h3#dump-load Dump & Load An Index
+    %p
+      Adding to an in-memory index using
+      %code Index#add
+      will not automatically
+      store the index data on permanent storage.
+    %p
+      To write the index to disk, call
+      %code Index#dump
+      \.
+    %p
+      To load the index from disk, call
+      %code Index#load
+      \.
+    %p
+      %pre
+        %code
+          gem install picky
+    %p
+      Then run this code:
+    %p
+      %pre
+        %code
+          :preserve
+            # Copy this into a Ruby file "dump_load_search.rb", then:
+            #   ruby dump_load_search.rb
+
+            require 'fileutils'
+            require 'picky'
+
+            # Make Picky be quiet.
+            #
+            Picky.logger = Picky::Loggers::Silent.new
+
+            # Create an index.
+            # Note that :id is implied - every input
+            # object must supply an :id!
+            #
+            index = Picky::Index.new :people do
+              category :age
+              category :name
+            end
+
+            # Define a data input class. Any object that responds to
+            # :id, :age, :name can be added to the index.
+            #
+            Person = Struct.new :id, :age, :name
+
+            # Add some data objects to the index.
+            # IDs can be any unique string or integer.
+            #
+            index.add Person.new(1, 34, 'Florian is the author of picky')
+            index.add Person.new(2, 77, 'Floris is related to Florian')
+
+            # Create a search interface object to search the index.
+            #
+            people = Picky::Search.new index
+
+            # The index data is saved into './index' when you
+            # run index.dump().
+            # But you still find results.
+            #
+            index.dump
+            p people.search('flori').ids # => [2, 1]
+
+            # Clearing the index will empty it in memory.
+            #
+            index.clear
+            p people.search('flori').ids # => []
+
+            # Loading the index will fill the index again.
+            #
+            index.load
+            p people.search('flori').ids # => [2, 1]
