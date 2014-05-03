@@ -1,60 +1,13 @@
 ---
-title: About
+title: Getting Started
 ---
 
 .container_2
   .grid_1
     %p
-      Picky is a really
-      %strong easy to use
-      and
-      %strong
-        %a{ :href => 'enterprise.html#use_case_1' } fast
-      Ruby search engine that helps your users
-      %strong find what they are looking for.
-    %h3 Try a…
-    %p
-      %ul
-        %li
-          %a{ :href => 'http://cocoapods.org/?q=cocoa' } A beautiful OS X library search (CocoaPods).
-        %li
-          %a{ :href => 'http://wadoku.eu/?query=wasabi' } A fantastic Japanese-German dictionary.
-        %li
-          %a{ :href => 'http://laut.fm/stations/search?query=bob+marley'} A live updating web radio station/playlist search.
-          %a{ :href => 'http://api.laut.fm/documentation/search' } API
-          in German.
-        %li
-          %a{ :href => 'http://gemsearch.heroku.com/' } A Ruby gems search alternative prototype (with now moderately old data).
-    %h3 What it is
-    %p
-      A lightweight
-      %a{ :href => 'details.html' } semantic text search engine
-      for categorized data, such as varchar fields from a database (probably like most – if not all – data in your application).
-    %p
-      The
-      %a{ :href => 'features.html#server' } standalone server
-      offers a HTTP interface returning crispy clean JSON, and a
-      %a{ :href => 'features.html#client' } comfortable web front end
-      for your application. There's also a
-      %a{ :href => 'features.html#statistics' } statistics web app
-      and a
-      %a{ :href => 'features.html#live' } live interface
-      for changing parameters inside the running server.
-    %h3 What it is not
-    %p
-      A search engine for purely uncategorized data (like text from a book).
-      It needs mostly categorized, semantic data (like names, or categories, most database fields, anyway) to excel.
-    %h3 Where it is
-    %p
-      Picky lives in a little cave called
-      = succeed('.') do
-        %a{ :href => 'http://github.com/floere/picky' } The Github Repo
-      He usually pays his rent on time.
-  .grid_1
-    %p
       = succeed(':') do
         %strong Getting started
-      Got 2 minutes?
+      Need a search engine in a Ruby script and got 3 minutes?
       %pre
         %code
           gem install picky
@@ -125,3 +78,148 @@ title: About
       %a{ :href => 'http://florianhanke.com' } Florian Hanke
       %a{ :href => 'http://twitter.com/hanke' } @hanke
       aka "Flöre", or "Floere" – if you have personal feedback on anything, I'm pleased to hear it.
+  .grid_1
+    %p
+      Need a search engine in a Sinatra server & web frontend and got 10 minutes?
+    %code
+      %pre
+        gem install picky-generators
+    %p
+      This will also install the needed gems "picky" and "picky-client".
+    %p
+      Other
+      %a{ :href => "#system-requirements-server" } system requirements
+      if it doesn't run straightaway.
+    %h3 Create a web server
+    %p The server generates a library example, which you can run right away.
+    %code
+      %pre
+        :preserve
+          # Generates a directory "app_name"
+          # with a new Picky default server project.
+          # Type "picky generate" to see other options.
+
+          picky generate server app_name
+      %pre
+        :preserve
+          cd app_name
+          bundle install
+    %h4 1. Index the data
+    %code
+      %pre
+        rake index
+    %h4 2. Start the server
+    %code
+      %pre
+        rake start
+    %h4 3. Try a query
+    %code
+      %pre
+        curl localhost:8080/books?query=test
+    %p
+      Don't worry about the strange looking results!
+      The next part (client) will take care of them.
+    %p
+      If you're interested anyway:
+      %a{ :href => 'http://github.com/floere/picky/wiki/results-format-and-structure' } Results (Format & Structure)
+    %h3 The client
+    %p The client generates an example app for the "library" example backend, using Sinatra.
+    %code
+      %pre
+        :preserve
+          # Generates a directory "app_name"
+          # with a new Picky client Sinatra project.
+
+          picky generate client app_name
+    %pre
+      :preserve
+        cd app_name
+        bundle install
+    %h4 1. Start the app server
+    %code
+      %pre
+        unicorn -p 3000
+    %h4 2. Admire your work
+    %p
+      Go to
+      %a{ :href => 'http://localhost:3000/' } http://localhost:3000/
+      and try the examples.
+    %h3 Your own search
+    %p
+      You're probably itching to change the example for
+      your own data. How do you do this?
+    %h4 The server
+    %p In the server directory, just type
+    %code
+      %pre
+        rake todo
+    %p and it will tell you where to change the server configuration.
+    %h4 The client
+    %p
+      Go to
+      %a{ :href => 'http://localhost:3000/configure' } http://localhost:3000/configure
+      and the page will show you how to configure your app server.
+    %p
+      That's it, congratulations! :)
+    %h3#system-requirements-server System Requirements
+    %p
+      %ul
+        %li OSX / Linux
+        %li
+          %a{ :href => 'http://www.ruby-lang.org/en/downloads/' } Ruby 2
+        %li
+          %a{ :href => 'http://gembundler.com/' } Bundler Gem
+    %p
+      I recommend
+      %a{ :href => 'https://github.com/postmodern/chruby' } chruby
+      for installing and managing Ruby versions.
+    %h3 Overview
+    %p Before we start, the big picture:
+    %img{ :src => 'diagrams/basic-overview.png', :width => '480px' }
+    %p
+      That's the basic setup. The things to remember are:
+      %ol
+        %li The Picky server calculates IDs for a query.
+        %li Your app server renders results for the resulting IDs.
+        %li The Picky JS frontend offers help to the user.
+    %p
+      Together they are like a small A-Team, something like "Action Search Squad Alpha"! «We've got the results and are heading back to base now, Sir!» Bam!
+    %p
+      Note that you don't need a Picky client. You could just as well use the results in your Python/Java/PHP app server (If you happen to write a client for one of these, please let me know).
+  .grid_1
+    %h3 Need assistance?
+    %p
+      Right here. I'm happy to help!
+      If something doesn't work, send/gist me your app/application.rb
+      and I'll look into it.
+    %p
+      = succeed(', ') do
+        %a{ :href => 'http://github.com/inbox/new/floere' } github (floere)
+      = succeed(', ') do
+        %a{ :href => 'http://twitter.com/hanke' } twitter (hanke)
+      %a{ :href => 'mailto:florian.hanke@gmail.com' } mail (gmail)
+    %p
+      There's a Wiki as well:
+      %a{ :href => 'http://github.com/floere/picky/wiki' } Picky Wiki
+    %h3 Accompanying Video
+    %p
+      If you don't have the time or leisure to do it yourself, watch this:
+    %iframe{ :src => "http://player.vimeo.com/video/17161012", :width => "460", :height => "365", :frameborder => "0" }
+    %p
+      Note that the video was made with version 1.0.0.
+    %p
+      In the latest version, instead of
+    %code
+      %pre
+        :preserve
+          picky project &lt;server dir&gt;
+          picky-client sinatra &lt;client dir&gt;
+    %p
+      the following commands are now used:
+    %code
+      %pre
+        :preserve
+          picky generate unicorn_server &lt;server dir&gt;
+          picky generate sinatra_client &lt;client dir&gt;
+    %p
+      A bit more wordy, but hopefully clearer what it does.
