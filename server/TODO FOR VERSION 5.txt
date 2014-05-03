@@ -1,14 +1,14 @@
 TODO for version 5
 ==================
 
-* id method, same as category? -> id(:name). Default: id
-* id_format
+* DONE id method, same as category? -> id(:name). Default: id
+* key_format -> id_format
+* Make id_format default dependent on backend?
 * Default: ids -> amount
-* Picky.root
+* DONE Picky.root
 * Picky.index_path ?
-* Make key_format default dependent on backend?
-* Enumerator for results?
-* Redesign results.
+* DONE Enumerator for results?
+* Improve Results design.
 * name:jif~ should only look for similarity in the designated category as per usual.
 * Better inspection/to_s/debugging of indexes.
 
@@ -16,7 +16,7 @@ Indexing
 --------
 
 * Don't dump when indexing.
-* Is dump only related to dumping to the file system.
+* Is dump only related to dumping to the file system?
 * Add parent directory parameter when calling dump or load.
 
 Loggers as modules?
@@ -32,13 +32,6 @@ def logger= loggy_thing
   loggy_thing.extend Picky::Loggers::Concise # This then decides how to extend.
   @logger = loggy_thing
 end
-
-Renamings
----------
-
-Consistently name stuff:
-
-* key_format -> id_format
 
 Classic remnants
 ----------------
