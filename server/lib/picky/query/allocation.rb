@@ -1,7 +1,7 @@
 module Picky
 
   module Query
-    
+
     # An Allocation contains an ordered list of
     # tuples (Combinations).
     # The Combinations are ordered according to the order
@@ -25,7 +25,13 @@ module Picky
         @index = index
         @combinations = combinations
       end
-      
+
+      # TODO
+      #
+      def each &block
+        @combinations.each &block
+      end
+
       #
       #
       def backend
@@ -56,7 +62,7 @@ module Picky
       #
       def calculate_ids amount, offset
         return [] if @combinations.empty? # Checked here to avoid checking in each backend.
-        
+
         # TODO Redesign such that ids is only created (and cached) if requested.
         #
         backend.ids @combinations, amount, offset
@@ -112,7 +118,7 @@ module Picky
       def to_result
         [@index.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count && self.count > 0
       end
-      
+
       #
       #
       def to_qualifiers

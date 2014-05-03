@@ -6,7 +6,7 @@ module Picky
     #
     # Combinations contain methods for calculating score (including
     # the boost) and ids for each of its Combination s.
-    #    
+    #
     # They are the core of an Allocation.
     # An Allocation consists of a number of Combinations.
     #
@@ -21,6 +21,12 @@ module Picky
 
       def initialize combinations = []
         @combinations = combinations
+      end
+
+      # TODO
+      #
+      def each &block
+        @combinations.each &block
       end
 
       # Sums up the weights of the combinations.
@@ -39,7 +45,7 @@ module Picky
       # ids that have an associated identifier that is nil.
       #
       def remove categories = []
-        # TODO Do not use the name, but the category. 
+        # TODO Do not use the name, but the category.
         #
         @combinations.reject! { |combination| categories.include?(combination.category.name) }
       end
@@ -49,7 +55,7 @@ module Picky
       def to_result
         @combinations.map &:to_result
       end
-      
+
       def to_qualifiers
         @combinations.map &:category_name
       end

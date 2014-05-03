@@ -5,6 +5,8 @@ module Picky
   #
   class Results
 
+    include Enumerable
+
     # Duration is set externally by the query.
     #
     attr_writer :duration
@@ -41,6 +43,10 @@ module Picky
       unique ?
         allocations.process_unique!(amount, offset, extra_allocations) :
         allocations.process!(amount, offset, extra_allocations)
+    end
+
+    def each &block
+      allocations.each &block
     end
 
     # Forwards to allocations.

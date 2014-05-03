@@ -29,7 +29,20 @@ describe Picky::Results do
 
       @results.ids
     end
-    
+  end
+
+  describe "each" do
+    before(:each) do
+      @allocations = [1, 2, 3]
+      @results = described_class.new :unimportant, :amount, :unimportant, @allocations
+    end
+    it "forwards" do
+      expected = [1, 2, 3]
+      @results.each do |i|
+        expected.delete(i).should == i
+      end
+      expected.should be_empty
+    end
   end
 
   describe 'to_s time format' do
