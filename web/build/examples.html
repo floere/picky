@@ -72,6 +72,9 @@
     </div>
     <div class='container_2'>
   <div class='grid_2 plain'>
+    <p>
+      These are a few simple examples that will get you into Picky quickly.
+    </p>
     <h4>Index & Search</h4>
     <ul>
       <li>
@@ -80,9 +83,18 @@
       <li>
         <a href='#csv'>CSV files</a>
       </li>
+      <li>
+        <a href='#document'>Documents</a>
+      </li>
+    </ul>
+    <h4>Dump & Load</h4>
+    <ul>
+      <li>
+        <a href='#dump-load'>Index</a>
+      </li>
     </ul>
   </div>
-  <div class='grid_1'>
+  <div class='grid_2'>
     <h3 id='objects'>Index & Search Ruby objects</h3>
     <p>
       <pre><code>gem install picky</code></pre>
@@ -91,7 +103,7 @@
       <pre><code># Copy this into a Ruby file "objectsearch.rb", then:&#x000A;#   ruby objectsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
     </p>
   </div>
-  <div class='grid_1'>
+  <div class='grid_2'>
     <h3 id='csv'>Index & Search CSV files</h3>
     <p>
       <pre><code>gem install picky</code></pre>
@@ -106,7 +118,54 @@
       Then run this code:
     </p>
     <p>
-      <pre><code># Copy this into a Ruby file "csvsearch.rb", then:&#x000A;#   ruby csvsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;require 'csv'&#x000A;require 'ostruct'&#x000A;require 'fileutils'&#x000A;&#x000A;# Prepare CSV data.&#x000A;#&#x000A;options = {&#x000A;  headers: true,&#x000A;  header_converters: ->(header) { header.to_sym }&#x000A;}&#x000A;csv = CSV.open('./people.csv', options)&#x000A;         .to_a&#x000A;         .map { |row| OpenStruct.new row.to_hash }&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;  source { csv }&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# The index is saved into './index'.&#x000A;#&#x000A;data.index&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'age:36'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => ["2"]</code></pre>
+      <pre><code># Copy this into a Ruby file "csvsearch.rb", then:&#x000A;#   ruby csvsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;require 'csv'&#x000A;require 'ostruct'&#x000A;require 'fileutils'&#x000A;&#x000A;# Prepare CSV data.&#x000A;#&#x000A;options = {&#x000A;  headers: true,&#x000A;  header_converters: ->(header) { header.to_sym }&#x000A;}&#x000A;csv = CSV.open('./people.csv', options)&#x000A;         .to_a&#x000A;         .map { |row| OpenStruct.new row.to_hash }&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;  source { csv }&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# The index is saved into './index'.&#x000A;#&#x000A;data.index&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'age:36'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => ["2"]&#x000A;</code></pre>
+    </p>
+  </div>
+  <div class='grid_2'>
+    <h3 id='document'>Index & Search Documents</h3>
+    <p>
+      <pre><code>gem install picky</code></pre>
+    </p>
+    <p>
+      Copy the poem "The Raven" by E. A. Poe into ./story.txt. Here
+      is the ending (that's enough to run the example):
+    </p>
+    <p>
+      <pre>And the raven, never flitting, still is sitting, still is sitting&#x000A;On the pallid bust of Pallas just above my chamber door;&#x000A;And his eyes have all the seeming of a demon's that is dreaming,&#x000A;And the lamp-light o'er him streaming throws his shadow on the floor;&#x000A;And my soul from out that shadow that lies floating on the floor&#x000A;Shall be lifted - nevermore!</pre>
+    </p>
+    <p>
+      Then run this code:
+    </p>
+    <p>
+      <pre><code># Copy this into a Ruby file "document_search.rb", then:&#x000A;#   ruby document_search.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;           # Only keep alpha/blank characters.&#x000A;  indexing removes_characters: /[^\p{Alpha}\p{Blank}]/i&#x000A;&#x000A;                  # Only index full words.&#x000A;  category :text, partial: Picky::Partial::None.new&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Document = Struct.new :id, :text&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;File.open 'story.txt' do |story|&#x000A;  data.add Document.new(1, story.read)&#x000A;end&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do two searches and remember the results.&#x000A;#&#x000A;found           = people.search 'nevermore'&#x000A;only_full_words = people.search 'nevermor'&#x000A;not_found       = people.search 'peter'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p found.ids # => [1]&#x000A;p only_full_words.ids # => []&#x000A;p not_found.ids # => []</code></pre>
+    </p>
+  </div>
+  <div class='grid_2'>
+    <h3 id='dump-load'>Dump & Load An Index</h3>
+    <p>
+      Adding to an in-memory index using
+      <code>Index#add</code>
+      will not automatically
+      store the index data on permanent storage.
+    </p>
+    <p>
+      To write the index to disk, call
+      <code>Index#dump</code>
+      .
+    </p>
+    <p>
+      To load the index from disk, call
+      <code>Index#load</code>
+      .
+    </p>
+    <p>
+      <pre><code>gem install picky</code></pre>
+    </p>
+    <p>
+      Then run this code:
+    </p>
+    <p>
+      <pre><code># Copy this into a Ruby file "dump_load_search.rb", then:&#x000A;#   ruby dump_load_search.rb&#x000A;&#x000A;require 'fileutils'&#x000A;require 'picky'&#x000A;&#x000A;# Make Picky be quiet.&#x000A;#&#x000A;Picky.logger = Picky::Loggers::Silent.new&#x000A;&#x000A;# Create an index.&#x000A;# Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object to search the index.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# The index data is saved into './index' when you&#x000A;# run index.dump().&#x000A;# But you still find results.&#x000A;#&#x000A;index.dump&#x000A;p people.search('flori').ids # => [2, 1]&#x000A;&#x000A;# Clearing the index will empty it in memory.&#x000A;#&#x000A;index.clear&#x000A;p people.search('flori').ids # => []&#x000A;&#x000A;# Loading the index will fill the index again.&#x000A;#&#x000A;index.load&#x000A;p people.search('flori').ids # => [2, 1]</code></pre>
     </p>
   </div>
 </div>
