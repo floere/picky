@@ -43,7 +43,7 @@ module Picky
 
     forward :[], :[]=,        :to => :configuration
     forward :index_directory, :to => :category
-    
+
     # TODO Move the strategies into options.
     #
     def initialize name, category, weight_strategy, partial_strategy, similarity_strategy, options = {}
@@ -103,7 +103,7 @@ module Picky
     def empty
       on_all_indexes_call :empty
     end
-    
+
     # Extracted to avoid duplicate code.
     #
     def on_all_indexes_call method_name
@@ -163,7 +163,7 @@ module Picky
     def index_path type = nil
       ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
     end
-    
+
     def to_tree_s indent = 0, &block
       s = <<-TREE
 #{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
