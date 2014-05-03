@@ -3,3 +3,119 @@ title: Code Examples
 ---
 
 .container_2
+  .grid_2.plain
+    %h4 Index & Search
+    %ul
+      %li
+        %a{ :href => '#objects' } Ruby objects
+      %li
+        %a{ :href => '#csv' } CSV files
+  .grid_1
+    %h3#objects Index & Search Ruby objects
+    %p
+      %pre
+        %code
+          gem install picky
+    %p
+      %pre
+        %code
+          :preserve
+            # Copy this into a Ruby file "objectsearch.rb", then:
+            #   ruby objectsearch.rb
+
+            require 'picky'
+
+            # Create an index which is saved into './index' when you
+            # run index.dump(). Note that :id is implied - every input
+            # object must supply an :id!
+            #
+            index = Picky::Index.new :people do
+              category :age
+              category :name
+            end
+
+            # Define a data input class. Any object that responds to
+            # :id, :age, :name can be added to the index.
+            #
+            Person = Struct.new :id, :age, :name
+
+            # Add some data objects to the index.
+            # IDs can be any unique string or integer.
+            #
+            index.add Person.new(1, 34, 'Florian is the author of picky')
+            index.add Person.new(2, 77, 'Floris is related to Florian')
+
+            # Create a search interface object.
+            #
+            people = Picky::Search.new index
+
+            # Do a search and remember the results.
+            #
+            results = people.search 'floris'
+
+            # Show the results.
+            #
+            p results.ids # => [2]
+  .grid_1
+    %h3#csv Index & Search CSV files
+    %p
+      %pre
+        %code
+          gem install picky
+    %p
+      Copy the CSV data into ./people.csv:
+    %p
+      %pre
+        %code
+          :preserve
+            id,name,age
+            1,Florian Hanke,37
+            2,Kaspar Schiess,36
+
+    %p
+      Then run this code:
+    %p
+      %pre
+        %code
+          :preserve
+            # Copy this into a Ruby file "csvsearch.rb", then:
+            #   ruby csvsearch.rb
+
+            require 'picky'
+            require 'csv'
+            require 'ostruct'
+            require 'fileutils'
+
+            # Prepare CSV data.
+            #
+            options = {
+              headers: true,
+              header_converters: ->(header) { header.to_sym }
+            }
+            csv = CSV.open('./people.csv', options)
+                     .to_a
+                     .map { |row| OpenStruct.new row.to_hash }
+
+            # Define an index.
+            #
+            data = Picky::Index.new :people do
+              source { csv }
+              category :age
+              category :name
+            end
+
+            # The index is saved into './index'.
+            #
+            data.index
+
+            # Create a search interface object.
+            #
+            people = Picky::Search.new data
+
+            # Do a search and remember the results.
+            #
+            results = people.search 'age:36'
+
+            # Show the results.
+            #
+            p results.ids # => ["2"]

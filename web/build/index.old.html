@@ -20,7 +20,7 @@
     <script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
     <title>
       Picky:
-      Status and Contributions
+      About
     </title>
     <script type='text/javascript'>
       //<![CDATA[
@@ -51,14 +51,14 @@
         <a class='' href='documentation.html'>Documentation</a>
         <a class='' href='details.html'>About</a>
         <a class='right' href='enterprise.html'>Business</a>
-        <a class='current right' href='status.html'>Contribute</a>
+        <a class='right' href='status.html'>Contribute</a>
         <a class='right' href='features.html'>Features</a>
         <a class='right' href='videos.html'>Screencasts</a>
       </div>
     </div>
     <div class='container_2'>
       <h2>
-        Status and Contributions
+        About
         <div class='social'>
           <!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
           <a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
@@ -72,69 +72,107 @@
     </div>
     <div class='container_2'>
   <div class='grid_1'>
-    <h3>Status</h3>
     <p>
-      We have released 4.0! Motto: "The
-      <a href='http://sinatrarb.com/'>Sinatra</a>
-      of search engines!" :)
+      Picky is a really
+      <strong>easy to use</strong>
+      and
+      <strong>
+        <a href='enterprise.html#use_case_1'>fast</a>
+      </strong>
+      Ruby search engine that helps your users
+      <strong>find what they are looking for.</strong>
+    </p>
+    <h3>Try a…</h3>
+    <p>
+      <ul>
+        <li>
+          <a href='http://cocoapods.org/?q=cocoa'>A beautiful OS X library search (CocoaPods).</a>
+        </li>
+        <li>
+          <a href='http://wadoku.eu/?query=wasabi'>A fantastic Japanese-German dictionary.</a>
+        </li>
+        <li>
+          <a href='http://laut.fm/stations/search?query=bob+marley'>A live updating web radio station/playlist search.</a>
+          <a href='http://api.laut.fm/documentation/search'>API</a>
+          in German.
+        </li>
+        <li>
+          <a href='http://gemsearch.heroku.com/'>A Ruby gems search alternative prototype (with now moderately old data).</a>
+        </li>
+      </ul>
+    </p>
+    <h3>What it is</h3>
+    <p>
+      A lightweight
+      <a href='details.html'>semantic text search engine</a>
+      for categorized data, such as varchar fields from a database (probably like most – if not all – data in your application).
     </p>
     <p>
-      Quite a few more features are planned.
+      The
+      <a href='features.html#server'>standalone server</a>
+      offers a HTTP interface returning crispy clean JSON, and a
+      <a href='features.html#client'>comfortable web front end</a>
+      for your application. There's also a
+      <a href='features.html#statistics'>statistics web app</a>
+      and a
+      <a href='features.html#live'>live interface</a>
+      for changing parameters inside the running server.
     </p>
+    <h3>What it is not</h3>
     <p>
-      See the
-      <a href='http://github.com/floere/picky/issues'>Issues List</a>
-      to see what's – probably – going to happen next.
+      A search engine for purely uncategorized data (like text from a book).
+      It needs mostly categorized, semantic data (like names, or categories, most database fields, anyway) to excel.
     </p>
-    <h3>Specs</h3>
+    <h3>Where it is</h3>
     <p>
-      Server: Around 1300 specs, 100 of them complete integration specs. Many, many functional specs.
-      Other gems: Around 150 specs.
-    </p>
-    <p>
-      The server specs run in ~10 seconds.
+      Picky lives in a little cave called
+      <a href='http://github.com/floere/picky'>The Github Repo</a>.
+      He usually pays his rent on time.
     </p>
   </div>
   <div class='grid_1'>
-    <h3>Contributions</h3>
     <p>
-      Many people have worked on Picky.
+      <strong>Getting started</strong>:
+      Got 2 minutes?
+      <pre><code>gem install picky</code></pre>
     </p>
     <p>
-      See the
-      <a href='http://github.com/floere/picky/wiki/Contributions-and-contributors'>list of Contributors</a>
-      to see who has helped Picky become what it is today.
+      and copy paste
+      <pre><code>#!/usr/bin/env ruby&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
     </p>
     <p>
-      If you want to contribute, see
-      <a href='http://github.com/floere/picky/wiki'>the Wiki</a>
-      under "Extending and contributing to Picky" to see how to add new data sources etc.
+      Have fun changing the code to suit your needs :)
     </p>
     <p>
-      Or join us on IRC in #picky.
+      Got 5 minutes and want Picky in a web server?
     </p>
-    <h3>Press</h3>
     <p>
-      Picky has been mentioned in a few places. Check them out:
-      <ul>
-        <li>
-          <a href='http://rogerbraun.net/using-picky-for-search-and-profit'>Japomatik</a>
-          (Thanks to
-          <a href='http://rogerbraun.net/'>Roger Braun</a>)
-        </li>
-        <li>
-          <a href='http://5by5.tv/rubyshow/142'>The Ruby Show</a>
-          (Thanks to
-          <a href='http://5by5.tv/people/jason-seifer'>Jason Seifer</a>
-          and
-          <a href='http://5by5.tv/people/petercooper'>Peter Cooper</a>)
-        </li>
-        <li>
-          <a href='http://rubyweekly.com/archive/18.html'>Ruby Weekly</a>
-          (Thanks to
-          <a href='http://www.petercooper.co.uk/'>Peter Cooper</a>)
-        </li>
-      </ul>
+      <a href='getting_started.html'>Install and run Picky with a nice Sinatra interface</a>
+    </p>
+    <h3>Help / Feedback</h3>
+    <p>
+      We're always glad for help requests, feedback, single-page scripts, project battle stories:
+    </p>
+    <p>
+      <a href='http://groups.google.com/forum/#!forum/picky-ruby'>Share it in the mailing list</a>
+    </p>
+    <p>
+      For quick info updates,
+      <a href='http://twitter.com/picky_rb'>follow Picky</a>
+      on twitter.
+    </p>
+    <p>
+      You might also find excellent Pickyists on IRC in
+      <a href='http://webchat.freenode.net/'>#picky</a>
+      that can also help.
+    </p>
+    <p>
+      <img src='http://www.gravatar.com/avatar/de2d64478e715fb02266f77a3f5641f6?size=90' />
+      <br />
+      This webpage & the images on it have been designed by me,
+      <a href='http://florianhanke.com'>Florian Hanke</a>
+      <a href='http://twitter.com/hanke'>@hanke</a>
+      aka "Flöre", or "Floere" – if you have personal feedback on anything, I'm pleased to hear it.
     </p>
   </div>
 </div>
