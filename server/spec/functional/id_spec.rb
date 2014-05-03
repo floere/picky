@@ -33,8 +33,7 @@ describe "id option" do
     data = Picky::Index.new :id do
       source { things }
 
-      key_format :to_i
-      id :number # TODO :format => :to_i
+      id :number, format: 'to_i'
       category :text
     end
 

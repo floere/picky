@@ -1,3 +1,11 @@
+## 4.21.2
+
+- Add option `format` to `Category#id`. E.g. `id :number, :format => :to_i`. Tells Picky to convert the `number` attribute to an Integer. Same functionality as `Category#key_format`.
+
+## 4.21.1
+
+- Add method `id` to category. E.g. `id :number`. Tells Picky to use method `number` instead of the default `id`.
+
 ## 4.21.0
 
 - Rename "aux" folder to "tools".

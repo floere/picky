@@ -96,7 +96,8 @@ module Picky
     # === Parameters
     # * name: Method name of the ID.
     #
-    def id name = nil
+    def id name = nil, options = {}
+      key_format options[:format]
       @id_name = name || @id_name || :id
     end
 
