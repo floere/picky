@@ -4,8 +4,8 @@ require 'spec_helper'
 require 'ostruct'
 
 describe "Array IDs" do
-  
-  let(:index) { Picky::Index.new :arrays } 
+
+  let(:index) { Picky::Index.new :arrays }
   let(:try) { Picky::Search.new index }
 
   # This tests the weights option.
