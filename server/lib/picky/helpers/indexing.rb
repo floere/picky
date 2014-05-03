@@ -6,14 +6,14 @@ module Picky
     module Indexing
 
       include Measuring
-      
+
       # Runs the block and logs a few infos regarding the time it took.
       #
       def timed_indexing scheduler, &block
         Picky.logger.info "Picky is indexing using #{scheduler.fork? ? 'multiple processes' : 'a single process'}: "
         Picky.logger.info " Done in #{timed(&block).round}s.\n"
       end
-      
+
       # Indexing works the same way, always:
       #  * Prepare the scheduler.
       #  * Cache the scheduler.

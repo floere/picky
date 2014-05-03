@@ -1,6 +1,8 @@
 TODO for version 5
 ==================
 
+* id method, same as category? -> id(:name). Default: id
+* id_format
 * Default: ids -> amount
 * Picky.root
 * Picky.index_path ?
