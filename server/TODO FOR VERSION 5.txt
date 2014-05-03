@@ -1,11 +1,21 @@
-TODO s for version 5
-====================
+TODO for version 5
+==================
 
 * Default: ids -> amount
-* Picky.root + Picky.index_path !
+* Picky.root
+* Picky.index_path ?
 * Make key_format default dependent on backend?
 * Enumerator for results?
+* Redesign results.
 * name:jif~ should only look for similarity in the designated category as per usual.
+* Better inspection/to_s/debugging of indexes.
+
+Indexing
+--------
+
+* Don't dump when indexing.
+* Is dump only related to dumping to the file system.
+* Add parent directory parameter when calling dump or load.
 
 Loggers as modules?
 -------------------
