@@ -2,46 +2,22 @@ require 'spec_helper'
 
 describe Picky::Results do
 
-  describe "from" do
-    before(:each) do
-      @results = double :results
-      described_class.stub :new => @results
-
-      @results.stub :prepare!
-    end
-    it "should generate a result" do
-      described_class.from("some query", 20, 0, @allocations).should == @results
-    end
-  end
-
   describe "ids" do
     before(:each) do
       @allocations = double :allocations
-      @results = described_class.new :unimportant, :amount, :unimportant, @allocations
+      @results = described_class.new :unimportant, :amount, :offset, @allocations
     end
     it "forwards" do
+      @allocations.should_receive(:process!).once.with :amount, :offset, nil
       @allocations.should_receive(:ids).once.with :anything
 
       @results.ids :anything
     end
     it "forwards and uses amount if nothing given" do
+      @allocations.should_receive(:process!).once.with :amount, :offset, nil
       @allocations.should_receive(:ids).once.with :amount
 
       @results.ids
-    end
-  end
-
-  describe "each" do
-    before(:each) do
-      @allocations = [1, 2, 3]
-      @results = described_class.new :unimportant, :amount, :unimportant, @allocations
-    end
-    it "forwards" do
-      expected = [1, 2, 3]
-      @results.each do |i|
-        expected.delete(i).should == i
-      end
-      expected.should be_empty
     end
   end
 
@@ -67,12 +43,12 @@ describe Picky::Results do
     context 'with results' do
       before(:each) do
         @allocations = double :allocations,
-                            :process! => nil,
-                            :size => 12
+                              :process! => nil,
+                              :size => 12
 
         @results = described_class.new "some_query", 20, 1234, @allocations
         @results.stub :duration => 0.1234567890,
-                       :total    => 12345678
+                      :total    => 12345678
       end
       it 'should output a specific log' do
         @results.to_s.should == '>|2011-08-16 10:07:33|0.123457|some_query                                        |12345678|1234|12|'
@@ -107,7 +83,8 @@ describe Picky::Results do
 
   describe "accessors" do
     before(:each) do
-      @results = described_class.new :query, :amount, :offset, :allocations
+      @allocations = double :allocations, :process! => :allocations
+      @results = described_class.new :query, :amount, :offset, @allocations
     end
     it "should have accessors for query" do
       @results.query.should == :query
@@ -119,7 +96,7 @@ describe Picky::Results do
       @results.offset.should == :offset
     end
     it "should have accessors for allocations" do
-      @results.allocations.should == :allocations
+      @results.allocations.should == @allocations
     end
     it "should have accessors for duration" do
       @results.duration = :some_duration

@@ -138,7 +138,7 @@ module Picky
     def boost boosts
       @boosts = extract_boosts boosts
     end
-    
+
     # Ignore given categories and/or combinations of
     # categories.
     #
@@ -158,7 +158,7 @@ module Picky
         end
       end
     end
-    
+
     # Exclusively keep combinations of
     # categories.
     #
@@ -171,7 +171,7 @@ module Picky
     def only *allocations_and_categories
       indexes.keep_allocations *allocations_and_categories
     end
-    
+
     # Ignore the given token if it cannot be matched to a category.
     # The default behaviour is that if a token does not match to
     # any category, the query will not return anything (since a
@@ -236,12 +236,12 @@ module Picky
     # Note: Internal method, use #search to search.
     #
     def execute tokens, ids, offset, original_text = nil, unique = false
-      Results.from original_text,
-                   ids,
-                   offset,
-                   sorted_allocations(tokens, @max_allocations),
-                   @extra_allocations,
-                   unique
+      Results.new original_text,
+                  ids,
+                  offset,
+                  sorted_allocations(tokens, @max_allocations),
+                  @extra_allocations,
+                  unique
     end
 
     # Forwards the tokenizing to the query tokenizer.

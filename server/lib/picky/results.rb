@@ -17,21 +17,18 @@ module Picky
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new
+    def initialize query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil, unique = false
       @amount      = amount
       @query       = query
       @offset      = offset
       @allocations = allocations
+      @extra_allocations = extra_allocations
+      @unique      = unique
     end
 
-    # Create new results and calculate the ids.
-    #
-    # TODO Remove and calculate lazily via results.ids (rewrite all references to use Result.new).
-    #
-    def self.from query, amount, offset, allocations, extra_allocations = nil, unique = false
-      results = new query, amount, offset, allocations
-      results.prepare! extra_allocations, unique
-      results
+    def allocations
+      prepare! @extra_allocations, @unique
+      @allocations
     end
 
     # This starts the actual processing.
@@ -40,6 +37,8 @@ module Picky
     # and no ids are calculated.
     #
     def prepare! extra_allocations = nil, unique = false
+      return if @prepared == [extra_allocations, unique]
+      @prepared = [extra_allocations, unique]
       unique ?
         allocations.process_unique!(amount, offset, extra_allocations) :
         allocations.process!(amount, offset, extra_allocations)
@@ -54,6 +53,8 @@ module Picky
     # Note that this is an expensive call and
     # should not be done repeatedly. Just keep
     # a reference to the result.
+    #
+    # TODO Rewrite such that this triggers calculation, not prepare!
     #
     def ids only = amount
       allocations.ids only
