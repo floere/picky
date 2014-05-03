@@ -93,6 +93,12 @@
         <a href='#dump-load'>Index</a>
       </li>
     </ul>
+    <h4>Inspect</h4>
+    <ul>
+      <li>
+        <a href='#inspect'>Index</a>
+      </li>
+    </ul>
   </div>
   <div class='grid_2'>
     <h3 id='objects'>Index & Search Ruby objects</h3>
@@ -166,6 +172,18 @@
     </p>
     <p>
       <pre><code># Copy this into a Ruby file "dump_load_search.rb", then:&#x000A;#   ruby dump_load_search.rb&#x000A;&#x000A;require 'fileutils'&#x000A;require 'picky'&#x000A;&#x000A;# Make Picky be quiet.&#x000A;#&#x000A;Picky.logger = Picky::Loggers::Silent.new&#x000A;&#x000A;# Create an index.&#x000A;# Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object to search the index.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# The index data is saved into './index' when you&#x000A;# run index.dump().&#x000A;# But you still find results.&#x000A;#&#x000A;index.dump&#x000A;p people.search('flori').ids # => [2, 1]&#x000A;&#x000A;# Clearing the index will empty it in memory.&#x000A;#&#x000A;index.clear&#x000A;p people.search('flori').ids # => []&#x000A;&#x000A;# Loading the index will fill the index again.&#x000A;#&#x000A;index.load&#x000A;p people.search('flori').ids # => [2, 1]</code></pre>
+    </p>
+  </div>
+  <div class='grid_2'>
+    <h3 id='inspect'>Inspect An Index</h3>
+    <p>
+      <pre><code>gem install picky</code></pre>
+    </p>
+    <p>
+      Then run this code:
+    </p>
+    <p>
+      <pre><code># Copy this into a Ruby file "inspection.rb", then:&#x000A;#   ruby inspection.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Look at pieces of the index.&#x000A;#&#x000A;puts index[:name].exact.inverted&#x000A;puts index[:name].exact.weights&#x000A;puts index[:name].partial.inverted&#x000A;puts index[:name].partial.weights</code></pre>
     </p>
   </div>
 </div>
