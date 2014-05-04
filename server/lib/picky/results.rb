@@ -26,7 +26,7 @@ module Picky
     end
 
     def allocations
-      prepare! @extra_allocations, @unique
+      prepare! *(@prepared || [@extra_allocations, @unique])
       @allocations
     end
 
