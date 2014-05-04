@@ -10,8 +10,7 @@ module Picky
     # Duration is set externally by the query.
     #
     attr_writer :duration
-    attr_reader :allocations,
-                :offset,
+    attr_reader :offset,
                 :amount,
                 :query
 
@@ -40,8 +39,8 @@ module Picky
       return if @prepared == [extra_allocations, unique]
       @prepared = [extra_allocations, unique]
       unique ?
-        allocations.process_unique!(amount, offset, extra_allocations) :
-        allocations.process!(amount, offset, extra_allocations)
+        @allocations.process_unique!(amount, offset, extra_allocations) :
+        @allocations.process!(amount, offset, extra_allocations)
     end
 
     def each &block

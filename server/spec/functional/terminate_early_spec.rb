@@ -156,43 +156,51 @@ describe 'Search#terminate_early' do
     fast = performance_of do
       try_fast.search 'hello'
     end
-    (slow/fast).should >= 1.1
+    slow.should < 0.00009
+    fast.should < 0.00005
+    (slow/fast).should >= 1.5
 
     try_slow = Picky::Search.new index
     slow = performance_of do
-      try_slow.search 'hello hello'
+      try_slow.search('hello hello').ids
     end
     try_fast = Picky::Search.new index do
       terminate_early
     end
     fast = performance_of do
-      try_fast.search 'hello hello'
+      try_fast.search('hello hello').ids
     end
-    (slow/fast).should >= 1.2
+    slow.should < 0.00015
+    fast.should < 0.00009
+    (slow/fast).should >= 1.5
 
     try_slow = Picky::Search.new index
     slow = performance_of do
-      try_slow.search 'hello hello hello'
+      try_slow.search('hello hello hello').ids
     end
     try_fast = Picky::Search.new index do
       terminate_early
     end
     fast = performance_of do
-      try_fast.search 'hello hello hello'
+      try_fast.search('hello hello hello').ids
     end
-    (slow/fast).should >= 1.4
+    slow.should < 0.0005
+    fast.should < 0.00025
+    (slow/fast).should >= 2
 
     try_slow = Picky::Search.new index
     slow = performance_of do
-      try_slow.search 'hello hello hello hello'
+      try_slow.search('hello hello hello hello').ids
     end
     try_fast = Picky::Search.new index do
       terminate_early
     end
     fast = performance_of do
-      try_fast.search 'hello hello hello hello'
+      try_fast.search('hello hello hello hello').ids
     end
-    (slow/fast).should >= 1.7
+    slow.should < 0.002
+    fast.should < 0.0008
+    (slow/fast).should >= 2.3
   end
 
 end
