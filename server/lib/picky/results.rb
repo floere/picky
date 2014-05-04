@@ -36,8 +36,8 @@ module Picky
     # and no ids are calculated.
     #
     def prepare! extra_allocations = nil, unique = false
-      return if @prepared == [extra_allocations, unique]
-      @prepared = [extra_allocations, unique]
+      return if @prepared == [extra_allocations, unique] # cached?
+      @prepared = [extra_allocations, unique] # cache!
       unique ?
         @allocations.process_unique!(amount, offset, extra_allocations) :
         @allocations.process!(amount, offset, extra_allocations)

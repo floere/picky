@@ -53,7 +53,7 @@ module Picky
       def remove_categories categories = []
         @allocations.each { |allocation| allocation.remove categories } unless categories.empty?
       end
-      
+
       # Removes allocations.
       #
       # Only those passed in are removed.
@@ -70,7 +70,7 @@ module Picky
           allocation
         end
       end
-      
+
       # Keeps allocations.
       #
       # Only those passed in are kept.
@@ -90,7 +90,7 @@ module Picky
       # Returns the top amount ids.
       #
       def ids amount = 20
-        @allocations.inject([]) do |total, allocation|
+        inject([]) do |total, allocation|
           total.size >= amount ? (return total.shift(amount)) : total + allocation.ids
         end
       end
@@ -128,7 +128,7 @@ module Picky
           end
         end
       end
-      
+
       # Same as #process! but removes duplicate ids from results.
       #
       # Note that in the result later on an allocation won't be

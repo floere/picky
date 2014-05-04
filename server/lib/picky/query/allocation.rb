@@ -54,6 +54,14 @@ module Picky
         end)
       end
 
+      # Ids return by default [].
+      #
+      # TODO Calculate ids here.
+      #
+      def ids
+        @ids ||= []
+      end
+
       # Asks the backend for the (intersected) ids.
       #
       # Note: Combinations can be empty on eg.
@@ -66,12 +74,6 @@ module Picky
         # TODO Redesign such that ids is only created (and cached) if requested.
         #
         backend.ids @combinations, amount, offset
-      end
-
-      # Ids return by default [].
-      #
-      def ids
-        @ids ||= []
       end
 
       # This starts the searching process.

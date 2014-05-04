@@ -8,7 +8,7 @@ TODO for version 5
 * DONE Picky.root
 * Picky.index_path ?
 * DONE Enumerator for results?
-* Improve Results design.
+* Improve Results design: Only calculate what is necessary -> optimal paths for ids/allocations.
 * name:jif~ should only look for similarity in the designated category as per usual.
 * Better inspection/to_s/debugging of indexes.
 
