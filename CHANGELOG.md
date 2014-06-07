@@ -1,3 +1,7 @@
+## 4.22.0
+
+- Searching for similarity "hullo~" will also return results for "hullo" (the string itself).
+
 ## 4.21.2
 
 - Add option `format` to `Category#id`. E.g. `id :number, :format => :to_i`. Tells Picky to convert the `number` attribute to an Integer. Same functionality as `Category#key_format`.
