@@ -43,3 +43,6 @@ Optimizations
 
 * object id instead of hash for allocation comparison.
 * Option to cleanly stop calculating ids (inside the algorithm) if we have enough results for a full result.
+
+Identity for similarity
+-----------------------
