@@ -28,8 +28,8 @@ describe Picky::Generators::Similarity do
         expect {
           similarity.from Object.new
         }.to raise_error(<<-ERROR)
-similarity options should be either
-* for example a Similarity::Phonetic.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+Similarity options should be either
+* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
 or
 * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
 ERROR
@@ -38,8 +38,8 @@ ERROR
         expect {
           similarity.from Object.new, 'some_index'
         }.to raise_error(<<-ERROR)
-similarity options for some_index should be either
-* for example a Similarity::Phonetic.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+Similarity options for some_index should be either
+* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
 or
 * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
 ERROR
@@ -48,8 +48,8 @@ ERROR
         expect {
           similarity.from Object.new, 'some_index', 'some_category'
         }.to raise_error(<<-ERROR)
-similarity options for some_index:some_category should be either
-* for example a Similarity::Phonetic.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+Similarity options for some_index:some_category should be either
+* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
 or
 * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
 ERROR

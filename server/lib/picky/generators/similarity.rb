@@ -1,5 +1,5 @@
 module Picky
-  
+
   module Generators
 
     module Similarity
@@ -12,8 +12,8 @@ module Picky
           thing
         else
           raise <<-ERROR
-similarity options #{identifier_for(index_name, category_name)}should be either
-* for example a Similarity::Phonetic.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+Similarity options #{identifier_for(index_name, category_name)}should be either
+* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
 or
 * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
 ERROR
@@ -23,5 +23,5 @@ ERROR
     end
 
   end
-  
+
 end

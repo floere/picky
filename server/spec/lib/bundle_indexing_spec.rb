@@ -21,8 +21,8 @@ describe Picky::Bundle do
       bundle.add_similarity :dragon
       bundle.add_similarity :dargon
     end
-    it 'returns the right similars (not itself)' do
-      bundle.similar(:dragon).should == [:dargon]
+    it 'returns the right similars (including itself)' do
+      bundle.similar(:dragon).should == [:dargon, :dragon]
     end
     it 'returns the right similars' do
       bundle.similar(:trkn).should == [:dargon, :dragon]

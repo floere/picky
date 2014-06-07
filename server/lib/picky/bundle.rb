@@ -128,19 +128,20 @@ module Picky
 
     # Get a list of similar texts.
     #
-    # Note: Does not return itself.
+    # Note: Also checks for itself.
     #
     def similar text
       code = similarity_strategy.encode text
       return [] unless code
-      similar_codes = @similarity[code]
-      if similar_codes.blank?
-        [] # Return a simple array.
-      else
-        similar_codes = similar_codes.dup
-        similar_codes.delete text
-        similar_codes
-      end
+      @similarity[code] || []
+      # similar_codes = @similarity[code]
+      # if similar_codes.blank?
+      #   [] # Return a simple array.
+      # else
+      #   similar_codes = similar_codes.dup
+      #   similar_codes.delete text # Remove itself.
+      #   similar_codes
+      # end
     end
 
     # If a key format is set, use it, else forward to the category.
