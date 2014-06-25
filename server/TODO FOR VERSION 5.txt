@@ -1,6 +1,8 @@
 TODO for version 5
 ==================
 
+options.fetch(:option) { Default }
+
 * DONE id method, same as category? -> id(:name). Default: id
 * key_format -> id_format
 * Make id_format default dependent on backend?
