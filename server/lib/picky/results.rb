@@ -12,7 +12,8 @@ module Picky
     attr_writer :duration
     attr_reader :offset,
                 :amount,
-                :query
+                :query,
+                :sorting
 
     # Takes instances of Query::Allocations as param.
     #
@@ -23,6 +24,13 @@ module Picky
       @allocations = allocations
       @extra_allocations = extra_allocations
       @unique      = unique
+    end
+    
+    # Provide a block which
+    # accepts a result id.
+    #
+    def sort_by &sorting
+      @sorting = sorting
     end
 
     def allocations
@@ -39,8 +47,8 @@ module Picky
       return if @prepared == [extra_allocations, unique] # cached?
       @prepared = [extra_allocations, unique] # cache!
       unique ?
-        @allocations.process_unique!(amount, offset, extra_allocations) :
-        @allocations.process!(amount, offset, extra_allocations)
+        @allocations.process_unique!(amount, offset, extra_allocations, sorting) :
+        @allocations.process!(amount, offset, extra_allocations, sorting)
     end
 
     def each &block

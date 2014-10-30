@@ -113,9 +113,9 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      def process! amount, offset = 0, terminate_early = nil
+      def process! amount, offset = 0, terminate_early = nil, sorting = nil
         each do |allocation|
-          calculated_ids = allocation.process! amount, offset
+          calculated_ids = allocation.process! amount, offset, sorting
           if calculated_ids.empty?
             offset = offset - allocation.count unless offset.zero?
           else
@@ -137,10 +137,10 @@ module Picky
       #
       # Note: Slower than #process! especially with large offsets.
       #
-      def process_unique! amount, offset = 0, terminate_early = nil
+      def process_unique! amount, offset = 0, terminate_early = nil, sorting = nil
         unique_ids = []
         each do |allocation|
-          calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids
+          calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids, sorting
           projected_offset = offset - allocation.count
           unique_ids += calculated_ids # uniq this? <- No, slower than just leaving duplicates.
           if projected_offset <= 0
