@@ -19,7 +19,7 @@ describe Picky do
     simple_load = <<-COMMAND
       #{ruby} -I #{load_path} -r picky -e "puts 'OK'"
     COMMAND
-    
+    p IO.popen(simple_load, err: [:child, :out]).readline
     IO.popen(simple_load, err: [:child, :out]).readline.strip.should == 'OK'
   end
   
