@@ -1,3 +1,7 @@
+## 4.23.0
+
+- Adds `Results#sort_by` to Picky results. Allows arbitrary sorting.
+
 ## 4.22.0
 
 - Searching for similarity "hullo~" will also return results for "hullo" (the string itself).
