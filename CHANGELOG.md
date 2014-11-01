@@ -1,3 +1,7 @@
+## 4.23.1
+
+- Optimization: Stop sorting allocations whose results won't be shown.
+
 ## 4.23.0
 
 - Adds `Results#sort_by` to Picky results. Allows arbitrary sorting.
