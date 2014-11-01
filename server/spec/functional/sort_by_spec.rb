@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "id option" do
 
-  it 'can be given a different id (in-ruby based)' do
+  it 'can sort' do
     data = Picky::Index.new :id do
       id :id
       category :text, partial: Picky::Partial::Postfix.new(from: 1)
@@ -58,5 +58,6 @@ describe "id option" do
     
     results.ids.should == [1,2]
   end
+  
 
 end

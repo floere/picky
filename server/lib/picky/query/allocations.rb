@@ -115,6 +115,7 @@ module Picky
       #
       def process! amount, offset = 0, terminate_early = nil, sorting = nil
         each do |allocation|
+          sorting = nil if amount <= 0 # Stop sorting if the results aren't shown.
           calculated_ids = allocation.process! amount, offset, sorting
           if calculated_ids.empty?
             offset = offset - allocation.count unless offset.zero?
@@ -140,6 +141,7 @@ module Picky
       def process_unique! amount, offset = 0, terminate_early = nil, sorting = nil
         unique_ids = []
         each do |allocation|
+          sorting = nil if amount <= 0 # Stop sorting if the results aren't shown.
           calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids, sorting
           projected_offset = offset - allocation.count
           unique_ids += calculated_ids # uniq this? <- No, slower than just leaving duplicates.
