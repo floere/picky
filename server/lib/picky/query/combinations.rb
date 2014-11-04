@@ -47,7 +47,7 @@ module Picky
       def remove categories = []
         # TODO Do not use the name, but the category.
         #
-        @combinations.reject! { |combination| categories.include?(combination.category.name) }
+        @combinations.reject! { |combination| categories.include?(combination.category_name) }
       end
 
       #

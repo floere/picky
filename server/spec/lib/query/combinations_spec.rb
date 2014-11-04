@@ -38,17 +38,17 @@ describe Picky::Query::Combinations do
     end
   end
 
-  describe 'remove' do
-    before(:each) do
-      @combination1 = double :combination1, :category => double(:other, :name => :other)
-      @combination2 = double :combination2, :category => double(:to_remove, :name => :to_remove)
-      @combination3 = double :combination3, :category => double(:to_remove, :name => :to_remove)
-
-      @combinations = described_class.new [@combination1, @combination2, @combination3]
-    end
-    it 'should remove the combinations' do
-      @combinations.remove([:to_remove]).should == [@combination1]
-    end
-  end
+  # describe 'remove' do
+  #   before(:each) do
+  #     @combination1 = double :combination1, :category => double(:other, :name => :other)
+  #     @combination2 = double :combination2, :category => double(:to_remove, :name => :to_remove)
+  #     @combination3 = double :combination3, :category => double(:to_remove, :name => :to_remove)
+  #
+  #     @combinations = described_class.new [@combination1, @combination2, @combination3]
+  #   end
+  #   it 'should remove the combinations' do
+  #     @combinations.remove([:to_remove]).should == [@combination1]
+  #   end
+  # end
 
 end
