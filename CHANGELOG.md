@@ -1,3 +1,7 @@
+## 4.23.2
+
+- Fix bug when accessing category name.
+
 ## 4.23.1
 
 - Optimization: Stop sorting allocations whose results won't be shown.
