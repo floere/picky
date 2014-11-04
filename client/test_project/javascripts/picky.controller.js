@@ -6,6 +6,7 @@ var PickyController = function(config) {
   
   var backends             = config.backends;
   var beforeInsertCallback = config.beforeInsert || function(query) { return query; };
+  var beforeParamsCallback = config.beforeParams || function(params) { return params; };
   var beforeCallback       = config.before       || function(query, params) { return query; };
   var successCallback      = config.success      || function(data, query) { return data; };
   var afterCallback        = config.after        || function(data, query) { return data; };
@@ -61,20 +62,21 @@ var PickyController = function(config) {
   // If the given backend cannot be found, ignore the search request.
   //
   var search = function(type, query, callback, specificParams) {
-    var beforeQuery = beforeCallback(query, specificParams);
-    // If the before callback returns nothing, 
-    // don't use the result.
-    //
-    if (beforeQuery != undefined) { query = beforeQuery; }
-    
-    lastQueryParams = [type, query, callback, specificParams];
-    saveInHistory(query);
-    
     // Only trigger a search if the text is not empty.
     //
     if (!searchOnEmpty && query == '') {
       view.reset();
     } else {
+      var specificParams = beforeParamsCallback(specificParams);
+      var beforeQuery = beforeCallback(query, specificParams);
+      // If the before callback returns nothing, 
+      // don't use the result.
+      //
+      if (beforeQuery != undefined) { query = beforeQuery; }
+    
+      lastQueryParams = [type, query, callback, specificParams];
+      saveInHistory(query);
+      
       var currentBackend = backends[type];
       if (currentBackend) { currentBackend.search(query, callback, specificParams); };
     }
