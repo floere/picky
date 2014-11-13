@@ -1,6 +1,6 @@
 ## All Ruby
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_intro.html.md)
 
 Never forget this: *Picky is all Ruby, all the time*!

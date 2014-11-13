@@ -1,6 +1,6 @@
 ## Results{#results}
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_results.html.md)
 
 Results are returned by the `Search` instance.
@@ -15,6 +15,46 @@ Results are returned by the `Search` instance.
     p results         # Returns results in log form.
     p results.to_hash # Returns results as a hash.
     p results.to_json # Returns results as JSON.
+
+### Sorting{#results-sorting}
+
+If no sorting is defined, Picky results will be *sorted in the order of the data provided* by the data source.
+
+However, you can sort the results any way you want.
+
+#### Arbitrary Sorting
+
+You can define an arbitrary sorting on results by calling `Results#sort_by`.
+It takes a block with a single parameter: The stored id of a result item.
+
+This example looks up a result item via id and then takes the priority of the item to sort the results. 
+
+```ruby
+results.sort_by { |id| MyResultItemsHash[id].priority }
+```
+
+The results are only sorted within their allocation.
+If you, for example, searched for `Peter`, and Picky allocated results in `first_name` and `last_name`, then each allocation's results would be sorted.
+
+Picky is optimized: it only sorts results which are actually visible. So if Picky looks for the first 20 results, and the first allocation already has more than 20 results in it – say, 100 --, then it will only sort the 100 results of the first allocation. It will still calculate all other allocations, but not sort them.
+
+#### Sorting Costs
+
+* If you don't call `Results#sort_by`, then sorting incurs no costs.
+* With arbitrary sorting, the cost incurred is proportional to the sorted results. So if an allocation has 1000 results in it, and you want 20 results, then all 1000 results from that allocation are sorted.
+* The more complex your sorting is, the longer sorting takes. So we suggest precalculating a sort key if you'd like to sort it according to a complex calculation. For example you could have a sorting hash which knows for each id how its priority is:
+
+```ruby
+sort_hash = {
+  1 => 10, # important
+  2 => 100 # not so important
+}
+results.sort_by { |id| sort_hash[id] }
+```
+
+Note that in Ruby, a lower value => more to the front (the higher up in Picky).
+
+
 
 ### Logging{#results-logging}
 
@@ -49,13 +89,3 @@ and the Picky classic server will log the results into it, if it is defined.
 Why in a separate file? So that you can have different logging for different environments.
 
 More power to you.
-
-### Sorting{#results-sorting}
-
-Picky results are always *sorted in the order of the data provided* by the data source.
-
-So if you need different sort orders you have to define two indexes.
-
-Why? This was a conscious design decision on my part. Usually, we do not need multiple sortings in a search application (I reckon around 95% of the cases). However, if you need it, you can.
-
-TODO Example that shows how to have different result sorting depending on the category a result is found in.

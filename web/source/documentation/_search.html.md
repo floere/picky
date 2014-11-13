@@ -1,6 +1,5 @@
 ## Search{#search}
 
-{.edit}
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_search.html.md)
 
 Picky offers a `Search` interface for the indexes. You instantiate it as follows:
@@ -122,11 +121,13 @@ Let's say you want to keep only results where first name is found before last na
 
 So if somebody searches for "peter paul han" (each a last name as well as a first name), and Picky finds the following combinations:
 
-    [:first_name, :first_name, :last_name]
-    [:last_name, :first_name, :last_name]
-    [:first_name, :last_name, :first_name]
-    [:last_name, :first_name, :first_name]
-    [:last_name, :last_name, :first_name]
+```ruby
+[:first_name, :first_name, :last_name]
+[:last_name, :first_name, :last_name]
+[:first_name, :last_name, :first_name]
+[:last_name, :first_name, :first_name]
+[:last_name, :last_name, :first_name]
+```
 
 then only the combination
 

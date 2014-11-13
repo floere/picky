@@ -1,6 +1,6 @@
 ## Indexes{#indexes}
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_indexes.html.md)
 
 Indexes do three things:

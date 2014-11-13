@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'middleman', '~>3.0'
+gem 'middleman'
 
 gem 'haml'
-gem 'maruku'
+gem 'redcarpet'
 gem 'sass'

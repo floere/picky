@@ -1,6 +1,6 @@
 ## Single Page Help Index
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_index.html.md)
 
 This is the one page help document for Picky.
@@ -134,8 +134,8 @@ When you need a slice over a category's data.
 What a picky search returns.
 
 * [Results Overview](#results)
-* [Logging](#results-logging)
 * [Sorting](#results-sorting)
+* [Logging](#results-logging)
 * [Identification](#indexes-results)
 
 ### JavaScript{#index-javascript}

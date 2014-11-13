@@ -1,6 +1,6 @@
 ## Facets
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_facets.html.md)
 
 Here's [the Wikipedia entry on facets](http://en.wikipedia.org/wiki/Faceted_classification). I fell asleep after about 5 words. Twice.

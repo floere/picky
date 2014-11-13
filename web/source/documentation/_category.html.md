@@ -1,6 +1,6 @@
 ## Categories{#indexes-categories}
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_category.html.md)
 
 Categories – usually what other search engines call fields – define *categorized data*. For example, book data might have a `title`, an `author` and an `isbn`.

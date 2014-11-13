@@ -61,16 +61,42 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
-set :markdown_engine, :maruku
+class SemanticHeadersRenderer < Redcarpet::Render::HTML
+  
+  # Removes any Maruku header ids and sets them as id attribute in the header.
+  #
+  def header(title, level)
+    match = title.match(%r{({#.+})})
+    id, processed_title = if match && id = match[1]
+      title.gsub!(id, '')
+      id.gsub!(%r{[{}#]}, '')
+      [id, title]
+    else
+      [
+        title.downcase.gsub(/[\s]/, '-').gsub(/\:/, ''),
+        title
+      ]
+    end
+    
+    "<h#{level} id='#{id}'>#{processed_title}</h#{level}>"
+  end
+end
+
+set :markdown_engine, :redcarpet
+set :markdown, fenced_code_blocks: true,
+               smartypants: true,
+               gh_blockcode: true,
+               renderer: SemanticHeadersRenderer
+set :haml, { ugly: true }
 
 # Build-specific configuration
 #
 configure :build do
   # For example, change the Compass output style for deployment
-  # activate :minify_css
+  activate :minify_css
 
   # Minify Javascript on build
-  # activate :minify_javascript
+  activate :minify_javascript
 
   # Enable cache buster
   # activate :cache_buster

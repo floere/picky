@@ -1,6 +1,6 @@
 ## JavaScript
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_javascript.html.md)
 
 Picky offers a standard HTML interface that works well with its JavaScript. Render this into your HTML (needs the `picky-client` gem):

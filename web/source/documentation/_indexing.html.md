@@ -1,6 +1,6 @@
 ### Indexing{#indexes-indexing}
 
-{.edit}
+
 [edit](http://github.com/floere/picky/blob/master/web/source/documentation/_indexing.html.md)
 
 Indexing can be done programmatically, at any time. Even while the server is running.
