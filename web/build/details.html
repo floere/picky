@@ -1,242 +1,250 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
-    <meta content='EN' http-equiv='Content-Language' />
-    <meta content='Florian Hanke, florianhanke.com' name='author' />
-    <meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description' />
-    <meta content='index, follow' name='robots' />
-    <meta content='3 days' name='revisit-after' />
-    <link href='favicon.ico' rel='shortcut icon' />
-<link href='stylesheets/basic.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/specific.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/grid.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/colors.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css' />
-    <script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    <script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
-    <title>
-      Picky:
-      In Detail
-    </title>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-20991642-1']);
-        _gaq.push(['_trackPageview']);
-        
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      //]]>
-    </script>
-  </head>
-  <body onload='hljs.initHighlighting();'>
-    <div class='header'>
-      <a href='http://github.com/floere/picky'>
-        <img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;' />
-      </a>
-    </div>
-    <div class='picky' title='Happy Picky (drawn on iPhone)'></div>
-    <div class='container_2'>
-      <h1>Picky</h1>
-      <div class='navigation'>
-        <a class='' href='index.html'>get started</a>
-        <a class='' href='examples.html'>examples</a>
-        <a class='' href='documentation.html'>documentation</a>
-        <a class='current ' href='details.html'>about</a>
-        <a class='right' href='enterprise.html'>business</a>
-        <a class='right' href='status.html'>contribute</a>
-        <a class='right' href='features.html'>features</a>
-        <a class='right' href='videos.html'>screencasts</a>
-      </div>
-    </div>
-    <div class='container_2'>
-      <h2>
-        In Detail
-        <div class='social'>
-          <!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
-          <a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
-          <a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-          <div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
-          <script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
-        </div>
-      </h2>
-    </div>
-    <div class='container_2'>
-  <div class='grid_1'>
-    <h3>Huh? What's a semantic text search engine?</h3>
-    <p>
-      A semantic text search engine does not operate on huge blobs of text, but instead on smaller, highly categorized text amounts. For example, on varchar database fields.
-    </p>
-    <p>
-      If your data isn't categorized well (like text from a book), then you should instead choose a full-text search engine, like
-      <a href='http://sphinxsearch.com/'>Sphinx</a>
-      or
-      <a href='http://lucene.apache.org/solr/'>Solr (Lucene)</a>.
-    </p>
-    <h3>Then why use it?</h3>
-    <p>
-      Often, full-text search engines are misused by letting them loose on highly categorized (semantic) text.
-    </p>
-    <p>
-      Picky helps your user find data which in a full-text search engine would be buried in a heap of results. Also, it lets him do so with a Google-y single search field.
-    </p>
-    <p>
-      Sure the word "peter" is found most often in document #7, but he actually just wants documents by someone with surname "Peter", and not everything related to peters.
-    </p>
-    <p>
-      Picky helps him refine his search by way of a comfortable interface to get exactly what he wants.
-    </p>
-    <h3>But why not use a full-text search engine?</h3>
-    <p>
-      Full-Text search engines do one thing especially well: Making full (i.e. uncategorized heaps of) text searchable.
-    </p>
-    <p>
-      For small, highly categorized text, we simply need new ideas. Picky is one of them.
-    </p>
-    <p>
-      Ok, that was my elevator pitch ;)
-    </p>
-    <h3>See me show (it) off</h3>
-    <p>
-      Using a real
-      <a href='http://twixtel.ch'>telephone search</a>
-      as an example.
-    </p>
-    <iframe frameborder='0' height='365' src='http://player.vimeo.com/video/12614970' width='460'></iframe>
-    <p>
-      This was at the fantastic
-      <a href='http://euruko2010.org/'>EuRuKo 2010</a>
-      Conference in
-      <a href='http://www.google.ch/images?q=krakow+poland'>beautiful</a>
-      Krakow.
-    </p>
-    <h3>Why would one write a search engine in Ruby?</h3>
-    <p>
-      It's fast enough and the high level really helped understanding it as it evolved. There are some parts that have been written in pedal-to-the-metal C code.
-    </p>
-    <h3>How does it perform?</h3>
-    <p>
-      This depends on many factors, but generally we recommend using Picky with a maximum of 150 million data points, i.e. words (we used it there).
-      The area under 20 millions is probably best. Your mileage may vary, of course, depending on how many partial indexes you use etc.
-    </p>
-    <p>
-      See the
-      <a href='enterprise.html'>use case</a>
-      in the enterprise section.
-    </p>
-    <p>
-      Indexing is not too fast, and I'd be glad if it were faster. However, you get the full power of Ruby and fully customizable indexing.
-    </p>
-  </div>
-  <div class='grid_1'>
-    <h3>Why the octopus?</h3>
-    <p>
-      Glad you asked. But first, read this
-      <a href='http://en.wikipedia.org/wiki/Octopus'>Wikipedia entry about octopuses</a>.
-      Also,
-      <a href='http://www.youtube.com/watch?v=badHUNl2HXU'>a movie</a>.
-      Finished? I think that sums it up pretty well. And it's cuuute, don't you think? :)
-    </p>
-    <p>
-      But don't call him that. He likes to be called "Octor the Destroyer".
-    </p>
-    <h3>Who wrote it?</h3>
-    <p>
-      Mainly me,
-      <a href='http://florianhanke.com'>Florian Hanke</a>,
-      but I also had
-      <a href='status.html'>excellent help</a>
-      by friends and coworkers.
-    </p>
-    <h3>Why the LGPL license?</h3>
-    <p>
-      I'd have preferred a MIT license. In the end it was a compromise between my former employer and me.
-    </p>
-    <h3>Roadmap</h3>
-    <p>
-      <a href='http://github.com/floere/picky/wiki/Roadmap'>Wiki Roadmap</a>
-    </p>
-    <h3>Alternatives</h3>
-    <p>
-      There aren't many
-      <strong>real</strong>
-      Ruby search engines. Just more or less elegant adapters for existing ones. I found two real ones:
-    </p>
-    <p>
-      <a href='http://masanjin.net/whistlepig/'>Whistlepig</a>
-      by William Morgan.
-      "Whistlepig is a minimalist real-time full-text search".
-    </p>
-    <p>
-      <a href='https://github.com/rstacruz/ion'>Ion</a>
-      by Rico Sta. Cruz.
-      A Ruby search engine based on a Redis backend.
-    </p>
-  </div>
-  <div class='grid_1'>
-    <h3>Help / Feedback</h3>
-    <p>
-      We're always glad for help requests, feedback, single-page scripts, project battle stories:
-    </p>
-    <p>
-      <a href='http://groups.google.com/forum/#!forum/picky-ruby'>Share it in the mailing list</a>
-    </p>
-    <p>
-      For quick info updates,
-      <a href='http://twitter.com/picky_rb'>follow Picky</a>
-      on twitter.
-    </p>
-    <p>
-      You might also find excellent Pickyists on IRC in
-      <a href='http://webchat.freenode.net/'>#picky</a>
-      that can also help.
-    </p>
-    <p>
-      <img src='http://www.gravatar.com/avatar/de2d64478e715fb02266f77a3f5641f6?size=90' />
-      <br />
-      This webpage & the images on it have been designed by me,
-      <a href='http://florianhanke.com'>Florian Hanke</a>
-      <a href='http://twitter.com/hanke'>@hanke</a>
-      aka "Flöre", or "Floere" – if you have personal feedback on anything, I'm pleased to hear it.
-    </p>
-  </div>
+<head>
+<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+<meta content='EN' http-equiv='Content-Language'>
+<meta content='Florian Hanke, florianhanke.com' name='author'>
+<meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords'>
+<meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract'>
+<meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description'>
+<meta content='index, follow' name='robots'>
+<meta content='3 days' name='revisit-after'>
+
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='stylesheets/basic.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/specific.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/grid.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/colors.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css'>
+
+<script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
+
+<title>
+Picky:
+In Detail
+</title>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20991642-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body onload='hljs.initHighlighting();'>
+<div class='header'>
+<a href='http://github.com/floere/picky'>
+<img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;'>
+</a>
 </div>
-    <div class='license'>
-      Logos and all images are
-      <a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
-      licensed to Florian Hanke.
-    </div>
-    <div class='footer'></div>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var picky = document.getElementsByClassName('picky')[0];
-        var footer = document.getElementsByClassName('footer')[0];
-        
-        var position = 0;
-        
-        var movePicky = function() {
-          if (position == -2780) {
-            position = 0;
-          } else {
-            position -= 20;
-            setTimeout(movePicky,5);
-          }
-          picky.style.backgroundPositionY = position + "px";
-        }
-        
-        footer.onclick = function() {
-          setTimeout(movePicky,5);
-        };
-      //]]>
-    </script>
-  </body>
+
+<div class='picky' title='Happy Picky (drawn on iPhone)'></div>
+
+<div class='container_2'>
+<h1>Picky</h1>
+<div class='navigation'>
+<a class='' href='index.html'>get started</a>
+<a class='' href='examples.html'>examples</a>
+<a class='' href='documentation.html'>documentation</a>
+<a class='current ' href='details.html'>about</a>
+<a class='right' href='enterprise.html'>business</a>
+<a class='right' href='status.html'>contribute</a>
+<a class='right' href='features.html'>features</a>
+<a class='right' href='videos.html'>screencasts</a>
+</div>
+
+</div>
+<div class='container_2'>
+<h2>
+In Detail
+<div class='social'>
+<!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
+<a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
+<a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
+<script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
+</div>
+
+</h2>
+</div>
+<div class='container_2'>
+<div class='grid_1'>
+<h3>Huh? What's a semantic text search engine?</h3>
+<p>
+A semantic text search engine does not operate on huge blobs of text, but instead on smaller, highly categorized text amounts. For example, on varchar database fields.
+</p>
+<p>
+If your data isn't categorized well (like text from a book), then you should instead choose a full-text search engine, like
+<a href='http://sphinxsearch.com/'>Sphinx</a>
+or
+<a href='http://lucene.apache.org/solr/'>Solr (Lucene)</a>.
+</p>
+<h3>Then why use it?</h3>
+<p>
+Often, full-text search engines are misused by letting them loose on highly categorized (semantic) text.
+</p>
+<p>
+Picky helps your user find data which in a full-text search engine would be buried in a heap of results. Also, it lets him do so with a Google-y single search field.
+</p>
+<p>
+Sure the word "peter" is found most often in document #7, but he actually just wants documents by someone with surname "Peter", and not everything related to peters.
+</p>
+<p>
+Picky helps him refine his search by way of a comfortable interface to get exactly what he wants.
+</p>
+<h3>But why not use a full-text search engine?</h3>
+<p>
+Full-Text search engines do one thing especially well: Making full (i.e. uncategorized heaps of) text searchable.
+</p>
+<p>
+For small, highly categorized text, we simply need new ideas. Picky is one of them.
+</p>
+<p>
+Ok, that was my elevator pitch ;)
+</p>
+<h3>See me show (it) off</h3>
+<p>
+Using a real
+<a href='http://twixtel.ch'>telephone search</a>
+as an example.
+</p>
+<iframe frameborder='0' height='365' src='http://player.vimeo.com/video/12614970' width='460'></iframe>
+<p>
+This was at the fantastic
+<a href='http://euruko2010.org/'>EuRuKo 2010</a>
+Conference in
+<a href='http://www.google.ch/images?q=krakow+poland'>beautiful</a>
+Krakow.
+</p>
+<h3>Why would one write a search engine in Ruby?</h3>
+<p>
+It's fast enough and the high level really helped understanding it as it evolved. There are some parts that have been written in pedal-to-the-metal C code.
+</p>
+<h3>How does it perform?</h3>
+<p>
+This depends on many factors, but generally we recommend using Picky with a maximum of 150 million data points, i.e. words (we used it there).
+The area under 20 millions is probably best. Your mileage may vary, of course, depending on how many partial indexes you use etc.
+</p>
+<p>
+See the
+<a href='enterprise.html'>use case</a>
+in the enterprise section.
+</p>
+<p>
+Indexing is not too fast, and I'd be glad if it were faster. However, you get the full power of Ruby and fully customizable indexing.
+</p>
+</div>
+<div class='grid_1'>
+<h3>Why the octopus?</h3>
+<p>
+Glad you asked. But first, read this
+<a href='http://en.wikipedia.org/wiki/Octopus'>Wikipedia entry about octopuses</a>.
+Also,
+<a href='http://www.youtube.com/watch?v=badHUNl2HXU'>a movie</a>.
+Finished? I think that sums it up pretty well. And it's cuuute, don't you think? :)
+</p>
+<p>
+But don't call him that. He likes to be called "Octor the Destroyer".
+</p>
+<h3>Who wrote it?</h3>
+<p>
+Mainly me,
+<a href='http://florianhanke.com'>Florian Hanke</a>, 
+but I also had
+<a href='status.html'>excellent help</a>
+by friends and coworkers.
+</p>
+<h3>Why the LGPL license?</h3>
+<p>
+I'd have preferred a MIT license. In the end it was a compromise between my former employer and me.
+</p>
+<h3>Roadmap</h3>
+<p>
+<a href='http://github.com/floere/picky/wiki/Roadmap'>Wiki Roadmap</a>
+</p>
+<h3>Alternatives</h3>
+<p>
+There aren't many
+<strong>real</strong>
+Ruby search engines. Just more or less elegant adapters for existing ones. I found two real ones:
+</p>
+<p>
+<a href='http://masanjin.net/whistlepig/'>Whistlepig</a>
+by William Morgan.
+"Whistlepig is a minimalist real-time full-text search".
+</p>
+<p>
+<a href='https://github.com/rstacruz/ion'>Ion</a>
+by Rico Sta. Cruz.
+A Ruby search engine based on a Redis backend.
+</p>
+</div>
+<div class='grid_1'>
+<h3>Help / Feedback</h3>
+<p>
+We're always glad for help requests, feedback, single-page scripts, project battle stories:
+</p>
+<p>
+<a href='http://groups.google.com/forum/#!forum/picky-ruby'>Share it in the mailing list</a>
+</p>
+<p>
+For quick info updates,
+<a href='http://twitter.com/picky_rb'>follow Picky</a>
+on twitter.
+</p>
+<p>
+You might also find excellent Pickyists on IRC in
+<a href='http://webchat.freenode.net/'>#picky</a>
+that can also help.
+</p>
+<p>
+<img src='http://www.gravatar.com/avatar/de2d64478e715fb02266f77a3f5641f6?size=90'>
+<br>
+This webpage & the images on it have been designed by me,
+<a href='http://florianhanke.com'>Florian Hanke</a>
+<a href='http://twitter.com/hanke'>@hanke</a>
+aka "Flöre", or "Floere" – if you have personal feedback on anything, I'm pleased to hear it.
+</p>
+</div>
+</div>
+
+<div class='license'>
+Logos and all images are
+<a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
+licensed to Florian Hanke.
+</div>
+
+<div class='footer'></div>
+<script>
+  var picky = document.getElementsByClassName('picky')[0];
+  var footer = document.getElementsByClassName('footer')[0];
+  
+  var position = 0;
+  
+  var movePicky = function() {
+    if (position == -2780) {
+      position = 0;
+    } else {
+      position -= 20;
+      setTimeout(movePicky,5);
+    }
+    picky.style.backgroundPositionY = position + "px";
+  }
+  
+  footer.onclick = function() {
+    setTimeout(movePicky,5);
+  };
+</script>
+
+</body>
 </html>

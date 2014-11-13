@@ -1,14 +1,14 @@
-/* line 1, colors.css.sass */
+/* line 1, /Users/hanke/temp/picky/web/source/stylesheets/colors.css.sass */
 body {
-  background-color: #f5f5ea; }
+  background-color: #F5F5EA; }
 
-/* line 4, colors.css.sass */
+/* line 4, /Users/hanke/temp/picky/web/source/stylesheets/colors.css.sass */
 .header {
   background-color: #199399;
-  background: -moz-radial-gradient(50% 100%, circle, #f5f5ea 90px, #199399 600px);
-  background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(#f5f5ea), to(#199399)); }
+  background: -moz-radial-gradient(50% 100%, circle, #F5F5EA 90px, #199399 600px);
+  background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(#F5F5EA), to(#199399)); }
 
-/* line 10, colors.css.sass */
+/* line 10, /Users/hanke/temp/picky/web/source/stylesheets/colors.css.sass */
 div.navigation a.current {
   color: black;
   background-color: white; }

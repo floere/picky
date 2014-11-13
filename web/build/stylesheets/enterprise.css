@@ -1,20 +1,20 @@
-/* line 1, enterprise.css.sass */
+/* line 1, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
 body {
   background-color: white; }
 
-/* line 4, enterprise.css.sass */
+/* line 4, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
 .picky {
   background-image: url("../images/picky-enterprise.png"); }
 
-/* line 7, enterprise.css.sass */
+/* line 7, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
 .header {
-  background-color: #a79c8e;
-  background: -moz-radial-gradient(50% 100%, circle, white 90px, #a79c8e 600px);
-  background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(white), to(#a79c8e)); }
+  background-color: #A79C8E;
+  background: -moz-radial-gradient(50% 100%, circle, white 90px, #A79C8E 600px);
+  background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(white), to(#A79C8E)); }
 
-/* line 13, enterprise.css.sass */
+/* line 13, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
 body .navigation a.current {
-  background-color: #f5f5ea; }
-/* line 15, enterprise.css.sass */
+  background-color: #F5F5EA; }
+/* line 15, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
 body .navigation a:hover {
-  background-color: #f5f5ea; }
+  background-color: #F5F5EA; }

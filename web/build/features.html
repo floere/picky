@@ -1,299 +1,307 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
-    <meta content='EN' http-equiv='Content-Language' />
-    <meta content='Florian Hanke, florianhanke.com' name='author' />
-    <meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description' />
-    <meta content='index, follow' name='robots' />
-    <meta content='3 days' name='revisit-after' />
-    <link href='favicon.ico' rel='shortcut icon' />
-<link href='stylesheets/basic.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/specific.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/grid.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/colors.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css' />
-    <script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    <script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
-    <title>
-      Picky:
-      Features
-    </title>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-20991642-1']);
-        _gaq.push(['_trackPageview']);
-        
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      //]]>
-    </script>
-  </head>
-  <body onload='hljs.initHighlighting();'>
-    <div class='header'>
-      <a href='http://github.com/floere/picky'>
-        <img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;' />
-      </a>
-    </div>
-    <div class='picky' title='Happy Picky (drawn on iPhone)'></div>
-    <div class='container_2'>
-      <h1>Picky</h1>
-      <div class='navigation'>
-        <a class='' href='index.html'>get started</a>
-        <a class='' href='examples.html'>examples</a>
-        <a class='' href='documentation.html'>documentation</a>
-        <a class='' href='details.html'>about</a>
-        <a class='right' href='enterprise.html'>business</a>
-        <a class='right' href='status.html'>contribute</a>
-        <a class='current right' href='features.html'>features</a>
-        <a class='right' href='videos.html'>screencasts</a>
-      </div>
-    </div>
-    <div class='container_2'>
-      <h2>
-        Features
-        <div class='social'>
-          <!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
-          <a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
-          <a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-          <div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
-          <script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
-        </div>
-      </h2>
-    </div>
-    <div class='container_2'>
-  <div class='grid_2 plain'>
-    <ul>
-      <li>
-        <a href='#server'>Full-blown standalone search server</a>
-      </li>
-      <li>
-        <a href='#client'>Helpful, comfortable Javascript web client and server query interface.</a>
-      </li>
-      <li>
-        <a href='#statistics'>Clam: Gaining insight on how good your search works</a>
-      </li>
-      <li>
-        <a href='#live'>Suckerfish: Looking at and changing server parameters on the fly in the running server</a>
-      </li>
-    </ul>
-  </div>
-  <div class='grid_1'>
-    <h3 id='server'>Full-blown standalone search server</h3>
-    <div class='grid_1'>
-      <h4>Goodies</h4>
-      <p>
-        Picky is a standalone search server currently offering a HTTP interface (returning JSON) and a nice in-code Ruby configuration (no huge XML files).
-        Also:
-        <ul>
-          <li>Flexibly configure indexing</li>
-          <li>
-            Easily configure handling query text, e.g.
-            <pre><code>splits_text_on:&nbsp;/[\s\/\-\"\&]/</code></pre>
-          </li>
-          <li>Multiple data sources (DB, CSV, ...)</li>
-          <li>Choice of in-memory or Redis indexes.</li>
-          <li>
-            Partial searching
-            <pre><code>pick*</code></pre>
-          </li>
-          <li>
-            Phonetic similarity
-            <pre><code>pecky~</code></pre>
-          </li>
-          <li>
-            Categorized searching
-            <pre><code>napoleon, title:war</code></pre>
-          </li>
-          <li>
-            Weighing not only categories, but combinations!
-            <pre><code>{&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}</code></pre>
-          </li>
-          <li>
-            Range queries
-          </li>
-          <li>
-            Comfortable routing
-            <pre><code>get %r{/books} do&#x000A;  books.search params[:query]&#x000A;end</code></pre>
-          </li>
-        </ul>
-        <p>
-          … and much more.
-        </p>
-      </p>
-      <h4>Getting Started</h4>
-      <pre><code>gem install picky</code></pre>
-      <p>
-        There's a whole section devoted to getting started with Picky!
-        See
-        <a href='getting_started.html'>here</a>
-        for getting on your feet quickly :)
-      </p>
-    </div>
-  </div>
-  <div class='grid_1'>
-    <h3 id='client'>Helpful, comfortable web client</h3>
-    <div class='grid_1'>
-      <h4>Goodies</h4>
-      <p>
-        Offers a Ruby client that connects to the Server's JSON interface and provides a clever (in a helpful way) and easily configurable Javascript interface.
-      </p>
-      <p>
-        Including the interface in your views is as easy as
-        <pre><code>= Picky::Client.interface</code></pre>
-      </p>
-      <p>
-        and adding the
-        <code>picky.min.js</code>
-        file.
-      </p>
-      <p>
-        This is it:
-        <img src='images/client1.png' width='480px' />
-      </p>
-      <p>
-        This is how you search for books with title similar to lyterature that were published in 2002.
-      </p>
-      <p>
-        The gem also contains useful methods to render results into the JSON that is sent to the Javascript interface, extracting just the ids, and much more.
-      </p>
-      <h4>Getting Started</h4>
-      <pre><code>gem install picky-client</code></pre>
-      <p>
-        There's a whole section devoted to getting started with the Picky client!
-        See
-        <a href='getting_started.html'>here</a>
-        and scroll down to the client part on the left.
-      </p>
-    </div>
-  </div>
-  <div class='grid_1'>
-    <h3 id='statistics'>Clam: Statistics Server</h3>
-    <div class='grid_1'>
-      <h4>Goodies</h4>
-      <p>
-        Clam is a simple log parser that starts a in-gem webapp and shows you relevant statistics about your app.
-      </p>
-      <p>
-        This is part of its interface:
-        <img src='images/statistics.png' width='480px' />
-      </p>
-      <p>
-        It shows you
-        <ul>
-          <li>how often people were successful in finding things</li>
-          <li>if it was a request for "more results" (indicating that they haven't found it in the first 20 displayed results)</li>
-          <li>how fast Picky was</li>
-          <li>if the query was just a "results while you type" or a full one</li>
-        </ul>
-      </p>
-      <p>
-        and other things.
-      </p>
-      <h4>Getting Started</h4>
-      <pre><code>gem install picky-statistics</code></pre>
-      <p>Then run:</p>
-      <pre><code>picky stats path/to/pickys/log/search.log</code></pre>
-      <p>
-        If you are in the Picky server directory, the path is probably
-        <code>log/search.log</code>
-        .
-      </p>
-      <p>You should see a message like:</p>
-      <pre><code>Clam, Picky's friend, is looking at Picky's logfile.&#x000A;... and showing results on port 4567.</code></pre>
-      <p>
-        Go to
-        <a href='localhost:4567'>localhost:4567</a>
-        and you should see the statistics interface in its full glory!
-      </p>
-      <p>
-        More params are available, just enter
-        <code>picky</code>
-        in the console.
-      </p>
-    </div>
-  </div>
-  <div class='grid_1'>
-    <h3 id='live'>Suckerfish: Live Interface into a running Picky</h3>
-    <div class='grid_1'>
-      <h4>Goodies</h4>
-      <p>
-        Suckerfish is an introspective system that allows you to look at parameters of a running Picky Server. Not only that, it allows you to change parameters on the fly.
-      </p>
-      <p>
-        This is part of its interface:
-        <img src='images/live.png' width='480px' />
-      </p>
-      <p>
-        Currently, you have the possibility to modify how the server handles query input.
-      </p>
-      <p>
-        Hit "Update Server now" and see the effects instantly on all queries.
-      </p>
-      <p>
-        Note: Only works with multiprocessing servers, like Unicorn.
-      </p>
-      <h4>Getting Started</h4>
-      <pre><code>gem install picky-live</code></pre>
-      <p>
-        Add this to
-        <code>app/application.rb</code>
-        in the server:
-      </p>
-      <pre><code>%r{/admin} => LiveParameters.new</code></pre>
-      <p>Start the server and enter:</p>
-      <pre><code>picky live</code></pre>
-      <p>You should see a message like:</p>
-      <pre><code>Suckerfish has sucked onto Picky at localhost:8080/admin.&#x000A;Sinatra has taken the stage on port 4568...</code></pre>
-      <p>
-        Go to
-        <a href='localhost:4568'>localhost:4568</a>
-        and fiddle with the parameters (server needs to be running).
-      </p>
-      <p>
-        More params are available, just enter
-        <code>picky</code>
-        in the console.
-      </p>
-    </div>
-  </div>
+<head>
+<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+<meta content='EN' http-equiv='Content-Language'>
+<meta content='Florian Hanke, florianhanke.com' name='author'>
+<meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords'>
+<meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract'>
+<meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description'>
+<meta content='index, follow' name='robots'>
+<meta content='3 days' name='revisit-after'>
+
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='stylesheets/basic.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/specific.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/grid.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/colors.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css'>
+
+<script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
+
+<title>
+Picky:
+Features
+</title>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20991642-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body onload='hljs.initHighlighting();'>
+<div class='header'>
+<a href='http://github.com/floere/picky'>
+<img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;'>
+</a>
 </div>
-    <div class='license'>
-      Logos and all images are
-      <a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
-      licensed to Florian Hanke.
-    </div>
-    <div class='footer'></div>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var picky = document.getElementsByClassName('picky')[0];
-        var footer = document.getElementsByClassName('footer')[0];
-        
-        var position = 0;
-        
-        var movePicky = function() {
-          if (position == -2780) {
-            position = 0;
-          } else {
-            position -= 20;
-            setTimeout(movePicky,5);
-          }
-          picky.style.backgroundPositionY = position + "px";
-        }
-        
-        footer.onclick = function() {
-          setTimeout(movePicky,5);
-        };
-      //]]>
-    </script>
-  </body>
+
+<div class='picky' title='Happy Picky (drawn on iPhone)'></div>
+
+<div class='container_2'>
+<h1>Picky</h1>
+<div class='navigation'>
+<a class='' href='index.html'>get started</a>
+<a class='' href='examples.html'>examples</a>
+<a class='' href='documentation.html'>documentation</a>
+<a class='' href='details.html'>about</a>
+<a class='right' href='enterprise.html'>business</a>
+<a class='right' href='status.html'>contribute</a>
+<a class='current right' href='features.html'>features</a>
+<a class='right' href='videos.html'>screencasts</a>
+</div>
+
+</div>
+<div class='container_2'>
+<h2>
+Features
+<div class='social'>
+<!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
+<a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
+<a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
+<script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
+</div>
+
+</h2>
+</div>
+<div class='container_2'>
+<div class='grid_2 plain'>
+<ul>
+<li>
+<a href='#server'>Full-blown standalone search server</a>
+</li>
+<li>
+<a href='#client'>Helpful, comfortable Javascript web client and server query interface.</a>
+</li>
+<li>
+<a href='#statistics'>Clam: Gaining insight on how good your search works</a>
+</li>
+<li>
+<a href='#live'>Suckerfish: Looking at and changing server parameters on the fly in the running server</a>
+</li>
+</ul>
+</div>
+<div class='grid_1'>
+<h3 id='server'>Full-blown standalone search server</h3>
+<div class='grid_1'>
+<h4>Goodies</h4>
+<p>
+Picky is a standalone search server currently offering a HTTP interface (returning JSON) and a nice in-code Ruby configuration (no huge XML files).
+Also:
+<ul>
+<li>Flexibly configure indexing</li>
+<li>
+Easily configure handling query text, e.g.
+<pre><code>splits_text_on:&nbsp;/[\s\/\-\"\&]/</code></pre>
+</li>
+<li>Multiple data sources (DB, CSV, ...)</li>
+<li>Choice of in-memory or Redis indexes.</li>
+<li>
+Partial searching
+<pre><code>pick*</code></pre>
+</li>
+<li>
+Phonetic similarity
+<pre><code>pecky~</code></pre>
+</li>
+<li>
+Categorized searching
+<pre><code>napoleon, title:war</code></pre>
+</li>
+<li>
+Weighing not only categories, but combinations!
+<pre><code>{&nbsp;[:title,&nbsp;:author]&nbsp;=>&nbsp;+3,&nbsp;[:isbn,&nbsp;:author]&nbsp;=>&nbsp;-5&nbsp;}</code></pre>
+</li>
+<li>
+Range queries
+</li>
+<li>
+Comfortable routing
+<pre><code>get %r{/books} do&#x000A;  books.search params[:query]&#x000A;end</code></pre>
+</li>
+</ul>
+<p>
+… and much more.
+</p>
+</p>
+<h4>Getting Started</h4>
+<pre><code>gem install picky</code></pre>
+<p>
+There's a whole section devoted to getting started with Picky!
+See
+<a href='getting_started.html'>here</a>
+for getting on your feet quickly :)
+</p>
+</div>
+</div>
+<div class='grid_1'>
+<h3 id='client'>Helpful, comfortable web client</h3>
+<div class='grid_1'>
+<h4>Goodies</h4>
+<p>
+Offers a Ruby client that connects to the Server's JSON interface and provides a clever (in a helpful way) and easily configurable Javascript interface.
+</p>
+<p>
+Including the interface in your views is as easy as
+<pre><code>= Picky::Client.interface</code></pre>
+</p>
+<p>
+and adding the
+<code>picky.min.js</code>
+file.
+</p>
+<p>
+This is it:
+<img src='images/client1.png' width='480px'>
+</p>
+<p>
+This is how you search for books with title similar to lyterature that were published in 2002.
+</p>
+<p>
+The gem also contains useful methods to render results into the JSON that is sent to the Javascript interface, extracting just the ids, and much more.
+</p>
+<h4>Getting Started</h4>
+<pre><code>gem install picky-client</code></pre>
+<p>
+There's a whole section devoted to getting started with the Picky client!
+See
+<a href='getting_started.html'>here</a>
+and scroll down to the client part on the left.
+</p>
+</div>
+</div>
+<div class='grid_1'>
+<h3 id='statistics'>Clam: Statistics Server</h3>
+<div class='grid_1'>
+<h4>Goodies</h4>
+<p>
+Clam is a simple log parser that starts a in-gem webapp and shows you relevant statistics about your app.
+</p>
+<p>
+This is part of its interface:
+<img src='images/statistics.png' width='480px'>
+</p>
+<p>
+It shows you
+<ul>
+<li>how often people were successful in finding things</li>
+<li>if it was a request for "more results" (indicating that they haven't found it in the first 20 displayed results)</li>
+<li>how fast Picky was</li>
+<li>if the query was just a "results while you type" or a full one</li>
+</ul>
+</p>
+<p>
+and other things.
+</p>
+<h4>Getting Started</h4>
+<pre><code>gem install picky-statistics</code></pre>
+<p>Then run:</p>
+<pre><code>picky stats path/to/pickys/log/search.log</code></pre>
+<p>
+If you are in the Picky server directory, the path is probably
+<code>log/search.log</code>
+.
+</p>
+<p>You should see a message like:</p>
+<pre><code>Clam, Picky's friend, is looking at Picky's logfile.&#x000A;... and showing results on port 4567.</code></pre>
+<p>
+Go to
+<a href='localhost:4567'>localhost:4567</a>
+and you should see the statistics interface in its full glory!
+</p>
+<p>
+More params are available, just enter
+<code>picky</code>
+in the console.
+</p>
+</div>
+</div>
+<div class='grid_1'>
+<h3 id='live'>Suckerfish: Live Interface into a running Picky</h3>
+<div class='grid_1'>
+<h4>Goodies</h4>
+<p>
+Suckerfish is an introspective system that allows you to look at parameters of a running Picky Server. Not only that, it allows you to change parameters on the fly.
+</p>
+<p>
+This is part of its interface:
+<img src='images/live.png' width='480px'>
+</p>
+<p>
+Currently, you have the possibility to modify how the server handles query input.
+</p>
+<p>
+Hit "Update Server now" and see the effects instantly on all queries.
+</p>
+<p>
+Note: Only works with multiprocessing servers, like Unicorn.
+</p>
+<h4>Getting Started</h4>
+<pre><code>gem install picky-live</code></pre>
+<p>
+Add this to
+<code>app/application.rb</code>
+in the server:
+</p>
+<pre><code>%r{/admin} => LiveParameters.new</code></pre>
+<p>Start the server and enter:</p>
+<pre><code>picky live</code></pre>
+<p>You should see a message like:</p>
+<pre><code>Suckerfish has sucked onto Picky at localhost:8080/admin.&#x000A;Sinatra has taken the stage on port 4568...</code></pre>
+<p>
+Go to
+<a href='localhost:4568'>localhost:4568</a>
+and fiddle with the parameters (server needs to be running).
+</p>
+<p>
+More params are available, just enter
+<code>picky</code>
+in the console.
+</p>
+</div>
+</div>
+</div>
+
+<div class='license'>
+Logos and all images are
+<a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
+licensed to Florian Hanke.
+</div>
+
+<div class='footer'></div>
+<script>
+  var picky = document.getElementsByClassName('picky')[0];
+  var footer = document.getElementsByClassName('footer')[0];
+  
+  var position = 0;
+  
+  var movePicky = function() {
+    if (position == -2780) {
+      position = 0;
+    } else {
+      position -= 20;
+      setTimeout(movePicky,5);
+    }
+    picky.style.backgroundPositionY = position + "px";
+  }
+  
+  footer.onclick = function() {
+    setTimeout(movePicky,5);
+  };
+</script>
+
+</body>
 </html>

@@ -1,249 +1,257 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
-    <meta content='EN' http-equiv='Content-Language' />
-    <meta content='Florian Hanke, florianhanke.com' name='author' />
-    <meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description' />
-    <meta content='index, follow' name='robots' />
-    <meta content='3 days' name='revisit-after' />
-    <link href='favicon.ico' rel='shortcut icon' />
-<link href='stylesheets/basic.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/specific.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/grid.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/colors.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css' />
-    <script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    <script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
-    <title>
-      Picky:
-      Getting Started
-    </title>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-20991642-1']);
-        _gaq.push(['_trackPageview']);
-        
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      //]]>
-    </script>
-  </head>
-  <body onload='hljs.initHighlighting();'>
-    <div class='header'>
-      <a href='http://github.com/floere/picky'>
-        <img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;' />
-      </a>
-    </div>
-    <div class='picky' title='Happy Picky (drawn on iPhone)'></div>
-    <div class='container_2'>
-      <h1>Picky</h1>
-      <div class='navigation'>
-        <a class='current ' href='index.html'>get started</a>
-        <a class='' href='examples.html'>examples</a>
-        <a class='' href='documentation.html'>documentation</a>
-        <a class='' href='details.html'>about</a>
-        <a class='right' href='enterprise.html'>business</a>
-        <a class='right' href='status.html'>contribute</a>
-        <a class='right' href='features.html'>features</a>
-        <a class='right' href='videos.html'>screencasts</a>
-      </div>
-    </div>
-    <div class='container_2'>
-      <h2>
-        Getting Started
-        <div class='social'>
-          <!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
-          <a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
-          <a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-          <div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
-          <script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
-        </div>
-      </h2>
-    </div>
-    <div class='container_2'>
-  <div class='grid_1'>
-    <p>
-      Need a search engine in a Ruby script and got 3 minutes?
-      <pre><code>gem install picky</code></pre>
-    </p>
-    <p>
-      and copy paste
-      <pre><code>#!/usr/bin/env ruby&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
-    </p>
-    <p>
-      Have fun changing the code to suit your needs :)
-    </p>
-  </div>
-  <div class='grid_1'>
-    <p>
-      Need a search engine in a Sinatra server & web frontend and got 10 minutes?
-    </p>
-    <code><pre>gem install picky-generators</pre></code>
-    <p>
-      This will also install the needed gems "picky" and "picky-client".
-    </p>
-    <p>
-      Other
-      <a href='#system-requirements-server'>system requirements</a>
-      if it doesn't run straightaway.
-    </p>
-    <h3>Create a web server</h3>
-    <p>The server generates a library example, which you can run right away.</p>
-    <code><pre># Generates a directory "app_name"&#x000A;# with a new Picky default server project.&#x000A;# Type "picky generate" to see other options.&#x000A;&#x000A;picky generate server app_name</pre>
-    <pre>cd app_name&#x000A;bundle install</pre></code>
-    <h4>1. Index the data</h4>
-    <code><pre>rake index</pre></code>
-    <h4>2. Start the server</h4>
-    <code><pre>rake start</pre></code>
-    <h4>3. Try a query</h4>
-    <code><pre>curl localhost:8080/books?query=test</pre></code>
-    <p>
-      Don't worry about the strange looking results!
-      The next part (client) will take care of them.
-    </p>
-    <p>
-      If you're interested anyway:
-      <a href='http://github.com/floere/picky/wiki/results-format-and-structure'>Results (Format & Structure)</a>
-    </p>
-    <h3>The client</h3>
-    <p>The client generates an example app for the "library" example backend, using Sinatra.</p>
-    <code><pre># Generates a directory "app_name"&#x000A;# with a new Picky client Sinatra project.&#x000A;&#x000A;picky generate client app_name</pre></code>
-    <pre>cd app_name&#x000A;bundle install</pre>
-    <h4>1. Start the app server</h4>
-    <code><pre>unicorn -p 3000</pre></code>
-    <h4>2. Admire your work</h4>
-    <p>
-      Go to
-      <a href='http://localhost:3000/'>http://localhost:3000/</a>
-      and try the examples.
-    </p>
-    <h3>Your own search</h3>
-    <p>
-      You're probably itching to change the example for
-      your own data. How do you do this?
-    </p>
-    <h4>The server</h4>
-    <p>In the server directory, just type</p>
-    <code><pre>rake todo</pre></code>
-    <p>and it will tell you where to change the server configuration.</p>
-    <h4>The client</h4>
-    <p>
-      Go to
-      <a href='http://localhost:3000/configure'>http://localhost:3000/configure</a>
-      and the page will show you how to configure your app server.
-    </p>
-    <p>
-      That's it, congratulations! :)
-    </p>
-    <h3 id='system-requirements-server'>System Requirements</h3>
-    <p>
-      <ul>
-        <li>OSX / Linux</li>
-        <li>
-          <a href='http://www.ruby-lang.org/en/downloads/'>Ruby 2</a>
-        </li>
-        <li>
-          <a href='http://gembundler.com/'>Bundler Gem</a>
-        </li>
-      </ul>
-    </p>
-    <p>
-      I recommend
-      <a href='https://github.com/postmodern/chruby'>chruby</a>
-      for installing and managing Ruby versions.
-    </p>
-    <h3>How does it all work together?</h3>
-    <p>The big picture:</p>
-    <img src='diagrams/basic-overview.png' width='480px' />
-    <p>
-      That's the basic setup. The things to remember are:
-      <ol>
-        <li>The Picky server calculates IDs for a query.</li>
-        <li>Your app server renders results for the resulting IDs.</li>
-        <li>The Picky JS frontend offers help to the user.</li>
-      </ol>
-    </p>
-    <p>
-      Together they are like a small A-Team, something like "Action Search Squad Alpha"! «We've got the results and are heading back to base now, Sir!» Bam!
-    </p>
-    <p>
-      Note that you don't need a Picky client. You could just as well use the results in your Python/Java/PHP app server (If you happen to write a client for one of these, please let me know).
-    </p>
-  </div>
-  <div class='grid_1'>
-    <h3>Need assistance?</h3>
-    <p>
-      Right here. I'm happy to help!
-      If something doesn't work, send/gist me your app/application.rb
-      and I'll look into it.
-    </p>
-    <p>
-      <a href='http://github.com/inbox/new/floere'>github (floere)</a>,
-      <a href='http://twitter.com/hanke'>twitter (hanke)</a>,
-      <a href='mailto:florian.hanke@gmail.com'>mail (gmail)</a>
-    </p>
-    <p>
-      There's a Wiki as well:
-      <a href='http://github.com/floere/picky/wiki'>Picky Wiki</a>
-    </p>
-    <h3>Accompanying Video</h3>
-    <p>
-      If you don't have the time or leisure to do it yourself, watch this:
-    </p>
-    <iframe frameborder='0' height='365' src='http://player.vimeo.com/video/17161012' width='460'></iframe>
-    <p>
-      Note that the video was made with version 1.0.0.
-    </p>
-    <p>
-      In the latest version, instead of
-    </p>
-    <code><pre>picky project &lt;server dir&gt;&#x000A;picky-client sinatra &lt;client dir&gt;</pre></code>
-    <p>
-      the following commands are now used:
-    </p>
-    <code><pre>picky generate unicorn_server &lt;server dir&gt;&#x000A;picky generate sinatra_client &lt;client dir&gt;</pre></code>
-    <p>
-      A bit more wordy, but hopefully clearer what it does.
-    </p>
-  </div>
+<head>
+<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+<meta content='EN' http-equiv='Content-Language'>
+<meta content='Florian Hanke, florianhanke.com' name='author'>
+<meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords'>
+<meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract'>
+<meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description'>
+<meta content='index, follow' name='robots'>
+<meta content='3 days' name='revisit-after'>
+
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='stylesheets/basic.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/specific.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/grid.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/colors.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css'>
+
+<script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
+
+<title>
+Picky:
+Getting Started
+</title>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20991642-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body onload='hljs.initHighlighting();'>
+<div class='header'>
+<a href='http://github.com/floere/picky'>
+<img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;'>
+</a>
 </div>
-    <div class='license'>
-      Logos and all images are
-      <a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
-      licensed to Florian Hanke.
-    </div>
-    <div class='footer'></div>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var picky = document.getElementsByClassName('picky')[0];
-        var footer = document.getElementsByClassName('footer')[0];
-        
-        var position = 0;
-        
-        var movePicky = function() {
-          if (position == -2780) {
-            position = 0;
-          } else {
-            position -= 20;
-            setTimeout(movePicky,5);
-          }
-          picky.style.backgroundPositionY = position + "px";
-        }
-        
-        footer.onclick = function() {
-          setTimeout(movePicky,5);
-        };
-      //]]>
-    </script>
-  </body>
+
+<div class='picky' title='Happy Picky (drawn on iPhone)'></div>
+
+<div class='container_2'>
+<h1>Picky</h1>
+<div class='navigation'>
+<a class='current ' href='index.html'>get started</a>
+<a class='' href='examples.html'>examples</a>
+<a class='' href='documentation.html'>documentation</a>
+<a class='' href='details.html'>about</a>
+<a class='right' href='enterprise.html'>business</a>
+<a class='right' href='status.html'>contribute</a>
+<a class='right' href='features.html'>features</a>
+<a class='right' href='videos.html'>screencasts</a>
+</div>
+
+</div>
+<div class='container_2'>
+<h2>
+Getting Started
+<div class='social'>
+<!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
+<a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
+<a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
+<script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
+</div>
+
+</h2>
+</div>
+<div class='container_2'>
+<div class='grid_1'>
+<p>
+Need a search engine in a Ruby script and got 3 minutes?
+<pre><code>gem install picky</code></pre>
+</p>
+<p>
+and copy paste
+<pre><code>#!/usr/bin/env ruby&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
+</p>
+<p>
+Have fun changing the code to suit your needs :)
+</p>
+</div>
+<div class='grid_1'>
+<p>
+Need a search engine in a Sinatra server & web frontend and got 10 minutes?
+</p>
+<code><pre>gem install picky-generators</pre></code>
+<p>
+This will also install the needed gems "picky" and "picky-client".
+</p>
+<p>
+Other
+<a href='#system-requirements-server'>system requirements</a>
+if it doesn't run straightaway.
+</p>
+<h3>Create a web server</h3>
+<p>The server generates a library example, which you can run right away.</p>
+<code><pre># Generates a directory "app_name"&#x000A;# with a new Picky default server project.&#x000A;# Type "picky generate" to see other options.&#x000A;&#x000A;picky generate server app_name</pre>
+<pre>cd app_name&#x000A;bundle install</pre></code>
+<h4>1. Index the data</h4>
+<code><pre>rake index</pre></code>
+<h4>2. Start the server</h4>
+<code><pre>rake start</pre></code>
+<h4>3. Try a query</h4>
+<code><pre>curl localhost:8080/books?query=test</pre></code>
+<p>
+Don't worry about the strange looking results!
+The next part (client) will take care of them.
+</p>
+<p>
+If you're interested anyway:
+<a href='http://github.com/floere/picky/wiki/results-format-and-structure'>Results (Format & Structure)</a>
+</p>
+<h3>The client</h3>
+<p>The client generates an example app for the "library" example backend, using Sinatra.</p>
+<code><pre># Generates a directory "app_name"&#x000A;# with a new Picky client Sinatra project.&#x000A;&#x000A;picky generate client app_name</pre></code>
+<pre>cd app_name&#x000A;bundle install</pre>
+<h4>1. Start the app server</h4>
+<code><pre>unicorn -p 3000</pre></code>
+<h4>2. Admire your work</h4>
+<p>
+Go to
+<a href='http://localhost:3000/'>http://localhost:3000/</a>
+and try the examples.
+</p>
+<h3>Your own search</h3>
+<p>
+You're probably itching to change the example for
+your own data. How do you do this?
+</p>
+<h4>The server</h4>
+<p>In the server directory, just type</p>
+<code><pre>rake todo</pre></code>
+<p>and it will tell you where to change the server configuration.</p>
+<h4>The client</h4>
+<p>
+Go to
+<a href='http://localhost:3000/configure'>http://localhost:3000/configure</a>
+and the page will show you how to configure your app server.
+</p>
+<p>
+That's it, congratulations! :)
+</p>
+<h3 id='system-requirements-server'>System Requirements</h3>
+<p>
+<ul>
+<li>OSX / Linux</li>
+<li>
+<a href='http://www.ruby-lang.org/en/downloads/'>Ruby 2</a>
+</li>
+<li>
+<a href='http://gembundler.com/'>Bundler Gem</a>
+</li>
+</ul>
+</p>
+<p>
+I recommend
+<a href='https://github.com/postmodern/chruby'>chruby</a>
+for installing and managing Ruby versions.
+</p>
+<h3>How does it all work together?</h3>
+<p>The big picture:</p>
+<img src='diagrams/basic-overview.png' width='480px'>
+<p>
+That's the basic setup. The things to remember are:
+<ol>
+<li>The Picky server calculates IDs for a query.</li>
+<li>Your app server renders results for the resulting IDs.</li>
+<li>The Picky JS frontend offers help to the user.</li>
+</ol>
+</p>
+<p>
+Together they are like a small A-Team, something like "Action Search Squad Alpha"! «We've got the results and are heading back to base now, Sir!» Bam!
+</p>
+<p>
+Note that you don't need a Picky client. You could just as well use the results in your Python/Java/PHP app server (If you happen to write a client for one of these, please let me know).
+</p>
+</div>
+<div class='grid_1'>
+<h3>Need assistance?</h3>
+<p>
+Right here. I'm happy to help!
+If something doesn't work, send/gist me your app/application.rb
+and I'll look into it.
+</p>
+<p>
+<a href='http://github.com/inbox/new/floere'>github (floere)</a>, 
+<a href='http://twitter.com/hanke'>twitter (hanke)</a>, 
+<a href='mailto:florian.hanke@gmail.com'>mail (gmail)</a>
+</p>
+<p>
+There's a Wiki as well:
+<a href='http://github.com/floere/picky/wiki'>Picky Wiki</a>
+</p>
+<h3>Accompanying Video</h3>
+<p>
+If you don't have the time or leisure to do it yourself, watch this:
+</p>
+<iframe frameborder='0' height='365' src='http://player.vimeo.com/video/17161012' width='460'></iframe>
+<p>
+Note that the video was made with version 1.0.0.
+</p>
+<p>
+In the latest version, instead of
+</p>
+<code><pre>picky project &lt;server dir&gt;&#x000A;picky-client sinatra &lt;client dir&gt;</pre></code>
+<p>
+the following commands are now used:
+</p>
+<code><pre>picky generate unicorn_server &lt;server dir&gt;&#x000A;picky generate sinatra_client &lt;client dir&gt;</pre></code>
+<p>
+A bit more wordy, but hopefully clearer what it does.
+</p>
+</div>
+</div>
+
+<div class='license'>
+Logos and all images are
+<a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
+licensed to Florian Hanke.
+</div>
+
+<div class='footer'></div>
+<script>
+  var picky = document.getElementsByClassName('picky')[0];
+  var footer = document.getElementsByClassName('footer')[0];
+  
+  var position = 0;
+  
+  var movePicky = function() {
+    if (position == -2780) {
+      position = 0;
+    } else {
+      position -= 20;
+      setTimeout(movePicky,5);
+    }
+    picky.style.backgroundPositionY = position + "px";
+  }
+  
+  footer.onclick = function() {
+    setTimeout(movePicky,5);
+  };
+</script>
+
+</body>
 </html>

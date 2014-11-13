@@ -1,219 +1,227 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
-    <meta content='EN' http-equiv='Content-Language' />
-    <meta content='Florian Hanke, florianhanke.com' name='author' />
-    <meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract' />
-    <meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description' />
-    <meta content='index, follow' name='robots' />
-    <meta content='3 days' name='revisit-after' />
-    <link href='favicon.ico' rel='shortcut icon' />
-<link href='stylesheets/basic.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/specific.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/grid.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/colors.css' rel='stylesheet' type='text/css' />
-<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css' />
-    <script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    <script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
-    <title>
-  Picky:
-  Code Examples
+<head>
+<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+<meta content='EN' http-equiv='Content-Language'>
+<meta content='Florian Hanke, florianhanke.com' name='author'>
+<meta content='picky, ruby, single field, semantic small text, search engine, light, lightweight' name='keywords'>
+<meta content='Picky: The fast and easy to configure Ruby search engine' name='abstract'>
+<meta content='Picky: The fast and easy to configure Ruby search engine. Offers a server, a client, and a statistics interface.' name='description'>
+<meta content='index, follow' name='robots'>
+<meta content='3 days' name='revisit-after'>
+
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='stylesheets/basic.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/specific.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/grid.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/colors.css' rel='stylesheet' type='text/css'>
+<link href='stylesheets/solarized_code.css' rel='stylesheet' type='text/css'>
+
+<script src='javascripts/highlight.bash.ruby.js' type='text/javascript'></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">function plusone_vote(obj){_gaq.push(['_trackEvent','plusone',obj.state]);}</script>
+
+<title>
+Picky:
+Code Examples
 </title>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-20991642-1']);
-        _gaq.push(['_trackPageview']);
-        
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      //]]>
-    </script>
-  </head>
-  <body onload='hljs.initHighlighting();'>
-    <div class='header'>
-      <a href='http://github.com/floere/picky'>
-        <img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;' />
-      </a>
-    </div>
-    <div class='picky' title='Happy Picky (drawn on iPhone)'></div>
-    <div class='container_2'>
-      <h1>Picky</h1>
-      <div class='navigation'>
-        <a class='' href='index.html'>get started</a>
-        <a class='current ' href='examples.html'>examples</a>
-        <a class='' href='documentation.html'>documentation</a>
-        <a class='' href='details.html'>about</a>
-        <a class='right' href='enterprise.html'>business</a>
-        <a class='right' href='status.html'>contribute</a>
-        <a class='right' href='features.html'>features</a>
-        <a class='right' href='videos.html'>screencasts</a>
-      </div>
-    </div>
-    <div class='container_2'>
-      <h2>
-        Code Examples
-        <div class='social'>
-          <!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
-          <a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
-          <a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-          <div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
-          <script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
-        </div>
-      </h2>
-    </div>
-    <div class='container_2'>
-  <div class='grid_2 plain'>
-    <p>
-      These are a few simple examples that will get you into Picky quickly.
-    </p>
-    <h4>Index & Search</h4>
-    <ul>
-      <li>
-        <a href='#objects'>Ruby objects</a>
-      </li>
-      <li>
-        <a href='#csv'>CSV files</a>
-      </li>
-      <li>
-        <a href='#document'>Documents</a>
-      </li>
-    </ul>
-    <h4>Dump & Load</h4>
-    <ul>
-      <li>
-        <a href='#dump-load'>Index</a>
-      </li>
-    </ul>
-    <h4>Inspect</h4>
-    <ul>
-      <li>
-        <a href='#inspect'>Index</a>
-      </li>
-    </ul>
-  </div>
-  <div class='grid_2'>
-    <h3 id='objects'>Index & Search Ruby objects</h3>
-    <p>
-      <pre><code>gem install picky</code></pre>
-    </p>
-    <p>
-      <pre><code># Copy this into a Ruby file "objectsearch.rb", then:&#x000A;#   ruby objectsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
-    </p>
-  </div>
-  <div class='grid_2'>
-    <h3 id='csv'>Index & Search CSV files</h3>
-    <p>
-      <pre><code>gem install picky</code></pre>
-    </p>
-    <p>
-      Copy the CSV data into ./people.csv:
-    </p>
-    <p>
-      <pre><code>id,name,age&#x000A;1,Florian Hanke,37&#x000A;2,Kaspar Schiess,36&#x000A;</code></pre>
-    </p>
-    <p>
-      Then run this code:
-    </p>
-    <p>
-      <pre><code># Copy this into a Ruby file "csvsearch.rb", then:&#x000A;#   ruby csvsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;require 'csv'&#x000A;require 'ostruct'&#x000A;require 'fileutils'&#x000A;&#x000A;# Prepare CSV data.&#x000A;#&#x000A;options = {&#x000A;  headers: true,&#x000A;  header_converters: ->(header) { header.to_sym }&#x000A;}&#x000A;csv = CSV.open('./people.csv', options)&#x000A;         .to_a&#x000A;         .map { |row| OpenStruct.new row.to_hash }&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;  source { csv }&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# The index is saved into './index'.&#x000A;#&#x000A;data.index&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'age:36'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => ["2"]&#x000A;</code></pre>
-    </p>
-  </div>
-  <div class='grid_2'>
-    <h3 id='document'>Index & Search Documents</h3>
-    <p>
-      <pre><code>gem install picky</code></pre>
-    </p>
-    <p>
-      Copy the poem "The Raven" by E. A. Poe into ./story.txt. Here
-      is the ending (that's enough to run the example):
-    </p>
-    <p>
-      <pre>And the raven, never flitting, still is sitting, still is sitting&#x000A;On the pallid bust of Pallas just above my chamber door;&#x000A;And his eyes have all the seeming of a demon's that is dreaming,&#x000A;And the lamp-light o'er him streaming throws his shadow on the floor;&#x000A;And my soul from out that shadow that lies floating on the floor&#x000A;Shall be lifted - nevermore!</pre>
-    </p>
-    <p>
-      Then run this code:
-    </p>
-    <p>
-      <pre><code># Copy this into a Ruby file "document_search.rb", then:&#x000A;#   ruby document_search.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;           # Only keep alpha/blank characters.&#x000A;  indexing removes_characters: /[^\p{Alpha}\p{Blank}]/i&#x000A;&#x000A;                  # Only index full words.&#x000A;  category :text, partial: Picky::Partial::None.new&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Document = Struct.new :id, :text&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;File.open 'story.txt' do |story|&#x000A;  data.add Document.new(1, story.read)&#x000A;end&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do two searches and remember the results.&#x000A;#&#x000A;found           = people.search 'nevermore'&#x000A;only_full_words = people.search 'nevermor'&#x000A;not_found       = people.search 'peter'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p found.ids # => [1]&#x000A;p only_full_words.ids # => []&#x000A;p not_found.ids # => []</code></pre>
-    </p>
-  </div>
-  <div class='grid_2'>
-    <h3 id='dump-load'>Dump & Load An Index</h3>
-    <p>
-      Adding to an in-memory index using
-      <code>Index#add</code>
-      will not automatically
-      store the index data on permanent storage.
-    </p>
-    <p>
-      To write the index to disk, call
-      <code>Index#dump</code>
-      .
-    </p>
-    <p>
-      To load the index from disk, call
-      <code>Index#load</code>
-      .
-    </p>
-    <p>
-      <pre><code>gem install picky</code></pre>
-    </p>
-    <p>
-      Then run this code:
-    </p>
-    <p>
-      <pre><code># Copy this into a Ruby file "dump_load_search.rb", then:&#x000A;#   ruby dump_load_search.rb&#x000A;&#x000A;require 'fileutils'&#x000A;require 'picky'&#x000A;&#x000A;# Make Picky be quiet.&#x000A;#&#x000A;Picky.logger = Picky::Loggers::Silent.new&#x000A;&#x000A;# Create an index.&#x000A;# Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object to search the index.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# The index data is saved into './index' when you&#x000A;# run index.dump().&#x000A;# But you still find results.&#x000A;#&#x000A;index.dump&#x000A;p people.search('flori').ids # => [2, 1]&#x000A;&#x000A;# Clearing the index will empty it in memory.&#x000A;#&#x000A;index.clear&#x000A;p people.search('flori').ids # => []&#x000A;&#x000A;# Loading the index will fill the index again.&#x000A;#&#x000A;index.load&#x000A;p people.search('flori').ids # => [2, 1]</code></pre>
-    </p>
-  </div>
-  <div class='grid_2'>
-    <h3 id='inspect'>Inspect An Index</h3>
-    <p>
-      <pre><code>gem install picky</code></pre>
-    </p>
-    <p>
-      Then run this code:
-    </p>
-    <p>
-      <pre><code># Copy this into a Ruby file "inspection.rb", then:&#x000A;#   ruby inspection.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Look at pieces of the index.&#x000A;#&#x000A;puts index[:name].exact.inverted&#x000A;puts index[:name].exact.weights&#x000A;puts index[:name].partial.inverted&#x000A;puts index[:name].partial.weights</code></pre>
-    </p>
-  </div>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20991642-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body onload='hljs.initHighlighting();'>
+<div class='header'>
+<a href='http://github.com/floere/picky'>
+<img alt='Fork me on GitHub' src='images/forkme.png' style='position: fixed; top: -10px; right: -10px; border: 0; z-index: 1;'>
+</a>
 </div>
-    <div class='license'>
-      Logos and all images are
-      <a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
-      licensed to Florian Hanke.
-    </div>
-    <div class='footer'></div>
-    <script type='text/javascript'>
-      //<![CDATA[
-        var picky = document.getElementsByClassName('picky')[0];
-        var footer = document.getElementsByClassName('footer')[0];
-        
-        var position = 0;
-        
-        var movePicky = function() {
-          if (position == -2780) {
-            position = 0;
-          } else {
-            position -= 20;
-            setTimeout(movePicky,5);
-          }
-          picky.style.backgroundPositionY = position + "px";
-        }
-        
-        footer.onclick = function() {
-          setTimeout(movePicky,5);
-        };
-      //]]>
-    </script>
-  </body>
+
+<div class='picky' title='Happy Picky (drawn on iPhone)'></div>
+
+<div class='container_2'>
+<h1>Picky</h1>
+<div class='navigation'>
+<a class='' href='index.html'>get started</a>
+<a class='current ' href='examples.html'>examples</a>
+<a class='' href='documentation.html'>documentation</a>
+<a class='' href='details.html'>about</a>
+<a class='right' href='enterprise.html'>business</a>
+<a class='right' href='status.html'>contribute</a>
+<a class='right' href='features.html'>features</a>
+<a class='right' href='videos.html'>screencasts</a>
+</div>
+
+</div>
+<div class='container_2'>
+<h2>
+Code Examples
+<div class='social'>
+<!-- script id='fbda0ml'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=hanke&button=compact&url=http%3A%2F%2Fpickyrb.com';f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbda0ml');</script -->
+<a class='twitter-follow-button' data-show-count='false' data-width='110px' href='https://twitter.com/hanke'>Follow @hanke</a>
+<a class='twitter-follow-button' data-show-count='false' data-width='123px' href='https://twitter.com/picky_rb'>Follow @picky_rb</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pickyrb.com" data-via="picky_rb" data-text="Picky: The fast Ruby semantic search engine">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div callback='plusone_vote' class='g-plusone' data-href='http://florianhanke.com/picky/' data-size='medium' data-width='60'></div>
+<script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
+</div>
+
+</h2>
+</div>
+<div class='container_2'>
+<div class='grid_2 plain'>
+<p>
+These are a few simple examples that will get you into Picky quickly.
+</p>
+<h4>Index & Search</h4>
+<ul>
+<li>
+<a href='#objects'>Ruby objects</a>
+</li>
+<li>
+<a href='#csv'>CSV files</a>
+</li>
+<li>
+<a href='#document'>Documents</a>
+</li>
+</ul>
+<h4>Dump & Load</h4>
+<ul>
+<li>
+<a href='#dump-load'>Index</a>
+</li>
+</ul>
+<h4>Inspect</h4>
+<ul>
+<li>
+<a href='#inspect'>Index</a>
+</li>
+</ul>
+</div>
+<div class='grid_2'>
+<h3 id='objects'>Index & Search Ruby objects</h3>
+<p>
+<pre><code>gem install picky</code></pre>
+</p>
+<p>
+<pre><code># Copy this into a Ruby file "objectsearch.rb", then:&#x000A;#   ruby objectsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'floris'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => [2]</code></pre>
+</p>
+</div>
+<div class='grid_2'>
+<h3 id='csv'>Index & Search CSV files</h3>
+<p>
+<pre><code>gem install picky</code></pre>
+</p>
+<p>
+Copy the CSV data into ./people.csv:
+</p>
+<p>
+<pre><code>id,name,age&#x000A;1,Florian Hanke,37&#x000A;2,Kaspar Schiess,36&#x000A;</code></pre>
+</p>
+<p>
+Then run this code:
+</p>
+<p>
+<pre><code># Copy this into a Ruby file "csvsearch.rb", then:&#x000A;#   ruby csvsearch.rb&#x000A;&#x000A;require 'picky'&#x000A;require 'csv'&#x000A;require 'ostruct'&#x000A;require 'fileutils'&#x000A;&#x000A;# Prepare CSV data.&#x000A;#&#x000A;options = {&#x000A;  headers: true,&#x000A;  header_converters: ->(header) { header.to_sym }&#x000A;}&#x000A;csv = CSV.open('./people.csv', options)&#x000A;         .to_a&#x000A;         .map { |row| OpenStruct.new row.to_hash }&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;  source { csv }&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# The index is saved into './index'.&#x000A;#&#x000A;data.index&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do a search and remember the results.&#x000A;#&#x000A;results = people.search 'age:36'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p results.ids # => ["2"]&#x000A;</code></pre>
+</p>
+</div>
+<div class='grid_2'>
+<h3 id='document'>Index & Search Documents</h3>
+<p>
+<pre><code>gem install picky</code></pre>
+</p>
+<p>
+Copy the poem "The Raven" by E. A. Poe into ./story.txt. Here
+is the ending (that's enough to run the example):
+</p>
+<p>
+<pre>And the raven, never flitting, still is sitting, still is sitting&#x000A;On the pallid bust of Pallas just above my chamber door;&#x000A;And his eyes have all the seeming of a demon's that is dreaming,&#x000A;And the lamp-light o'er him streaming throws his shadow on the floor;&#x000A;And my soul from out that shadow that lies floating on the floor&#x000A;Shall be lifted - nevermore!</pre>
+</p>
+<p>
+Then run this code:
+</p>
+<p>
+<pre><code># Copy this into a Ruby file "document_search.rb", then:&#x000A;#   ruby document_search.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Define an index.&#x000A;#&#x000A;data = Picky::Index.new :people do&#x000A;           # Only keep alpha/blank characters.&#x000A;  indexing removes_characters: /[^\p{Alpha}\p{Blank}]/i&#x000A;&#x000A;                  # Only index full words.&#x000A;  category :text, partial: Picky::Partial::None.new&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Document = Struct.new :id, :text&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;File.open 'story.txt' do |story|&#x000A;  data.add Document.new(1, story.read)&#x000A;end&#x000A;&#x000A;# Create a search interface object.&#x000A;#&#x000A;people = Picky::Search.new data&#x000A;&#x000A;# Do two searches and remember the results.&#x000A;#&#x000A;found           = people.search 'nevermore'&#x000A;only_full_words = people.search 'nevermor'&#x000A;not_found       = people.search 'peter'&#x000A;&#x000A;# Show the results.&#x000A;#&#x000A;p found.ids # => [1]&#x000A;p only_full_words.ids # => []&#x000A;p not_found.ids # => []</code></pre>
+</p>
+</div>
+<div class='grid_2'>
+<h3 id='dump-load'>Dump & Load An Index</h3>
+<p>
+Adding to an in-memory index using
+<code>Index#add</code>
+will not automatically
+store the index data on permanent storage.
+</p>
+<p>
+To write the index to disk, call
+<code>Index#dump</code>
+.
+</p>
+<p>
+To load the index from disk, call
+<code>Index#load</code>
+.
+</p>
+<p>
+<pre><code>gem install picky</code></pre>
+</p>
+<p>
+Then run this code:
+</p>
+<p>
+<pre><code># Copy this into a Ruby file "dump_load_search.rb", then:&#x000A;#   ruby dump_load_search.rb&#x000A;&#x000A;require 'fileutils'&#x000A;require 'picky'&#x000A;&#x000A;# Make Picky be quiet.&#x000A;#&#x000A;Picky.logger = Picky::Loggers::Silent.new&#x000A;&#x000A;# Create an index.&#x000A;# Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Create a search interface object to search the index.&#x000A;#&#x000A;people = Picky::Search.new index&#x000A;&#x000A;# The index data is saved into './index' when you&#x000A;# run index.dump().&#x000A;# But you still find results.&#x000A;#&#x000A;index.dump&#x000A;p people.search('flori').ids # => [2, 1]&#x000A;&#x000A;# Clearing the index will empty it in memory.&#x000A;#&#x000A;index.clear&#x000A;p people.search('flori').ids # => []&#x000A;&#x000A;# Loading the index will fill the index again.&#x000A;#&#x000A;index.load&#x000A;p people.search('flori').ids # => [2, 1]</code></pre>
+</p>
+</div>
+<div class='grid_2'>
+<h3 id='inspect'>Inspect An Index</h3>
+<p>
+<pre><code>gem install picky</code></pre>
+</p>
+<p>
+Then run this code:
+</p>
+<p>
+<pre><code># Copy this into a Ruby file "inspection.rb", then:&#x000A;#   ruby inspection.rb&#x000A;&#x000A;require 'picky'&#x000A;&#x000A;# Create an index which is saved into './index' when you&#x000A;# run index.dump(). Note that :id is implied - every input&#x000A;# object must supply an :id!&#x000A;#&#x000A;index = Picky::Index.new :people do&#x000A;  category :age&#x000A;  category :name&#x000A;end&#x000A;&#x000A;# Define a data input class. Any object that responds to&#x000A;# :id, :age, :name can be added to the index.&#x000A;#&#x000A;Person = Struct.new :id, :age, :name&#x000A;&#x000A;# Add some data objects to the index.&#x000A;# IDs can be any unique string or integer.&#x000A;#&#x000A;index.add Person.new(1, 34, 'Florian is the author of picky')&#x000A;index.add Person.new(2, 77, 'Floris is related to Florian')&#x000A;&#x000A;# Look at pieces of the index.&#x000A;#&#x000A;puts index[:name].exact.inverted&#x000A;puts index[:name].exact.weights&#x000A;puts index[:name].partial.inverted&#x000A;puts index[:name].partial.weights</code></pre>
+</p>
+</div>
+</div>
+
+<div class='license'>
+Logos and all images are
+<a href='http://creativecommons.org/licenses/by/1.0/'>CC Attribution</a>
+licensed to Florian Hanke.
+</div>
+
+<div class='footer'></div>
+<script>
+  var picky = document.getElementsByClassName('picky')[0];
+  var footer = document.getElementsByClassName('footer')[0];
+  
+  var position = 0;
+  
+  var movePicky = function() {
+    if (position == -2780) {
+      position = 0;
+    } else {
+      position -= 20;
+      setTimeout(movePicky,5);
+    }
+    picky.style.backgroundPositionY = position + "px";
+  }
+  
+  footer.onclick = function() {
+    setTimeout(movePicky,5);
+  };
+</script>
+
+</body>
 </html>

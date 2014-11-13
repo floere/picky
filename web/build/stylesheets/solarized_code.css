@@ -1,25 +1,25 @@
-/* line 3, solarized_code.css.sass */
+/* line 3, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre, code, tt, samp {
   background: black;
-  color: #f7f8f0;
+  color: #F7F8F0;
   font-weight: 500; }
 
-/* line 10, solarized_code.css.sass */
+/* line 10, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 p > code, li > code {
   padding: 0.2em 0.5em;
-  -webkit-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  -webkit-box-shadow: #A89A7A 0 1px 1px inset, white 0 1px 0;
   -moz-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
-  box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  box-shadow: #A89A7A 0 1px 1px inset, white 0 1px 0;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px; }
 
-/* line 20, solarized_code.css.sass */
+/* line 20, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre {
-  -webkit-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  -webkit-box-shadow: #A89A7A 0 1px 1px inset, white 0 1px 0;
   -moz-box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
-  box-shadow: #a89a7a 0 1px 1px inset, white 0 1px 0;
+  box-shadow: #A89A7A 0 1px 1px inset, white 0 1px 0;
   padding: 0.5em 1em;
   margin: 1.5em 0;
   -webkit-border-radius: 4px;
@@ -30,7 +30,7 @@ pre {
   padding: 1em;
   display: block; }
 
-/* line 35, solarized_code.css.sass */
+/* line 35, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .comment,
 pre .template_comment,
 pre .diff .header,
@@ -44,7 +44,7 @@ code .lisp .string,
 code .javadoc {
   color: #93a1a1;
   font-style: italic; }
-/* line 44, solarized_code.css.sass */
+/* line 44, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .keyword,
 pre .css .rule .keyword,
 pre .winutils,
@@ -60,8 +60,8 @@ code .method,
 code .addition,
 code .css .tag,
 code .lisp .title {
-  color: #d98a64; }
-/* line 54, solarized_code.css.sass */
+  color: #D98A64; }
+/* line 54, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .number,
 pre .command,
 pre .string,
@@ -77,8 +77,8 @@ code .phpdoc,
 code .tex .formula,
 code .regexp,
 code .hexcolor {
-  color: #61b042; }
-/* line 64, solarized_code.css.sass */
+  color: #61B042; }
+/* line 64, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .title,
 pre .localvars,
 pre .function .title,
@@ -100,8 +100,8 @@ code .lisp .title,
 code .identifier,
 code .title .keymethods,
 code .id {
-  color: #89bdff; }
-/* line 77, solarized_code.css.sass */
+  color: #89BDFF; }
+/* line 77, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .attribute,
 pre .variable,
 pre .instancevar,
@@ -119,8 +119,8 @@ code .constant,
 code .class .title,
 code .parent,
 code .haskell .label {
-  color: #9b859c; }
-/* line 88, solarized_code.css.sass */
+  color: #9B859C; }
+/* line 88, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .preprocessor,
 pre .pi,
 pre .shebang,
@@ -142,10 +142,10 @@ code .attr_selector,
 code .important,
 code .subst,
 code .cdata {
-  color: #3187cb; }
-/* line 101, solarized_code.css.sass */
+  color: #3187CB; }
+/* line 101, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .deletion, code .deletion {
   color: #dc322f; }
-/* line 104, solarized_code.css.sass */
+/* line 104, /Users/hanke/temp/picky/web/source/stylesheets/solarized_code.css.sass */
 pre .tex .formula, code .tex .formula {
   background: #eee8d5; }

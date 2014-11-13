@@ -1,4 +1,4 @@
-/* line 1, basic.css.sass */
+/* line 1, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -16,99 +16,99 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   vertical-align: baseline;
   background: transparent; }
 
-/* line 18, basic.css.sass */
+/* line 18, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 ol, ul {
   list-style: none; }
 
-/* line 21, basic.css.sass */
+/* line 21, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 blockquote, q {
   quotes: none; }
 
-/* line 24, basic.css.sass */
+/* line 24, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 blockquote:before, blockquote:after,
 q:before, q:after {
   content: "";
   content: none; }
 
-/* line 29, basic.css.sass */
+/* line 29, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h1, h2, h3, h4, h5 {
   font-weight: normal;
   border-bottom: 1px solid #777777; }
 
-/* line 33, basic.css.sass */
+/* line 33, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h2, h3, h4, h5, p, ul, ol {
   margin-top: 1em;
   font-size: 0.9em; }
 
-/* line 37, basic.css.sass */
+/* line 37, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 ul, ol {
   margin-top: 0.5em; }
 
-/* line 40, basic.css.sass */
+/* line 40, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h1 {
   font-size: 2em; }
 
-/* line 43, basic.css.sass */
+/* line 43, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h2 {
   font-size: 1.5em; }
 
-/* line 46, basic.css.sass */
+/* line 46, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h3 {
   font-size: 1.25em; }
 
-/* line 49, basic.css.sass */
+/* line 49, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h4 {
   font-size: 1.05em; }
 
-/* line 52, basic.css.sass */
+/* line 52, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h5 {
   font-size: 1em; }
 
-/* line 55, basic.css.sass */
+/* line 55, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 a {
   color: #224466;
   text-decoration: none;
   border-bottom: 1px solid gray; }
 
-/* line 60, basic.css.sass */
+/* line 60, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 h1 a, h2 a, h3 a, h4 a, h5 a {
   border-bottom: none; }
 
-/* line 63, basic.css.sass */
+/* line 63, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 a:visited {
   color: #555666; }
 
-/* line 66, basic.css.sass */
+/* line 66, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 a:hover,
 a:focus {
   color: #224466;
-  background-color: white; }
+  background-color: #fff; }
 
-/* line 71, basic.css.sass */
+/* line 71, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 a:active {
   color: #224466; }
 
-/* line 74, basic.css.sass */
+/* line 74, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 pre {
   background-color: white;
   margin: 10px 0;
   padding: 10px; }
 
-/* line 79, basic.css.sass */
+/* line 79, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 img {
   float: left;
   margin: 10px 10px 10px 0px; }
 
-/* line 85, basic.css.sass */
+/* line 85, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 ol ol li {
   list-style: none; }
-/* line 88, basic.css.sass */
+/* line 88, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 ol ol ol li {
   list-style: disc; }
 
-/* line 91, basic.css.sass */
+/* line 91, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 table {
-  border: 2px solid #999999; }
+  border: 2px solid #999; }
 
 /*  :background white*/
  * :padding 1em
@@ -116,20 +116,20 @@ table {
  *
  * td
  *   :padding 0.5em */
-/* line 100, basic.css.sass */
+/* line 100, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 ol.nav {
   height: 1.5em;
-  color: #cccccc; }
-  /* line 103, basic.css.sass */
+  color: #ccc; }
+  /* line 103, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
   ol.nav li {
     float: left;
     padding-right: 0.4em; }
 
-/* line 107, basic.css.sass */
+/* line 107, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 div.clear {
   clear: both; }
 
-/* line 110, basic.css.sass */
+/* line 110, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
 div.license {
   font-size: 0.5em;
   width: 33em;
