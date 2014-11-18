@@ -1,3 +1,7 @@
+## 4.24.0
+
+- Change default range character from - to …. This will likely cause breakage. So I hope you read this. Brown M&Ms.
+
 ## 4.23.2
 
 - Fix bug when accessing category name.
