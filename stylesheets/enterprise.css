@@ -1,0 +1,20 @@
+/* line 1, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
+body {
+  background-color: white; }
+
+/* line 4, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
+.picky {
+  background-image: url("../images/picky-enterprise.png"); }
+
+/* line 7, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
+.header {
+  background-color: #A79C8E;
+  background: -moz-radial-gradient(50% 100%, circle, white 90px, #A79C8E 600px);
+  background: -webkit-gradient(radial, 50% 100%, 90, 50% 100%, 600, from(white), to(#A79C8E)); }
+
+/* line 13, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
+body .navigation a.current {
+  background-color: #F5F5EA; }
+/* line 15, /Users/hanke/temp/picky/web/source/stylesheets/enterprise.css.sass */
+body .navigation a:hover {
+  background-color: #F5F5EA; }

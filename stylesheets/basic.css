@@ -1,0 +1,139 @@
+/* line 1, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+/* line 18, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+ol, ul {
+  list-style: none; }
+
+/* line 21, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+blockquote, q {
+  quotes: none; }
+
+/* line 24, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none; }
+
+/* line 29, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+  border-bottom: 1px solid #777777; }
+
+/* line 33, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h2, h3, h4, h5, p, ul, ol {
+  margin-top: 1em;
+  font-size: 0.9em; }
+
+/* line 37, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+ul, ol {
+  margin-top: 0.5em; }
+
+/* line 40, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h1 {
+  font-size: 2em; }
+
+/* line 43, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h2 {
+  font-size: 1.5em; }
+
+/* line 46, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h3 {
+  font-size: 1.25em; }
+
+/* line 49, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h4 {
+  font-size: 1.05em; }
+
+/* line 52, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h5 {
+  font-size: 1em; }
+
+/* line 55, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+a {
+  color: #224466;
+  text-decoration: none;
+  border-bottom: 1px solid gray; }
+
+/* line 60, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+h1 a, h2 a, h3 a, h4 a, h5 a {
+  border-bottom: none; }
+
+/* line 63, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+a:visited {
+  color: #555666; }
+
+/* line 66, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+a:hover,
+a:focus {
+  color: #224466;
+  background-color: #fff; }
+
+/* line 71, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+a:active {
+  color: #224466; }
+
+/* line 74, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+pre {
+  background-color: white;
+  margin: 10px 0;
+  padding: 10px; }
+
+/* line 79, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+img {
+  float: left;
+  margin: 10px 10px 10px 0px; }
+
+/* line 85, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+ol ol li {
+  list-style: none; }
+/* line 88, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+ol ol ol li {
+  list-style: disc; }
+
+/* line 91, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+table {
+  border: 2px solid #999; }
+
+/*  :background white*/
+ * :padding 1em
+ * :margin 0.5em
+ *
+ * td
+ *   :padding 0.5em */
+/* line 100, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+ol.nav {
+  height: 1.5em;
+  color: #ccc; }
+  /* line 103, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+  ol.nav li {
+    float: left;
+    padding-right: 0.4em; }
+
+/* line 107, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+div.clear {
+  clear: both; }
+
+/* line 110, /Users/hanke/temp/picky/web/source/stylesheets/basic.css.sass */
+div.license {
+  font-size: 0.5em;
+  width: 33em;
+  position: fixed;
+  bottom: 0px;
+  left: 10px;
+  background-color: beige; }
