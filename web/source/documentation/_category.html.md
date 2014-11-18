@@ -276,7 +276,7 @@ Users can use some special features when searching. They are:
 * Similarity: `something~` (The tilde makes this word eligible for similarity search)
 * Categorized: `title:something` (Picky will only search in the category designated as title, in each index of the search)
 * Multi-categorized: `title,author:something` (Picky will search in title _and_ author categories, in each index of the search)
-* Range: `year:1999-2012` (Picky will search all values in a Ruby `Range`: `(1999..2012)`)
+* Range: `year:1999…2012` (Picky will search all values in a Ruby `Range`: `(1999..2012)`)
 
 These options can be combined (e.g. `title,author:funky~"`): This will try to find similar words to funky (like "fonky"), but no partials of them (like "fonk"), in both title and author.
 
