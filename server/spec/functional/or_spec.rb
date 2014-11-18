@@ -73,7 +73,7 @@ describe "OR token" do
     it { try.search("something,other:ohai").ids.should == [] }
     it { try.search("text:taster~|text:kthxbye hello").ids.should == [2, 1] }
     it { try.search("text:test*|kthxbye hello").ids.should == [2, 1] }
-    it { try.search("text:11-15|kthxbye hello").ids.should == [2, 1] }
+    it { try.search("text:11…15|kthxbye hello").ids.should == [2, 1] }
     it { try.search("hello text,other:ohai|text:kthxbye").ids.should == [1, 2] }
     it { try.search("hello something,other:ohai|kthxbye").ids.should == [2] }
     it { try.search("hello text:oh*|text:kthxbya~").ids.should == [1, 2] }

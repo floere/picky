@@ -31,49 +31,49 @@ describe 'range queries' do
   end
   
   it 'works with misses' do
-    try.search('900-1200').ids.should == []
+    try.search('900…1200').ids.should == []
   end
   
   it 'survives huge ranges' do
-    try.search('0-10000 a').ids.should == [3]
+    try.search('0…10000 a').ids.should == [3]
     
     # Quote to make it non-partial.
     #
-    try.search('0-3000"').ids.should == [7,6,2,8,3,1,4,5]
+    try.search('0…3000"').ids.should == [7,6,2,8,3,1,4,5]
   end
   it 'is semi-reasonably fast with huge ranges' do
     # Quote to make it non-partial.
     #
-    performance_of { try.search('0-3000"') }.should < 0.21
+    performance_of { try.search('0…3000"') }.should < 0.21
     
     # Note it is much much faster with an additional token.
     #
-    performance_of { try.search('0-3000 a') }.should < 0.0085
+    performance_of { try.search('0…3000 a') }.should < 0.0085
   end
     
   it 'handles basic range queries' do
-    try.search('1980-2001').ids.should == [8,3,1]
-    try.search('f-u').ids.should == [2,1,8,7,4]
+    try.search('1980…2001').ids.should == [8,3,1]
+    try.search('f…u').ids.should == [2,1,8,7,4]
   end
   
   it 'can handle qualifiers' do
-    try.search('year:1980-2001').ids.should == [8,3,1]
-    try.search('alphabet:f-u').ids.should == [2,1,8,7,4]
+    try.search('year:1980…2001').ids.should == [8,3,1]
+    try.search('alphabet:f…u').ids.should == [2,1,8,7,4]
   end
   
   it 'can be combined with other search words' do
-    try.search('1980-2001 a').ids.should == [3]
-    try.search('f-u 881').ids.should == [7]
+    try.search('1980…2001 a').ids.should == [3]
+    try.search('f…u 881').ids.should == [7]
   end
   
   it 'can handle multiple range queries' do
-    try.search('1980-2001 a-h').ids.should == [3,1]
-    try.search('f-u 881-1977').ids.should == [2,7]
+    try.search('1980…2001 a…h').ids.should == [3,1]
+    try.search('f…u 881…1977').ids.should == [2,7]
   end
   
   it 'can be combined with partial queries' do
-    try.search('198* a-h').ids.should == [3]
-    try.search('a-h 198').ids.should == [3]
+    try.search('198* a…h').ids.should == [3]
+    try.search('a…h 198').ids.should == [3]
   end
   
   it 'works with nonsensical ranges' do
@@ -126,11 +126,11 @@ describe 'range queries' do
     end
 
     it 'allows injection of custom range classes' do
-      try.search('hour:10-2').ids.should == [6, 5, 1, 2, 7]
+      try.search('hour:10…2').ids.should == [6, 5, 1, 2, 7]
     end
     
     it 'allows injection of custom range classes' do
-      try.search('hour:0-11').ids.should == [1, 2, 7, 8, 3, 4, 6, 5]
+      try.search('hour:0…11').ids.should == [1, 2, 7, 8, 3, 4, 6, 5]
     end
   end
   

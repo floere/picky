@@ -206,13 +206,13 @@ module Picky
       
       # Define a character which makes a token a range token.
       #
-      # Default is '-'.
+      # Default is '…'.
       #
       # Example:
-      #   Picky::Query::Token.range_character = "…"
-      #   try.search("year:2000…2008") # Will find results in a range.
+      #   Picky::Query::Token.range_character = "-"
+      #   try.search("year:2000-2008") # Will find results in a range.
       #
-      @@range_character = '-'
+      @@range_character = ?…
       def self.range_character= character
         @@range_character = character
       end
