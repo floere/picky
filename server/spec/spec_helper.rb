@@ -20,6 +20,13 @@ if ENV['COV']
   SimpleCov.start 'picky'
 end
 
+# Pippi.
+#
+if ENV['PIPPI']
+  require 'pippi'
+  Pippi::AutoRunner.new(:checkset => ENV['PIPPI_CHECKSET'] || 'basic')
+end
+
 # Make RSpec shut up about deprecations.
 #
 RSpec.configure { |rspec| rspec.deprecation_stream = StringIO.new }

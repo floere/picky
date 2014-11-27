@@ -39,6 +39,8 @@ group :test do
   gem 'ruby-stemmer', :require => 'lingua/stemmer'
 
   gem 'rack-mount'
+  
+  gem 'pippi'
 end
 
 group :coverage do
