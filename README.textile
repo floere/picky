@@ -4,9 +4,9 @@ In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://
 
 h2. The Ruby semantic text search engine.
 
-* "Main web site":http://florianhanke.com/picky
-* "Documentation":http://florianhanke.com/picky/documentation.html
-* "Getting Started":http://florianhanke.com/picky/getting_started.html
+* "Main web site":http://pickyrb.com/
+* "Documentation":http://pickyrb.com/documentation.html
+* "Getting Started":http://pickyrb.com/ 
 * Ask questions in the "Picky Mailing List":http://groups.google.com/group/picky-ruby.
 * Tentacly tweets on "@picky_rb":http://twitter.com/picky_rb.
 * Find everything else in "the Picky Wiki":http://github.com/floere/picky/wiki.
