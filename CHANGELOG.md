@@ -1,3 +1,7 @@
+## 4.25.1
+
+- Symbol keys can now be used with facets.
+
 ## 4.25.0
 
 - Picky can now use Symbols internally. Only use with Ruby 2.2.0.
