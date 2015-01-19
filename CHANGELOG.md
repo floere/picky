@@ -1,3 +1,7 @@
+## 4.25.2
+
+- Symbol keys can now be used with an OR query.
+
 ## 4.25.1
 
 - Symbol keys can now be used with facets.
