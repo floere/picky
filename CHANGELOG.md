@@ -1,3 +1,8 @@
+## 4.25.0
+
+- Picky can now use Symbols internally. Only use with Ruby 2.2.0.
+- Use both `Index#symbol_keys(bool)` and `Search#symbol_keys` to enable.
+
 ## 4.24.0
 
 - Change default range character from - to …. This will likely cause breakage. So I hope you read this. Brown M&Ms.
