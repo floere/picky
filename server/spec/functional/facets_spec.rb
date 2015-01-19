@@ -226,4 +226,85 @@ describe 'facets' do
     end
     
   end
+  
+  describe 'simple example with symbols' do
+    let(:index) {
+      index = Picky::Index.new :facets do
+        symbol_keys true
+        category :name, partial: Picky::Partial::Substring.new(from: 1)
+        category :surname
+      end
+
+      thing = Struct.new :id, :name, :surname
+      index.add thing.new(1, 'fritz', 'hanke')
+      index.add thing.new(2, 'kaspar', 'schiess')
+      index.add thing.new(3, 'florian', 'hanke')
+    
+      index
+    }
+    let(:finder) do
+      Picky::Search.new(index) { symbol_keys }
+    end
+    
+    describe 'Index#facets' do
+      it 'is correct' do
+        # Picky has 2 facets with different counts for surname.
+        #
+        index.facets(:surname).should == {
+          hanke: 2,
+          schiess: 1
+        }
+    
+        # It has 3 facets with the same count for name.
+        #
+        index.facets(:name).should == {
+          fritz: 1,
+          kaspar: 1,
+          florian: 1
+        }
+        
+        # Picky only selects facets with a count >= the given one.
+        #
+        index.facets(:surname, at_least: 2).should == {
+          hanke: 2
+        }
+      end
+    end
+  
+    describe 'Search#facets' do
+      it 'filters them correctly' do
+        # Passing in no filter query just returns the facets
+        #
+        finder.facets(:surname).should == {
+          hanke: 2,
+          schiess: 1
+        }
+        
+        # It has two facets.
+        #
+        finder.facets(:name, filter: 'surname:hanke').should == {
+          fritz: 1,
+          florian: 1
+        }
+        
+        # It only uses exact matches (ie. the last token is not partialized).
+        #
+        finder.facets(:name, filter: 'surname:hank').should == {}
+        
+        # It allows explicit partial matches.
+        #
+        finder.facets(:name, filter: 'surname:hank*').should == {
+          fritz: 1,
+          florian: 1
+        }
+        
+        # It allows explicit partial matches.
+        #
+        finder.facets(:name, filter: 'surname:hank*').should == {
+          fritz: 1,
+          florian: 1
+        }
+      end
+    end
+  end
 end

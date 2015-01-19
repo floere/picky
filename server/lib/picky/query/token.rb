@@ -11,7 +11,7 @@ module Picky
     #
     class Token
       
-      attr_reader :text, :original
+      attr_accessor :text, :original
       attr_writer :similar
       attr_writer :predefined_categories
       

@@ -40,7 +40,8 @@ module Picky
       # key_token = Query::Token.new ''
       # key_token.predefined_categories = [index[category_identifier]]
       #
-      key_token = Query::Token.new '', nil, predefined_categories
+      empty = @symbol_keys ? :'' : ''
+      key_token = Query::Token.new empty, nil, predefined_categories
       
       # Pre-tokenize filter for reuse.
       #
@@ -55,9 +56,13 @@ module Picky
       # Get actual counts.
       #
       if no_counts
-        facets_without_counts counts, minimal_counts, tokenized_filter_query, key_token.text, options
+        facets_without_counts counts, minimal_counts, tokenized_filter_query, options do |last_text|
+          key_token.text = last_text # TODO Why is this necessary?
+        end
       else
-        facets_with_counts    counts, minimal_counts, tokenized_filter_query, key_token.text, options
+        facets_with_counts counts, minimal_counts, tokenized_filter_query, key_token.text, options do |last_text|
+          key_token.text = last_text # TODO Why is this necessary?
+        end
       end
     end
     def facets_without_counts counts, minimal_counts, tokenized_filter_query, last_token_text, options = {}
@@ -66,7 +71,9 @@ module Picky
         # is the only information that changes in between
         # queries.
         #
-        last_token_text.replace key
+        # Note: DOes not use replace anymore.
+        #
+        yield key
         
         # Calculate up to 1000 facets using unique to show correct facet counts.
         # TODO Redesign and deoptimize the whole process.
@@ -83,7 +90,7 @@ module Picky
         # is the only information that changes in between
         # queries.
         #
-        last_token_text.replace key
+        yield key
         
         # Calculate up to 1000 facets using unique to show correct facet counts.
         # TODO Redesign and deoptimize the whole process.
