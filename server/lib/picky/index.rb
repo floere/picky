@@ -150,6 +150,16 @@ module Picky
       end
     end
 
+    # API method.
+    #
+    def symbol_keys value = nil
+      if value
+        @symbol_keys = value
+      else
+        @symbol_keys
+      end 
+    end
+
     # The directory used by this index.
     #
     # Note: Used @directory ||=, but needs to be dynamic.

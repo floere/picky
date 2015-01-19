@@ -64,7 +64,7 @@ module Picky
     # strings to the index for the given id.
     #
     def add_text id, text_or_tokens, where = :unshift
-      # text = text.to_sym if @symbols # SYMBOLS.
+      # text_or_tokens = text_or_tokens.to_sym if @symbol_keys # SYMBOLS.
       tokens = nil
       if tokenizer
         tokens, _ = tokenizer.tokenize text_or_tokens
@@ -92,7 +92,7 @@ module Picky
       return unless text
 
       id = id.send key_format if format
-      # text = text.to_sym if @symbols # SYMBOLS.
+      text = text.to_sym if @symbol_keys # SYMBOLS.
       id.freeze
 
       exact.add id, text, where, static

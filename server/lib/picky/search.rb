@@ -138,6 +138,10 @@ module Picky
     def boost boosts
       @boosts = extract_boosts boosts
     end
+    
+    def symbol_keys
+      @symbol_keys = true
+    end
 
     # Ignore given categories and/or combinations of
     # categories.
@@ -258,7 +262,7 @@ module Picky
     def tokenized text, partialize_last = true
       tokens, originals = tokenizer.tokenize text
       tokens = Query::Tokens.processed tokens, originals || tokens, @ignore_unassigned
-      # tokens.symbolize # SYMBOLS.
+      tokens.symbolize if @symbol_keys # SYMBOLS.
       tokens.partialize_last if partialize_last
       tokens
     end

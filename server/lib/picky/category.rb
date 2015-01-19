@@ -42,21 +42,21 @@ module Picky
     end
     
     def configure_from options
-      @from      = options.delete :from
+      @from       = options.delete :from
       
       # Instantly extracted to raise an error instantly.
       #
-      @source    = Source.from options[:source], true, @index.name
-      @tokenize  = options[:tokenize] != false
-      @tokenizer = Tokenizer.from options[:indexing], @index.name, name
-      @ranger    = options[:ranging] || Range
+      @source     = Source.from options[:source], true, @index.name
+      @tokenize   = options[:tokenize] != false
+      @tokenizer  = Tokenizer.from options[:indexing], @index.name, name
+      @ranger     = options[:ranging] || Range
 
-      @key_format = options.delete :key_format
-      @backend    = options.delete :backend
+      @key_format  = options.delete :key_format
+      @backend     = options.delete :backend
 
-      @qualifiers = extract_qualifiers_from options
+      @qualifiers  = extract_qualifiers_from options
 
-      # @symbols    = options[:use_symbols] || index.use_symbols? # SYMBOLS.
+      @symbol_keys = options[:symbol_keys] || @index.symbol_keys # SYMBOLS.
     end
 
     # TODO I do a lot of helper method calls here. Refactor?

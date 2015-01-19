@@ -20,7 +20,7 @@ describe Picky::Category do
 
       category.partial.similarity_strategy.should be_kind_of(Picky::Generators::Similarity::None)
 
-      category.instance_variable_get(:@symbols).should == nil
+      category.instance_variable_get(:@symbol_keys).should == nil
     end
     
     context '#==' do
