@@ -29,6 +29,28 @@ describe "OR token" do
     it('still works') { try.search("hello text:ohai").ids.should == [1] }
   end
   
+  context 'simple cases with symbol_keys' do
+    let(:index) do
+      index = Picky::Index.new :or do
+        symbol_keys true
+        category :text
+      end
+      thing = OpenStruct.new id: 1, text: "hello ohai"
+      other = OpenStruct.new id: 2, text: "hello kthxbye"
+
+      index.add thing
+      index.add other
+      
+      index
+    end
+    let(:try) { Picky::Search.new(index) { symbol_keys } }
+    it { try.search("hello text:ohai|text:kthxbye").ids.should == [1, 2] }
+    it { try.search("hello text:ohai|kthxbye").ids.should == [1, 2] }
+    it { try.search("hello ohai|text:kthxbye").ids.should == [1, 2] }
+    it { try.search("hello ohai|kthxbye").ids.should == [1, 2] }
+    it('still works') { try.search("hello text:ohai").ids.should == [1] }
+  end
+  
   context 'more complex cases' do
     let(:index) do
       index = Picky::Index.new :or do

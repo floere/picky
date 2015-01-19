@@ -24,6 +24,10 @@ module Picky
           end
           combinations.empty? && combinations || [Query::Combination::Or.new(combinations)]
         end
+        
+        def symbolize!
+          @tokens.symbolize
+        end
       
       end
       
