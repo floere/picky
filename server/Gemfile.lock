@@ -1,11 +1,10 @@
 PATH
   remote: .
   specs:
-    picky (4.25.1)
+    picky (4.25.3)
       activesupport
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
-      text (~> 1.2)
 
 GEM
   remote: https://rubygems.org/
