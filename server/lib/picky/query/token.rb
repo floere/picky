@@ -89,8 +89,8 @@ module Picky
       # the same stemmer will be used always.
       #
       def stem tokenizer
-        if tokenizer && stem?
-          @stem ||= tokenizer.stem @text
+        if stem?
+          @stem ||= tokenizer.stem(@text)
         else
           @text
         end
