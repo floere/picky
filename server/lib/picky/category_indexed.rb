@@ -25,7 +25,11 @@ module Picky
           weight && (weight + (sum || 0)) || sum
         end
       else
-        bundle.weight token.stem(tokenizer)
+        if tokenizer && tokenizer.stemmer?
+          bundle.weight token.stem(tokenizer)
+        else
+          bundle.weight token.text
+        end
       end
     end
 
@@ -45,7 +49,12 @@ module Picky
           ids.empty? ? result : result << ids
         end.flatten
       else
-        bundle.ids token.stem(tokenizer)
+        # Optimization
+        if tokenizer && tokenizer.stemmer?
+          bundle.ids token.stem(tokenizer)
+        else
+          bundle.ids token.text
+        end
       end
     end
 
