@@ -1,6 +1,7 @@
 ## 4.26.0
 
 - Stemming is now done per-category, and is not defined anymore on `Search`, although that's still an option.
+- Currently, only a single type of stemmer is possible to use.
 
 ## 4.25.2
 
