@@ -107,6 +107,16 @@ describe 'stemming' do
 
         try = Picky::Search.new index
     
+        try.search("stemming").ids.should == [1, 2]
+        try.search("stemmin").ids.should == []
+        try.search("stemmi").ids.should == []
+        try.search("stemm").ids.should == []
+        try.search("stem").ids.should == [1]
+        
+        try.search("ios").ids.should == [2, 1]
+        try.search("io").ids.should == [2]
+        try.search("i").ids.should == []
+        
         try.search("text1:stemming").ids.should == [1]
         try.search("text2:ios").ids.should == [1]
     
