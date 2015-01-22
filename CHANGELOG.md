@@ -1,3 +1,7 @@
+## 4.26.0
+
+- Stemming is now done per-category, and is not defined anymore on `Search`, although that's still an option.
+
 ## 4.25.2
 
 - Symbol keys can now be used with an OR query.
