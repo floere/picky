@@ -130,5 +130,54 @@ describe 'stemming' do
         try.search("text2:stem").ids.should == []
       end
     end
+    describe 'multiple stemmers' do
+      it 'caching works' do
+        do_nothing_stemmer = Class.new do
+          def stem text
+            text
+          end
+        end.new
+        
+        index = Picky::Index.new :stemming do
+          # Be aware that if !s are not removed from
+          # eg. Lemming!, then stemming won't work.
+          #
+          indexing removes_characters: /[^a-z\s]/i
+          category :text1,
+                   partial: Picky::Partial::None.new,
+                   indexing: { stems_with: Lingua::Stemmer.new }
+          category :text2,
+                   partial: Picky::Partial::None.new,
+                   indexing: { stems_with: do_nothing_stemmer }
+        end
+    
+        index.replace_from id: 1, text1: 'stemming', text2: 'ios'
+        index.replace_from id: 2, text1: 'ios', text2: 'stemming'
+
+        try = Picky::Search.new index
+    
+        try.search("stemming").ids.should == [1, 2]
+        try.search("stemmin").ids.should == []
+        try.search("stemmi").ids.should == []
+        try.search("stemm").ids.should == []
+        try.search("stem").ids.should == [1]
+        
+        try.search("ios").ids.should == [2, 1]
+        try.search("io").ids.should == [2]
+        try.search("i").ids.should == []
+        
+        try.search("text1:stemming").ids.should == [1]
+        try.search("text2:ios").ids.should == [1]
+    
+        try.search("text1:ios").ids.should == [2]
+        try.search("text2:stemming").ids.should == [2]
+      
+        try.search("text1:stem").ids.should == [1]
+        try.search("text2:io").ids.should == []
+      
+        try.search("text1:io").ids.should == [2]
+        try.search("text2:stem").ids.should == []
+      end
+    end
   end
 end
