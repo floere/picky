@@ -90,7 +90,8 @@ module Picky
       #
       def stem tokenizer
         if stem?
-          @stem ||= tokenizer.stem(@text)
+          @stems ||= {}
+          @stems[tokenizer] ||= tokenizer.stem(@text)
         else
           @text
         end
