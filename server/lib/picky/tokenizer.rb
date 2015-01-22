@@ -282,7 +282,7 @@ ERROR
     #
     def tokens_for words
       words.collect! { |word| word.downcase!; word } if downcase?
-      words.collect! { |word| stem word } if stemmer?
+      words.collect! { |word| stem word } if stemmer? # Usually only done in indexing step.
       words
     end
 

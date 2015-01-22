@@ -6,18 +6,19 @@ require 'stemmer'
 require 'lingua/stemmer'
 
 describe 'stemming' do
-  let(:stemmer) {
-    # Fast stemmer does not conform with the API.
-    #
-    module Stemmer
-      class << self
-        alias_method :stem, :stem_word
-      end
-    end
-    Stemmer
-  }
   
-  describe 'examples' do
+  describe 'per-index stemming' do
+    let(:stemmer) {
+      # Fast stemmer does not conform with the API.
+      #
+      module Stemmer
+        class << self
+          alias_method :stem, :stem_word
+        end
+      end
+      Stemmer
+    }
+    
     it 'works correctly' do
       tokenizer = Picky::Tokenizer.new(stems_with: stemmer)
       
@@ -58,15 +59,7 @@ describe 'stemming' do
 
       try = Picky::Search.new index
       
-      # If you don't stem in the search, it should not be found!
-      #
-      try.search("text:stemming").ids.should == []
-
-      try = Picky::Search.new index do
-        searching stems_with: Stemmer
-      end
-      
-      # With stemming in search AND indexing, it works :)
+      # Stems for both, so finds both.
       #
       try.search("text:stemming").ids.should == [2, 1]
       try.search("text:lem").ids.should == [2]
@@ -80,27 +73,52 @@ describe 'stemming' do
         # eg. Lemming!, then stemming won't work.
         #
         indexing removes_characters: /[^a-z\s]/i,
-                 stems_with: Lingua::Stemmer.new
+                 stems_with: Lingua::Stemmer.new # Both stem
         category :text
       end
-      
+
       index.replace_from id: 1, text: "Hello good Sirs, these things here need stems to work!"
       index.replace_from id: 2, text: "Stemming Lemming!"
 
       try = Picky::Search.new index
-      
-      # If you don't stem in the search, it should not be found!
-      #
-      try.search("text:stemming").ids.should == []
 
-      try = Picky::Search.new index do
-        searching stems_with: Lingua::Stemmer.new
-      end
-      
-      # With stemming in search AND indexing, it works :)
-      #
       try.search("text:stemming").ids.should == [2, 1]
       try.search("text:lem").ids.should == [2]
+    end
+  end
+  
+  describe 'per-category stemming' do
+    describe 'mixed stemming categories' do
+      it 'stems some but not others' do
+        index = Picky::Index.new :stemming do
+          # Be aware that if !s are not removed from
+          # eg. Lemming!, then stemming won't work.
+          #
+          indexing removes_characters: /[^a-z\s]/i
+          category :text1,
+                   partial: Picky::Partial::None.new,
+                   indexing: { stems_with: Lingua::Stemmer.new }
+          category :text2,
+                   partial: Picky::Partial::None.new
+        end
+    
+        index.replace_from id: 1, text1: 'stemming', text2: 'ios'
+        index.replace_from id: 2, text1: 'ios', text2: 'stemming'
+
+        try = Picky::Search.new index
+    
+        try.search("text1:stemming").ids.should == [1]
+        try.search("text2:ios").ids.should == [1]
+    
+        try.search("text1:ios").ids.should == [2]
+        try.search("text2:stemming").ids.should == [2]
+      
+        try.search("text1:stem").ids.should == [1]
+        try.search("text2:io").ids.should == []
+      
+        try.search("text1:io").ids.should == [2]
+        try.search("text2:stem").ids.should == []
+      end
     end
   end
 end

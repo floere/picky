@@ -25,7 +25,7 @@ module Picky
           weight && (weight + (sum || 0)) || sum
         end
       else
-        bundle.weight token.text
+        bundle.weight token.stem(tokenizer)
       end
     end
 
@@ -45,14 +45,13 @@ module Picky
           ids.empty? ? result : result << ids
         end.flatten
       else
-        bundle.ids token.text
+        bundle.ids token.stem(tokenizer)
       end
     end
 
     # Returns the right index bundle for this token.
     #
     def bundle_for token
-      # token.partial? ? partial : exact
       token.select_bundle exact, partial
     end
 

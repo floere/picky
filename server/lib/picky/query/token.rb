@@ -82,6 +82,22 @@ module Picky
       def select_bundle exact, partial
         @partial ? partial : exact
       end
+      
+      # Generates a reused stem.
+      #
+      # TODO Probably should not cache, as not
+      # the same stemmer will be used always.
+      #
+      def stem tokenizer
+        if tokenizer && stem?
+          @stem ||= tokenizer.stem @text
+        else
+          @text
+        end
+      end
+      def stem?
+        @text !~ @@no_partial
+      end
 
       # Partial is a conditional setter.
       #

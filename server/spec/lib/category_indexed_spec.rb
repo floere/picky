@@ -64,7 +64,7 @@ describe Picky::Category do
   end
 
   describe 'weight' do
-    let(:token) { double :token, :text => :some_text }
+    let(:token) { double :token, :text => :some_text, :stem => :some_stem }
     context 'without range' do
       before :each do
         token.stub :range => nil
@@ -74,7 +74,7 @@ describe Picky::Category do
           @category.stub :bundle_for => @partial
         end
         it 'should receive weight with the token text' do
-          @partial.should_receive(:weight).once.with :some_text
+          @partial.should_receive(:weight).once.with :some_stem
 
           @category.weight token
         end
@@ -84,7 +84,7 @@ describe Picky::Category do
           @category.stub :bundle_for => @exact
         end
         it 'should receive weight with the token text' do
-          @exact.should_receive(:weight).once.with :some_text
+          @exact.should_receive(:weight).once.with :some_stem
 
           @category.weight token
         end
@@ -129,7 +129,7 @@ describe Picky::Category do
   end
 
   describe 'ids' do
-    let(:token) { double :token, :text => :some_text }
+    let(:token) { double :token, :text => :some_text, :stem => :some_stem }
     context 'without range' do
       before(:each) { token.stub :range => nil }
       context 'partial bundle' do
@@ -137,7 +137,7 @@ describe Picky::Category do
           @category.stub :bundle_for => @partial
         end
         it 'should receive ids with the token text' do
-          @partial.should_receive(:ids).once.with :some_text
+          @partial.should_receive(:ids).once.with :some_stem
 
           @category.ids token
         end
@@ -147,7 +147,7 @@ describe Picky::Category do
           @category.stub :bundle_for => @exact
         end
         it 'should receive ids with the token text' do
-          @exact.should_receive(:ids).once.with :some_text
+          @exact.should_receive(:ids).once.with :some_stem
 
           @category.ids token
         end
