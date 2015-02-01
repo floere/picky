@@ -5,38 +5,32 @@ require 'ostruct'
 
 describe "Hint: no_dump" do
 
+  Book = Struct.new(:id, :title, :author)
+
   let(:index) do
     Picky::Index.new :no_dump do
       optimize :no_dump
+      
+      category :title
+      category :author
     end
   end
   let(:try) { Picky::Search.new index }
 
   it 'can index and search' do
-    index.category :text1
+    index.replace Book.new(2, "Title", "Author")
 
-    thing = OpenStruct.new id: ['id1', 'thing1'], text1: "ohai"
-    other = OpenStruct.new id: ['id2', 'thing2'], text1: "ohai kthxbye"
-
-    index.add thing
-    index.add other
-
-    try.search("text1:ohai").ids.should == [
-      ["id2", "thing2"],
-      ["id1", "thing1"]
-    ]
+    try.search("title:title").ids.should == [2]
   end
   
-  it 'fails when taking a dump' do
-    index.category :text1
+  context 'dumping and loading' do
+    it "raises" do
+      index.replace Book.new(2, "Title New", "Author New")
 
-    thing = OpenStruct.new id: ['id1', 'thing1'], text1: "ohai"
-    other = OpenStruct.new id: ['id2', 'thing2'], text1: "ohai kthxbye"
-
-    index.add thing
-    index.add other
-    
-    index.dump
+      index.dump
+      index.load
+      index.build_realtime_mapping
+    end
   end
 
 end
