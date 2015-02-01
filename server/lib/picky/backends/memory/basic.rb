@@ -38,7 +38,16 @@ module Picky
         # together before it is dumped into the files.
         #
         def empty
-          @empty && @empty.clone || {}
+          @empty && @empty.clone || empty_hash
+        end
+        
+        def empty_hash
+          # TODO Make this an explicit option.
+          if defined? GoogleHashSparseRubyToRuby
+            GoogleHashSparseRubyToRuby.new # TODO Use GoogleHashDenseIntToRuby where possible.
+          else
+            {}
+          end
         end
 
         # The initial content before loading from file.
