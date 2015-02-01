@@ -1,3 +1,7 @@
+## 4.26.2
+
+- Experimental: Require 'google_hash' to enable Picky to use denser hashes.
+
 ## 4.26.1
 
 - Using multiple different stemmers is now possible.
