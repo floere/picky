@@ -36,6 +36,10 @@ module Picky
     def initialize name, index, options = {}
       @name  = name
       @index = index
+      
+      # TODO Move.
+      #
+      options[:hints] = index.hints
 
       configure_from options
       configure_indexes_from options
@@ -77,7 +81,19 @@ module Picky
     #
     # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
     #
-    @@known_keys = [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight]
+    @@known_keys = [
+      :hints,
+      :indexing,
+      :partial,
+      :qualifier,
+      :qualifiers,
+      :ranging,
+      :similarity,
+      :source,
+      :tokenize,
+      :tokenizer,
+      :weight,
+    ]
     def warn_if_unknown options
       if options && (options.keys - @@known_keys).size > 0
         warn <<-WARNING

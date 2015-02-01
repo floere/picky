@@ -14,21 +14,21 @@ module Picky
       # an object that responds to:
       #   object[:token] # => [id, id, id, id, id] (an array of ids)
       #
-      def create_inverted bundle
+      def create_inverted bundle, _ = nil
         json bundle.index_path(:inverted)
       end
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[:key] # => value (a value for this config key)
       #
-      def create_configuration bundle
+      def create_configuration bundle, _ = nil
         json bundle.index_path(:configuration)
       end
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[id] # => [:sym1, :sym2]
       #
-      def create_realtime bundle
+      def create_realtime bundle, _ = nil
         json bundle.index_path(:realtime)
       end
 

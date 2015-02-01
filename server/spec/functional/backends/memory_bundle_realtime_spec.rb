@@ -18,16 +18,16 @@ describe Picky::Bundle do
   end
 
   it 'is by default Hash-like' do
-    @bundle.realtime.to_hash.should == true
+    @bundle.realtime.should respond_to(:to_hash)
   end
   it 'is by default Hash-like' do
-    @bundle.inverted.to_hash.should == true
+    @bundle.inverted.should respond_to(:to_hash)
   end
   it 'is by default Hash-like' do
-    @bundle.weights.to_hash.should == true
+    @bundle.weights.should respond_to(:to_hash)
   end
   it 'is by default Hash-like' do
-    @bundle.similarity.to_hash.should == true
+    @bundle.similarity.should respond_to(:to_hash)
   end
 
   context 'strings' do

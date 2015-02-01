@@ -17,31 +17,31 @@ module Picky
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
-      def create_inverted bundle
+      def create_inverted bundle, _ = nil
         StringKeyArray.new bundle.index_path(:inverted), realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
-      def create_weights bundle
+      def create_weights bundle, _ = nil
         Value.new bundle.index_path(:weights), realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
-      def create_similarity bundle
+      def create_similarity bundle, _ = nil
         StringKeyArray.new bundle.index_path(:similarity), realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
-      def create_configuration bundle
+      def create_configuration bundle, _ = nil
         Value.new bundle.index_path(:configuration), realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [id] # => [:sym1, :sym2]
       #
-      def create_realtime bundle
+      def create_realtime bundle, _ = nil
         IntegerKeyArray.new bundle.index_path(:realtime), realtime: realtime
       end
 

@@ -53,7 +53,8 @@ module Picky
       @weight_strategy     = weight_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
-
+      
+      @hints      = options.delete :hints
       @backend    = options.delete :backend
 
       reset_backend
@@ -81,11 +82,11 @@ module Picky
     # TODO Move @backend_ into the backend?
     #
     def create_backends
-      @backend_inverted      = backend.create_inverted self
-      @backend_weights       = backend.create_weights self
-      @backend_similarity    = backend.create_similarity self
-      @backend_configuration = backend.create_configuration self
-      @backend_realtime      = backend.create_realtime self
+      @backend_inverted      = backend.create_inverted self, @hints
+      @backend_weights       = backend.create_weights self, @hints
+      @backend_similarity    = backend.create_similarity self, @hints
+      @backend_configuration = backend.create_configuration self, @hints
+      @backend_realtime      = backend.create_realtime self, @hints
     end
 
     # Initial indexes.

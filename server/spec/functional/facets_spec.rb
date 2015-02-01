@@ -174,14 +174,14 @@ describe 'facets' do
       end
       it 'has two filtered facets' do
         finder.facets(:surname, filter: 'age:40 name:peter', counts: false).should == [
-          'kunz',
-          'hanke'
+          'hanke',
+          'kunz'
         ]
       end
       it 'has 2 facets >= count 1' do
         finder.facets(:surname, filter: 'age:40 name:peter', at_least: 1, counts: false).should == [
-          'kunz',
-          'hanke'
+          'hanke',
+          'kunz'
         ]
       end
       it 'has 0 facets >= counts 2' do

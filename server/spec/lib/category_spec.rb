@@ -52,7 +52,7 @@ describe Picky::Category do
       category.should_receive(:warn).once.with <<-WARNING
 
 Warning: Category options {:weights=>:some_weight} for category some_category contain an unknown option.
-         Working options are: [:indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight].
+         Working options are: [:hints, :indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight].
 WARNING
       
       category.warn_if_unknown :weights => :some_weight

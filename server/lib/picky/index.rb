@@ -87,7 +87,8 @@ module Picky
   class Index
 
     attr_reader :name,
-                :categories
+                :categories,
+                :hints
 
     forward :[],
             :dump,
@@ -125,6 +126,13 @@ module Picky
       Indexes.register self
 
       instance_eval(&Proc.new) if block_given?
+    end
+    
+    # Provide hints for Picky so it can optimise.
+    #
+    def optimize *hints
+      require_relative 'index/hints'
+      @hints = Hints.new *hints
     end
 
     # TODO Doc.

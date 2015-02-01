@@ -5,19 +5,19 @@ require 'spec_helper'
 # To test the interface definition.
 #
 class BackendInterfaceTester < Picky::Backends::Backend
-  def create_inverted _
+  def create_inverted _, _ = nil
     InternalBackendInterfaceTester.new
   end
-  def create_weights _
+  def create_weights _, _ = nil
     InternalBackendInterfaceTester.new
   end
-  def create_similarity _
+  def create_similarity _, _ = nil
     InternalBackendInterfaceTester.new
   end
-  def create_configuration _
+  def create_configuration _, _ = nil
     InternalBackendInterfaceTester.new
   end
-  def create_realtime _
+  def create_realtime _, _ = nil
     InternalBackendInterfaceTester.new
   end
 end
