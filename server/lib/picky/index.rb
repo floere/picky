@@ -132,7 +132,7 @@ module Picky
     #
     def optimize *hints
       require_relative 'index/hints'
-      @hints = Hints.new *hints
+      @hints = Hints.new hints
     end
 
     # TODO Doc.
