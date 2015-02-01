@@ -1,3 +1,7 @@
+## 4.27.0
+
+- Use Google hashes when `optimize :no_dump` is specified on an index. The index can then not be dumped/loaded from file anymore.
+
 ## 4.26.2
 
 - Experimental: Require 'google_hash' to enable Picky to use denser hashes.
