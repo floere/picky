@@ -35,6 +35,8 @@ module Picky
 
     # Empty all the indexes.
     #
+    # TODO Call clear.
+    #
     def empty
       exact.empty
       partial.empty
