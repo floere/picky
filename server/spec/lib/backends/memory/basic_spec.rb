@@ -27,6 +27,7 @@ describe Picky::Backends::Memory::Basic do
   context 'with options' do
     let(:basic) do
       described_class.new 'spec/temp/some/cache/path/to/file',
+                          Hash,
                           empty: [],
                           initial: []
     end

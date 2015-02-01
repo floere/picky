@@ -18,12 +18,17 @@ module Picky
         # This file's location.
         #
         attr_reader :cache_path
+        
+        # What hash type to use. Default: ::Hash
+        #
+        attr_reader :hash_type
 
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_path, options = {}
+        def initialize cache_path, hash_type = Hash, options = {}
           @cache_path = "#{cache_path}.memory.#{extension}"
+          @hash_type  = hash_type
           @empty      = options[:empty]
           @initial    = options[:initial]
         end
@@ -38,7 +43,7 @@ module Picky
         # together before it is dumped into the files.
         #
         def empty
-          @empty && @empty.clone || empty_hash
+          @empty && @empty.clone || hash_type.new
         end
         
         def empty_hash
@@ -50,10 +55,10 @@ module Picky
           end
         end
 
-        # The initial content before loading from file.
+        # The initial content before loading from file/indexing.
         #
         def initial
-          @initial && @initial.clone || {}
+          @initial && @initial.clone || hash_type.new
         end
 
         # Deletes the file.

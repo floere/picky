@@ -17,17 +17,17 @@ describe Picky::Bundle do
                                         backend: Picky::Backends::Memory.new
   end
 
-  it 'is by default a Hash' do
-    @bundle.realtime.should be_kind_of(Hash)
+  it 'is by default Hash-like' do
+    @bundle.realtime.to_hash.should == true
   end
-  it 'is by default a Hash' do
-    @bundle.inverted.should be_kind_of(Hash)
+  it 'is by default Hash-like' do
+    @bundle.inverted.to_hash.should == true
   end
-  it 'is by default a Hash' do
-    @bundle.weights.should be_kind_of(Hash)
+  it 'is by default Hash-like' do
+    @bundle.weights.to_hash.should == true
   end
-  it 'is by default a Hash' do
-    @bundle.similarity.should be_kind_of(Hash)
+  it 'is by default Hash-like' do
+    @bundle.similarity.to_hash.should == true
   end
 
   context 'strings' do

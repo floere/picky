@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    picky (4.26.1)
+    picky (4.26.2)
       activesupport
+      google_hash (~> 0.8)
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
 
