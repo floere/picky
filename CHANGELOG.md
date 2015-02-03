@@ -1,3 +1,7 @@
+## 4.27.1
+
+- Also use Google hashes for partial indexes when `optimize :no_dump` is specified on an index.
+
 ## 4.27.0
 
 - Use Google hashes when `optimize :no_dump` is specified on an index. The index can then not be dumped/loaded from file anymore.
