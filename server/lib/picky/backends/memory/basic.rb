@@ -45,15 +45,6 @@ module Picky
         def empty
           @empty && @empty.clone || hash_type.new
         end
-        
-        def empty_hash
-          # TODO Make this an explicit option.
-          if defined? GoogleHashSparseRubyToRuby
-            GoogleHashSparseRubyToRuby.new # TODO Use GoogleHashDenseIntToRuby where possible.
-          else
-            {}
-          end
-        end
 
         # The initial content before loading from file/indexing.
         #

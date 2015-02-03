@@ -30,7 +30,7 @@ module Picky
     #
     def clear_categories
       @categories    = []
-      @category_hash = {}
+      @category_hash = Hash.new
     end
     
     # Updates the qualifier ("qualifier:searchterm") mapping.

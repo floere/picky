@@ -1,6 +1,8 @@
 if require 'google_hash'
   
   class ::GoogleHashSparseRubyToRuby
+    
+    alias each_pair each
 
     # This is mainly used in tests, which is
     # why we allow for a silly implementation.
@@ -24,7 +26,7 @@ if require 'google_hash'
       true
     end
   
-    #
+    # TODO
     #
     def inject init, &block
       result = init
@@ -34,6 +36,8 @@ if require 'google_hash'
       result
     end
   
+    # TODO
+    #
     def size
       result = 0
       # each only accepts a block

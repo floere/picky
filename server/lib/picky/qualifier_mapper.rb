@@ -9,7 +9,7 @@ module Picky
     #
     #
     def initialize categories
-      @mapping = {}
+      @mapping = Hash.new
       categories.each { |category| add category }
     end
 

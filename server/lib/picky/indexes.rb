@@ -41,7 +41,7 @@ module Picky
     #
     def clear_indexes
       @indexes       = []
-      @index_mapping = {}
+      @index_mapping = Hash.new
     end
 
     # Registers an index with the indexes.

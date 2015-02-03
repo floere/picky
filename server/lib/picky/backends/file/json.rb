@@ -64,7 +64,7 @@ module Picky
         #
         def dump hash
           offset = 0
-          mapping = {}
+          mapping = Hash.new
           
           create_directory cache_path
           ::File.open(cache_path, 'w:utf-8') do |out_file|

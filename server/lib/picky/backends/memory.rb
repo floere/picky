@@ -44,14 +44,15 @@ module Picky
       #   object[id] # => [:sym1, :sym2]
       #
       def create_realtime bundle, hints = nil
-        json bundle.index_path(:realtime), hash_for(hints) # GoogleHashSparseLongToRuby # FIXME This is only true on number keys (add Picky hints).
+        # GoogleHashSparseLongToRuby # FIXME This is only true on number keys (add Picky hints).
+        json bundle.index_path(:realtime), hash_for(hints)
       end
       
       private
       
         def hash_for hints
           if hints && hints.does?(:no_dump)
-            ::GoogleHashSparseRubyToRuby
+            ::GoogleHashSparseRubyToRuby # TODO Use GoogleHashSparseIntToRuby where possible.
           else
             ::Hash
           end

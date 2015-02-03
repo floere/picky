@@ -27,9 +27,11 @@ describe "Hint: no_dump" do
     it "raises" do
       index.replace Book.new(2, "Title New", "Author New")
 
-      index.dump
-      index.load
-      index.build_realtime_mapping
+      expect {
+        index.dump
+        index.load
+        index.build_realtime_mapping
+      }.to raise_error # TODO Clarify error.
     end
   end
 

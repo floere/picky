@@ -85,12 +85,11 @@ module Picky
       
       # Generates a reused stem.
       #
-      # TODO Probably should not cache, as not
-      # the same stemmer will be used always.
+      # Caches a stem for a tokenizer.
       #
       def stem tokenizer
         if stem?
-          @stems ||= {}
+          @stems ||= Hash.new
           @stems[tokenizer] ||= tokenizer.stem(@text)
         else
           @text

@@ -36,8 +36,8 @@ module Picky
       # Reset the memoization.
       #
       def reset_memoization
-        @exact_memo = {}
-        @partial_memo = {}
+        @exact_memo = Hash.new
+        @partial_memo = Hash.new
       end
       
       # Split the given text into its most

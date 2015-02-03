@@ -54,8 +54,8 @@ module Picky
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
       
-      @hints      = options.delete :hints
-      @backend    = options.delete :backend
+      @hints      = options[:hints]
+      @backend    = options[:backend]
 
       reset_backend
     end

@@ -71,7 +71,7 @@ module Picky
       weights    = weights_from options
       partial    = partial_from options
       similarity = similarity_from options
-
+      
       @exact     = exact_for weights, similarity, options
       @partial   = partial_for @exact, partial, weights, options
     end
