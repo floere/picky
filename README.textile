@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="http://pickyrb.com/images/picky.png"/>
+</div>
+
 h1. Picky
 
 In use on: "laut.de":http://laut.de (radio channel search), "goodfil.ms":http://goodfil.ms, "cocoapods.org":http://cocoapods.org, "wadoku.eu":http://wadoku.eu, "twixtel.ch":http://twixtel.ch, "wilmaa.com":http://wilmaa.com, "paatle.com":http://www.paatle.com, and many more…
