@@ -7,7 +7,7 @@ require 'spec_helper'
 #
 describe Picky::Backends::File do
 
-  class Book
+  class PoetryBook
     attr_reader :id, :title, :author
     def initialize id, title, author
       @id, @title, @author = id, title, author
@@ -44,7 +44,7 @@ describe Picky::Backends::File do
       books.search('title').ids.should == []
     end
     it 'handles removing with more than one entry' do
-      data.add Book.new(2, 'title', 'author')
+      data.add PoetryBook.new(2, 'title', 'author')
 
       books.search('title').ids.should == ['2', '1']
 
@@ -53,8 +53,8 @@ describe Picky::Backends::File do
       books.search('title').ids.should == ['2']
     end
     it 'handles removing with three entries' do
-      data.add Book.new(2, 'title', 'author')
-      data.add Book.new(3, 'title', 'author')
+      data.add PoetryBook.new(2, 'title', 'author')
+      data.add PoetryBook.new(3, 'title', 'author')
 
       books.search('title').ids.should == ['3', '2', '1']
 
@@ -63,7 +63,7 @@ describe Picky::Backends::File do
       books.search('title').ids.should == ['3', '2']
     end
     it 'handles replacing' do
-      data.replace Book.new(1, 'toitle', 'oithor')
+      data.replace PoetryBook.new(1, 'toitle', 'oithor')
 
       books.search('title').ids.should == []
       books.search('toitle').ids.should == ['1']
@@ -100,7 +100,7 @@ describe Picky::Backends::File do
       books.search('title').ids.should == []
     end
     it 'handles removing with more than one entry' do
-      data.add Book.new(2, 'title', 'author')
+      data.add PoetryBook.new(2, 'title', 'author')
 
       books.search('title').ids.should == [2, 1]
 
@@ -109,8 +109,8 @@ describe Picky::Backends::File do
       books.search('title').ids.should == [2]
     end
     it 'handles removing with three entries' do
-      data.add Book.new(2, 'title', 'author')
-      data.add Book.new(3, 'title', 'author')
+      data.add PoetryBook.new(2, 'title', 'author')
+      data.add PoetryBook.new(3, 'title', 'author')
 
       books.search('title').ids.should == [3, 2, 1]
 
@@ -119,7 +119,7 @@ describe Picky::Backends::File do
       books.search('title').ids.should == [3, 2]
     end
     it 'handles replacing' do
-      data.replace Book.new(1, 'toitle', 'oithor')
+      data.replace PoetryBook.new(1, 'toitle', 'oithor')
 
       books.search('title').ids.should == []
       books.search('toitle').ids.should == [1]
@@ -144,7 +144,7 @@ describe Picky::Backends::File do
         data.backend described_class.new
         data.clear
 
-        data.add Book.new(1, 'title', 'author')
+        data.add PoetryBook.new(1, 'title', 'author')
       end
 
       instance_eval &its_to_s
@@ -157,7 +157,7 @@ describe Picky::Backends::File do
         data.backend described_class.new
         data.clear
 
-        data.add Book.new(1, 'title', 'author')
+        data.add PoetryBook.new(1, 'title', 'author')
       end
 
       instance_eval &its_to_i

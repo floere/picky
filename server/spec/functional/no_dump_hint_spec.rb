@@ -5,7 +5,7 @@ require 'ostruct'
 
 describe "Hint: no_dump" do
 
-  Book = Struct.new(:id, :title, :author)
+  ComicBook = Struct.new(:id, :title, :author)
 
   let(:index) do
     Picky::Index.new :no_dump do
@@ -18,14 +18,14 @@ describe "Hint: no_dump" do
   let(:try) { Picky::Search.new index }
 
   it 'can index and search' do
-    index.replace Book.new(2, "Title", "Author")
+    index.replace ComicBook.new(2, "Title", "Author")
 
     try.search("title:title").ids.should == [2]
   end
   
   context 'dumping and loading' do
     it "raises" do
-      index.replace Book.new(2, "Title New", "Author New")
+      index.replace ComicBook.new(2, "Title New", "Author New")
 
       expect {
         index.dump

@@ -16,7 +16,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec', '~> 3.0.0.beta'
+  gem 'rspec'
   gem 'rake-compiler'
 
   # Needed for testing itself.

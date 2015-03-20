@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    picky (4.27.0)
+    picky (4.27.1)
       activesupport
       google_hash (~> 0.8)
       multi_json (~> 1.3)
@@ -118,7 +118,7 @@ DEPENDENCIES
   rake-compiler
   redis
   rest-client
-  rspec (~> 3.0.0.beta)
+  rspec
   ruby-stemmer
   simplecov
   sinatra
