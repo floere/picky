@@ -22,17 +22,21 @@ module Picky
 
         # Dumps the index internal backend in marshal format.
         #
-        def dump internal
+        def dump internal, io = nil
           create_directory cache_path
-          dump_marshal internal
+          if io
+            dump_marshal internal, io
+          else
+            ::File.open(cache_path, 'w:binary') do |out_file|
+              dump_marshal internal, out_file
+            end
+          end
         end
 
         # Dumps binary self to the path given. Minus extension.
         #
-        def dump_marshal internal
-          ::File.open(cache_path, 'w:binary') do |out_file|
-            ::Marshal.dump internal, out_file
-          end
+        def dump_marshal internal, io
+          ::Marshal.dump internal, io
         end
 
         # A marshal file does not provide retrieve functionality.

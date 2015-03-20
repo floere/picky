@@ -38,7 +38,7 @@ module Picky
         # Text files are used exclusively for
         # prepared data files.
         #
-        def dump hash
+        def dump(*)
           raise "Can't dump to text file. Use JSON or Marshal."
         end
 

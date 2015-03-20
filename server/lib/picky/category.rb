@@ -142,9 +142,9 @@ WARNING
 
     # Dumps both bundles.
     #
-    def dump
-      exact.dump
-      partial.dump
+    def dump io = {}
+      exact.dump io[:exact]
+      partial.dump io[:partial]
       Picky.logger.dump self
     end
 

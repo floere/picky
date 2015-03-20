@@ -35,7 +35,8 @@ module Picky
 
         # Writes the hash into Redis.
         #
-        def dump hash
+        def dump hash, io = nil
+          # Note: io is ignored for redis.
           unless @realtime
             clear
             hash.each_pair do |key, values|

@@ -21,7 +21,7 @@ describe Picky::Backends::Memory::JSON do
       it "forwards to the given hash" do
         hash = double :hash
 
-        json.should_receive(:dump_json).once.with hash
+        json.should_receive(:dump_json).once.with hash, File
 
         json.dump hash
       end

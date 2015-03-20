@@ -57,27 +57,35 @@ module Picky
           self
         end
 
-        # Dumps the index hash in json format.
+        # Dumps the index hash in json format to the given io.
         #
         # 1. Dump actual data.
         # 2. Dumps mapping key => [length, offset].
         #
-        def dump hash
+        def dump hash, io = nil
           offset = 0
           mapping = Hash.new
           
-          create_directory cache_path
-          ::File.open(cache_path, 'w:utf-8') do |out_file|
-            hash.each do |(key, object)|
-              encoded = MultiJson.encode object
-              length  = encoded.size
-              mapping[key] = [length, offset]
-              offset += length
-              out_file.write encoded
+          if io
+            internal_dump hash, io
+          else
+            create_directory cache_path
+            ::File.open(cache_path, 'w:utf-8') do |out_file|
+              internal_dump hash, out_file
             end
           end
 
           mapping_file.dump mapping
+        end
+        
+        def internal_dump hash, io
+          hash.each do |(key, object)|
+            encoded = MultiJson.encode object
+            length  = encoded.size
+            mapping[key] = [length, offset]
+            offset += length
+            io.write encoded
+          end
         end
 
         # A json file does not provide retrieve functionality.

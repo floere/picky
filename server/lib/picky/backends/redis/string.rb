@@ -28,7 +28,8 @@ module Picky
         #
         # Note: We could use multi, but it did not help.
         #
-        def dump hash
+        def dump hash, io = nil
+          # Note: io is ignored.
           unless @realtime
             clear
             hash.each_pair do |key, value|

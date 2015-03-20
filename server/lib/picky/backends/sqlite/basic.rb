@@ -31,7 +31,8 @@ module Picky
           @empty && @empty.clone || (@realtime ? self.reset.asynchronous : {})
         end
 
-        def dump internal
+        def dump internal, io = nil
+          # Note: io is ignored.
           dump_sqlite internal unless @realtime
           self
         end

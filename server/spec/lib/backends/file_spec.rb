@@ -2,32 +2,6 @@ require 'spec_helper'
 
 describe Picky::Backends::File do
 
-  # context 'with options' do
-  #   before(:each) do
-  #     @backend = described_class.new inverted:      Picky::Backends::File::Basic.new(:unimportant),
-  #                                    weights:       Picky::Backends::File::Basic.new(:unimportant),
-  #                                    similarity:    Picky::Backends::File::Basic.new(:unimportant),
-  #                                    configuration: Picky::Backends::File::Basic.new(:unimportant)
-  #
-  #     @backend.stub :timed_exclaim
-  #   end
-  #
-  #   describe 'create_...' do
-  #     [
-  #       [:inverted,      Picky::Backends::File::Basic],
-  #       [:weights,       Picky::Backends::File::Basic],
-  #       [:similarity,    Picky::Backends::File::Basic],
-  #       [:configuration, Picky::Backends::File::Basic]
-  #     ].each do |type, kind|
-  #       it "creates and returns a(n) #{type} index" do
-  #         @backend.send(:"create_#{type}",
-  #                       double(type, :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
-  #         ).should be_kind_of(kind)
-  #       end
-  #     end
-  #   end
-  # end
-
   context 'without options' do
     before(:each) do
       @backend = described_class.new

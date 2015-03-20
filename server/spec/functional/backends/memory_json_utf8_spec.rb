@@ -6,12 +6,12 @@ describe Picky::Backends::Memory::JSON do
 
   let(:backend) { described_class.new '/tmp/picky_test_cache' }
   
-  describe "dump_json" do
+  describe "dump" do
     it "works with ascii characters" do
-      backend.dump_json key: 'abc'
+      backend.dump key: 'abc'
     end
     it "works with cyrillic characters" do
-      backend.dump_json key: 'й'
+      backend.dump key: 'й'
     end
     it "works with ascii strings" do
       # See https://github.com/floere/picky/pull/69.
@@ -25,7 +25,7 @@ describe Picky::Backends::Memory::JSON do
       
       ascii = "\xE5".force_encoding 'ASCII-8BIT'
       # ascii.encode('UTF-8') # Uncomment this to get the error mentioned in the pull request.
-      backend.dump_json ascii => ascii # Pass in the string as both key and value
+      backend.dump ascii => ascii # Pass in the string as both key and value
       
       # Reset encodings.
       #

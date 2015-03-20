@@ -54,7 +54,7 @@ class InternalBackendInterfaceTester
   # dump/load
   #
 
-  def dump _
+  def dump(*)
 
   end
 

@@ -21,7 +21,7 @@ describe Picky::Backends::Memory::Marshal do
       it "forwards to the given hash" do
         hash = double :hash
 
-        marshal.should_receive(:dump_marshal).once.with hash
+        marshal.should_receive(:dump_marshal).once.with hash, File
 
         marshal.dump hash
       end

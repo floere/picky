@@ -27,12 +27,12 @@ describe Picky::Category do
         partial.stub :dump
       end
       it 'should dump the exact index' do
-        exact.should_receive(:dump).once.with no_args
+        exact.should_receive(:dump).once.with nil
 
         category.dump
       end
       it 'should dump the partial index' do
-        partial.should_receive(:dump).once.with no_args
+        partial.should_receive(:dump).once.with nil
 
         category.dump
       end

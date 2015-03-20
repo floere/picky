@@ -30,9 +30,19 @@ module Picky
 
         # Dumps the index internal backend in json format.
         #
-        def dump internal
-          create_directory cache_path
-          dump_json internal
+        def dump internal, io = nil
+          if io
+            dump_json internal, io
+          else
+            create_directory cache_path
+            ::File.open(cache_path, 'w') do |out_file|
+              # If using Yajl, this will stream write to out_file.
+              # Note: But it fails on oj.
+              #
+              # MultiJson.dump internal, [out_file]
+              dump_json internal, out_file
+            end
+          end
         end
 
         # Dump JSON into the cache file.
@@ -40,14 +50,8 @@ module Picky
         # TODO Add IO option:
         # MultiJson.encode(object, io: out_file)
         #
-        def dump_json internal
-          ::File.open(cache_path, 'w') do |out_file|
-            # If using Yajl, this will stream write to out_file.
-            # Note: But it fails on oj.
-            #
-            # MultiJson.dump internal, [out_file]
-            out_file.write MultiJson.encode internal
-          end
+        def dump_json internal, io
+          io.write MultiJson.encode internal
         end
 
         # A json file does not provide retrieve functionality.
