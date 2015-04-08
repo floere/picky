@@ -1,0 +1,9 @@
+This file's purpose is to keep me from obsessing over Picky performance and focus on other things.
+
+Speed
+=====
+
+Memory
+======
+
+* Hint `key_format :to_i`: Use narray for numeric arrays, https://github.com/masa16/narray-devel.
