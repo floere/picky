@@ -3,7 +3,6 @@ PATH
   specs:
     picky (4.27.1)
       activesupport
-      google_hash (~> 0.8)
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
 
