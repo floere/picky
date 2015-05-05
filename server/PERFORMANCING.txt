@@ -8,3 +8,4 @@ Memory
 
 * Hint `key_format :to_i`: Use narray for numeric arrays, https://github.com/masa16/narray-devel.
 * Use Triez? https://github.com/luikore/triez
+* yield >>> block.call
