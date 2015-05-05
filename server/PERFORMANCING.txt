@@ -7,6 +7,8 @@ https://www.youtube.com/watch?v=fGFM_UrSp70
 
 * yield >>> block.call
 * flat_map >> map.flatten
+* gsub vs. sub
+* Use tr where appropriate.
 
 Memory
 ======
