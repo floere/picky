@@ -3,9 +3,13 @@ This file's purpose is to keep me from obsessing over Picky performance and focu
 Speed
 =====
 
+https://www.youtube.com/watch?v=fGFM_UrSp70
+
+* yield >>> block.call
+* flat_map >> map.flatten
+
 Memory
 ======
 
 * Hint `key_format :to_i`: Use narray for numeric arrays, https://github.com/masa16/narray-devel.
 * Use Triez? https://github.com/luikore/triez
-* yield >>> block.call
