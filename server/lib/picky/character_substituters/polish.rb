@@ -9,8 +9,8 @@ module Picky
       def substitute text
         trans = @chars.new(text).normalize :kd
 
-        trans.tr 'Ł', 'L'
-        trans.tr 'ł', 'l'
+        trans.gsub! 'Ł', 'L'
+        trans.gsub! 'ł', 'l'
 
         trans.unpack('U*').select { |cp|
           cp < 0x0300 || cp > 0x035F
