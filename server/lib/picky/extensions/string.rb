@@ -27,13 +27,15 @@ class String
   #
   def each_subtoken from_length = 1, range = nil
     sub = self
-
-    if range && (range.min || range.max)
-      sub = sub[range].freeze
+    
+    if range
+      unless (range.first.zero? && range.last == -1)
+        sub = sub[range].freeze
+      end
     end
     
     yield sub
-
+    
     size = sub.size
     from_length = size + from_length + 1 if from_length < 0
     from_length = size if size < from_length

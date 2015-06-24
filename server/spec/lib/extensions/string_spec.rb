@@ -2,6 +2,9 @@
 #
 require 'spec_helper'
 
+# Requiring text here as it's optional in Picky.
+require 'text'
+
 describe String do
 
   context 'performance' do
