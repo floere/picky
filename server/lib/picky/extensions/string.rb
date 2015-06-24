@@ -28,8 +28,10 @@ class String
   def each_subtoken from_length = 1, range = nil
     sub = self
 
-    sub = sub[range] if range
-
+    if range && (range.min || range.max)
+      sub = sub[range].freeze
+    end
+    
     yield sub
 
     size = sub.size
@@ -37,7 +39,9 @@ class String
     from_length = size if size < from_length
     from_length = 1 if from_length < 1
 
-    size.downto(from_length + 1) { yield sub = sub.chop }
+    size.downto(from_length + 1) { yield sub = sub.chop.freeze }
+    
+    sub = nil
   end
 
   # 'keys'.each_intoken         # => yields each of ['keys', 'key', 'eys', 'ke', 'ey', 'ys', 'k', 'e', 'y', 's']
