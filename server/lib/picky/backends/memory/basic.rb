@@ -15,9 +15,9 @@ module Picky
 
         include Helpers::File
 
-        # This file's location.
+        # This file's cache file without extensions.
         #
-        attr_reader :cache_path
+        attr_reader :cache_file_path
         
         # What hash type to use. Default: ::Hash
         #
@@ -26,17 +26,23 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_path, hash_type = Hash, options = {}
-          @cache_path = "#{cache_path}.memory.#{extension}"
-          @hash_type  = hash_type
-          @empty      = options[:empty]
-          @initial    = options[:initial]
+        def initialize cache_file_path, hash_type = Hash, options = {}
+          @cache_file_path = cache_file_path
+          @hash_type       = hash_type
+          @empty           = options[:empty]
+          @initial         = options[:initial]
         end
 
         # The default extension for index files is "index".
         #
         def extension
           :index
+        end
+        def type
+          :memory
+        end
+        def cache_path
+          [cache_file_path, type, extension].join(?.)
         end
 
         # The empty index that is used for putting the index
