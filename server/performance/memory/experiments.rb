@@ -36,7 +36,25 @@ end
 
 result.pretty_print
 
-p result.total_retained
-p result.total_retained_memsize
+puts ['total_retained', result.total_retained]
+puts ['total_rtnd_mem', result.total_retained_memsize]
+puts ['symbol count', Symbol.all_symbols.count]
 
-p Symbol.all_symbols.count
+
+# ---
+
+require 'memory_profiler'
+
+GC.start
+
+MemoryProfiler.report do
+  h1 = { "key": "value" }
+  h2 = { "key": "value" }
+  
+  key = "key"
+  h3 = {}
+  h3[key] = "value"
+  key = nil
+  
+  GC.start
+end.pretty_print
