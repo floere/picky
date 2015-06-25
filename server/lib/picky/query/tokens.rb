@@ -80,7 +80,7 @@ module Picky
         @tokens.map(&:original)
       end
       def original
-        @tokens.map(&:original)
+        originals
       end
       # TODO
       #

@@ -224,6 +224,20 @@ describe Picky::Query::Tokens do
     it 'should work correctly' do
       (@tokens + @other).to_s.should == 'Hello~ I~ Am A* Token~'
     end
+    it 'should work correctly' do
+      (@tokens + @other).texts.should == ['hello', 'i', 'am', 'a', 'token']
+    end
+    it 'should work correctly' do
+      (@tokens + @other).originals.should == ['Hello~', 'I~', 'Am', 'A*', 'Token~']
+    end
+    it 'correctly handles ignore_unassigned' do
+      (@tokens + @other).ignore_unassigned.should == false
+    end
+    it 'correctly handles ignore_unassigned' do
+      yet_another = described_class.new [], true
+      (@tokens + yet_another).ignore_unassigned.should == true
+      (yet_another + @tokens).ignore_unassigned.should == true
+    end
   end
 
   def self.it_should_forward name
