@@ -227,7 +227,7 @@ describe Picky::Query::Tokens do
   end
 
   def self.it_should_forward name
-    describe name do
+    describe "forwarding ##{name}" do
       before(:each) do
         @internal_tokens = double :internal_tokens
         @tokens = described_class.new @internal_tokens
