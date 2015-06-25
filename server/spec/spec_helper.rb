@@ -30,6 +30,7 @@ end
 # Make RSpec shut up about deprecations.
 #
 RSpec.configure { |rspec| rspec.deprecation_stream = StringIO.new }
+RSpec::Expectations.configuration.warn_about_potential_false_positives = false
 
 ENV['PICKY_ENV'] = 'test'
 require_relative '../lib/picky'
