@@ -134,6 +134,13 @@ module Picky
       require_relative 'index/hints'
       @hints = Hints.new hints
     end
+    
+    # Explicitly trigger memory optimization.
+    #
+    def optimize_memory array_references = Hash.new
+      dedup = Picky::Optimizers::Memory::ArrayDeduplicator.new
+      dedup.deduplicate categories.map(&:partial).map(&:inverted), array_references
+    end
 
     # TODO Doc.
     #

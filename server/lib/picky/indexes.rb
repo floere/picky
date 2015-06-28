@@ -43,6 +43,18 @@ module Picky
       @indexes       = []
       @index_mapping = Hash.new
     end
+    
+    # Tries to optimize the memory usage of the indexes.
+    #
+    def optimize_memory array_references = Hash.new
+      dedup = Picky::Optimizers::Memory::ArrayDeduplicator.new
+      @indexes.each do |index|
+        index.optimize_memory array_references
+      end
+    end
+    def self.optimize_memory array_references = Hash.new
+      self.instance.optimize_memory array_references
+    end
 
     # Registers an index with the indexes.
     #
