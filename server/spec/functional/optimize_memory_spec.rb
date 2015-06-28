@@ -4,7 +4,10 @@ require 'spec_helper'
 
 describe "Memory optimization" do
   
-  it 'saves memory' do    
+  it 'saves memory' do
+    # Remove all indexes.
+    Picky::Indexes.clear_indexes
+    
     index = Picky::Index.new :memory_optimization do
       category :text1
       category :text2
