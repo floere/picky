@@ -30,7 +30,11 @@ class Symbol
   def each_subtoken from_length = 1, range = nil
     sub = self.id2name
 
-    sub = sub[range] if range
+    if range
+      unless (range.first.zero? && range.last == -1)
+        sub = sub[range]
+      end
+    end
 
     yield sub.intern
 
@@ -39,7 +43,9 @@ class Symbol
     from_length = size if size < from_length
     from_length = 1 if from_length < 1
 
-    size.downto(from_length + 1) { yield sub.chop!.intern }
+    size.downto(from_length + 1) do
+      yield sub.chop!.intern
+    end
   end
 
   # :keys.each_intoken         # => yields each of [:keys, :key, :eys, :ke, :ey, :ys, :k, :e, :y, :s]
