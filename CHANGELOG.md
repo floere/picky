@@ -1,3 +1,7 @@
+## 4.28.0
+
+- Add experimental explicit `Picky::Indexes.optimize_memory` and `Picky::Index#optimize_memory` calls.
+
 ## 4.27.1
 
 - Also use Google hashes for partial indexes when `optimize :no_dump` is specified on an index.
