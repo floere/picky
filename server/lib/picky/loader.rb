@@ -69,7 +69,9 @@ module Picky
         load_relative 'helpers/measuring',
                       'helpers/indexing',
                       'helpers/identification',
-                      'splitter'
+                      'splitter',
+                      'optimizers',
+                      'optimizers/memory/array_deduplicator'
       end
       def load_index_generation_strategies
         load_relative 'indexers/base',
