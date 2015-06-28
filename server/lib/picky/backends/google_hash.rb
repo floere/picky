@@ -1,4 +1,5 @@
-if require 'google_hash'
+begin
+  require 'google_hash'
   
   class ::GoogleHashSparseRubyToRuby
     
@@ -47,4 +48,6 @@ if require 'google_hash'
 
   end
   
+rescue LoadError
+  # Welp. Don't do anything.
 end
