@@ -1,3 +1,7 @@
+## 4.28.1
+
+- Handle LoadError.
+
 ## 4.28.0
 
 - Add experimental explicit `Picky::Indexes.optimize_memory` and `Picky::Index#optimize_memory` calls.
