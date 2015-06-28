@@ -1,3 +1,7 @@
+## 4.29.0
+
+- Do not set default encodings anymore.
+
 ## 4.28.1
 
 - Handle LoadError.
