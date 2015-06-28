@@ -11,8 +11,8 @@ module Picky
   # Set default encoding.
   # (Note: Rails does this already as well)
   #
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
+  # Encoding.default_external = Encoding::UTF_8
+  # Encoding.default_internal = Encoding::UTF_8
 
   # External libraries.
   #
