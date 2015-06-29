@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "Memory leak?" do
   
-  it 'does not leak' do
+  it 'leaks a little' do
     # Remove all indexes.
     Picky::Indexes.clear_indexes
     
