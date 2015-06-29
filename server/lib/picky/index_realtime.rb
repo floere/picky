@@ -5,7 +5,7 @@ module Picky
   class Index
 
     forward :remove,  # aka "delete".
-            :add,     # aka "insert".
+            # :add,     # aka "insert". # See below.
             :replace, # aka "delete then insert".
             :update,
             :replace_from,
@@ -23,6 +23,12 @@ module Picky
     #
     def unshift thing
       add thing, __method__
+    end
+    
+    # Add to the index using unshift.
+    #
+    def add thing, method = :unshift
+      categories.add thing, method
     end
 
   end
