@@ -30,7 +30,7 @@ class String
     
     if range
       unless (range.first.zero? && range.last == -1)
-        sub = sub[range].freeze
+        sub = sub[range]
       end
     end
     
@@ -41,7 +41,7 @@ class String
     from_length = size if size < from_length
     from_length = 1 if from_length < 1
 
-    size.downto(from_length + 1) { yield sub = sub.chop.freeze }
+    size.downto(from_length + 1) { yield sub = sub.chop }
     
     sub = nil
   end
