@@ -47,7 +47,6 @@ module Picky
     # Does not add to realtime if static.
     #
     def add id, str_or_sym, where = :unshift, static = false
-      
       # If static, indexing will be slower, but will use less
       # space in the end.
       #
@@ -69,7 +68,11 @@ module Picky
           # Update the realtime index.
           #
           str_or_syms << str_or_sym # unless static
-          ids = @inverted[str_or_sym] ||= []
+          ids = if @inverted.has_key?(str_or_sym)
+            @inverted[str_or_sym]
+          else
+            @inverted[str_or_sym] = []
+          end
           ids.send where, id
         end
       end
