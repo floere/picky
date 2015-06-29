@@ -46,5 +46,36 @@ describe "Memory optimization" do
     # But smaller than with added.
     memsize_with_optimized_memory.should < memsize_with_added_thing
   end
+  
+  it 'saves a certain amount of memory' do
+    require 'objspace'
+    
+    GC.start
+    memsize_without_added_thing = ObjectSpace.memsize_of_all(Array)
+    GC.start
+    
+    index.add thing.new(1, 'one', 'two', 'three', 'four')
+    
+    GC.start
+    memsize_with_added_thing = ObjectSpace.memsize_of_all(Array)
+    GC.start
+    
+    10.times do |i|
+      index.add thing.new(i+1, 'one', 'two', 'three', 'four')
+    end
+    
+    GC.start
+    memsize_with_readded_thing = ObjectSpace.memsize_of_all(Array)
+    GC.start
+    
+    Picky::Indexes.optimize_memory
+    
+    GC.start
+    memsize_with_optimized_memory = ObjectSpace.memsize_of_all(Array)
+    GC.start
+    
+    # Optimize saves some memory.
+    (memsize_with_optimized_memory + 2952).should == memsize_with_readded_thing
+  end
 
 end
