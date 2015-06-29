@@ -18,8 +18,21 @@ module Picky::Optimizers::Memory
     
     def deduplicate_hash hash, array_references
       hash.each do |k, ary|
-        hash[k] = (array_references[ary] ||= ary)
+        stored_ary = if array_references.has_key?(ary)
+          array_references.fetch ary
+        else
+          # Prepare ary for reference cache.
+          compact_ary = compact ary
+          # Cache ary.
+          array_references.store ary, compact_ary
+        end
+        
+        hash[k] = stored_ary
       end
+    end
+    
+    def compact ary
+      Array[*ary]
     end
     
   end
