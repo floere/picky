@@ -131,10 +131,11 @@ module Picky
     #
     # Note: Also checks for itself.
     #
-    def similar text
-      code = similarity_strategy.encode text
+    def similar str_or_sym
+      code = similarity_strategy.encode str_or_sym
       return [] unless code
       @similarity[code] || []
+      
       # similar_codes = @similarity[code]
       # if similar_codes.blank?
       #   [] # Return a simple array.

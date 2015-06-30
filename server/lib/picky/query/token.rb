@@ -281,7 +281,7 @@ module Picky
       # Returns all similar tokens for the token.
       #
       def similar_tokens_for category
-        similars = category.bundle_for(self).similar @text
+        similars = category.similar self
         similars.map do |similar|
           # The array describes all possible categories. There is only one here.
           #

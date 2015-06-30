@@ -58,6 +58,13 @@ module Picky
       end
     end
     
+    # Gets the similars for this token's text.
+    #
+    def similar token
+      bundle = bundle_for token
+      bundle.similar str_or_sym(token.text)
+    end
+    
     def str_or_sym text
       if @symbol_keys
         text.to_sym
