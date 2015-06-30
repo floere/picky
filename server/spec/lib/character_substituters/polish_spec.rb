@@ -26,7 +26,7 @@ describe Picky::CharacterSubstituters::Polish do
     it "is fast" do
       substituter.substitute 'ą' # Prerun
       result = performance_of { substituter.substitute('ą') }
-      result.should < 0.00009
+      result.should < 0.0002
     end
     it "is fast" do
       result = performance_of { substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }

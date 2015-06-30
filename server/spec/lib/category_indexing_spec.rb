@@ -48,26 +48,27 @@ describe Picky::Category do
       end
     end
 
-    describe 'retrieve' do
-      it 'call the right thing' do
-        prepared = double :prepared
-        prepared.should_receive(:retrieve).at_least(1)
-                                          .and_yield(1, :some_token)
-                                          .and_yield(2, :some_token)
-                                          .and_yield(3, :some_token)
-                                          .and_yield(4, :some_token)
-                                          .and_yield(5, :some_token)
-        category.stub :prepared => prepared
-
-        category.should_receive(:add_tokenized_token).once.with(1, :some_token, :<<, nil, nil)
-        category.should_receive(:add_tokenized_token).once.with(2, :some_token, :<<, nil, nil)
-        category.should_receive(:add_tokenized_token).once.with(3, :some_token, :<<, nil, nil)
-        category.should_receive(:add_tokenized_token).once.with(4, :some_token, :<<, nil, nil)
-        category.should_receive(:add_tokenized_token).once.with(5, :some_token, :<<, nil, nil)
-
-        category.retrieve
-      end
-    end
+    # Replaced by functional specs.
+    # describe 'retrieve' do
+    #   it 'call the right thing' do
+    #     prepared = double :prepared
+    #     prepared.should_receive(:retrieve).at_least(1)
+    #                                       .and_yield(1, :some_token)
+    #                                       .and_yield(2, :some_token)
+    #                                       .and_yield(3, :some_token)
+    #                                       .and_yield(4, :some_token)
+    #                                       .and_yield(5, :some_token)
+    #     category.stub :prepared => prepared
+    #
+    #     category.should_receive(:add_tokenized_token).once.with(1, :some_token, :<<, nil, nil)
+    #     category.should_receive(:add_tokenized_token).once.with(2, :some_token, :<<, nil, nil)
+    #     category.should_receive(:add_tokenized_token).once.with(3, :some_token, :<<, nil, nil)
+    #     category.should_receive(:add_tokenized_token).once.with(4, :some_token, :<<, nil, nil)
+    #     category.should_receive(:add_tokenized_token).once.with(5, :some_token, :<<, nil, nil)
+    #
+    #     category.retrieve
+    #   end
+    # end
 
     describe 'key_format' do
       context 'category has its own key_format' do

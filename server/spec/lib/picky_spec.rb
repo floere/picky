@@ -8,7 +8,7 @@ describe Picky do
   # THINK What to set default internal encoding to?
   #
   it 'sets the right internal encoding' do
-    Encoding.default_internal.should == Encoding::UTF_8
+    Encoding.default_internal.should be_nil
   end
   
   it 'loads in a simple ruby environment with the defined requirements' do

@@ -79,7 +79,7 @@ describe Performant::Array do
 
       # Brute force.
       #
-      performance_of { Performant::Array.memory_efficient_intersect(arys) }.should < 0.001
+      performance_of { Performant::Array.memory_efficient_intersect(arys) }.should < 0.002
     end
     it "should be optimal for 2 small arrays of 50/10_000" do
       arys = [(:'1'..:'50').to_a, (:'10_000'..:'20_000').to_a << 7]
