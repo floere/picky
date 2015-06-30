@@ -25,7 +25,12 @@ describe 'ignoring updates' do
     # Expected behavior.
     try.search('some').ids.should == [1, 2]
     
-    index.add thing.new(2, 'some title')
+    index.add thing.new(2, 'some title') # force_update: false is the default.
+    
+    # Not updated, since it was the exact same data everywhere.
+    try.search('some').ids.should == [1, 2]
+    
+    index.add thing.new(2, 'some title'), force_update: false
     
     # Not updated, since it was the exact same data everywhere.
     try.search('some').ids.should == [1, 2]
