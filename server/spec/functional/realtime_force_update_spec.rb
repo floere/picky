@@ -7,7 +7,7 @@ require 'spec_helper'
 #
 describe 'ignoring updates' do
 
-  it 'does not update the index if the updated data stayed the same' do
+  it 'does not update the index if the added data stayed the same' do
     index = Picky::Index.new :books do
       category :title
     end
@@ -33,6 +33,25 @@ describe 'ignoring updates' do
     index.add thing.new(2, 'some title'), force_update: false
     
     # Not updated, since it was the exact same data everywhere.
+    try.search('some').ids.should == [1, 2]
+  end
+  
+  it 'does always update the index if replace is used' do
+    index = Picky::Index.new :books do
+      category :title
+    end
+
+    thing = Struct.new :id, :title
+    index.add thing.new(1, 'some title')
+    index.add thing.new(2, 'some title')
+    
+    try = Picky::Search.new index
+    
+    try.search('some').ids.should == [2, 1]
+    
+    index.replace thing.new(1, 'some title')
+    
+    # Expected behavior.
     try.search('some').ids.should == [1, 2]
   end
 end
