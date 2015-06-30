@@ -9,8 +9,8 @@ module Picky
     def load
       Picky.logger.load self
       clear_realtime # THINK Should we really explicitly clear the realtime? Or should it just be loaded?
-      exact.load
-      partial.load
+      exact.load @symbol_keys
+      partial.load @symbol_keys
     end
 
     # Gets the weight for this token's text.

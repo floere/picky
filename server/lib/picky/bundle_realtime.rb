@@ -146,11 +146,12 @@ module Picky
     #
     # THINK Maybe load it and just replace the arrays with the corresponding ones.
     #
-    def build_realtime
+    def build_realtime symbol_keys
       clear_realtime
       @inverted.each_pair do |str_or_sym, ids|
         ids.each do |id|
-          str_or_syms = @realtime[id] ||= []
+          str_or_syms = (@realtime[id] ||= [])
+          str_or_sym = str_or_sym.to_sym if symbol_keys
           @realtime[id] << str_or_sym unless str_or_syms.include? str_or_sym
         end
       end

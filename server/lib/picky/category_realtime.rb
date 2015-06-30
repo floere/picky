@@ -118,8 +118,8 @@ module Picky
     # Builds the realtime mapping.
     #
     def build_realtime_mapping
-      exact.build_realtime
-      partial.build_realtime
+      exact.build_realtime @symbol_keys
+      partial.build_realtime @symbol_keys
     end
 
   end

@@ -63,9 +63,9 @@ module Picky
     # Loading loads index objects from the backend.
     # They should each respond to [] and return something appropriate.
     #
-    def load
-      load_inverted
-      load_weights
+    def load symbol_keys
+      load_inverted symbol_keys
+      load_weights symbol_keys
       load_similarity
       load_configuration
       load_realtime
@@ -73,13 +73,13 @@ module Picky
 
     # Loads the core index.
     #
-    def load_inverted
-      self.inverted = @backend_inverted.load
+    def load_inverted symbol_keys
+      self.inverted = @backend_inverted.load symbol_keys
     end
     # Loads the weights index.
     #
-    def load_weights
-      self.weights = @backend_weights.load unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
+    def load_weights symbol_keys
+      self.weights = @backend_weights.load symbol_keys unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
     end
     # Loads the similarity index.
     #
@@ -89,12 +89,12 @@ module Picky
     # Loads the configuration.
     #
     def load_configuration
-      self.configuration = @backend_configuration.load
+      self.configuration = @backend_configuration.load false
     end
     # Loads the realtime mapping.
     #
     def load_realtime
-      self.realtime = @backend_realtime.load
+      self.realtime = @backend_realtime.load false
     end
 
     # Clears all indexes.

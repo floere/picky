@@ -22,8 +22,8 @@ module Picky
         #
         # Also ensures all hash keys are frozen.
         #
-        def load
-          MultiJson.decode ::File.open(cache_path, 'r') # , symbolize_keys: true # SYMBOLS.
+        def load symbol_keys
+          MultiJson.decode ::File.open(cache_path, 'r'), symbolize_keys: symbol_keys # SYMBOLS.
           # index_hash && index_hash.each { |(key, value)| key.freeze }
           # index_hash
         end
