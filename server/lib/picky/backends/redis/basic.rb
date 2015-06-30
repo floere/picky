@@ -45,7 +45,7 @@ module Picky
 
         # Returns itself.
         #
-        def load
+        def load _
           self
         end
 

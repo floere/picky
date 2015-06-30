@@ -46,7 +46,7 @@ describe Picky::Backends::SQLite::Array do
 
     describe 'load' do
       it 'returns a copy of itself' do
-        db.load.should == db
+        db.load(:anything).should == db
       end
     end
 
@@ -111,7 +111,7 @@ describe Picky::Backends::SQLite::Array do
 
     describe 'load' do
       it 'returns a copy of itself' do
-        db.load.should == db
+        db.load(:anything).should == db
       end
     end
 

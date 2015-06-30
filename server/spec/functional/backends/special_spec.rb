@@ -58,7 +58,7 @@ class InternalBackendInterfaceTester
 
   end
 
-  def load
+  def load _
     self
   end
 

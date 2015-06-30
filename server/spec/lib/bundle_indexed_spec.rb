@@ -106,12 +106,12 @@ describe Picky::Bundle do
       @bundle.dump # Create an index first.
     end
     it 'should trigger loads' do
-      @bundle.should_receive(:load_inverted).once.with no_args
-      @bundle.should_receive(:load_weights).once.with no_args
-      @bundle.should_receive(:load_similarity).once.with no_args
+      @bundle.should_receive(:load_inverted).once.with :something
+      @bundle.should_receive(:load_weights).once.with :something
+      @bundle.should_receive(:load_similarity).once.with :something
       @bundle.should_receive(:load_configuration).once.with no_args
 
-      @bundle.load
+      @bundle.load :something
     end
   end
   describe "loading indexes" do
@@ -124,7 +124,7 @@ describe Picky::Bundle do
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
 
-        @bundle.load_inverted
+        @bundle.load_inverted :anything
       end
     end
     describe "load_weights" do
@@ -133,7 +133,7 @@ describe Picky::Bundle do
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
 
-        @bundle.load_weights
+        @bundle.load_weights :anything
       end
     end
     describe "load_similarity" do
@@ -142,7 +142,7 @@ describe Picky::Bundle do
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
 
-        @bundle.load_similarity
+        @bundle.load_similarity :anything
       end
     end
     describe "load_configuration" do

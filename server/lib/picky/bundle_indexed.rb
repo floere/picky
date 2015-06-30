@@ -63,10 +63,10 @@ module Picky
     # Loading loads index objects from the backend.
     # They should each respond to [] and return something appropriate.
     #
-    def load symbol_keys
+    def load symbol_keys = false
       load_inverted symbol_keys
       load_weights symbol_keys
-      load_similarity
+      load_similarity symbol_keys
       load_configuration
       load_realtime
     end
@@ -83,8 +83,8 @@ module Picky
     end
     # Loads the similarity index.
     #
-    def load_similarity
-      self.similarity = @backend_similarity.load unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
+    def load_similarity symbol_keys
+      self.similarity = @backend_similarity.load symbol_keys unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
     end
     # Loads the configuration.
     #

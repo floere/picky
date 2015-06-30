@@ -75,8 +75,7 @@ describe Picky::Query::Token do
     let(:token) { described_class.processed 'similar~', 'Similar~' }
     context 'with similar' do
       before(:each) do
-        @bundle   = double :bundle, :similar => ['array', 'of', 'similar']
-        @category = double :category, :bundle_for => @bundle
+        @category = double :category, :similar => ['array', 'of', 'similar']
       end
       it 'returns a list of tokens' do
         token.similar_tokens_for(@category).each do |token|
@@ -102,8 +101,7 @@ describe Picky::Query::Token do
     end
     context 'without similar' do
       before(:each) do
-        @bundle   = double :bundle, :similar => []
-        @category = double :category, :bundle_for => @bundle
+        @category = double :category, :similar => []
       end
       it 'returns an empty list' do
         token.similar_tokens_for(@category).should == []

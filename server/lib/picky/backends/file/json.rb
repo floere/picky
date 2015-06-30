@@ -52,8 +52,8 @@ module Picky
 
         # Loads the mapping hash from json format.
         #
-        def load
-          self.mapping = mapping_file.load
+        def load symbol_keys
+          self.mapping = mapping_file.load symbol_keys
           self
         end
 

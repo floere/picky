@@ -36,7 +36,7 @@ module Picky
           self
         end
 
-        def load
+        def load _
           self
         end
 

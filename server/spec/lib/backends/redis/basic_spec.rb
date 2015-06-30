@@ -11,7 +11,7 @@ describe Picky::Backends::Redis::Basic do
       it 'is nothing they do (at least on the backend)' do
         backend.should_receive(:client).never
 
-        backend.load
+        backend.load false
         backend.retrieve
       end
     end

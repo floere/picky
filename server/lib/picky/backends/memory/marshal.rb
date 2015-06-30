@@ -16,7 +16,7 @@ module Picky
 
         # Loads the index hash from marshal format.
         #
-        def load
+        def load _
           ::Marshal.load ::File.open(cache_path, 'r:binary')
         end
 
