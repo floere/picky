@@ -1,5 +1,5 @@
 puts 'Run `ulimit -n 3000` if specs fail.'
-system 'rm -r spec/temp/*'
+system 'rm -r spec/temp/* 2> /dev/null'
 
 # Start Redis if not yet running.
 #
