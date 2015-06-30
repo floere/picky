@@ -46,13 +46,13 @@ module Picky
     #
     # Does not add to realtime if static.
     #
-    def add id, str_or_sym, where = :unshift, static = false
+    def add id, str_or_sym, method: :unshift, static: false, force_update: false
       # If static, indexing will be slower, but will use less
       # space in the end.
       #
       if static
         ids = @inverted[str_or_sym] ||= []
-        ids.send where, id unless ids.include? id
+        ids.send method, id unless ids.include? id
       else
         # Use a generalized strategy.
         #
@@ -62,18 +62,25 @@ module Picky
         #
         ids = if str_or_syms && str_or_syms.include?(str_or_sym)
           ids = @inverted[str_or_sym] ||= []
+          # If updates are not forced, then do not add it to the
+          # index if it's in there already.
+          unless force_update
+            return if ids.include? id
+          end
           ids.delete id
-          ids.send where, id
+          ids.send method, id
         else
           # Update the realtime index.
           #
           str_or_syms << str_or_sym # unless static
-          ids = if @inverted.has_key?(str_or_sym)
-            @inverted[str_or_sym]
-          else
-            @inverted[str_or_sym] = []
-          end
-          ids.send where, id
+          # TODO Add has_key? to index backends.
+          # ids = if @inverted.has_key?(str_or_sym)
+          #   @inverted[str_or_sym]
+          # else
+          #   @inverted[str_or_sym] = []
+          # end
+          ids = (@inverted[str_or_sym] ||= [])
+          ids.send method, id
         end
       end
         
@@ -83,7 +90,7 @@ module Picky
 
       # Similarity.
       #
-      add_similarity str_or_sym, where
+      add_similarity str_or_sym, method: method
 
       # Return reference.
       #
@@ -92,7 +99,7 @@ module Picky
 
     # Add string/symbol to similarity index.
     #
-    def add_similarity str_or_sym, where = :unshift
+    def add_similarity str_or_sym, method: :unshift
       if encoded = self.similarity_strategy.encode(str_or_sym)
         similars = @similarity[encoded] ||= []
 
@@ -107,9 +114,9 @@ module Picky
 
     # Partializes the text and then adds each.
     #
-    def add_partialized id, text, where = :unshift, static = false
+    def add_partialized id, text, method: :unshift, static: false, force_update: false
       partialized text do |partial_text|
-        add id, partial_text, where, static
+        add id, partial_text, method: method, static: static, force_update: force_update
       end
     end
     def partialized text, &block

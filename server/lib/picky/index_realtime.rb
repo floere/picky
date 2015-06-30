@@ -16,19 +16,19 @@ module Picky
     # Add at the end.
     #
     def << thing
-      add thing, __method__
+      add thing, method: __method__
     end
 
     # Add at the beginning (calls add).
     #
     def unshift thing
-      add thing, __method__
+      add thing, method: __method__
     end
     
     # Add to the index using unshift.
     #
-    def add thing, method = :unshift
-      categories.add thing, method
+    def add thing, method: :unshift, force_update: false
+      categories.add thing, method: method, force_update: force_update
     end
 
   end
