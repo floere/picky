@@ -77,7 +77,7 @@ module Picky
 
         # Inverted.
         #
-        ids = if str_or_syms && str_or_syms.include?(str_or_sym)
+        ids = if str_or_syms.include?(str_or_sym)
           ids = @inverted[str_or_sym] ||= []
           # If updates are forced or if it isn't in there already
           # then remove and add to the index.

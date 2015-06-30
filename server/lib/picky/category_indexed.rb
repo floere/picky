@@ -21,14 +21,14 @@ module Picky
         # TODO We might be able to return early?
         #
         @ranger.new(*range).inject(nil) do |sum, text|
-          weight = bundle.weight text
+          weight = bundle.weight str_or_sym(text)
           weight && (weight + (sum || 0)) || sum
         end
       else
         if tokenizer && tokenizer.stemmer?
-          bundle.weight token.stem(tokenizer)
+          bundle.weight str_or_sym(token.stem(tokenizer))
         else
-          bundle.weight token.text
+          bundle.weight str_or_sym(token.text)
         end
       end
     end
@@ -45,16 +45,24 @@ module Picky
           # It is 30% faster using the empty check
           # than just << [].
           #
-          ids = bundle.ids text
+          ids = bundle.ids str_or_sym(text)
           ids.empty? ? result : result << ids
         end.flatten
       else
         # Optimization
         if tokenizer && tokenizer.stemmer?
-          bundle.ids token.stem(tokenizer)
+          bundle.ids str_or_sym(token.stem(tokenizer))
         else
-          bundle.ids token.text
+          bundle.ids str_or_sym(token.text)
         end
+      end
+    end
+    
+    def str_or_sym text
+      if @symbol_keys
+        text.to_sym
+      else
+        text
       end
     end
 

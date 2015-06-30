@@ -23,8 +23,8 @@ module Picky
     # Note: If the backend wants to return a special
     # enumerable, the backend should do so.
     #
-    def ids sym_or_string
-      @inverted[sym_or_string] || []
+    def ids str_or_sym
+      @inverted[str_or_sym] || []
       # THINK Place the key_format conversion here – or move into the backend?
       #
       # if @key_format
@@ -46,16 +46,16 @@ module Picky
     #
     # Returns a number, or nil.
     #
-    def weight sym_or_string
-      @weights[sym_or_string]
+    def weight str_or_sym
+      @weights[str_or_sym]
     end
 
     # Get settings for this bundle.
     #
     # Returns an object.
     #
-    def [] sym_or_string
-      @configuration[sym_or_string]
+    def [] str_or_sym
+      @configuration[str_or_sym]
     end
 
     # Loads all indexes.

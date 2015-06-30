@@ -12,12 +12,18 @@ describe "Realtime Indexing" do
   end
 
   default_index = Picky::Index.new(:books) do
-    source []
+    category :title
+    category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
+  end
+  
+  symbol_keys_index = Picky::Index.new(:books) do
+    symbol_keys true
+    
     category :title
     category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
   end
 
-  [default_index].each do |index|
+  [symbol_keys_index].each do |index|
     context 'default index' do
       before(:each) { index.clear }
       let(:books) { Picky::Search.new index }
