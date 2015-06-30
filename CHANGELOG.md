@@ -1,3 +1,7 @@
+## 4.31.1
+
+- Automatic segmenter handles indexes with symbol keys.
+
 ## 4.31.0
 
 - Several semi-internal APIs have changed (`Backend#load`, for example).
