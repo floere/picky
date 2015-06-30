@@ -24,18 +24,13 @@ klass = Class.new do
 
 end
 
-thing1 = klass.new(1, "My name")
-thing2 = klass.new(2, "By name")
-thing3 = klass.new(3, "Ty name")
-thing4 = klass.new(4, "Jy name")
-
 puts ['symbol count', Symbol.all_symbols.count]
+
+thing1 = klass.new(1, "My name")
+index.add thing1
 
 result = MemoryProfiler.report do
   index.add thing1
-  index.add thing2
-  index.add thing3
-  index.add thing4
 end
 
 result.pretty_print

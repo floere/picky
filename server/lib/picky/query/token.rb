@@ -293,6 +293,7 @@ module Picky
       #
       @@qualifier_text_delimiter = /:/
       @@qualifiers_delimiter     = /,/
+      # TODO Think about making these instances.
       @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
       @@qualifiers_splitter      = Splitter.new @@qualifiers_delimiter
       def qualify
