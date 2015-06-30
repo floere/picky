@@ -31,3 +31,21 @@ p ObjectSpace.memsize_of(ary2)
 ary.clear
 
 p ObjectSpace.memsize_of(ary)
+
+
+# ---
+
+h = {}
+10_000.times do |i|
+  h[i] = (0..i).to_a
+end
+
+def remove h, i
+  h.each do |key, ary|
+    ary.delete(i) if ary.include?(i)
+  end
+end
+
+t = Time.now
+remove(h, 10000)
+p Time.now - t
