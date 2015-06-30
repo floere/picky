@@ -9,6 +9,8 @@ module Picky
     
     # Removes the given id from the indexes.
     #
+    # TODO Simplify (and slow) this again – remove the realtime index.
+    #
     def remove id
       # Is it anywhere?
       #
@@ -60,6 +62,8 @@ module Picky
           ids.delete id
           ids.send method, id
         else
+          # TODO Adding should not change the array if it's already in.
+          #
           if ids.include?(id)
             # Do nothing. Not forced, and already in.
           else
