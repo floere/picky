@@ -62,13 +62,13 @@ module Picky
         #
         ids = if str_or_syms && str_or_syms.include?(str_or_sym)
           ids = @inverted[str_or_sym] ||= []
-          # If updates are not forced, then do not add it to the
-          # index if it's in there already.
-          unless force_update
-            return if ids.include? id
+          # If updates are forced or if it isn't in there already
+          # then remove and add to the index.
+          if force_update || !ids.include?(id)
+            ids.delete id
+            ids.send method, id
           end
-          ids.delete id
-          ids.send method, id
+          ids
         else
           # Update the realtime index.
           #
