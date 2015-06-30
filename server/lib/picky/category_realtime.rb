@@ -76,8 +76,9 @@ module Picky
       end
 
       format = key_format?
+      static = static?
       tokens.each do |text|
-        add_tokenized_token id, text, method: method, format: format, force_update: force_update
+        add_tokenized_token id, text, method: method, format: format, static: static, force_update: force_update
       end
     rescue NoMethodError => e
       show_informative_add_text_error_message_for e

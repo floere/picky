@@ -46,13 +46,26 @@ module Picky
     #
     # Does not add to realtime if static.
     #
+    # TODO What does static do again?
+    # TODO Why the realtime index? Is it really necessary?
+    #      Not absolutely. It was for efficient deletion/replacement.
+    #
     def add id, str_or_sym, method: :unshift, static: false, force_update: false
       # If static, indexing will be slower, but will use less
       # space in the end.
       #
       if static
         ids = @inverted[str_or_sym] ||= []
-        ids.send method, id unless ids.include? id
+        if force_update
+          ids.delete id
+          ids.send method, id
+        else
+          if ids.include?(id)
+            # Do nothing. Not forced, and already in.
+          else
+            ids.send method, id
+          end
+        end
       else
         # Use a generalized strategy.
         #
@@ -72,7 +85,7 @@ module Picky
         else
           # Update the realtime index.
           #
-          str_or_syms << str_or_sym # unless static
+          str_or_syms << str_or_sym
           # TODO Add has_key? to index backends.
           # ids = if @inverted.has_key?(str_or_sym)
           #   @inverted[str_or_sym]
