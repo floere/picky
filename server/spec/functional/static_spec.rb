@@ -24,7 +24,7 @@ describe "static option" do
     try.search("text:ohai").ids.should == [1, 2]
   end
   
-  it 'still adds to the realtime index' do
+  it 'does not add to the realtime index' do
     index = Picky::Index.new :static do
       static
       
@@ -34,7 +34,7 @@ describe "static option" do
     index.add OpenStruct.new id: 1, text: "ohai"
     index.add OpenStruct.new id: 2, text: "ohai kthxbye"
                      
-    index[:text].exact.realtime.should == { 1 => ["ohai"], 2 => ["ohai", "kthxbye"] }
+    index[:text].exact.realtime.should == {}
 
     try = Picky::Search.new index
     try.search("text:ohai").ids.should == [2, 1]
