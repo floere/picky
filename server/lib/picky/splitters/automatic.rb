@@ -26,6 +26,7 @@ module Picky
     class Automatic
       
       def initialize category, options = {}
+        @category     = category
         @exact        = category.exact
         @partial      = category.partial
         @with_partial = options[:partial]
@@ -58,13 +59,16 @@ module Picky
       
       def segment text, use_partial = false
         segments, score = segment_recursively text, use_partial
+        segments.collect!(&:to_s) if @category.symbol_keys?
         [segments, score && score-text.size+segments.size]
       end
       
       # Segments the given text recursively.
       #
       def segment_recursively text, use_partial = false
+        text = text.to_sym if @category.symbol_keys?
         (use_partial ? @partial_memo : @exact_memo)[text] ||= splits(text).inject([[], nil]) do |(current, heaviest), (head, tail)|
+          tail = tail.to_sym if @category.symbol_keys?
           tail_weight = use_partial ? @partial.weight(tail) : @exact.weight(tail)
           tail_weight && tail_weight += (tail.size-1)
           

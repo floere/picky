@@ -62,6 +62,10 @@ module Picky
 
       @symbol_keys = options[:symbol_keys] || @index.symbol_keys # SYMBOLS.
     end
+    
+    def symbol_keys?
+      @symbol_keys
+    end
 
     # TODO I do a lot of helper method calls here. Refactor?
     #
