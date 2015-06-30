@@ -1,3 +1,7 @@
+## 4.30.0
+
+- Add boolean option `force_update` to `Picky::Index#add` and `Picky::Category#add`. Default is `false` – index will only be partially updated. Index parts which already have the passed "thing" stored will not be updated by default. This impacts ordering (If id 1 was already in, it will not be unshifted to the ids). If `Picky::Results#order_by` is used, then ordering will not be impacted.
+
 ## 4.29.0
 
 - Do not set default encodings anymore.
