@@ -75,7 +75,7 @@ describe "Memory optimization" do
     GC.start
     
     # Optimize saves some memory.
-    (memsize_with_optimized_memory + 2952).should == memsize_with_readded_thing
+    (memsize_with_optimized_memory + 2760).should == memsize_with_readded_thing
   end
 
 end
