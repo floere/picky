@@ -30,6 +30,8 @@ module Picky
     # Removes the object's id, and then
     # adds it again.
     #
+    # TODO Is this the actual forced update?
+    #
     def replace object, method: :unshift
       remove object.send id
       add object, method: method
