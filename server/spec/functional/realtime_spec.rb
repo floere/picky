@@ -111,7 +111,7 @@ describe "Realtime Indexing" do
           books.search('Titl').ids.should == [1]
 
           index.add Book.new(2, "Title New", "Author New")
-          index.add Book.new(2, "Title New", "Author New")
+          index.add Book.new(2, "New Title", "New Author")
           index.add Book.new(2, "Title New", "Author New")
 
           books.search('Titl').ids.should == [2,1]
