@@ -134,6 +134,17 @@ describe "Realtime Indexing" do
 
           books.search('title:Ne').ids.should == [1]
         end
+        it 'does not unnecessarily change the position if a category already contains it' do
+          books.search('title:Title').ids.should == [1]
+
+          index.add Book.new(2, "Title New", "Author New")
+
+          books.search('title:Title').ids.should == [2,1]
+          
+          index.replace Book.new(1, "Title", "Author")
+          
+          books.search('title:Title').ids.should == [2,1]
+        end
       end
 
       context 'non-partial' do
@@ -258,7 +269,7 @@ describe "Realtime Indexing" do
     end
   end
 
-  context 'special index' do
+  context 'index with key_format :to_sym' do
     let(:index) do
       Picky::Index.new(:books) do
         key_format :to_sym
