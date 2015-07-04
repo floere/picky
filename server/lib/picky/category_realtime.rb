@@ -7,7 +7,9 @@ module Picky
     # Adds and indexes this category of the
     # given object.
     #
-    # TODO Don't do this super-dynamically?
+    # @param object [Object] The thing to index.
+    # @param method [Symbol] The method name to use on the id array.
+    # @param force_update [Boolean] Whether to force update.
     #
     def add object, method: :unshift, force_update: false
       data = if from.respond_to? :call
@@ -21,18 +23,36 @@ module Picky
     # Removes an indexed object with the
     # given id.
     #
+    # @param id [Object] The id of the object.
+    #
     def remove id
       id = id.send key_format if key_format?
       exact.remove id
       partial.remove id
     end
 
-    # Removes the object's id, and then
-    # adds it again.
+    # Replaces an object. Will first check if each category of the object is in
+    # the index it would insert, and if it is, will not insert.
+    # Otherwise will delete and add.
     #
-    # TODO Is this the actual forced update?
+    # @param object [Object] The object to replace.
+    # @param method [Symbol] The method name to use on the id array.
     #
     def replace object, method: :unshift
+      remove object.send id
+      add object, method: method
+    end
+
+    # Always removes the object's id, and then
+    # adds the object again.
+    #
+    # Note: This puts a bit of a strain on Ruby's
+    # memory management.
+    #
+    # @param object [Object] The object to replace.
+    # @param method [Symbol] The method name to use on the id array.
+    #
+    def replace! object, method: :unshift
       remove object.send id
       add object, method: method
     end
