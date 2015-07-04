@@ -107,6 +107,15 @@ describe "Realtime Indexing" do
 
           books.search('Titl').ids.should == [2,1]
         end
+        it 'will not have duplicate result from adding something twice' do
+          books.search('Titl').ids.should == [1]
+
+          index.add Book.new(2, "Title New", "Author New")
+          index.add Book.new(2, "Title New", "Author New")
+          index.add Book.new(2, "Title New", "Author New")
+
+          books.search('Titl').ids.should == [2,1]
+        end
 
         it 'allows replacing something' do
           index.replace Book.new(1, "Title New", "Author New")
