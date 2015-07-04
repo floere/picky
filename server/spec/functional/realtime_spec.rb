@@ -262,7 +262,7 @@ describe "Realtime Indexing" do
     let(:index) do
       Picky::Index.new(:books) do
         key_format :to_sym
-        source []
+        
         category :title
         category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
       end
