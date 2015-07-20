@@ -1,3 +1,7 @@
+## 4.31.2
+
+- Fix for exact partial `load` interface.
+
 ## 4.31.1
 
 - Automatic segmenter handles indexes with symbol keys.
