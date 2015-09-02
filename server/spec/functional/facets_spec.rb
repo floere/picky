@@ -11,8 +11,8 @@ describe 'facets' do
       index = Picky::Index.new :redis_facets_index do
         backend Picky::Backends::Redis.new
         
-        category :name, partial: Picky::Partial::Infix.new(max: 6)
-        category :surname, partial: Picky::Partial::Infix.new(min: 3, max: 6)
+        category :name
+        category :surname
       end
       index.clear
 
@@ -21,7 +21,8 @@ describe 'facets' do
       index.add thing.new(2, 'kaspar', 'schiess')
       index.add thing.new(3, 'florian', 'hanke')
       
-      p index.backend
+      index.dump
+      index.load
     
       index
     }
