@@ -5,6 +5,46 @@ require 'spec_helper'
 # This spec describes
 #
 describe 'facets' do
+  
+  describe 'with Redis' do
+    let(:redis_index) {
+      index = Picky::Index.new :redis_facets_index do
+        backend Picky::Backends::Redis.new
+        
+        category :name, partial: Picky::Partial::Infix.new(max: 6)
+        category :surname, partial: Picky::Partial::Infix.new(min: 3, max: 6)
+      end
+      index.clear
+
+      thing = Struct.new :id, :name, :surname
+      index.add thing.new(1, 'fritz', 'hanke')
+      index.add thing.new(2, 'kaspar', 'schiess')
+      index.add thing.new(3, 'florian', 'hanke')
+      
+      p index.backend
+    
+      index
+    }
+    let(:redis_finder) { Picky::Search.new redis_index }
+    
+    describe 'Index#facets' do
+      it 'does not fail' do
+        redis_index.facets(:surname).should == {
+          'hanke' => 2,
+          'schiess' => 1
+        }
+      end
+    end
+    
+    describe 'Search#facets' do
+      it 'does not fail' do
+        redis_finder.facets(:surname).should == {
+          'hanke' => 2,
+          'schiess' => 1
+        }
+      end
+    end
+  end
 
   describe 'simple example' do
     let(:index) {
