@@ -77,6 +77,17 @@ module Picky
           
           values
         end
+        
+        # Inject.
+        #
+        def inject initial, &block
+          redis_keys = "#{namespace}:*"
+          client.keys(redis_keys).each do |redis_key|
+            key = redis_key[/:([^\:]+)$/, 1]
+            initial = block.call initial, [key, self[key]]
+          end
+          initial
+        end
 
       end
 
