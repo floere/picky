@@ -1,3 +1,7 @@
+## 4.31.3
+
+- Fix for Redis list `inject`.
+
 ## 4.31.2
 
 - Fix for exact partial `load` interface.
