@@ -1,0 +1,3 @@
+cargo build --release
+mv target/release/libarrays.dylib target/release/libarrays.bundle
+ruby -I. manual_test.rb
