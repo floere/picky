@@ -1,0 +1,8 @@
+[package]
+name = "arrays"
+version = "0.0.1"
+authors = ["Florian R. Hanke <florian.hanke@gmail.com>"]
+
+[lib]
+name = "arrays"
+crate-type = ["dylib"]
