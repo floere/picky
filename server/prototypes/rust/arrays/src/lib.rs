@@ -1,5 +1,5 @@
-// #![crate_type = "dylib"]
 extern crate libc;
+use std::ffi::{CString, CStr};
 pub use libc::types::os::arch::c95::c_char;
 pub use libc::types::os::arch::c99::uintptr_t;
 
@@ -23,8 +23,8 @@ extern {
   fn rb_define_class_under(
     module: libc::uintptr_t,
     name: *const libc::c_char,
-    klass: libc::uintptr_t
-  );
+    klass: libc::c_void
+  ) -> libc::uintptr_t;
   fn rb_define_method(
     klass: libc::uintptr_t,
     name: *const libc::c_char,
@@ -42,9 +42,12 @@ extern {
 #[no_mangle]
 pub extern fn Init_picky() {
   // Module/Class structure.
-  let rust_module = unsafe { rb_define_module("Rust".to_c_str().as_ptr()) };
-  let rust_array  = unsafe { rb_define_class_under(rust_module, "Array".to_c_str().as_ptr(), rb_cObject) };
+  let rust_module_name = CString::new("Rust").unwrap().as_ptr();
+  let rust_array_name  = CString::new("Array").unwrap().as_ptr();
+  let rust_module = unsafe { rb_define_module(rust_module_name) };
+  let rust_array  = unsafe { rb_define_class_under(rust_module, rust_array_name, rb_cObject) };
   
   // Ruby methods.
-  unsafe { rb_define_method(rust_array, "intersect".to_c_str().as_ptr(), intersect, 1) }
+  let intersect_name = CString::new("intersect").unwrap().as_ptr();
+  unsafe { rb_define_method(rust_array, intersect_name, intersect, 1) }
 }
