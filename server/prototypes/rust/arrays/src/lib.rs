@@ -21,7 +21,9 @@ pub use libc::types::os::arch::c99::uintptr_t;
 #[link(name = "ruby")]
 extern {
   // static rb_cObject: &'static libc::c_void;
-  fn rb_define_module(name: *const libc::c_char) -> libc::uintptr_t;
+  fn rb_define_module(
+    name: *const libc::c_char
+  ) -> libc::uintptr_t;
   // fn rb_define_class_under(
   //   module: libc::uintptr_t,
   //   name: *const libc::c_char,

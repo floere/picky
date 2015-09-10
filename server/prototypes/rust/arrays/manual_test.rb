@@ -1,5 +1,5 @@
 require File.expand_path('../target/release/libarrays', __FILE__)
 
-# Rust
+Rust
 
 puts 'Yeah!'
