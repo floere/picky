@@ -13,13 +13,29 @@ impl<T: Hash+Eq+Debug> Intersectable<T> for Vec<T> {
         let mut result: Vec<T> = vec![];
         let mut map = HashMap::<&T,()>::new();
         
-        for item in self.iter() {
+        // Use the shorter Vector for the Hash.
+        let longer;
+        let shorter;
+        
+        if self.len() > other.len() {
+            longer  = self;
+            shorter = other;
+        } else {
+            longer  = other;
+            shorter = self;
+        }
+        
+        // Insert all items in the shorter Vector
+        // into the Hash.
+        for item in shorter.iter() {
             map.insert(item, ());
         }
         
-        for item in other.iter() {
+        // Iterate over the longer Vector to
+        // fill result vector.
+        for item in longer.iter() {
             if map.contains_key(item) {
-                result.push(item);
+                result.push(*item);
             }
         }
         
