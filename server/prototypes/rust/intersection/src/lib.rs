@@ -11,18 +11,15 @@ trait Intersectable<T> {
 impl<T: Hash+Eq+Debug> Intersectable<T> for Vec<T> {
     fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T> {
         let mut result: Vec<T> = vec![];
-        let mut map = HashMap::new();
+        let mut map = HashMap::<&T,()>::new();
         
         for item in self.iter() {
-            map.insert(item, item);
+            map.insert(item, ());
         }
         
         for item in other.iter() {
-            match map.get(item) {
-                Some(&res) => {
-                    result.push(*res);
-                },
-                None => (),
+            if map.contains_key(item) {
+                result.push(item);
             }
         }
         
