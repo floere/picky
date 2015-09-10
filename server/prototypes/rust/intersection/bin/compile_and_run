@@ -1,2 +1,4 @@
-rustc -O src/lib.rs -o bin/lib
+set -ex
+
+rustc -O src/lib.rs -o bin/lib && \
 ./bin/lib

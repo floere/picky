@@ -3,7 +3,7 @@ trait Intersectable {
 }
 
 impl Intersectable for [i16] {
-    fn intersect(&self) -> &[i16] {
+    fn intersect(&self, other: [i16]) -> &[i16] {
         self
     }
 }
