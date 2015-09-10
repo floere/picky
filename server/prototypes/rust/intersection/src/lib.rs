@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::hash::Hash;
-use std::fmt::Debug;
 
 trait Intersectable<T> {
     fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T>;
@@ -8,10 +7,10 @@ trait Intersectable<T> {
 
 // Naïve implementation.
 //
-impl<T: Hash+Eq+Debug> Intersectable<T> for Vec<T> {
+impl<T: Hash+Eq+Copy> Intersectable<T> for Vec<T> {
     fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T> {
         let mut result: Vec<T> = vec![];
-        let mut map = HashMap::<&T,()>::new();
+        let mut map = HashMap::<T,()>::new();
         
         // Use the shorter Vector for the Hash.
         let longer;
@@ -27,15 +26,15 @@ impl<T: Hash+Eq+Debug> Intersectable<T> for Vec<T> {
         
         // Insert all items in the shorter Vector
         // into the Hash.
-        for item in shorter.iter() {
+        for &item in shorter.iter() {
             map.insert(item, ());
         }
         
         // Iterate over the longer Vector to
         // fill result vector.
-        for item in longer.iter() {
-            if map.contains_key(item) {
-                result.push(*item);
+        for &item in longer.iter() {
+            if map.contains_key(&item) {
+                result.push(item);
             }
         }
         
