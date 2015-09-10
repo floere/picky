@@ -76,7 +76,12 @@ mod tests {
 
     #[test]
     fn it_works() {
+        let vec1: Vec<u16> = (0..10).collect();
+        let vec2: Vec<u16> = (0..10000).collect();
         
+        let expected: Vec<u16> = (0..10).collect();
+        
+        assert_eq!(expected, vec1.intersect(&vec2));
     }
 
     #[bench]
