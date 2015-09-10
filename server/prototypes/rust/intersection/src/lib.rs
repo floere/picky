@@ -1,14 +1,16 @@
 use std::collections::HashMap;
+use std::hash::Hash;
+use std::fmt::Debug;
 
-trait Intersectable {
-    fn intersect<'a>(&'a self, other: &'a Vec<i16>) -> Vec<i16>;
+trait Intersectable<T> {
+    fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T>;
 }
 
 // Naïve implementation.
 //
-impl Intersectable for [i16] {
-    fn intersect<'a>(&'a self, other: &'a Vec<i16>) -> Vec<i16> {
-        let mut result: Vec<i16> = vec![];
+impl<T: Hash+Eq+Debug> Intersectable<T> for Vec<T> {
+    fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T> {
+        let mut result: Vec<T> = vec![];
         let mut map = HashMap::new();
         
         for item in self.iter() {
@@ -17,8 +19,10 @@ impl Intersectable for [i16] {
         
         for item in other.iter() {
             match map.get(item) {
-                Some(&res) => result.push(*res),
-                _ => {},
+                Some(&res) => {
+                    result.push(*res);
+                },
+                None => (),
             }
         }
         
