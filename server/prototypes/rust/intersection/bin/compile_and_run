@@ -1,4 +1,4 @@
 set -ex
 
-rustc -O src/lib.rs -o bin/lib && \
-  ./bin/lib
+time rustc --emit asm,link -O src/lib.rs -o bin/lib && \
+  time ./bin/lib
