@@ -75,7 +75,27 @@ mod tests {
     use Intersectable;
 
     #[test]
-    fn it_works() {
+    fn equal_empty() {
+        let vec1: Vec<u16> = vec![];
+        let vec2: Vec<u16> = vec![];
+        
+        let expected: Vec<u16> = vec![];
+        
+        assert_eq!(expected, vec1.intersect(&vec2));
+    }
+    
+    #[test]
+    fn asymmetric_empty() {
+        let vec1: Vec<u16> = (0..10).collect();
+        let vec2: Vec<u16> = vec![];
+        
+        let expected: Vec<u16> = vec![];
+        
+        assert_eq!(expected, vec1.intersect(&vec2));
+    }
+
+    #[test]
+    fn asymmetric() {
         let vec1: Vec<u16> = (0..10).collect();
         let vec2: Vec<u16> = (0..10000).collect();
         
