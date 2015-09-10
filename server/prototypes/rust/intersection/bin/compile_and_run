@@ -1,0 +1,2 @@
+rustc -O src/lib.rs -o bin/lib
+./bin/lib
