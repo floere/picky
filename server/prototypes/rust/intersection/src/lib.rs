@@ -42,11 +42,15 @@ impl<T: Hash+Eq+Copy> Intersectable<T> for Vec<T> {
     }
 }
 
-fn main() {
+fn process() {
     let vec1: Vec<i16> = vec![1,2,3,4,5,6,7,8,9,10];
-    let vec2: Vec<i16> = vec![2,3,4,5,6,7,8,9,10,11];
+    let vec2: Vec<i16> = vec![2,3];
 
     let vec3 = vec1.intersect(&vec2);
     
     println!("{:?}", vec3);
+}
+
+fn main() {
+    process();
 }
