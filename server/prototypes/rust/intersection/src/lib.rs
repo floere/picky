@@ -2,13 +2,13 @@ use std::collections::HashMap;
 use std::hash::Hash;
 
 trait Intersectable<T> {
-    fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T>;
+    fn intersect(&self, other: &Vec<T>) -> Vec<T>;
 }
 
 // Naïve implementation.
 //
 impl<T: Hash+Eq+Copy> Intersectable<T> for Vec<T> {
-    fn intersect<'a>(&'a self, other: &'a Vec<T>) -> Vec<T> {
+    fn intersect(&self, other: &Vec<T>) -> Vec<T> {
         let mut result: Vec<T> = vec![];
         let mut map = HashMap::<T,()>::new();
         
@@ -43,8 +43,8 @@ impl<T: Hash+Eq+Copy> Intersectable<T> for Vec<T> {
 }
 
 fn process() {
-    let vec1: Vec<i16> = vec![1,2,3,4,5,6,7,8,9,10];
-    let vec2: Vec<i16> = vec![2,3];
+    let vec1: Vec<u16> = vec![1,2,3,4,5,6,7,8,9,253];
+    let vec2: Vec<u16> = vec![2,253];
 
     let vec3 = vec1.intersect(&vec2);
     
