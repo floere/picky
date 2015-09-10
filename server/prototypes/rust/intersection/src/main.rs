@@ -1,3 +1,8 @@
+#![feature(test)]
+
+extern crate test;
+extern crate time;
+
 use std::collections::HashMap;
 use std::hash::Hash;
 
@@ -42,15 +47,43 @@ impl<T: Hash+Eq+Copy> Intersectable<T> for Vec<T> {
     }
 }
 
-fn process() {
-    let vec1: Vec<u16> = vec![1,2,3,4,5,6,7,8,9,253];
-    let vec2: Vec<u16> = vec![2,253];
+pub fn process() {
+    let vec1: Vec<u16> = (1..253).collect(); // Only creates a 1..252 Vec.
+    let vec2: Vec<u16> = (2..252).collect();
 
+    println!("{:?}", vec1);
+    println!("{:?}", vec2);
+
+    let t1 = time::now();
     let vec3 = vec1.intersect(&vec2);
+    let t2 = time::now();
+    
+    println!("{:?}", t2 - t1);
     
     println!("{:?}", vec3);
 }
 
 fn main() {
     process();
+}
+
+
+#[cfg(test)]
+mod tests {
+    use test::Bencher;
+    
+    use Intersectable;
+
+    #[test]
+    fn it_works() {
+        
+    }
+
+    #[bench]
+    fn bench_process(b: &mut Bencher) {
+        let vec1: Vec<u16> = (0..10).collect();
+        let vec2: Vec<u16> = (0..10000).collect();
+        
+        b.iter(|| vec1.intersect(&vec2) );
+    }
 }
