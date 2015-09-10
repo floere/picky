@@ -85,7 +85,31 @@ mod tests {
     }
 
     #[bench]
-    fn bench_process(b: &mut Bencher) {
+    fn bench_equal_small(b: &mut Bencher) {
+        let vec1: Vec<u16> = (0..5).collect();
+        let vec2: Vec<u16> = (0..5).collect();
+        
+        b.iter(|| vec1.intersect(&vec2) );
+    }
+
+    #[bench]
+    fn bench_asymmetric_small(b: &mut Bencher) {
+        let vec1: Vec<u16> = (0..5).collect();
+        let vec2: Vec<u16> = (0..10).collect();
+        
+        b.iter(|| vec1.intersect(&vec2) );
+    }
+
+    #[bench]
+    fn bench_equal_large(b: &mut Bencher) {
+        let vec1: Vec<u16> = (0..10000).collect();
+        let vec2: Vec<u16> = (0..10000).collect();
+        
+        b.iter(|| vec1.intersect(&vec2) );
+    }
+
+    #[bench]
+    fn bench_asymmetric_large(b: &mut Bencher) {
         let vec1: Vec<u16> = (0..10).collect();
         let vec2: Vec<u16> = (0..10000).collect();
         
