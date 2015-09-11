@@ -6,6 +6,9 @@ extern crate libc;
 
 use libc::types::common::c95::c_void;
 use libc::types::common::c99::uint16_t;
+use libc::types::common::c99::uint32_t;
+use libc::types::common::c99::uint64_t;
+use libc::size_t;
 
 trait Intersectable<T> {
     fn intersect(&self, other: &Vec<T>) -> Vec<T>;
@@ -60,16 +63,25 @@ pub extern "C" fn rust_array_append(vec: *mut c_void, item: uint16_t) {
 }
 
 #[no_mangle]
-pub extern "C" fn rust_array_first(ptr: *mut uint16_t) -> uint16_t {        
-    // println!("0 {}", unsafe { *ptr });
-    // println!("2 {}", unsafe { *ptr.offset(1) });
-    // println!("4 {}", unsafe { *ptr.offset(2) });
+pub extern "C" fn rust_array_first(
+    ptr: *mut uint16_t,
+    len: *mut size_t,
+    cap: *mut size_t) -> uint16_t {        
     
-    unsafe { *ptr }
+    println!("0 {}", unsafe { *ptr });
+    println!("2 {}", unsafe { *ptr.offset(1) });
+    println!("4 {}", unsafe { *ptr.offset(2) });
+    
+    let vec = unsafe { Vec::from_raw_parts(ptr, len as usize, cap as usize) };
+    
+    vec[0]
 }
 
 #[no_mangle]
-pub extern "C" fn rust_array_alloc() -> *const u16 {
+pub extern "C" fn rust_array_alloc(
+        ptr: *mut uint64_t,
+        len: *mut size_t,
+        cap: *mut size_t) -> *mut uint64_t {
     // Alloc space on the heap.
     let mut obj = Box::new(Vec::<u16>::new());
     
@@ -77,17 +89,18 @@ pub extern "C" fn rust_array_alloc() -> *const u16 {
     obj.push(7);
     obj.push(8);
     obj.push(9);
+    obj.push(10);
+    obj.push(11);
     
-    println!("obj[0] {:?}", obj[0]);
-    println!("obj[1] {:?}", obj[1]);
-    println!("obj[2] {:?}", obj[2]);
     println!("&obj {:?}", &obj);
     
-    let ptr = (*obj).as_ptr();
+    unsafe {
+        *ptr = obj.as_ptr() as uint64_t;
+        *len = obj.len() as size_t;
+        *cap = obj.capacity() as size_t;
+    }
     
-    // let ptr = obj.as_mut_ptr();
-    // let len = obj.len();
-    // let cap = obj.capacity();
+    println!("Rust ptr {:?}", ptr);
     
     ::std::mem::forget(obj);
     
