@@ -1,5 +1,6 @@
-fn addition<T: 'static>(a: i32, fun: T) -> Box<Fn(i32) -> i32> where T : Fn(i32) -> i32 {
-    Box::new(move |b| a + fun(b))
+fn addition<T>(a: i32, fun: T) -> Box<Fn(i32) -> i32>
+    where T : Fn(i32) -> i32 + 'static {
+        Box::new(move |b| a + fun(b))
 }
 
 fn main() {
