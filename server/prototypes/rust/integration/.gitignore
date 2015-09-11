@@ -2,3 +2,4 @@
 *.a
 .fingerprint
 *.bundle
+*.rlib
