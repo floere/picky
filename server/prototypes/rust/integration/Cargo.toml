@@ -1,0 +1,4 @@
+[package]
+name = "integration"
+version = "0.1.0"
+authors = ["Florian R. Hanke <florian.hanke@gmail.com>"]
