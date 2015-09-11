@@ -1,3 +1,5 @@
+set -ex
+
 CARGO_TARGET_DIR=ext/integration/lib cargo build --release
 cd ext/integration && ruby extconf.rb && make
 cd ../.. && ruby manual_test.rb

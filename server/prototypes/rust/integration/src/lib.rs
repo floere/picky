@@ -1,5 +1,11 @@
 use std::collections::HashMap;
 use std::hash::Hash;
+// use std::mem;
+
+extern crate libc;
+
+use libc::types::common::c95::c_void;
+use libc::types::common::c99::uint16_t;
 
 trait Intersectable<T> {
     fn intersect(&self, other: &Vec<T>) -> Vec<T>;
@@ -42,24 +48,48 @@ impl<T: Hash+Eq+Copy> Intersectable<T> for Vec<T> {
     }
 }
 
-
 #[no_mangle]
-pub extern "C" fn rust_array_append(inst: &mut Vec<u16>, item: u16) -> &Vec<u16> {
-    println!("{:?} << {:?}", inst, item);
+pub extern "C" fn rust_array_append(vec: *mut c_void, item: uint16_t) {
+    let vec = unsafe { &mut *(vec as *mut Vec<u16>) };
     
-    inst.push(item);
+    println!("{:?} << {:?}", vec, item);
     
-    println!("{:?}", inst);
+    vec.push(item);
     
-    inst
+    println!("{:?}", vec);
 }
 
 #[no_mangle]
-pub extern "C" fn rust_array_init() ->*const u16 {
-    Vec::<u16>::new().as_ptr()
+pub extern "C" fn rust_array_first(ptr: *mut uint16_t) -> uint16_t {        
+    // println!("0 {}", unsafe { *ptr });
+    // println!("2 {}", unsafe { *ptr.offset(1) });
+    // println!("4 {}", unsafe { *ptr.offset(2) });
+    
+    unsafe { *ptr }
 }
 
 #[no_mangle]
-pub extern "C" fn rust_print() -> *const u8 {
-    "Hello, world!\0".as_ptr()
+pub extern "C" fn rust_array_alloc() -> *const u16 {
+    // Alloc space on the heap.
+    let mut obj = Box::new(Vec::<u16>::new());
+    
+    // Add values (manual test).
+    obj.push(7);
+    obj.push(8);
+    obj.push(9);
+    
+    println!("obj[0] {:?}", obj[0]);
+    println!("obj[1] {:?}", obj[1]);
+    println!("obj[2] {:?}", obj[2]);
+    println!("&obj {:?}", &obj);
+    
+    let ptr = (*obj).as_ptr();
+    
+    // let ptr = obj.as_mut_ptr();
+    // let len = obj.len();
+    // let cap = obj.capacity();
+    
+    ::std::mem::forget(obj);
+    
+    ptr
 }
