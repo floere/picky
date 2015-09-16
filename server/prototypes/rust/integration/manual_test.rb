@@ -1,6 +1,7 @@
-require File.expand_path('../ext/integration/integration', __FILE__)
+require File.expand_path('../integration', __FILE__)
 
 t = Time.now
+
 rary1 = Rust::Array.new
 # rary2 = Rust::Array.new
 
