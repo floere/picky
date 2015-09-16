@@ -9,6 +9,8 @@ t = Time.now
 
 ary = ('a'..'z').to_a
 
+puts `ps aux | head -1`
+
 mem
 
 map = Rust::HashMap.new
