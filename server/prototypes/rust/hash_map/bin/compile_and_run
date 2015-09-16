@@ -1,0 +1,6 @@
+set -ex
+
+cargo build --release
+gcc --std=c11 -o c-example src/integration.c -L target/release/ -lintegration
+
+LD_LIBRARY_PATH=target/release/ ruby ./src/manual_test.rb
