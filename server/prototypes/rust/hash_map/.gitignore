@@ -3,3 +3,5 @@
 .fingerprint
 *.bundle
 *.rlib
+*.dylib
+c-example
