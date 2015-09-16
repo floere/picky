@@ -57,11 +57,17 @@ pub extern "C" fn rust_array_first(
     len: *mut size_t,
     cap: *mut size_t) -> uint64_t {
     
-    let vec = unsafe { Vec::from_raw_parts(ptr, len as usize, cap as usize) };
+    let vec = unsafe { Vec::from_raw_parts(ptr, *len as usize, *cap as usize) };
     
-    println!("first: {:?}", vec);
+    println!("vec in first: {:?}", vec);
     
-    vec[0] as uint64_t
+    let result = vec[0] as uint64_t;
+    
+    println!("first: {:?}", result);
+    
+    ::std::mem::forget(vec);
+    
+    result
 }
 
 #[no_mangle]
@@ -73,7 +79,10 @@ pub extern "C" fn rust_array_append(
     
     // It is possible it has not been allocated yet!
     // 
-    println!("ptr: {:?}", ptr);
+    println!("");
+    unsafe {
+        println!("ptr: {:?}, len: {:?}, cap: {:?}", ptr, *len as usize, *cap as usize);
+    };
     let mut vec = unsafe { Vec::<u64>::from_raw_parts(ptr, *len as usize, *cap as usize) };
     
     // // The vector will not allocate until elements are pushed onto it.
@@ -82,17 +91,21 @@ pub extern "C" fn rust_array_append(
     //     vec = internal_array_alloc();
     // }
     
-    println!("pushing {:?}", item as u64);
-    vec.push(item as u64);
-    println!("pushed onto {:?}", vec.as_ptr());
+    println!("preparing to push {:?} onto ptr: {:?}", item as u64, vec.as_ptr());
     
-    println!("vec: {:?}", vec);
+    vec.push(item as u64);
+    
+    // println!("pushed onto {:?}", vec.as_ptr());
+    
+    println!("vec before: {:?} (len: {:?})", vec, unsafe { *len });
     
     unsafe {
-        // *ptr = vec.as_ptr() as uint64_t;
+        *ptr = *vec.as_ptr() as size_t;
         *len = vec.len() as size_t;
         *cap = vec.capacity() as size_t;
     }
+    
+    println!("vec after: {:?} (len: {:?})", vec, unsafe { *len });
     
     ::std::mem::forget(vec);
     
@@ -104,13 +117,13 @@ pub extern "C" fn rust_array_alloc(
         ptr: *mut uint64_t,
         len: *mut size_t,
         cap: *mut size_t) -> *mut uint64_t {
-    let mut vec = internal_array_alloc();
+    let vec = internal_array_alloc();
     
     // Add value (manual test).
-    vec.push(27);
+    // vec.push(27);
     
     unsafe {
-        *ptr = vec.as_ptr() as uint64_t;
+        *ptr = vec.as_ptr() as size_t;
         *len = vec.len() as size_t;
         *cap = vec.capacity() as size_t;
     }

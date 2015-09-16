@@ -5,8 +5,8 @@ static VALUE rb_mRust;
 static VALUE rb_cRustArray;
 
 extern void* rust_array_alloc();
-extern uint16_t rust_array_first(void*, size_t, size_t);
-extern uint16_t rust_array_append(void*, size_t, size_t, uint16_t);
+extern uint64_t rust_array_first();
+extern uint64_t rust_array_append();
 
 struct rust_array {
   void* ptr;
@@ -81,7 +81,7 @@ extern VALUE ruby_rust_array_first(VALUE self) {
   // printf("len#first %lu\n", rary->len);
   // printf("cap#first %lu\n", rary->cap);
     
-  uint16_t num = rust_array_first(rary->ptr, rary->len, rary->cap);
+  uint64_t num = rust_array_first(&rary->ptr, &rary->len, &rary->cap);
   
   // printf("NUM %d\n", num);
 
@@ -95,16 +95,16 @@ static VALUE ruby_rust_array_append(VALUE self, VALUE fix) {
   void *ptr;
   size_t len;
   size_t cap;
-  uint16_t num = INT2NUM(fix);
+  uint64_t num = INT2NUM(fix);
   
   // printf("C: ptr#<< %p\n", rary->ptr);
   // printf("C: len#<< %lu\n", rary->len);
   // printf("C: cap#<< %lu\n", rary->cap);
   // printf("C: item#<< %lu\n", item);
   
-  num = rust_array_append(rary->ptr, &rary->len, &rary->cap, num);
+  num = rust_array_append(&rary->ptr, &rary->len, &rary->cap, num);
   
-  // printf("C: ptr %p\n", rary->ptr);
+  // printf("C: ptr#<< %p\n", rary->ptr);
   // printf("C: len %lu\n", rary->len);
   // printf("C: cap %lu\n", rary->cap);
 
