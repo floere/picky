@@ -54,20 +54,37 @@ pub fn rust_array_append(ptr: *mut Database, item: uint32_t) -> uint32_t {
     database.append(item)
 }
 
-#[no_mangle]
-pub fn rust_array_first(ptr: *const Database) -> uint32_t {
-    let database = unsafe {
-        assert!(!ptr.is_null());
-        &*ptr
-    };
-    *database.first()
+macro_rules! delegate {
+    ($from:ident, $to:ident) => {
+        #[no_mangle]
+        pub fn $from(ptr: *const Database) -> uint32_t {
+            let database = unsafe {
+                assert!(!ptr.is_null());
+                &*ptr
+            };
+            *database.$to()
+        }
+    }
 }
 
-#[no_mangle]
-pub fn rust_array_last(ptr: *const Database) -> uint32_t {
-    let database = unsafe {
-        assert!(!ptr.is_null());
-        &*ptr
-    };
-    *database.last()
-}
+// TODO Make it first/last only.
+delegate!(rust_array_first, first);
+delegate!(rust_array_last, last);
+
+// #[no_mangle]
+// pub fn rust_array_first(ptr: *const Database) -> uint32_t {
+//     let database = unsafe {
+//         assert!(!ptr.is_null());
+//         &*ptr
+//     };
+//     *database.first()
+// }
+//
+// #[no_mangle]
+// pub fn rust_array_last(ptr: *const Database) -> uint32_t {
+//     let database = unsafe {
+//         assert!(!ptr.is_null());
+//         &*ptr
+//     };
+//     *database.last()
+// }
