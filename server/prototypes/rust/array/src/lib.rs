@@ -1,12 +1,12 @@
 extern crate libc;
 
-use libc::{c_char, uint32_t};
+use libc::{c_char, uint16_t};
 use std::{mem, str};
 use std::collections::HashMap;
 use std::ffi::CStr;
 
 pub struct Database {
-    data: Vec<u32>,
+    data: Vec<u16>,
 }
 
 impl Database {
@@ -16,16 +16,16 @@ impl Database {
         }
     }
 
-    fn append(&mut self, item: u32) -> u32 {
+    fn append(&mut self, item: u16) -> u16 {
         self.data.push(item);
         item
     }
 
-    fn first(&self) -> &u32 {
+    fn first(&self) -> &u16 {
         self.data.first().unwrap()
     }
     
-    fn last(&self) -> &u32 {
+    fn last(&self) -> &u16 {
         self.data.last().unwrap()
     }
 }
@@ -46,7 +46,7 @@ pub fn rust_array_free(ptr: *mut Database) {
 }
 
 #[no_mangle]
-pub fn rust_array_append(ptr: *mut Database, item: uint32_t) -> uint32_t {
+pub fn rust_array_append(ptr: *mut Database, item: uint16_t) -> uint16_t {
     let database = unsafe {
         assert!(!ptr.is_null());
         &mut *ptr
@@ -58,7 +58,7 @@ macro_rules! delegate {
     ($from:ident, $to:ident) => {
         #[no_mangle]
         // concat_idents! does not work here.
-        pub fn $from(ptr: *const Database) -> uint32_t {
+        pub fn $from(ptr: *const Database) -> uint16_t {
             let database = unsafe {
                 assert!(!ptr.is_null());
                 &*ptr

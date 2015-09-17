@@ -17,18 +17,18 @@ puts `ps aux | head -1`
 
 mem
 
+ary = Rust::Array.new
 timed do
-  ary = Rust::Array.new
-  100_000.times do |i|
+  30_000.times do |i|
     ary.append(i)
   end
 end
 
 mem
 
+ruby_ary = Array.new
 timed do
-  ruby_ary = Array.new
-  100_000.times do |i|
+  30_000.times do |i|
     ruby_ary << i
   end
 end
@@ -37,5 +37,3 @@ mem
 
 p [ary.first, ary.last]
 p [ruby_ary.first, ruby_ary.last]
-
-p Time.now - t
