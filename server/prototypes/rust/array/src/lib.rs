@@ -1,17 +1,15 @@
 extern crate libc;
 
-use libc::{c_char, uint16_t};
-use std::{mem, str};
-use std::collections::HashMap;
-use std::ffi::CStr;
+use libc::uint16_t;
+use std::mem;
 
-pub struct Database {
+pub struct Data {
     data: Vec<u16>,
 }
 
-impl Database {
-    fn new() -> Database {
-        Database {
+impl Data {
+    fn new() -> Data {
+        Data {
             data: Vec::new(),
         }
     }
@@ -31,39 +29,39 @@ impl Database {
 }
 
 #[no_mangle]
-pub fn rust_array_new() -> *mut Database {
+pub fn rust_array_new() -> *mut Data {
     unsafe {
-        mem::transmute(Box::new(Database::new()))
+        mem::transmute(Box::new(Data::new()))
     }
 }
 
 #[no_mangle]
-pub fn rust_array_free(ptr: *mut Database) {
+pub fn rust_array_free(ptr: *mut Data) {
     if ptr.is_null() { return }
-    let _: Box<Database> = unsafe {
+    let _: Box<Data> = unsafe {
         mem::transmute(ptr)
     };
 }
 
 #[no_mangle]
-pub fn rust_array_append(ptr: *mut Database, item: uint16_t) -> uint16_t {
-    let database = unsafe {
+pub fn rust_array_append(ptr: *mut Data, item: uint16_t) -> uint16_t {
+    let data = unsafe {
         assert!(!ptr.is_null());
         &mut *ptr
     };
-    database.append(item)
+    data.append(item)
 }
 
 macro_rules! delegate {
     ($from:ident, $to:ident) => {
         #[no_mangle]
         // concat_idents! does not work here.
-        pub fn $from(ptr: *const Database) -> uint16_t {
-            let database = unsafe {
+        pub fn $from(ptr: *const Data) -> uint16_t {
+            let data = unsafe {
                 assert!(!ptr.is_null());
                 &*ptr
             };
-            *database.$to()
+            *data.$to()
         }
     };
 }
