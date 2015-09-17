@@ -28,23 +28,23 @@ impl Data {
     }
 }
 
-#[no_mangle]
-pub fn rust_array_new() -> *mut Data {
+#[no_mangle] pub extern
+fn rust_array_new() -> *mut Data {
     unsafe {
         mem::transmute(Box::new(Data::new()))
     }
 }
 
-#[no_mangle]
-pub fn rust_array_free(ptr: *mut Data) {
+#[no_mangle] pub extern
+fn rust_array_free(ptr: *mut Data) {
     if ptr.is_null() { return }
     let _: Box<Data> = unsafe {
         mem::transmute(ptr)
     };
 }
 
-#[no_mangle]
-pub fn rust_array_append(ptr: *mut Data, item: uint16_t) -> uint16_t {
+#[no_mangle] pub extern
+fn rust_array_append(ptr: *mut Data, item: uint16_t) -> uint16_t {
     let data = unsafe {
         assert!(!ptr.is_null());
         &mut *ptr
@@ -54,9 +54,9 @@ pub fn rust_array_append(ptr: *mut Data, item: uint16_t) -> uint16_t {
 
 macro_rules! delegate {
     ($from:ident, $to:ident) => {
-        #[no_mangle]
+        #[no_mangle] pub extern
         // concat_idents! does not work here.
-        pub fn $from(ptr: *const Data) -> uint16_t {
+        fn $from(ptr: *const Data) -> uint16_t {
             let data = unsafe {
                 assert!(!ptr.is_null());
                 &*ptr
