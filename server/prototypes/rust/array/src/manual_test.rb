@@ -11,6 +11,8 @@ def timed
   p Time.now - t
 end
 
+TIMES = 65_000
+
 ary = ('a'..'z').to_a
 
 puts `ps aux | head -1`
@@ -19,7 +21,7 @@ mem
 
 ary = Rust::Array.new
 timed do
-  30_000.times do |i|
+  TIMES.times do |i|
     ary.append(i)
   end
 end
@@ -28,7 +30,7 @@ mem
 
 ruby_ary = Array.new
 timed do
-  30_000.times do |i|
+  TIMES.times do |i|
     ruby_ary << i
   end
 end
