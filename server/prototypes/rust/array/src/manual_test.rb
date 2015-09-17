@@ -5,7 +5,11 @@ def mem
   puts `ps aux | grep #{Process.pid}`.split("\n").find { |s| s.match(/manual_test/) }
 end
 
-t = Time.now
+def timed
+  t = Time.now
+  yield
+  p Time.now - t
+end
 
 ary = ('a'..'z').to_a
 
@@ -13,16 +17,20 @@ puts `ps aux | head -1`
 
 mem
 
-ary = Rust::Array.new
-100_000.times do |i|
-  ary.append(i)
+timed do
+  ary = Rust::Array.new
+  100_000.times do |i|
+    ary.append(i)
+  end
 end
 
 mem
 
-ruby_ary = Array.new
-100_000.times do |i|
-  ruby_ary << i
+timed do
+  ruby_ary = Array.new
+  100_000.times do |i|
+    ruby_ary << i
+  end
 end
 
 mem
