@@ -11,6 +11,8 @@ def timed
   p Time.now - t
 end
 
+# Array
+
 TIMES = 65_000
 
 ary = ('a'..'z').to_a
@@ -39,3 +41,32 @@ mem
 
 p [ary.first, ary.last]
 p [ruby_ary.first, ruby_ary.last]
+
+# Hash
+
+ary = ('a'..'z').to_a
+
+puts `ps aux | head -1`
+
+mem
+
+map = Rust::Hash.new
+
+timed do
+  100_000.times do |i|
+    map.set(ary.shuffle[0..9].join, i)
+  end
+end
+
+mem
+
+hash = Hash.new
+
+timed do
+  100_000.times do |i|
+    hash[ary.shuffle[0..9].join] = i
+  end
+end
+
+mem
+

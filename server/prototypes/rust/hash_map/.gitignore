@@ -1,7 +1,0 @@
-*.o
-*.a
-.fingerprint
-*.bundle
-*.rlib
-*.dylib
-c-example

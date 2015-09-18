@@ -53,14 +53,14 @@ delegate!(rust_array_last, last);
 mod hash;
 
 #[no_mangle] pub extern
-fn rust_hash_map_new() -> *mut hash::Data {
+fn rust_hash_new() -> *mut hash::Data {
     unsafe {
         mem::transmute(Box::new(hash::Data::new()))
     }
 }
 
 #[no_mangle] pub extern
-fn rust_hash_map_free(ptr: *mut hash::Data) {
+fn rust_hash_free(ptr: *mut hash::Data) {
     if ptr.is_null() { return }
     let _: Box<hash::Data> = unsafe {
         mem::transmute(ptr)
@@ -68,7 +68,7 @@ fn rust_hash_map_free(ptr: *mut hash::Data) {
 }
 
 #[no_mangle] pub extern
-fn rust_hash_map_set(ptr: *mut hash::Data, key: *const c_char, value: uint32_t) -> uint32_t {
+fn rust_hash_set(ptr: *mut hash::Data, key: *const c_char, value: uint32_t) -> uint32_t {
     let data = unsafe {
         assert!(!ptr.is_null());
         &mut *ptr
@@ -82,7 +82,7 @@ fn rust_hash_map_set(ptr: *mut hash::Data, key: *const c_char, value: uint32_t) 
 }
 
 #[no_mangle] pub extern
-fn rust_hash_map_get(ptr: *const hash::Data, key: *const c_char) -> uint32_t {
+fn rust_hash_get(ptr: *const hash::Data, key: *const c_char) -> uint32_t {
     let data = unsafe {
         assert!(!ptr.is_null());
         &*ptr
