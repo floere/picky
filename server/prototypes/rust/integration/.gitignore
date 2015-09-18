@@ -1,5 +1,0 @@
-*.o
-*.a
-.fingerprint
-*.bundle
-*.rlib

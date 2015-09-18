@@ -19,7 +19,7 @@ class Rust < FFI::AutoPointer
 
   module Array
     extend FFI::Library
-    ffi_lib 'integration'
+    ffi_lib 'picky'
 
     attach_function :new,  :rust_array_new, [], Rust
     attach_function :free, :rust_array_free, [Rust], :void
