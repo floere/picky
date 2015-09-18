@@ -50,17 +50,7 @@ puts `ps aux | head -1`
 
 mem
 
-map = Rust::Hash.new
-
-timed do
-  100_000.times do |i|
-    map.set(ary.shuffle[0..9].join, i)
-  end
-end
-
-mem
-
-hash = Hash.new
+hash = Rust::Hash.new
 
 timed do
   100_000.times do |i|
@@ -70,3 +60,12 @@ end
 
 mem
 
+ruby_hash = Hash.new
+
+timed do
+  100_000.times do |i|
+    ruby_hash[ary.shuffle[0..9].join] = i
+  end
+end
+
+mem

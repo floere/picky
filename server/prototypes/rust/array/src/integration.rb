@@ -35,21 +35,19 @@ module Rust
       Hash.free(ptr)
     end
 
-    def populate
-      Hash.populate(self)
-    end
-
     def set(key, value)
       Hash.set(self, key, value)
     end
+    alias []= set
 
     def get(key)
       Hash.get(self, key)
     end
+    alias [] get
   end
   class Hash
     extend FFI::Library
-    ffi_lib 'picky'
+    ffi_lib 'picky_rust'
     
     attach_function :new,  :rust_hash_new, [], HashPointer
     attach_function :free, :rust_hash_free, [HashPointer], :void
