@@ -1,10 +1,10 @@
-pub struct Data {
+pub struct Array {
     data: Vec<u16>,
 }
 
-impl Data {
-    pub fn new() -> Data {
-        Data {
+impl Array {
+    pub fn new() -> Array {
+        Array {
             data: Vec::new(),
         }
     }
@@ -17,7 +17,7 @@ impl Data {
     pub fn first(&self) -> &u16 {
         self.data.first().unwrap()
     }
-    
+
     pub fn last(&self) -> &u16 {
         self.data.last().unwrap()
     }

@@ -9,6 +9,7 @@ module Rust
     def append(item)
       Array.append(self, item)
     end
+    alias << append
 
     def first()
       Array.first(self)
@@ -52,7 +53,7 @@ module Rust
     attach_function :new,  :rust_hash_new, [], HashPointer
     attach_function :free, :rust_hash_free, [HashPointer], :void
                     
-    attach_function :get, :rust_hash_get, [HashPointer, :string], :uint32
-    attach_function :set, :rust_hash_set, [HashPointer, :string, :uint32], :uint32
+    attach_function :get, :rust_hash_get, [HashPointer, :string], ArrayPointer
+    attach_function :set, :rust_hash_set, [HashPointer, :string, ArrayPointer], :void
   end
 end

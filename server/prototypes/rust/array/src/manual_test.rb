@@ -44,7 +44,7 @@ p [ruby_ary.first, ruby_ary.last]
 
 # Hash
 
-ary = ('a'..'z').to_a
+ary = ['abc', 'def', 'ghi', 'jkl', 'mno']
 
 puts `ps aux | head -1`
 
@@ -54,7 +54,9 @@ hash = Rust::Hash.new
 
 timed do
   100_000.times do |i|
-    hash[ary.shuffle[0..9].join] = i
+    key = ary.shuffle[0]
+    hash[key] ||= Rust::Array.new
+    hash[key] << i
   end
 end
 
@@ -64,8 +66,13 @@ ruby_hash = Hash.new
 
 timed do
   100_000.times do |i|
-    ruby_hash[ary.shuffle[0..9].join] = i
+    key = ary.shuffle[0]
+    ruby_hash[key] ||= Array.new
+    ruby_hash[key] << i
   end
 end
 
 mem
+
+# Combined
+
