@@ -20,4 +20,9 @@ impl Hash {
     pub fn get(&self, key: &str) -> Option<&Box<Array>> {
         self.data.get(key)
     }
+    
+    pub fn length(&self) -> usize {
+        println!("{:?}", self.data.len());
+        self.data.len()
+    }
 }

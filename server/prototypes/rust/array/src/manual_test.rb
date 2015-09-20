@@ -20,6 +20,8 @@ def rust_ary
       ary << i
     end
   end
+  ary.length
+  p ary.size
   p [ary.first, ary.last]
 end
 def ruby_ary
@@ -29,20 +31,30 @@ def ruby_ary
       ary << i
     end
   end
+  ary.length
+  p ary.size
   p [ary.first, ary.last]
 end
 
 KEYS = ['abc', 'def', 'ghi', 'jkl', 'mno']
 def rust_hash
+  some_hash = Rust::Hash.new
+  some_hash['test'] = Rust::Array.new
+  p "Stored: #{some_hash['test']}"
+  
   hash = Rust::Hash.new
   keys_size = KEYS.size
   timed do
     TIMES.times do |i|
       key = KEYS[i % keys_size]
+      p [:hash_key, hash[key]]
       hash[key] ||= Rust::Array.new
-      hash[key] << i
+      p [:hash_key, hash[key]]
+      # hash[key] << i
     end
   end
+  p [:rust_hash_length, hash.length]
+  p [:rust_hash_size, hash.size]
   p hash['abc']
 end
 def ruby_hash
@@ -55,7 +67,9 @@ def ruby_hash
       hash[key] << i
     end
   end
-  puts hash['abc'].inspect
+  hash.length
+  p hash.size
+  p hash['abc']
 end
 
 # # Array

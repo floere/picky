@@ -21,4 +21,8 @@ impl Array {
     pub fn last(&self) -> &u16 {
         self.data.last().unwrap()
     }
+    
+    pub fn length(&self) -> usize {
+        self.data.len()
+    }
 }
