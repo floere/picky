@@ -3,7 +3,7 @@ require 'ffi'
 module Rust
   class ArrayPointer < FFI::AutoPointer
     def self.release(ptr)
-      Array.free(ptr)
+      # Array.free(ptr) # TODO Free Array
     end
 
     def append(item)

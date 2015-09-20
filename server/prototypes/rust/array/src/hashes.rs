@@ -12,9 +12,9 @@ impl Hash {
         }
     }
 
-    pub fn set(&mut self, key: &str, array: Array) {
+    pub fn set(&mut self, key: &str, value: Array) {
         let key = String::from(key);
-        self.data.insert(key, array);
+        self.data.insert(key, value);
     }
 
     pub fn get(&self, key: &str) -> Option<&Array> {

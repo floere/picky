@@ -79,11 +79,11 @@ fn rust_hash_set(ptr: *mut hashes::Hash, key: *const c_char, value: Array)  {
         CStr::from_ptr(key)
     };
     let key_str = str::from_utf8(key.to_bytes()).unwrap();
-    hash.set(key_str, value)
+    hash.set(key_str, value);
 }
 
 #[no_mangle] pub extern
-fn rust_hash_get<'a>(ptr: *const hashes::Hash, key: *const c_char) -> () {
+fn rust_hash_get<'a>(ptr: *const hashes::Hash, key: *const c_char) {
     let hash = unsafe {
         assert!(!ptr.is_null());
         &*ptr
@@ -94,5 +94,4 @@ fn rust_hash_get<'a>(ptr: *const hashes::Hash, key: *const c_char) -> () {
     };
     let key_str = str::from_utf8(key.to_bytes()).unwrap();
     hash.get(key_str);
-    ()
 }

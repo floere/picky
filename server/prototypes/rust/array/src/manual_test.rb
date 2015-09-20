@@ -11,67 +11,70 @@ def timed
   p Time.now - t
 end
 
+ARY_TIMES = 65_000
+def rust_ary
+  ary = Rust::Array.new
+  timed do
+    ARY_TIMES.times do |i|
+      ary << i
+    end
+  end
+  p [ary.first, ary.last]
+end
+def ruby_ary
+  ary = Array.new
+  timed do
+    ARY_TIMES.times do |i|
+      ary << i
+    end
+  end
+  p [ary.first, ary.last]
+end
+
+HASH_TIMES = 10 # 100_000
+KEYS = ['abc', 'def', 'ghi', 'jkl', 'mno']
+def rust_hash
+  hash = Rust::Hash.new
+  keys_size = KEYS.size
+  timed do
+    HASH_TIMES.times do |i|
+      key = KEYS[i % keys_size]
+      hash[key] ||= Rust::Array.new
+      # ptr = hash[key]
+      # ptr << i
+      # hash[key] << i
+    end
+  end
+  hash
+end
+def ruby_hash
+  ruby_hash = Hash.new
+  keys_size = KEYS.size
+  timed do
+    HASH_TIMES.times do |i|
+      key = KEYS[i % keys_size]
+      ruby_hash[key] ||= Array.new
+      ruby_hash[key] << i
+    end
+  end
+end
+
 # Array
 
-TIMES = 65_000
-
-ary = ('a'..'z').to_a
-
 puts `ps aux | head -1`
-
 mem
-
-ary = Rust::Array.new
-timed do
-  TIMES.times do |i|
-    ary.append(i)
-  end
-end
-
+rust_ary
 mem
-
-ruby_ary = Array.new
-timed do
-  TIMES.times do |i|
-    ruby_ary << i
-  end
-end
-
+ruby_ary
 mem
-
-p [ary.first, ary.last]
-p [ruby_ary.first, ruby_ary.last]
 
 # Hash
 
-ary = ['abc', 'def', 'ghi', 'jkl', 'mno']
-
 puts `ps aux | head -1`
-
 mem
-
-hash = Rust::Hash.new
-
-timed do
-  100_000.times do |i|
-    key = ary.shuffle[0]
-    hash[key] ||= Rust::Array.new
-    hash[key] << i
-  end
-end
-
+h = rust_hash
 mem
-
-ruby_hash = Hash.new
-
-timed do
-  100_000.times do |i|
-    key = ary.shuffle[0]
-    ruby_hash[key] ||= Array.new
-    ruby_hash[key] << i
-  end
-end
-
+ruby_hash
 mem
 
 # Combined
