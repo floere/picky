@@ -11,11 +11,12 @@ def timed
   p Time.now - t
 end
 
-ARY_TIMES = 65_000
+TIMES = 10
+
 def rust_ary
   ary = Rust::Array.new
   timed do
-    ARY_TIMES.times do |i|
+    TIMES.times do |i|
       ary << i
     end
   end
@@ -24,55 +25,53 @@ end
 def ruby_ary
   ary = Array.new
   timed do
-    ARY_TIMES.times do |i|
+    TIMES.times do |i|
       ary << i
     end
   end
   p [ary.first, ary.last]
 end
 
-HASH_TIMES = 10 # 100_000
 KEYS = ['abc', 'def', 'ghi', 'jkl', 'mno']
 def rust_hash
   hash = Rust::Hash.new
   keys_size = KEYS.size
   timed do
-    HASH_TIMES.times do |i|
+    TIMES.times do |i|
       key = KEYS[i % keys_size]
       hash[key] ||= Rust::Array.new
-      # ptr = hash[key]
-      # ptr << i
-      # hash[key] << i
+      hash[key] << i
     end
   end
-  hash
+  p hash['abc']
 end
 def ruby_hash
-  ruby_hash = Hash.new
+  hash = Hash.new
   keys_size = KEYS.size
   timed do
-    HASH_TIMES.times do |i|
+    TIMES.times do |i|
       key = KEYS[i % keys_size]
-      ruby_hash[key] ||= Array.new
-      ruby_hash[key] << i
+      hash[key] ||= Array.new
+      hash[key] << i
     end
   end
+  puts hash['abc'].inspect
 end
 
-# Array
-
-puts `ps aux | head -1`
-mem
-rust_ary
-mem
-ruby_ary
-mem
+# # Array
+#
+# puts `ps aux | head -1`
+# mem
+# rust_ary
+# mem
+# ruby_ary
+# mem
 
 # Hash
 
 puts `ps aux | head -1`
 mem
-h = rust_hash
+rust_hash
 mem
 ruby_hash
 mem

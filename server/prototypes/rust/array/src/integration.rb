@@ -3,7 +3,7 @@ require 'ffi'
 module Rust
   class ArrayPointer < FFI::AutoPointer
     def self.release(ptr)
-      # Array.free(ptr) # TODO Free Array
+      Array.free(ptr)
     end
 
     def append(item)
@@ -11,17 +11,17 @@ module Rust
     end
     alias << append
 
-    def first()
+    def first
       Array.first(self)
     end
   
-    def last()
+    def last
       Array.last(self)
     end
   end
   class Array
     extend FFI::Library
-    ffi_lib 'picky'
+    ffi_lib 'picky_rust'
 
     attach_function :new,  :rust_array_new, [], ArrayPointer
     attach_function :free, :rust_array_free, [ArrayPointer], :void
