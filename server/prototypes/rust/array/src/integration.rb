@@ -32,8 +32,10 @@ module Rust
     attach_function :free, :rust_array_free, [ArrayPointer], :void
                     
     attach_function :append, :rust_array_append, [ArrayPointer, :uint16], :uint16
+    
     attach_function :first, :rust_array_first, [ArrayPointer], :uint16
     attach_function :last, :rust_array_last, [ArrayPointer], :uint16
+    
     attach_function :length, :rust_array_length, [ArrayPointer], :size_t
   end
   
@@ -43,7 +45,9 @@ module Rust
     end
 
     def set(key, value)
-      Hash.set(self, key, value)
+      result = Hash.set(self, key, value)
+      p [:set, :result, result.address]
+      result
     end
     alias []= set
 
@@ -67,7 +71,8 @@ module Rust
     attach_function :free, :rust_hash_free, [HashPointer], :void
                     
     attach_function :get, :rust_hash_get, [HashPointer, :string], ArrayPointer
-    attach_function :set, :rust_hash_set, [HashPointer, :string, ArrayPointer], :void
+    attach_function :set, :rust_hash_set, [HashPointer, :string, ArrayPointer], ArrayPointer
+    
     attach_function :length, :rust_hash_length, [HashPointer], :size_t
   end
 end

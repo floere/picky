@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use arrays::Array;
 
 pub struct Hash {
-    data: HashMap<String, Box<Array>>,
+    data: HashMap<String, Array>,
 }
 
 impl Hash {
@@ -12,17 +12,20 @@ impl Hash {
         }
     }
 
-    pub fn set(&mut self, key: &str, value: Box<Array>) {
+    pub fn set(&mut self, key: &str, value: Array) {
         let key = String::from(key);
+        println!("set key: {}", key);
         self.data.insert(key, value);
     }
 
-    pub fn get(&self, key: &str) -> Option<&Box<Array>> {
-        self.data.get(key)
+    pub fn get(&self, key: &str) -> Option<&Array> {
+        println!("get key: {}", key);
+        let res = self.data.get(key);
+        println!("res: {:?}", res);
+        res
     }
     
     pub fn length(&self) -> usize {
-        println!("{:?}", self.data.len());
         self.data.len()
     }
 }

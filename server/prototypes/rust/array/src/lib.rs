@@ -1,6 +1,6 @@
 extern crate libc;
 
-use libc::{c_char, uint16_t, uint64_t, size_t};
+use libc::{c_char, uint16_t, size_t};
 use std::{mem, str};
 use std::ffi::CStr;
 
@@ -22,10 +22,7 @@ macro_rules! delegate {
         #[no_mangle] pub extern
         // concat_idents! does not work here.
         fn $from(ptr: *const $pointer_type) -> $ret {
-            let data = unsafe {
-                assert!(!ptr.is_null());
-                &*ptr
-            };
+            let data = unsafe { &*ptr };
             data.$to()
         }
     };
@@ -36,36 +33,27 @@ pub mod arrays;
 use arrays::Array;
 
 #[no_mangle] pub extern
-fn rust_array_new() -> *mut Array {
-    unsafe {
-        mem::transmute(Box::new(Array::new()))
-    }
+fn rust_array_new() -> *const Array {
+    unsafe { mem::transmute(Box::new(Array::new())) }
 }
 
 #[no_mangle] pub extern
-fn rust_array_free(ptr: *mut Array) {
+fn rust_array_free(ptr: *const Array) {
     if ptr.is_null() { return }
-    let _: Box<Array> = unsafe {
-        mem::transmute(ptr)
-    };
+    let _: Box<Array> = unsafe { mem::transmute(ptr) };
+    println!("Array freed: {:?}", ptr);
 }
 
 #[no_mangle] pub extern
 fn rust_array_append(ptr: *mut Array, item: uint16_t) -> uint16_t {
-    let data = unsafe {
-        assert!(!ptr.is_null());
-        &mut *ptr
-    };
-    data.append(item)
+    let array = unsafe { &mut *ptr };
+    array.append(item)
 }
 
 #[no_mangle] pub extern
 fn rust_array_length(ptr: *const Array) -> size_t {
-    let data = unsafe {
-        assert!(!ptr.is_null());
-        &*ptr
-    };
-    data.length() as size_t
+    let array = unsafe { &*ptr };
+    array.length() as size_t
 }
 
 // TODO Make it first/last/... only.
@@ -79,57 +67,56 @@ use hashes::Hash;
 
 #[no_mangle] pub extern
 fn rust_hash_new() -> *mut Hash {
-    unsafe {
-        mem::transmute(Box::new(Hash::new()))
-    }
+    unsafe { mem::transmute(Box::new(Hash::new())) }
 }
 
 #[no_mangle] pub extern
 fn rust_hash_free(ptr: *mut Hash) {
     if ptr.is_null() { return }
-    let _: Box<Hash> = unsafe {
-        mem::transmute(ptr)
-    };
+    let _: Box<Hash> = unsafe { mem::transmute(ptr) };
+    println!("Hash freed: {:?}", ptr);
 }
 
 #[no_mangle] pub extern
-fn rust_hash_set(ptr: *mut Hash, key: *const c_char, value: *const Array) -> *const Array {
-    let hash = unsafe {
-        assert!(!ptr.is_null());
-        &mut *ptr
-    };
-    let transformed_key = unsafe {
-        assert!(!key.is_null());
-        CStr::from_ptr(key)
-    };
-    let value: Box<Array> = unsafe {
-        assert!(!value.is_null());
+fn rust_hash_set(ptr: *mut Hash, key: *const c_char, value: *const Box<Array>) -> *const Box<Array> {
+    let hash = unsafe { &mut *ptr };
+    let transformed_key = unsafe { CStr::from_ptr(key) };
+    let transmuted_value = unsafe {
+        let boxed: Box<Array> = mem::transmute(value);
         // &*value
-        mem::transmute(value)
+        *boxed
     };
     
     let key_str = str::from_utf8(transformed_key.to_bytes()).unwrap();
-    hash.set(key_str, value);
+    println!("rust_hash_set: {:?} => {:?} ({:?})", key_str, transmuted_value, value);
+    hash.set(key_str, transmuted_value);
     
-    rust_hash_get(ptr, key)
+    value
 }
 
 #[no_mangle] pub extern
-fn rust_hash_get(ptr: *const Hash, key: *const c_char) -> *const Array {
-    let hash = unsafe {
-        assert!(!ptr.is_null());
-        &*ptr
-    };
-    let key = unsafe {
-        assert!(!key.is_null());
-        CStr::from_ptr(key)
-    };
+fn rust_hash_get(ptr: *const Hash, key: *const c_char) -> *const Box<Array> {
+    println!("rust_hash_get ptr: {:?}", ptr);
+    let hash = unsafe { &*ptr };
+    let key = unsafe { CStr::from_ptr(key) };
     let key_str = str::from_utf8(key.to_bytes()).unwrap();
-    match hash.get(key_str) {
-        Some(value) => unsafe {
-            mem::transmute(value)
-        },
-        None => std::ptr::null() // TODO Automatic default!
+    let res = rust_hash_internal_get(hash, key_str);
+    println!("rust_hash_get res: {:?}", res);
+    res
+}
+
+fn rust_hash_internal_get(hash: &Hash, key_str: &str) -> *const Box<Array> {
+    let opt = hash.get(key_str);
+    // match opt {
+    //     Some(ref value) => {
+    //         let a: Box<Array> = unsafe { mem::transmute(value) };
+    //         println!("rust_hash_internal_get: {:?}", a)
+    //     },
+    //     None => ()
+    // }
+    match opt {
+        Some(value) => unsafe { mem::transmute(Box::new(value)) },
+        None => std::ptr::null()
     }
 }
 

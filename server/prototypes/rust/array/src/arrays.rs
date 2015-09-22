@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub struct Array {
     data: Vec<u16>,
 }
@@ -10,7 +12,9 @@ impl Array {
     }
 
     pub fn append(&mut self, item: u16) -> u16 {
+        println!("item: {}, {:?}", item, &self.data[0..20]);
         self.data.push(item);
+        println!("pushed item: {}, {:?}", item, &self.data[0..20]);
         item
     }
 
@@ -24,5 +28,11 @@ impl Array {
     
     pub fn length(&self) -> usize {
         self.data.len()
+    }
+}
+
+impl fmt::Debug for Array {
+    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        write!(formatter, "{:?}", self.data)
     }
 }
