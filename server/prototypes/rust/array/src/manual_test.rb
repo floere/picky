@@ -38,24 +38,6 @@ end
 
 KEYS = ['abc', 'def', 'ghi', 'jkl', 'mno']
 def rust_hash
-  # # We are getting the stored object back when get-ting.
-  # some_hash = Rust::Hash.new
-  # some_ary  = Rust::Array.new
-  # # some_ary << 25
-  # p [:hash_key_bef, some_hash['test'], some_ary]
-  # some_hash['test'] = some_ary
-  # puts
-  # p [:hash_key_aft, some_hash['test'], some_ary]
-  # p [:hash_key_aft, some_hash['test'], some_ary]
-  # p [:hash_key_aft, some_hash['test'].address, some_ary.address]
-  # p [:array_pointer_equal, some_hash['test'].address == some_ary.address]
-  # puts
-  # p some_hash['test']
-  # some_hash['test'] << 13
-  # some_hash['test'] << 26
-  # p some_hash['test']
-  # p "Stored: #{some_hash['test']}"
-  
   hash = Rust::Hash.new
   keys_size = KEYS.size
   timed do
@@ -65,9 +47,6 @@ def rust_hash
       hash[key] << i
     end
   end
-  p [:rust_hash_length, hash.length]
-  p [:rust_hash_size, hash.size]
-  p hash['abc']
 end
 def ruby_hash
   hash = Hash.new
@@ -79,10 +58,6 @@ def ruby_hash
       hash[key] << i
     end
   end
-  hash.length
-  p hash.size
-  p hash
-  p hash['abc']
 end
 
 # # Array
