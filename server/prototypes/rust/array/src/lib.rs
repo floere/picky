@@ -40,7 +40,8 @@ fn rust_array_new() -> *const Array {
 #[no_mangle] pub extern
 fn rust_array_free(ptr: *const Array) {
     if ptr.is_null() { return }
-    let _: Box<Array> = unsafe { mem::transmute(ptr) };
+    // TODO Why is there a double free happening? Because the Hash frees its components?
+    // let _: Box<Array> = unsafe { mem::transmute(ptr) };
     // println!("Array freed: {:?}", ptr);
 }
 

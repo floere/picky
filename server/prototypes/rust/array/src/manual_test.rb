@@ -11,7 +11,7 @@ def timed
   p Time.now - t
 end
 
-TIMES = 10
+TIMES = 65_000
 
 def rust_ary
   ary = Rust::Array.new
@@ -73,9 +73,9 @@ end
 
 puts `ps aux | head -1`
 mem
-ruby_hash
-mem
 rust_hash
+mem
+ruby_hash
 mem
 
 # Combined
