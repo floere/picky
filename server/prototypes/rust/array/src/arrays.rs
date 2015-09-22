@@ -12,9 +12,7 @@ impl Array {
     }
 
     pub fn append(&mut self, item: u16) -> u16 {
-        println!("item: {}, {:?}", item, &self.data[0..20]);
         self.data.push(item);
-        println!("pushed item: {}, {:?}", item, &self.data[0..20]);
         item
     }
 

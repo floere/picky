@@ -45,9 +45,7 @@ module Rust
     end
 
     def set(key, value)
-      result = Hash.set(self, key, value)
-      p [:set, :result, result.address]
-      result
+      Hash.set(self, key, value)
     end
     alias []= set
 
