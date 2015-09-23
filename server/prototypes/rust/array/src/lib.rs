@@ -1,4 +1,4 @@
-// #![feature(cstr_to_str)]
+#![feature(drain)]
 
 extern crate libc;
 
@@ -43,19 +43,48 @@ fn rust_array_new() -> *const Array {
 fn rust_array_free(ptr: *const Array) {
     if ptr.is_null() { return }
     // TODO Why is there a double free happening? Because the Hash frees its components?
-    // let _: Box<Array> = unsafe { mem::transmute(ptr) };
+    let _: Box<Array> = unsafe { mem::transmute(ptr) };
     // println!("Array freed: {:?}", ptr);
 }
 
 #[no_mangle] pub extern
 fn rust_array_append(ptr: *mut Array, item: uint16_t) -> uint16_t {
+    println!("ptr: {:?}", ptr);
     let array = unsafe { &mut *ptr };
+    
     array.append(item)
 }
 
 #[no_mangle] pub extern
-fn rust_array_length(ptr: *const Array) -> size_t {
+fn rust_array_unshift(ptr: *mut Array, item: uint16_t) -> uint16_t {
+    let array = unsafe { &mut *ptr };
+    
+    array.unshift(item)
+}
+
+
+#[no_mangle] pub extern
+fn rust_array_intersect(ptr: *const Array, oth: *const Array) -> Array {
     let array = unsafe { &*ptr };
+    let other = unsafe { &*oth };
+    
+    array.intersect(other)
+}
+
+#[no_mangle] pub extern
+fn rust_array_slice_bang(ptr: *mut Array, offset: usize, amount: usize) -> Array {
+    println!("ptr: {:?}", ptr);
+    let array = unsafe { &mut *ptr };
+    
+    array.slice_bang(offset as usize, amount as usize)
+}
+
+
+#[no_mangle] pub extern
+fn rust_array_length(ptr: *const Array) -> size_t {
+    println!("ptr: {:?}", ptr);
+    let array = unsafe { &*ptr };
+    
     array.length() as size_t
 }
 
@@ -80,18 +109,18 @@ fn rust_hash_free(ptr: *mut Hash) {
     // println!("Hash freed: {:?}", ptr);
 }
 
-#[no_mangle] pub extern
-fn rust_hash_append_to(ptr: *mut Hash, key: *const c_char, item: uint16_t) -> uint16_t {
-    let hash = unsafe { &mut *ptr };
-    let key = unsafe { CStr::from_ptr(key) };
-    
-    let key_str = str::from_utf8(key.to_bytes()).unwrap();
-    // let key_str = key.to_str().unwrap();
-    
-    hash.append_to(key_str, item);
-    
-    item
-}
+// #[no_mangle] pub extern
+// fn rust_hash_append_to(ptr: *mut Hash, key: *const c_char, item: uint16_t) -> uint16_t {
+//     let hash = unsafe { &mut *ptr };
+//     let key = unsafe { CStr::from_ptr(key) };
+//
+//     let key_str = str::from_utf8(key.to_bytes()).unwrap();
+//     // let key_str = key.to_str().unwrap();
+//
+//     hash.append_to(key_str, item);
+//
+//     item
+// }
 
 #[no_mangle] pub extern
 fn rust_hash_set(ptr: *mut Hash, key: *const c_char, value: *const Array) -> *const Array {

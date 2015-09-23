@@ -1,4 +1,8 @@
 set -ex
 
+cargo clean
+cargo test -- --nocapture
 cargo build --release
 LD_LIBRARY_PATH=target/release/ ruby ./src/manual_test.rb
+cp target/release/libpicky_rust.dylib ../../../../indexes/lib/picky-indexes/libpicky_rust.dylib
+cp src/integration.rb ../../../../indexes/lib/picky-indexes/integration.rb

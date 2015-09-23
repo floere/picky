@@ -48,17 +48,17 @@ def rust_hash
     end
   end
 end
-def rust_hash_fast_append
-  hash = Rust::Hash.new
-  keys_size = KEYS.size
-  timed do
-    TIMES.times do |i|
-      key = KEYS[i % keys_size]
-      # hash[key] ||= Rust::Array.new
-      hash.append_to(key, i)
-    end
-  end
-end
+# def rust_hash_fast_append
+#   hash = Rust::Hash.new
+#   keys_size = KEYS.size
+#   timed do
+#     TIMES.times do |i|
+#       key = KEYS[i % keys_size]
+#       # hash[key] ||= Rust::Array.new
+#       hash.append_to(key, i)
+#     end
+#   end
+# end
 def ruby_hash
   hash = Hash.new
   keys_size = KEYS.size
@@ -80,16 +80,39 @@ end
 # ruby_ary
 # mem
 
-# Hash
+# # Hash
+#
+# puts `ps aux | head -1`
+# mem
+# # rust_hash_fast_append
+# # mem
+# rust_hash
+# mem
+# ruby_hash
+# mem
 
-puts `ps aux | head -1`
-mem
-rust_hash_fast_append
-mem
-rust_hash
-mem
-ruby_hash
-mem
+# Other
 
-# Combined
+ary1 = Rust::Array.new
+p ary1
+ary1 << 1
+p ary1
+ary1 << 2
+p ary1
+ary1 << 3
+p ary1
+ary1 << 4
+p ary1
+ary1.length
+p ary1
+ary1.size
+p ary1
+ary1.slice!(1,2)
+
+# ary2 = Rust::Array.new
+# ary2 << 2
+# ary2 << 3
+# ary2 << 4
+
+# ary1.intersect(ary2)
 
