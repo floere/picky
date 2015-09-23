@@ -40,17 +40,17 @@ module Rust
     extend FFI::Library
     ffi_lib 'picky_rust'
 
-    attach_function :new,  :rust_array_new, [], ArrayPointer
+    attach_function :new,  :rust_array_new,  [],             ArrayPointer
     attach_function :free, :rust_array_free, [ArrayPointer], :void
                     
-    attach_function :append, :rust_array_append, [ArrayPointer, :uint16], :uint16
+    attach_function :append,  :rust_array_append,  [ArrayPointer, :uint16], :uint16
     attach_function :unshift, :rust_array_unshift, [ArrayPointer, :uint16], :uint16
     
     attach_function :intersect,  :rust_array_intersect,  [ArrayPointer, ArrayPointer],     ArrayPointer
     attach_function :slice_bang, :rust_array_slice_bang, [ArrayPointer, :size_t, :size_t], ArrayPointer
     
     attach_function :first, :rust_array_first, [ArrayPointer], :uint16
-    attach_function :last, :rust_array_last, [ArrayPointer], :uint16
+    attach_function :last,  :rust_array_last,  [ArrayPointer], :uint16
     
     attach_function :length, :rust_array_length, [ArrayPointer], :size_t
   end

@@ -94,20 +94,15 @@ end
 # Other
 
 ary1 = Rust::Array.new
-p ary1
 ary1 << 1
-p ary1
 ary1 << 2
-p ary1
 ary1 << 3
-p ary1
 ary1 << 4
-p ary1
+ary1 << 5
 ary1.length
-p ary1
 ary1.size
-p ary1
-ary1.slice!(1,2)
+ary1.slice!(3,1)
+# ary1.slice!(2,1)
 
 # ary2 = Rust::Array.new
 # ary2 << 2

@@ -38,9 +38,8 @@ impl Array {
     }
     
     pub fn slice_bang(&mut self, offset: usize, amount: usize) -> Array {
-        let sliced = self.data.drain(offset..offset+amount).collect();
         Array {
-            data: sliced
+            data: self.data.drain(offset..offset+amount).collect()
         }
     }
 

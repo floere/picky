@@ -49,7 +49,6 @@ fn rust_array_free(ptr: *const Array) {
 
 #[no_mangle] pub extern
 fn rust_array_append(ptr: *mut Array, item: uint16_t) -> uint16_t {
-    println!("ptr: {:?}", ptr);
     let array = unsafe { &mut *ptr };
     
     array.append(item)
@@ -64,25 +63,23 @@ fn rust_array_unshift(ptr: *mut Array, item: uint16_t) -> uint16_t {
 
 
 #[no_mangle] pub extern
-fn rust_array_intersect(ptr: *const Array, oth: *const Array) -> Array {
+fn rust_array_intersect(ptr: *const Array, oth: *const Array) -> *const Array {
     let array = unsafe { &*ptr };
     let other = unsafe { &*oth };
     
-    array.intersect(other)
+    &array.intersect(other)
 }
 
 #[no_mangle] pub extern
-fn rust_array_slice_bang(ptr: *mut Array, offset: usize, amount: usize) -> Array {
-    println!("ptr: {:?}", ptr);
+fn rust_array_slice_bang(ptr: *mut Array, offset: usize, amount: usize) -> *const Array {
     let array = unsafe { &mut *ptr };
     
-    array.slice_bang(offset as usize, amount as usize)
+    &array.slice_bang(offset as usize, amount as usize)
 }
 
 
 #[no_mangle] pub extern
 fn rust_array_length(ptr: *const Array) -> size_t {
-    println!("ptr: {:?}", ptr);
     let array = unsafe { &*ptr };
     
     array.length() as size_t
