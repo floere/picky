@@ -57,7 +57,7 @@ module Picky
       # space in the end.
       #
       if static
-        ids = @inverted[str_or_sym] ||= []
+        ids = @inverted[str_or_sym] ||= Rust::Array.new
         if force_update
           ids.delete id
           ids.send method, id
@@ -96,7 +96,7 @@ module Picky
           # else
           #   @inverted[str_or_sym] = []
           # end
-          ids = (@inverted[str_or_sym] ||= [])
+          ids = (@inverted[str_or_sym] ||= Rust::Array.new)
           ids.send method, id
         end
       end
