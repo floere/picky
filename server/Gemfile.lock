@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    picky (4.31.2)
+    picky (4.31.3)
       activesupport
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
@@ -33,6 +33,7 @@ GEM
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     fast-stemmer (1.0.2)
+    ffi (1.9.10)
     google_hash (0.8.8)
       sane (~> 0)
     highline (1.7.2)
@@ -115,6 +116,7 @@ DEPENDENCIES
   activerecord
   coverband
   fast-stemmer
+  ffi
   google_hash
   highline
   hiredis

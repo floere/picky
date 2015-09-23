@@ -11,6 +11,7 @@ group :development do
   gem 'google_hash'
   gem 'stackprof'
   # gem 'perfer'
+  gem 'ffi'
 end
 
 group :test do
