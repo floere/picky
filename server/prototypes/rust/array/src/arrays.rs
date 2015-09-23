@@ -10,6 +10,12 @@ impl Array {
             data: Vec::new(),
         }
     }
+    
+    pub fn new_with_init(item: u16) -> Array {
+        Array {
+            data: vec![item],
+        }
+    }
 
     pub fn append(&mut self, item: u16) -> u16 {
         self.data.push(item);

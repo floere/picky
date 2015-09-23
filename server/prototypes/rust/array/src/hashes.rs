@@ -11,6 +11,18 @@ impl Hash {
             data: HashMap::new(),
         }
     }
+    
+    pub fn append_to(&mut self, key: &str, item: u16) {
+        match self.data.get_mut(key) {
+            Some(array) => array.append(item),
+            None => {
+                let ary = Box::new(Array::new_with_init(item));
+                let key = String::from(key);
+                self.data.insert(key, ary);
+                item
+            }
+        };
+    }
 
     pub fn set(&mut self, key: &str, value: Box<Array>) {
         let key = String::from(key);

@@ -48,6 +48,17 @@ def rust_hash
     end
   end
 end
+def rust_hash_fast_append
+  hash = Rust::Hash.new
+  keys_size = KEYS.size
+  timed do
+    TIMES.times do |i|
+      key = KEYS[i % keys_size]
+      # hash[key] ||= Rust::Array.new
+      hash.append_to(key, i)
+    end
+  end
+end
 def ruby_hash
   hash = Hash.new
   keys_size = KEYS.size
@@ -72,6 +83,8 @@ end
 # Hash
 
 puts `ps aux | head -1`
+mem
+rust_hash_fast_append
 mem
 rust_hash
 mem

@@ -1,3 +1,5 @@
+// #![feature(cstr_to_str)]
+
 extern crate libc;
 
 use libc::{c_char, uint16_t, size_t};
@@ -76,6 +78,19 @@ fn rust_hash_free(ptr: *mut Hash) {
     if ptr.is_null() { return }
     let _: Box<Hash> = unsafe { mem::transmute(ptr) };
     // println!("Hash freed: {:?}", ptr);
+}
+
+#[no_mangle] pub extern
+fn rust_hash_append_to(ptr: *mut Hash, key: *const c_char, item: uint16_t) -> uint16_t {
+    let hash = unsafe { &mut *ptr };
+    let key = unsafe { CStr::from_ptr(key) };
+    
+    let key_str = str::from_utf8(key.to_bytes()).unwrap();
+    // let key_str = key.to_str().unwrap();
+    
+    hash.append_to(key_str, item);
+    
+    item
 }
 
 #[no_mangle] pub extern

@@ -43,6 +43,10 @@ module Rust
     def self.release(ptr)
       Hash.free(ptr)
     end
+    
+    def append_to(key, value)
+      Hash.append_to(self, key, value)
+    end
 
     def set(key, value)
       Hash.set(self, key, value)
@@ -67,7 +71,10 @@ module Rust
     
     attach_function :new,  :rust_hash_new, [], HashPointer
     attach_function :free, :rust_hash_free, [HashPointer], :void
-                    
+
+    # Special function.
+    attach_function :append_to, :rust_hash_append_to, [HashPointer, :string, :uint16], :uint16
+
     attach_function :get, :rust_hash_get, [HashPointer, :string], ArrayPointer
     attach_function :set, :rust_hash_set, [HashPointer, :string, ArrayPointer], ArrayPointer
     
