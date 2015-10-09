@@ -62,6 +62,10 @@ fn rust_array_unshift(array: &mut Array, item: uint16_t) -> &mut Array {
     array
 }
 
+#[no_mangle] pub extern "C"
+fn rust_array_plus(ary1: &Array, ary2: &Array) -> Box<Array> {
+    Box::new(ary1.plus(ary2))
+}
 
 #[no_mangle] pub extern "C"
 fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Box<Array> {

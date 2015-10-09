@@ -44,6 +44,16 @@ impl Array {
         }
     }
     
+    // TODO Could be improved in speed I assume (set capacity etc.).
+    pub fn plus(&self, other: &Array) -> Array {
+        let mut vector = vec![];
+        vector.extend(self.data.iter());
+        vector.extend(other.data.iter());
+        Array {
+            data: vector
+        }
+    }
+    
     pub fn slice_bang(&mut self, offset: usize, amount: usize) -> Array {
         let mut actual_amount = amount;
         if self.data.len() < offset + actual_amount {

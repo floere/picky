@@ -109,6 +109,23 @@ describe Rust::Array do
         array.refute.empty?
       end
     end
+    describe '#+' do
+      it 'handles empty arrays' do
+        (empty + empty).assert == empty
+      end
+      it 'handles normal arrays' do
+        (empty + array).assert == array
+      end
+      it 'handles normal arrays' do
+        (array + empty).assert == array
+      end
+      it 'handles normal arrays' do
+        expected = described_class.new
+        expected << 0 << 1 << 2 << 3 << 4 << 0 << 1 << 2 << 3 << 4
+        
+        (array + array).assert == expected
+      end
+    end
     describe '#==' do
       it 'handles empty arrays' do
         assert empty == empty.dup
