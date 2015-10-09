@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cargo build --release && cp target/release/libpicky_rust.dylib lib/picky-indexes/libpicky_rust.dylib && rspec spec/lib/rust/array_spec.rb

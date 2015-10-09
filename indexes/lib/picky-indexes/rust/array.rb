@@ -94,6 +94,7 @@ module Rust
     
     __func__ pr, :<<,  :rust_array_append, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_SHORT
+    __func__ pr, :unshift, :rust_array_unshift, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
     
     __func__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
     __func__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T

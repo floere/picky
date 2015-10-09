@@ -55,6 +55,13 @@ fn rust_array_shift(array: &mut Array) -> Option<uint16_t> {
     array.shift()
 }
 
+#[no_mangle] pub extern "C"
+fn rust_array_unshift(array: &mut Array, item: uint16_t) -> &mut Array {
+    array.unshift(item);
+    
+    array
+}
+
 
 #[no_mangle] pub extern "C"
 fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Box<Array> {

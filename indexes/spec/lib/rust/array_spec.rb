@@ -150,5 +150,20 @@ describe Rust::Array do
       array.shift.assert == 9
     end
   end
+  describe '#unshift' do
+    it 'works with empty arrays' do
+      expected = Rust::Array.new
+      expected << 7
+      
+      empty.unshift(7).assert == expected
+    end
+    it 'works with normal arrays' do
+      expected = Rust::Array.new
+      expected << 7 << 1 << 2
+      
+      array << 1 << 2
+      array.unshift(7).assert == expected
+    end
+  end
   
 end

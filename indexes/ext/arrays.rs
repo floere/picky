@@ -33,6 +33,11 @@ impl Array {
         }
     }
     
+    pub fn unshift(&mut self, item: u16) -> u16 {
+        self.data.insert(0, item);
+        item
+    }
+    
     pub fn intersect(&self, other: &Array) -> Array {
         Array {
             data: self.data.intersect(&other.data)
