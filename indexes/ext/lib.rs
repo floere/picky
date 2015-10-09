@@ -49,7 +49,7 @@ fn rust_array_append(array: &mut Array, item: uint16_t) -> uint16_t {
 }
 
 #[no_mangle] pub extern "C"
-fn rust_array_shift(array: &mut Array) -> uint16_t {
+fn rust_array_shift(array: &mut Array) -> Option<uint16_t> {
     array.shift()
 }
 

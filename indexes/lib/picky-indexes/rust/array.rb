@@ -82,16 +82,16 @@ module Rust
     __func__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
     __func__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
     
-    __func__ pr, :<<,  :rust_array_append, Fiddle::TYPE_INT, Fiddle::TYPE_INT
-    __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_INT
+    __func__ pr, :<<,  :rust_array_append, Fiddle::TYPE_SHORT, Fiddle::TYPE_SHORT
+    __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_SHORT
     
     __func__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
     __func__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
     
-    __func__ pr, :first, :rust_array_first, Fiddle::TYPE_INT
-    __func__ pr, :last, :rust_array_last, Fiddle::TYPE_INT
+    __func__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
+    __func__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
     
-    __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT
+    __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT # TODO 
     
     __func__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
     

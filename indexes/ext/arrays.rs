@@ -25,10 +25,12 @@ impl Array {
         item
     }
     
-    pub fn shift(&mut self) -> u16 {
-        let item = self.data.remove(0);
-        println!("shift: {:?}", item); // Ummm... Why does it only work when I print here?
-        item
+    pub fn shift(&mut self) -> Option<u16> {
+        if self.data.is_empty() {
+            None
+        } else {
+            Some(self.data.remove(0))
+        }
     }
     
     pub fn intersect(&self, other: &Array) -> Array {
