@@ -25,9 +25,9 @@ impl Array {
         item
     }
     
-    pub fn unshift(&mut self, item: u16) -> u16 {
-        self.data.insert(0, item);
-        
+    pub fn shift(&mut self) -> u16 {
+        let item = self.data.remove(0);
+        println!("shift: {:?}", item); // Ummm... Why does it only work when I print here?
         item
     }
     
@@ -43,12 +43,12 @@ impl Array {
         }
     }
 
-    pub fn first(&self) -> &u16 {
-        self.data.first().unwrap()
+    pub fn first(&self) -> u16 {
+        self.data.first().unwrap().clone()
     }
 
-    pub fn last(&self) -> &u16 {
-        self.data.last().unwrap()
+    pub fn last(&self) -> u16 {
+        self.data.last().unwrap().clone()
     }
     
     pub fn length(&self) -> usize {

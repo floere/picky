@@ -10,12 +10,8 @@ macro_rules! dereflegate {
     ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
         #[no_mangle] pub extern
         // concat_idents! does not work here.
-        fn $from(ptr: *const $pointer_type) -> $ret {
-            let data = unsafe {
-                assert!(!ptr.is_null());
-                &*ptr
-            };
-            *data.$to()
+        fn $from(array: &$pointer_type) -> $ret {
+            array.$to()
         }
     };
 }
@@ -34,9 +30,9 @@ macro_rules! delegate {
 pub mod arrays;
 use arrays::Array;
 
-#[no_mangle] pub extern
-fn rust_array_new() -> *const Array {
-    unsafe { mem::transmute(Box::new(Array::new())) }
+#[no_mangle] pub extern "C"
+fn rust_array_new() -> Box<Array> {
+    Box::new(Array::new())
 }
 
 #[no_mangle] pub extern
@@ -47,18 +43,14 @@ fn rust_array_free(ptr: *const Array) {
     // println!("Array freed: {:?}", ptr);
 }
 
-#[no_mangle] pub extern
-fn rust_array_append(ptr: *mut Array, item: uint16_t) -> uint16_t {
-    let array = unsafe { &mut *ptr };
-    
+#[no_mangle] pub extern "C"
+fn rust_array_append(array: &mut Array, item: uint16_t) -> uint16_t {
     array.append(item)
 }
 
-#[no_mangle] pub extern
-fn rust_array_unshift(ptr: *mut Array, item: uint16_t) -> uint16_t {
-    let array = unsafe { &mut *ptr };
-    
-    array.unshift(item)
+#[no_mangle] pub extern "C"
+fn rust_array_shift(array: &mut Array) -> uint16_t {
+    array.shift()
 }
 
 
@@ -71,23 +63,30 @@ fn rust_array_intersect(ptr: *const Array, oth: *const Array) -> *const Array {
 }
 
 #[no_mangle] pub extern
-fn rust_array_slice_bang(ptr: *mut Array, offset: usize, amount: usize) -> *const Array {
-    let array = unsafe { &mut *ptr };
-    
-    &array.slice_bang(offset as usize, amount as usize)
+fn rust_array_slice_bang(array: &mut Array, offset: usize, amount: usize) -> Array {
+    println!("slice_bang: {:?}, {:?}", offset, amount);
+    array.slice_bang(offset, amount)
 }
 
 
-#[no_mangle] pub extern
-fn rust_array_length(ptr: *const Array) -> size_t {
-    let array = unsafe { &*ptr };
-    
+#[no_mangle] pub extern "C"
+fn rust_array_length(array: &Array) -> size_t {
     array.length() as size_t
 }
 
+#[no_mangle] pub extern "C"
+fn rust_array_first(array: &Array) -> size_t {
+    array.first() as size_t
+}
+
+#[no_mangle] pub extern "C"
+fn rust_array_last(array: &Array) -> size_t {
+    array.last() as size_t
+}
+
 // TODO Make it first/last/... only.
-dereflegate!(Array, rust_array_first, first, uint16_t);
-dereflegate!(Array, rust_array_last, last, uint16_t);
+// dereflegate!(Array, rust_array_first, first, uint16_t);
+// dereflegate!(Array, rust_array_last, last, uint16_t);
 // delegate!(Array, rust_array_length, length, size_t);
 
 // Load the pure Rust Hash.
