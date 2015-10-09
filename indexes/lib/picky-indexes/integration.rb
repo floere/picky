@@ -39,7 +39,7 @@ module Rust
   end
   class Array
     extend FFI::Library
-    ffi_lib 'picky_rust'
+    ffi_lib File.expand_path('../libpicky_rust.dylib', __FILE__)
 
     attach_function :new,  :rust_array_new,  [],             ArrayPointer
     attach_function :free, :rust_array_free, [ArrayPointer], :void
@@ -84,7 +84,7 @@ module Rust
   end
   class Hash
     extend FFI::Library
-    ffi_lib 'picky_rust'
+    ffi_lib File.expand_path('../libpicky_rust.dylib', __FILE__)
     
     attach_function :new,  :rust_hash_new, [], HashPointer
     attach_function :free, :rust_hash_free, [HashPointer], :void
