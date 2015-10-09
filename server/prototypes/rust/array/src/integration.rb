@@ -58,6 +58,14 @@ module Rust
     def initialize
       @internal_instance = self.class.new_rust
     end
+    
+    def to_ptr
+      @internal_instance
+    end
+
+    # TODO Freeing!
+    # TODO Add RUBY_OBJECT type which automatically calls its #to_ptr.
+    # TODO Add RUBY_OBJECT type which automatically calls this class' #from_ptr.
 
     __func__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
     __func__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
@@ -65,14 +73,8 @@ module Rust
     __func__ pr, :append,  :rust_array_append, Fiddle::TYPE_INT, Fiddle::TYPE_INT
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_INT
     
-    # extern "void*  rust_array_free(Array*)"
-    #
-    # extern "int rust_array_append(Array*, int)"
-    # extern "int rust_array_unshift(Array*, int)"
-    #
-    # extern "Array* rust_array_intersect(Array*, Array*)"
+    __func__ pr, :intersect, :rust_array_intersect, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
     __func__ pr, :'slice!', :rust_array_slice_bang, Fiddle::TYPE_VOIDP, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
-    # extern "Array* rust_array_slice_bang(Array*, int, int)"
     
     __func__ pr, :first, :rust_array_first, Fiddle::TYPE_INT
     __func__ pr, :last, :rust_array_last, Fiddle::TYPE_INT

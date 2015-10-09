@@ -107,13 +107,14 @@ p [:first, ary1.first]
 p [:last, ary1.last]
 p [:length, ary1.length]
 p [:size, ary1.size]
-# p [:slice!, ary1.slice!(3,1)]
+# TODO p [:slice!, ary1.slice!(2,1)]
 
+ary2 = Rust::Array.new
+ary2 << 2
+ary2 << 3
+ary2 << 4
+p [:size, ary2.size]
+p ary2
 
-# ary2 = Rust::Array.new
-# ary2 << 2
-# ary2 << 3
-# ary2 << 4
-
-# ary1.intersect(ary2)
+p [:intersect, ary1.intersect(ary2.to_ptr)]
 

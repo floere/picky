@@ -55,11 +55,9 @@ fn rust_array_shift(array: &mut Array) -> uint16_t {
 
 
 #[no_mangle] pub extern
-fn rust_array_intersect(ptr: *const Array, oth: *const Array) -> *const Array {
-    let array = unsafe { &*ptr };
-    let other = unsafe { &*oth };
-    
-    &array.intersect(other)
+fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Array {
+    println!("slice_bang: {:?}, {:?}", ary1, ary2);
+    ary1.intersect(ary2)
 }
 
 #[no_mangle] pub extern
