@@ -1,0 +1,23 @@
+[package]
+name = "integration"
+version = "0.1.0"
+authors = ["Florian R. Hanke <florian.hanke@gmail.com>"]
+
+[lib]
+path = "ext/lib.rs"
+name = "picky_rust"
+crate-type = ["dylib"]
+
+[dependencies]
+libc = "0.1.10"
+
+[build]
+target-dir = "testing"
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 1
