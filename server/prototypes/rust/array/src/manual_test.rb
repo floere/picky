@@ -112,10 +112,13 @@ ary2 = Rust::Array.new
 ary2 << 5
 ary2 << 6
 ary2 << 7
+p ary2
 p [:size, ary2.size]
 p ary2
 
 p [:intersect, ary1.intersect(ary2.to_ptr)]
 
-p [:slice!, ary1.slice!(2,1)]
+p [:slice!, ary1.slice!(2,2)]
+
+p ary1
 

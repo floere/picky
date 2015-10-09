@@ -5,15 +5,18 @@ module FunctionMapping
   
   attr_reader :func_map
   
+  AS_OBJ = :as_obj
+  
   def __func__ from, external, internal, retval, *params
     class_method = external.to_s.match(/\Aself\./)
     relative = class_method ? '' : 'self.class.'
     params = class_method ? params : params.unshift(Fiddle::TYPE_VOIDP)
+    # params.map! { |param| param == AS_OBJ ? Fiddle::TYPE_VOIDP : '' }
     
     func = Fiddle::Function.new(
       from[internal.to_s],
       params,
-      retval
+      retval == AS_OBJ ? Fiddle::TYPE_VOIDP : retval
     )
     @func_map ||= {}
     @func_map[internal] = func
@@ -40,6 +43,11 @@ module FunctionMapping
           'res = f.call(@internal_instance,*args,&block)'
         end
         }
+        #{
+        if retval == AS_OBJ
+          'res = self.class.from_ptr(res)'
+        end
+        }
         # p res
         res
       end
@@ -55,12 +63,16 @@ module Rust
 
     pr = Fiddle.dlopen File.expand_path('../../target/release/libpicky_rust.dylib', __FILE__)
 
-    def initialize
-      @internal_instance = self.class.new_rust
+    def initialize pointer = nil
+      @internal_instance = pointer || self.class.new_rust
     end
     
     def to_ptr
       @internal_instance
+    end
+    
+    def self.from_ptr pointer
+      new(pointer)
     end
 
     # TODO Freeing!
@@ -73,8 +85,8 @@ module Rust
     __func__ pr, :append,  :rust_array_append, Fiddle::TYPE_INT, Fiddle::TYPE_INT
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_INT
     
-    __func__ pr, :intersect, :rust_array_intersect, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
-    __func__ pr, :'slice!', :rust_array_slice_bang, Fiddle::TYPE_VOIDP, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
+    __func__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
+    __func__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
     
     __func__ pr, :first, :rust_array_first, Fiddle::TYPE_INT
     __func__ pr, :last, :rust_array_last, Fiddle::TYPE_INT
