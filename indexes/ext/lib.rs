@@ -96,6 +96,11 @@ fn rust_array_last(array: &Array) -> uint16_t {
 }
 
 #[no_mangle] pub extern "C"
+fn rust_array_empty(array: &Array) -> bool {
+    array.empty()
+}
+
+#[no_mangle] pub extern "C"
 fn rust_array_eq(ary1: &Array, ary2: &Array) -> bool {
     ary1.eq(ary2)
 }

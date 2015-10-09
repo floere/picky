@@ -103,6 +103,7 @@ module Rust
     __func__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
     
     __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT # TODO 
+    __func__ pr, :empty?, :rust_array_empty, Fiddle::TYPE_VOIDP
     
     __func__ pr, :==, :rust_array_eq, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
     

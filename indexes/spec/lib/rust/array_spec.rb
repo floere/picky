@@ -101,6 +101,14 @@ describe Rust::Array do
         array.slice!(0,20).assert == expected
       end
     end
+    describe '#empty?' do
+      it 'handles empty arrays' do
+        empty.assert.empty?
+      end
+      it 'handles normal arrays' do
+        array.refute.empty?
+      end
+    end
     describe '#==' do
       it 'handles empty arrays' do
         assert empty == empty.dup

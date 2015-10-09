@@ -66,6 +66,10 @@ impl Array {
         self.data.len()
     }
     
+    pub fn empty(&self) -> bool {
+        self.data.is_empty()
+    }
+    
     pub fn eq(&self, other: &Array) -> bool {
         if self.data.len() == other.data.len() {
             // We need to check.

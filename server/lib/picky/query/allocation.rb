@@ -87,7 +87,6 @@ module Picky
       def process! amount, offset, sorting = nil
         calculated_ids = calculate_ids amount, offset
         calculated_ids.sort_by! &sorting if sorting
-        p [calculated_ids, offset, amount] 
         @count = calculated_ids.size                         # cache the count before throwing away the ids
         @ids   = calculated_ids.slice!(offset, amount) || [] # slice out the relevant part
       end
