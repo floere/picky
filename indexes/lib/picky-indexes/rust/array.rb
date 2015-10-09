@@ -48,7 +48,12 @@ module FunctionMapping
           'res = self.class.from_ptr(res)'
         end
         }
-        # p res
+        #{
+        # Could it be null?
+        if retval == Fiddle::TYPE_VOIDP
+          'if res.null?; res = nil; end'
+        end
+        }
         res
       end
     EOS
@@ -65,6 +70,11 @@ module Rust
 
     def initialize pointer = nil
       @internal_instance = pointer || self.class.new_rust
+      ObjectSpace.define_finalizer(self, self.class.releaser_for(@internal_instance))
+    end
+    
+    def self.releaser_for internal_instance
+      proc { internal_instance.free }
     end
     
     def to_ptr

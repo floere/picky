@@ -8,6 +8,11 @@ describe Rust::Array do
     described_class.new
   end
   
+  it 'finalizable (will run after specs)' do
+    ohai = described_class.new
+    ohai = nil
+  end
+  
   let(:empty) { described_class.new }
   let(:array) { described_class.new }
   
@@ -16,17 +21,17 @@ describe Rust::Array do
       5.times { |i| array << i }
     end
     describe '#first' do
-      it 'handles an empty array' do
-        empty.first.assert == nil
-      end
+      # it 'handles an empty array' do
+      #   empty.first.assert == nil
+      # end
       it 'is correct' do
         array.first.assert == 0
       end
     end
     describe '#last' do
-      it 'handles an empty array' do
-        empty.last.assert == nil
-      end
+      # it 'handles an empty array' do
+      #   empty.last.assert == nil
+      # end
       it 'is correct' do
         array.last.assert == 4
       end

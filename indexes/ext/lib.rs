@@ -45,7 +45,9 @@ fn rust_array_free(ptr: *const Array) {
 
 #[no_mangle] pub extern "C"
 fn rust_array_append(array: &mut Array, item: uint16_t) -> uint16_t {
-    array.append(item)
+    array.append(item);
+    
+    item
 }
 
 #[no_mangle] pub extern "C"
@@ -71,13 +73,19 @@ fn rust_array_length(array: &Array) -> size_t {
 }
 
 #[no_mangle] pub extern "C"
-fn rust_array_first(array: &Array) -> size_t {
-    array.first() as size_t
+fn rust_array_first(array: &Array) -> uint16_t {
+    match array.first() {
+        Some(value) => value.clone(),
+        None => 0,
+    }
 }
 
 #[no_mangle] pub extern "C"
-fn rust_array_last(array: &Array) -> size_t {
-    array.last() as size_t
+fn rust_array_last(array: &Array) -> uint16_t {
+    match array.last() {
+        Some(value) => value.clone(),
+        None => 0,
+    }
 }
 
 #[no_mangle] pub extern "C"

@@ -45,12 +45,12 @@ impl Array {
         }
     }
 
-    pub fn first(&self) -> u16 {
-        self.data.first().unwrap().clone()
+    pub fn first(&self) -> Option<&u16> {
+        self.data.first()
     }
 
-    pub fn last(&self) -> u16 {
-        self.data.last().unwrap().clone()
+    pub fn last(&self) -> Option<&u16> {
+        self.data.last()
     }
     
     pub fn length(&self) -> usize {
