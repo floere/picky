@@ -90,7 +90,8 @@ module Picky
       # Returns the top amount ids.
       #
       def ids amount = 20
-        inject([]) do |total, allocation|
+        # TODO Make this Array too index type dependent.
+        inject(Rust::Array.new) do |total, allocation|
           total.size >= amount ? (return total.shift(amount)) : total + allocation.ids
         end
       end
