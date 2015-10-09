@@ -3,8 +3,8 @@
 extern crate libc;
 
 use libc::{c_char, uint16_t, size_t};
-use std::{mem, str};
-use std::ffi::CStr;
+use std::{mem,str};
+use std::ffi::{CStr,CString};
 
 macro_rules! dereflegate {
     ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
@@ -54,16 +54,14 @@ fn rust_array_shift(array: &mut Array) -> uint16_t {
 }
 
 
-#[no_mangle] pub extern
-fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Array {
-    println!("slice_bang: {:?}, {:?}", ary1, ary2);
-    ary1.intersect(ary2)
+#[no_mangle] pub extern "C"
+fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Box<Array> {
+    Box::new(ary1.intersect(ary2))
 }
 
 #[no_mangle] pub extern
-fn rust_array_slice_bang(array: &mut Array, offset: usize, amount: usize) -> Array {
-    println!("slice_bang: {:?}, {:?}", offset, amount);
-    array.slice_bang(offset, amount)
+fn rust_array_slice_bang(array: &mut Array, offset: usize, amount: usize) -> Box<Array> {
+    Box::new(array.slice_bang(offset, amount))
 }
 
 
@@ -80,6 +78,11 @@ fn rust_array_first(array: &Array) -> size_t {
 #[no_mangle] pub extern "C"
 fn rust_array_last(array: &Array) -> size_t {
     array.last() as size_t
+}
+
+#[no_mangle] pub extern "C"
+fn rust_array_inspect(array: &Array) -> *const libc::c_char {
+    CString::new(format!("{:?}", array)).unwrap().into_raw()
 }
 
 // TODO Make it first/last/... only.

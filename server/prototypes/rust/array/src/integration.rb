@@ -81,6 +81,8 @@ module Rust
     
     __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT
     
+    __func__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
+    
     alias << append
     alias size length
   end

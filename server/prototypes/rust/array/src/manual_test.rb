@@ -101,20 +101,21 @@ p ary1 << 4
 p ary1 << 5
 p ary1 << 6
 p [:shift, ary1.shift]
-p ary1
+puts ary1.inspect
 
 p [:first, ary1.first]
 p [:last, ary1.last]
 p [:length, ary1.length]
 p [:size, ary1.size]
-# TODO p [:slice!, ary1.slice!(2,1)]
 
 ary2 = Rust::Array.new
-ary2 << 2
-ary2 << 3
-ary2 << 4
+ary2 << 5
+ary2 << 6
+ary2 << 7
 p [:size, ary2.size]
 p ary2
 
 p [:intersect, ary1.intersect(ary2.to_ptr)]
+
+p [:slice!, ary1.slice!(2,1)]
 
