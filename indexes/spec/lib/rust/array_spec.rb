@@ -75,6 +75,19 @@ describe Rust::Array do
         a1.intersect(a2).assert == expected
         a2.intersect(a1).assert == expected
       end
+      # it 'is performant' do
+      #   a1 = described_class.new
+      #   a2 = described_class.new
+      #
+      #   10_000.times do |i|
+      #     a1 << i
+      #     a2 << i
+      #   end
+      #
+      #   t = Time.now
+      #   a1.intersect(a2).assert a1
+      #   p Time.now - t
+      # end
     end
     describe '#slice!' do
       # it 'handles an empty array' do
