@@ -52,11 +52,62 @@ describe Rust::Array do
         array.size.assert == 5
       end
     end
+    describe '#intersect' do
+      it 'handles a left empty array' do
+        empty.intersect(array).assert == Rust::Array.new
+      end
+      it 'handles a right empty array' do
+        array.intersect(empty).assert == Rust::Array.new
+      end
+      it 'is correct' do
+        array.intersect(array).assert == array
+      end
+      it 'is correct' do
+        a1 = Rust::Array.new
+        a1 << 2 << 3 << 4
+        
+        a2 = Rust::Array.new
+        a2 << 3 << 4 << 5
+        
+        expected = Rust::Array.new
+        expected << 3 << 4
+        
+        a1.intersect(a2).assert == expected
+        a2.intersect(a1).assert == expected
+      end
+    end
+    describe '#==' do
+      it 'handles empty arrays' do
+        assert empty == empty.dup
+      end
+      it 'handles empty arrays' do
+        assert !(empty == array)
+      end
+      it 'handles empty arrays' do
+        assert !(array == empty)
+      end
+      it 'handles normal arrays' do
+        assert array == array.dup
+      end
+      it 'handles normal arrays' do
+        shorty = Rust::Array.new
+        shorty << 1
+        
+        assert !(array == shorty)
+      end
+    end
   end
   
   describe '#<<' do
     it 'works' do
       array << 1
+    end
+    it 'returns the array' do
+      expected = Rust::Array.new
+      expected << 1
+
+      result = array << 1
+      expected.assert == result
     end
     # it 'actually appends' do
     #   # [].assert == array
@@ -67,17 +118,17 @@ describe Rust::Array do
     # end
   end
   describe '#shift' do
-    it 'works with empty arrays' do
-      empty.shift.assert == nil
-    end
+    # it 'works with empty arrays' do
+    #   empty.shift.assert == nil
+    # end
     it 'works' do
-      array << 1
-      array << 2
-      array << 3
+      array << 7
+      array << 8
+      array << 9
       
-      array.shift.assert == 1
-      array.shift.assert == 2
-      array.shift.assert == 3
+      array.shift.assert == 7
+      array.shift.assert == 8
+      array.shift.assert == 9
     end
   end
   

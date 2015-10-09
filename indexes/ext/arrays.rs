@@ -56,6 +56,20 @@ impl Array {
     pub fn length(&self) -> usize {
         self.data.len()
     }
+    
+    pub fn eq(&self, other: &Array) -> bool {
+        if self.data.len() == other.data.len() {
+            // We need to check.
+            for (a, b) in self.data.iter().zip(other.data.iter()) {
+                if a != b {
+                    return false;
+                }
+            }
+            true
+        } else {
+            false
+        }
+    }
 }
 
 impl fmt::Debug for Array {

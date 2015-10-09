@@ -44,10 +44,10 @@ fn rust_array_free(ptr: *const Array) {
 }
 
 #[no_mangle] pub extern "C"
-fn rust_array_append(array: &mut Array, item: uint16_t) -> uint16_t {
+fn rust_array_append(array: &mut Array, item: uint16_t) -> &mut Array {
     array.append(item);
     
-    item
+    array
 }
 
 #[no_mangle] pub extern "C"
@@ -86,6 +86,11 @@ fn rust_array_last(array: &Array) -> uint16_t {
         Some(value) => value.clone(),
         None => 0,
     }
+}
+
+#[no_mangle] pub extern "C"
+fn rust_array_eq(ary1: &Array, ary2: &Array) -> bool {
+    ary1.eq(ary2)
 }
 
 #[no_mangle] pub extern "C"

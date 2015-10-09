@@ -36,10 +36,10 @@ module FunctionMapping
         # p f
         #{
         if class_method
-          puts "Installing #{relative}#{external}(#{params.join(',')})."
+          # puts "Installing #{relative}#{external}(#{params.join(',')})."
           'res = f.call(*args,&block)'
         else
-          puts "Installing #{external}(#{params.join(',')})."
+          # puts "Installing #{external}(#{params.join(',')})."
           'res = f.call(@internal_instance,*args,&block)'
         end
         }
@@ -92,7 +92,7 @@ module Rust
     __func__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
     __func__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
     
-    __func__ pr, :<<,  :rust_array_append, Fiddle::TYPE_SHORT, Fiddle::TYPE_SHORT
+    __func__ pr, :<<,  :rust_array_append, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_SHORT
     
     __func__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
@@ -102,6 +102,8 @@ module Rust
     __func__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
     
     __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT # TODO 
+    
+    __func__ pr, :==, :rust_array_eq, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
     
     __func__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
     
