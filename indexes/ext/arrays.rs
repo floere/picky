@@ -45,8 +45,12 @@ impl Array {
     }
     
     pub fn slice_bang(&mut self, offset: usize, amount: usize) -> Array {
+        let mut actual_amount = amount;
+        if self.data.len() < offset + actual_amount {
+            actual_amount = self.data.len() - offset;
+        }
         Array {
-            data: self.data.drain(offset..offset+amount).collect()
+            data: self.data.drain(offset..offset+actual_amount).collect()
         }
     }
 

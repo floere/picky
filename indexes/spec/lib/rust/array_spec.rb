@@ -94,6 +94,12 @@ describe Rust::Array do
         
         array.slice!(2,2).assert == expected
       end
+      it 'handles a too large amount' do
+        expected = Rust::Array.new
+        expected << 0 << 1 << 2 << 3 << 4
+        
+        array.slice!(0,20).assert == expected
+      end
     end
     describe '#==' do
       it 'handles empty arrays' do
