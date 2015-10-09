@@ -76,6 +76,25 @@ describe Rust::Array do
         a2.intersect(a1).assert == expected
       end
     end
+    describe '#slice!' do
+      # it 'handles an empty array' do
+      #   empty.slice!(1,1).assert == nil
+      # end
+      it 'is correct' do
+        expected = Rust::Array.new
+        expected << 0 << 1 << 3 << 4
+        
+        array.slice!(2,1)
+        
+        array.assert == expected
+      end
+      it 'returns the deleted object(s)' do
+        expected = Rust::Array.new
+        expected << 2 << 3
+        
+        array.slice!(2,2).assert == expected
+      end
+    end
     describe '#==' do
       it 'handles empty arrays' do
         assert empty == empty.dup
