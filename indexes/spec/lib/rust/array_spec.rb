@@ -159,6 +159,45 @@ describe Rust::Array do
         assert !(array == shorty)
       end
     end
+    describe '#shift (on non-empty array)' do
+      it 'works' do
+        array << 7
+        array << 8
+        array << 9
+      
+        array.shift.assert == 7
+        array.shift.assert == 8
+        array.shift.assert == 9
+      end
+      it 'works with a parameter' do
+        expected = Rust::Array.new
+        expected << 0 << 1 << 2
+        
+        array.shift(3).assert == expected
+      end
+      it 'works with a parameter' do
+        expected = Rust::Array.new
+        expected << 0 << 1 << 2 << 3 << 4
+        
+        array.shift(100_000).assert == expected
+      end
+    end
+    describe '#dup' do
+      it 'works correctly' do
+        dupped = array.dup
+        
+        dupped.shift
+        
+        dupped.size.assert == array.size - 1
+      end
+      it 'works correctly' do
+        dupped = array.dup
+        
+        dupped.shift(5)
+        
+        dupped.assert == empty
+      end
+    end
   end
   
   describe '#<<' do

@@ -104,6 +104,12 @@ module Picky
     def empty
       on_all_indexes_call :empty
     end
+    
+    # Returns a new, empty instance of an array type.
+    #
+    def empty_array
+      @backend_inverted.empty_array
+    end
 
     # Extracted to avoid duplicate code.
     #

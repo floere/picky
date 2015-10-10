@@ -20,6 +20,7 @@ module Picky
               :inject,
               :size,
               :map,
+              :[],
               :to => :@allocations
 
       def initialize allocations = []
@@ -90,9 +91,20 @@ module Picky
       # Returns the top amount ids.
       #
       def ids amount = 20
-        # TODO Make this Array too index type dependent.
-        inject(Rust::Array.new) do |total, allocation|
-          total.size >= amount ? (return total.shift(amount)) : total + allocation.ids
+        # TODO Make this Array too index type dependent (by e.g. pseudo-shifting?).
+        # TODO This is called too many times?
+        if allocation = first
+          # TODO Call ids with amount as parameter?
+          result = self[1..-1].inject(allocation.ids) do |total, allocation|
+            if total.size >= amount
+              break(total)
+            else
+              total + allocation.ids
+            end
+          end
+          result.shift(amount)
+        else
+          [] # TODO Ok?
         end
       end
 

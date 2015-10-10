@@ -56,10 +56,11 @@ module Picky
 
       # Ids return by default [].
       #
-      # TODO Calculate ids here.
+      # TODO Calculate ids here?
       #
       def ids
-        @ids ||= []
+        # TODO Should ids only be received from the backend with the right type.
+        @ids ||= backend.create_inverted # Rust::Array.new # [] # TODO
       end
 
       # Asks the backend for the (intersected) ids.

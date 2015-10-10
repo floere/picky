@@ -1,8 +1,12 @@
+require File.expand_path('../../rust', __FILE__)
+
 module Picky
 
   module Backends
 
     class Rust
+      
+      EMPTY_ARRAY = ::Rust::Array.new
 
       # Base class for all Rust memory-based index files.
       #
@@ -17,7 +21,11 @@ module Picky
         # which will be provided by the subclasses.
         #
         def initialize cache_file_path, hash_type = Hash, options = {}
-          super(cache_file_path, Rust::)
+          super(cache_file_path, hash_type, options)
+        end
+        
+        def empty_array
+          EMPTY_ARRAY.dup
         end
 
         # The default extension for index files is "index".
@@ -26,7 +34,7 @@ module Picky
           :index
         end
         def type
-          :memory
+          :memory # TODO Change to rust?
         end
         def cache_path
           [cache_file_path, type, extension].join(?.)

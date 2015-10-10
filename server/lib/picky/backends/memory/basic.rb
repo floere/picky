@@ -3,6 +3,8 @@ module Picky
   module Backends
 
     class Memory
+      
+      EMPTY_ARRAY = Array.new
 
       # Base class for all memory-based index files.
       #
@@ -31,6 +33,12 @@ module Picky
           @hash_type       = hash_type
           @empty           = options[:empty]
           @initial         = options[:initial]
+        end
+        
+        # Return a new, empty instance of this array type.
+        #
+        def empty_array
+          EMPTY_ARRAY.dup
         end
 
         # The default extension for index files is "index".

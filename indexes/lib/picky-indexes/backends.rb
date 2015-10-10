@@ -1,1 +1,1 @@
-require File.expand_path('../backends/rust', __FILE__)
+require File.expand_path('../backends/rust/basic', __FILE__)

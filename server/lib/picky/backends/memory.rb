@@ -4,6 +4,10 @@ module Picky
 
     class Memory < Backend
       
+      def json *args
+        JSON.new *args
+      end
+      
       # TODO Make lazy.
       require_relative 'google_hash'
       

@@ -33,6 +33,17 @@ impl Array {
         }
     }
     
+    pub fn shift_amount(&mut self, amount: usize) -> Array {
+        let mut actual_amount = amount;
+        if self.data.len() < actual_amount {
+            actual_amount = self.data.len();
+        }
+        Array {
+            // Upper bound is exclusive
+            data: self.data.drain(0..actual_amount).collect()
+        }
+    }
+    
     pub fn unshift(&mut self, item: u16) -> u16 {
         self.data.insert(0, item);
         item
@@ -78,6 +89,13 @@ impl Array {
     
     pub fn empty(&self) -> bool {
         self.data.is_empty()
+    }
+    
+    // Creates a copy.
+    pub fn dup(&self) -> Array {
+        Array {
+            data: self.data.to_vec()
+        }
     }
     
     pub fn eq(&self, other: &Array) -> bool {

@@ -56,6 +56,11 @@ fn rust_array_shift(array: &mut Array) -> Option<uint16_t> {
 }
 
 #[no_mangle] pub extern "C"
+fn rust_array_shift_amount(array: &mut Array, amount: usize) -> Box<Array> {
+    Box::new(array.shift_amount(amount))
+}
+
+#[no_mangle] pub extern "C"
 fn rust_array_unshift(array: &mut Array, item: uint16_t) -> &mut Array {
     array.unshift(item);
     
@@ -107,6 +112,11 @@ fn rust_array_empty(array: &Array) -> bool {
 #[no_mangle] pub extern "C"
 fn rust_array_eq(ary1: &Array, ary2: &Array) -> bool {
     ary1.eq(ary2)
+}
+
+#[no_mangle] pub extern "C"
+fn rust_array_dup(array: &Array) -> Box<Array> {
+    Box::new(array.dup())
 }
 
 #[no_mangle] pub extern "C"

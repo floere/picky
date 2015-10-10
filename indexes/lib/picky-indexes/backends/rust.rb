@@ -1,8 +1,15 @@
 module Picky
-
   module Backends
 
     class Rust < Memory
+      
+      # Returns an object that on #initial, #load returns
+      # an object that responds to:
+      #   object[:token] # => [id, id, id, id, id] (an array of ids)
+      #
+      def create_inverted bundle, hints = nil
+        Basic.new bundle.index_path(:inverted), hash_for(hints)
+      end
       
       # Overrides the base implementation.
       #
@@ -18,5 +25,4 @@ module Picky
     end
     
   end
-  
 end

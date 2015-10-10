@@ -21,6 +21,12 @@ module FunctionMapping
     @func_map ||= {}
     @func_map[internal] = func
     
+    [func, class_method, relative, retval]
+  end
+  
+  def __func_impl__ from, external, internal, retval, *params
+    func, class_method, relative, retval = __func__(from, external, internal, retval, *params)
+    
     # Get the right error position.
     begin
       /^(.+?):(\d+)/ =~ caller.first
@@ -28,6 +34,7 @@ module FunctionMapping
     rescue
       file, line = __FILE__, __LINE__+3
     end
+    
     # Map external interface to C interface.
     module_eval(<<-EOS, file, line)
       def #{external}(*args, &block)
@@ -89,27 +96,46 @@ module Rust
     # TODO Add RUBY_OBJECT type which automatically calls its #to_ptr.
     # TODO Add RUBY_OBJECT type which automatically calls this class' #from_ptr.
 
-    __func__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
-    __func__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
+    __func_impl__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
+    __func_impl__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
     
-    __func__ pr, :<<,  :rust_array_append, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
+    __func_impl__ pr, :<<,  :rust_array_append, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
+    __func_impl__ pr, :unshift, :rust_array_unshift, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
+    
+    __func_impl__ pr, :+, :rust_array_plus, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
+    
+    __func_impl__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
+    __func_impl__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
+    
+    __func_impl__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
+    __func_impl__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
+    
+    __func_impl__ pr, :length, :rust_array_length, Fiddle::TYPE_INT # TODO 
+    __func_impl__ pr, :empty?, :rust_array_empty, Fiddle::TYPE_VOIDP
+    
+    __func_impl__ pr, :==, :rust_array_eq, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
+    
+    __func_impl__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
+    
+    # Rewrite interface.
+    #
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_SHORT
-    __func__ pr, :unshift, :rust_array_unshift, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
+    __func__ pr, :shift, :rust_array_shift_amount, Fiddle::TYPE_VOIDP, Fiddle::TYPE_SIZE_T
     
-    __func__ pr, :+, :rust_array_plus, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
+    def shift(amount = nil)
+      if amount
+        pointer = self.class.func_map[:rust_array_shift_amount].call(to_ptr, amount)
+        self.class.from_ptr(pointer)
+      else
+        self.class.func_map[:rust_array_shift].call(to_ptr)
+      end
+    end
     
-    __func__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
-    __func__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
+    __func__ pr, :dup, :rust_array_dup, Fiddle::TYPE_VOIDP
     
-    __func__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
-    __func__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
-    
-    __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT # TODO 
-    __func__ pr, :empty?, :rust_array_empty, Fiddle::TYPE_VOIDP
-    
-    __func__ pr, :==, :rust_array_eq, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
-    
-    __func__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
+    def dup
+      self.class.from_ptr(self.class.func_map[:rust_array_dup].call(to_ptr))
+    end
     
     alias size length
   end
