@@ -17,26 +17,42 @@ describe Rust::Array do
 
   attr_reader :data, :books
 
-  let(:data) do
-    Picky::Index.new(:books) do
-      key_format :to_i
+  context 'with an Integer based index' do
+    let(:data) do
+      Picky::Index.new(:books) do
+        key_format :to_i
       
-      backend Picky::Backends::Rust.new
+        backend Picky::Backends::Rust.new
 
-      category :title
-      category :author
+        category :title
+        category :author
+      end
+    end
+    let(:books) { Picky::Search.new data }
+
+    context 'with an empty index' do
+      before(:each) do
+        data.clear
+      end
+      
+      it 'searching for it' do
+        expected = Rust::Array.new
+        books.search('title').ids.should == expected
+      end
+    end
+
+    context 'with 2 books' do
+      before(:each) do
+        data.clear
+        data.add Book.new(1, 'title', 'author')
+        data.add Book.new(2, 'another title', 'another author')
+      end
+
+      it 'searching for it' do
+        expected = Rust::Array.new << 2 << 1
+        books.search('title').ids.should == expected
+      end
     end
   end
-  let(:books) { Picky::Search.new data }
 
-  before(:each) do
-    data.clear
-    data.add Book.new(1, 'title', 'author')
-    data.add Book.new(2, 'another title', 'another author')
-  end
-
-  it 'searching for it' do
-    expected = Rust::Array.new << 2 << 1
-    books.search('title').ids.should == expected
-  end
 end
