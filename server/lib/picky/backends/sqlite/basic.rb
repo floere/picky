@@ -4,7 +4,7 @@ module Picky
 
     class SQLite
       
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = ::Array.new
 
       class Basic
 

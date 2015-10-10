@@ -16,6 +16,8 @@ module Picky
                 :backup,
                 :restore,
                 :delete,
+                
+                :empty_array,
 
                 :reset_backend,
 

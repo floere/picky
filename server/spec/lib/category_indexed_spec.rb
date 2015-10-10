@@ -10,8 +10,8 @@ describe Picky::Category do
     @weight_strategy     = double :weights, :saved? => true, :weight_for => :some_weight
     @similarity_strategy = double :similarity, :encode => nil, :prioritize => nil
 
-    @exact   = double :exact, :dump => nil
-    @partial = double :partial, :dump => nil
+    @exact   = double :exact, :dump => nil, :empty_array => []
+    @partial = double :partial, :dump => nil, :empty_array => []
 
     @category = described_class.new :some_name, @index, :partial    => @partial_strategy,
                                                         :weight     => @weight_strategy,

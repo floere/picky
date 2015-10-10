@@ -42,7 +42,7 @@ module Picky
         # is faster than using ary + ary.
         #
         # TODO Use of empty_array ok?
-        @ranger.new(*range).inject(backend.empty_array) do |result, text|
+        @ranger.new(*range).inject(bundle.empty_array) do |result, text|
           # It is 30% faster using the empty check
           # than just << [].
           #
