@@ -91,7 +91,6 @@ module Picky
       # Returns the top amount ids.
       #
       def ids amount = 20
-        # TODO Make this Array too index type dependent (by e.g. pseudo-shifting?).
         # TODO This is called too many times?
         if allocation = first
           # TODO Call ids with amount as parameter?
@@ -104,7 +103,7 @@ module Picky
           end
           result.shift(amount)
         else
-          [] # TODO Ok?
+          [] # TODO Make this Array too index type dependent (by e.g. pseudo-shifting?).
         end
       end
 

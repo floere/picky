@@ -23,8 +23,14 @@ class BackendInterfaceTester < Picky::Backends::Backend
 end
 class InternalBackendInterfaceTester
 
+  EMPTY_ARRAY = Array.new
+
   def initialize
     @hash = {}
+  end
+  
+  def empty_array
+    EMPTY_ARRAY.dup
   end
 
   def initial

@@ -35,9 +35,9 @@ describe Rust::Array do
         data.clear
       end
       
-      it 'searching for it' do
-        expected = Rust::Array.new
-        books.search('title').ids.should == expected
+      it 'searching for it returns an empty Array (!)' do
+        # No need to create a Rust::Array for that.
+        books.search('title').ids.should == []
       end
     end
 
@@ -50,6 +50,7 @@ describe Rust::Array do
 
       it 'searching for it' do
         expected = Rust::Array.new << 2 << 1
+        # TODO Cannot be called twice!
         books.search('title').ids.should == expected
       end
     end

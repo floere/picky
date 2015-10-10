@@ -94,7 +94,7 @@ module Picky
           # ids = if @inverted.has_key?(str_or_sym)
           #   @inverted[str_or_sym]
           # else
-          #   @inverted[str_or_sym] = []
+          #   @inverted[str_or_sym] = empty_array
           # end
           ids = (@inverted[str_or_sym] ||= empty_array)
           ids.send method, id

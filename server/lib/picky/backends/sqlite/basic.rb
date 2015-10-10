@@ -3,6 +3,8 @@ module Picky
   module Backends
 
     class SQLite
+      
+      EMPTY_ARRAY = Array.new
 
       class Basic
 
@@ -21,6 +23,12 @@ module Picky
           #  
           # rescue SQLite3::CantOpenException => e
           #  
+        end
+        
+        # Return a new, empty instance of this array type.
+        #
+        def empty_array
+          EMPTY_ARRAY.dup
         end
 
         def initial

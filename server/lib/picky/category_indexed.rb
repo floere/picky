@@ -41,7 +41,8 @@ module Picky
         # Adding all to an array, then flattening
         # is faster than using ary + ary.
         #
-        @ranger.new(*range).inject([]) do |result, text|
+        # TODO Use of empty_array ok?
+        @ranger.new(*range).inject(backend.empty_array) do |result, text|
           # It is 30% faster using the empty check
           # than just << [].
           #
