@@ -54,6 +54,28 @@ describe Rust::Array do
         books.search('title').ids.should == expected
       end
     end
+    
+    context 'with 1K books' do
+      before(:each) do
+        data.clear
+        1000.times do |i|
+          data.add Book.new(i, 'title', 'author')
+        end
+      end
+      it 'searching for it' do
+        expected = Rust::Array.new
+        999.downto(980).each do |i|
+          expected << i
+        end
+        books.search('title').ids.should == expected
+      end
+      it 'is reasonably fast' do
+        performance_of do
+          books.search('title')
+        end.should < 0.002
+        # Note: Native Ruby is < 0.0001 (20x faster)
+      end
+    end
   end
 
 end
