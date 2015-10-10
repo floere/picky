@@ -72,6 +72,11 @@ fn rust_array_plus(ary1: &Array, ary2: &Array) -> Box<Array> {
 }
 
 #[no_mangle] pub extern "C"
+fn rust_array_minus(ary1: &Array, ary2: &Array) -> Box<Array> {
+    Box::new(ary1.minus(ary2))
+}
+
+#[no_mangle] pub extern "C"
 fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Box<Array> {
     Box::new(ary1.intersect(ary2))
 }

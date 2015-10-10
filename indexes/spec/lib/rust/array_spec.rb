@@ -139,6 +139,20 @@ describe Rust::Array do
         (array + array).assert == expected
       end
     end
+    describe '#-' do
+      it 'handles empty arrays' do
+        (empty - empty).assert == empty
+      end
+      it 'handles normal arrays' do
+        (empty - array).assert == empty
+      end
+      it 'handles normal arrays' do
+        (array - empty).assert == array
+      end
+      it 'handles normal arrays' do
+        (array - array).assert == empty
+      end
+    end
     describe '#==' do
       it 'handles empty arrays' do
         Rust::Array.new.assert == Rust::Array.new

@@ -55,11 +55,20 @@ impl Array {
         }
     }
     
-    // TODO Could be improved in speed I assume (set capacity etc.).
+    // TODO Could be improved in speed (set capacity etc.).
     pub fn plus(&self, other: &Array) -> Array {
         let mut vector = vec![];
         vector.extend(self.data.iter());
         vector.extend(other.data.iter());
+        Array {
+            data: vector
+        }
+    }
+    
+    // TODO Could be much improved in speed (set capacity etc.).
+    pub fn minus(&self, other: &Array) -> Array {
+        let mut vector = self.data.to_vec();
+        vector.retain(|&item| !other.data.contains(&item));
         Array {
             data: vector
         }
