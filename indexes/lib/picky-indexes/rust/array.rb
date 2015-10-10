@@ -96,8 +96,8 @@ module Rust
     # TODO Add RUBY_OBJECT type which automatically calls its #to_ptr.
     # TODO Add RUBY_OBJECT type which automatically calls this class' #from_ptr.
 
-    __func_impl__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
-    __func_impl__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
+    __func_impl__ pr, :'self.new_rust', :rust_array_new, Fiddle::TYPE_VOIDP
+    # __func_impl__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
     
     __func_impl__ pr, :<<,  :rust_array_append, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
     __func_impl__ pr, :unshift, :rust_array_unshift, FunctionMapping::AS_OBJ, Fiddle::TYPE_SHORT
@@ -110,15 +110,21 @@ module Rust
     __func_impl__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
     __func_impl__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
     
-    __func_impl__ pr, :length, :rust_array_length, Fiddle::TYPE_INT # TODO 
-    __func_impl__ pr, :empty?, :rust_array_empty, Fiddle::TYPE_VOIDP
+    __func_impl__ pr, :length, :rust_array_length, Fiddle::TYPE_SIZE_T
+    alias size length
     
-    __func_impl__ pr, :==, :rust_array_eq, Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP
+    __func__ pr, :==, :rust_array_eq, Fiddle::TYPE_CHAR, Fiddle::TYPE_VOIDP
+    def == other
+      # return false if other.class
+      
+      self.class.func_map[:rust_array_eq].call(to_ptr, other) == 1
+    end
     
-    __func_impl__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
+    __func__ pr, :empty?, :rust_array_empty, Fiddle::TYPE_CHAR # aka BOOL
+    def empty?
+      self.class.func_map[:rust_array_empty].call(to_ptr) == 1
+    end
     
-    # Rewrite interface.
-    #
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_SHORT
     __func__ pr, :shift, :rust_array_shift_amount, Fiddle::TYPE_VOIDP, Fiddle::TYPE_SIZE_T
     
@@ -132,12 +138,14 @@ module Rust
     end
     
     __func__ pr, :dup, :rust_array_dup, Fiddle::TYPE_VOIDP
-    
     def dup
       self.class.from_ptr(self.class.func_map[:rust_array_dup].call(to_ptr))
     end
     
-    alias size length
+    __func__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
+    def inspect
+      self.class.func_map[:rust_array_inspect].call(to_ptr).to_s
+    end
   end
 end
 

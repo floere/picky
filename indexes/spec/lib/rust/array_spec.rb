@@ -141,7 +141,10 @@ describe Rust::Array do
     end
     describe '#==' do
       it 'handles empty arrays' do
-        assert empty == empty.dup
+        Rust::Array.new.assert == Rust::Array.new
+      end
+      it 'handles empty arrays' do
+        empty.assert == empty.dup
       end
       it 'handles empty arrays' do
         assert !(empty == array)
@@ -196,6 +199,14 @@ describe Rust::Array do
         dupped.shift(5)
         
         dupped.assert == empty
+      end
+    end
+    describe '#inspect' do
+      it 'works with empty arrays' do
+        empty.inspect.assert == '[]'
+      end
+      it 'works for a normal array' do
+        array.inspect.assert == '[0, 1, 2, 3, 4]'
       end
     end
   end
