@@ -91,6 +91,10 @@ impl Array {
         self.data.is_empty()
     }
     
+    pub fn include(&self, item: u16) -> bool {
+        self.data.contains(&item)
+    }
+    
     // Creates a copy.
     pub fn dup(&self) -> Array {
         Array {

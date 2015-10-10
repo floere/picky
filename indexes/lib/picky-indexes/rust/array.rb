@@ -125,6 +125,11 @@ module Rust
       self.class.func_map[:rust_array_empty].call(to_ptr) == 1
     end
     
+    __func__ pr, :include?, :rust_array_include, Fiddle::TYPE_CHAR, Fiddle::TYPE_VOIDP
+    def include? item
+      self.class.func_map[:rust_array_include].call(to_ptr, item) == 1
+    end
+    
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_SHORT
     __func__ pr, :shift, :rust_array_shift_amount, Fiddle::TYPE_VOIDP, Fiddle::TYPE_SIZE_T
     

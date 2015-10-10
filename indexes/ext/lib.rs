@@ -109,6 +109,11 @@ fn rust_array_empty(array: &Array) -> bool {
 }
 
 #[no_mangle] pub extern "C"
+fn rust_array_include(array: &Array, item: uint16_t) -> bool {
+    array.include(item)
+}
+
+#[no_mangle] pub extern "C"
 fn rust_array_eq(ary1: &Array, ary2: &Array) -> bool {
     ary1.eq(ary2)
 }

@@ -162,27 +162,41 @@ describe Rust::Array do
         assert !(array == shorty)
       end
     end
-    describe '#shift (on non-empty array)' do
+    describe '#==' do
+      it 'handles empty arrays' do
+        Rust::Array.new.assert == Rust::Array.new
+      end
+      it 'handles empty arrays' do
+        empty.assert == empty.dup
+      end
+      it 'handles empty arrays' do
+        assert !(empty == array)
+      end
+      it 'handles empty arrays' do
+        assert !(array == empty)
+      end
+      it 'handles normal arrays' do
+        assert array == array.dup
+      end
+      it 'handles normal arrays' do
+        shorty = Rust::Array.new
+        shorty << 1
+        
+        assert !(array == shorty)
+      end
+    end
+    describe '#include' do
       it 'works' do
-        array << 7
-        array << 8
-        array << 9
-      
-        array.shift.assert == 7
-        array.shift.assert == 8
-        array.shift.assert == 9
+        empty.refute.include?(0)
       end
-      it 'works with a parameter' do
-        expected = Rust::Array.new
-        expected << 0 << 1 << 2
-        
-        array.shift(3).assert == expected
+      it 'works' do
+        array.assert.include?(0)
       end
-      it 'works with a parameter' do
-        expected = Rust::Array.new
-        expected << 0 << 1 << 2 << 3 << 4
-        
-        array.shift(100_000).assert == expected
+      it 'works' do
+        array.assert.include?(4)
+      end
+      it 'works' do
+        array.refute.include?(5)
       end
     end
     describe '#dup' do
