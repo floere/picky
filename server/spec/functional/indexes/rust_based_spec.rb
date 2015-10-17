@@ -53,6 +53,12 @@ describe Rust::Array do
         # TODO Cannot be called twice!
         books.search('title').ids.should == expected
       end
+      it 'can sort' do
+        expected = Rust::Array.new << 1 << 2
+        results = books.search('title')
+        results.sort_by { |x| -x }
+        results.ids.should == expected
+      end
     end
     
     context 'with 1K books' do
