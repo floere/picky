@@ -329,6 +329,15 @@ describe Rust::Array do
       intersected.sort_by! { |x| -x }
       intersected.assert == Rust::Array.new << 15 << 14
     end
+    it 'handles large numbers' do
+      array << 10_000
+      array << 10_001
+      array << 10_002
+      array.shift.assert == 10_000
+      
+      array.sort_by! { |x| -x }
+      array.assert == Rust::Array.new << 10_002 << 10_001
+    end
   end
   
 end
