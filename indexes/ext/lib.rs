@@ -3,7 +3,7 @@
 extern crate libc;
 
 use libc::{c_char, uint16_t, size_t};
-use std::ffi::{CString};
+use std::ffi::CString;
 
 // macro_rules! dereflegate {
 //     ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
@@ -33,14 +33,6 @@ use arrays::Array;
 fn rust_array_new() -> Box<Array> {
     Box::new(Array::new())
 }
-
-// #[no_mangle] pub extern
-// fn rust_array_free(ptr: *const Array) {
-//     if ptr.is_null() { return }
-//     // TODO Why is there a double free happening? Because the Hash frees its components?
-//     let _: Box<Array> = unsafe { mem::transmute(ptr) };
-//     // println!("Array freed: {:?}", ptr);
-// }
 
 #[no_mangle] pub extern "C"
 fn rust_array_append(array: &mut Array, item: uint16_t) -> &Array {
@@ -107,6 +99,11 @@ fn rust_array_first(array: &Array) -> uint16_t {
         Some(value) => value.clone(),
         None => 0,
     }
+}
+
+#[no_mangle] pub extern "C"
+fn rust_array_first_amount(array: &mut Array, amount: usize) -> Box<Array> {
+    Box::new(array.first_amount(amount))
 }
 
 #[no_mangle] pub extern "C"

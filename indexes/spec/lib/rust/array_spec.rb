@@ -29,6 +29,21 @@ describe Rust::Array do
         array.first.assert == 0
       end
     end
+    describe '#first (with amount)' do
+      let(:large) do
+        ary = described_class.new()
+        (0..30).each do |i|
+          ary << i
+        end
+        ary
+      end
+      it 'sorts correctly' do
+        expected = described_class.new
+        (0..19).each { |i| expected << i }
+      
+        large.first(20).assert == expected
+      end
+    end
     describe '#last' do
       # it 'handles an empty array' do
       #   empty.last.assert == nil
@@ -299,6 +314,23 @@ describe Rust::Array do
       
       array << 1 << 2
       array.unshift(7).assert == expected
+    end
+  end
+  
+  describe '#sort_by' do
+    let(:large) do
+      ary = described_class.new()
+      (0..999).each do |i|
+        ary << i
+      end
+      ary
+    end
+    it 'sorts correctly' do
+      expected = described_class.new
+      999.downto(980).each { |i| expected << i }
+      
+      large.sort_by! { |i| -i }
+      large.first(20).assert == expected
     end
   end
   

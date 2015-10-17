@@ -69,7 +69,7 @@ module FunctionMapping
   
 end
 
-module Rust  
+module Rust
   class Array
     extend FunctionMapping
 
@@ -120,7 +120,17 @@ module Rust
       self.class.from_ptr(pointer)
     end
     
-    __func_impl__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
+    __func__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
+    __func__ pr, :first, :rust_array_first_amount, Fiddle::TYPE_VOIDP, Fiddle::TYPE_SIZE_T
+    
+    def first(amount = nil)
+      if amount
+        pointer = self.class.func_map[:rust_array_first_amount].call(to_ptr, amount)
+        self.class.from_ptr(pointer)
+      else
+        self.class.func_map[:rust_array_first].call(to_ptr)
+      end
+    end
     __func_impl__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
     
     __func_impl__ pr, :length, :rust_array_length, Fiddle::TYPE_SIZE_T

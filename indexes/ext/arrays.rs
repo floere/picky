@@ -93,6 +93,14 @@ impl Array {
     pub fn first(&self) -> Option<&u16> {
         self.data.first()
     }
+    
+    pub fn first_amount(&mut self, amount: usize) -> Array {
+        let mut vector = Vec::with_capacity(amount);
+        vector.extend(self.data[0..amount].iter().cloned());
+        Array {
+            data: vector
+        }
+    }
 
     pub fn last(&self) -> Option<&u16> {
         self.data.last()
