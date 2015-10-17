@@ -124,8 +124,10 @@ impl Array {
             data: self.data.to_vec()
         }
     }
-    
-    pub fn eq(&self, other: &Array) -> bool {
+}
+
+impl PartialEq for Array {
+    fn eq(&self, other: &Array) -> bool {
         if self.data.len() == other.data.len() {
             // We need to check.
             for (a, b) in self.data.iter().zip(other.data.iter()) {
@@ -215,12 +217,12 @@ pub fn normal_slice() {
     let mut ary = Array { data: vec![0,1,2,3,4,5,6,7,8,9] };
     let expected = Array { data: vec![3,4,5,6,7] };
     
-    assert_eq!(expected.data, ary.slice_bang(3,5).data);
+    assert_eq!(expected, ary.slice_bang(3,5));
 }
 #[test]
 pub fn short_slice() {
     let mut ary = Array { data: vec![1,2,3,4] };
     let expected = Array { data: vec![2,3] };
     
-    assert_eq!(expected.data, ary.slice_bang(1,2).data);
+    assert_eq!(expected, ary.slice_bang(1,2));
 }
