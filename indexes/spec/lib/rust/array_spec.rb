@@ -302,4 +302,33 @@ describe Rust::Array do
     end
   end
   
+  describe 'complex use case' do
+    it 'works' do
+      array << 7
+      array << 8
+      array << 9
+      array.shift.assert == 7
+      array << 10
+      array.shift(2).assert == Rust::Array.new << 8 << 9
+      array.assert == Rust::Array.new << 10
+      array << 11
+      array << 12
+      array.unshift 9
+      array.assert == Rust::Array.new << 9 << 10 << 11 << 12
+      array.assert.include?(9)
+      combined = array + Rust::Array.new << 13
+      combined.assert == Rust::Array.new << 9 << 10 << 11 << 12 << 13
+      array = combined - (Rust::Array.new << 10 << 11 << 12)
+      array.assert == Rust::Array.new << 9 << 13
+      array << 14
+      array.slice!(1,1)
+      array.assert == Rust::Array.new << 9 << 14
+      array << 15
+      intersected = array.intersect(Rust::Array.new << 14 << 15 << 16)
+      intersected.assert == Rust::Array.new << 14 << 15
+      intersected.sort_by! { |x| -x }
+      intersected.assert == Rust::Array.new << 15 << 14
+    end
+  end
+  
 end
