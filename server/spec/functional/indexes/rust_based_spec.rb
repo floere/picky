@@ -81,6 +81,19 @@ describe Rust::Array do
         end.should < 0.002
         # Note: Native Ruby is < 0.0001 (20x faster)
       end
+      describe 'sorting' do
+        it 'works' do
+          expected = Rust::Array.new
+          (0..19).each do |i|
+            expected << i
+          end
+          
+          results = books.search('title')
+          results.sort_by { |x| -x } # Find the first 20 first.
+          
+          results.ids.should == expected
+        end
+      end
     end
   end
 
