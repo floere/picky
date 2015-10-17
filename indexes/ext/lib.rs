@@ -43,7 +43,7 @@ fn rust_array_new() -> Box<Array> {
 // }
 
 #[no_mangle] pub extern "C"
-fn rust_array_append(array: &mut Array, item: uint16_t) -> &mut Array {
+fn rust_array_append(array: &mut Array, item: uint16_t) -> &Array {
     array.append(item);
     
     array
@@ -60,7 +60,7 @@ fn rust_array_shift_amount(array: &mut Array, amount: usize) -> Box<Array> {
 }
 
 #[no_mangle] pub extern "C"
-fn rust_array_unshift(array: &mut Array, item: uint16_t) -> &mut Array {
+fn rust_array_unshift(array: &mut Array, item: uint16_t) -> &Array {
     array.unshift(item);
     
     array
@@ -81,11 +81,17 @@ fn rust_array_intersect(ary1: &Array, ary2: &Array) -> Box<Array> {
     Box::new(ary1.intersect(ary2))
 }
 
-#[no_mangle] pub extern
+#[no_mangle] pub extern "C"
 fn rust_array_slice_bang(array: &mut Array, offset: usize, amount: usize) -> Box<Array> {
     Box::new(array.slice_bang(offset, amount))
 }
 
+#[no_mangle] pub extern "C"
+fn rust_array_sort_by_bang(array: &mut Array, block: extern fn(&u16) -> u16) -> &Array {
+    array.sort_by(|a, b| block(&a).cmp(&block(&b)));
+    
+    array
+}
 
 #[no_mangle] pub extern "C"
 fn rust_array_length(array: &Array) -> size_t {

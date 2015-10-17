@@ -2,6 +2,7 @@ use std::fmt;
 
 use std::collections::HashMap;
 use std::hash::Hash;
+use std::cmp::Ordering;
 
 pub struct Array {
     data: Vec<u16>,
@@ -53,6 +54,11 @@ impl Array {
         Array {
             data: self.data.intersect(&other.data)
         }
+    }
+    
+    pub fn sort_by<F>(&mut self, compare: F)
+        where F : FnMut(&u16, &u16) -> Ordering {
+        self.data.sort_by(compare);
     }
     
     // TODO Could be improved in speed (set capacity etc.).
