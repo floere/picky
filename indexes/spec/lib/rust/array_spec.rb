@@ -20,6 +20,7 @@ describe Rust::Array do
     before(:each) do
       5.times { |i| array << i }
     end
+    
     describe '#first' do
       # it 'handles an empty array' do
       #   empty.first.assert == nil
@@ -88,6 +89,19 @@ describe Rust::Array do
       #   a1.intersect(a2).assert a1
       #   p Time.now - t
       # end
+    end
+    describe '#sort_by!' do
+      it 'is correct with identity' do
+        array.sort_by! { |x| x }.assert == array
+      end
+      it 'is correct' do
+        expected = Rust::Array.new
+        expected << 4 << 3 << 2 << 1 << 0
+        
+        array.sort_by! do |x|
+          -x
+        end.assert == expected
+      end
     end
     describe '#slice!' do
       # it 'handles an empty array' do
