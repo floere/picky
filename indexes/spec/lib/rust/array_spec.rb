@@ -104,9 +104,9 @@ describe Rust::Array do
       end
     end
     describe '#slice!' do
-      # it 'handles an empty array' do
-      #   empty.slice!(1,1).assert == nil
-      # end
+      it 'handles an empty array' do
+        empty.slice!(1,1).assert == nil
+      end
       it 'is correct' do
         expected = Rust::Array.new
         expected << 0 << 1 << 3 << 4

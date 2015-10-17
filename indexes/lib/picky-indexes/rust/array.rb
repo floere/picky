@@ -112,7 +112,13 @@ module Rust
     end
     
     __func_impl__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
-    __func_impl__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
+    __func__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
+    def slice! start, length # TODO Other ways.
+      return nil if self.empty?
+      
+      pointer = self.class.func_map[:rust_array_slice_bang].call(to_ptr, start, length)
+      self.class.from_ptr(pointer)
+    end
     
     __func_impl__ pr, :first, :rust_array_first, Fiddle::TYPE_SHORT
     __func_impl__ pr, :last, :rust_array_last, Fiddle::TYPE_SHORT
