@@ -120,6 +120,17 @@ module Rust
     __func_impl__ pr, :length, :rust_array_length, Fiddle::TYPE_SIZE_T
     alias size length
     
+    __func__ pr, :'sort_by!', :rust_array_sort_by_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
+    def sort_by! &block
+      return self unless block_given?
+      
+      cb = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_INT, [Fiddle::TYPE_INT], &block)
+      block_func = Fiddle::Function.new(cb, [Fiddle::TYPE_INT], Fiddle::TYPE_INT)
+      
+      pointer = self.class.func_map[:rust_array_sort_by_bang].call(to_ptr, block_func)
+      self.class.from_ptr(pointer)
+    end
+    
     __func__ pr, :==, :rust_array_eq, Fiddle::TYPE_CHAR, Fiddle::TYPE_VOIDP
     def == other
       # return false if other.class
