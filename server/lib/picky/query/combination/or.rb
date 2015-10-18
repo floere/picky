@@ -36,6 +36,7 @@ module Picky
         # Note: Caching is most of the time useful.
         #
         def ids
+          # FIXME Use empty_array from bundle!
           @ids ||= @combinations.inject([]) do |total, combination|
             total + combination.ids
           end.uniq

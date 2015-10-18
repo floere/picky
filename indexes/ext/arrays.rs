@@ -98,7 +98,10 @@ impl Array {
         self.data.first()
     }
     
-    pub fn first_amount(&mut self, amount: usize) -> Array {
+    pub fn first_amount(&mut self, mut amount: usize) -> Array {
+        // Check for length.
+        let length = self.length();
+        if amount > length { amount = length; }
         let mut vector = Vec::with_capacity(amount);
         vector.extend(self.data[0..amount].iter().cloned());
         Array {

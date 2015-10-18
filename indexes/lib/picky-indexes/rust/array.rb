@@ -30,6 +30,9 @@ module Rust
     attach_function :rust_array_sort_by_bang, [:pointer, :rust_array_sort_by_bang_callback], :pointer
     attach_function :rust_array_dup,          [:pointer],                   :pointer
     attach_function :rust_array_inspect,      [:pointer],                   :string
+    
+    # attach_function :rust_array_find,         [:pointer, :uint16],          :uint16
+    # attach_function :rust_array_reject,         [:pointer, :uint16],          :uint16
   end
   
   class Array < FFI::AutoPointer
@@ -130,6 +133,7 @@ module Rust
     
     def sort_by! &block
       return self unless block_given?
+      return self if size < 2
       
       @internal_instance = rust_array_sort_by_bang(to_ptr, block)
       
