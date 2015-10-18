@@ -102,7 +102,8 @@ module Picky
               total + allocation.ids
             end
           end
-          result.shift(amount)
+          # result.shift(amount)
+          result.first(amount)
         else
           [] # TODO Make this Array too index type dependent (by e.g. pseudo-shifting?).
         end
