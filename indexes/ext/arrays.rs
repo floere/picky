@@ -56,9 +56,13 @@ impl Array {
         }
     }
     
-    pub fn sort_by<F>(&mut self, compare: F)
+    pub fn sort_by<F>(&mut self, compare: F) -> Array
         where F : FnMut(&u16, &u16) -> Ordering {
-        self.data.sort_by(compare);
+        let mut vector = self.data.to_vec(); // TODO Do not copy.
+        vector.sort_by(compare);
+        Array {
+            data: vector
+        }
     }
     
     // TODO Could be improved in speed (set capacity etc.).

@@ -122,7 +122,9 @@ module Rust
     def sort_by! &block
       return self unless block_given?
       
-      self.class.from_ptr rust_array_sort_by_bang(to_ptr, block)
+      @internal_instance = rust_array_sort_by_bang(to_ptr, block)
+      
+      self
     end
     
     def == other
