@@ -2,7 +2,7 @@
 
 extern crate libc;
 
-use libc::{c_char, uint16_t, int32_t, size_t};
+use libc::{c_char, uint16_t, int64_t, size_t};
 use std::ffi::CString;
 
 // macro_rules! dereflegate {
@@ -87,7 +87,7 @@ fn rust_array_slice_bang(array: &mut Array, offset: usize, amount: usize) -> Box
 }
 
 #[no_mangle] pub extern "C"
-fn rust_array_sort_by_bang(array: &Array, block: extern fn(uint16_t) -> int32_t) -> Box<Array> {
+fn rust_array_sort_by_bang(array: &Array, block: extern fn(uint16_t) -> int64_t) -> Box<Array> {
     Box::new(array.sort_by(|&a, &b| block(a).cmp(&block(b))))
 }
 

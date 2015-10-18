@@ -159,7 +159,7 @@ describe Rust::Array do
         
         expect do
           array.sort_by! do |x|
-            -100_000_000_000_000
+            -100_000_000_000_000_000_000_000_000
           end
         end.to raise_error(RangeError)
       end

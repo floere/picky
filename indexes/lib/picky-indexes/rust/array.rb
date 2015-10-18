@@ -10,7 +10,7 @@ module Rust
   
     attach_function :rust_array_new, [], :pointer
   
-    callback :rust_array_sort_by_bang_callback, [:uint16], :int32
+    callback :rust_array_sort_by_bang_callback, [:uint16], :int64
     callback :rust_array_reject_callback,       [:uint16], :bool
     callback :rust_array_each_callback,         [:uint16], :void
     callback :rust_array_map_callback,          [:uint16], :uint16
