@@ -57,7 +57,7 @@ describe Rust::Array do
         expected = Rust::Array.new << 1 << 2
         results = books.search('title')
         
-        results.sort_by { |x| -x }
+        results.sort_by { |x| x }
         
         results.ids.should == expected
       end
@@ -91,7 +91,7 @@ describe Rust::Array do
           end
           
           results = books.search('title')
-          results.sort_by { |x| -x } # Find the first 20 first.
+          results.sort_by { |x| x } # Find the first 20 first.
           
           results.ids.should == expected
         end
