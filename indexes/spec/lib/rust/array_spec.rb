@@ -135,6 +135,13 @@ describe Rust::Array do
       # end
     end
     describe '#sort_by!' do
+      it 'is in-place' do
+        expected = described_class.new
+        expected << 4 << 3 << 2 << 1 << 0
+        
+        array.sort_by! { |x| -x }
+        array.assert == expected
+      end
       it 'is correct with identity' do
         array.sort_by! { |x| x }.assert == array
       end
