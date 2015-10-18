@@ -27,7 +27,7 @@ module Rust
     attach_function :rust_array_shift,        [:pointer],                   :uint16
     attach_function :rust_array_shift_amount, [:pointer, :size_t],          :pointer
     attach_function :rust_array_include,      [:pointer, :uint16],          :bool
-    attach_function :rust_array_sort_by_bang, [:pointer, :rust_array_sort_by_bang_callback], :pointer
+    FUNC = attach_function :rust_array_sort_by_bang, [:pointer, :rust_array_sort_by_bang_callback], :pointer
     attach_function :rust_array_dup,          [:pointer],                   :pointer
     attach_function :rust_array_inspect,      [:pointer],                   :string
     
@@ -42,11 +42,12 @@ module Rust
 
     def initialize pointer = nil
       @internal_instance = pointer || rust_array_new
+      super(@internal_instance)
     end
     
-    def release
-      p [:freeing, @internal_instance]
-      # @internal_instance.rust_array_free
+    def self.release array
+      p [:freeing, array.internal_instance]
+      # array.internal_instance.rust_array_free
     end
     
     def self.from_ptr pointer
@@ -155,3 +156,14 @@ module Rust
 
   end
 end
+
+# r = Rust::Array.new
+# r << 463
+# r << 27
+# # r << 'hello'
+# p r
+# res = Rust::ArrayBackend::FUNC.call(r.to_ptr) do |i|
+#   -i
+# end
+# p Rust::Array.from_ptr(res)
+# p r
