@@ -34,7 +34,8 @@ module Picky
     end
 
     def allocations
-      prepare! *(@prepared || [@extra_allocations, @unique])
+      # prepare! *(@prepared || [@extra_allocations, @unique, @sorting])
+      prepare! @extra_allocations, @unique, @sorting
       @allocations
     end
 
@@ -43,9 +44,10 @@ module Picky
     # Without this, the allocations are not processed,
     # and no ids are calculated.
     #
-    def prepare! extra_allocations = nil, unique = false
-      return if @prepared == [extra_allocations, unique] # cached?
-      @prepared = [extra_allocations, unique] # cache!
+    def prepare! extra_allocations = nil, unique = false, sorting = nil
+      return if @prepared == [extra_allocations, unique, sorting] # cached?
+      @prepared = [extra_allocations, unique, sorting] # cache!
+      puts "Preparing! (with #{@prepared})"
       unique ?
         @allocations.process_unique!(amount, offset, extra_allocations, sorting) :
         @allocations.process!(amount, offset, extra_allocations, sorting)
