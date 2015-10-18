@@ -128,7 +128,7 @@ module Rust
     end
     
     def == other
-      # return false if other.class # TODO
+      return false if self.class != other.class
       
       rust_array_eq(to_ptr, other.internal_instance)
     end

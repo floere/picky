@@ -204,6 +204,9 @@ describe Rust::Array do
         
         assert !(array == shorty)
       end
+      it 'handles a different class instance' do
+        assert !(empty == []) 
+      end
     end
     describe '#==' do
       it 'handles empty arrays' do
