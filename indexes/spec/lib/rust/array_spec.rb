@@ -435,6 +435,8 @@ describe Rust::Array do
       array << 15
       intersected = array.intersect(Rust::Array.new << 14 << 15 << 16)
       intersected.assert == Rust::Array.new << 14 << 15
+      intersected << 16
+      intersected -= (described_class.new << 16)
       intersected.sort_by! { |x| -x }
       intersected.assert == Rust::Array.new << 15 << 14
     end
