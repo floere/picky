@@ -56,7 +56,9 @@ describe Rust::Array do
       it 'can sort' do
         expected = Rust::Array.new << 1 << 2
         results = books.search('title')
+        
         results.sort_by { |x| -x }
+        
         results.ids.should == expected
       end
     end
