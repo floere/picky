@@ -37,11 +37,14 @@ describe Rust::Array do
         end
         ary
       end
-      it 'sorts correctly' do
+      it 'is correct' do
         expected = described_class.new
         (0..19).each { |i| expected << i }
       
         large.first(20).assert == expected
+      end
+      it 'has no trouble with a too long array' do
+        large.first(100_000).assert == large
       end
     end
     describe '#last' do
