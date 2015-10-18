@@ -4,6 +4,10 @@ module Picky
 
     class Memory < Backend
       
+      def empty_array
+        []
+      end
+      
       def json *args
         JSON.new *args
       end
