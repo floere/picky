@@ -61,6 +61,10 @@ describe Rust::Array do
         
         results.ids.should == expected
       end
+      it 'can survive a ludicrous request' do
+        results = books.search('title', 10_000)
+        results.ids.should == Rust::Array.new << 2 << 1
+      end
     end
     
     context 'with 1K books' do
