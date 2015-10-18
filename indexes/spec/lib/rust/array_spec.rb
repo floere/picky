@@ -146,6 +146,16 @@ describe Rust::Array do
           -x
         end.assert == expected
       end
+      it 'fails non-gracefully' do
+        expected = Rust::Array.new
+        expected << 4 << 3 << 2 << 1 << 0
+        
+        expect do
+          array.sort_by! do |x|
+            -100_000_000_000_000
+          end
+        end.to raise_error(RangeError)
+      end
     end
     describe '#slice!' do
       it 'handles an empty array' do
