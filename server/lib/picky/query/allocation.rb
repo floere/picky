@@ -76,7 +76,7 @@ module Picky
       # ignored (ie. removed).
       #
       def calculate_ids amount, offset
-        return [] if @combinations.empty? # Checked here to avoid checking in each backend.
+        return backend.empty_array if @combinations.empty? # Checked here to avoid checking in each backend.
 
         # TODO Redesign such that ids is only created (and cached) if requested.
         #
@@ -94,8 +94,8 @@ module Picky
       def process! amount, offset, sorting = nil
         calculated_ids = calculate_ids amount, offset
         calculated_ids.sort_by! &sorting if sorting
-        @count = calculated_ids.size                         # cache the count before throwing away the ids
-        @ids   = calculated_ids.slice!(offset, amount) || [] # slice out the relevant part
+        @count = calculated_ids.size                                          # cache the count before throwing away the ids
+        @ids   = calculated_ids.slice!(offset, amount) || backend.empty_array # slice out the relevant part
       end
       # Same as the above, but with illegal ids. Parameter added:
       #  * illegal_ids: ids to ignore.
@@ -105,11 +105,11 @@ module Picky
         # assumes the worst case that the ids contain
         # all illegal ids.
         #
-        calculated_ids = calculate_ids amount + illegal_ids.size, offset
+        calculated_ids = calculate_ids(amount + illegal_ids.size, offset)
         calculated_ids -= illegal_ids
         calculated_ids.sort_by! &sorting if sorting
-        @count = calculated_ids.size                         # cache the count before throwing away the ids
-        @ids   = calculated_ids.slice!(offset, amount) || [] # slice out the relevant part
+        @count = calculated_ids.size                                          # cache the count before throwing away the ids
+        @ids   = calculated_ids.slice!(offset, amount) || backend.empty_array # slice out the relevant part
       end
 
       #
