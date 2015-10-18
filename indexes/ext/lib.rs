@@ -34,6 +34,11 @@ fn rust_array_new() -> Box<Array> {
     Box::new(Array::new())
 }
 
+// #[no_mangle] pub extern "C"
+// fn rust_array_free(array: &Array) {
+//     // ?
+// }
+
 #[no_mangle] pub extern "C"
 fn rust_array_append(array: &mut Array, item: uint16_t) -> &Array {
     array.append(item);

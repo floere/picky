@@ -45,7 +45,8 @@ module Rust
     end
     
     def release
-      # internal_instance.free # TODO
+      p [:freeing, @internal_instance]
+      # @internal_instance.rust_array_free
     end
     
     def self.from_ptr pointer
