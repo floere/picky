@@ -42,6 +42,11 @@ describe Rust::Array do
         array.map { |i| i*2 }.assert == expected
       end
     end
+    describe '#find' do
+      it 'is correct' do
+        array.find { |i| i.odd? }.assert == 1
+      end
+    end
     describe '#first' do
       # it 'handles an empty array' do
       #   empty.first.assert == nil

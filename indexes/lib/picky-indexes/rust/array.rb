@@ -158,11 +158,18 @@ module Rust
       
       rust_array_each(to_ptr, block)
     end
-    
     def map &block
       return self unless block_given?
       
       self.class.from_ptr rust_array_map(to_ptr, block)
+    end
+    
+    def find &block
+      return self unless block_given?
+      
+      rust_array_each(to_ptr) do |i|
+        return i if block.call(i)
+      end
     end
     
     def == other
