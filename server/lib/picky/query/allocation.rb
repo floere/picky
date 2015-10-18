@@ -101,6 +101,7 @@ module Picky
         #
         calculated_ids = calculate_ids amount + illegal_ids.size, offset
         calculated_ids = calculated_ids - illegal_ids
+        p [:process_with_illegals!, calculated_ids, sorting]
         calculated_ids.sort_by! &sorting if sorting
         @count = calculated_ids.size                         # cache the count before throwing away the ids
         @ids   = calculated_ids.slice!(offset, amount) || [] # slice out the relevant part

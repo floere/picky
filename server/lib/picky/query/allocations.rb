@@ -156,7 +156,8 @@ module Picky
           sorting = nil if amount <= 0 # Stop sorting if the results aren't shown.
           calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids, sorting
           projected_offset = offset - allocation.count
-          unique_ids += calculated_ids # uniq this? <- No, slower than just leaving duplicates.
+          # Not using += as we want to poison unique_ids with e.g. Rust::Array.
+          unique_ids = calculated_ids + unique_ids # uniq this? <- No, slower than just leaving duplicates.
           if projected_offset <= 0
             allocation.ids.slice!(0, offset)
           end

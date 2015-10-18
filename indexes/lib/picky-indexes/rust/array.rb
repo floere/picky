@@ -79,6 +79,15 @@ module Rust
     end
     
     def +(other)
+      if other.class != self.class
+        # TODO Improve speed!
+        new_other = self.class.new
+        other.each do |i|
+          new_other << i
+        end
+        other = new_other
+      end
+
       self.class.from_ptr rust_array_plus(to_ptr, other.internal_instance)
     end
     def -(other)

@@ -167,6 +167,15 @@ describe Rust::Array do
         
         (array + array).assert == expected
       end
+      it 'handles Arrays' do
+        (empty + []).assert == empty
+      end
+      it 'handles Arrays' do
+        expected = described_class.new
+        expected << 1 << 2 << 3 << 4 << 5
+        
+        (empty + [1, 2, 3, 4, 5]).assert == expected
+      end
     end
     describe '#-' do
       it 'handles empty arrays' do
