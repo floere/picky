@@ -56,13 +56,28 @@ impl Array {
         }
     }
     
-    pub fn sort_by<F>(&mut self, compare: F) -> Array
+    pub fn sort_by<F>(&self, compare: F) -> Array
         where F : FnMut(&u16, &u16) -> Ordering {
         let mut vector = self.data.to_vec(); // TODO Do not copy.
         vector.sort_by(compare);
         Array {
             data: vector
         }
+    }
+    
+    pub fn reject<F>(&self, predicate: F) -> Array
+        where F : FnMut(&u16) -> bool {
+        let mut vector = self.data.to_vec(); // TODO Do not copy.
+        vector.retain(predicate);
+        Array {
+            data: vector
+        }
+    }
+    
+    pub fn each<F>(&self, each: F) where F : Fn(&u16) {
+        for a in self.data.iter() {
+            each(a);
+        };
     }
     
     // TODO Could be improved in speed (set capacity etc.).

@@ -21,6 +21,16 @@ describe Rust::Array do
       5.times { |i| array << i }
     end
     
+    describe '#each' do
+      it 'handles an empty array' do
+        empty.each { raise }
+      end
+      it 'is correct' do
+        result = []
+        array.each { |i| result << i }
+        result.assert == [0,1,2,3,4]
+      end
+    end    
     describe '#first' do
       # it 'handles an empty array' do
       #   empty.first.assert == nil
@@ -329,6 +339,32 @@ describe Rust::Array do
       
       array << 1 << 2
       array.unshift(7).assert == expected
+    end
+  end
+  
+  describe '#reject' do
+    let(:array) do
+      ary = described_class.new()
+      (0..10).each do |i|
+        ary << i
+      end
+      ary
+    end
+    it 'sorts correctly' do
+      expected = described_class.new
+      [1,3,5,7,9].each { |i| expected << i }
+      
+      array.reject { |i| i.even? }.assert == expected
+    end
+  end
+  describe '#reject' do
+    let(:array) do
+      ary = described_class.new
+      (0..10).each { |i| ary << i }
+      ary
+    end
+    it 'transforms correctly' do
+      array.to_ary.assert == (0..10).to_a
     end
   end
   

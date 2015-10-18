@@ -32,10 +32,16 @@ module Picky
         @combinations.each &block
       end
 
-      #
+      # TODO
       #
       def backend
         @index.backend
+      end
+      
+      # TODO
+      #
+      def empty_array
+        backend.empty_array
       end
 
       # Asks the backend for the total score and
@@ -100,7 +106,7 @@ module Picky
         # all illegal ids.
         #
         calculated_ids = calculate_ids amount + illegal_ids.size, offset
-        calculated_ids = calculated_ids - illegal_ids
+        calculated_ids -= illegal_ids
         calculated_ids.sort_by! &sorting if sorting
         @count = calculated_ids.size                         # cache the count before throwing away the ids
         @ids   = calculated_ids.slice!(offset, amount) || [] # slice out the relevant part

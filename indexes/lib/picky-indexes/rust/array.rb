@@ -11,6 +11,8 @@ module Rust
     attach_function :rust_array_new, [], :pointer
   
     callback :rust_array_sort_by_bang_callback, [:uint16], :int32
+    callback :rust_array_reject_callback,       [:uint16], :bool
+    callback :rust_array_each_callback,         [:uint16], :void
   
     attach_function :rust_array_append,       [:pointer, :uint16],          :pointer
     attach_function :rust_array_unshift,      [:pointer, :uint16],          :pointer
@@ -27,12 +29,13 @@ module Rust
     attach_function :rust_array_shift,        [:pointer],                   :uint16
     attach_function :rust_array_shift_amount, [:pointer, :size_t],          :pointer
     attach_function :rust_array_include,      [:pointer, :uint16],          :bool
-    FUNC = attach_function :rust_array_sort_by_bang, [:pointer, :rust_array_sort_by_bang_callback], :pointer
+    attach_function :rust_array_sort_by_bang, [:pointer, :rust_array_sort_by_bang_callback], :pointer
+    attach_function :rust_array_reject,       [:pointer, :rust_array_reject_callback],       :pointer
+    attach_function :rust_array_each,         [:pointer, :rust_array_each_callback],         :void
     attach_function :rust_array_dup,          [:pointer],                   :pointer
     attach_function :rust_array_inspect,      [:pointer],                   :string
     
     # attach_function :rust_array_find,         [:pointer, :uint16],          :uint16
-    # attach_function :rust_array_reject,         [:pointer, :uint16],          :uint16
   end
   
   class Array < FFI::AutoPointer
@@ -92,7 +95,7 @@ module Rust
         end
         other = new_other
       end
-
+      
       self.class.from_ptr rust_array_plus(to_ptr, other.internal_instance)
     end
     def -(other)
@@ -142,6 +145,18 @@ module Rust
       self
     end
     
+    def reject &block
+      return self unless block_given?
+      
+      self.class.from_ptr rust_array_reject(to_ptr, block)
+    end
+    
+    def each &block
+      return self unless block_given?
+      
+      rust_array_each(to_ptr, block)
+    end
+    
     def == other
       return false if self.class != other.class
       
@@ -153,17 +168,13 @@ module Rust
     def inspect
       rust_array_inspect(to_ptr).to_s
     end
+    def to_ary
+      result = []
+      rust_array_each(to_ptr) do |i|
+        result << i
+      end
+      result
+    end
 
   end
 end
-
-# r = Rust::Array.new
-# r << 463
-# r << 27
-# # r << 'hello'
-# p r
-# res = Rust::ArrayBackend::FUNC.call(r.to_ptr) do |i|
-#   -i
-# end
-# p Rust::Array.from_ptr(res)
-# p r

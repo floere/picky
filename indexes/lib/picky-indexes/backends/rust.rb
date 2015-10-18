@@ -3,6 +3,11 @@ module Picky
 
     class Rust < Memory
       
+      def empty_array
+        @empty_array ||= ::Rust::Array.new
+        @empty_array.dup
+      end
+      
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[:token] # => [id, id, id, id, id] (an array of ids)
