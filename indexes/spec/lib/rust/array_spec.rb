@@ -30,7 +30,18 @@ describe Rust::Array do
         array.each { |i| result << i }
         result.assert == [0,1,2,3,4]
       end
-    end    
+    end
+    describe '#map' do
+      it 'handles an empty array' do
+        empty.map { raise }
+      end
+      it 'is correct' do
+        expected = described_class.new
+        expected << 0 << 2 << 4 << 6 << 8
+        
+        array.map { |i| i*2 }.assert == expected
+      end
+    end
     describe '#first' do
       # it 'handles an empty array' do
       #   empty.first.assert == nil

@@ -66,7 +66,7 @@ impl Array {
     }
     
     pub fn reject<F>(&self, predicate: F) -> Array
-        where F : FnMut(&u16) -> bool {
+            where F : FnMut(&u16) -> bool {
         let mut vector = self.data.to_vec(); // TODO Do not copy.
         vector.retain(predicate);
         Array {
@@ -74,10 +74,19 @@ impl Array {
         }
     }
     
-    pub fn each<F>(&self, each: F) where F : Fn(&u16) {
+    pub fn each<F>(&self, each: F)
+            where F : Fn(&u16) {
         for a in self.data.iter() {
             each(a);
         };
+    }
+    
+    pub fn map<F>(&self, map: F) -> Array
+            where F : FnMut(&u16) -> u16 {
+        let vector = self.data.iter().map(map).collect();
+        Array {
+            data: vector
+        }
     }
     
     // TODO Could be improved in speed (set capacity etc.).

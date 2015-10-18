@@ -13,6 +13,7 @@ module Rust
     callback :rust_array_sort_by_bang_callback, [:uint16], :int32
     callback :rust_array_reject_callback,       [:uint16], :bool
     callback :rust_array_each_callback,         [:uint16], :void
+    callback :rust_array_map_callback,          [:uint16], :uint16
   
     attach_function :rust_array_append,       [:pointer, :uint16],          :pointer
     attach_function :rust_array_unshift,      [:pointer, :uint16],          :pointer
@@ -32,6 +33,7 @@ module Rust
     attach_function :rust_array_sort_by_bang, [:pointer, :rust_array_sort_by_bang_callback], :pointer
     attach_function :rust_array_reject,       [:pointer, :rust_array_reject_callback],       :pointer
     attach_function :rust_array_each,         [:pointer, :rust_array_each_callback],         :void
+    attach_function :rust_array_map,          [:pointer, :rust_array_map_callback],          :pointer
     attach_function :rust_array_dup,          [:pointer],                   :pointer
     attach_function :rust_array_inspect,      [:pointer],                   :string
     
@@ -155,6 +157,12 @@ module Rust
       return self unless block_given?
       
       rust_array_each(to_ptr, block)
+    end
+    
+    def map &block
+      return self unless block_given?
+      
+      self.class.from_ptr rust_array_map(to_ptr, block)
     end
     
     def == other

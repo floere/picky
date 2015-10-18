@@ -102,6 +102,11 @@ fn rust_array_each(array: &Array, block: extern fn(uint16_t)) {
 }
 
 #[no_mangle] pub extern "C"
+fn rust_array_map(array: &Array, block: extern fn(uint16_t) -> uint16_t) -> Box<Array> {
+    Box::new(array.map(|&a| block(a)))
+}
+
+#[no_mangle] pub extern "C"
 fn rust_array_length(array: &Array) -> size_t {
     array.length() as size_t
 }
