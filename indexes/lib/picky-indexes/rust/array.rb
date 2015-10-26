@@ -10,7 +10,7 @@ module Rust
   
     attach_function :rust_array_new, [], :pointer
   
-    callback :rust_array_sort_by_bang_callback, [:uint16], :int64
+    callback :rust_array_sort_by_bang_callback, [:uint16, :uint16], :int8
     callback :rust_array_reject_callback,       [:uint16], :bool
     callback :rust_array_each_callback,         [:uint16], :void
     callback :rust_array_map_callback,          [:uint16], :uint16
@@ -142,7 +142,10 @@ module Rust
       return self unless block_given?
       return self if size < 2
       
-      @internal_instance = rust_array_sort_by_bang(to_ptr, block)
+      @internal_instance = rust_array_sort_by_bang(to_ptr) do |a, b|
+        p [b, block.call(b), a, block.call(a), block.call(b) <=> block.call(a)]
+        block.call(a) <=> block.call(b)
+      end
       
       self
     end

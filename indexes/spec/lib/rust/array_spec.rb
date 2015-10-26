@@ -163,6 +163,11 @@ describe Rust::Array do
           end
         end.to raise_error(RangeError)
       end
+      it 'can handle strings' do
+        abc = %w(a b c d e)
+        
+        array.sort_by! { |x| abc[x] }.assert == array
+      end
     end
     describe '#slice!' do
       it 'handles an empty array' do
