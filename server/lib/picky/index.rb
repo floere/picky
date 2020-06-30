@@ -117,7 +117,7 @@ module Picky
     #     result_identifier :my_special_results
     #   end
     #
-    def initialize name
+    def initialize name, &proc
       @name       = name.intern
       @categories = Categories.new
 
@@ -125,7 +125,7 @@ module Picky
       #
       Indexes.register self
 
-      instance_eval(&Proc.new) if block_given?
+      instance_eval(&proc) if block_given?
     end
     
     # Provide hints for Picky so it can optimise.
