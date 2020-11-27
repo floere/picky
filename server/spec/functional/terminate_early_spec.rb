@@ -156,9 +156,9 @@ describe 'Search#terminate_early' do
     fast = performance_of do
       try_fast.search 'hello'
     end
-    slow.should < 0.00009
-    fast.should < 0.00006
-    (slow/fast).should >= 1.5
+    slow.should < 0.00006
+    fast.should < 0.00004
+    (slow/fast).should >= 1.333
 
     try_slow = Picky::Search.new index
     slow = performance_of do
@@ -172,7 +172,7 @@ describe 'Search#terminate_early' do
     end
     slow.should < 0.00015
     fast.should < 0.0001
-    (slow/fast).should >= 1.5
+    (slow/fast).should >= 1.333
 
     try_slow = Picky::Search.new index
     slow = performance_of do
@@ -184,9 +184,9 @@ describe 'Search#terminate_early' do
     fast = performance_of do
       try_fast.search('hello hello hello').ids
     end
-    slow.should < 0.0005
-    fast.should < 0.0003
-    (slow/fast).should >= 2
+    slow.should < 0.0003
+    fast.should < 0.0002
+    (slow/fast).should >= 1.333
 
     try_slow = Picky::Search.new index
     slow = performance_of do
@@ -198,9 +198,9 @@ describe 'Search#terminate_early' do
     fast = performance_of do
       try_fast.search('hello hello hello hello').ids
     end
-    slow.should < 0.002
-    fast.should < 0.0008
-    (slow/fast).should >= 2.3
+    slow.should < 0.001
+    fast.should < 0.0005
+    (slow/fast).should >= 1.5
   end
 
 end
