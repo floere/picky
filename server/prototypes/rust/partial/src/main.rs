@@ -8,5 +8,5 @@ fn main() {
     let fun1 = move |b| b + c;
     let fun2 = addition(10, fun1);
     
-    println!("{}", &fun2(1));
+    // println!("{}", &fun2(1));
 }

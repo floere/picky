@@ -51,16 +51,15 @@ pub fn process() {
     let vec1: Vec<u16> = (1..253).collect(); // Only creates a 1..252 Vec.
     let vec2: Vec<u16> = (2..252).collect();
 
-    println!("{:?}", vec1);
-    println!("{:?}", vec2);
+    // println!("{:?}", vec1);
+    // println!("{:?}", vec2);
 
     let t1 = time::now();
     let vec3 = vec1.intersect(&vec2);
     let t2 = time::now();
     
-    println!("{:?}", t2 - t1);
-    
-    println!("{:?}", vec3);
+    // println!("{:?}", t2 - t1);
+    // println!("{:?}", vec3);
 }
 
 fn main() {
