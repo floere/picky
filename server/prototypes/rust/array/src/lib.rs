@@ -1,4 +1,4 @@
-#![feature(drain)]
+// #![feature(drain)]
 
 extern crate libc;
 
@@ -6,25 +6,25 @@ use libc::{c_char, uint16_t, size_t};
 use std::{mem,str};
 use std::ffi::{CStr,CString};
 
-macro_rules! dereflegate {
-    ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
-        #[no_mangle] pub extern
-        // concat_idents! does not work here.
-        fn $from(array: &$pointer_type) -> $ret {
-            array.$to()
-        }
-    };
-}
-macro_rules! delegate {
-    ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
-        #[no_mangle] pub extern
-        // concat_idents! does not work here.
-        fn $from(ptr: *const $pointer_type) -> $ret {
-            let data = unsafe { &*ptr };
-            data.$to()
-        }
-    };
-}
+// macro_rules! dereflegate {
+//     ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
+//         #[no_mangle] pub extern
+//         // concat_idents! does not work here.
+//         fn $from(array: &$pointer_type) -> $ret {
+//             array.$to()
+//         }
+//     };
+// }
+// macro_rules! delegate {
+//     ($pointer_type:ident, $from:ident, $to:ident, $ret:ident) => {
+//         #[no_mangle] pub extern
+//         // concat_idents! does not work here.
+//         fn $from(ptr: *const $pointer_type) -> $ret {
+//             let data = unsafe { &*ptr };
+//             data.$to()
+//         }
+//     };
+// }
 
 // Load the pure Rust array.
 pub mod arrays;
