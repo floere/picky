@@ -55,12 +55,27 @@ EXPECTED
       ary.should == [:aaa, :aa, :aaaa]
     end
     it 'sorts correctly' do
+      ary = [:aaa, :aaaaaa, :aa]
+      
+      ary.sort_by_levenshtein! :aaaaa
+      
+      ary.should == [:aaaaaa, :aaa, :aa]
+    end
+    it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 3
 
-      ary = [:aaaaa, :aa, :aaaa]
+      ary = [:aaaaaa, :aa, :a]
       phonetic.prioritize ary, :aaa
 
-      ary.should == [:aaaa, :aa, :aaaaa]
+      ary.should == [:aa, :a, :aaaaaa]
+    end
+    it 'sorts correctly (longer first)' do
+      phonetic.instance_variable_set :@amount, 3
+
+      ary = [:aaaaa, :aaa, :a]
+      phonetic.prioritize ary, :aaa
+
+      ary.should == [:aaa, :aaaaa, :a]
     end
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 3
