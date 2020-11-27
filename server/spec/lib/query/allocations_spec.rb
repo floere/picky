@@ -81,7 +81,7 @@ describe Picky::Query::Allocations do
 
   describe 'process!' do
     before(:each) do
-      @allocation1 = double :allocation1, :count => 4, ids: [1, 2, 3, 4]
+      @allocation1 = double :allocation1, :count => 4, ids: [1, 2, 3, 4], empty_array: [] # TODO Why is empty_array necessary?
       @allocation2 = double :allocation2, :count => 3, ids: [5, 6, 7]
       @allocation3 = double :allocation3, :count => 2, ids: [8, 9]
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]

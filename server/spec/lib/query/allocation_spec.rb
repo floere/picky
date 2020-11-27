@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Query::Allocation do
 
   before(:each) do
-    @backend      = double :backend
+    @backend      = double :backend, empty_array: []
     @index        = double :index, :result_identifier => :some_result_identifier, :backend => @backend
     @combinations = double :combinations, :empty? => false
     @allocation   = described_class.new @index, @combinations
