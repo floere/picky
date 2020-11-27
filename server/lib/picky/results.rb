@@ -47,7 +47,6 @@ module Picky
     def prepare! extra_allocations = nil, unique = false, sorting = nil
       return if @prepared == [extra_allocations, unique, sorting] # cached?
       @prepared = [extra_allocations, unique, sorting] # cache!
-      puts "Preparing! (with #{@prepared})"
       unique ?
         @allocations.process_unique!(amount, offset, extra_allocations, sorting) :
         @allocations.process!(amount, offset, extra_allocations, sorting)
