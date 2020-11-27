@@ -37,10 +37,10 @@ module Picky
     #            [:title, :isbn] => +1
     #   end
     #
-    def initialize *indexes
+    def initialize *indexes, &proc
       @indexes = Query::Indexes.new *indexes
 
-      instance_eval(&Proc.new) if block_given?
+      instance_eval(&proc) if block_given?
 
       @tokenizer ||= Tokenizer.searching # THINK Not dynamic. Ok?
       @boosts    ||= Query::Boosts.new
