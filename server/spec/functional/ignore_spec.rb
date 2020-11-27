@@ -25,14 +25,14 @@ describe 'ignoring allocations/categories' do
     #
     try.search('some some').allocations.to_result.should == [
       # [:books, 1.386, 2, [[:text, "some", "some"],   [:text, "some", "some"]],   [2, 1]],
-      [:books, 1.386, 2, [[:title, "some", "some"]],                             [2, 1]],
-      [:books, 1.386, 2, [                           [:title, "some", "some"]],  [2, 1]],
-      [:books, 1.386, 2, [[:title, "some", "some"],  [:title, "some", "some"]],  [2, 1]],
-      [:books, 0.693, 1, [[:title, "some", "some"],  [:author, "some", "some"]], [2]],
-      [:books, 0.693, 1, [[:author, "some", "some"],                          ], [2]],
-      [:books, 0.693, 1, [[:author, "some", "some"], [:title, "some", "some"]],  [2]],
-      [:books, 0.693, 1, [                           [:author, "some", "some"]], [2]],
-      [:books, 0.0,   1, [[:author, "some", "some"], [:author, "some", "some"]], [2]]
+      [:books, 1.386, 2, [[:title, 'some', 'some']],                             [2, 1]],
+      [:books, 1.386, 2, [                           [:title, 'some', 'some']],  [2, 1]],
+      [:books, 1.386, 2, [[:title, 'some', 'some'],  [:title, 'some', 'some']],  [2, 1]],
+      [:books, 0.693, 1, [[:title, 'some', 'some'],  [:author, 'some', 'some']], [2]],
+      [:books, 0.693, 1, [[:author, 'some', 'some'],                          ], [2]],
+      [:books, 0.693, 1, [[:author, 'some', 'some'], [:title, 'some', 'some']],  [2]],
+      [:books, 0.693, 1, [                           [:author, 'some', 'some']], [2]],
+      [:books, 0.0,   1, [[:author, 'some', 'some'], [:author, 'some', 'some']], [2]]
     ]
   end
   
