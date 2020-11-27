@@ -34,8 +34,8 @@ module Picky
     end
 
     def allocations
-      # prepare! *(@prepared || [@extra_allocations, @unique, @sorting])
-      prepare! @extra_allocations, @unique, @sorting
+      prepare! *(@prepared || [@extra_allocations, @unique, @sorting])
+      # prepare! @extra_allocations, @unique, @sorting # TODO Remove?
       @allocations
     end
 
