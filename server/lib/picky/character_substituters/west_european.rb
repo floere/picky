@@ -24,7 +24,7 @@ module Picky
       # (See the associated spec for all examples)
       #
       def substitute text
-        trans = @chars.new(text).normalize :kd
+        trans = @chars.new(text).unicode_normalize :nfkd
 
         # Substitute special cases.
         #
