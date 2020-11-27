@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.4)
-    rack (1.5.2)
+    rack (2.1.4)
     rake (10.0.4)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
