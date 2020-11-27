@@ -1,8 +1,8 @@
-#![feature(drain)]
+// #![feature(drain)]
 
 extern crate libc;
 
-use libc::{c_char, uint16_t, uint8_t, size_t};
+use libc::{uint16_t, uint8_t, size_t};
 use std::ffi::CString;
 
 // macro_rules! dereflegate {
