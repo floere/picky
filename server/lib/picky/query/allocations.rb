@@ -92,10 +92,10 @@ module Picky
       #
       def ids amount = 20
         # TODO This is called too many times?
-        if allocation = first
+        if first_allocation = first
           # TODO Call ids with amount as parameter?
           # result = inject(allocation.empty_array) do |total, allocation|
-          result = self[1..-1].inject(allocation.ids) do |total, allocation|
+          result = self[1..-1].inject(first_allocation.ids) do |total, allocation|
             if total.size >= amount
               break(total)
             else
