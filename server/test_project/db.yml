@@ -1,4 +1,4 @@
-adapter: postgres
+adapter: postgresql
 host: localhost
 username: root
 password:

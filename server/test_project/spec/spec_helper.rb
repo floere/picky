@@ -12,7 +12,7 @@ system('redis-cli quit') || fail('Redis must be running. Run redis-server in a t
 #       Please change and rerun. And suggest a better solution, please :)
 #
 sql_file = File.expand_path '../../data/generate_test_db.sql', __FILE__
-system("mysql --user developer -D picky_test_project < #{sql_file}") ||
-  fail("MySQL test data couldn't be inserted. Start a MySQL server using mysql.server start")
+system("psql -d picky_test_project < #{sql_file}") ||
+  fail("Postgres test data couldn't be inserted. See #{sql_file} for infos.")
 
 Picky::Loader.load_application

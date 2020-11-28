@@ -21,7 +21,7 @@ GEM
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    mysql2 (0.5.3)
+    pg (1.2.3)
     procrastinate (0.6.0)
       state_machine (~> 1.1)
     rack (2.2.3)
@@ -65,7 +65,7 @@ DEPENDENCIES
   activerecord (~> 3)
   activesupport
   multi_json
-  mysql2
+  pg
   procrastinate (~> 0.4)
   rack
   rack_fast_escape (= 2009.06.24)

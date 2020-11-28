@@ -1,7 +1,7 @@
 -- Postgres
 --
 -- > createdb picky_test_project
--- > psql -D picky_test_project < /Users/admin/temp/picky/server/test_project/data/generate_test_db.sql
+-- > psql -d picky_test_project < /Users/admin/temp/picky/server/test_project/data/generate_test_db.sql
 
 DROP TABLE IF EXISTS books;
 
