@@ -14,5 +14,5 @@ gem 'yajl-ruby', :require => 'yajl' # For faster JSON handling
 gem 'activerecord', '~> 3', :require => 'active_record' # If you use AR for the DB
 gem 'procrastinate', '~> 0.4' # Parallel indexing
 gem 'redis'
-gem 'mysql'
+gem 'pg'
 gem 'sqlite3'

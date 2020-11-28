@@ -1,4 +1,4 @@
-adapter: mysql
+adapter: postgres
 host: localhost
 username: root
 password:
