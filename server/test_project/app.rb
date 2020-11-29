@@ -65,7 +65,7 @@ class BookSearch < Sinatra::Application
       boost weights
     }
   }.each do |(path, things)|
-    get %r{\A/#{path}\z} do
+    get %r{/#{path}} do
       things.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
     end
   end
@@ -73,7 +73,7 @@ class BookSearch < Sinatra::Application
   # Live.
   #
   live = Picky::Interfaces::LiveParameters::Unicorn.new
-  get %r{\A/admin\z} do
+  get '/admin' do
     results = live.parameters params
     results.to_json
   end
