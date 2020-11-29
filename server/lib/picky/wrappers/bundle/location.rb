@@ -47,8 +47,8 @@ module Picky
 
           # Load first the bundle, then extract the config.
           #
-          def load
-            bundle.load
+          def load symbol_keys
+            bundle.load symbol_keys
 
             location_anchor     = bundle['location_anchor']
             @calculation.anchor = location_anchor && location_anchor.to_f || raise("Configuration 'location_anchor' for #{bundle.identifier} missing. Did you run rake index already?")
