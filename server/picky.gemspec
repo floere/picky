@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.summary = 'Picky: Semantic Search Engine. Clever Interface. Good Tools.'
 
   s.executables = ['picky']
-  s.default_executable = "picky"
 
   s.files = Dir["tools/**/*.rb", "lib/**/*.rb", "lib/tasks/*.rake", "ext/picky/picky.c"]
   s.test_files = Dir["spec/**/*_spec.rb"]
