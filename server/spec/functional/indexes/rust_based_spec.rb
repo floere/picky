@@ -84,8 +84,8 @@ describe Rust::Array do
       it 'is reasonably fast' do
         performance_of do
           books.search('title')
-        end.should < 0.005
-        # Note: Native Ruby is < 0.0001 (20x faster)
+        end.should < 0.008
+        # Note: Native Ruby is < 0.0001 (many times faster)
       end
       describe 'sorting' do
         it 'works' do
