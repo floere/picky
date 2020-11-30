@@ -11,24 +11,24 @@ describe BookSearch do
     Picky::Indexes.load
   end
 
-  let(:books)           { Picky::TestClient.new(described_class, :path => '/books')           }
-  let(:books_ignoring)  { Picky::TestClient.new(described_class, :path => '/books_ignoring')  }
-  let(:book_each)       { Picky::TestClient.new(described_class, :path => '/book_each')       }
-  let(:csv)             { Picky::TestClient.new(described_class, :path => '/csv')             }
-  let(:redis)           { Picky::TestClient.new(described_class, :path => '/redis')           }
-  let(:sym)             { Picky::TestClient.new(described_class, :path => '/sym')             }
-  let(:geo)             { Picky::TestClient.new(described_class, :path => '/geo')             }
-  let(:simple_geo)      { Picky::TestClient.new(described_class, :path => '/simple_geo')      }
-  let(:indexing)        { Picky::TestClient.new(described_class, :path => '/indexing')        }
-  let(:memory_changing) { Picky::TestClient.new(described_class, :path => '/memory_changing') }
-  let(:redis_changing)  { Picky::TestClient.new(described_class, :path => '/redis_changing')  }
-  let(:file)            { Picky::TestClient.new(described_class, :path => '/file')            }
-  let(:japanese)        { Picky::TestClient.new(described_class, :path => '/japanese')        }
-  # let(:backends)        { Picky::TestClient.new(described_class, :path => '/backends')        }
-  let(:nonstring)       { Picky::TestClient.new(described_class, :path => '/nonstring')       }
-  let(:partial)         { Picky::TestClient.new(described_class, :path => '/partial')         }
-  let(:sqlite)          { Picky::TestClient.new(described_class, :path => '/sqlite')          }
-  let(:commas)          { Picky::TestClient.new(described_class, :path => '/commas')          }
+  let(:books)           { Picky::TestClient.new(described_class, path: '/books')          }
+  let(:books_ignoring)  { Picky::TestClient.new(described_class, path: '/books_ignoring') }
+  let(:book_each)       { Picky::TestClient.new(described_class, path: '/book_each')      }
+  let(:csv)             { Picky::TestClient.new(described_class, path: '/csv')            }
+  let(:redis)           { Picky::TestClient.new(described_class, path: '/redis')          }
+  let(:sym)             { Picky::TestClient.new(described_class, path: '/sym')            }
+  let(:geo)             { Picky::TestClient.new(described_class, path: '/geo')            }
+  let(:simple_geo)      { Picky::TestClient.new(described_class, path: '/simple_geo')     }
+  let(:indexing)        { Picky::TestClient.new(described_class, path: '/indexing')       }
+  let(:memory_changing) { Picky::TestClient.new(described_class, path: '/memory_changing') }
+  let(:redis_changing)  { Picky::TestClient.new(described_class, path: '/redis_changing') }
+  let(:file)            { Picky::TestClient.new(described_class, path: '/file')           }
+  let(:japanese)        { Picky::TestClient.new(described_class, path: '/japanese')       }
+  # let(:backends)        { Picky::TestClient.new(described_class, path: '/backends')       }
+  let(:nonstring)       { Picky::TestClient.new(described_class, path: '/nonstring')      }
+  let(:partial)         { Picky::TestClient.new(described_class, path: '/partial')        }
+  let(:sqlite)          { Picky::TestClient.new(described_class, path: '/sqlite')         }
+  let(:commas)          { Picky::TestClient.new(described_class, path: '/commas')         }
   
   describe "dump" do
     it "simply works" do
@@ -39,7 +39,7 @@ describe BookSearch do
       end
 
       index.replace Thing.new(1, 'Picky')
-      index.replace Thing.new(2, 'Parslet')
+      index.replace Thing.new(2, 'Phony')
 
       index.dump
     end
@@ -184,6 +184,8 @@ describe BookSearch do
   # Similarity.
   #
   it { expect(csv.search('hystori~ leeward').ids).to eq [4] }
+  it { expect(csv.search('strutigic~').ids).to eq [7, 398, 414] }
+  it { expect(csv.search('guvurnance~').ids).to eq [126, 181, 198, 263, 298, 324, 419, 22] } # TODO 7 should be in the result set.
   it { expect(csv.search('strutigic~ guvurnance~').ids).to eq [7] }
   it { expect(csv.search('strategic~ governance~').ids).to eq [] } # Does not find itself.
 
@@ -342,7 +344,7 @@ describe BookSearch do
   
   # Commas in ids.
   #
-  it { expect(commas.search("text:with").ids).to eq ['a,b', 'c,d'] }
+  it { expect(commas.search("text").ids).to eq ['a,b', 'c,d'] }
 
   # Database index reloading.
   #
