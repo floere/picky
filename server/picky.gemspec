@@ -2,6 +2,7 @@ require File.expand_path '../../version', __FILE__
 
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
+  s.required_ruby_version = '>= 2.7.1' # ruby-install ruby 2.7.1; chruby 2.7.1
 
   s.name = 'picky'
   s.version = Picky::VERSION
@@ -12,7 +13,6 @@ Gem::Specification.new do |s|
   s.licenses = ['MIT', 'LGPL']
 
   s.homepage = 'http://florianhanke.com/picky'
-  s.rubyforge_project = 'http://rubyforge.org/projects/picky'
 
   s.description = 'Fast Ruby semantic text search engine with comfortable single field interface.'
   s.summary = 'Picky: Semantic Search Engine. Clever Interface. Good Tools.'
