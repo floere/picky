@@ -11,7 +11,7 @@ class Module
   def each_forward *methods
     forwarding methods,
       'def %{method}(*args, &block); %{to}.each{ |t| t.__send__(:%{method}, *args, &block) }; end',
-      'Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, :to => :an_array_reader).'
+      'Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, to: :an_array_reader).'
   end
   
   private

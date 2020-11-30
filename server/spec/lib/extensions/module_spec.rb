@@ -67,14 +67,14 @@ describe Module do
           Class.new do
             forward :bli, :bla, :blu # :to missing
           end
-        end.should raise_error(ArgumentError, "Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, :to => :a_reader).")
+        end.should raise_error(ArgumentError, "Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, to: :a_reader).")
       end
       it 'should raise an error' do
         lambda do
           Class.new do
             each_forward :bli, :bla, :blu # :to missing
           end
-        end.should raise_error(ArgumentError, "Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, :to => :an_array_reader).")
+        end.should raise_error(ArgumentError, "Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, to: :an_array_reader).")
       end
     end
   end
