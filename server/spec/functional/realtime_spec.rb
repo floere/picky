@@ -143,7 +143,7 @@ describe "Realtime Indexing" do
 
           books.search('title:Ne').ids.should == [1]
         end
-        it 'does not unnecessarily change the position if a category already contains it' do
+        it 'does not unnecessarily change the position if a category already contains it (not true anymore)' do
           books.search('title:Title').ids.should == [1]
 
           index.add Book.new(2, "Title New", "Author New")
@@ -152,7 +152,7 @@ describe "Realtime Indexing" do
           
           index.replace Book.new(1, "Title", "Author")
           
-          books.search('title:Title').ids.should == [2,1]
+          books.search('title:Title').ids.should == [1,2]
         end
       end
 
