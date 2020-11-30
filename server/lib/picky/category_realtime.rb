@@ -31,7 +31,10 @@ module Picky
       partial.remove id
     end
 
-    # Replaces an object. Will first check if each category of the object is in
+    # Replaces an object.
+    #
+    # Note: This paragraph is not correct anymore.
+    # Will first check if each category of the object is in
     # the index it would insert, and if it is, will not insert.
     # Otherwise will delete and add.
     #
