@@ -156,8 +156,8 @@ describe 'Search#terminate_early' do
     fast = performance_of do
       try_fast.search 'hello'
     end
-    slow.should < 0.00006
-    fast.should < 0.00004
+    slow.should < 0.00009
+    fast.should < 0.00006
     (slow/fast).should >= 1.333
 
     try_slow = Picky::Search.new index
