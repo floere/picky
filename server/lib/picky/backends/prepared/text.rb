@@ -56,7 +56,7 @@ module Picky
           token = nil
           ::File.open(cache_path, 'r:utf-8') do |file|
             file.each_line do |line|
-              id, token = line.split ?,, 2
+              id, token = line.split ',', 2
               yield id.freeze, (token.chomp! || token).freeze
             end
           end
