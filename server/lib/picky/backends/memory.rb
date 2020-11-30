@@ -60,7 +60,8 @@ module Picky
       
         def hash_for hints
           if hints && hints.does?(:no_dump)
-            ::GoogleHashSparseRubyToRuby # TODO Use GoogleHashSparseIntToRuby where possible.
+            # ::GoogleHashSparseRubyToRuby # TODO Use GoogleHashSparseIntToRuby where possible.
+            ::Hash # Note: GoogleHashSparseRubyToRuby was removed with Ruby 2.7.1
           else
             ::Hash
           end
