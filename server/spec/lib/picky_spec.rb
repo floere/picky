@@ -15,13 +15,13 @@ describe Picky do
     # TODO Picky.root is set to /spec/temp in spec_helper, so is this the "best" way?
     load_path   = File.expand_path('../../../lib', __FILE__)
     ruby        = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name']).sub(/.*\s.*/m, '"\&"')
-
+    
     simple_load = <<-COMMAND
       #{ruby} -I #{load_path} -r picky -e "puts 'OK'"
     COMMAND
+
     response = IO.popen(simple_load, err: [:child, :out])
-    # pp response.read
-    response.readline.strip.should == 'OK'
+    expect(response.readlines.last.chomp).to eq 'OK'
   end
   
 end
