@@ -42,7 +42,7 @@ class BookSearch < Sinatra::Application
     },
     memory_changing: Picky::Search.new(MemoryChangingIndex),
     redis_changing: Picky::Search.new(RedisChangingIndex),
-    csv: Picky::Search.new(CSVTestIndex) {
+    csv: Picky::Search.new(CSVIndex) {
       boost weights
     },
     isbn: Picky::Search.new(ISBNIndex),
@@ -61,7 +61,7 @@ class BookSearch < Sinatra::Application
     partial: Picky::Search.new(PartialIndex),
     sqlite: Picky::Search.new(SQLiteIndex),
     commas: Picky::Search.new(CommaIdsIndex),
-    all: Picky::Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
+    all: Picky::Search.new(BooksIndex, CSVIndex, ISBNIndex, MgeoIndex) {
       boost weights
     }
   }.each do |(path, things)|
