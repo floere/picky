@@ -107,7 +107,7 @@ GEM
     url_escape (2009.06.24)
     uuidtools (2.1.5)
     www-delicious (0.4.0)
-    yajl-ruby (1.2.1)
+    yajl-ruby (1.4.2)
 
 PLATFORMS
   ruby
