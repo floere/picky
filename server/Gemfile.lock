@@ -24,6 +24,7 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.0)
     builder (3.2.2)
+    concurrent-ruby (1.1.10)
     coverband (1.0.2)
       json
       redis
@@ -40,7 +41,8 @@ GEM
     hiredis (0.6.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    i18n (0.7.0)
+    i18n (0.9.5)
+      concurrent-ruby (~> 1.0)
     json (1.8.3)
     mime-types (2.6.1)
     minitest (5.7.0)
