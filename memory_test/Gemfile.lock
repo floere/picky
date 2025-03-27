@@ -20,7 +20,7 @@ GEM
     state_machine (0.9.4)
     text (1.2.1)
     url_escape (2009.06.24)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.4.3)
 
 PLATFORMS
   ruby
