@@ -249,18 +249,20 @@ module Picky
         @similar
       end
 
+      mattr_accessor :illegals
+
       # Normalizes this token's text.
       #
       def remove_illegals
         # NOTE: unless @text.blank? was removed.
         #
-        @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
+        @text.gsub! self.class.illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
 
       def self.redefine_illegals
         # NOTE: By default, both no similar and no partial are ".
         #
-        @@illegals = /[#{@@no_similar_character}#{@@similar_character}#{@@no_partial_character}#{@@partial_character}]/
+        self.illegals = /[#{@@no_similar_character}#{@@similar_character}#{@@no_partial_character}#{@@partial_character}]/
       end
       redefine_illegals
 
