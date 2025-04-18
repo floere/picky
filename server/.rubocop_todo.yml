@@ -77,13 +77,6 @@ Naming/AsciiIdentifiers:
   Exclude:
     - 'prototypes/range_query/performance.rb'
 
-# Offense count: 1
-# Configuration parameters: ForbiddenDelimiters.
-# ForbiddenDelimiters: (?i-mx:(^|\s)(EO[A-Z]{1}|END)(\s|$))
-Naming/HeredocDelimiterNaming:
-  Exclude:
-    - 'prototypes/rust/array/src/integration.rb'
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.

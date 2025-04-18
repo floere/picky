@@ -29,7 +29,7 @@ module FunctionMapping
       line = __LINE__ + 3
     end
     # Map external interface to C interface.
-    module_eval(<<-EOS, __FILE__, line)
+    module_eval(<<-MAPPING, __FILE__, line)
       def #{external}(*args, &block)
         # p [:calling, :'#{external}', @internal_instance, args]
         f = #{relative}func_map[:'#{internal}']
@@ -49,7 +49,7 @@ module FunctionMapping
         # p res
         res
       end
-    EOS
+    MAPPING
     func
   end
 end
