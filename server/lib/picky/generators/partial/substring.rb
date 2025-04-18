@@ -14,7 +14,7 @@ module Picky
             def each_subtoken(token, &block)
               token.each_subtoken @from, &block
             end
-          elsif @from < 0 && @to < 0
+          elsif @from.negative? && @to.negative?
             def each_subtoken(token, &block)
               token.each_subtoken @from - @to - 1, (0..@to), &block
             end

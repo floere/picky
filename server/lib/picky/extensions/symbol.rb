@@ -34,7 +34,7 @@ class Symbol
     yield sub.intern
 
     size = sub.size
-    from_length = size + from_length + 1 if from_length < 0
+    from_length = size + from_length + 1 if from_length.negative?
     from_length = size if size < from_length
     from_length = 1 if from_length < 1
 
@@ -49,11 +49,11 @@ class Symbol
   # :keys.each_intoken(10, 12) # => yields nothing (min larger than sym)
   #
   def each_intoken(min_length = 1, max_length = -1)
-    max_length = size + max_length + 1 if max_length < 0
+    max_length = size + max_length + 1 if max_length.negative?
     max_length = size if size < max_length
     max_length = 1 if max_length < 1
 
-    min_length = size + min_length + 1 if min_length < 0
+    min_length = size + min_length + 1 if min_length.negative?
     min_length = 1 if min_length < 1
 
     this_many = size - max_length + 1

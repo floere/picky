@@ -97,7 +97,7 @@ def diff(klass = String)
     now_hash[thing] -= 1
   end
 
-  now_hash.select { |_, v| v > 0 }
+  now_hash.select { |_, v| v.positive? }
 end
 
 definitions.each do |definition, description|

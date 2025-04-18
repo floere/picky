@@ -123,7 +123,7 @@ module Picky
       # Transform the allocation into result form.
       #
       def to_result
-        if count && count > 0
+        if count&.positive?
           [@index.result_identifier, score, count, @combinations.to_result,
            ids]
         end

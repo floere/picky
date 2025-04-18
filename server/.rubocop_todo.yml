@@ -338,31 +338,6 @@ Style/MutableConstant:
     - 'prototypes/rust/array/src/manual_test.rb'
     - 'spec/functional/backends/special_spec.rb'
 
-# Offense count: 11
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'spec/**/*'
-    - 'lib/picky/category.rb'
-    - 'lib/picky/extensions/string.rb'
-    - 'lib/picky/extensions/symbol.rb'
-    - 'lib/picky/generators/partial/substring.rb'
-    - 'lib/picky/query/allocation.rb'
-    - 'performance_tests/search.rb'
-
-# Offense count: 11
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: respond_to_missing?
-Style/OptionalBooleanParameter:
-  Exclude:
-    - 'lib/picky/bundle_indexed.rb'
-    - 'lib/picky/query/tokens.rb'
-    - 'lib/picky/results.rb'
-    - 'lib/picky/search.rb'
-    - 'lib/picky/splitters/automatic.rb'
-
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
