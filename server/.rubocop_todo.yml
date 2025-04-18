@@ -86,14 +86,6 @@ Naming/MemoizedInstanceVariableName:
     - 'lib/picky/backends/redis.rb'
     - 'lib/picky/query/allocation.rb'
 
-# Offense count: 3
-# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
-# AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
-Naming/MethodParameterName:
-  Exclude:
-    - 'lib/picky/category_realtime.rb'
-    - 'performance/memory/experiments2.rb'
-
 # Offense count: 10
 # Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
 # SupportedStyles: snake_case, normalcase, non_integer

@@ -34,17 +34,17 @@ p ObjectSpace.memsize_of(ary)
 
 # ---
 
-h = {}
+hash = {}
 10_000.times do |i|
   h[i] = (0..i).to_a
 end
 
-def remove(h, i)
-  h.each_value do |ary|
-    ary.delete(i) if ary.include?(i)
+def remove(hash, number)
+  hash.each_value do |ary|
+    ary.delete(number) if ary.include?(number)
   end
 end
 
 t = Time.now
-remove(h, 10_000)
+remove(hash, 10_000)
 p Time.now - t

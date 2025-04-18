@@ -107,10 +107,10 @@ module Picky
       show_informative_add_text_error_message_for e
     end
 
-    def show_informative_add_text_error_message_for(e)
-      raise %(#{e.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.) if e.name == :each
+    def show_informative_add_text_error_message_for(error)
+      raise %(#{error.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.) if error.name == :each
 
-      raise e
+      raise error
     end
 
     def add_tokenized_token(id, text, method: :unshift, format: true, static: false, force_update: false)
