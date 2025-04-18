@@ -18,7 +18,7 @@ describe Picky::Generators::Weights::Dynamic do
 
     describe 'weight_for' do
       it 'is nil' do
-        constant.weight_for(1234).should == nil
+        constant.weight_for(1234).should.nil?
       end
     end
   end

@@ -109,7 +109,7 @@ describe Picky::Category do
           @partial.should_receive(:weight).once.times.with(2).and_return(nil)
           @partial.should_receive(:weight).once.times.with(3).and_return(nil)
 
-          @category.weight(token).should == nil
+          @category.weight(token).should.nil?
         end
       end
       context 'exact bundle' do

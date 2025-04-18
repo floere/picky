@@ -55,7 +55,7 @@ describe Picky::Source do
     end
     context 'with nil ok' do
       it 'simply returns nil back' do
-        described_class.from(nil, true).should == nil
+        described_class.from(nil, true).should.nil?
       end
     end
   end

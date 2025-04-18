@@ -51,7 +51,7 @@ describe Picky::Bundle do
         @bundle.realtime[2].should
         @bundle.inverted['title'].should
         @bundle.weights['title'].should
-        @bundle.similarity['TTL'].should == nil
+        @bundle.similarity['TTL'].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
@@ -63,7 +63,7 @@ describe Picky::Bundle do
         @bundle.realtime[2].should
         @bundle.inverted['title'].should
         @bundle.weights['title'].should
-        @bundle.similarity['TTL'].should == nil
+        @bundle.similarity['TTL'].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
@@ -94,7 +94,7 @@ describe Picky::Bundle do
         @bundle.realtime[1].should
         @bundle.inverted['title'].should
         @bundle.weights['title'].should
-        @bundle.similarity['TTL'].should == nil
+        @bundle.similarity['TTL'].should.nil?
       end
     end
 
@@ -151,7 +151,7 @@ describe Picky::Bundle do
         @bundle.realtime[2].should
         @bundle.inverted[:title].should
         @bundle.weights[:title].should
-        @bundle.similarity[:TTL].should == nil
+        @bundle.similarity[:TTL].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -162,7 +162,7 @@ describe Picky::Bundle do
         @bundle.realtime[1].should
         @bundle.inverted[:title].should
         @bundle.weights[:title].should
-        @bundle.similarity[:TTL].should == nil
+        @bundle.similarity[:TTL].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -193,7 +193,7 @@ describe Picky::Bundle do
         @bundle.realtime[1].should
         @bundle.inverted[:title].should
         @bundle.weights[:title].should
-        @bundle.similarity[:TTL].should == nil
+        @bundle.similarity[:TTL].should.nil?
       end
     end
 

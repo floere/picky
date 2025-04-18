@@ -29,7 +29,7 @@ describe Picky::Backends::Redis::Float do
     it 'returns whatever it gets from the backend' do
       client.should_receive(:hget).at_least(1).and_return nil
 
-      backend['anything'].should == nil
+      backend['anything'].should.nil?
     end
   end
 

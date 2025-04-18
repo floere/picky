@@ -46,7 +46,7 @@ describe Picky::Index do
         end
       end
       it 'does not have an after_indexing set' do
-        index.after_indexing.should == nil
+        index.after_indexing.should.nil?
       end
     end
   end
@@ -113,7 +113,7 @@ describe Picky::Index do
           @index.category :some_name, source: double(:source)
         end
         it 'returns it if found' do
-          @index[:some_name].should_not == nil
+          @index[:some_name].should_not.nil?
         end
         it 'raises on none existent category' do
           expect do

@@ -44,7 +44,7 @@ describe 'Option symbol_keys' do
     index[:text].exact.inverted[:ohai].should
     index[:text].exact.weights[:ohai].should
     index[:text].exact.realtime[1].should
-    index[:text].exact.similarity[:ohai].should == nil
+    index[:text].exact.similarity[:ohai].should.nil?
   end
 
   it 'does the internals right - uses symbols' do

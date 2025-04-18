@@ -176,7 +176,7 @@ describe Picky::Query::Allocation do
 
         @allocation.process! 20, 0
 
-        @allocation.to_result.should == nil
+        @allocation.to_result.should.nil?
       end
     end
   end

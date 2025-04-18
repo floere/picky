@@ -93,7 +93,7 @@ describe Picky::Bundle do
       @bundle.instance_variable_set :@weights, { existing: :specific }
     end
     it 'should return nil' do
-      @bundle.weight(:non_existing).should == nil
+      @bundle.weight(:non_existing).should.nil?
     end
     it 'should return the weight for the text' do
       @bundle.weight(:existing).should == :specific

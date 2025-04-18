@@ -89,7 +89,7 @@ describe Picky::Results::ExactFirst do
           @category.weight(double(:token, text: :anything, partial?: true)).should == 0.12
         end
         it 'uses the exact weight' do
-          @category.weight(double(:token, text: :anything, partial?: false)).should == nil
+          @category.weight(double(:token, text: :anything, partial?: false)).should.nil?
         end
       end
       context 'partial without weight' do
@@ -97,10 +97,10 @@ describe Picky::Results::ExactFirst do
           @partial.stub weight: nil
         end
         it 'is nil' do
-          @category.weight(double(:token, text: :anything, partial?: true)).should == nil
+          @category.weight(double(:token, text: :anything, partial?: true)).should.nil?
         end
         it 'is nil' do
-          @category.weight(double(:token, text: :anything, partial?: false)).should == nil
+          @category.weight(double(:token, text: :anything, partial?: false)).should.nil?
         end
       end
     end

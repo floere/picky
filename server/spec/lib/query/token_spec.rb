@@ -47,7 +47,7 @@ describe Picky::Query::Token do
       let(:token) { described_class.processed 'noqualifier', 'NoQualifier' }
       context 'unrestricted' do
         it 'categorizes correctly' do
-          token.predefined_categories(mapper).should == nil
+          token.predefined_categories(mapper).should.nil?
         end
       end
       context 'restricted' do
@@ -321,7 +321,7 @@ describe Picky::Query::Token do
         @token = described_class.processed 'not similar', 'NOT SIMILAR'
       end
       it 'should be nil' do
-        @token.partial?.should == nil
+        @token.partial?.should.nil?
       end
     end
   end
