@@ -83,7 +83,6 @@ Naming/AsciiIdentifiers:
 # SupportedStylesForLeadingUnderscores: disallowed, required, optional
 Naming/MemoizedInstanceVariableName:
   Exclude:
-    - 'lib/picky/backends/redis.rb'
     - 'lib/picky/query/allocation.rb'
 
 # Offense count: 10

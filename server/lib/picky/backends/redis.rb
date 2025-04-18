@@ -200,14 +200,11 @@ module Picky
       # Note: Generated when this class loads.
       #
       require 'socket'
-      def self.extract_host
+      def self.host
         @host ||= Socket.gethostname
       end
 
-      def host
-        self.class.extract_host
-      end
-      extract_host
+      # host
       def pid
         @pid ||= Process.pid
       end
@@ -215,7 +212,7 @@ module Picky
       # Use the host and pid (generated lazily in child processes) for the result.
       #
       def generate_intermediate_result_id
-        @intermediate_result_id ||= "#{host}:#{pid}:picky:result"
+        @generate_intermediate_result_id ||= "#{self.class.host}:#{pid}:picky:result"
       end
 
       def identifiers_for(combinations)
