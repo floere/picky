@@ -23,6 +23,17 @@ module Picky
 
       def adapt_for_logger
         super
+
+        extend Logger
+      end
+
+      def adapt_for_io
+        super
+
+        extend Io
+      end
+
+      module Logger
         def timed_exclaim(text)
           output.info "#{Time.now.strftime('%H:%M:%S')}: #{text}"
         end
@@ -36,8 +47,7 @@ module Picky
         end
       end
 
-      def adapt_for_io
-        super
+      module Io
         def timed_exclaim(text)
           output.puts "#{Time.now.strftime('%H:%M:%S')}: #{text}"
           flush

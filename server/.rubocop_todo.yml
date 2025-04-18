@@ -20,14 +20,6 @@ Lint/MissingSuper:
     - 'lib/picky/query/or.rb'
 
 # Offense count: 23
-# Configuration parameters: AllowedMethods, AllowedPatterns.
-Lint/NestedMethodDefinition:
-  Exclude:
-    - 'lib/picky/loggers/concise.rb'
-    - 'lib/picky/loggers/silent.rb'
-    - 'lib/picky/loggers/verbose.rb'
-
-# Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes.
 Metrics/AbcSize:
   Max: 37

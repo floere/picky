@@ -25,6 +25,17 @@ module Picky
 
       def adapt_for_logger
         super
+
+        extend Logger
+      end
+
+      def adapt_for_io
+        super
+
+        extend Io
+      end
+
+      module Logger
         def info(text)
           output.info text
         end
@@ -38,8 +49,7 @@ module Picky
         end
       end
 
-      def adapt_for_io
-        super
+      module Io
         def info(text)
           output.write text
         end

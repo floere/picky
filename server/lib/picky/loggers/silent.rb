@@ -25,13 +25,11 @@ module Picky
       end
 
       def adapt_for_logger
-        def flush; end
+        extend Logger
       end
 
       def adapt_for_io
-        def flush
-          output.flush
-        end
+        extend Io
       end
 
       def info(*); end
@@ -45,6 +43,16 @@ module Picky
       def dump(*); end
 
       def load(*); end
+
+      module Logger
+        def flush; end
+      end
+
+      module Io
+        def flush
+          output.flush
+        end
+      end
     end
   end
 end
