@@ -13,17 +13,29 @@ module Picky
           @to = to
 
           if @to.zero?
-            def each_subtoken(token, &block)
-              token.each_subtoken @from, &block
-            end
+            extend ToZero
           elsif @from.negative? && @to.negative?
-            def each_subtoken(token, &block)
-              token.each_subtoken @from - @to - 1, (0..@to), &block
-            end
+            extend FromToNegative
           else
-            def each_subtoken(token, &block)
-              token.each_subtoken @from, (0..@to), &block
-            end
+            extend Otherwise
+          end
+        end
+
+        module ToZero
+          def each_subtoken(token, &block)
+            token.each_subtoken @from, &block
+          end
+        end
+
+        module FromToNegative
+          def each_subtoken(token, &block)
+            token.each_subtoken @from - @to - 1, (0..@to), &block
+          end
+        end
+
+        module Otherwise
+          def each_subtoken(token, &block)
+            token.each_subtoken @from, (0..@to), &block
           end
         end
       end
