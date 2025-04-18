@@ -2,7 +2,8 @@
 #
 desc 'Analyzes indexes (index, category optional).'
 task :analyze, %i[index category] => :'stats:prepare' do |_, options|
-  index, category = options.index, options.category
+  index = options.index
+  category = options.category
 
   specific = Picky::Indexes
   specific = specific[index]    if index

@@ -5,7 +5,9 @@ describe 'Realtime Indexing' do
     attr_reader :id, :title, :author
 
     def initialize(id, title, author)
-      @id, @title, @author = id, title, author
+      @id = id
+      @title = title
+      @author = author
     end
   end
 

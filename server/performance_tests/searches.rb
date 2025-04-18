@@ -4,7 +4,8 @@ class Searches
   attr_reader :complexity, :data_size
 
   def initialize(complexity, data_size)
-    @complexity, @data_size = complexity, data_size
+    @complexity = complexity
+    @data_size = data_size
   end
 
   def self.each(data_size)

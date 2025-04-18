@@ -7,7 +7,8 @@ module Picky
         attr_reader :from, :to
 
         def initialize(from, to)
-          @from, @to = from, to
+          @from = from
+          @to = to
 
           if @to.zero?
             def each_subtoken(token, &block)

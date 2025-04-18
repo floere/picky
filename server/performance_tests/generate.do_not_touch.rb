@@ -11,7 +11,12 @@ class IndexGenerator
     attr_reader :id, :text1, :text2, :text3, :text4, :text5
 
     def initialize(id, text1, text2, text3, text4, text5)
-      @id, @text1, @text2, @text3, @text4, @text5 = id, text1, text2, text3, text4, text5
+      @id = id
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @text4 = text4
+      @text5 = text5
     end
 
     def to_s

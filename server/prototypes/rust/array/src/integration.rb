@@ -23,9 +23,11 @@ module FunctionMapping
     # Get the right error position.
     begin
       /^(.+?):(\d+)/ =~ caller.first
-      file, line = $1, $2.to_i
+      file = $1
+      line = $2.to_i
     rescue
-      file, line = __FILE__, __LINE__ + 3
+      file = __FILE__
+      line = __LINE__ + 3
     end
     # Map external interface to C interface.
     module_eval(<<-EOS, file, line)

@@ -9,7 +9,9 @@ class Each
 
   class Yielder
     def initialize(file, accessibility, options)
-      @file, @accessibility, @options = file, accessibility, options
+      @file = file
+      @accessibility = accessibility
+      @options = options
     end
 
     def each
