@@ -30,8 +30,8 @@ module Picky
     def analyze(object)
       object.each_category do |category|
         @indexes << <<-ANALYSIS
-  #{"#{category.index_name}".indented_to_s}\n
-  #{"#{category.name}".indented_to_s(4)}\n
+  #{category.index_name.to_s.indented_to_s}\n
+  #{category.name.to_s.indented_to_s(4)}\n
   #{"exact\n#{Analyzer.new.analyze(category.exact).indented_to_s}".indented_to_s(6)}\n
   #{"partial\n#{Analyzer.new.analyze(category.partial).indented_to_s}".indented_to_s(6)}
         ANALYSIS

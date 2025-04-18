@@ -10,7 +10,7 @@ module Picky
       else
         return if nil_ok
 
-        raise ArgumentError.new(<<~ERROR)
+        raise ArgumentError, <<~ERROR
           The source #{identifier_for(index_name)}should respond to either the method #each or
           it can be a lambda/block, returning such a source.
         ERROR

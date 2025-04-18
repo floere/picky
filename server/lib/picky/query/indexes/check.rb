@@ -23,7 +23,7 @@ module Picky
           end
 
           def raise_different(backends)
-            raise DifferentBackendsError.new(backends)
+            raise DifferentBackendsError, backends
           end
         end
       end

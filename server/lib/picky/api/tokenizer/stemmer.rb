@@ -6,7 +6,7 @@ module Picky
           if thing.respond_to? :stem
             thing
           else
-            raise ArgumentError.new <<~ERROR
+            raise ArgumentError, <<~ERROR
               The stems_with option needs a stemmer,
               which responds to #stem(text) and returns stemmed_text."
             ERROR

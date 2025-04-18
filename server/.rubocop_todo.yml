@@ -372,25 +372,6 @@ Style/PreferredHashMethods:
     - 'lib/picky/optimizers/memory/array_deduplicator.rb'
     - 'lib/picky/qualifier_mapper.rb'
 
-# Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedCompactTypes.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'lib/picky/api/tokenizer/character_substituter.rb'
-    - 'lib/picky/api/tokenizer/stemmer.rb'
-    - 'lib/picky/category_realtime.rb'
-    - 'lib/picky/query/indexes/check.rb'
-    - 'lib/picky/source.rb'
-    - 'lib/picky/tokenizer.rb'
-
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'lib/picky/statistics.rb'
-
 # Offense count: 27
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.

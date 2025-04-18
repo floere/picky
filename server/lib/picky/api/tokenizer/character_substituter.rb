@@ -6,7 +6,7 @@ module Picky
           if thing.respond_to? :substitute
             thing
           else
-            raise ArgumentError.new <<~ERROR
+            raise ArgumentError, <<~ERROR
               The substitutes_characters_with option needs a character substituter,
               which responds to #substitute(text) and returns substituted_text."
             ERROR
