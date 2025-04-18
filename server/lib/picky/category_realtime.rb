@@ -11,21 +11,21 @@ module Picky
     # @param method [Symbol] The method name to use on the id array.
     # @param force_update [Boolean] Whether to force update.
     #
-    def add object, method: :unshift, force_update: false
+    def add(object, method: :unshift, force_update: false)
       data = if from.respond_to? :call
         from.call(object)
       else
         object.send(from)
       end
-      add_text object.send(id), data, method: method, force_update: force_update
+      add_text(object.send(id), data, method:, force_update:)
     end
-    
+
     # Removes an indexed object with the
     # given id.
     #
     # @param id [Object] The id of the object.
     #
-    def remove id
+    def remove(id)
       id = id.send key_format if key_format?
       exact.remove id
       partial.remove id
@@ -101,7 +101,7 @@ module Picky
       format = key_format?
       static = static?
       tokens.each do |text|
-        add_tokenized_token id, text, method: method, format: format, static: static, force_update: force_update
+        add_tokenized_token(id, text, method:, format:, static:, force_update:)
       end
     rescue NoMethodError => e
       show_informative_add_text_error_message_for e

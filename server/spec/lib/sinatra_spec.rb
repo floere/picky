@@ -27,7 +27,7 @@ describe Picky::Sinatra do
       extendee.send :indexing, some: 'option'
     end
     it 'gets forwardd correctly' do
-      Picky::Tokenizer.should_receive(:default_searching_with).once.with some: 'option'
+      expect(Picky::Tokenizer).to receive(:default_searching_with).once.with(some: 'option')
 
       extendee.send :searching, some: 'option'
     end
