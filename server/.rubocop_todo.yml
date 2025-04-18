@@ -123,7 +123,6 @@ Style/ClassAndModuleChildren:
 Style/ClassVars:
   Exclude:
     - 'lib/picky/backends/redis/directly_manipulable.rb'
-    - 'lib/picky/index/hints.rb'
     - 'lib/picky/query/token.rb'
     - 'test_project/indexes/isbn_each.rb'
 

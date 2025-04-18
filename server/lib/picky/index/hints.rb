@@ -1,21 +1,22 @@
 module Picky
   class Index
     class Hints
+      ALLOWED_HINTS = [:no_dump].freeze
+
       def initialize(hints)
         @hints = check hints
       end
 
       # Check if all hints are allowed
       #
-      @@allowed_hints = [:no_dump]
       def check(hints)
         hints.each do |hint|
-          next if @@allowed_hints.include?(hint)
+          next if ALLOWED_HINTS.include?(hint)
 
           raise <<-ERROR
               Picky cannot optimize for #{hint}.
               Allowed hints are:
-                #{@@allowed_hints.join("\n")}
+                #{ALLOWED_HINTS.join("\n")}
           ERROR
         end
         hints
