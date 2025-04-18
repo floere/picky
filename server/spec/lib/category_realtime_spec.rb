@@ -30,9 +30,9 @@ describe Picky::Category, 'Realtime API' do
     category.replace_from id: 1, text: 'some text'
   end
   it 'raises on no id given' do
-    expect {
+    expect do
       category.replace_from text: 'some text'
-    }.to raise_error
+    end.to raise_error
   end
   it 'shrugs off no data given' do
     category.replace_from id: 1

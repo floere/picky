@@ -32,9 +32,9 @@ module Picky
 
         # Get rid of ecutes, graves etc.
         #
-        trans.unpack('U*').select { |cp|
+        trans.unpack('U*').select do |cp|
           cp < 0x0300 || cp > 0x035F
-        }.pack 'U*'
+        end.pack 'U*'
       end
     end
   end

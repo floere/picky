@@ -23,11 +23,11 @@ puts data[:name].exact.inverted.inject({}) { |result, token_ids|
 
 class Picky::Index
   def facets(category)
-    self[category].exact.inverted.inject({}) { |result, token_ids|
+    self[category].exact.inverted.inject({}) do |result, token_ids|
       token, ids = token_ids
       result[token] = ids.size
       result
-    }
+    end
   end
 end
 

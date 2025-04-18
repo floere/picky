@@ -13,9 +13,9 @@ describe 'partial automatic splitting with small partials' do
   end
 
   context 'splitting the text automatically' do
-    let(:automatic_splitter) {
+    let(:automatic_splitter) do
       Picky::Splitters::Automatic.new index[:text], partial: true
-    }
+    end
 
     # It splits the text correctly.
     #

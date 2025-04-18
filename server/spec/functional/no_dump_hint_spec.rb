@@ -24,11 +24,11 @@ describe 'Hint: no_dump' do
     it 'does not raise (as GoogleHashSparseRubyToRuby was removed)' do
       index.replace ComicBook.new(2, 'Title New', 'Author New')
 
-      expect {
+      expect do
         index.dump
         index.load
         index.build_realtime_mapping
-      }.to_not raise_error
+      end.to_not raise_error
     end
   end
 end

@@ -30,9 +30,9 @@ describe Picky::API::Search::Boost do
     end
     context 'invalid weight' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           object.extract_boosts Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           boost options for a Search should be either
           * for example a Hash { [:name, :surname] => +3 }
           or

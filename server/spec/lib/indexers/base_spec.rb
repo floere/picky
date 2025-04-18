@@ -21,9 +21,9 @@ describe Picky::Indexers::Base do
 
       indexer.stub :process
 
-      expect {
+      expect do
         indexer.prepare Picky::Categories.new
-      }.to raise_error('Trying to index without a source for some_index_or_category.')
+      end.to raise_error('Trying to index without a source for some_index_or_category.')
     end
   end
 

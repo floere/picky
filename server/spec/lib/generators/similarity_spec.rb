@@ -25,9 +25,9 @@ describe Picky::Generators::Similarity do
     end
     context 'invalid weight' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           similarity.from Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           Similarity options should be either
           * for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
           or
@@ -35,9 +35,9 @@ describe Picky::Generators::Similarity do
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           similarity.from Object.new, 'some_index'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           Similarity options for some_index should be either
           * for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
           or
@@ -45,9 +45,9 @@ describe Picky::Generators::Similarity do
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           similarity.from Object.new, 'some_index', 'some_category'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           Similarity options for some_index:some_category should be either
           * for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
           or

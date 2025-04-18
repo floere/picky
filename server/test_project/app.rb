@@ -22,25 +22,25 @@ class BookSearch < Sinatra::Application
   }
 
   {
-    books: Picky::Search.new(BooksIndex, ISBNIndex) {
+    books: Picky::Search.new(BooksIndex, ISBNIndex) do
       boost weights
-    },
-    books_ignoring: Picky::Search.new(BooksIndex, ISBNIndex) {
+    end,
+    books_ignoring: Picky::Search.new(BooksIndex, ISBNIndex) do
       boost weights
       ignore_unassigned_tokens true
-    },
-    book_each: Picky::Search.new(BookEachIndex) {
+    end,
+    book_each: Picky::Search.new(BookEachIndex) do
       boost weights
       ignore :title
-    },
-    redis: Picky::Search.new(RedisIndex) {
+    end,
+    redis: Picky::Search.new(RedisIndex) do
       boost weights
-    },
+    end,
     memory_changing: Picky::Search.new(MemoryChangingIndex),
     redis_changing: Picky::Search.new(RedisChangingIndex),
-    csv: Picky::Search.new(CSVIndex) {
+    csv: Picky::Search.new(CSVIndex) do
       boost weights
-    },
+    end,
     isbn: Picky::Search.new(ISBNIndex),
     sym: Picky::Search.new(SymKeysIndex),
     geo: Picky::Search.new(RealGeoIndex),
@@ -48,18 +48,18 @@ class BookSearch < Sinatra::Application
     iphone: Picky::Search.new(IphoneLocations),
     indexing: Picky::Search.new(IndexingIndex),
     file: Picky::Search.new(FileIndex),
-    japanese: Picky::Search.new(JapaneseIndex) {
+    japanese: Picky::Search.new(JapaneseIndex) do
       searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}"~*:,]/i, # a-zA-Z0-9\s\/\-\_\&\.
                 stopwords: /\b(and|the|of|it|in|for)\b/i,
                 splits_text_on: /[\s\/\-&]+/
-    },
+    end,
     nonstring: Picky::Search.new(NonstringDataIndex),
     partial: Picky::Search.new(PartialIndex),
     sqlite: Picky::Search.new(SQLiteIndex),
     commas: Picky::Search.new(CommaIdsIndex),
-    all: Picky::Search.new(BooksIndex, CSVIndex, ISBNIndex, MgeoIndex) {
+    all: Picky::Search.new(BooksIndex, CSVIndex, ISBNIndex, MgeoIndex) do
       boost weights
-    }
+    end
   }.each do |(path, things)|
     get %r{/#{path}} do
       things.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json

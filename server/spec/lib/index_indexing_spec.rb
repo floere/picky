@@ -69,11 +69,11 @@ describe Picky::Index do
     context 'with non#each source' do
       it 'raises' do
         the_source = double :source, harvest: nil
-        expect {
+        expect do
           described_class.new :some_name do
             source the_source
           end
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           The source for some_name should respond to either the method #each or
           it can be a lambda/block, returning such a source.
         ERROR

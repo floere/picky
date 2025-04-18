@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Picky::Tokenizer do
   describe 'with wrong/incorrectly spelled option' do
     it 'informs the user nicely' do
-      expect {
+      expect do
         described_class.new rejetcs_token_if: :blank?.to_proc
-      }.to raise_error(<<~MESSAGE)
+      end.to raise_error(<<~MESSAGE)
         The option "rejetcs_token_if" is not a valid option for a Picky tokenizer.
         Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
         A short overview:
@@ -23,11 +23,11 @@ describe Picky::Tokenizer do
   end
 
   context 'with special instance' do
-    let(:tokenizer) {
+    let(:tokenizer) do
       described_class.new rejects_token_if: lambda { |token|
         token.to_s.length < 2 || token == :hello
       }, case_sensitive: true
-    }
+    end
     it 'rejects tokens with length < 2' do
       tokenizer.reject([:'', :a, :ab, :abc]).should == %i[ab abc]
     end
@@ -361,9 +361,9 @@ describe Picky::Tokenizer do
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           described_class.from Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           indexing options should be either
           * a Hash
           or
@@ -371,9 +371,9 @@ describe Picky::Tokenizer do
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           described_class.from Object.new, 'some_index'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           indexing options for some_index should be either
           * a Hash
           or
@@ -381,9 +381,9 @@ describe Picky::Tokenizer do
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           described_class.from Object.new, 'some_index', 'some_category'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           indexing options for some_index:some_category should be either
           * a Hash
           or

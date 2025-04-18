@@ -31,9 +31,9 @@ describe Performant::Array do
       proto = Array.new(100, 3_500_000)
       arys = [proto.map { |e| rand e }, proto.map { |e| rand e }, proto.map { |e| rand e }]
 
-      Performant::Array.memory_efficient_intersect(arys).should == arys.inject(arys.shift.dup) { |total, _ary|
+      Performant::Array.memory_efficient_intersect(arys).should == arys.inject(arys.shift.dup) do |total, _ary|
         total & arys
-      }
+      end
     end
     it 'should be optimal for 2 small arrays of 50/10_000' do
       arys = [(1..50).to_a, (10_000..20_000).to_a << 7]

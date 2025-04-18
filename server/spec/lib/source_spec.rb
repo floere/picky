@@ -37,17 +37,17 @@ describe Picky::Source do
     end
     context 'invalid source with nil not ok' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           described_class.from Object.new, false
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           The source should respond to either the method #each or
           it can be a lambda/block, returning such a source.
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           described_class.from Object.new, false, 'some_index'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           The source for some_index should respond to either the method #each or
           it can be a lambda/block, returning such a source.
         ERROR

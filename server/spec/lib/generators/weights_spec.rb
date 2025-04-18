@@ -30,9 +30,9 @@ describe Picky::Generators::Weights do
     end
     context 'invalid weight' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           weights.from Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           weight options should be either
           * for example a Weights::Logarithmic.new, Weights::Constant.new(int = 0), Weights::Dynamic.new(&block) etc.
           or
@@ -42,9 +42,9 @@ describe Picky::Generators::Weights do
     end
     context 'invalid weight' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           weights.from Object.new, 'some_index_name'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           weight options for some_index_name should be either
           * for example a Weights::Logarithmic.new, Weights::Constant.new(int = 0), Weights::Dynamic.new(&block) etc.
           or
@@ -54,9 +54,9 @@ describe Picky::Generators::Weights do
     end
     context 'invalid weight' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           weights.from Object.new, 'some_index_name', 'some_category_name'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           weight options for some_index_name:some_category_name should be either
           * for example a Weights::Logarithmic.new, Weights::Constant.new(int = 0), Weights::Dynamic.new(&block) etc.
           or

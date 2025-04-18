@@ -41,6 +41,6 @@ puts people.search 'tentacles florian tentacles', 20, 0
 counts
 
 require 'benchmark'
-puts(Benchmark.measure {
+puts(Benchmark.measure do
   1000.times { people.search 'tentacles florian tentacles', 20, 0 }
-})
+end)

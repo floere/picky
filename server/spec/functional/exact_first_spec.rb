@@ -53,12 +53,12 @@ describe 'exact first' do
     data = Picky::Index.new :exact_first do
       key_format :to_i
 
-      source {
+      source do
         [
           OpenStruct.new(id: 1, text: 'discofox'),
           OpenStruct.new(id: 2, text: 'disco')
         ]
-      }
+      end
       category :text, partial: Picky::Partial::Substring.new(from: 1)
     end
     normal = Picky::Search.new data

@@ -85,9 +85,9 @@ describe Picky::Category do
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           described_class.new :some_category, index, indexing: Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           indexing options for some_index:some_category should be either
           * a Hash
           or

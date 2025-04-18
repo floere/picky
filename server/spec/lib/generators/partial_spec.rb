@@ -24,9 +24,9 @@ describe Picky::Generators::Partial do
     end
     context 'invalid partial' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           partial.from Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           partial options should be either
           * for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
           or
@@ -34,9 +34,9 @@ describe Picky::Generators::Partial do
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           partial.from Object.new, 'some_index'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           partial options for some_index should be either
           * for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
           or
@@ -44,9 +44,9 @@ describe Picky::Generators::Partial do
         ERROR
       end
       it 'raises with a nice error message' do
-        expect {
+        expect do
           partial.from Object.new, 'some_index', 'some_category'
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           partial options for some_index:some_category should be either
           * for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
           or

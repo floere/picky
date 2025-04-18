@@ -5,7 +5,7 @@ require 'lingua/stemmer'
 
 describe 'stemming' do
   describe 'per-index stemming' do
-    let(:stemmer) {
+    let(:stemmer) do
       # Fast stemmer does not conform with the API.
       #
       module Stemmer
@@ -14,7 +14,7 @@ describe 'stemming' do
         end
       end
       Stemmer
-    }
+    end
 
     it 'works correctly' do
       tokenizer = Picky::Tokenizer.new(stems_with: stemmer)

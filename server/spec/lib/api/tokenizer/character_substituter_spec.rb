@@ -22,9 +22,9 @@ describe Picky::API::Tokenizer do
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           object.extract_character_substituter Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           The substitutes_characters_with option needs a character substituter,
           which responds to #substitute(text) and returns substituted_text."
         ERROR

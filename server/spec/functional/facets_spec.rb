@@ -4,7 +4,7 @@ require 'spec_helper'
 #
 describe 'facets' do
   describe 'with Redis' do
-    let(:redis_index) {
+    let(:redis_index) do
       index = Picky::Index.new :redis_facets_index do
         backend Picky::Backends::Redis.new
 
@@ -22,7 +22,7 @@ describe 'facets' do
       index.load
 
       index
-    }
+    end
     let(:redis_finder) { Picky::Search.new redis_index }
 
     describe 'Index#facets' do
@@ -45,7 +45,7 @@ describe 'facets' do
   end
 
   describe 'simple example' do
-    let(:index) {
+    let(:index) do
       index = Picky::Index.new :facets do
         category :name, partial: Picky::Partial::Substring.new(from: 1)
         category :surname
@@ -57,7 +57,7 @@ describe 'facets' do
       index.add thing.new(3, 'florian', 'hanke')
 
       index
-    }
+    end
     let(:finder) { Picky::Search.new index }
 
     describe 'Index#facets' do
@@ -107,7 +107,7 @@ describe 'facets' do
   end
 
   describe 'complex example' do
-    let(:index) {
+    let(:index) do
       index = Picky::Index.new :facets do
         category :name
         category :surname
@@ -123,7 +123,7 @@ describe 'facets' do
       index.add thing.new(5, 'hans', 'meier', 35)
 
       index
-    }
+    end
     let(:finder) { Picky::Search.new index }
 
     describe 'Index#facets' do
@@ -159,9 +159,9 @@ describe 'facets' do
 
     describe 'Search#facets' do
       it 'is fast enough' do
-        performance_of {
+        performance_of do
           10.times { finder.facets(:age_category, filter: 'surname:meier name:peter') }
-        }.should < 0.0032
+        end.should < 0.0032
       end
       it 'has one filtered facet' do
         finder.facets(:age_category, filter: 'surname:meier name:peter').should == {
@@ -187,9 +187,9 @@ describe 'facets' do
 
     describe 'Search#facets without counts' do
       it 'is fast enough' do
-        performance_of {
+        performance_of do
           10.times { finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false) }
-        }.should < 0.0031
+        end.should < 0.0031
       end
       it 'has one filtered facet' do
         finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false).should == ['45']
@@ -249,7 +249,7 @@ describe 'facets' do
   end
 
   describe 'simple example with symbols' do
-    let(:index) {
+    let(:index) do
       index = Picky::Index.new :facets do
         symbol_keys true
         category :name, partial: Picky::Partial::Substring.new(from: 1)
@@ -262,7 +262,7 @@ describe 'facets' do
       index.add thing.new(3, 'florian', 'hanke')
 
       index
-    }
+    end
     let(:finder) do
       Picky::Search.new(index) { symbol_keys }
     end

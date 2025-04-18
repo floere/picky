@@ -11,9 +11,9 @@ describe Picky::Backends::Prepared::Text do
 
   describe 'initial' do
     it 'raises' do
-      expect {
+      expect do
         text.initial
-      }.to raise_error("Can't have an initial content from text file. Use JSON or Marshal.")
+      end.to raise_error("Can't have an initial content from text file. Use JSON or Marshal.")
     end
   end
 

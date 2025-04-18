@@ -69,12 +69,12 @@ describe Picky::Search do
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
     it 'handles :weights options when not yet wrapped' do
-      search = described_class.new do boost %i[a b] => +3 end
+      search = described_class.new { boost %i[a b] => +3 }
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
     it 'handles :weights options when already wrapped' do
-      search = described_class.new do boost Picky::Query::Boosts.new(%i[a b] => +3) end
+      search = described_class.new { boost Picky::Query::Boosts.new(%i[a b] => +3) }
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end

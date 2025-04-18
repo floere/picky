@@ -22,9 +22,9 @@ describe Picky::API::Tokenizer do
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           object.extract_stemmer Object.new
-        }.to raise_error(<<~ERROR)
+        end.to raise_error(<<~ERROR)
           The stems_with option needs a stemmer,
           which responds to #stem(text) and returns stemmed_text."
         ERROR
