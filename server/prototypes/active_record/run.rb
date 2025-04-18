@@ -30,7 +30,7 @@ p 'Expected: 1, 2'
 p client.search 'surname:mcnama*'
 p client.search 'hanke'
 
-florian.update_attributes! name: 'Kaspar', surname: 'Schiess'
+florian.update_attributes! name: 'Peter', surname: 'Hansmeier'
 tentacles.update_attributes! name: 'Roger', surname: 'Braun'
 
 p 'Expected: Nothing, 2, 3'

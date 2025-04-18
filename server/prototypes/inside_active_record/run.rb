@@ -20,7 +20,7 @@ p 'Expected: 1, 1'
 p Model.search 'surname:mcnama*'
 p Model.search 'hanke'
 
-florian.update_attributes! name: 'Kaspar', surname: 'Schiess'
+florian.update_attributes! name: 'Peter', surname: 'Hansmeier'
 tentacles.update_attributes! name: 'Roger', surname: 'Braun'
 
 p 'Expected: Nothing, 1, 1'

@@ -68,11 +68,11 @@ describe Picky::Tokenizer do
     end
     it 'is case sensitive' do
       tokenizer = described_class.new(case_sensitive: true)
-      tokenizer.tokenize('Kaspar codes').should == [%w[Kaspar codes], %w[Kaspar codes]]
+      tokenizer.tokenize('Peter codes').should == [%w[Peter codes], %w[Peter codes]]
     end
     it 'is case sensitive, also for removing characters' do
-      tokenizer = described_class.new(case_sensitive: true, removes_characters: /K/)
-      tokenizer.tokenize('Kaspar codes').should == [%w[aspar codes], %w[aspar codes]]
+      tokenizer = described_class.new(case_sensitive: true, removes_characters: /P/)
+      tokenizer.tokenize('Peter codes').should == [%w[eter codes], %w[eter codes]]
     end
   end
 end

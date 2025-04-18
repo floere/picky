@@ -15,7 +15,7 @@ describe 'facets' do
 
       thing = Struct.new :id, :name, :surname
       index.add thing.new(1, 'fritz', 'hanke')
-      index.add thing.new(2, 'kaspar', 'schiess')
+      index.add thing.new(2, 'Peter', 'Hansmeier')
       index.add thing.new(3, 'florian', 'hanke')
 
       index.dump
@@ -29,7 +29,7 @@ describe 'facets' do
       it 'does not fail' do
         redis_index.facets(:surname).should == {
           'hanke' => 2,
-          'schiess' => 1
+          'hansmeier' => 1
         }
       end
     end
@@ -38,7 +38,7 @@ describe 'facets' do
       it 'does not fail' do
         redis_finder.facets(:surname).should == {
           'hanke' => 2,
-          'schiess' => 1
+          'hansmeier' => 1
         }
       end
     end
@@ -53,7 +53,7 @@ describe 'facets' do
 
       thing = Struct.new :id, :name, :surname
       index.add thing.new(1, 'fritz', 'hanke')
-      index.add thing.new(2, 'kaspar', 'schiess')
+      index.add thing.new(2, 'Peter', 'Hansmeier')
       index.add thing.new(3, 'florian', 'hanke')
 
       index
@@ -258,7 +258,7 @@ describe 'facets' do
 
       thing = Struct.new :id, :name, :surname
       index.add thing.new(1, 'fritz', 'hanke')
-      index.add thing.new(2, 'kaspar', 'schiess')
+      index.add thing.new(2, 'Peter', 'Hansmeier')
       index.add thing.new(3, 'florian', 'hanke')
 
       index
