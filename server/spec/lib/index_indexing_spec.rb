@@ -105,7 +105,7 @@ describe Picky::Index do
         it 'raises on none existent category' do
           expect do
             @index[:some_non_existent_name]
-          end.to raise_error(%Q{Index category "some_non_existent_name" not found. Possible categories: "some_category_name1", "some_category_name2".})
+          end.to raise_error('Index category "some_non_existent_name" not found. Possible categories: "some_category_name1", "some_category_name2".')
         end
       end
       context 'with categories' do
@@ -118,7 +118,7 @@ describe Picky::Index do
         it 'raises on none existent category' do
           expect do
             @index[:some_non_existent_name]
-          end.to raise_error(%Q{Index category "some_non_existent_name" not found. Possible categories: "some_category_name1", "some_category_name2", "some_name".})
+          end.to raise_error('Index category "some_non_existent_name" not found. Possible categories: "some_category_name1", "some_category_name2", "some_name".')
         end
       end
     end

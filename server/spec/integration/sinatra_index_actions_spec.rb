@@ -35,28 +35,28 @@ describe 'Sinatra Index Actions' do
         it 'returns a correct code after updating without problems' do
           result = request.put('/', params: {
                                  index: 'some_index',
-                                 data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                                 data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                                })
           result.status.should == 200
         end
         it 'returns a correct code after updating with just the id' do
           result = request.put('/', params: {
                                  index: 'some_index',
-                                 data: %Q{{ "id":"1" }}
+                                 data: '{ "id":"1" }'
                                })
           result.status.should == 200
         end
         it 'returns a correct code after updating without id' do
           result = request.put('/', params: {
                                  index: 'some_index',
-                                 data: %Q{{ "name":"Florian", "surname":"Hanke" }}
+                                 data: '{ "name":"Florian", "surname":"Hanke" }'
                                })
           result.status.should == 400
         end
         it 'returns a correct code after updating with the wrong index' do
           result = request.put('/', params: {
                                  index: 'some_wrong_index',
-                                 data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                                 data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                                })
           result.status.should == 404
         end
@@ -65,38 +65,38 @@ describe 'Sinatra Index Actions' do
         before(:each) do
           request.post('/', params: {
                          index: 'some_index',
-                         data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                         data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                        })
         end
         it 'returns a correct code after deleting without problems' do
           result = request.delete('/', params: {
                                     index: 'some_index',
-                                    data: %Q{{ "id":"1" }}
+                                    data: '{ "id":"1" }'
                                   })
           result.status.should == 200
         end
         it 'returns a correct code after deleting twice' do
           request.delete('/', params: {
                            index: 'some_index',
-                           data: %Q{{ "id":"1" }}
+                           data: '{ "id":"1" }'
                          })
           result = request.delete('/', params: {
                                     index: 'some_index',
-                                    data: %Q{{ "id":"1" }}
+                                    data: '{ "id":"1" }'
                                   })
           result.status.should == 200
         end
         it 'returns a correct code after deleting without id' do
           result = request.delete('/', params: {
                                     index: 'some_index',
-                                    data: %Q{{}}
+                                    data: "{}"
                                   })
           result.status.should == 400
         end
         it 'returns a correct code after deleting with the wrong index' do
           result = request.delete('/', params: {
                                     index: 'some_wrong_index',
-                                    data: %Q{{ "id":"1" }}
+                                    data: '{ "id":"1" }'
                                   })
           result.status.should == 404
         end
@@ -106,7 +106,7 @@ describe 'Sinatra Index Actions' do
       it 'updates the index correctly' do
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                      data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
@@ -114,7 +114,7 @@ describe 'Sinatra Index Actions' do
 
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"2", "name":"Florian", "surname":"Meier" }}
+                      data: '{ "id":"2", "name":"Florian", "surname":"Meier" }'
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
@@ -123,7 +123,7 @@ describe 'Sinatra Index Actions' do
       it 'updates the index correctly' do
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"1", "name":"Flarian", "surname":"Hanke" }}
+                      data: '{ "id":"1", "name":"Flarian", "surname":"Hanke" }'
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'hanke' }).body
@@ -136,7 +136,7 @@ describe 'Sinatra Index Actions' do
         #
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                      data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'hanke' }).body
@@ -151,11 +151,11 @@ describe 'Sinatra Index Actions' do
       it 'deletes entries from the index correctly' do
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                      data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                     })
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"2", "name":"Florian", "surname":"Meier" }}
+                      data: '{ "id":"2", "name":"Florian", "surname":"Meier" }'
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
@@ -163,7 +163,7 @@ describe 'Sinatra Index Actions' do
 
         request.delete('/', params: {
                          index: 'some_index',
-                         data: %Q{{ "id":"1" }}
+                         data: '{ "id":"1" }'
                        })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
@@ -172,7 +172,7 @@ describe 'Sinatra Index Actions' do
       it 'has no problem with a superfluous delete' do
         request.delete('/', params: {
                          index: 'some_index',
-                         data: %Q{{ "id":"1" }}
+                         data: '{ "id":"1" }'
                        })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
@@ -183,7 +183,7 @@ describe 'Sinatra Index Actions' do
 
         request.put('/', params: {
                       index: 'some_index',
-                      data: %Q{{ "id":"1", "name":"Florian", "surname":"Hanke" }}
+                      data: '{ "id":"1", "name":"Florian", "surname":"Hanke" }'
                     })
 
         client.search('florian').total.should == 1
