@@ -50,7 +50,7 @@ rescue LoadError
   # collaborators who don't need to check
   # performance so much.
   #
-  module Picky; PerformanceRatio = 0.5 end
+  module Picky; PERFORMANCE_RATIO = 0.5 end
 end
 def performance_of(&code)
   raise '#performance_of needs a block' unless code
@@ -60,7 +60,7 @@ def performance_of(&code)
   code.call
   t1 = Time.now
   GC.enable
-  (t1 - t0) * Picky::PerformanceRatio
+  (t1 - t0) * Picky::PERFORMANCE_RATIO
 end
 
 def gc_runs_of
