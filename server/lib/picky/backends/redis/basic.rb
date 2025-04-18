@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class Redis
-      EMPTY_ARRAY = []
+      EMPTY_ARRAY = [].freeze
 
       # Redis Backend Accessor.
       #

@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class SQLite
-      EMPTY_ARRAY = []
+      EMPTY_ARRAY = [].freeze
 
       class Basic
         include Helpers::File

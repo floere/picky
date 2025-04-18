@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class Memory
-      EMPTY_ARRAY = []
+      EMPTY_ARRAY = [].freeze
 
       # Base class for all memory-based index files.
       #

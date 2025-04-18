@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class File
-      EMPTY_ARRAY = []
+      EMPTY_ARRAY = [].freeze
 
       # Base class for all file-based index files.
       #

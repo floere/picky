@@ -146,10 +146,6 @@ Style/MixinUsage:
 # SupportedStyles: literals, strict
 Style/MutableConstant:
   Exclude:
-    - 'lib/picky/backends/file/basic.rb'
-    - 'lib/picky/backends/memory/basic.rb'
-    - 'lib/picky/backends/redis/basic.rb'
-    - 'lib/picky/backends/sqlite/basic.rb'
     - 'prototypes/rust/array/src/manual_test.rb'
     - 'spec/functional/backends/special_spec.rb'
 
