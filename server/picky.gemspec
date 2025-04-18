@@ -2,7 +2,7 @@ require File.expand_path '../../version', __FILE__
 
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 2.7.1' # ruby-install ruby 2.7.1; chruby 2.7.1
+  s.required_ruby_version = '>= 3.2'
 
   s.name = 'picky'
   s.version = Picky::VERSION
