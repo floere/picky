@@ -28,11 +28,11 @@ module Picky
         end
 
         def initial
-          @initial && @initial.clone || (@realtime ? reset : {})
+          @initial&.clone || (@realtime ? reset : {})
         end
 
         def empty
-          @empty && @empty.clone || (@realtime ? reset.asynchronous : {})
+          @empty&.clone || (@realtime ? reset.asynchronous : {})
         end
 
         def dump(internal)

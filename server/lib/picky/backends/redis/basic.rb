@@ -35,7 +35,7 @@ module Picky
         # together.
         #
         def empty
-          @empty && @empty.clone || (@realtime ? reset : {})
+          @empty&.clone || (@realtime ? reset : {})
         end
 
         # The initial content before loading.
@@ -44,7 +44,7 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.clone || (@realtime ? reset : {})
+          @initial&.clone || (@realtime ? reset : {})
         end
 
         # Returns itself.

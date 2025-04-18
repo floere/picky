@@ -55,13 +55,13 @@ module Picky
         # together before it is dumped into the files.
         #
         def empty
-          @empty && @empty.clone || hash_type.new
+          @empty&.clone || hash_type.new
         end
 
         # The initial content before loading from file/indexing.
         #
         def initial
-          @initial && @initial.clone || hash_type.new
+          @initial&.clone || hash_type.new
         end
 
         # Deletes the file.

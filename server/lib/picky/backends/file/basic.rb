@@ -47,7 +47,7 @@ module Picky
         # together before it is saved into the files.
         #
         def empty
-          @empty && @empty.clone || {}
+          @empty&.clone || {}
         end
 
         # The initial content before loading.
@@ -56,7 +56,7 @@ module Picky
         #       as in #load.
         #
         def initial
-          @initial && @initial.clone || {}
+          @initial&.clone || {}
         end
 
         # Deletes the file.

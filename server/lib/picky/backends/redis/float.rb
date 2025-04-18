@@ -14,7 +14,7 @@ module Picky
         #
         def [](key)
           float = super
-          float && float.to_f
+          float&.to_f
         end
       end
     end

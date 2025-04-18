@@ -56,7 +56,7 @@ module Picky
       private
 
       def hash_for(hints)
-        if hints && hints.does?(:no_dump)
+        if hints&.does?(:no_dump)
           # ::GoogleHashSparseRubyToRuby # TODO Use GoogleHashSparseIntToRuby where possible.
         end
         ::Hash
