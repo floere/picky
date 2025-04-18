@@ -23,7 +23,7 @@ describe Picky::Results do
 
   describe 'to_s time format' do
     it 'is in the right format' do
-      described_class.new("some_query").to_s.should match(/\d{2}\-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
+      described_class.new("some_query").to_s.should match(/\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
     end
   end
 

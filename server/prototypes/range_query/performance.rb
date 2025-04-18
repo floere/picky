@@ -5,7 +5,7 @@ inc = '2000…2008'
 #
 t = Time.now
 1000.times do
-  inc =~ /\…/
+  inc =~ /…/
 end
 p [:inc, :'=~', (Time.now … t)]
 t = Time.now
@@ -16,7 +16,7 @@ p [:inc, :include?, (Time.now … t)]
 
 t = Time.now
 1000.times do
-  exc =~ /\…/
+  exc =~ /…/
 end
 p [:exc, :'=~', (Time.now … t)]
 t = Time.now

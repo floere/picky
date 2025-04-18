@@ -128,7 +128,7 @@ module Picky
       #
       @@no_partial_character = '"'
       @@partial_character = '*'
-      @@no_partial = /\"\z/
+      @@no_partial = /"\z/
       @@partial    = /\*\z/
       def partialize
         # A token is partial? only if it not similar

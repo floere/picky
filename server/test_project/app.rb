@@ -53,9 +53,9 @@ class BookSearch < Sinatra::Application
     indexing: Picky::Search.new(IndexingIndex),
     file: Picky::Search.new(FileIndex),
     japanese: Picky::Search.new(JapaneseIndex) {
-      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
+      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}"~*:,]/i, # a-zA-Z0-9\s\/\-\_\&\.
                 stopwords:          /\b(and|the|of|it|in|for)\b/i,
-                splits_text_on:     /[\s\/\-\&]+/
+                splits_text_on:     /[\s\/\-&]+/
     },
     nonstring: Picky::Search.new(NonstringDataIndex),
     partial: Picky::Search.new(PartialIndex),

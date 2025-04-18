@@ -9,7 +9,7 @@ describe Picky::Tokenizer do
       tokenizer.tokenize('title1-').should == [['title1-'], ['title1-']]
     end
     it 'works correctly' do
-      tokenizer = described_class.new(normalizes_words: [[/\&/, 'and']])
+      tokenizer = described_class.new(normalizes_words: [[/&/, 'and']])
       
       # Is this really correct? Shouldn't we split after normalizing? 
       #
@@ -18,7 +18,7 @@ describe Picky::Tokenizer do
       tokenizer.tokenize('M & M').should == [%w[m and m], %w[m and m]]
     end
     it 'works correctly' do
-      tokenizer = described_class.new(stopwords: /\b(and)\b/, normalizes_words: [[/\&/, 'and']])
+      tokenizer = described_class.new(stopwords: /\b(and)\b/, normalizes_words: [[/&/, 'and']])
       
       # Is this really correct? Shouldn't we stop words after normalizing? 
       #

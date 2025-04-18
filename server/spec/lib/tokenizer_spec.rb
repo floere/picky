@@ -121,7 +121,7 @@ ERROR
             [/st\./, 'sankt'],
             [/stras?s?e?/, 'str'],
             [/\+/, 'plus'],
-            [/\&/, 'and']
+            [/&/, 'and']
           ])
         end
         it "has normalize_with_patterns" do
@@ -185,7 +185,7 @@ ERROR
       end
       context "with specific splitting pattern" do
         before(:each) do
-          tokenizer.splits_text_on(/[\s\.\/]/)
+          tokenizer.splits_text_on(/[\s.\/]/)
         end
         it "splits text correctly" do
           expect { tokenizer.split('a b/c.d') }.to_not raise_error
