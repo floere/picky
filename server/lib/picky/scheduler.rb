@@ -11,29 +11,9 @@ module Picky
 
     def configure
       if fork?
-        def schedule(&block)
-          scheduler.schedule(&block)
-        end
-
-        def finish
-          scheduler.join
-        end
-
-        def scheduler
-          @scheduler ||= create_scheduler
-        end
-
-        def create_scheduler
-          Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(@factor)
-        end
+        extend WithFork
       else
-        def schedule
-          yield
-        end
-
-        def finish
-          # Don't do anything.
-        end
+        extend WithoutFork
       end
     end
 
@@ -48,6 +28,34 @@ module Picky
     def warn_procrastinate_missing
       warn_gem_missing 'Procrastinate', 'parallelized indexing (with the procrastinate gem)' unless @gem_missing_warned
       @gem_missing_warned = true
+    end
+
+    module WithFork
+      def schedule(&block)
+        scheduler.schedule(&block)
+      end
+
+      def finish
+        scheduler.join
+      end
+
+      def scheduler
+        @scheduler ||= create_scheduler
+      end
+
+      def create_scheduler
+        Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(@factor)
+      end
+    end
+
+    module WithoutFork
+      def schedule
+        yield
+      end
+
+      def finish
+        # Don't do anything.
+      end
     end
   end
 end
