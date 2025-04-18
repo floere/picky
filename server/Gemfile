@@ -3,10 +3,10 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'rake'
-  gem 'rack'
-  gem 'text'
   gem 'procrastinate'
+  gem 'rack'
+  gem 'rake'
+  gem 'text'
 
   # gem 'google_hash'
   gem 'stackprof'
@@ -15,8 +15,8 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
   gem 'rake-compiler'
+  gem 'rspec'
   gem 'rubocop'
 
   # Needed for testing itself.
@@ -25,16 +25,16 @@ group :test do
 
   # Needed to test optional data sources etc.
   #
-  gem 'sinatra'
-  gem 'www-delicious'
-  gem 'rest-client'
-  gem 'uuidtools'
-  gem 'highline'
-  gem 'picky-client'
   gem 'activerecord'
+  gem 'highline'
   gem 'hiredis'
+  gem 'picky-client'
   gem 'redis'
+  gem 'rest-client'
+  gem 'sinatra'
   gem 'sqlite3'
+  gem 'uuidtools'
+  gem 'www-delicious'
 
   gem 'fast-stemmer', :require => 'stemmer'
   gem 'ruby-stemmer', :require => 'lingua/stemmer'

@@ -1,19 +1,19 @@
 source 'http://rubygems.org'
 
+gem 'activesupport'
+gem 'multi_json'
+gem 'rack'
 gem 'rake'
 gem 'rspec'
-gem 'activesupport'
 gem 'sinatra'
-gem 'rack'
 gem 'text'
-gem 'multi_json'
 
 # Optional.
 #
-gem 'yajl-ruby', require: 'yajl' # For faster JSON handling
 gem 'activerecord', require: 'active_record' # If you use AR for the DB
+gem 'activerecord-postgresql-adapter'
+gem 'pg'
 gem 'procrastinate', '~> 0.4' # Parallel indexing
 gem 'redis'
 gem 'sqlite3'
-gem 'pg'
-gem 'activerecord-postgresql-adapter'
+gem 'yajl-ruby', require: 'yajl' # For faster JSON handling
