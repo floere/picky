@@ -24,7 +24,7 @@ module Picky
       # String params are optional, Symbol params aren't.
       #
       def params_to_s(params)
-        params.map { |param| param.respond_to?(:to_str) ? "[#{param}]" : param }.join(' ') if params
+        params&.map { |param| param.respond_to?(:to_str) ? "[#{param}]" : param }&.join(' ')
       end
     end
 

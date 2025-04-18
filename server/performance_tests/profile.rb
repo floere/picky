@@ -9,7 +9,7 @@ size   = begin
 rescue StandardError
   puts('This script needs an index size as first argument.') && exit(1)
 end
-amount = ARGV[1] && ARGV[1].to_i || 10
+amount = ARGV[1]&.to_i || 10
 
 data = Picky::Index.new size do
   category :text1

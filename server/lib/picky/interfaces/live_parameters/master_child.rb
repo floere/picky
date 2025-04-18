@@ -138,7 +138,7 @@ module Picky
         #
         def querying_removes_characters
           regexp = Tokenizer.searching.instance_variable_get :@removes_characters_regexp
-          regexp && regexp.source
+          regexp&.source
         end
 
         def querying_removes_characters=(new_value)
@@ -147,7 +147,7 @@ module Picky
 
         def querying_stopwords
           regexp = Tokenizer.searching.instance_variable_get :@remove_stopwords_regexp
-          regexp && regexp.source
+          regexp&.source
         end
 
         def querying_stopwords=(new_value)
@@ -156,7 +156,7 @@ module Picky
 
         def querying_splits_text_on
           splits = Tokenizer.searching.instance_variable_get :@splits_text_on
-          splits && splits.respond_to?(:source) ? splits.source : splits
+          splits.respond_to?(:source) ? splits.source : splits
         end
 
         def querying_splits_text_on=(new_value)

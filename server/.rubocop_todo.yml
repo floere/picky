@@ -186,10 +186,6 @@ Style/SafeNavigation:
     - 'lib/picky/category_indexed.rb'
     - 'lib/picky/extensions/string.rb'
     - 'lib/picky/extensions/symbol.rb'
-    - 'lib/picky/interfaces/live_parameters/master_child.rb'
-    - 'lib/picky/query/token.rb'
-    - 'performance_tests/profile.rb'
-    - 'tools/picky/cli.rb'
 
 # Offense count: 115
 # This cop supports safe autocorrection (--autocorrect).

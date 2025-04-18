@@ -96,9 +96,9 @@ module Picky
       end
 
       def categorize_with(mapper, qualifiers)
-        qualifiers && qualifiers.map do |qualifier|
+        qualifiers&.map do |qualifier|
           mapper.map qualifier
-        end.compact
+        end&.compact
       end
 
       # Selects the bundle to be used.
