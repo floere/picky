@@ -26,10 +26,10 @@ describe Picky::Query::Tokens do
       end
       it 'should work correctly' do
         @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11
-                                                                                          combination12]
+                                                                                            combination12]
         @token2.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination21]
         @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31
-                                                                                          combination32 combination33]
+                                                                                            combination32 combination33]
 
         @tokens.possible_combinations_in(:some_index).should == [
           %i[combination11 combination12],
@@ -39,10 +39,10 @@ describe Picky::Query::Tokens do
       end
       it 'should work correctly' do
         @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11
-                                                                                          combination12]
+                                                                                            combination12]
         @token2.should_receive(:possible_combinations).once.with(:some_index).and_return []
         @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31
-                                                                                          combination32 combination33]
+                                                                                            combination32 combination33]
 
         @tokens.possible_combinations_in(:some_index).should == [
           %i[combination11 combination12],
@@ -177,7 +177,7 @@ describe Picky::Query::Tokens do
       @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11 combination12]
       @token2.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination21]
       @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31 combination32
-                                                                                        combination33]
+                                                                                          combination33]
 
       @tokens.possible_combinations_in(:some_index).should == [
         %i[combination11 combination12],
@@ -189,7 +189,7 @@ describe Picky::Query::Tokens do
       @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11 combination12]
       @token2.should_receive(:possible_combinations).once.with(:some_index).and_return nil
       @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31 combination32
-                                                                                        combination33]
+                                                                                          combination33]
 
       @tokens.possible_combinations_in(:some_index).should == [
         %i[combination11 combination12],
