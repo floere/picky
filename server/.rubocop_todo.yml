@@ -12,13 +12,6 @@
 Lint/ConstantDefinitionInBlock:
   Enabled: false
 
-# Offense count: 12
-# Configuration parameters: AllowedParentClasses.
-Lint/MissingSuper:
-  Exclude:
-    - 'lib/picky/query/combination/or.rb'
-    - 'lib/picky/query/or.rb'
-
 # Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes.
 Metrics/AbcSize:

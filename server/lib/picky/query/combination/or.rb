@@ -7,6 +7,9 @@ module Picky
       #
       class Or < Combination
         def initialize(combinations)
+          # TODO: Fix.
+          super(nil, nil, 0.0)
+
           @combinations = combinations
         end
 

@@ -8,10 +8,6 @@ module Picky
       # a token would answer to.
       #
       class Or < Tokens
-        def initialize(processed_tokens)
-          @tokens = processed_tokens
-        end
-
         # TODO
         #
         def possible_combinations(categories)
