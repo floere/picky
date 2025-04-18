@@ -16,7 +16,7 @@ class Source
   end
 end
 
-with = ->(amount) do
+with = lambda do |amount|
   Source.new amount
 end
 

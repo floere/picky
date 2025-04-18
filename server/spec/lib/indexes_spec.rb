@@ -9,7 +9,7 @@ describe Picky::Indexes do
 
     describe 'indexes' do
       it 'exists' do
-        lambda { indexes.indexes }.should_not raise_error
+        -> { indexes.indexes }.should_not raise_error
       end
       it 'is empty by default' do
         indexes.indexes.should be_empty
@@ -22,7 +22,7 @@ describe Picky::Indexes do
 
     describe 'indexes' do
       it 'exists' do
-        lambda { indexes.indexes }.should_not raise_error
+        -> { indexes.indexes }.should_not raise_error
       end
     end
 

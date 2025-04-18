@@ -75,7 +75,7 @@ describe Picky::Index do
           api.category(:some_name) { |category| expected = category }.should == expected
         end
         it 'takes a string' do
-          lambda { api.category('some_name') { |indexing, indexed| } }.should_not raise_error
+          -> { api.category('some_name') { |indexing, indexed| } }.should_not raise_error
         end
         it 'yields both the indexing category and the indexed category' do
           api.category(:some_name) do |category|
@@ -90,10 +90,10 @@ describe Picky::Index do
       end
       context 'without block' do
         it 'works' do
-          lambda { api.category(:some_name) }.should_not raise_error
+          -> { api.category(:some_name) }.should_not raise_error
         end
         it 'takes a string' do
-          lambda { api.category('some_name') }.should_not raise_error
+          -> { api.category('some_name') }.should_not raise_error
         end
         it 'returns itself' do
           api.category(:some_name).should be_kind_of(Picky::Category)

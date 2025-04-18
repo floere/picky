@@ -4,10 +4,10 @@ describe Picky::Sinatra do
   let(:extendee) { Class.new {} }
 
   it 'has no Picky specific methods' do
-    lambda { extendee.indexing }.should raise_error
+    -> { extendee.indexing }.should raise_error
   end
   it 'has no Picky specific methods' do
-    lambda { extendee.searching }.should raise_error
+    -> { extendee.searching }.should raise_error
   end
 
   context 'after extending' do

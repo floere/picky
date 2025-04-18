@@ -23,7 +23,7 @@ describe Picky::Backends::Memory do
   end
   let(:books) { Picky::Search.new data }
 
-  its_to_s = ->(*) do
+  its_to_s = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == ['1']
     end
@@ -79,7 +79,7 @@ describe Picky::Backends::Memory do
     end
   end
 
-  its_to_i = ->(*) do
+  its_to_i = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == [1]
     end

@@ -175,7 +175,7 @@ describe Picky::Tokenizer do
       end
       context 'without splits_text_on called' do
         it 'has split' do
-          lambda { tokenizer.split('any') }.should_not raise_error
+          -> { tokenizer.split('any') }.should_not raise_error
         end
         it 'should define a method split that splits by default on \s' do
           tokenizer.split('a b/c.d').should == ['a', 'b/c.d']
@@ -256,7 +256,7 @@ describe Picky::Tokenizer do
       end
       context 'without stopwords given' do
         it 'should define a method remove_stopwords' do
-          lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error
+          -> { tokenizer.remove_stopwords('from this text') }.should_not raise_error
         end
         it 'should define a method remove_stopwords that does nothing' do
           tokenizer.remove_stopwords('from this text').should == 'from this text'
@@ -270,7 +270,7 @@ describe Picky::Tokenizer do
           tokenizer.stopwords('t')
         end
         it 'should define a method remove_stopwords' do
-          lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error
+          -> { tokenizer.remove_stopwords('from this text') }.should_not raise_error
         end
         it 'should define a method stopwords that removes stopwords' do
           tokenizer.remove_stopwords('from this text').should == 'from his ex'
@@ -290,7 +290,7 @@ describe Picky::Tokenizer do
           tokenizer.stopwords(/r|e/)
         end
         it 'should define a method remove_stopwords' do
-          lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error
+          -> { tokenizer.remove_stopwords('from this text') }.should_not raise_error
         end
         it 'should define a method stopwords that removes stopwords' do
           tokenizer.remove_stopwords('from this text').should == 'fom this txt'
@@ -310,7 +310,7 @@ describe Picky::Tokenizer do
           tokenizer.stopwords(false)
         end
         it 'should define a method remove_stopwords' do
-          lambda { tokenizer.remove_stopwords('from this text') }.should_not raise_error
+          -> { tokenizer.remove_stopwords('from this text') }.should_not raise_error
         end
         it 'should define a method stopwords that removes stopwords' do
           tokenizer.remove_stopwords('from this text').should == 'from this text'

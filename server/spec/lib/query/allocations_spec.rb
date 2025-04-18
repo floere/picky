@@ -337,7 +337,7 @@ describe Picky::Query::Allocations do
       @allocations = described_class.new @internal_allocations
     end
     it 'should forward to the internal allocations' do
-      stub_proc = lambda {}
+      stub_proc = -> {}
       @internal_allocations.should_receive(:each).once.with no_args, &stub_proc
 
       @allocations.each(&stub_proc)
@@ -349,7 +349,7 @@ describe Picky::Query::Allocations do
       @allocations = described_class.new @internal_allocations
     end
     it 'should forward to the internal allocations' do
-      stub_proc = lambda {}
+      stub_proc = -> {}
       @internal_allocations.should_receive(:inject).once.with no_args, &stub_proc
 
       @allocations.inject(&stub_proc)

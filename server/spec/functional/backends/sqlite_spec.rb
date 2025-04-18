@@ -21,7 +21,7 @@ describe Picky::Backends::SQLite do
   end
   let(:books) { Picky::Search.new data }
 
-  its = ->(*) do
+  its = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == [1]
     end

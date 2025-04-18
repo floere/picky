@@ -122,7 +122,7 @@ describe Picky::Category do
     describe 'source' do
       context 'without source' do
         it 'has no problem with that' do
-          lambda { described_class.new :some_name, @index }.should_not raise_error
+          -> { described_class.new :some_name, @index }.should_not raise_error
         end
       end
     end
