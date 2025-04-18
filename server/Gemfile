@@ -17,6 +17,7 @@ end
 group :test do
   gem 'rspec'
   gem 'rake-compiler'
+  gem 'rubocop'
 
   # Needed for testing itself.
   #
@@ -38,8 +39,10 @@ group :test do
   gem 'fast-stemmer', :require => 'stemmer'
   gem 'ruby-stemmer', :require => 'lingua/stemmer'
 
+  gem 'ostruct'
+
   gem 'rack-mount'
-  
+
   gem 'pippi'
 end
 
