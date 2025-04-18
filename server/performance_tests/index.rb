@@ -32,7 +32,7 @@ backends = [
   # ["standard Redis", Backends::Redis.new, 200],
   # ["standard SQLite", Backends::SQLite.new, 200],
   # ["standard File", Backends::File.new, 300],
-  ['standard Memory', Backends::Memory.new, 1000],
+  ['standard Memory', Backends::Memory.new, 1000]
 ]
 
 constant_weight = Picky::Weights::Constant.new

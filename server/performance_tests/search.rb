@@ -25,7 +25,7 @@ include Picky
 require_relative 'searches'
 
 backends = [
-  Backends::Memory.new, # Pre-run.
+  Backends::Memory.new # Pre-run.
   # Backends::Memory.new,
   # Backends::File.new,
   # Backends::SQLite.new,

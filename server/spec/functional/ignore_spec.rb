@@ -25,7 +25,7 @@ describe 'ignoring allocations/categories' do
       [:books, 1.386, 2, [[:title, 'some', 'some'], [:title, 'some', 'some']], [2, 1]],
       [:books, 1.386, 2, [[:title, 'some', 'some']], [2, 1]],
       [:books, 1.386, 2, [[:title, 'some', 'some']], [2, 1]],
-      [:books, 0.693, 1, [[:author, 'some', 'some'],], [2]],
+      [:books, 0.693, 1, [[:author, 'some', 'some']], [2]],
       [:books, 0.693, 1, [[:author, 'some', 'some'], [:title, 'some', 'some']], [2]],
       [:books, 0.693, 1, [[:author, 'some', 'some']], [2]],
       [:books, 0.693, 1, [[:title, 'some', 'some'],  [:author, 'some', 'some']], [2]],

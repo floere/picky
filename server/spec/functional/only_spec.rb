@@ -52,7 +52,7 @@ describe 'Search#only' do
       # [:books, 0.693,              1, [[:author, "some", "some"], [:author, "some", "some"], [:title, "some", "some"]],  []],
       # [:books, 0.693,              1, [[:title, "some", "some"],  [:author, "some", "some"], [:author, "some", "some"]], []],
       [:books, 0.693,              1,
-       [[:author, 'some', 'some'], [:author, 'some', 'some'], [:text, 'some', 'some']],   [2]],
+       [[:author, 'some', 'some'], [:author, 'some', 'some'], [:text, 'some', 'some']],   [2]]
       # [:books, 0.0,                1, [[:author, "some", "some"], [:author, "some", "some"], [:author, "some", "some"]], []]
     ]
   end

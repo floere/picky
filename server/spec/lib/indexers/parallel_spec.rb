@@ -16,7 +16,7 @@ describe Picky::Indexers::Parallel do
       ]
       @source = [
         thing.new(1, 'hello'),
-        thing.new(2, 'world'),
+        thing.new(2, 'world')
       ]
     end
 
@@ -49,7 +49,7 @@ describe Picky::Indexers::Parallel do
       ]
       @source = [
         thing.new(1, ['hello']),
-        thing.new(2, ['world']),
+        thing.new(2, ['world'])
       ]
     end
 

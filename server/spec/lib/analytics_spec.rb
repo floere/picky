@@ -13,7 +13,7 @@ describe Picky::Analytics do
     @index1 = Picky::Index.new :index1 do
       source [
         Item.new(1, 'test one'),
-        Item.new(2, 'test two'),
+        Item.new(2, 'test two')
       ]
       category :text
     end
@@ -22,7 +22,7 @@ describe Picky::Analytics do
     @index2 = Picky::Index.new :index2 do
       source [
         Item.new(3, 'test three'),
-        Item.new(4, 'test four'),
+        Item.new(4, 'test four')
       ]
       category :text
     end
