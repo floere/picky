@@ -1,3 +1,4 @@
+require 'English'
 puts 'Run `ulimit -n 3000` if specs fail.'
 system 'rm -r spec/temp/* 2> /dev/null'
 
@@ -6,7 +7,7 @@ system 'rm -r spec/temp/* 2> /dev/null'
 fork do
   print 'Starting redis-server... '
   `redis-server` # Gets stuck or fails, continuing.
-  puts "(already running, redis-server returned #{$?.exitstatus})." unless $?.success?
+  puts "(already running, redis-server returned #{$CHILD_STATUS.exitstatus})." unless $CHILD_STATUS.success?
 end
 
 # Coverage report.

@@ -55,8 +55,8 @@ result = RubyProf.stop
 result.eliminate_methods!([/(Searches|CSV)#.+/])
 
 filename = "#{Dir.pwd}/20#{Time.now.strftime('%y%m%d%H%M')}-ruby-prof-results-#{size}-#{amount}"
-html = filename + '.html'
-viz  = filename + '.viz'
+html = "#{filename}.html"
+viz  = "#{filename}.viz"
 File.open html, 'w' do |file|
   RubyProf::CallStackPrinter.new(result).print file
   # RubyProf::GraphHtmlPrinter.new(result).print file
