@@ -39,7 +39,7 @@ end
 def string_count
   i = 0
   GC.start
-  ObjectSpace.each_object(String) do |s|
+  ObjectSpace.each_object(String) do |_s|
     # puts s
     i += 1
   end

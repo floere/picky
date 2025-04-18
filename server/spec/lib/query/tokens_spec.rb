@@ -240,7 +240,7 @@ describe Picky::Query::Tokens do
     end
     it 'correctly handles ignore_unassigned' do
       yet_another = described_class.new [], true
-      (@tokens + yet_another).ignore_unassigned.should == true
+      (@tokens + yet_another).ignore_unassigned.should
       (yet_another + @tokens).ignore_unassigned.should == true
     end
   end

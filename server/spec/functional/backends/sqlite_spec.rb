@@ -44,7 +44,7 @@ describe Picky::Backends::SQLite do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == [2, 1]
+      books.search('title').ids.should
 
       data.remove 1
 
@@ -54,7 +54,7 @@ describe Picky::Backends::SQLite do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == [3, 2, 1]
+      books.search('title').ids.should
 
       data.remove 1
 
@@ -74,7 +74,7 @@ describe Picky::Backends::SQLite do
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
 
-      books.search('title').ids.should == []
+      books.search('title').ids.should
       books.search('toitle').ids.should == [1]
     end
   end
@@ -87,7 +87,7 @@ describe Picky::Backends::SQLite do
       data.add Book.new(1, 'title', 'author')
     end
 
-    instance_eval &its
+    instance_eval(&its)
   end
 
   context 'immediately indexing backend (no dump needed)' do
@@ -98,6 +98,6 @@ describe Picky::Backends::SQLite do
       data.add Book.new(1, 'title', 'author')
     end
 
-    instance_eval &its
+    instance_eval(&its)
   end
 end

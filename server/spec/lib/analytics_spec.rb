@@ -20,7 +20,6 @@ describe Picky::Analytics do
       category :text
     end
     @index1.index
-    @index1
 
     @index2 = Picky::Index.new :index2 do
       source [

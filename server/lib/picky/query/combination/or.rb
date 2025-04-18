@@ -43,7 +43,7 @@ module Picky
         end
 
         def to_result
-          @combinations.map &:to_result
+          @combinations.map(&:to_result)
           [*@combinations.map(&:to_result).transpose.map! { |thing| thing.join('|') }]
         end
       end

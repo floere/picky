@@ -68,8 +68,8 @@ module Picky
         def parameters **configuration_hash
           close_child
           exclaim 'Trying to update worker child configuration.' unless configuration_hash.empty?
-          try_updating_configuration_with **configuration_hash
-          write_parent **configuration_hash
+          try_updating_configuration_with(**configuration_hash)
+          write_parent(**configuration_hash)
           extract_configuration
         rescue CouldNotUpdateConfigurationError => e
           # I need to die such that my broken config is never used.

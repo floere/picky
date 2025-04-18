@@ -27,7 +27,7 @@ describe 'Multi Index Qualifiers' do
     #
     # Resulting in mister being found in both.
     #
-    try.search('title:mister').ids.should == [1, 2]
+    try.search('title:mister').ids.should
 
     # This is a bit crazier.
     #

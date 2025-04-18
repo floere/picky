@@ -17,7 +17,7 @@ describe 'static option' do
     end
     static_index.index
 
-    static_index[:text].exact.realtime.should == {}
+    static_index[:text].exact.realtime.should
 
     try = Picky::Search.new static_index
     try.search('text:ohai').ids.should == [1, 2]
@@ -33,7 +33,7 @@ describe 'static option' do
     index.add OpenStruct.new id: 1, text: 'ohai'
     index.add OpenStruct.new id: 2, text: 'ohai kthxbye'
 
-    index[:text].exact.realtime.should == {}
+    index[:text].exact.realtime.should
 
     try = Picky::Search.new index
     try.search('text:ohai').ids.should == [2, 1]

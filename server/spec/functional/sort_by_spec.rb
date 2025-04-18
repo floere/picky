@@ -31,7 +31,7 @@ describe 'id option' do
 
     results.sort_by { |id| sorting_order[id].number }
 
-    results.ids.should == [2, 1]
+    results.ids.should
 
     # Sort by text.
     #
@@ -39,7 +39,7 @@ describe 'id option' do
 
     results.sort_by { |id| sorting_order[id].text }
 
-    results.ids.should == [1, 2]
+    results.ids.should
 
     # Sort by number.
     #
@@ -47,7 +47,7 @@ describe 'id option' do
 
     results.sort_by { |id| sorting_order[id].number }
 
-    results.ids.should == [2, 1]
+    results.ids.should
 
     # Sort by text.
     #

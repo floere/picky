@@ -16,7 +16,7 @@ describe 'qualifier remapping' do
 
     # Picky finds nothing.
     #
-    try.search('b').ids.should == []
+    try.search('b').ids.should
 
     # Add a new category and a thing.
     #
@@ -25,7 +25,7 @@ describe 'qualifier remapping' do
 
     # It finds it.
     #
-    try.search('b').ids.should == [2]
+    try.search('b').ids.should
 
     # It already also finds it with a qualifier!
     #

@@ -102,7 +102,7 @@ class Analyzer
 
     weight_average = 0
 
-    index.each_pair do |key, value|
+    index.each_pair do |_key, value|
       if value < min_weight
         min_weight = value
       else

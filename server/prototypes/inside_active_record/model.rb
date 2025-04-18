@@ -23,7 +23,7 @@ class Model < ActiveRecord::Base
   end
 
   def self.search *args
-    models.search *args
+    models.search(*args)
   end
 
   after_commit do

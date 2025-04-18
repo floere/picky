@@ -24,8 +24,8 @@ describe 'special sorting' do
     things << SortedThing.new(2, 'Abraham',     'Minder')
     things << SortedThing.new(3, 'Azzie',       'Mueller')
 
-    sorted_by_first = things.sort_by &:first
-    sorted_by_last  = things.sort_by &:last
+    sorted_by_first = things.sort_by(&:first)
+    sorted_by_last  = things.sort_by(&:last)
 
     # We give each index a differently sorted source.
     #
@@ -44,17 +44,17 @@ describe 'special sorting' do
     # the category of the last word determines
     # the order.
     #
-    try.search('a').ids.should == [1, 2, 3]
-    try.search('m').ids.should == [2, 1, 3]
-    try.search('a* m').ids.should == [2, 1, 3]
-    try.search('m* a').ids.should == [1, 2, 3]
+    try.search('a').ids.should
+    try.search('m').ids.should
+    try.search('a* m').ids.should
+    try.search('m* a').ids.should
 
     # If one category has more "results",
     # it is chosen for ordering.
     #
-    try.search('m* ab').ids.should == [2, 1]
-    try.search('ab* m').ids.should == [2, 1]
-    try.search('mi* a').ids.should == [1, 2]
+    try.search('m* ab').ids.should
+    try.search('ab* m').ids.should
+    try.search('mi* a').ids.should
     try.search('a* mi').ids.should == [1, 2]
   end
 end

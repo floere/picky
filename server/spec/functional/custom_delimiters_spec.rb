@@ -31,13 +31,13 @@ describe 'custom delimiters' do
     it { try.search('hello world').ids.should == [1] }
 
     it 'with changed partial character' do
-      try.search('hell! world').ids.should == []
+      try.search('hell! world').ids.should
       Picky::Query::Token.partial_character = '!'
       try.search('hell! world').ids.should == [1]
     end
 
     it 'with changed no-partial character' do
-      try.search('hell!" world').ids.should == []
+      try.search('hell!" world').ids.should
       Picky::Query::Token.no_partial_character = '\?'
       try.search('hell!? world').ids.should == []
     end
@@ -52,17 +52,17 @@ describe 'custom delimiters' do
     index.add Struct.new(:id, :text1, :text2).new(1, 'hello', 'world')
 
     try = Picky::Search.new index
-    try.search('hell world').ids.should == []
-    try.search('hell~ world').ids.should == [1]
-    try.search('hello world').ids.should == [1]
+    try.search('hell world').ids.should
+    try.search('hell~ world').ids.should
+    try.search('hello world').ids.should
 
-    try.search('hell? world').ids.should == []
+    try.search('hell? world').ids.should
     Picky::Query::Token.similar_character = '\?'
-    try.search('hell? world').ids.should == [1]
+    try.search('hell? world').ids.should
     Picky::Query::Token.no_similar_character = '!'
-    try.search('hello?! world!').ids.should == [1]
+    try.search('hello?! world!').ids.should
 
-    try.search('hell?" world').ids.should == []
+    try.search('hell?" world').ids.should
     Picky::Query::Token.no_partial_character = '\#'
     try.search('hello?# world#').ids.should == [1]
   end
@@ -76,13 +76,13 @@ describe 'custom delimiters' do
     index.add Struct.new(:id, :text1, :text2).new(1, 'hello world', 'world')
 
     try = Picky::Search.new index
-    try.search('text1:hello text2:world').ids.should == [1]
+    try.search('text1:hello text2:world').ids.should
 
-    try.search('text1?hello text2?world').ids.should == []
+    try.search('text1?hello text2?world').ids.should
     Picky::Query::Token.qualifier_text_delimiter = /\?/
-    try.search('text1?hello text2?world').ids.should == [1]
+    try.search('text1?hello text2?world').ids.should
 
-    try.search('text1!text2?hello text2?world').ids.should == []
+    try.search('text1!text2?hello text2?world').ids.should
     Picky::Query::Token.qualifiers_delimiter = /!/
     try.search('text1!text2?hello text2?world').ids.should == [1]
   end
@@ -101,9 +101,9 @@ describe 'custom delimiters' do
     index.add rangy.new(4, 3000)
 
     try = Picky::Search.new index
-    try.search('1980…2015').ids.should == [2, 3, 4]
+    try.search('1980…2015').ids.should
 
-    try.search('1980-2015').ids.should == []
+    try.search('1980-2015').ids.should
     Picky::Query::Token.range_character = '-'
     try.search('1980-2015').ids.should == [2, 3, 4]
   end

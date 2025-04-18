@@ -2,7 +2,7 @@ module Picky
   module Backends
     class File
       def json *args
-        JSON.new *args
+        JSON.new(*args)
       end
 
       # File-based index files dumped in the JSON format.

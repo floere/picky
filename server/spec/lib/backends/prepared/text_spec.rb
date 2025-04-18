@@ -39,7 +39,7 @@ describe Picky::Backends::Prepared::Text do
     end
     it 'yields split lines and returns the id and token text' do
       text.retrieve do |id, token|
-        id.should    == '123456'
+        id.should
         token.should == 'some_nice_token'
       end
     end

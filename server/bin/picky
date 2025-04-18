@@ -11,4 +11,4 @@ rescue LoadError
 end
 
 cli = Picky::CLI.new
-cli.execute *ARGV
+cli.execute(*ARGV)

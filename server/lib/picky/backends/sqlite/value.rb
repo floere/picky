@@ -9,8 +9,6 @@ module Picky
         def []=(key, value)
           db.execute 'INSERT OR REPLACE INTO key_value (key, value) VALUES (?,?)',
                      [key.to_s, MultiJson.encode(value)]
-
-          value
         end
 
         def [](key)

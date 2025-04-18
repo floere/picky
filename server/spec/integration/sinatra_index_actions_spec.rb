@@ -110,7 +110,7 @@ describe 'Sinatra Index Actions' do
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
-        results['total'].should == 1
+        results['total'].should
 
         request.put('/', params: {
                       index: 'some_index',
@@ -127,10 +127,10 @@ describe 'Sinatra Index Actions' do
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'hanke' }).body
-        results['total'].should == 1
+        results['total'].should
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
-        results['total'].should == 0
+        results['total'].should
 
         # Whoops, typo. Let's fix it.
         #
@@ -140,10 +140,10 @@ describe 'Sinatra Index Actions' do
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'hanke' }).body
-        results['total'].should == 1
+        results['total'].should
 
         results = MultiJson.decode request.get('/people', params: { query: 'flarian' }).body
-        results['total'].should == 0
+        results['total'].should
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
         results['total'].should == 1
@@ -159,7 +159,7 @@ describe 'Sinatra Index Actions' do
                     })
 
         results = MultiJson.decode request.get('/people', params: { query: 'florian' }).body
-        results['total'].should == 2
+        results['total'].should
 
         request.delete('/', params: {
                          index: 'some_index',

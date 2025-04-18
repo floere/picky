@@ -26,10 +26,6 @@ include Picky
 
 require_relative 'searches'
 
-->(complexity, amount) do
-  Searches.new complexity, amount
-end
-
 backends = [
   Backends::Memory.new, # Pre-run.
   # Backends::Memory.new,
@@ -141,7 +137,6 @@ definitions.each do |definition, description|
 
       rams = []
       strings = []
-      []
       gc_runs = []
 
       # Run amount queries, but only chosen from searches that will return a result.

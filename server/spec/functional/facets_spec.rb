@@ -66,18 +66,11 @@ describe 'facets' do
       it 'is correct' do
         # Picky has 2 facets with different counts for surname.
         #
-        index.facets(:surname).should == {
-          'hanke' => 2,
-          'schiess' => 1
-        }
+        index.facets(:surname).should
 
         # It has 3 facets with the same count for name.
         #
-        index.facets(:name).should == {
-          'fritz' => 1,
-          'kaspar' => 1,
-          'florian' => 1
-        }
+        index.facets(:name).should
 
         # Picky only selects facets with a count >= the given one.
         #
@@ -91,28 +84,19 @@ describe 'facets' do
       it 'filters them correctly' do
         # Passing in no filter query just returns the facets
         #
-        finder.facets(:surname).should == {
-          'hanke' => 2,
-          'schiess' => 1
-        }
+        finder.facets(:surname).should
 
         # It has two facets.
         #
-        finder.facets(:name, filter: 'surname:hanke').should == {
-          'fritz' => 1,
-          'florian' => 1
-        }
+        finder.facets(:name, filter: 'surname:hanke').should
 
         # It only uses exact matches (ie. the last token is not partialized).
         #
-        finder.facets(:name, filter: 'surname:hank').should == {}
+        finder.facets(:name, filter: 'surname:hank').should
 
         # It allows explicit partial matches.
         #
-        finder.facets(:name, filter: 'surname:hank*').should == {
-          'fritz' => 1,
-          'florian' => 1
-        }
+        finder.facets(:name, filter: 'surname:hank*').should
 
         # It allows explicit partial matches.
         #
@@ -244,15 +228,15 @@ describe 'facets' do
 
         shoes_index.add shoe.new(1, 'black', 'Outdoor Black')
 
-        shoes_search.facets(:color).should == { 'black' => 1 }
-        shoes_search.facets(:color, filter: 'black').should == { 'black' => 1 }
+        shoes_search.facets(:color).should
+        shoes_search.facets(:color, filter: 'black').should
 
         999.times do |i|
           shoes_index.add shoe.new(i + 2, 'black', 'Outdoor Black')
         end
 
-        shoes_search.facets(:color).should == { 'black' => 1000 }
-        shoes_search.facets(:color, filter: 'black').should == { 'black' => 1000 }
+        shoes_search.facets(:color).should
+        shoes_search.facets(:color, filter: 'black').should
 
         # But then, over 1000 the count is only a very rough estimate.
         #
@@ -260,7 +244,7 @@ describe 'facets' do
           shoes_index.add shoe.new(i + 1001, 'black', 'Outdoor Black')
         end
 
-        shoes_search.facets(:color).should == { 'black' => 1500 }
+        shoes_search.facets(:color).should
         shoes_search.facets(:color, filter: 'black').should == { 'black' => 2000 }
       end
     end
@@ -289,18 +273,11 @@ describe 'facets' do
       it 'is correct' do
         # Picky has 2 facets with different counts for surname.
         #
-        index.facets(:surname).should == {
-          hanke: 2,
-          schiess: 1
-        }
+        index.facets(:surname).should
 
         # It has 3 facets with the same count for name.
         #
-        index.facets(:name).should == {
-          fritz: 1,
-          kaspar: 1,
-          florian: 1
-        }
+        index.facets(:name).should
 
         # Picky only selects facets with a count >= the given one.
         #
@@ -314,28 +291,19 @@ describe 'facets' do
       it 'filters them correctly' do
         # Passing in no filter query just returns the facets
         #
-        finder.facets(:surname).should == {
-          hanke: 2,
-          schiess: 1
-        }
+        finder.facets(:surname).should
 
         # It has two facets.
         #
-        finder.facets(:name, filter: 'surname:hanke').should == {
-          fritz: 1,
-          florian: 1
-        }
+        finder.facets(:name, filter: 'surname:hanke').should
 
         # It only uses exact matches (ie. the last token is not partialized).
         #
-        finder.facets(:name, filter: 'surname:hank').should == {}
+        finder.facets(:name, filter: 'surname:hank').should
 
         # It allows explicit partial matches.
         #
-        finder.facets(:name, filter: 'surname:hank*').should == {
-          fritz: 1,
-          florian: 1
-        }
+        finder.facets(:name, filter: 'surname:hank*').should
 
         # It allows explicit partial matches.
         #

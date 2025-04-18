@@ -18,7 +18,6 @@ module Picky
           end
 
           DirectlyManipulable.make self, array, key
-          array
         end
 
         def [](key)

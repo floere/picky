@@ -9,8 +9,8 @@ module Picky
 
       # Basically forwards to its internal tokens array.
       #
-      forward *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each,
-                :exit, to: :@tokens].flatten
+      forward(*[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each,
+                :exit, to: :@tokens].flatten)
       each_forward :partial=,
                    to: :@tokens
 
@@ -63,7 +63,7 @@ module Picky
       # Symbolizes each of the tokens.
       #
       def symbolize
-        @tokens.each &:symbolize!
+        @tokens.each(&:symbolize!)
       end
 
       # Makes the last of the tokens partial.

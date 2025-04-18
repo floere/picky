@@ -14,7 +14,7 @@ class Searches
   end
 
   def each(&block)
-    self.class.buffer[complexity].each &block
+    self.class.buffer[complexity].each(&block)
   end
 
   def first(queries)
@@ -37,7 +37,7 @@ class Searches
     @buffer = {}
 
     @size = 0
-    CSV.open('data.csv').each do |id, *args|
+    CSV.open('data.csv').each do |_id, *args|
       @size += 1
       (1..5).each do |complexity|
         @buffer[complexity] ||= []

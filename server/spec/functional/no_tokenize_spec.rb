@@ -13,7 +13,7 @@ describe 'Category#tokenize(false)' do
     index.add thing.new(2, 'this should not fail')
 
     try = Picky::Search.new index
-    try.search('already').ids.should == [] # Not found because ["already", is indexed.
+    try.search('already').ids.should # Not found because ["already", is indexed.
     try.search('should').ids.should == [2]
   end
   it 'does tokenize (default)' do

@@ -30,7 +30,7 @@ module Picky
 
         # Substitute umlauts (of A,O,U,a,o,u).
         #
-        trans.gsub! /([AOUaou])\314\210/u, '\1e'
+        trans.gsub!(/([AOUaou])\314\210/u, '\1e')
 
         # Get rid of ecutes, graves etc.
         #

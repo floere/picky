@@ -31,7 +31,7 @@ describe Performant::Array do
       proto = Array.new(100, 3_500_000)
       arys = [proto.map { |e| rand e }, proto.map { |e| rand e }, proto.map { |e| rand e }]
 
-      Performant::Array.memory_efficient_intersect(arys).should == arys.inject(arys.shift.dup) { |total, ary|
+      Performant::Array.memory_efficient_intersect(arys).should == arys.inject(arys.shift.dup) { |total, _ary|
         total & arys
       }
     end
@@ -48,7 +48,7 @@ describe Performant::Array do
       # &
       #
       performance_of do
-        arys.inject(arys.shift.dup) do |total, ary|
+        arys.inject(arys.shift.dup) do |total, _ary|
           total & arys
         end
       end.should < 0.0015
@@ -90,7 +90,7 @@ describe Performant::Array do
       # &
       #
       performance_of do
-        arys.inject(arys.shift.dup) do |total, ary|
+        arys.inject(arys.shift.dup) do |total, _ary|
           total & arys
         end
       end.should < 0.0015
@@ -139,7 +139,7 @@ describe Performant::Array do
       # &
       #
       performance_of do
-        arys.inject(arys.shift.dup) do |total, ary|
+        arys.inject(arys.shift.dup) do |total, _ary|
           total & arys
         end
       end.should < 0.0015

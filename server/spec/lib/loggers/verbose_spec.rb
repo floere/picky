@@ -11,7 +11,7 @@ describe Picky::Loggers::Verbose do
     before :each do
       # Explicitly define formatting for these specs.
       #
-      thing.formatter = proc do |severity, datetime, progname, msg|
+      thing.formatter = proc do |_severity, _datetime, _progname, msg|
         "#{msg}\n"
       end
     end

@@ -11,7 +11,7 @@ describe Picky::API::Tokenizer do
       let(:stemmer) do
         Class.new do
           def stem(text)
-            text.gsub /computers/, 'comput' # a simple one word stemmer ;)
+            text.gsub(/computers/, 'comput') # a simple one word stemmer ;)
           end
         end.new
       end

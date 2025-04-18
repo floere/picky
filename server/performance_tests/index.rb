@@ -21,7 +21,7 @@ class Source
   end
 
   def each(up_to = nil, &block)
-    @buffer[0..(up_to || amount)].each &block
+    @buffer[0..(up_to || amount)].each(&block)
   end
 end
 

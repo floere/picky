@@ -24,7 +24,6 @@ module Picky
       # Initialise/Reset the pool.
       #
       def clear
-        require 'set'
         @pools = Set.new
       end
 

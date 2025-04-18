@@ -201,7 +201,7 @@ module Picky
     #
     def prepared_index_file(&block)
       @prepared_index_file ||= Backends::Prepared::Text.new prepared_index_path
-      @prepared_index_file.open &block
+      @prepared_index_file.open(&block)
     end
 
     def index_directory

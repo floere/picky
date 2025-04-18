@@ -40,7 +40,7 @@ h = {}
 end
 
 def remove(h, i)
-  h.each do |key, ary|
+  h.each do |_key, ary|
     ary.delete(i) if ary.include?(i)
   end
 end

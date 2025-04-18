@@ -16,8 +16,8 @@ module Picky
           # Picky will raise a Query::Indexes::DifferentBackendsError.
           #
           def check_backends(indexes)
-            backends = indexes.map &:backend
-            backends.uniq! &:class
+            backends = indexes.map(&:backend)
+            backends.uniq!(&:class)
             raise_different backends if backends.size > 1
             backends
           end

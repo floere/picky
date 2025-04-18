@@ -2,7 +2,7 @@ require File.expand_path('integration', __dir__)
 
 def mem
   GC.start
-  puts `ps aux | grep #{Process.pid}`.split("\n").find { |s| s.match(/manual_test/) }
+  puts(`ps aux | grep #{Process.pid}`.split("\n").find { |s| s.match(/manual_test/) })
 end
 
 def timed

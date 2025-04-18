@@ -70,8 +70,6 @@ module Picky
           end
 
           DirectlyManipulable.make self, values, key
-
-          values
         end
 
         # Inject.

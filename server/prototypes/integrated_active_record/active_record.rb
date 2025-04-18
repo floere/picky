@@ -40,7 +40,7 @@ module Picky
           define_method :searches_picky do |search|
             model.class.class_eval do
               define_method :search do |*args|
-                search.search *args
+                search.search(*args)
               end
             end
           end

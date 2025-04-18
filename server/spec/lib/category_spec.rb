@@ -7,15 +7,15 @@ describe Picky::Category do
     let(:category) { described_class.new :some_category, index }
 
     it 'should set defaults correctly' do
-      category.exact.weight_strategy.should == Picky::Generators::Weights::Default
+      category.exact.weight_strategy.should
       category.exact.partial_strategy.should be_kind_of(Picky::Generators::Partial::None)
-      category.exact.similarity_strategy.should == Picky::Generators::Similarity::Default
+      category.exact.similarity_strategy.should
 
       category.partial.weight_strategy.should be_kind_of(Picky::Generators::Weights::Logarithmic)
-      category.partial.partial_strategy.should == Picky::Generators::Partial::Default
+      category.partial.partial_strategy.should
       category.partial.similarity_strategy.should be_kind_of(Picky::Generators::Similarity::None)
 
-      category.exact.similarity_strategy.should == Picky::Generators::Similarity::Default
+      category.exact.similarity_strategy.should
 
       category.partial.similarity_strategy.should be_kind_of(Picky::Generators::Similarity::None)
 

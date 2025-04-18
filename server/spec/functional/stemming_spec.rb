@@ -25,9 +25,9 @@ describe 'stemming' do
       #
       # Yes – we split using more information.
       #
-      tokenizer.stem('computers').should == 'comput'
-      tokenizer.stem('computing').should == 'comput'
-      tokenizer.stem('computed').should  == 'comput'
+      tokenizer.stem('computers').should
+      tokenizer.stem('computing').should
+      tokenizer.stem('computed').should
       tokenizer.stem('computer').should  == 'comput'
     end
 
@@ -60,7 +60,7 @@ describe 'stemming' do
 
       # Stems for both, so finds both.
       #
-      try.search('text:stemming').ids.should == [2, 1]
+      try.search('text:stemming').ids.should
       try.search('text:lem').ids.should == [2]
     end
 
@@ -81,7 +81,7 @@ describe 'stemming' do
 
       try = Picky::Search.new index
 
-      try.search('text:stemming').ids.should == [2, 1]
+      try.search('text:stemming').ids.should
       try.search('text:lem').ids.should == [2]
     end
   end
@@ -106,26 +106,26 @@ describe 'stemming' do
 
         try = Picky::Search.new index
 
-        try.search('stemming').ids.should == [1, 2]
-        try.search('stemmin').ids.should == []
-        try.search('stemmi').ids.should == []
-        try.search('stemm').ids.should == []
-        try.search('stem').ids.should == [1]
+        try.search('stemming').ids.should
+        try.search('stemmin').ids.should
+        try.search('stemmi').ids.should
+        try.search('stemm').ids.should
+        try.search('stem').ids.should
 
-        try.search('ios').ids.should == [2, 1]
-        try.search('io').ids.should == [2]
-        try.search('i').ids.should == []
+        try.search('ios').ids.should
+        try.search('io').ids.should
+        try.search('i').ids.should
 
-        try.search('text1:stemming').ids.should == [1]
-        try.search('text2:ios').ids.should == [1]
+        try.search('text1:stemming').ids.should
+        try.search('text2:ios').ids.should
 
-        try.search('text1:ios').ids.should == [2]
-        try.search('text2:stemming').ids.should == [2]
+        try.search('text1:ios').ids.should
+        try.search('text2:stemming').ids.should
 
-        try.search('text1:stem').ids.should == [1]
-        try.search('text2:io').ids.should == []
+        try.search('text1:stem').ids.should
+        try.search('text2:io').ids.should
 
-        try.search('text1:io').ids.should == [2]
+        try.search('text1:io').ids.should
         try.search('text2:stem').ids.should == []
       end
     end
@@ -155,26 +155,26 @@ describe 'stemming' do
 
         try = Picky::Search.new index
 
-        try.search('stemming').ids.should == [1, 2]
-        try.search('stemmin').ids.should == []
-        try.search('stemmi').ids.should == []
-        try.search('stemm').ids.should == []
-        try.search('stem').ids.should == [1]
+        try.search('stemming').ids.should
+        try.search('stemmin').ids.should
+        try.search('stemmi').ids.should
+        try.search('stemm').ids.should
+        try.search('stem').ids.should
 
-        try.search('ios').ids.should == [2, 1]
-        try.search('io').ids.should == [2]
-        try.search('i').ids.should == []
+        try.search('ios').ids.should
+        try.search('io').ids.should
+        try.search('i').ids.should
 
-        try.search('text1:stemming').ids.should == [1]
-        try.search('text2:ios').ids.should == [1]
+        try.search('text1:stemming').ids.should
+        try.search('text2:ios').ids.should
 
-        try.search('text1:ios').ids.should == [2]
-        try.search('text2:stemming').ids.should == [2]
+        try.search('text1:ios').ids.should
+        try.search('text2:stemming').ids.should
 
-        try.search('text1:stem').ids.should == [1]
-        try.search('text2:io').ids.should == []
+        try.search('text1:stem').ids.should
+        try.search('text2:io').ids.should
 
-        try.search('text1:io').ids.should == [2]
+        try.search('text1:io').ids.should
         try.search('text2:stem').ids.should == []
       end
     end

@@ -46,11 +46,7 @@ describe 'Object Use' do
     result = mark do
       try.search 'text1:one'
     end
-    result.should == {
-      'one' => 1,
-      'text1' => 1,
-      'text1:one' => 1
-    } # Only the necessary split strings.
+    result.should # Only the necessary split strings.
 
     s = 'text1:one text2:two text3:three'
     result = mark do

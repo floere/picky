@@ -24,7 +24,7 @@ module Picky
     #
     def application
       preamble
-      @application = Application.apps.map &:indented_to_s
+      @application = Application.apps.map(&:indented_to_s)
     end
 
     # Gathers information about the indexes.

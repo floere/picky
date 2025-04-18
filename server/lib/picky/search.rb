@@ -36,14 +36,12 @@ module Picky
     #   end
     #
     def initialize *indexes, &proc
-      @indexes = Query::Indexes.new *indexes
+      @indexes = Query::Indexes.new(*indexes)
 
       instance_eval(&proc) if block_given?
 
       @tokenizer ||= Tokenizer.searching # THINK Not dynamic. Ok?
       @boosts    ||= Query::Boosts.new
-
-      self
     end
 
     # Defines tokenizer options or the tokenizer itself.
@@ -171,7 +169,7 @@ module Picky
     #   end
     #
     def only *allocations_and_categories
-      indexes.keep_allocations *allocations_and_categories
+      indexes.keep_allocations(*allocations_and_categories)
     end
 
     # Ignore the given token if it cannot be matched to a category.

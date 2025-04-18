@@ -232,7 +232,7 @@ module Picky
 
         return [] if possible_combinations.empty?
 
-        possible_combinations.shift.zip *possible_combinations
+        possible_combinations.shift.zip(*possible_combinations)
       end
     end
   end

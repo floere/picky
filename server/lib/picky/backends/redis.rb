@@ -97,7 +97,7 @@ module Picky
       def redis_version
         infos          = client.info
         version_string = infos['redis_version'] || infos[:redis_version]
-        version_string.split('.').map &:to_i
+        version_string.split('.').map(&:to_i)
       end
 
       # Returns the total weight for the combinations.

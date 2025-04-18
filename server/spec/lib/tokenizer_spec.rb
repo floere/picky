@@ -25,7 +25,7 @@ describe Picky::Tokenizer do
   end
 
   context 'with special instance' do
-    let (:tokenizer) {
+    let(:tokenizer) {
       described_class.new rejects_token_if: lambda { |token|
         token.to_s.length < 2 || token == :hello
       }, case_sensitive: true

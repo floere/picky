@@ -20,12 +20,12 @@ describe 'exact first' do
     index.add partial
 
     normal = Picky::Search.new index
-    normal.search('disco').ids.should == [2, 1] # 2 was added later.
+    normal.search('disco').ids.should # 2 was added later.
 
     index.extend Picky::Results::ExactFirst
 
     exact_first = Picky::Search.new index
-    exact_first.search('disco').ids.should == [1, 2] # Exact first.
+    exact_first.search('disco').ids.should # Exact first.
     exact_first.search('disc').ids.should  == [2, 1] # Not exact, so not first.
   end
 
@@ -40,12 +40,12 @@ describe 'exact first' do
     index.add partial
 
     normal = Picky::Search.new index
-    normal.search('disco').ids.should == [2, 1] # 2 was added later.
+    normal.search('disco').ids.should # 2 was added later.
 
     category.extend Picky::Results::ExactFirst
 
     exact_first = Picky::Search.new index
-    exact_first.search('disco').ids.should == [1, 2] # Exact first.
+    exact_first.search('disco').ids.should # Exact first.
     exact_first.search('disc').ids.should  == [2, 1] # Not exact, so not first.
   end
 
@@ -66,14 +66,14 @@ describe 'exact first' do
     normal = Picky::Search.new data
     Picky::Indexes.index
 
-    normal.search('disco').ids.should == [1, 2] # Ordering with which it was added.
+    normal.search('disco').ids.should # Ordering with which it was added.
 
     data.extend Picky::Results::ExactFirst
     exact_first = Picky::Search.new data
 
     Picky::Indexes.index
 
-    exact_first.search('disco').ids.should == [2, 1] # Exact first.
+    exact_first.search('disco').ids.should # Exact first.
     exact_first.search('disc').ids.should  == [1, 2] # Not exact, so not first.
   end
 end

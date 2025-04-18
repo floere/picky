@@ -173,7 +173,7 @@ module Picky
     end
 
     def reject(tokens)
-      tokens.reject! &@reject_condition
+      tokens.reject!(&@reject_condition)
     end
 
     # Case sensitivity.

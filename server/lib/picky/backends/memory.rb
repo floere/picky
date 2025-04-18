@@ -6,7 +6,7 @@ module Picky
       end
 
       def json *args
-        JSON.new *args
+        JSON.new(*args)
       end
 
       # TODO Make lazy.

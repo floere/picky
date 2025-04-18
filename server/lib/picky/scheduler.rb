@@ -12,7 +12,7 @@ module Picky
     def configure
       if fork?
         def schedule(&block)
-          scheduler.schedule &block
+          scheduler.schedule(&block)
         end
 
         def finish

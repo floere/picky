@@ -4,7 +4,7 @@ module Picky
     #
     class Concise < Silent
       def initialize *args
-        super *args
+        super(*args)
       end
 
       def tokenize(*)

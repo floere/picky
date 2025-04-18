@@ -8,7 +8,7 @@ class EachRSSItemProxy
       rss_content = f.read
     end
     rss = RSS::Parser.parse rss_content, true
-    rss.items.each &block
+    rss.items.each(&block)
   rescue
     # Don't call block, no data.
   end

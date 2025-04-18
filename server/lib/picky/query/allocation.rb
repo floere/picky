@@ -26,7 +26,7 @@ module Picky
       # TODO
       #
       def each(&block)
-        @combinations.each &block
+        @combinations.each(&block)
       end
 
       # TODO
@@ -90,7 +90,7 @@ module Picky
       #
       def process!(amount, offset, sorting = nil)
         calculated_ids = calculate_ids amount, offset
-        calculated_ids.sort_by! &sorting if sorting
+        calculated_ids.sort_by!(&sorting) if sorting
         @count = calculated_ids.size                                          # cache the count before throwing away the ids
         @ids   = calculated_ids.slice!(offset, amount) || backend.empty_array # slice out the relevant part
       end
@@ -105,7 +105,7 @@ module Picky
         #
         calculated_ids = calculate_ids(amount + illegal_ids.size, offset)
         calculated_ids -= illegal_ids
-        calculated_ids.sort_by! &sorting if sorting
+        calculated_ids.sort_by!(&sorting) if sorting
         @count = calculated_ids.size                                          # cache the count before throwing away the ids
         @ids   = calculated_ids.slice!(offset, amount) || backend.empty_array # slice out the relevant part
       end

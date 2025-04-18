@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Splitter do
   describe 'single' do
-    let(:splitter) { described_class.new /:/ }
+    let(:splitter) { described_class.new(/:/) }
     it 'splits right' do
       splitter.single(':b').should == ['', 'b']
     end
@@ -22,7 +22,7 @@ describe Picky::Splitter do
   end
 
   describe 'multi' do
-    let(:splitter) { described_class.new /\s/ }
+    let(:splitter) { described_class.new(/\s/) }
     it 'splits right' do
       splitter.multi(' b').should == ['', 'b']
     end

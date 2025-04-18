@@ -59,7 +59,7 @@ module Picky
       # TODO Push into categories? Store boosts in categories?
       #
       def boost_for(combinations)
-        boost_for_categories combinations.map { |combination| combination.category_name }
+        boost_for_categories(combinations.map { |combination| combination.category_name })
       end
 
       # A Weights instance is == to another if

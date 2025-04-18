@@ -8,7 +8,7 @@ module Picky
     attr_reader :indexes
 
     def initialize *indexes
-      @indexes = Indexes.new *indexes
+      @indexes = Indexes.new(*indexes)
     end
 
     # Returns the number of tokens in all the inverted indexes.

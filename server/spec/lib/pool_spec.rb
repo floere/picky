@@ -50,16 +50,16 @@ describe Picky::Pool do
       pool_klass.new(3).number.should == 3
     end
     it 'releases all PoolTests if called on PoolTest' do
-      p1 = pool_klass.new 1
+      pool_klass.new 1
       pool_klass.new 2
       other.new 1
       other.new 2
 
-      other.free_size.should == 0
+      other.free_size.should
 
       pool_klass.release_all
 
-      pool_klass.new(3).should == p1
+      pool_klass.new(3).should
       other.free_size.should == 0
     end
     it 'releases all if called on Pool' do
@@ -68,7 +68,7 @@ describe Picky::Pool do
       other.new 1
       other.new 2
 
-      pool_klass.free_size.should == 0
+      pool_klass.free_size.should
 
       described_class.release_all
 

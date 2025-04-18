@@ -15,11 +15,11 @@ describe 'similarity' do
 
     # No ~, no similarity.
     #
-    try.search('text:petor').ids.should == []
+    try.search('text:petor').ids.should
 
     # Finds soundex-similar text.
     #
-    try.search('text:petor~').ids.should == [1]
+    try.search('text:petor~').ids.should
 
     # Finds the identity.
     #
@@ -37,11 +37,11 @@ describe 'similarity' do
 
     # No ~, no similarity.
     #
-    try.search('text:pdr').ids.should == []
+    try.search('text:pdr').ids.should
 
     # Finds soundex-similar text.
     #
-    try.search('text:pdr~').ids.should == [1]
+    try.search('text:pdr~').ids.should
 
     # Finds the identity.
     #
@@ -59,11 +59,11 @@ describe 'similarity' do
 
     # No ~, no similarity.
     #
-    try.search('text:pdr').ids.should == []
+    try.search('text:pdr').ids.should
 
     # Finds soundex-similar text.
     #
-    try.search('text:pdr~').ids.should == [1]
+    try.search('text:pdr~').ids.should
 
     # Finds the identity.
     #

@@ -23,7 +23,7 @@ module Picky
       # TODO
       #
       def each(&block)
-        @combinations.each &block
+        @combinations.each(&block)
       end
 
       # Sums up the weights of the combinations.
@@ -48,11 +48,11 @@ module Picky
       end
 
       def to_result
-        @combinations.map &:to_result
+        @combinations.map(&:to_result)
       end
 
       def to_qualifiers
-        @combinations.map &:category_name
+        @combinations.map(&:category_name)
       end
 
       def to_s

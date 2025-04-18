@@ -340,7 +340,7 @@ describe Picky::Query::Allocations do
       stub_proc = lambda {}
       @internal_allocations.should_receive(:each).once.with no_args, &stub_proc
 
-      @allocations.each &stub_proc
+      @allocations.each(&stub_proc)
     end
   end
   describe 'inject' do
@@ -352,7 +352,7 @@ describe Picky::Query::Allocations do
       stub_proc = lambda {}
       @internal_allocations.should_receive(:inject).once.with no_args, &stub_proc
 
-      @allocations.inject &stub_proc
+      @allocations.inject(&stub_proc)
     end
   end
   describe 'empty?' do
