@@ -5,7 +5,7 @@ module Picky
     class Silent
       attr_reader :output
 
-      def initialize(output = STDOUT)
+      def initialize(output = $stdout)
         @output = output
         adapt
       end

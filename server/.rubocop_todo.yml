@@ -168,13 +168,6 @@ Style/FormatString:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'lib/picky/loggers/silent.rb'
-    - 'performance_tests/profile.rb'
-
 # Offense count: 6
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
