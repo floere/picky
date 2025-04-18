@@ -34,7 +34,7 @@ describe Module do
       end
     end
   end
-  
+
   describe 'forward' do
     context "with correct params" do
       let(:klass) do
@@ -63,11 +63,11 @@ describe Module do
     end
     context "without correct params" do
       it 'should raise an error' do
-        lambda do
+        expect do
           Class.new do
             forward :bli, :bla, :blu # :to missing
           end
-        end.should raise_error(ArgumentError, "Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, to: :a_reader).")
+        end.to raise_error(ArgumentError, "Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, to: :a_reader).")
       end
       it 'should raise an error' do
         lambda do

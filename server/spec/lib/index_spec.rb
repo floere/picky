@@ -55,7 +55,7 @@ describe Picky::Index do
         source the_source
       end
     end
-    
+
     describe 'directory' do
       it 'is correct' do
         api.directory.should == 'spec/temp/index/test/some_index_name'
@@ -64,10 +64,10 @@ describe Picky::Index do
 
     describe 'geo_categories' do
       it 'forwards correctly' do
-        api.should_receive(:ranged_category).once.with :some_lat, 0.00898312, from: :some_lat_from
-        api.should_receive(:ranged_category).once.with :some_lng, 0.01796624, from: :some_lng_from
+        api.should_receive(:ranged_category).once.with(:some_lat, 0.00898312, from: :some_lat_from)
+        api.should_receive(:ranged_category).once.with(:some_lng, 0.01796624, from: :some_lng_from)
 
-        api.geo_categories :some_lat, :some_lng, 1, :lat_from => :some_lat_from, :lng_from => :some_lng_from
+        api.geo_categories(:some_lat, :some_lng, 1, lat_from: :some_lat_from, lng_from: :some_lng_from)
       end
     end
 
@@ -103,7 +103,7 @@ describe Picky::Index do
         end
       end
     end
-    
+
     describe '#to_stats' do
       let(:index) do
         the_source = some_source
@@ -114,7 +114,7 @@ describe Picky::Index do
           result_identifier :foobar
         end
       end
-      
+
       it 'outputs the stats correctly' do
         index.to_stats.should == <<-EXPECTED
 some_index_name (Picky::Index):
@@ -124,7 +124,7 @@ some_index_name (Picky::Index):
 EXPECTED
       end
     end
-    
+
     describe '#to_tree_s' do
       let(:index) do
         the_source = some_source
@@ -137,7 +137,7 @@ EXPECTED
         idx.replace_from id: 1, text1: 'hello', text2: 'hoohoo'
         idx
       end
-      
+
       it 'outputs the stats correctly' do
         index.to_tree_s.should == <<-EXPECTED
 Index(some_index_name)

@@ -127,14 +127,14 @@ module Picky
 
       instance_eval(&proc) if block_given?
     end
-    
+
     # Provide hints for Picky so it can optimise.
     #
     def optimize *hints
       require_relative 'index/hints'
       @hints = Hints.new hints
     end
-    
+
     # Explicitly trigger memory optimization.
     #
     def optimize_memory array_references = Hash.new
@@ -173,7 +173,7 @@ module Picky
         @symbol_keys = value
       else
         @symbol_keys
-      end 
+      end
     end
 
     # The directory used by this index.
@@ -352,15 +352,15 @@ module Picky
     # THINK Will have to write a wrapper that combines two categories that are
     # indexed simultaneously, since lat/lng are correlated.
     #
-    def geo_categories lat_name, lng_name, radius, options = {}
+    def geo_categories(lat_name, lng_name, radius, **options)
       # Extract lat/lng specific options.
       #
-      lat_from = options.delete :lat_from
-      lng_from = options.delete :lng_from
+      lat_from = options.delete(:lat_from)
+      lng_from = options.delete(:lng_from)
 
       # One can be a normal ranged_category.
       #
-      ranged_category lat_name, radius*0.00898312, options.merge(from: lat_from)
+      ranged_category lat_name, radius*0.00898312, **options.merge(from: lat_from)
 
       # The other needs to adapt the radius depending on the one.
       #
@@ -375,7 +375,7 @@ module Picky
       # A degree on the 45 degree line is equal to ~222.6398 km.
       # So a km on the 45 degree line is equal to 0.01796624 degrees.
       #
-      ranged_category lng_name, radius*0.01796624, options.merge(from: lng_from)
+      ranged_category lng_name, radius*0.01796624, **options.merge(from: lng_from)
     end
 
     def to_stats

@@ -18,7 +18,7 @@ describe Picky::Loggers::Verbose do
     end
     describe 'more complicated test case' do
       it 'is correct' do
-        Time.stub :now => Time.new('0')
+        Time.stub :now => Time.new('0000')
 
         logger.info 'Tokenizing '
         logger.tokenize category, file
@@ -41,7 +41,7 @@ describe Picky::Loggers::Verbose do
     let(:thing) { io }
     describe 'more complicated test case' do
       it 'is correct' do
-        Time.stub :now => Time.new('zeros')
+        Time.stub :now => Time.new('0000')
 
         logger.info 'Tokenizing '
         logger.tokenize category, file

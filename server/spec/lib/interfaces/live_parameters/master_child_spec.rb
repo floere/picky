@@ -48,7 +48,7 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
         @parameters.should_receive(:write_parent).once.with(:a => :b).ordered
         @parameters.should_receive(:extract_configuration).once.with(no_args).ordered
 
-        @parameters.parameters :a => :b
+        @parameters.parameters(a: :b)
       end
     end
     context 'updating failed' do
@@ -59,7 +59,7 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
         @parameters.should_receive(:close_child).once.ordered
         @parameters.should_receive(:harakiri).once.ordered
 
-        @parameters.parameters( :a => :b ).should == { :a => :ERROR }
+        @parameters.parameters(a: :b).should == {a: :ERROR }
       end
     end
   end

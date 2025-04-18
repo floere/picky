@@ -5,7 +5,7 @@ class Module
   def forward *methods
     forwarding methods,
       'def %{method}(*args, **kwargs, &block); %{to}.__send__(:%{method}, *args, **kwargs, &block); end',
-      'Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, :to => :a_reader).'
+      'Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, to: :a_reader).'
   end
 
   def each_forward *methods
