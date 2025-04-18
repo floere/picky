@@ -28,7 +28,7 @@ describe Picky::Query::Combination do
         @combination = Picky::Query::Combination.new token, @category, 3.14
       end
       it 'should return a correct result' do
-        @combination.to_result.should == [:some_category_name, 'Blä~', 'blä'] # Note: Characters not substituted. That's ok.
+        @combination.to_result.should == [:some_category_name, 'Blä~', 'blä'] # NOTE: Characters not substituted. That's ok.
       end
     end
     it 'should return a correct result' do

@@ -11,7 +11,7 @@ describe Picky do
   end
 
   it 'loads in a simple ruby environment with the defined requirements' do
-    # TODO Picky.root is set to /spec/temp in spec_helper, so is this the "best" way?
+    # TODO: Picky.root is set to /spec/temp in spec_helper, so is this the "best" way?
     load_path   = File.expand_path('../../lib', __dir__)
     ruby        = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name']).sub(/.*\s.*/m, '"\&"')
 

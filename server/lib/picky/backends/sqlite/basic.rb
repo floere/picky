@@ -14,7 +14,7 @@ module Picky
           @initial    = options[:initial]
           @realtime   = options[:realtime]
 
-          # Note: If on OSX, too many files get opened during
+          # NOTE: If on OSX, too many files get opened during
           #       the specs -> ulimit -n 3000
           #
           # rescue SQLite3::CantOpenException => e
@@ -59,7 +59,7 @@ module Picky
           reset
 
           transaction do
-            # Note: Internal structures need to
+            # NOTE: Internal structures need to
             #       implement each.
             #
             internal.each do |key, value|

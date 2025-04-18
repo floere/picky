@@ -26,7 +26,7 @@ module Picky
   require 'active_support/multibyte'
   require 'multi_json'
 
-  # TODO Still required with Ruby 2.1?
+  # TODO: Still required with Ruby 2.1?
   #
   # require 'fileutils'
   require 'strscan'
@@ -34,7 +34,7 @@ module Picky
   # Check if platform specific modifiers need to be installed.
   #
 
-  # Note: We don't use require_relative yet because MacRuby
+  # NOTE: We don't use require_relative yet because MacRuby
   # doesn't have it.
   #
   require File.expand_path 'picky/platforms/macruby', __dir__

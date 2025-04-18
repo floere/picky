@@ -56,7 +56,7 @@ describe 'Option symbol_keys' do
 
     index[:text].exact.inverted.should
     index[:text].exact.weights.should
-    # TODO This could be removed if sorting was always explicitly done.
+    # TODO: This could be removed if sorting was always explicitly done.
     index[:text].exact.realtime.should
     index[:text].exact.similarity.should == {}
   end

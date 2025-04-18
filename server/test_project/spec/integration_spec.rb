@@ -187,7 +187,7 @@ describe BookSearch do
   it { expect(csv.search('strutigic~').ids).to eq [7, 398, 414] }
   it {
     expect(csv.search('guvurnance~').ids).to eq [126, 181, 198, 263, 298, 324, 419, 22]
-  } # TODO 7 should be in the result set.
+  } # TODO: 7 should be in the result set.
   it { expect(csv.search('strutigic~ guvurnance~').ids).to eq [7] }
   it { expect(csv.search('strategic~ governance~').ids).to eq [] } # Does not find itself.
 

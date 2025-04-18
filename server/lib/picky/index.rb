@@ -141,7 +141,7 @@ module Picky
       dedup.deduplicate categories.map(&:partial).map(&:inverted), array_references
     end
 
-    # TODO Doc.
+    # TODO: Doc.
     #
     def static
       @static = true
@@ -199,7 +199,7 @@ module Picky
       # @qualifier_mapper.restrict_to *qualifiers
     end
 
-    # TODO Reinstate.
+    # TODO: Reinstate.
     #
     # # Ignore the categories with these qualifiers.
     # #
@@ -309,7 +309,7 @@ module Picky
       precision = options.delete(:precision) || 1
       anchor    = options.delete(:anchor)    || 0.0
 
-      # Note: :key_format => :to_f ?
+      # NOTE: :key_format => :to_f ?
       #
       options = { partial: Partial::None.new }.merge options
 

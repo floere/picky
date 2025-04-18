@@ -47,7 +47,7 @@ module Picky
         @tokens.inject([]) do |combinations, token|
           possible_combinations = token.possible_combinations categories
 
-          # Note: Optimization for ignoring tokens that allocate to nothing and
+          # NOTE: Optimization for ignoring tokens that allocate to nothing and
           # can be ignored.
           # For example in a special search, where "florian" is not
           # mapped to any category.

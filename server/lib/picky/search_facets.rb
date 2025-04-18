@@ -14,7 +14,7 @@ module Picky
     #   search.facets :name, filter: 'surname:peter', at_least: 2
     #
     def facets(category_identifier, options = {})
-      # TODO Make it work. How should it work with multiple indexes?
+      # TODO: Make it work. How should it work with multiple indexes?
       #
       raise "#{__method__} cannot be used on searches with more than 1 index yet. Sorry!" if indexes.size > 1
 
@@ -56,11 +56,11 @@ module Picky
       #
       if no_counts
         facets_without_counts counts, minimal_counts, tokenized_filter_query, options do |last_text|
-          key_token.text = last_text # TODO Why is this necessary?
+          key_token.text = last_text # TODO: Why is this necessary?
         end
       else
         facets_with_counts counts, minimal_counts, tokenized_filter_query, key_token.text, options do |last_text|
-          key_token.text = last_text # TODO Why is this necessary?
+          key_token.text = last_text # TODO: Why is this necessary?
         end
       end
     end

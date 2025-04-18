@@ -14,7 +14,7 @@ module Picky
     def weight(token)
       bundle = bundle_for token
       if (range = token.range)
-        # TODO We might be able to return early?
+        # TODO: We might be able to return early?
         #
         @ranger.new(*range).inject(nil) do |sum, text|
           weight = bundle.weight str_or_sym(text)

@@ -59,7 +59,7 @@ module Picky
     # Registers an index with the indexes.
     #
     def register(index)
-      # TODO Do not store duplicate indexes.
+      # TODO: Do not store duplicate indexes.
       #
       # self.indexes.delete_if { |existing| existing.name == index.name }
       self.indexes << index

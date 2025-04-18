@@ -38,7 +38,7 @@ describe 'Object Use' do
       'three' => 1,
       'two' => 1,
       'one' => 1,
-      'one two three' => 2 # TODO Is GC'd.
+      'one two three' => 2 # TODO: Is GC'd.
     )
 
     result = mark do

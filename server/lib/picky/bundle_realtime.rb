@@ -1,6 +1,6 @@
 module Picky
   class Bundle
-    # TODO Push methods back into the backend, so that we
+    # TODO: Push methods back into the backend, so that we
     #      can apply more efficient methods tailored for
     #      each specific backends.
     #
@@ -60,7 +60,7 @@ module Picky
           ids.delete id
           ids.send method, id
         else
-          # TODO Adding should not change the array if it's already in.
+          # TODO: Adding should not change the array if it's already in.
           #
           if ids.include?(id)
             # Do nothing. Not forced, and already in.
@@ -88,7 +88,7 @@ module Picky
                 # Update the realtime index.
                 #
                 str_or_syms << str_or_sym
-                # TODO Add has_key? to index backends.
+                # TODO: Add has_key? to index backends.
                 # ids = if @inverted.has_key?(str_or_sym)
                 #   @inverted[str_or_sym]
                 # else

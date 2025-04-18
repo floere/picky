@@ -127,7 +127,7 @@ module Picky
     end
 
     def normalize_with_patterns(text)
-      return text unless @normalizes_words_regexp_replaces # TODO Remove.
+      return text unless @normalizes_words_regexp_replaces # TODO: Remove.
 
       @normalizes_words_regexp_replaces.each do |regex, replace|
         # This should be sufficient
@@ -251,7 +251,7 @@ module Picky
     #
     def tokenize(text)
       text = preprocess text.to_s # processing the text
-      return empty_tokens if text.empty? # TODO blank?
+      return empty_tokens if text.empty? # TODO: blank?
 
       words = pretokenize text # splitting and preparations for tokenizing
       return empty_tokens if words.empty?

@@ -9,7 +9,7 @@ module Picky
         JSON.new(*args)
       end
 
-      # TODO Make lazy.
+      # TODO: Make lazy.
       require_relative 'google_hash'
 
       # Returns an object that on #initial, #load returns
@@ -58,7 +58,7 @@ module Picky
       def hash_for(hints)
         if hints && hints.does?(:no_dump)
           # ::GoogleHashSparseRubyToRuby # TODO Use GoogleHashSparseIntToRuby where possible.
-          ::Hash # Note: GoogleHashSparseRubyToRuby was removed with Ruby 2.7.1
+          ::Hash # NOTE: GoogleHashSparseRubyToRuby was removed with Ruby 2.7.1
         else
           ::Hash
         end

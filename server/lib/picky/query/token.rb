@@ -257,13 +257,13 @@ module Picky
       # Normalizes this token's text.
       #
       def remove_illegals
-        # Note: unless @text.blank? was removed.
+        # NOTE: unless @text.blank? was removed.
         #
         @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
 
       def self.redefine_illegals
-        # Note: By default, both no similar and no partial are ".
+        # NOTE: By default, both no similar and no partial are ".
         #
         @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
       end
@@ -303,7 +303,7 @@ module Picky
       #
       @@qualifier_text_delimiter = /:/
       @@qualifiers_delimiter     = /,/
-      # TODO Think about making these instances.
+      # TODO: Think about making these instances.
       @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
       @@qualifiers_splitter      = Splitter.new @@qualifiers_delimiter
       def qualify

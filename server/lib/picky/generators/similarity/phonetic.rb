@@ -30,7 +30,7 @@ module Picky
         #
         def prioritize(ary, code)
           ary.sort_by_levenshtein! code
-          ary.slice! amount, ary.size # Note: The ary.size is not perfectly correct.
+          ary.slice! amount, ary.size # NOTE: The ary.size is not perfectly correct.
         end
       end
     end

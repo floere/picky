@@ -73,7 +73,7 @@ module Rust
       new(pointer)
     end
 
-    # TODO Freeing!
+    # TODO: Freeing!
     # TODO Add RUBY_OBJECT type which automatically calls its #to_ptr.
     # TODO Add RUBY_OBJECT type which automatically calls this class' #from_ptr.
 

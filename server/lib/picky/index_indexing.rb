@@ -49,7 +49,7 @@ module Picky
       indexer.prepare categories, scheduler
     end
 
-    # Note: Duplicated in category_indexing.rb.
+    # NOTE: Duplicated in category_indexing.rb.
     #
     # Take a data snapshot if the source offers it.
     #

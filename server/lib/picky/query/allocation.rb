@@ -52,7 +52,7 @@ module Picky
         @score ||= (if @combinations.empty?
                       0 # Optimization.
                     else
-                      # Note: Was @backend.score(@combinations) - indirection for maximum flexibility.
+                      # NOTE: Was @backend.score(@combinations) - indirection for maximum flexibility.
                       @combinations.score + boosts.boost_for(@combinations)
                     end)
       end
@@ -62,7 +62,7 @@ module Picky
       # TODO Calculate ids here?
       #
       def ids
-        # TODO Should ids only be received from the backend with the right type.
+        # TODO: Should ids only be received from the backend with the right type.
         @ids ||= backend.empty_array
       end
 
@@ -75,7 +75,7 @@ module Picky
       def calculate_ids(amount, offset)
         return backend.empty_array if @combinations.empty? # Checked here to avoid checking in each backend.
 
-        # TODO Redesign such that ids is only created (and cached) if requested.
+        # TODO: Redesign such that ids is only created (and cached) if requested.
         #
         backend.ids @combinations, amount, offset
       end
@@ -99,7 +99,7 @@ module Picky
       #  * illegal_ids: ids to ignore.
       #
       def process_with_illegals!(amount, offset, illegal_ids, sorting = nil)
-        # Note: Fairly inefficient calculation since it
+        # NOTE: Fairly inefficient calculation since it
         # assumes the worst case that the ids contain
         # all illegal ids.
         #

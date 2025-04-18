@@ -73,7 +73,7 @@ module Picky
         def release(instance)
           @__free__ << instance
 
-          # Note: This is relatively fast as there are often only
+          # NOTE: This is relatively fast as there are often only
           # few instances in the used pool.
           #
           @__used__.delete instance

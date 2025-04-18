@@ -138,7 +138,7 @@ describe Picky::Tokenizer do
           tokenizer.normalize_with_patterns('alice & bob').should == 'alice and bob'
         end
       end
-      # TODO Reinstate.
+      # TODO: Reinstate.
       #
       # context 'with a normalizer' do
       #   let(:normalizer) {

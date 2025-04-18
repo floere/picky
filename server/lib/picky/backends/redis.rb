@@ -103,7 +103,7 @@ module Picky
       # Returns the total weight for the combinations.
       #
       def weight(combinations)
-        # Note: A nice experiment that generated far too many strings.
+        # NOTE: A nice experiment that generated far too many strings.
         #
         # if redis_with_scripting?
         #   @@weight_script = "local sum = 0; for i=1,#(KEYS),2 do local value = redis.call('hget', KEYS[i], KEYS[i+1]); if value then sum = sum + value end end return sum;"
@@ -157,7 +157,7 @@ module Picky
       # Note: We use the amount and offset hints to speed Redis up.
       #
       def ids(combinations, amount, offset)
-        # TODO This is actually not correct:
+        # TODO: This is actually not correct:
         #      A dumped/loaded Redis backend should use
         #      the Redis backend calculation method.
         #      So loaded? would be more appropriate.

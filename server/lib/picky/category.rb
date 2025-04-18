@@ -35,7 +35,7 @@ module Picky
       @name  = name
       @index = index
 
-      # TODO Move.
+      # TODO: Move.
       #
       options[:hints] = index.hints
 
@@ -65,7 +65,7 @@ module Picky
       @symbol_keys
     end
 
-    # TODO I do a lot of helper method calls here. Refactor?
+    # TODO: I do a lot of helper method calls here. Refactor?
     #
     def configure_indexes_from(options)
       warn_if_unknown options
@@ -123,7 +123,7 @@ module Picky
     end
 
     def partial_for(exact, partial_options, weights, options)
-      # TODO Also partial.extend Bundle::Exact like in the category.
+      # TODO: Also partial.extend Bundle::Exact like in the category.
       #
       # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance?
       #

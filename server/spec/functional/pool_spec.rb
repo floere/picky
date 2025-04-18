@@ -25,7 +25,7 @@ describe 'GC stats: searching' do
   end
   let(:search) { Picky::Search.new data }
 
-  # TODO Why are both versions almost equally fast?
+  # TODO: Why are both versions almost equally fast?
   #
   # context 'without pool' do
   #   it 'runs the GC more' do

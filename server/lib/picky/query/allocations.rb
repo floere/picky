@@ -91,9 +91,9 @@ module Picky
       # Returns the top amount ids.
       #
       def ids(amount = 20)
-        # TODO This is called too many times?
+        # TODO: This is called too many times?
         if (first_allocation = first)
-          # TODO Call ids with amount as parameter?
+          # TODO: Call ids with amount as parameter?
           # result = inject(allocation.empty_array) do |total, allocation|
           result = self[1..-1].inject(first_allocation.ids) do |total, allocation|
             if total.size >= amount
@@ -105,7 +105,7 @@ module Picky
           # result.shift(amount)
           result.first(amount)
         else
-          [] # TODO Make this Array too index type dependent (by e.g. pseudo-shifting?).
+          [] # TODO: Make this Array too index type dependent (by e.g. pseudo-shifting?).
         end
       end
 

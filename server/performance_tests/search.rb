@@ -43,7 +43,7 @@ definitions = []
 #   category :text4, weight: Picky::Weights::Constant.new
 # end, :no_weights]
 
-# TODO Why does the String count explode when using key_format :to_s?
+# TODO: Why does the String count explode when using key_format :to_s?
 #
 definitions << [Proc.new do
   category :text1

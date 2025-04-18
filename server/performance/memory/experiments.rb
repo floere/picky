@@ -5,7 +5,7 @@ require_relative '../../lib/picky'
 GC.start
 
 index = Picky::Index.new(:index) do
-  # optimize :no_dump
+  # OPTIMIZE: no_dump
   static
   symbol_keys true
 
