@@ -38,7 +38,7 @@ class Searches
     @buffer = {}
 
     @size = 0
-    CSV.open('data.csv').each do |_id, *args|
+    CSV.open('data.csv').each_value do |*args|
       @size += 1
       (1..5).each do |complexity|
         @buffer[complexity] ||= []
