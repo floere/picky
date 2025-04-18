@@ -25,11 +25,9 @@ GEM
     pg (1.2.3)
     procrastinate (0.6.0)
       state_machine (~> 1.1)
-    rack (2.2.3)
+    rack (2.2.13)
     rack-protection (2.1.0)
       rack
-    rack_fast_escape (2009.06.24)
-      url_escape
     rake (13.0.1)
     redis (4.2.5)
     rspec (3.10.0)
@@ -58,7 +56,6 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
-    url_escape (2009.06.24)
     yajl-ruby (1.4.1)
     zeitwerk (2.4.2)
 
@@ -73,7 +70,6 @@ DEPENDENCIES
   pg
   procrastinate (~> 0.4)
   rack
-  rack_fast_escape (= 2009.06.24)
   rake
   redis
   rspec
