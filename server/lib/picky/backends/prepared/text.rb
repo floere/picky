@@ -1,13 +1,9 @@
 module Picky
-
   module Backends
-
     class Prepared
-
       # Index data dumped in the text format.
       #
       class Text
-
         include Helpers::File
 
         attr_reader :cache_path
@@ -68,12 +64,7 @@ module Picky
           create_directory cache_path
           ::File.open cache_path, 'w:utf-8', &block
         end
-
-
       end
-
     end
-
   end
-
 end

@@ -1,7 +1,5 @@
 module Picky
-
   module Generators
-
     module Similarity
       extend Helpers::Identification
 
@@ -19,9 +17,6 @@ or
 ERROR
         end
       end
-
     end
-
   end
-
 end

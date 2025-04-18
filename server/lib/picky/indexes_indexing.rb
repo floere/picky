@@ -1,9 +1,7 @@
 module Picky
-
   # Indexes indexing.
   #
   class Indexes
-
     extend Helpers::Indexing
     include Helpers::Indexing
 
@@ -24,7 +22,5 @@ module Picky
     def tokenizer
       Tokenizer.indexing
     end
-
   end
-
 end

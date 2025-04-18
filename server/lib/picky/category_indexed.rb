@@ -1,9 +1,7 @@
 module Picky
-
   #
   #
   class Category
-
     # Loads the index from cache.
     #
     def load
@@ -79,7 +77,5 @@ module Picky
     def bundle_for(token)
       token.select_bundle exact, partial
     end
-
   end
-
 end

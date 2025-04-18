@@ -1,7 +1,5 @@
 module Picky
-
   class Category
-
     class Picky::IdNotGivenException < StandardError; end
 
     # Adds and indexes this category of the
@@ -144,7 +142,5 @@ module Picky
       exact.build_realtime @symbol_keys
       partial.build_realtime @symbol_keys
     end
-
   end
-
 end

@@ -1,5 +1,4 @@
 class IndexGenerator
-
   attr_reader :amount, :length
 
   def initialize(amount, &length)
@@ -36,7 +35,6 @@ class IndexGenerator
       yield args
     end
   end
-
 end
 
 generator = IndexGenerator.new 100_000

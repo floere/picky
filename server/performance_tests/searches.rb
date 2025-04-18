@@ -46,5 +46,4 @@ class Searches
       end
     end
   end
-
 end

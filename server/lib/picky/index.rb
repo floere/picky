@@ -1,5 +1,4 @@
 module Picky
-
   # = Picky Indexes
   #
   # A Picky Index defines
@@ -85,7 +84,6 @@ module Picky
   # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Index*.
   #
   class Index
-
     attr_reader :name,
                 :categories,
                 :hints
@@ -419,7 +417,5 @@ INDEX
 #{' ' * indent}#{categories.to_tree_s(4)}
 TREE
     end
-
   end
-
 end

@@ -1,5 +1,4 @@
 class CSVBook < Each
-
   module Accessibility
     def id
       self[0]
@@ -11,5 +10,4 @@ class CSVBook < Each
       end
     end
   end
-
 end

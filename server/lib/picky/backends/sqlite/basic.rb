@@ -1,13 +1,9 @@
 module Picky
-
   module Backends
-
     class SQLite
-
       EMPTY_ARRAY = ::Array.new
 
       class Basic
-
         include Helpers::File
 
         attr_reader :cache_path, :db
@@ -110,11 +106,7 @@ module Picky
         def to_s
           "#{self.class}(#{cache_path})"
         end
-
       end
-
     end
-
   end
-
 end

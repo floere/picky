@@ -1,9 +1,7 @@
 module Picky
-
   #
   #
   class Category
-
     include Helpers::Indexing
 
     attr_reader :exact,
@@ -132,7 +130,5 @@ module Picky
       exact.clear
       partial.clear
     end
-
   end
-
 end

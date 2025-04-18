@@ -1,7 +1,5 @@
 module Picky
-
   module Generators
-
     module Weights
       
       # Uses a logarithmic weight.
@@ -53,9 +51,6 @@ module Picky
         # end
         
       end
-
     end
-
   end
-
 end

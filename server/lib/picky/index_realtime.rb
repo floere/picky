@@ -1,9 +1,7 @@
 module Picky
-
   #
   #
   class Index
-
     forward :remove,  # aka "delete".
             # :add,     # aka "insert". # See below.
             :replace, # aka "delete then insert".
@@ -30,7 +28,5 @@ module Picky
     def add(thing, method: :unshift, force_update: false)
       categories.add(thing, method:, force_update:)
     end
-
   end
-
 end

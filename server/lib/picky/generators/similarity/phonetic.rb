@@ -1,11 +1,8 @@
 module Picky
-
   # encoding: utf-8
   #
   module Generators
-
     module Similarity
-
       # It's actually a combination of double metaphone
       # and Levenshtein.
       #
@@ -13,7 +10,6 @@ module Picky
       # and ranks them using the levenshtein.
       #
       class Phonetic < Strategy
-
         attr_reader :amount
 
         #
@@ -38,11 +34,7 @@ module Picky
           ary.sort_by_levenshtein! code
           ary.slice! amount, ary.size # Note: The ary.size is not perfectly correct.
         end
-
       end
-
     end
-
   end
-
 end

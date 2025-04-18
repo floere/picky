@@ -1,13 +1,9 @@
 module Picky
-
     module Wrappers
-
       module Bundle
-
         # A location calculation recalculates a location to the Picky internal location.
         #
         class Location < Calculation
-
           def initialize(bundle, user_grid, options = {})
             super bundle
 
@@ -53,11 +49,7 @@ module Picky
             location_anchor     = bundle['location_anchor']
             @calculation.anchor = location_anchor && location_anchor.to_f || raise("Configuration 'location_anchor' for #{bundle.identifier} missing. Did you run rake index already?")
           end
-
         end
-
       end
-
   end
-
 end

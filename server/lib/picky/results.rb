@@ -1,10 +1,8 @@
 module Picky
-
   # This is the internal results object. Usually, to_marshal, or to_json
   # is called on it to get a string for the answer.
   #
   class Results
-
     include Enumerable
 
     # Duration is set externally by the query.
@@ -111,7 +109,5 @@ module Picky
     def log_type
       amount.zero?? :'.' : :'>'
     end
-
   end
-
 end

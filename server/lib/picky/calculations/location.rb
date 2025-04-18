@@ -1,7 +1,5 @@
 module Picky
-
   module Calculations
-
     # A location calculation recalculates a 1-d location
     # to the Picky internal 1-d "grid".
     #
@@ -10,7 +8,6 @@ module Picky
     # and the gridlength is 1.
     #
     class Location
-
       attr_reader :anchor,
                   :precision,
                   :grid
@@ -59,9 +56,6 @@ module Picky
       def calculate(location)
         ((location - @anchor) / @grid).floor
       end
-
     end
-
   end
-
 end

@@ -1,7 +1,5 @@
 module Picky
-
   module Generators
-
     module Weights
       extend Helpers::Identification
       
@@ -24,7 +22,6 @@ or
 ERROR
         end
       end
-
     end
     
   end

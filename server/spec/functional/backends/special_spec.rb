@@ -27,7 +27,6 @@ class BackendInterfaceTester < Picky::Backends::Backend
 end
 
 class InternalBackendInterfaceTester
-
   EMPTY_ARRAY = Array.new
 
   def initialize
@@ -72,7 +71,6 @@ class InternalBackendInterfaceTester
   def load(_)
     self
   end
-
 end
 
 # Describes a Picky index that uses the Memory backend

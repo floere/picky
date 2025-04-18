@@ -1,5 +1,4 @@
 module Rack
-
   # Simple Rack Middleware to kill Unicorns after X requests.
   #
   # Use as follows in e.g. your rackup File:
@@ -12,7 +11,6 @@ module Rack
   # The Master Unicorn process forks a new child Unicorn to replace the old one.
   #
   class Harakiri
-
     # Set the amount of requests before the Unicorn commits Harakiri.
     #
     class << self
@@ -52,7 +50,5 @@ module Rack
     def harakiri?
       @requests >= @quit_after_requests
     end
-
   end
-
 end

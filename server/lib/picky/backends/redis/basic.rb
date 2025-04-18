@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     class Redis
       
       EMPTY_ARRAY = Array.new
@@ -14,7 +12,6 @@ module Picky
       # dump/load methods.
       #
       class Basic
-
         attr_reader :client, :namespace
 
         # An index cache takes a path, without file extension,
@@ -75,11 +72,7 @@ module Picky
         def to_s
           "#{self.class}(#{namespace}:*)"
         end
-
       end
-
     end
-
   end
-
 end

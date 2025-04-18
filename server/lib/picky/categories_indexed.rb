@@ -1,7 +1,5 @@
 module Picky
-
   class Categories
-
     each_forward :load,
                  :analyze,
                  to: :categories
@@ -53,7 +51,5 @@ module Picky
     def possible_categories(token)
       token.predefined_categories(qualifier_mapper) || categories
     end
-
   end
-
 end

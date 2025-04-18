@@ -1,5 +1,4 @@
 class SwissLocations < Each
-
   module Accessibility
     def id
       self[0]
@@ -17,5 +16,4 @@ class SwissLocations < Each
       self[3]
     end
   end
-
 end

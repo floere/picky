@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Calculates boosts for combinations.
     #
     # Example:
@@ -22,7 +20,6 @@ module Picky
     # And return a boost (float).
     #
     class Boosts
-
       attr_reader :boosts
 
       forward :empty?, to: :boosts
@@ -78,8 +75,6 @@ module Picky
       def to_s
         "#{self.class}(#@boosts)"
       end
-
     end
   end
-
 end

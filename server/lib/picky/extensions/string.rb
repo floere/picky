@@ -1,7 +1,6 @@
 # Extending the String class.
 #
 class String
-
   # Returns a _single_ double metaphone code
   # for this string.
   #
@@ -67,5 +66,4 @@ class String
       this_many += 1
     end
   end
-
 end

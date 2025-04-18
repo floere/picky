@@ -1,9 +1,7 @@
 module Picky
-
   # encoding: utf-8
   #
   module Query
-
     # This class primarily handles switching through similar token constellations.
     #
     class Tokens
@@ -107,9 +105,6 @@ module Picky
       def to_s
         originals.join ' '
       end
-
     end
-
   end
-
 end

@@ -1,11 +1,8 @@
 module Picky
-
   module Backends
-
     #
     #
     class Redis < Backend
-
       attr_reader :client,
                   :realtime
 
@@ -304,9 +301,6 @@ module Picky
           results
         end
       end
-
     end
-
   end
-
 end

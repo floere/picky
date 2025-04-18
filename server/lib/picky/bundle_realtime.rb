@@ -1,5 +1,4 @@
 module Picky
-
   class Bundle
     
     # TODO Push methods back into the backend, so that we
@@ -157,7 +156,5 @@ module Picky
         end
       end
     end
-
   end
-
 end

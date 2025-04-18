@@ -1,9 +1,6 @@
 module Picky
-
   module Backends
-
     class SQLite < Backend
-
       attr_reader :realtime
 
       def initialize(options = {})
@@ -48,9 +45,6 @@ module Picky
       def create_realtime(bundle, _ = nil)
         IntegerKeyArray.new bundle.index_path(:realtime), realtime: realtime
       end
-
     end
-
   end
-
 end

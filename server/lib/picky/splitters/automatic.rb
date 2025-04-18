@@ -1,5 +1,4 @@
 module Picky
-
   module Splitters
     
     # Automatic Splitter.

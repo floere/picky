@@ -5,12 +5,10 @@ require_relative 'sinatra/index_actions'
 # TODO Remove for 5.0 (or rename to Tokenizer.indexing, ...).
 #
 module Picky
-
   # This Module is used to install delegator methods
   # into the class for use with Sinatra.
   #
   module Sinatra
-
     # Privatizes app file methods.
     #
     def self.extended(_into)
@@ -28,9 +26,7 @@ module Picky
     def searching(**options)
       Tokenizer.default_searching_with(**options)
     end
-
   end
-
 end
 
 # Check if toplevel Sinatra picky methods need to be installed.

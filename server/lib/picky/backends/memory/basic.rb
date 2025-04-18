@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     class Memory
       
       EMPTY_ARRAY = Array.new
@@ -14,7 +12,6 @@ module Picky
       # dump/load methods.
       #
       class Basic
-
         include Helpers::File
 
         # This file's cache file without extensions.
@@ -52,7 +49,7 @@ module Picky
         end
 
         def cache_path
-          [cache_file_path, type, extension].join(?.)
+          [cache_file_path, type, extension].join('.')
         end
 
         # The empty index that is used for putting the index
@@ -79,11 +76,7 @@ module Picky
         def to_s
           "#{self.class}(#{cache_path})"
         end
-
       end
-
     end
-
   end
-
 end

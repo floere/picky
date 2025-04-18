@@ -77,5 +77,4 @@ class BookSearch < Sinatra::Application
     results = live.parameters params
     results.to_json
   end
-
 end

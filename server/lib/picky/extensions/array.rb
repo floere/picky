@@ -1,7 +1,6 @@
 # The Array class we all know and love.
 #
 class Array
-
   # Around 10% faster than the above.
   #
   # Returns a copy.
@@ -28,5 +27,4 @@ class Array
       Text::Levenshtein.distance(this.to_s, from) <=> Text::Levenshtein.distance(that.to_s, from)
     end
   end
-
 end

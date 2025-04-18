@@ -1,7 +1,6 @@
 # The original Module class.
 #
 class Module
-
   def forward *methods
     forwarding methods,
                'def %{method}(*args, **kwargs, &block); %{to}.__send__(:%{method}, *args, **kwargs, &block); end',
@@ -31,5 +30,4 @@ class Module
       end
       to
     end
-
 end

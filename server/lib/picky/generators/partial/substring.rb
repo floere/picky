@@ -1,13 +1,9 @@
 module Picky
-
   module Generators
-
     module Partial
-
       # Generates the right substrings for use in the substring strategy.
       #
       class SubstringGenerator
-
         attr_reader :from, :to
 
         def initialize(from, to)
@@ -30,7 +26,6 @@ module Picky
           end
 
         end
-
       end
 
       # The subtoken partial strategy.
@@ -40,7 +35,6 @@ module Picky
       # (Depending on what the given from value is, the example is with option from: 1)
       #
       class Substring < Strategy
-
         # The from option signifies where in the symbol it
         # will start in generating the subtokens.
         #
@@ -77,11 +71,7 @@ module Picky
         def each_partial(token, &block)
           @generator.each_subtoken token, &block
         end
-
       end
-
     end
-
   end
-
 end

@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-
       module DirectlyManipulable
-
         attr_accessor :backend, :key
 
         def self.make(backend, list, key)
@@ -46,9 +42,6 @@ module Picky
         end
         
       end
-
     end
-
   end
-
 end

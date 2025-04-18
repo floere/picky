@@ -1,14 +1,11 @@
 # encoding: utf-8
 #
 module Picky
-
   class Results
-
     # This index combines an exact and partial index.
     # It serves to order the results such that exact hits are found first.
     #
     module ExactFirst
-
       # Installs the exact first on the given category
       # or on the categories of the index, if an index is given.
       #
@@ -46,9 +43,6 @@ module Picky
           exact.weight text
         end
       end
-
     end
-
   end
-
 end

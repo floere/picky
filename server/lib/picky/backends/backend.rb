@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     #
     #
     class Backend
@@ -70,9 +68,6 @@ module Picky
       def to_s
         self.class.name
       end
-
     end
-
   end
-
 end

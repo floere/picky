@@ -1,9 +1,7 @@
 module Picky
-
   # Collection class for qualifiers.
   #
   class QualifierMapper
-
     attr_reader :mapping
       
     #
@@ -46,7 +44,5 @@ module Picky
     def restrict_to *qualifiers
       @restricted = qualifiers.map { |qualifier| map qualifier }.compact
     end
-
   end
-
 end

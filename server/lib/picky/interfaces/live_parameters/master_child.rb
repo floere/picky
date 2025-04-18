@@ -1,18 +1,14 @@
 module Picky
-
   # This is very optional.
   # Only load if the user wants it.
   #
   module Interfaces
-
     module LiveParameters
-
       # This is an interface that provides the user of
       # Picky with the possibility to change parameters
       # while the Application is running.
       #
       class MasterChild
-
         def initialize
           @child, @parent = IO.pipe
           start_master_process_thread
@@ -174,11 +170,7 @@ module Picky
         def to_s
           'Suckerfish Live Interface (Use the picky-live gem to introspect)'
         end
-
       end
-
     end
-
   end
-
 end

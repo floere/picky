@@ -1,9 +1,7 @@
 module Picky
   module API
     module Tokenizer
-
       module Stemmer
-
         def extract_stemmer(thing)
           if thing.respond_to? :stem
             thing
@@ -14,9 +12,7 @@ which responds to #stem(text) and returns stemmed_text."
 ERROR
           end
         end
-
       end
-
     end
   end
 end

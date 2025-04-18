@@ -1,13 +1,9 @@
 module Picky
-
   module Backends
-
     class Memory
-
       # Memory-based index files dumped in the JSON format.
       #
       class JSON < Basic
-
         # Uses the extension "json".
         #
         def extension
@@ -51,11 +47,7 @@ module Picky
         def retrieve
           raise "Can't retrieve from JSON file. Use text file."
         end
-
       end
-
     end
-
   end
-
 end

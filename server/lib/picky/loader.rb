@@ -1,11 +1,8 @@
 module Picky
-
   # Loads the search engine and it
   #
   module Loader
-
     class << self
-
       # Reloads the whole app.
       # First itself, then the app.
       #
@@ -293,9 +290,6 @@ module Picky
         load_framework_internals
         load_user_interface
       end
-
     end
-
   end
-
 end

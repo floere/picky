@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Combinations represent an ordered list of Combination s.
     #
     # Combinations contain methods for calculating score (including
@@ -11,7 +9,6 @@ module Picky
     # An Allocation consists of a number of Combinations.
     #
     class Combinations
-
       attr_reader :combinations
 
       forward :empty?,
@@ -65,9 +62,6 @@ module Picky
       def to_s
         @combinations.to_s
       end
-
     end
-
   end
-
 end

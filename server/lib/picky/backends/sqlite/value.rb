@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class SQLite
-
       class Value < Basic
-
         def create_table
           db.execute 'create table key_value (key varchar(255) PRIMARY KEY, value text);'
         end
@@ -27,11 +23,7 @@ module Picky
         def delete(key)
           db.execute 'DELETE FROM key_value WHERE key = (?)', [key.to_s]
         end
-
       end
-
     end
-
   end
-
 end

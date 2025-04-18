@@ -1,15 +1,12 @@
 # encoding: utf-8
 #
 module Picky
-
   module Indexers
-
     # Uses a category to index its data.
     #
     # Note: It is called serial since it indexes each category separately.
     #
     class Serial < Base
-
       # Harvest the data from the source, tokenize,
       # and write to an intermediate "prepared index" file.
       #
@@ -52,8 +49,8 @@ module Picky
       end
 
       def index_flush(datas, file, cache, tokenizer)
-        comma   = ?,
-        newline = ?\n
+        comma   = ','
+        newline = "\n"
         
         # Optimized, therefore duplicate code.
         #
@@ -82,8 +79,6 @@ module Picky
       def flush(prepared_file, cache)
         prepared_file.write(cache.join) && cache.clear
       end
-
     end
   end
-
 end

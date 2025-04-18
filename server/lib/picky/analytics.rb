@@ -1,12 +1,10 @@
 module Picky
-
   # This class is wrapped around indexes
   # and extracts useful information to be
   # displayed in beoootiful, live-updating
   # graphs.
   #
   class Analytics
-
     attr_reader :indexes
 
     def initialize *indexes
@@ -74,7 +72,5 @@ module Picky
     #   end
     #
     # end
-
   end
-
 end

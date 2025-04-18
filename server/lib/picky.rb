@@ -76,5 +76,4 @@ module Picky
   #  * Loggers::Verbose
   #
   self.logger = Loggers::Default
-
 end

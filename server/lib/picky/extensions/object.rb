@@ -38,5 +38,4 @@ WARNING
     ary = self.respond_to?(:join) ? self : self.to_s.split("\n")
     ary.map { |s| "#{" "*amount}#{s}"}.join("\n")
   end
-
 end

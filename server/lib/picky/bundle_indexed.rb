@@ -1,5 +1,4 @@
 module Picky
-
   # An indexed bundle is a number of memory/redis
   # indexes that compose the indexes for a single category:
   #  * core (inverted) index
@@ -15,7 +14,6 @@ module Picky
   # To (re)load or clear the current indexes.
   #
   class Bundle
-
     # Get the ids for the given symbol.
     #
     # Returns a (potentially empty) array of ids.
@@ -140,7 +138,5 @@ module Picky
     def clear_realtime
       realtime.clear
     end
-
   end
-
 end

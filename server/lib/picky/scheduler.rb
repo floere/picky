@@ -1,7 +1,5 @@
 module Picky
-
   class Scheduler
-
     attr_reader :parallel
 
     def initialize(options = {})
@@ -51,7 +49,5 @@ module Picky
       warn_gem_missing 'Procrastinate', 'parallelized indexing (with the procrastinate gem)' unless @gem_missing_warned
       @gem_missing_warned = true
     end
-
   end
-
 end

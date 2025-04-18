@@ -5,7 +5,6 @@ module Picky
   # to test how the text would be indexed and processed during a search.
   #
   class Try
-
     attr_reader :text, :specific
 
     def initialize(text, index = nil, category = nil)
@@ -35,7 +34,5 @@ module Picky
     def to_stdout
       puts output
     end
-
   end
-
 end

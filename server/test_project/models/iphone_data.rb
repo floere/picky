@@ -1,5 +1,4 @@
 class IphoneData < Each
-
   module Accessibility
     def id
       self[0]
@@ -22,5 +21,4 @@ class IphoneData < Each
       end
     end
   end
-
 end

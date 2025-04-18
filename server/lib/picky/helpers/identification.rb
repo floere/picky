@@ -1,5 +1,4 @@
 module Picky
-
   module Helpers
     
     module Identification
@@ -14,5 +13,4 @@ module Picky
     end
     
   end
-
 end

@@ -2,11 +2,9 @@
 # encoding: utf-8
 #
 module Picky
-
   # Handles the IRB console for Picky.
   #
   class Console
-
     def self.start(args = ARGV)
       irb = 'irb'
 
@@ -35,7 +33,5 @@ module Picky
       puts "\x1b[1;30mPicky::Loader.load_application; Picky::Indexes.load; p\x1b[m"
       exec "#{options[:irb]} #{libs} --simple-prompt"
     end
-
   end
-
 end

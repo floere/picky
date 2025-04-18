@@ -1,5 +1,4 @@
 module Picky
-
   class Index
     
     # Return facets for a category in the form:
@@ -29,7 +28,5 @@ module Picky
         end
       end
     end
-
   end
-
 end

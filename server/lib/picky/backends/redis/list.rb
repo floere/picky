@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-
       class List < Basic
-
         # Clear the index for this list.
         #
         # Note: Perhaps we can use a server only command.
@@ -88,11 +84,7 @@ module Picky
           end
           initial
         end
-
       end
-
     end
-
   end
-
 end

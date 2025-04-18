@@ -1,5 +1,4 @@
 module Picky
-
   #
   #
   class Index
@@ -118,7 +117,5 @@ module Picky
     def after_indexing(after_indexing = nil)
       after_indexing ? (@after_indexing = after_indexing) : @after_indexing
     end
-
   end
-
 end

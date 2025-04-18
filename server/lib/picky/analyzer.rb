@@ -15,7 +15,6 @@ end
 # Analyzes indexes (index bundles, actually).
 #
 class Analyzer
-
   attr_reader :analysis, :comments
 
   #
@@ -171,5 +170,4 @@ class Analyzer
   def configuration_to_s
     # analysis[:configuration]
   end
-
 end

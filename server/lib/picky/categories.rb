@@ -1,7 +1,5 @@
 module Picky
-
   class Categories
-
     attr_reader :categories, :category_hash
 
     forward :each,
@@ -80,7 +78,5 @@ module Picky
     def to_s
       "#{self.class}(#{categories.join(', ')})"
     end
-
   end
-
 end

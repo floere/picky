@@ -1,5 +1,4 @@
 module Picky
-
   # Holds all indexes and provides operations
   # for extracting and working on them.
   #
@@ -7,7 +6,6 @@ module Picky
   # indexes.
   #
   class Indexes
-
     attr_reader :indexes,
                 :index_mapping
 
@@ -90,7 +88,5 @@ module Picky
     def to_s
       indexes.indented_to_s
     end
-
   end
-
 end

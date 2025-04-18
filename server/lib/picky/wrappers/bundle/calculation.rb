@@ -1,16 +1,12 @@
 module Picky
-
   module Wrappers
-
     module Bundle
-
       # A calculation rewrites the symbol into a float.
       #
       # Note: A calculation will try to find a float in the index,
       #       not a sym.
       #
       class Calculation < Wrapper
-
         # API.
         #
         # By default, a calculation does not
@@ -35,11 +31,7 @@ module Picky
         def weight(float_str)
           @bundle.weight calculate(float_str.to_f).to_s
         end
-
       end
-
     end
-
   end
-
 end

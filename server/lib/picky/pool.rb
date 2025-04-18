@@ -1,5 +1,4 @@
 module Picky
-
   # Module that handles object pool behaviour
   # for you.
   #

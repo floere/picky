@@ -1,5 +1,4 @@
 class EachRSSItemProxy
-
   def each(&block)
     require 'rss'
     require 'open-uri'
@@ -13,7 +12,6 @@ class EachRSSItemProxy
   rescue
     # Don't call block, no data.
   end
-
 end
 
 RSSIndex = Picky::Index.new :rss do

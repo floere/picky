@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # The query indexes class bundles indexes given to a query.
     #
     # Example:
@@ -238,9 +236,6 @@ module Picky
 
         possible_combinations.shift.zip *possible_combinations
       end
-
     end
-
   end
-
 end

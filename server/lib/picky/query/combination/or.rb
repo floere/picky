@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     class Combination
       
       # Pretends to be a combination.

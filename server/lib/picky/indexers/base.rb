@@ -1,13 +1,10 @@
 # encoding: utf-8
 #
 module Picky
-
   module Indexers
-
     #
     #
     class Base
-
       attr_reader :index_or_category
 
       forward :source,
@@ -42,9 +39,6 @@ module Picky
       def notify_finished(prepared_file)
         Picky.logger.tokenize @index_or_category, prepared_file
       end
-
     end
-
   end
-
 end

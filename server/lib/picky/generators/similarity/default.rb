@@ -1,5 +1,4 @@
 module Picky
-
   module Generators
     module Similarity
       # Default is no similarity.
@@ -8,5 +7,4 @@ module Picky
       Default = None.new
     end
   end
-
 end

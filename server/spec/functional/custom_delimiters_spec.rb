@@ -105,7 +105,7 @@ describe 'custom delimiters' do
     try.search('1980…2015').ids.should == [2,3,4]
     
     try.search('1980-2015').ids.should == []
-    Picky::Query::Token.range_character = ?-
+    Picky::Query::Token.range_character = '-'
     try.search('1980-2015').ids.should == [2,3,4]
   end
 end

@@ -1,5 +1,4 @@
 module Picky
-
   module Generators
     
     module Partial
@@ -23,5 +22,4 @@ ERROR
     end
     
   end
-
 end

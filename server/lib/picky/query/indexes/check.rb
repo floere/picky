@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     class Indexes
       
       # Checks if multiple backends are used in the same search instance.
@@ -9,9 +7,7 @@ module Picky
       # Using multiple backends for the same search are not yet possible.
       #
       class Check
-
         class << self
-
           # Returns the right combinations strategy for
           # a number of query indexes.
           #
@@ -30,7 +26,6 @@ module Picky
           def raise_different(backends)
             raise DifferentBackendsError.new(backends)
           end
-
         end
         
       end
@@ -49,7 +44,5 @@ module Picky
       end
       
     end
-
   end
-
 end

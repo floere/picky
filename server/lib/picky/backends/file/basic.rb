@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     class File
       
       EMPTY_ARRAY = Array.new
@@ -14,7 +12,6 @@ module Picky
       # dump/load methods.
       #
       class Basic
-
         include Helpers::File
 
         attr_reader :cache_path,  # This index file's location.
@@ -76,11 +73,7 @@ module Picky
         def to_s
           "#{self.class}(#{cache_path},#{mapping_file.cache_path})"
         end
-
       end
-
     end
-
   end
-
 end

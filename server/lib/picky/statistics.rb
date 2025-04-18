@@ -3,11 +3,9 @@
 require_relative 'analyzer'
 
 module Picky
-
   # Gathers various statistics.
   #
   class Statistics
-
     def initialize
       @indexes = ["\033[1mIndexes analysis\033[m:"]
     end
@@ -59,7 +57,5 @@ module Picky
     def lines_of_code(text)
       text.scan(/^\s*[^#\s].*$/).size
     end
-
   end
-
 end

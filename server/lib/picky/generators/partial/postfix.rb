@@ -1,11 +1,7 @@
 module Picky
-
   module Generators
-
     module Partial
-
       class Postfix < Substring
-
         # The from option signifies where in the symbol it
         # will start in generating the subtokens.
         #
@@ -20,11 +16,7 @@ module Picky
 
           super options
         end
-
       end
-
     end
-
   end
-
 end

@@ -9,7 +9,6 @@ require_relative 'source'
 # Reopen class.
 #
 class Source
-
   def each(&block)
     i = 0
     CSV.open('data.csv').each do |args|
@@ -17,7 +16,6 @@ class Source
       break if (i+=1) == @amount
     end
   end
-
 end
 
 with = ->(amount) do

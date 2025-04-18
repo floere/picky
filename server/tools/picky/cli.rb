@@ -1,9 +1,7 @@
 module Picky
-
   # A very simple CLI selector.
   #
   class CLI
-
     # Execute a command.
     #
     # Note: By default, help is displayed. I.e. when no command is given.
@@ -47,7 +45,7 @@ module Picky
           ary << command
           ary << params_to_s(params) unless params.empty?
           ary.join ' '
-        end.join(?\n)
+        end.join("\n")
 
         Kernel.puts "Possible commands:\n#{commands}\n"
       end
@@ -123,7 +121,5 @@ module Picky
     def self.mapping
       @@mapping
     end
-
   end
-
 end

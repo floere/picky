@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class SQLite
-
       module DirectlyManipulable
-
         attr_accessor :backend, :key
 
         def self.make(backend, array, key)
@@ -34,9 +30,6 @@ module Picky
           value
         end
       end
-
     end
-
   end
-
 end

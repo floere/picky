@@ -1,7 +1,5 @@
 module Picky
-
   class Search
-
     # Returns a list/hash of filtered facets.
     # 
     # Params
@@ -104,7 +102,5 @@ module Picky
         result
       end
     end
-
   end
-
 end

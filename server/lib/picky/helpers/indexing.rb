@@ -1,10 +1,8 @@
 module Picky
-
   # Helper methods for measuring, benchmarking, logging.
   #
   module Helpers
     module Indexing
-
       include Measuring
 
       # Runs the block and logs a few infos regarding the time it took.
@@ -27,8 +25,6 @@ module Picky
           scheduler.finish
         end
       end
-
     end
   end
-
 end

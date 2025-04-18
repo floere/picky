@@ -11,7 +11,6 @@ gc = ENV['GC']
 # Reopen class.
 #
 class Source
-
   def prepare
     @buffer = []
     i = 0
@@ -24,7 +23,6 @@ class Source
   def each(up_to = nil, &block)
     @buffer[0..(up_to || amount)].each &block
   end
-
 end
 
 include Picky

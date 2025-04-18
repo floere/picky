@@ -1,13 +1,9 @@
 module Picky
-
   module Backends
-
     class Memory
-
       # Index data in the Ruby Marshal format.
       #
       class Marshal < Basic
-
         # Uses the extension "dump".
         #
         def extension
@@ -40,11 +36,7 @@ module Picky
         def retrieve
           raise "Can't retrieve from marshalled file. Use text file."
         end
-
       end
-
     end
-
   end
-
 end

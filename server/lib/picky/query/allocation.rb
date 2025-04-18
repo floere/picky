@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # An Allocation contains an ordered list of
     # tuples (Combinations).
     # The Combinations are ordered according to the order
@@ -12,7 +10,6 @@ module Picky
     # An Allocation is normally contained in an Allocations container.
     #
     class Allocation
-
       attr_reader :count,
                   :score,
                   :combinations
@@ -142,9 +139,6 @@ module Picky
       def to_s
         "Allocation(#{to_result})"
       end
-
     end
-
   end
-
 end

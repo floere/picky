@@ -1,9 +1,7 @@
 module Picky
-
   module Query
     
     class Tokens
-
       # This is a combination of multiple (already processed) tokens, combined using
       # the OR character, usually | (pipe).
       #

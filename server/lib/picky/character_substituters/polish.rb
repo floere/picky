@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
 module Picky
-
   module CharacterSubstituters
-
     class Polish < Base
-
       def substitute(text)
         trans = @chars.new(text).unicode_normalize :nfkd
 
@@ -16,9 +13,6 @@ module Picky
           cp < 0x0300 || cp > 0x035F
         }.pack 'U*'
       end
-
     end
-
   end
-
 end

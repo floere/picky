@@ -10,7 +10,6 @@ end
 
 
 class ExternalDataSearch < Sinatra::Base
-
   include Picky
   extend Sinatra::IndexActions
   
@@ -40,7 +39,6 @@ class ExternalDataSearch < Sinatra::Base
     results = finder.search params['query'], params['ids'] || 20, params['offset'] || 0
     results.to_json
   end
-
 end
 
 # Was this code below, but people don't get contexts etc.

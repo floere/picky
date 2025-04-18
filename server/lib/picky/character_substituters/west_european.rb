@@ -3,15 +3,12 @@
 # THINK Does it also remove diacritics, like べ to へ?
 #
 module Picky
-
   module CharacterSubstituters
-
     # Substitutes Umlauts like
     # ä, ö, ü => ae, oe, ue.
     # (and more, see specs)
     #
     class WestEuropean < Base
-
       # Substitutes occurrences of certain characters
       # (like Umlauts) with ASCII representations of them.
       #
@@ -40,9 +37,6 @@ module Picky
           cp < 0x0300 || cp > 0x035F
         }.pack 'U*'
       end
-
     end
-
   end
-
 end

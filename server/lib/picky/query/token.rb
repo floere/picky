@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # This is a query token. Together with other tokens it makes up a query.
     #
     # It remembers the original form, and and a normalized form.
@@ -236,7 +234,7 @@ module Picky
       #   Picky::Query::Token.range_character = "-"
       #   try.search("year:2000-2008") # Will find results in a range.
       #
-      @@range_character = ?…
+      @@range_character = '…'
       def self.range_character=(character)
         @@range_character = character
       end
@@ -382,9 +380,6 @@ module Picky
       def to_s
         "#{self.class}(#{[@text, (@qualifiers.inspect unless @qualifiers.blank?)].compact.join(', ')})"
       end
-
     end
-
   end
-
 end

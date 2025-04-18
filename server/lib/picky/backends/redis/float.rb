@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-
       class Float < String
-
         # Get a single value.
         #
         # Internal API method for the index.
@@ -20,11 +16,7 @@ module Picky
           float = super
           float && float.to_f
         end
-
       end
-
     end
-
   end
-
 end

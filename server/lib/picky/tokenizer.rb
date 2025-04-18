@@ -1,11 +1,9 @@
 # encoding: utf-8
 #
 module Picky
-
   # Defines tokenizing processes used both in indexing and querying.
   #
   class Tokenizer
-
     extend Picky::Helpers::Identification
     include API::Tokenizer::CharacterSubstituter
     include API::Tokenizer::Stemmer
@@ -305,7 +303,5 @@ ERROR
     def empty_tokens
       [[], []]
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 # Extending the Symbol class.
 #
 class Symbol
-
   # Returns a _single_ double metaphone code
   # for this symbol.
   #
@@ -69,5 +68,4 @@ class Symbol
       this_many += 1
     end
   end
-
 end

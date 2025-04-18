@@ -1,5 +1,4 @@
 module Picky
-
   # A Bundle is a number of indexes
   # per [index, category] combination.
   #
@@ -27,7 +26,6 @@ module Picky
   # (Find these in Indexed::Bundle)
   #
   class Bundle
-
     # Saves the indexes in a dump file.
     #
     def dump
@@ -39,7 +37,5 @@ module Picky
       @backend_configuration.dump @configuration
       @backend_realtime.dump @realtime
     end
-
   end
-
 end

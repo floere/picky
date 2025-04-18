@@ -1,7 +1,5 @@
 module Picky
-
   class Category
-
     include API::Tokenizer
 
     attr_accessor :exact,
@@ -242,7 +240,5 @@ WARNING
 TREE
       s.chomp
     end
-
   end
-
 end

@@ -1,5 +1,4 @@
 class SymbolKeys < Each
-
   module Accessibility
     def id
       self[0]
@@ -9,5 +8,4 @@ class SymbolKeys < Each
       self[1]
     end
   end
-
 end

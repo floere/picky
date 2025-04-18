@@ -1,7 +1,5 @@
 module Picky
-
   class Categories
-
     include Helpers::Indexing
 
     each_forward :cache,
@@ -9,5 +7,4 @@ module Picky
                  :prepare,
                  to: :categories
   end
-
 end

@@ -1,7 +1,6 @@
 module Picky
   
   class Tokenizer
-
     class RegexpWrapper
       
       def initialize(regexp)
@@ -20,7 +19,6 @@ module Picky
       def method_missing name, *args, &block
         @regexp.send name, *args, &block
       end
-
     end
     
   end

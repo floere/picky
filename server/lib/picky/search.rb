@@ -1,7 +1,6 @@
 # encoding: utf-8
 #
 module Picky
-
   # = Picky Searches
   #
   # A Picky Search is an object which:
@@ -13,7 +12,6 @@ module Picky
   #   search.search 'query'
   #
   class Search
-
     include API::Search::Boost
 
     include Helpers::Measuring
@@ -284,7 +282,5 @@ module Picky
       ].compact
       "#{self.class}(#{s.join(', ')})"
     end
-
   end
-
 end

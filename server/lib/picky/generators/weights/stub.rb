@@ -1,8 +1,6 @@
 module Picky
-
   module Generators
     module Weights
-
       # Is used for runtime-only strategies.
       #
       # Note: Pretends to be a backend but
@@ -13,7 +11,6 @@ module Picky
       #   * weight_for(size)   # During indextime. # Probably never used.
       #
       class Stub < Strategy
-
         # It is not saved, by default.
         #
         def saved?
@@ -43,9 +40,7 @@ module Picky
         def []=(_, _)
 
         end
-
       end
     end
   end
-
 end

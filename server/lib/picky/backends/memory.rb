@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     class Memory < Backend
       
       def empty_array
@@ -66,9 +64,6 @@ module Picky
             ::Hash
           end
         end
-
     end
-
   end
-
 end

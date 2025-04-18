@@ -21,7 +21,6 @@ module Picky
   #   memory / redis and looking up search data as fast as possible.
   #
   class Bundle
-
     attr_reader :name,
                 :category
 
@@ -189,6 +188,5 @@ TREE
     def to_s
       "#{self.class}(#{identifier})"
     end
-
   end
 end

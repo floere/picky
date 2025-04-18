@@ -1,9 +1,7 @@
 module Picky
-
   #
   #
   class Index
-
     forward :load,
             :analyze,
             :reindex,
@@ -17,7 +15,5 @@ module Picky
     def result_identifier(result_identifier = nil)
       result_identifier ? (@result_identifier = result_identifier) : (@result_identifier || @name)
     end
-
   end
-
 end

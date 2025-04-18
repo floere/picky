@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-
       class String < Basic
-
         # Clears the hash.
         #
         def clear
@@ -50,11 +46,7 @@ module Picky
         def []=(key, value)
           client.hset namespace, key, value
         end
-
       end
-
     end
-
   end
-
 end

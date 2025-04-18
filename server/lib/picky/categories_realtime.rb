@@ -1,7 +1,5 @@
 module Picky
-
   class Categories
-
     each_forward :remove,
                  :add,
                  :replace,
@@ -15,5 +13,4 @@ module Picky
     end
     
   end
-
 end

@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     # Naive implementation of a file-based index.
     # In-Memory Hash with length, offset:
     #   { :bla => [20, 312] }
@@ -17,9 +15,6 @@ module Picky
       def create_similarity(bundle, _ = nil)
         json bundle.index_path(:similarity)
       end
-
     end
-
   end
-
 end

@@ -1,11 +1,7 @@
 module Picky
-
   module Wrappers
-
     module Bundle
-
       module Delegator
-
         forward :add,
 
                 :inverted,
@@ -30,11 +26,9 @@ module Picky
                 :to_tree_s,
 
                 to: :bundle
-
       end
 
       module IndexingDelegator
-
         forward :[]=,
                 :analyze,
                 :dump,
@@ -46,11 +40,9 @@ module Picky
                 :retrieve,
                 :size,
                 to: :bundle
-
       end
 
       module IndexedDelegator
-
         forward :[],
                 :add_partialized,
                 :clear,
@@ -70,11 +62,7 @@ module Picky
                 :remove,
                 :weight,
                 to: :bundle
-
       end
-
     end
-
   end
-
 end

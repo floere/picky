@@ -1,9 +1,7 @@
 module Picky
   module API
     module Search
-
       module Boost
-
         def extract_boosts(thing)
           if thing.respond_to?(:boost_for)
             thing
@@ -20,9 +18,7 @@ ERROR
             end
           end
         end
-
       end
-
     end
   end
 end

@@ -1,5 +1,4 @@
 class Japanese < Each
-
   module Accessibility
     def id
       self[0]
@@ -13,5 +12,4 @@ class Japanese < Each
       self[2]
     end
   end
-
 end

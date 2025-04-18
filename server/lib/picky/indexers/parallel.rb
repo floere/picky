@@ -1,15 +1,12 @@
 # encoding: utf-8
 #
 module Picky
-
   module Indexers
-
     # Uses a number of categories, a source, and a tokenizer to index data.
     #
     # The tokenizer is taken from each category if specified, from the index, if not.
     #
     class Parallel < Base
-
       # Process does the actual indexing.
       #
       # Parameters:
@@ -56,8 +53,8 @@ module Picky
       end
 
       def index_flush(objects, file, category, cache, tokenizer)
-        comma   = ?,
-        newline = ?\n
+        comma   = ','
+        newline = "\n"
 
         # Optimized, therefore duplicate code.
         #
@@ -78,9 +75,6 @@ module Picky
       def flush(file, cache)
         file.write(cache.join) && cache.clear
       end
-
     end
-
   end
-
 end

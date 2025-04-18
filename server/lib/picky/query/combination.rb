@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Describes the Combination of:
     #  * a token
     #  * a category
@@ -10,7 +8,6 @@ module Picky
     # An Allocation consists of an ordered number of Combinations.
     #
     class Combination
-
       attr_reader :token,
                   :category,
                   :weight
@@ -70,9 +67,6 @@ module Picky
       def to_s
         "(#{category.bundle_for(token).identifier},#{to_result.join(':')})"
       end
-
     end
-
   end
-
 end

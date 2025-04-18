@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Container class for Allocation s.
     #
     # This class is asked by the Results class to
@@ -13,7 +11,6 @@ module Picky
     # of its Allocation s.
     #
     class Allocations
-
       forward :each,
               :empty?,
               :first,
@@ -211,9 +208,6 @@ module Picky
       def to_s
         to_result.inspect
       end
-
     end
-
   end
-
 end

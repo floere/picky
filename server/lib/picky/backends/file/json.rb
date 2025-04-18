@@ -1,7 +1,5 @@
 module Picky
-
   module Backends
-
     class File
       
       def json *args
@@ -11,7 +9,6 @@ module Picky
       # File-based index files dumped in the JSON format.
       #
       class JSON < Basic
-
         attr_writer :mapping
 
         # The in-memory mapping hash, mapping
@@ -91,11 +88,7 @@ module Picky
         def extension
           :json
         end
-
       end
-
     end
-
   end
-
 end

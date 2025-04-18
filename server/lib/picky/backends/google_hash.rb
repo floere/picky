@@ -45,7 +45,6 @@ begin
       each { result += 1 }
       result
     end
-
   end
   
 rescue LoadError
