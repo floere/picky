@@ -1,4 +1,4 @@
-require File.expand_path '../app', __FILE__
+require File.expand_path 'app', __dir__
 
 # Load all indexes.
 #

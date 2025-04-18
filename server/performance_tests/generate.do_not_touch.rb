@@ -1,18 +1,22 @@
 class IndexGenerator
-
   attr_reader :amount, :length
 
-  def initialize amount, &length
-    @random = Random.new 115032730400174366788466674494640623225
+  def initialize(amount, &length)
+    @random = Random.new 115_032_730_400_174_366_788_466_674_494_640_623_225
     @amount = amount
-    @length = length || ->() { @random.rand(18) + 3 }
+    @length = length || -> { @random.rand(18) + 3 }
   end
 
   class Thing
     attr_reader :id, :text1, :text2, :text3, :text4, :text5
 
-    def initialize id, text1, text2, text3, text4, text5
-      @id, @text1, @text2, @text3, @text4, @text5 = id, text1, text2, text3, text4, text5
+    def initialize(id, text1, text2, text3, text4, text5)
+      @id = id
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @text4 = text4
+      @text5 = text5
     end
 
     def to_s
@@ -20,12 +24,12 @@ class IndexGenerator
     end
   end
 
-  def each &block
-    characters = ['a', 'b', 'c', 'd']
+  def each
+    characters = %w[a b c d]
     size = characters.size
 
     amount.times do |i|
-      args = [i+1]
+      args = [i + 1]
       5.times do
         current = []
         length[].times do
@@ -36,7 +40,6 @@ class IndexGenerator
       yield args
     end
   end
-
 end
 
 generator = IndexGenerator.new 100_000

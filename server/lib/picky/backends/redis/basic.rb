@@ -1,10 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-      
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = [].freeze
 
       # Redis Backend Accessor.
       #
@@ -14,13 +11,12 @@ module Picky
       # dump/load methods.
       #
       class Basic
-
         attr_reader :client, :namespace
 
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize client, namespace, options = {}
+        def initialize(client, namespace, options = {})
           @client    = client
           @namespace = namespace
 
@@ -28,7 +24,7 @@ module Picky
           @initial  = options[:initial]
           @realtime = options[:realtime]
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -39,7 +35,7 @@ module Picky
         # together.
         #
         def empty
-          @empty && @empty.clone || (@realtime ? self.reset : {})
+          @empty&.clone || (@realtime ? reset : {})
         end
 
         # The initial content before loading.
@@ -48,12 +44,12 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.clone || (@realtime ? self.reset : {})
+          @initial&.clone || (@realtime ? reset : {})
         end
 
         # Returns itself.
         #
-        def load _
+        def load(_)
           self
         end
 
@@ -70,16 +66,10 @@ module Picky
           self
         end
 
-        #
-        #
         def to_s
           "#{self.class}(#{namespace}:*)"
         end
-
       end
-
     end
-
   end
-
 end

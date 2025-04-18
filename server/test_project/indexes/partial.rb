@@ -3,8 +3,8 @@ PartialIndex = Picky::Index.new(:partial) do
   key_format :to_i
   source do
     [
-      PartialItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
-      PartialItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
+      PartialItem.new(1, 'octopussy', 'octopussy', 'octopussy', 'octopussy'),
+      PartialItem.new(2, 'abracadabra', 'abracadabra', 'abracadabra', 'abracadabra')
     ]
   end
   category :substring, partial: Picky::Partial::Substring.new(from: -5, to: -3)

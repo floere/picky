@@ -1,8 +1,9 @@
 # Statistics tasks.
 #
-desc "Analyzes indexes (index, category optional)."
-task :analyze, [:index, :category] => :'stats:prepare' do |_, options|
-  index, category = options.index, options.category
+desc 'Analyzes indexes (index, category optional).'
+task :analyze, %i[index category] => :'stats:prepare' do |_, options|
+  index = options.index
+  category = options.category
 
   specific = Picky::Indexes
   specific = specific[index]    if index
@@ -20,15 +21,13 @@ task :analyze, [:index, :category] => :'stats:prepare' do |_, options|
   puts statistics
 end
 
-task :stats => :'stats:prepare' do
+task stats: :'stats:prepare' do
   stats = Picky::Statistics.new
   puts stats.application
 end
 
 namespace :stats do
-
-  task :prepare => :application do
+  task prepare: :application do
     require_relative '../picky/statistics'
   end
-
 end

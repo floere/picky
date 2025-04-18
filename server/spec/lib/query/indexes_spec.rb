@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe Picky::Query::Indexes do
-
   before(:each) do
     Picky::Query::Indexes::Check.stub :check_backends
   end
 
   3.times do |i|
-    name = :"index#{i+1}"
+    name = :"index#{i + 1}"
     let(name) { Picky::Index.new(name) }
   end
 
@@ -20,7 +19,7 @@ describe Picky::Query::Indexes do
 
   describe 'expand_combinations_from' do
     it 'generates all possible combinations from the given ones' do
-      combinations = [[1,2,3], [:a, :b, :c], [:k, :l]]
+      combinations = [[1, 2, 3], %i[a b c], %i[k l]]
 
       indexes.expand_combinations_from(combinations).should == [
         [1, :a, :k],
@@ -49,12 +48,12 @@ describe Picky::Query::Indexes do
       indexes.expand_combinations_from(combinations).should == [[1, 2, 3]]
     end
     it 'can handle empty combinations' do
-      combinations = [[1,2,3], [:a, :b, :c], []]
+      combinations = [[1, 2, 3], %i[a b c], []]
 
       indexes.expand_combinations_from(combinations).should == []
     end
     it 'can handle empty combinations' do
-      combinations = [[], [:a, :b, :c], []]
+      combinations = [[], %i[a b c], []]
 
       indexes.expand_combinations_from(combinations).should == []
     end
@@ -64,7 +63,7 @@ describe Picky::Query::Indexes do
       indexes.expand_combinations_from(combinations).should == []
     end
     it 'is fast in a complicated case' do
-      combinations = [[1,2,3], [:a, :b, :c], [:k, :l]]
+      combinations = [[1, 2, 3], %i[a b c], %i[k l]]
 
       performance_of { indexes.expand_combinations_from(combinations) }.should < 0.00055
     end
@@ -88,7 +87,7 @@ describe Picky::Query::Indexes do
   describe 'prepared_allocations_for' do
     before(:each) do
       @allocations = double :allocations
-      indexes.stub :allocations_for => @allocations
+      indexes.stub allocations_for: @allocations
     end
     it 'calls the right method in order' do
       # @allocations.should_receive(:uniq!).once.ordered.with no_args
@@ -105,5 +104,4 @@ describe Picky::Query::Indexes do
       indexes.prepared_allocations_for :some_tokens
     end
   end
-
 end

@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-
       class List < Basic
-
         # Clear the index for this list.
         #
         # Note: Perhaps we can use a server only command.
@@ -29,22 +25,22 @@ module Picky
 
         # Deletes the list for the key.
         #
-        def delete key
+        def delete(key)
           client.del "#{namespace}:#{key}"
         end
 
         # Writes the hash into Redis.
         #
-        def dump hash
-          unless @realtime
-            clear
-            hash.each_pair do |key, values|
-              redis_key = "#{namespace}:#{key}"
-              i = 0
-              values.each do |value|
-                i += 1
-                client.zadd redis_key, i, value
-              end
+        def dump(hash)
+          return if @realtime
+
+          clear
+          hash.each_pair do |key, values|
+            redis_key = "#{namespace}:#{key}"
+            i = 0
+            values.each do |value|
+              i += 1
+              client.zadd redis_key, i, value
             end
           end
         end
@@ -53,17 +49,17 @@ module Picky
         #
         # Internal API method for the index.
         #
-        def [] key
+        def [](key)
           list = client.zrange "#{namespace}:#{key}", :'0', :'-1'
-          
+
           DirectlyManipulable.make self, list, key
-          
+
           list
         end
 
         # Set a single list.
         #
-        def []= key, values
+        def []=(key, values)
           delete key
 
           redis_key = "#{namespace}:#{key}"
@@ -72,27 +68,21 @@ module Picky
             i += 1
             client.zadd redis_key, i, value
           end
-          
+
           DirectlyManipulable.make self, values, key
-          
-          values
         end
-        
+
         # Inject.
         #
-        def inject initial, &block
+        def inject(initial, &block)
           redis_keys = "#{namespace}:*"
           client.keys(redis_keys).each do |redis_key|
-            key = redis_key[/:([^\:]+)$/, 1]
+            key = redis_key[/:([^:]+)$/, 1]
             initial = block.call initial, [key, self[key]]
           end
           initial
         end
-
       end
-
     end
-
   end
-
 end

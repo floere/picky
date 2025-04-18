@@ -1,23 +1,20 @@
-# coding: utf-8
-#
 require 'spec_helper'
 
 describe Picky::Query::Combination do
-
   before(:each) do
-    @bundle      = double :bundle, :identifier => :bundle_name
+    @bundle      = double :bundle, identifier: :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
     @category    = double :category,
-                        :bundle_for => @bundle,
-                        :name => :some_category_name,
-                        :identifier => 'some_category_identifier'
+                          bundle_for: @bundle,
+                          name: :some_category_name,
+                          identifier: 'some_category_identifier'
 
     @combination = described_class.new @token, @category, 3.14
   end
 
-  describe "to_s" do
+  describe 'to_s' do
     it "shows the combination's info" do
-      @token.stub :to_result => :token_result
+      @token.stub to_result: :token_result
 
       @combination.to_s.should == '(bundle_name,some_category_name:token_result)'
     end
@@ -31,19 +28,19 @@ describe Picky::Query::Combination do
         @combination = Picky::Query::Combination.new token, @category, 3.14
       end
       it 'should return a correct result' do
-        @combination.to_result.should == [:some_category_name, 'Blä~', 'blä'] # Note: Characters not substituted. That's ok.
+        @combination.to_result.should == [:some_category_name, 'Blä~', 'blä'] # NOTE: Characters not substituted. That's ok.
       end
     end
     it 'should return a correct result' do
-      @token.stub :to_result => [:some_original_text, :some_text]
+      @token.stub to_result: %i[some_original_text some_text]
 
-      @combination.to_result.should == [:some_category_name, :some_original_text, :some_text]
+      @combination.to_result.should == %i[some_category_name some_original_text some_text]
     end
   end
 
   describe 'identifier' do
     it 'should get the category name from the bundle' do
-      @combination.identifier.should == "bundle_name:inverted:some_text"
+      @combination.identifier.should == 'bundle_name:inverted:some_text'
     end
   end
 
@@ -54,7 +51,7 @@ describe Picky::Query::Combination do
       @combination.ids
     end
     it 'should not call it twice, but cache' do
-      @category.stub :ids => :some_ids
+      @category.stub ids: :some_ids
       @combination.ids
 
       @category.should_receive(:ids).never
@@ -65,8 +62,7 @@ describe Picky::Query::Combination do
 
   describe 'weight' do
     it 'should return the weight' do
-      @combination.weight.should == 3.14
+      expect(@combination.weight).to be_within(Float::EPSILON).of(3.14)
     end
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Indexers::Parallel do
-  
   thing = Struct.new :id, :text
 
   before(:each) do
@@ -9,16 +8,15 @@ describe Picky::Indexers::Parallel do
     @indexer = described_class.new @index
     @indexer.stub :timed_exclaim
   end
-  
+
   context 'with untokenized category' do
-    
     before(:each) do
       @categories = [
         Picky::Category.new(:text, @index)
       ]
       @source = [
-        thing.new(1, "hello"),
-        thing.new(2, "world"),
+        thing.new(1, 'hello'),
+        thing.new(2, 'world')
       ]
     end
 
@@ -34,7 +32,7 @@ describe Picky::Indexers::Parallel do
         @indexer.flush file, cache
       end
     end
-  
+
     describe 'process' do
       it 'flushes to joined cache to the file and clears it' do
         @indexer.process @source, @categories do |file|
@@ -42,18 +40,16 @@ describe Picky::Indexers::Parallel do
         end
       end
     end
-    
   end
-  
+
   context 'with tokenized category' do
-    
     before(:each) do
       @categories = [
         Picky::Category.new(:text, @index, tokenize: false)
       ]
       @source = [
-        thing.new(1, ["hello"]),
-        thing.new(2, ["world"]),
+        thing.new(1, ['hello']),
+        thing.new(2, ['world'])
       ]
     end
 
@@ -69,7 +65,7 @@ describe Picky::Indexers::Parallel do
         @indexer.flush file, cache
       end
     end
-  
+
     describe 'process' do
       it 'flushes to joined cache to the file and clears it' do
         @indexer.process @source, @categories do |file|
@@ -77,7 +73,5 @@ describe Picky::Indexers::Parallel do
         end
       end
     end
-    
   end
-
 end

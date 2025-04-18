@@ -1,8 +1,6 @@
-# coding: utf-8
 require 'spec_helper'
 
 describe Picky::Query::Token do
-
   describe '==' do
     it 'is equal if the originals are equal' do
       described_class.processed('similar~', 'Similar~').should == described_class.processed('similar~', 'Similar~')
@@ -11,7 +9,7 @@ describe Picky::Query::Token do
       described_class.processed('similar~', 'Similar~').should_not == described_class.processed('similar', 'Similar')
     end
   end
-  
+
   describe 'categorize' do
     let(:mapper) do
       index      = Picky::Index.new :mapper
@@ -49,7 +47,7 @@ describe Picky::Query::Token do
       let(:token) { described_class.processed 'noqualifier', 'NoQualifier' }
       context 'unrestricted' do
         it 'categorizes correctly' do
-          token.predefined_categories(mapper).should == nil
+          token.predefined_categories(mapper).should.nil?
         end
       end
       context 'restricted' do
@@ -75,7 +73,7 @@ describe Picky::Query::Token do
     let(:token) { described_class.processed 'similar~', 'Similar~' }
     context 'with similar' do
       before(:each) do
-        @category = double :category, :similar => ['array', 'of', 'similar']
+        @category = double :category, similar: %w[array of similar]
       end
       it 'returns a list of tokens' do
         token.similar_tokens_for(@category).each do |token|
@@ -88,20 +86,18 @@ describe Picky::Query::Token do
         end
       end
       it 'returns a list of tokens with the right text' do
-        token.similar_tokens_for(@category).map(&:text).should == ['array', 'of', 'similar']
+        token.similar_tokens_for(@category).map(&:text).should == %w[array of similar]
       end
       it 'returns a list of tokens with the right original' do
-        token.similar_tokens_for(@category).map(&:original).should == ['array', 'of', 'similar']
+        token.similar_tokens_for(@category).map(&:original).should == %w[array of similar]
       end
       it 'returns a list of tokens with the right categorization' do
-        token.similar_tokens_for(@category).map do |token|
-          token.predefined_categories
-        end.should == [[@category], [@category], [@category]]
+        token.similar_tokens_for(@category).map(&:predefined_categories).should == [[@category], [@category], [@category]]
       end
     end
     context 'without similar' do
       before(:each) do
-        @category = double :category, :similar => []
+        @category = double :category, similar: []
       end
       it 'returns an empty list' do
         token.similar_tokens_for(@category).should == []
@@ -138,7 +134,7 @@ describe Picky::Query::Token do
   # end
 
   describe 'qualify' do
-    def self.it_should_qualify text, expected_result
+    def self.it_should_qualify(text, expected_result)
       it "should extract the qualifier #{expected_result} from #{text}" do
         token = described_class.new text
         token.qualify
@@ -159,8 +155,8 @@ describe Picky::Query::Token do
     it_should_qualify ':nothing',          [[''],          'nothing']
     it_should_qualify 'hello',             [nil,           'hello']
     it_should_qualify 'a:b:c',             [['a'],         'b:c']
-    it_should_qualify 'a,b:c',             [['a','b'],     'c']
-    it_should_qualify 'a,b,c:d',           [['a','b','c'], 'd']
+    it_should_qualify 'a,b:c',             [%w[a b], 'c']
+    it_should_qualify 'a,b,c:d',           [%w[a b c], 'd']
     it_should_qualify ':',                 [[''],          '']
     it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
   end
@@ -179,7 +175,7 @@ describe Picky::Query::Token do
     it 'returns the right thing' do
       token = described_class.processed 'a,b:c'
 
-      token.qualifiers.should == ['a', 'b']
+      token.qualifiers.should == %w[a b]
     end
   end
 
@@ -323,18 +319,18 @@ describe Picky::Query::Token do
         @token = described_class.processed 'not similar', 'NOT SIMILAR'
       end
       it 'should be nil' do
-        @token.partial?.should == nil
+        @token.partial?.should.nil?
       end
     end
   end
 
   describe 'similar' do
     it 'should not change the original with the text' do
-      token = described_class.processed "bla~", 'BLA~'
+      token = described_class.processed 'bla~', 'BLA~'
       token.text.should_not == token.original
     end
-    def self.it_should_have_similarity text, expected_similarity_value
-      it "should have #{ "no" unless expected_similarity_value } similarity for '#{text}'" do
+    def self.it_should_have_similarity(text, expected_similarity_value)
+      it "should have #{'no' unless expected_similarity_value} similarity for '#{text}'" do
         described_class.processed(text, text.upcase).similar?.should == expected_similarity_value
       end
     end
@@ -361,37 +357,37 @@ describe Picky::Query::Token do
     end
   end
 
-  describe "original" do
-    it "should keep the original text even when processed" do
+  describe 'original' do
+    it 'should keep the original text even when processed' do
       token = described_class.processed "I'm the processed text.", "I'm the original text."
 
       token.original.should == "I'm the original text."
     end
   end
 
-  describe "blank?" do
-    it "should be blank if the token text itself is blank" do
+  describe 'blank?' do
+    it 'should be blank if the token text itself is blank' do
       token = described_class.processed ''
 
       token.blank?.should be_truthy
     end
-    it "should be non-blank if the token text itself is non-blank" do
+    it 'should be non-blank if the token text itself is non-blank' do
       token = described_class.processed 'not empty'
 
       token.blank?.should be_falsy
     end
   end
 
-  describe "to_s" do
-    describe "with qualifier" do
+  describe 'to_s' do
+    describe 'with qualifier' do
       it "should display qualifier and text combined with a ':'" do
         token = described_class.processed('sp:qualifier')
 
         token.to_s.should == 'Picky::Query::Token(qualifier, ["sp"])'
       end
     end
-    describe "without qualifier" do
-      it "should display just the text" do
+    describe 'without qualifier' do
+      it 'should display just the text' do
         token = described_class.processed('text')
 
         token.to_s.should == 'Picky::Query::Token(text)'
@@ -415,7 +411,7 @@ describe Picky::Query::Token do
     context 'with multiple qualifiers' do
       let(:token) { described_class.processed 'sp,spec:qualifier' }
       it 'should return the qualifier' do
-        token.qualifiers.should == ['sp', 'spec']
+        token.qualifiers.should == %w[sp spec]
       end
     end
     context 'without qualifier' do
@@ -427,7 +423,7 @@ describe Picky::Query::Token do
     context 'with missing qualifier' do
       let(:token) { described_class.processed ':missingqualifier' }
       it 'is correct' do
-        token.qualifiers.should == ['']
+        token.qualifiers.should
         token.text.should == 'missingqualifier'
       end
     end
@@ -500,7 +496,7 @@ describe Picky::Query::Token do
     end
   end
 
-  describe "processed" do
+  describe 'processed' do
     it 'should remove *' do
       token = described_class.processed 'text*'
 
@@ -516,9 +512,8 @@ describe Picky::Query::Token do
 
       token.text.should == 'text'
     end
-    it "should pass on a processed text" do
+    it 'should pass on a processed text' do
       described_class.processed('text').text.should == 'text'
     end
   end
-
 end

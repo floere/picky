@@ -1,40 +1,26 @@
 module Picky
-
   module Wrappers
-
     module Bundle
-
       module Delegator
-
         forward :add,
-
                 :inverted,
                 :weights,
                 :similarity,
                 :configuration,
-
                 :backup,
                 :restore,
                 :delete,
-                
                 :empty_array,
-
                 :reset_backend,
-
                 :raise_unless_cache_exists,
                 :raise_unless_index_exists,
                 :raise_unless_similarity_exists,
-
                 :similar,
-                
                 :to_tree_s,
-
-                :to => :bundle
-
+                to: :bundle
       end
 
       module IndexingDelegator
-
         forward :[]=,
                 :analyze,
                 :dump,
@@ -45,12 +31,10 @@ module Picky
                 :generate_partial_from,
                 :retrieve,
                 :size,
-                :to => :bundle
-
+                to: :bundle
       end
 
       module IndexedDelegator
-
         forward :[],
                 :add_partialized,
                 :clear,
@@ -69,12 +53,8 @@ module Picky
                 :name,
                 :remove,
                 :weight,
-                :to => :bundle
-
+                to: :bundle
       end
-
     end
-
   end
-
 end

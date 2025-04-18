@@ -3,7 +3,6 @@ require 'spec_helper'
 require 'sqlite3'
 
 describe Picky::Backends::SQLite do
-
   # context 'with options' do
   #   before(:each) do
   #     @backend = described_class.new inverted:      Picky::Backends::SQLite::Value.new(:unimportant),
@@ -72,55 +71,55 @@ describe Picky::Backends::SQLite do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        double(type, :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
-          ).should be_kind_of(kind)
+                        double(type,
+                               index_path: "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")).should be_kind_of(kind)
         end
       end
     end
 
-    describe "ids" do
+    describe 'ids' do
       before(:each) do
         @combination1 = double :combination1
         @combination2 = double :combination2
         @combination3 = double :combination3
         @combinations = [@combination1, @combination2, @combination3]
       end
-      it "should intersect correctly" do
+      it 'should intersect correctly' do
         @combination1.should_receive(:ids).once.with(no_args).and_return (1..100_000).to_a
         @combination2.should_receive(:ids).once.with(no_args).and_return (1..100).to_a
         @combination3.should_receive(:ids).once.with(no_args).and_return (1..10).to_a
 
         @backend.ids(@combinations, :any, :thing).should == (1..10).to_a
       end
-      it "should intersect symbol_keys correctly" do
+      it 'should intersect symbol_keys correctly' do
         @combination1.should_receive(:ids).once.with(no_args).and_return (:'00001'..:'10000').to_a
         @combination2.should_receive(:ids).once.with(no_args).and_return (:'00001'..:'00100').to_a
         @combination3.should_receive(:ids).once.with(no_args).and_return (:'00001'..:'00010').to_a
 
         @backend.ids(@combinations, :any, :thing).should == (:'00001'..:'0010').to_a
       end
-      it "should intersect correctly when intermediate intersect result is empty" do
+      it 'should intersect correctly when intermediate intersect result is empty' do
         @combination1.should_receive(:ids).once.with(no_args).and_return (1..100_000).to_a
         @combination2.should_receive(:ids).once.with(no_args).and_return (11..100).to_a
         @combination3.should_receive(:ids).once.with(no_args).and_return (1..10).to_a
 
         @backend.ids(@combinations, :any, :thing).should == []
       end
-      it "should be fast" do
+      it 'should be fast' do
         @combination1.should_receive(:ids).once.with(no_args).and_return (1..100_000).to_a
         @combination2.should_receive(:ids).once.with(no_args).and_return (1..100).to_a
         @combination3.should_receive(:ids).once.with(no_args).and_return (1..10).to_a
 
         performance_of { @backend.ids(@combinations, :any, :thing) }.should < 0.004
       end
-      it "should be fast" do
+      it 'should be fast' do
         @combination1.should_receive(:ids).once.with(no_args).and_return (1..1000).to_a
         @combination2.should_receive(:ids).once.with(no_args).and_return (1..100).to_a
         @combination3.should_receive(:ids).once.with(no_args).and_return (1..10).to_a
 
         performance_of { @backend.ids(@combinations, :any, :thing) }.should < 0.00015
       end
-      it "should be fast" do
+      it 'should be fast' do
         @combination1.should_receive(:ids).once.with(no_args).and_return (1..1000).to_a
         @combination2.should_receive(:ids).once.with(no_args).and_return (901..1000).to_a
         @combination3.should_receive(:ids).once.with(no_args).and_return (1..10).to_a
@@ -129,5 +128,4 @@ describe Picky::Backends::SQLite do
       end
     end
   end
-
 end

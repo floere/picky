@@ -27,7 +27,7 @@ impl Array {
     
     pub fn shift(&mut self) -> u16 {
         let item = self.data.remove(0);
-        println!("shift: {:?}", item); // Ummm... Why does it only work when I print here?
+        // println!("shift: {:?}", item); // Ummm... Why does it only work when I print here?
         item
     }
     

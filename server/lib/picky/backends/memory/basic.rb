@@ -1,10 +1,7 @@
 module Picky
-
   module Backends
-
     class Memory
-      
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = [].freeze
 
       # Base class for all memory-based index files.
       #
@@ -14,13 +11,12 @@ module Picky
       # dump/load methods.
       #
       class Basic
-
         include Helpers::File
 
         # This file's cache file without extensions.
         #
         attr_reader :cache_file_path
-        
+
         # What hash type to use. Default: ::Hash
         #
         attr_reader :hash_type
@@ -28,13 +24,13 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_file_path, hash_type = Hash, options = {}
+        def initialize(cache_file_path, hash_type = Hash, options = {})
           @cache_file_path = cache_file_path
           @hash_type       = hash_type
           @empty           = options[:empty]
           @initial         = options[:initial]
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -46,24 +42,26 @@ module Picky
         def extension
           :index
         end
+
         def type
           :memory
         end
+
         def cache_path
-          [cache_file_path, type, extension].join(?.)
+          [cache_file_path, type, extension].join('.')
         end
 
         # The empty index that is used for putting the index
         # together before it is dumped into the files.
         #
         def empty
-          @empty && @empty.clone || hash_type.new
+          @empty&.clone || hash_type.new
         end
 
         # The initial content before loading from file/indexing.
         #
         def initial
-          @initial && @initial.clone || hash_type.new
+          @initial&.clone || hash_type.new
         end
 
         # Deletes the file.
@@ -72,16 +70,10 @@ module Picky
           `rm -Rf #{cache_path}`
         end
 
-        #
-        #
         def to_s
           "#{self.class}(#{cache_path})"
         end
-
       end
-
     end
-
   end
-
 end

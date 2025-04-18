@@ -1,7 +1,5 @@
 module Picky
-
   class Categories
-
     attr_reader :categories, :category_hash
 
     forward :each,
@@ -10,7 +8,7 @@ module Picky
             :map!,
             :include?,
             :empty?,
-            :to => :categories
+            to: :categories
 
     each_forward :cache,
                  :dump,
@@ -18,11 +16,11 @@ module Picky
                  :inject,
                  :reindex,
                  :reset_backend,
-                 :to => :categories
+                 to: :categories
 
     # A list of indexed categories.
     #
-    def initialize options = {}
+    def initialize(_options = {})
       clear_categories
     end
 
@@ -30,9 +28,9 @@ module Picky
     #
     def clear_categories
       @categories    = []
-      @category_hash = Hash.new
+      @category_hash = {}
     end
-    
+
     # Updates the qualifier ("qualifier:searchterm") mapping.
     #
     # Example:
@@ -43,7 +41,7 @@ module Picky
     def qualifier_mapper
       @qualifier_mapper ||= QualifierMapper.new self
     end
-    
+
     # Resets the qualifier mapper used.
     #
     def reset_qualifier_mapper
@@ -52,34 +50,34 @@ module Picky
 
     # Add the given category to the list of categories.
     #
-    def << category
-      reset_qualifier_mapper # TODO Have an add method on QualifierMapper?
-      categories << category unless categories.include? category # TODO This is wrong, and needs to be handled in index.rb
+    def <<(category)
+      reset_qualifier_mapper # TODO: Have an add method on QualifierMapper?
+      # TODO: This is wrong, and needs to be handled in index.rb
+      categories << category unless categories.include? category
       category_hash[category.name] = category
     end
 
     # Find a given category in the categories.
     #
-    def [] category_name
+    def [](category_name)
       category_name = category_name.intern
       category_hash[category_name] || raise_not_found(category_name)
     end
-    def raise_not_found category_name
-      raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
+
+    def raise_not_found(category_name)
+      raise %(Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".)
     end
-    
+
     def to_stats
       map(&:name).join(', ')
     end
-    
-    def to_tree_s indent = 0
+
+    def to_tree_s(indent = 0)
       ([' ' * indent] * categories.size).zip(categories.map(&:to_tree_s)).map(&:join).join "\n"
     end
 
     def to_s
       "#{self.class}(#{categories.join(', ')})"
     end
-
   end
-
 end

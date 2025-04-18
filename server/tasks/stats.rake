@@ -1,10 +1,10 @@
 # Very pedestrian, coder only cloc.
 #
-desc "Pedestrian CLOC statistics."
+desc 'Pedestrian CLOC statistics.'
 task :stats do
   libs  = 0.0
   specs = 0.0
-  %w|lib spec test_project|.each do |dir|
+  %w[lib spec test_project].each do |dir|
     original_dir = dir
     dir = "#{dir}/*.rb"
     dirs = 5.times.inject([dir]) do |dirs, _|
@@ -22,5 +22,5 @@ task :stats do
     puts "#{original_dir}: #{total}"
   end
   puts
-  puts "Code/Test Ratio: 1:#{(specs/libs).round(1)}"
+  puts "Code/Test Ratio: 1:#{(specs / libs).round(1)}"
 end

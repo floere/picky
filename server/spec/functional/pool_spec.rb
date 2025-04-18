@@ -1,41 +1,38 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 require 'ostruct'
 
 describe 'GC stats: searching' do
+  PoolSpecThing = Struct.new :id, :the_first, :the_last, :other
 
-  PoolSpecThing = Struct.new :id, :first, :last, :other
-  
   before(:each) do
     Picky::Indexes.clear_indexes
   end
-  
+
   let(:amount) { 5_000 }
   let(:data) do
     index = Picky::Index.new :sorted do
-      category :first
-      category :last
+      category :the_first
+      category :the_last
       category :other
     end
     3.times do |i|
-      index.add PoolSpecThing.new(i+1, 'Abracadabra', 'Mirgel',  'whatever it')
-      index.add PoolSpecThing.new(i+2, 'Abraham',     'Minder',  'is not too')
-      index.add PoolSpecThing.new(i+3, 'Azzie',       'Mueller', 'unimportant')
+      index.add PoolSpecThing.new(i + 1, 'Abracadabra', 'Mirgel',  'whatever it')
+      index.add PoolSpecThing.new(i + 2, 'Abraham',     'Minder',  'is not too')
+      index.add PoolSpecThing.new(i + 3, 'Azzie',       'Mueller', 'unimportant')
     end
     index
   end
   let(:search) { Picky::Search.new data }
 
-  # TODO Why are both versions almost equally fast?
+  # TODO: Why are both versions almost equally fast?
   #
   # context 'without pool' do
   #   it 'runs the GC more' do
   #     # Quickly check if the pool is removed.
   #     #
   #     fail 'object pool still installed' if Picky::Query::Token.respond_to? :release_all
-  #     
+  #
   #     try = search
   #     query = 'abracadabra mirgel'
   #     gc_runs_of do
@@ -63,7 +60,7 @@ describe 'GC stats: searching' do
   #     # Quickly check that the pool is added.
   #     #
   #     fail 'object pool not installed' unless Picky::Query::Token.respond_to? :release_all
-  #     
+  #
   #     try = search
   #     query = 'abracadabra mirgel'
   #     gc_runs_of do
@@ -84,5 +81,4 @@ describe 'GC stats: searching' do
   #     end.should <= 0.2
   #   end
   # end
-  
 end

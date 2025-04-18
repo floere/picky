@@ -1,17 +1,15 @@
 module Picky
-
   class Bundle
-    
-    # TODO Push methods back into the backend, so that we
+    # TODO: Push methods back into the backend, so that we
     #      can apply more efficient methods tailored for
     #      each specific backends.
     #
-    
+
     # Removes the given id from the indexes.
     #
     # TODO Simplify (and slow) this again – remove the realtime index.
     #
-    def remove id
+    def remove(id)
       # Is it anywhere?
       #
       str_or_syms = @realtime[id]
@@ -32,9 +30,9 @@ module Picky
           # In essence, we don't know if and when we can remove it.
           # (One idea is to add an array of ids and remove from that)
           #
-          @similarity.delete self.similarity_strategy.encode(str_or_sym)
+          @similarity.delete similarity_strategy.encode(str_or_sym)
         else
-          @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
+          @weights[str_or_sym] = weight_strategy.weight_for ids.size
           # @weights[str_or_sym] = self.weight_strategy.respond_to?(:[]) &&
           #                        self.weight_strategy[str_or_sym] ||
           #                        self.weight_strategy.weight_for(ids.size)
@@ -52,7 +50,7 @@ module Picky
     # TODO Why the realtime index? Is it really necessary?
     #      Not absolutely. It was for efficient deletion/replacement.
     #
-    def add id, str_or_sym, method: :unshift, static: false, force_update: false
+    def add(id, str_or_sym, method: :unshift, static: false, force_update: false)
       # If static, indexing will be slower, but will use less
       # space in the end.
       #
@@ -61,14 +59,12 @@ module Picky
         if force_update
           ids.delete id
           ids.send method, id
+        elsif ids.include?(id)
+        # TODO: Adding should not change the array if it's already in.
+        #
+        # Do nothing. Not forced, and already in.
         else
-          # TODO Adding should not change the array if it's already in.
-          #
-          if ids.include?(id)
-            # Do nothing. Not forced, and already in.
-          else
-            ids.send method, id
-          end
+          ids.send method, id
         end
       else
         # Use a generalized strategy.
@@ -78,32 +74,32 @@ module Picky
         # Inverted.
         #
         ids = if str_or_syms.include?(str_or_sym)
-          ids = @inverted[str_or_sym] ||= empty_array
-          # If updates are forced or if it isn't in there already
-          # then remove and add to the index.
-          if force_update || !ids.include?(id)
-            ids.delete id
-            ids.send method, id
-          end
-          ids
-        else
-          # Update the realtime index.
-          #
-          str_or_syms << str_or_sym
-          # TODO Add has_key? to index backends.
-          # ids = if @inverted.has_key?(str_or_sym)
-          #   @inverted[str_or_sym]
-          # else
-          #   @inverted[str_or_sym] = empty_array
-          # end
-          ids = (@inverted[str_or_sym] ||= empty_array)
-          ids.send method, id
-        end
+                ids = @inverted[str_or_sym] ||= empty_array
+                # If updates are forced or if it isn't in there already
+                # then remove and add to the index.
+                if force_update || !ids.include?(id)
+                  ids.delete id
+                  ids.send method, id
+                end
+                ids
+              else
+                # Update the realtime index.
+                #
+                str_or_syms << str_or_sym
+                # TODO: Add has_key? to index backends.
+                # ids = if @inverted.has_key?(str_or_sym)
+                #   @inverted[str_or_sym]
+                # else
+                #   @inverted[str_or_sym] = empty_array
+                # end
+                ids = (@inverted[str_or_sym] ||= empty_array)
+                ids.send method, id
+              end
       end
-        
+
       # Weights.
       #
-      @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
+      @weights[str_or_sym] = weight_strategy.weight_for ids.size
 
       # Similarity.
       #
@@ -116,8 +112,8 @@ module Picky
 
     # Add string/symbol to similarity index.
     #
-    def add_similarity str_or_sym, method: :unshift
-      if encoded = self.similarity_strategy.encode(str_or_sym)
+    def add_similarity(str_or_sym, **_options)
+      if (encoded = similarity_strategy.encode(str_or_sym))
         similars = @similarity[encoded] ||= []
 
         # Not completely correct, as others will also be affected, but meh.
@@ -125,19 +121,20 @@ module Picky
         similars.delete str_or_sym if similars.include? str_or_sym
         similars << str_or_sym
 
-        self.similarity_strategy.prioritize similars, str_or_sym
+        similarity_strategy.prioritize similars, str_or_sym
       end
     end
 
     # Partializes the text and then adds each.
     #
-    def add_partialized id, text, method: :unshift, static: false, force_update: false
+    def add_partialized(id, text, method: :unshift, static: false, force_update: false)
       partialized text do |partial_text|
         add id, partial_text, method: method, static: static, force_update: force_update
       end
     end
-    def partialized text, &block
-      self.partial_strategy.each_partial text, &block
+
+    def partialized(text, &block)
+      partial_strategy.each_partial text, &block
     end
 
     # Builds the realtime mapping.
@@ -146,7 +143,7 @@ module Picky
     #
     # THINK Maybe load it and just replace the arrays with the corresponding ones.
     #
-    def build_realtime symbol_keys
+    def build_realtime(symbol_keys)
       clear_realtime
       @inverted.each_pair do |str_or_sym, ids|
         ids.each do |id|
@@ -156,7 +153,5 @@ module Picky
         end
       end
     end
-
   end
-
 end

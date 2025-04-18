@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Calculates boosts for combinations.
     #
     # Example:
@@ -22,16 +20,15 @@ module Picky
     # And return a boost (float).
     #
     class Boosts
-
       attr_reader :boosts
 
-      forward :empty?, :to => :boosts
+      forward :empty?, to: :boosts
 
       # Needs a Hash of
       #   [:category_name1, :category_name2] => +3
       # (some positive or negative weight)
       #
-      def initialize boosts = {}
+      def initialize(boosts = {})
         @boosts = boosts
       end
 
@@ -46,7 +43,7 @@ module Picky
       # Note: Use Array#clustered_uniq to make
       #       [:a, :a, :b, :a] => [:a, :b, :a]
       #
-      def boost_for_categories names
+      def boost_for_categories(names)
         @boosts[names.clustered_uniq] || 0
       end
 
@@ -61,14 +58,14 @@ module Picky
       #
       # TODO Push into categories? Store boosts in categories?
       #
-      def boost_for combinations
-        boost_for_categories combinations.map { |combination| combination.category_name }
+      def boost_for(combinations)
+        boost_for_categories(combinations.map(&:category_name))
       end
 
       # A Weights instance is == to another if
       # the weights are the same.
       #
-      def == other
+      def ==(other)
         @boosts == other.boosts
       end
 
@@ -76,10 +73,8 @@ module Picky
       # configured weights.
       #
       def to_s
-        "#{self.class}(#@boosts)"
+        "#{self.class}(#{@boosts})"
       end
-
     end
   end
-
 end

@@ -1,5 +1,3 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 # Not loaded by default.
@@ -7,7 +5,6 @@ require 'spec_helper'
 require_relative '../../lib/picky/analytics'
 
 describe Picky::Analytics do
-
   attr_reader :index1, :index2
 
   Item = Struct.new :id, :text
@@ -16,17 +13,16 @@ describe Picky::Analytics do
     @index1 = Picky::Index.new :index1 do
       source [
         Item.new(1, 'test one'),
-        Item.new(2, 'test two'),
+        Item.new(2, 'test two')
       ]
       category :text
     end
     @index1.index
-    @index1
 
     @index2 = Picky::Index.new :index2 do
       source [
         Item.new(3, 'test three'),
-        Item.new(4, 'test four'),
+        Item.new(4, 'test four')
       ]
       category :text
     end
@@ -61,5 +57,4 @@ describe Picky::Analytics do
       analytics.ids.should == 32
     end
   end
-
 end

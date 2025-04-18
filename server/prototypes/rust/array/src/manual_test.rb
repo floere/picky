@@ -1,8 +1,8 @@
-require File.expand_path('../integration', __FILE__)
+require File.expand_path('integration', __dir__)
 
 def mem
   GC.start
-  puts `ps aux | grep #{Process.pid}`.split("\n").find { |s| s.match(/manual_test/) }
+  puts(`ps aux | grep #{Process.pid}`.split("\n").find { |s| s.match(/manual_test/) })
 end
 
 def timed
@@ -24,8 +24,9 @@ def rust_ary
   p ary.size
   p [ary.first, ary.last]
 end
+
 def ruby_ary
-  ary = Array.new
+  ary = []
   timed do
     TIMES.times do |i|
       ary << i
@@ -36,7 +37,7 @@ def ruby_ary
   p [ary.first, ary.last]
 end
 
-KEYS = ['abc', 'def', 'ghi', 'jkl', 'mno']
+KEYS = %w[abc def ghi jkl mno]
 def rust_hash
   hash = Rust::Hash.new
   keys_size = KEYS.size
@@ -48,6 +49,7 @@ def rust_hash
     end
   end
 end
+
 # def rust_hash_fast_append
 #   hash = Rust::Hash.new
 #   keys_size = KEYS.size
@@ -60,12 +62,12 @@ end
 #   end
 # end
 def ruby_hash
-  hash = Hash.new
+  hash = {}
   keys_size = KEYS.size
   timed do
     TIMES.times do |i|
       key = KEYS[i % keys_size]
-      hash[key] ||= Array.new
+      hash[key] ||= []
       hash[key] << i
     end
   end
@@ -118,7 +120,6 @@ p ary2
 
 p [:intersect, ary1.intersect(ary2.to_ptr)]
 
-p [:slice!, ary1.slice!(2,2)]
+p [:slice!, ary1.slice!(2, 2)]
 
 p ary1
-

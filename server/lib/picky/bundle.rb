@@ -21,7 +21,6 @@ module Picky
   #   memory / redis and looking up search data as fast as possible.
   #
   class Bundle
-
     attr_reader :name,
                 :category
 
@@ -30,35 +29,34 @@ module Picky
                   :similarity,
                   :configuration,
                   :realtime,
-
                   :backend_inverted,
                   :backend_weights,
                   :backend_similarity,
                   :backend_configuration,
                   :backend_realtime,
-
                   :weight_strategy,
                   :partial_strategy,
                   :similarity_strategy
 
-    forward :[], :[]=,        :to => :configuration
-    forward :index_directory, :to => :category
+    forward :[], :[]=,        to: :configuration
+    forward :index_directory, to: :category
 
-    # TODO Move the strategies into options.
+    # TODO: Move the strategies into options.
     #
-    def initialize name, category, weight_strategy, partial_strategy, similarity_strategy, options = {}
+    def initialize(name, category, weight_strategy, partial_strategy, similarity_strategy, options = {})
       @name     = name
       @category = category
 
       @weight_strategy     = weight_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
-      
+
       @hints      = options[:hints]
       @backend    = options[:backend]
 
       reset_backend
     end
+
     def identifier
       @identifier ||= :"#{category.identifier}:#{name}"
     end
@@ -104,7 +102,7 @@ module Picky
     def empty
       on_all_indexes_call :empty
     end
-    
+
     # Returns a new, empty instance of an array type.
     #
     def empty_array
@@ -113,7 +111,7 @@ module Picky
 
     # Extracted to avoid duplicate code.
     #
-    def on_all_indexes_call method_name
+    def on_all_indexes_call(method_name)
       @inverted      = @backend_inverted.send method_name
       @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.send(method_name)
       @similarity    = @backend_similarity.send method_name
@@ -124,10 +122,10 @@ module Picky
     # Delete all index files.
     #
     def delete
-      @backend_inverted.delete       if @backend_inverted.respond_to? :delete
+      @backend_inverted.delete if @backend_inverted.respond_to? :delete
       # THINK about this. Perhaps the strategies should implement the backend methods?
       #
-      @backend_weights.delete        if @backend_weights.respond_to?(:delete) && @weight_strategy.respond_to?(:saved?) && @weight_strategy.saved?
+      @backend_weights.delete if @backend_weights.respond_to?(:delete) && @weight_strategy.respond_to?(:saved?) && @weight_strategy.saved?
       @backend_similarity.delete     if @backend_similarity.respond_to? :delete
       @backend_configuration.delete  if @backend_configuration.respond_to? :delete
       @backend_realtime.delete       if @backend_realtime.respond_to? :delete
@@ -137,11 +135,12 @@ module Picky
     #
     # Note: Also checks for itself.
     #
-    def similar str_or_sym
+    def similar(str_or_sym)
       code = similarity_strategy.encode str_or_sym
       return [] unless code
+
       @similarity[code] || []
-      
+
       # similar_codes = @similarity[code]
       # if similar_codes.blank?
       #   [] # Return a simple array.
@@ -169,25 +168,24 @@ module Picky
     # Returns just the part without subindex type,
     # if none given.
     #
-    def index_path type = nil
-      ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
+    def index_path(type = nil)
+      ::File.join index_directory, "#{category.name}_#{name}#{"_#{type}" if type}"
     end
 
-    def to_tree_s indent = 0, &block
-      s = <<-TREE
-#{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
-#{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block && block.call(inverted)}
-#{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block && block.call(weights)}
-#{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block && block.call(similarity)}
-#{' ' * indent}    Realtime(#{realtime.size})[#{backend_realtime}]#{block && block.call(realtime)}
-#{' ' * indent}    Configur(#{configuration.size})[#{backend_configuration}]#{block && block.call(configuration)}
-TREE
+    def to_tree_s(indent = 0, &block)
+      s = <<~TREE
+        #{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
+        #{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block&.call(inverted)}
+        #{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block&.call(weights)}
+        #{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block&.call(similarity)}
+        #{' ' * indent}    Realtime(#{realtime.size})[#{backend_realtime}]#{block&.call(realtime)}
+        #{' ' * indent}    Configur(#{configuration.size})[#{backend_configuration}]#{block&.call(configuration)}
+      TREE
       s.chomp
     end
 
     def to_s
       "#{self.class}(#{identifier})"
     end
-
   end
 end

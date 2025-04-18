@@ -1,9 +1,6 @@
 module Picky
-
   module Generators
-
     module Weights
-
       # Uses a dynamic weight.
       #
       # Note: This is not saved.
@@ -14,24 +11,21 @@ module Picky
       #     end
       #
       class Dynamic < Stub
-
         # Give it a block that takes a string/symbol
         # and returns a weight.
         #
-        def initialize &calculation
+        def initialize(&calculation)
+          super()
+
           @calculation = calculation
         end
 
         # Calls the block to calculate the weight.
         #
-        def [] str_or_sym
+        def [](str_or_sym)
           @calculation.call str_or_sym
         end
-
       end
-
     end
-
   end
-
 end

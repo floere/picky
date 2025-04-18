@@ -1,5 +1,4 @@
 module Picky
-
   # = Picky Indexes
   #
   # A Picky Index defines
@@ -85,7 +84,6 @@ module Picky
   # Note: An Index holds both an *Indexed*::*Index* and an *Indexing*::*Index*.
   #
   class Index
-
     attr_reader :name,
                 :categories,
                 :hints
@@ -95,7 +93,7 @@ module Picky
             :each,
             :inject,
             :reset_backend,
-            :to => :categories
+            to: :categories
 
     # Create a new index with a given source.
     #
@@ -117,7 +115,7 @@ module Picky
     #     result_identifier :my_special_results
     #   end
     #
-    def initialize name, &proc
+    def initialize(name, &proc)
       @name       = name.intern
       @categories = Categories.new
 
@@ -127,27 +125,28 @@ module Picky
 
       instance_eval(&proc) if block_given?
     end
-    
+
     # Provide hints for Picky so it can optimise.
     #
     def optimize *hints
       require_relative 'index/hints'
       @hints = Hints.new hints
     end
-    
+
     # Explicitly trigger memory optimization.
     #
-    def optimize_memory array_references = Hash.new
+    def optimize_memory(array_references = {})
       dedup = Picky::Optimizers::Memory::ArrayDeduplicator.new
       dedup.deduplicate categories.map(&:exact).map(&:inverted), array_references
       dedup.deduplicate categories.map(&:partial).map(&:inverted), array_references
     end
 
-    # TODO Doc.
+    # TODO: Doc.
     #
     def static
       @static = true
     end
+
     def static?
       @static
     end
@@ -157,7 +156,7 @@ module Picky
     # Sets/returns the backend used.
     # Default is @Backends::Memory.new@.
     #
-    def backend backend = nil
+    def backend(backend = nil)
       if backend
         @backend = backend
         reset_backend
@@ -168,12 +167,12 @@ module Picky
 
     # API method.
     #
-    def symbol_keys value = nil
+    def symbol_keys(value = nil)
       if value
         @symbol_keys = value
       else
         @symbol_keys
-      end 
+      end
     end
 
     # The directory used by this index.
@@ -195,12 +194,12 @@ module Picky
     #
     # TODO Redesign.
     #
-    def only *qualifiers
-      raise "Sorry, Picky::Search#only has been removed in version."
+    def only *_qualifiers
+      raise 'Sorry, Picky::Search#only has been removed in version.'
       # @qualifier_mapper.restrict_to *qualifiers
     end
 
-    # TODO Reinstate.
+    # TODO: Reinstate.
     #
     # # Ignore the categories with these qualifiers.
     # #
@@ -233,7 +232,7 @@ module Picky
     # * source: Use a different source than the index uses. If you think you need that, there might be a better solution to your problem. Please post to the mailing list first with your application.rb :)
     # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: category(:similar_title, :from => :title).
     #
-    def category category_name, options = {}
+    def category(category_name, options = {})
       new_category = Category.new category_name.intern, self, options
       categories << new_category
 
@@ -306,11 +305,11 @@ module Picky
     # * anchor: Where to anchor the grid.
     # * ... all options of #category.
     #
-    def ranged_category category_name, range, options = {}
+    def ranged_category(category_name, range, options = {})
       precision = options.delete(:precision) || 1
       anchor    = options.delete(:anchor)    || 0.0
 
-      # Note: :key_format => :to_f ?
+      # NOTE: :key_format => :to_f ?
       #
       options = { partial: Partial::None.new }.merge options
 
@@ -352,15 +351,15 @@ module Picky
     # THINK Will have to write a wrapper that combines two categories that are
     # indexed simultaneously, since lat/lng are correlated.
     #
-    def geo_categories lat_name, lng_name, radius, options = {}
+    def geo_categories(lat_name, lng_name, radius, **options)
       # Extract lat/lng specific options.
       #
-      lat_from = options.delete :lat_from
-      lng_from = options.delete :lng_from
+      lat_from = options.delete(:lat_from)
+      lng_from = options.delete(:lng_from)
 
       # One can be a normal ranged_category.
       #
-      ranged_category lat_name, radius*0.00898312, options.merge(from: lat_from)
+      ranged_category lat_name, radius * 0.00898312, **options.merge(from: lat_from)
 
       # The other needs to adapt the radius depending on the one.
       #
@@ -375,15 +374,15 @@ module Picky
       # A degree on the 45 degree line is equal to ~222.6398 km.
       # So a km on the 45 degree line is equal to 0.01796624 degrees.
       #
-      ranged_category lng_name, radius*0.01796624, options.merge(from: lng_from)
+      ranged_category lng_name, radius * 0.01796624, **options.merge(from: lng_from)
     end
 
     def to_stats
-      stats = <<-INDEX
-#{name} (#{self.class}):
-#{"source:            #{source}".indented_to_s}
-#{"categories:        #{categories.to_stats}".indented_to_s}
-INDEX
+      stats = <<~INDEX
+        #{name} (#{self.class}):
+        #{"source:            #{source}".indented_to_s}
+        #{"categories:        #{categories.to_stats}".indented_to_s}
+      INDEX
       stats << "result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
       stats << "\n"
       stats
@@ -395,8 +394,6 @@ INDEX
       name
     end
 
-    #
-    #
     def to_s
       s = [
         name,
@@ -409,16 +406,14 @@ INDEX
 
     # Displays the structure as a tree.
     #
-    def to_tree_s indent = 0
-      <<-TREE
-#{' ' * indent}Index(#{name})
-#{' ' * indent}  source: #{source.to_s[0..40]}
-#{' ' * indent}  result identifier: "#{result_identifier}"
-#{' ' * indent}  categories:
-#{' ' * indent}#{categories.to_tree_s(4)}
-TREE
+    def to_tree_s(indent = 0)
+      <<~TREE
+        #{' ' * indent}Index(#{name})
+        #{' ' * indent}  source: #{source.to_s[0..40]}
+        #{' ' * indent}  result identifier: "#{result_identifier}"
+        #{' ' * indent}  categories:
+        #{' ' * indent}#{categories.to_tree_s(4)}
+      TREE
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Calculations::Location do
-
   context 'with precision 1' do
     before(:each) do
       @calculation = described_class.new 1.5, 42.7, 1
@@ -52,5 +51,4 @@ describe Picky::Calculations::Location do
       end
     end
   end
-
 end

@@ -1,16 +1,12 @@
 module Picky
-
   module Generators
-
     module Partial
-
       # Does not generate a partial index.
       #
       class None < Strategy
-
         # Yields each generated partial.
         #
-        def each_partial token
+        def each_partial(token)
           # yields nothing
         end
 
@@ -25,11 +21,7 @@ module Picky
         def use_exact_for_partial?
           true
         end
-
       end
-
     end
-
   end
-
 end

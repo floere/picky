@@ -143,7 +143,7 @@ module Rust
       return self if size < 2
       
       @internal_instance = rust_array_sort_by_bang(to_ptr) do |a, b|
-        p [b, block.call(b), a, block.call(a), block.call(b) <=> block.call(a)]
+        # p [b, block.call(b), a, block.call(a), block.call(b) <=> block.call(a)]
         block.call(a) <=> block.call(b)
       end
       

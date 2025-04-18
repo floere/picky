@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Memory::JSON do
-
   context 'hash-based indexes' do
     let(:json) { described_class.new 'spec/temp/some/cache/path/to/file' }
 
@@ -17,8 +16,8 @@ describe Picky::Backends::Memory::JSON do
       end
     end
 
-    describe "dump" do
-      it "forwards to the given hash" do
+    describe 'dump' do
+      it 'forwards to the given hash' do
         hash = double :hash
 
         json.should_receive(:dump_json).once.with hash
@@ -27,8 +26,8 @@ describe Picky::Backends::Memory::JSON do
       end
     end
 
-    describe "retrieve" do
-      it "raises" do
+    describe 'retrieve' do
+      it 'raises' do
         lambda do
           json.retrieve
         end.should raise_error("Can't retrieve from JSON file. Use text file.")
@@ -41,5 +40,4 @@ describe Picky::Backends::Memory::JSON do
       end
     end
   end
-
 end

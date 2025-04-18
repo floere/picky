@@ -1,19 +1,18 @@
 module Picky
-
   module Query
-
     class Combination
-      
       # Pretends to be a combination.
       #
       # TODO Rework completely and document.
       #
       class Or < Combination
-        
-        def initialize combinations
+        def initialize(combinations)
+          # TODO: Fix.
+          super(nil, nil, 0.0)
+
           @combinations = combinations
         end
-        
+
         # Returns the combination's category name.
         # Used in boosting.
         #
@@ -36,25 +35,21 @@ module Picky
         # Note: Caching is most of the time useful.
         #
         def ids
-          # FIXME Use empty_array from bundle!
+          # FIXME: Use empty_array from bundle!
           @ids ||= @combinations.inject([]) do |total, combination|
             total + combination.ids
           end.uniq
         end
-        
+
         def identifier
           @identifier ||= "#{@combinations.map(&:bundle).map(&:identifier).join('|')}:inverted:#{token.text}"
         end
-        
+
         def to_result
-          results = @combinations.map &:to_result
+          @combinations.map(&:to_result)
           [*@combinations.map(&:to_result).transpose.map! { |thing| thing.join('|') }]
         end
-        
       end
-      
     end
-    
   end
-  
 end

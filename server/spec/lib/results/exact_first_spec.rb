@@ -1,17 +1,16 @@
 require 'spec_helper'
 
 describe Picky::Results::ExactFirst do
-
   before(:each) do
     @exact    = double :exact
     @partial  = double :partial
-    @category = double :category, :exact => @exact, :partial => @partial
+    @category = double :category, exact: @exact, partial: @partial
     @category.extend described_class
   end
 
-  describe "self.wrap" do
-    context "index" do
-      it "wraps each category" do
+  describe 'self.wrap' do
+    context 'index' do
+      it 'wraps each category' do
         index = Picky::Index.new :some_index
         index.category :some_category
 
@@ -21,90 +20,89 @@ describe Picky::Results::ExactFirst do
           category.should be_kind_of(described_class)
         end
       end
-      it "returns the index" do
+      it 'returns the index' do
         index = Picky::Index.new :some_index
         index.category :some_category
 
         index.extend(described_class).should == index
       end
     end
-    context "category" do
-      it "wraps the category" do
+    context 'category' do
+      it 'wraps the category' do
         @category.should be_kind_of(described_class)
       end
     end
   end
 
   describe 'ids' do
-    it "uses first the exact, then the partial ids" do
-      @exact.stub   :ids => [1,4,5,6]
-      @partial.stub :ids => [2,3,7]
+    it 'uses first the exact, then the partial ids' do
+      @exact.stub   ids: [1, 4, 5, 6]
+      @partial.stub ids: [2, 3, 7]
 
-      @category.ids(double(:token, :text => :anything, :partial? => true)).should == [1,4,5,6,2,3,7]
+      @category.ids(double(:token, text: :anything, partial?: true)).should == [1, 4, 5, 6, 2, 3, 7]
     end
-    it "uses only the exact ids" do
-      @exact.stub   :ids => [1,4,5,6]
-      @partial.stub :ids => [2,3,7]
+    it 'uses only the exact ids' do
+      @exact.stub   ids: [1, 4, 5, 6]
+      @partial.stub ids: [2, 3, 7]
 
-      @category.ids(double(:token, :text => :anything, :partial? => false)).should == [1,4,5,6]
+      @category.ids(double(:token, text: :anything, partial?: false)).should == [1, 4, 5, 6]
     end
   end
 
   describe 'weight' do
-    context "exact with weight" do
+    context 'exact with weight' do
       before(:each) do
-        @exact.stub :weight => 0.12
+        @exact.stub weight: 0.12
       end
-      context "partial with weight" do
+      context 'partial with weight' do
         before(:each) do
-          @partial.stub :weight => 1.23
+          @partial.stub weight: 1.23
         end
-        it "uses the higher weight" do
-          @category.weight(double(:token, :text => :anything, :partial? => true)).should == 1.23
+        it 'uses the higher weight' do
+          expect(@category.weight(double(:token, text: :anything, partial?: true))).to be_within(Float::EPSILON).of(1.23)
         end
-        it "uses the exact weight" do
-          @category.weight(double(:token, :text => :anything, :partial? => false)).should == 0.12
+        it 'uses the exact weight' do
+          expect(@category.weight(double(:token, text: :anything, partial?: false))).to be_within(Float::EPSILON).of(0.12)
         end
       end
-      context "partial without weight" do
+      context 'partial without weight' do
         before(:each) do
-          @partial.stub :weight => nil
+          @partial.stub weight: nil
         end
-        it "uses the exact weight" do
-          @category.weight(double(:token, :text => :anything, :partial? => true)).should == 0.12
+        it 'uses the exact weight' do
+          expect(@category.weight(double(:token, text: :anything, partial?: true))).to be_within(Float::EPSILON).of(0.12)
         end
-        it "uses the exact weight" do
-          @category.weight(double(:token, :text => :anything, :partial? => false)).should == 0.12
+        it 'uses the exact weight' do
+          expect(@category.weight(double(:token, text: :anything, partial?: false))).to be_within(Float::EPSILON).of(0.12)
         end
       end
     end
-    context "exact without weight" do
+    context 'exact without weight' do
       before(:each) do
-        @exact.stub :weight => nil
+        @exact.stub weight: nil
       end
-      context "partial with weight" do
+      context 'partial with weight' do
         before(:each) do
-          @partial.stub :weight => 0.12
+          @partial.stub weight: 0.12
         end
-        it "uses the partial weight" do
-          @category.weight(double(:token, :text => :anything, :partial? => true)).should == 0.12
+        it 'uses the partial weight' do
+          expect(@category.weight(double(:token, text: :anything, partial?: true))).to be_within(Float::EPSILON).of(0.12)
         end
-        it "uses the exact weight" do
-          @category.weight(double(:token, :text => :anything, :partial? => false)).should == nil
+        it 'uses the exact weight' do
+          @category.weight(double(:token, text: :anything, partial?: false)).should.nil?
         end
       end
-      context "partial without weight" do
+      context 'partial without weight' do
         before(:each) do
-          @partial.stub :weight => nil
+          @partial.stub weight: nil
         end
-        it "is nil" do
-          @category.weight(double(:token, :text => :anything, :partial? => true)).should == nil
+        it 'is nil' do
+          @category.weight(double(:token, text: :anything, partial?: true)).should.nil?
         end
-        it "is nil" do
-          @category.weight(double(:token, :text => :anything, :partial? => false)).should == nil
+        it 'is nil' do
+          @category.weight(double(:token, text: :anything, partial?: false)).should.nil?
         end
       end
     end
   end
-
 end

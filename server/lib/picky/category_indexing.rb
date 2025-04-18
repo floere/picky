@@ -1,9 +1,5 @@
 module Picky
-
-  #
-  #
   class Category
-
     include Helpers::Indexing
 
     attr_reader :exact,
@@ -11,25 +7,25 @@ module Picky
 
     # Indexes, creates the "prepared_..." file.
     #
-    def prepare scheduler = Scheduler.new
+    def prepare(scheduler = Scheduler.new)
       categories = Categories.new
       categories << self
       with_data_snapshot do
         scheduler.schedule do
           indexer.prepare categories, scheduler
-          nil # Note: Needed so procrastinate is happy.
+          nil # NOTE: Needed so procrastinate is happy.
         end
       end
     end
 
     # Generates all caches for this category.
     #
-    def cache scheduler = Scheduler.new
+    def cache(scheduler = Scheduler.new)
       scheduler.schedule do
         empty
         retrieve
         dump
-        nil # Note: Needed so procrastinate is happy.
+        nil # NOTE: Needed so procrastinate is happy.
       end
     end
 
@@ -44,11 +40,9 @@ module Picky
 
     # Take a data snapshot if the source offers it.
     #
-    def with_data_snapshot
+    def with_data_snapshot(&block)
       if source.respond_to? :with_snapshot
-        source.with_snapshot(@index) do
-          yield
-        end
+        source.with_snapshot(@index, &block)
       else
         yield
       end
@@ -74,6 +68,7 @@ module Picky
     def key_format
       @key_format ||= @index.key_format
     end
+
     def key_format?
       key_format
     end
@@ -131,7 +126,5 @@ module Picky
       exact.clear
       partial.clear
     end
-
   end
-
 end

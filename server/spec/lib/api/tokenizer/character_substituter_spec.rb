@@ -10,24 +10,24 @@ describe Picky::API::Tokenizer do
     context 'with a substituter' do
       let(:substituter) do
         Class.new do
-          def substitute text
+          def substitute(text)
             text.tr('a-z', '1-9')
           end
         end.new
       end
       it 'creates a tokenizer' do
-        object.extract_character_substituter(substituter).
-          substitute("picky").should == '99399'
+        object.extract_character_substituter(substituter)
+              .substitute('picky').should == '99399'
       end
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
-        expect {
+        expect do
           object.extract_character_substituter Object.new
-        }.to raise_error(<<-ERROR)
-The substitutes_characters_with option needs a character substituter,
-which responds to #substitute(text) and returns substituted_text."
-ERROR
+        end.to raise_error(<<~ERROR)
+          The substitutes_characters_with option needs a character substituter,
+          which responds to #substitute(text) and returns substituted_text."
+        ERROR
       end
     end
   end

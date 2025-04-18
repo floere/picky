@@ -1,16 +1,14 @@
 module Picky
-
   # This class is wrapped around indexes
   # and extracts useful information to be
   # displayed in beoootiful, live-updating
   # graphs.
   #
   class Analytics
-
     attr_reader :indexes
 
     def initialize *indexes
-      @indexes = Indexes.new *indexes
+      @indexes = Indexes.new(*indexes)
     end
 
     # Returns the number of tokens in all the inverted indexes.
@@ -24,11 +22,11 @@ module Picky
     end
 
     def ids
-      total = 0
+      total_size = 0
       indexes.each_bundle do |bundle|
-        total += bundle.inverted.inject(0) { |total, (_, values)| total + values.size }
+        total_size += bundle.inverted.inject(0) { |total, (_, values)| total + values.size }
       end
-      total
+      total_size
     end
 
     # def lengths index
@@ -74,7 +72,5 @@ module Picky
     #   end
     #
     # end
-
   end
-
 end

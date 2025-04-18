@@ -1,19 +1,16 @@
 module Picky
-
-  #
-  #
   class Index
     include Helpers::Indexing
 
     forward :cache,
             :clear,
-            :to => :categories
+            to: :categories
 
     # Define an index tokenizer on the index.
     #
     # Parameters are the exact same as for indexing.
     #
-    def indexing options = {}
+    def indexing(options = {})
       @tokenizer = Tokenizer.from options
     end
 
@@ -25,7 +22,7 @@ module Picky
     #
     # TODO Do a critical reading of this on the blog.
     #
-    def prepare scheduler = Scheduler.new
+    def prepare(scheduler = Scheduler.new)
       if source.respond_to?(:each)
         check_source_empty
         prepare_in_parallel scheduler
@@ -40,27 +37,25 @@ module Picky
     #       user as early as possible.
     #
     def check_source_empty
-      Picky.logger.warn %Q{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
+      Picky.logger.warn %{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
     end
 
     # Indexes the categories in parallel.
     #
     # Only use where the category does have a #each source defined.
     #
-    def prepare_in_parallel scheduler
+    def prepare_in_parallel(scheduler)
       indexer = Indexers::Parallel.new self
       indexer.prepare categories, scheduler
     end
 
-    # Note: Duplicated in category_indexing.rb.
+    # NOTE: Duplicated in category_indexing.rb.
     #
     # Take a data snapshot if the source offers it.
     #
-    def with_data_snapshot
+    def with_data_snapshot(&block)
       if source.respond_to? :with_snapshot
-        source.with_snapshot(self) do
-          yield
-        end
+        source.with_snapshot(self, &block)
       else
         yield
       end
@@ -78,10 +73,11 @@ module Picky
     # anything responding to #each and returning objects that
     # respond to id and the category names (or the category from option).
     #
-    def source some_source = nil, &block
+    def source(some_source = nil, &block)
       some_source ||= block
       some_source ? (@source = Source.from(some_source, false, name)) : unblock_source
     end
+
     # Get the actual source if it is wrapped in a time
     # capsule, ie. a block/lambda.
     #
@@ -96,7 +92,7 @@ module Picky
     # === Parameters
     # * name: Method name of the ID.
     #
-    def id name = nil, options = {}
+    def id(name = nil, options = {})
       key_format options[:format]
       @id_name = name || @id_name || :id
     end
@@ -107,17 +103,15 @@ module Picky
     #
     # TODO Rename to id_format.
     #
-    def key_format key_format = nil
+    def key_format(key_format = nil)
       key_format ? (@key_format = key_format) : @key_format
     end
 
     # Define what to do after indexing.
     # (Only used in the Sources::DB)
     #
-    def after_indexing after_indexing = nil
+    def after_indexing(after_indexing = nil)
       after_indexing ? (@after_indexing = after_indexing) : @after_indexing
     end
-
   end
-
 end

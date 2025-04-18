@@ -1,17 +1,13 @@
 module Picky
-
   module Backends
-
     class File
-      
       def json *args
-        JSON.new *args
+        JSON.new(*args)
       end
 
       # File-based index files dumped in the JSON format.
       #
       class JSON < Basic
-
         attr_writer :mapping
 
         # The in-memory mapping hash, mapping
@@ -19,7 +15,7 @@ module Picky
         # the JSON data in the file.
         #
         def mapping
-          @mapping || raise("The File index/category needs to be loaded first.")
+          @mapping || raise('The File index/category needs to be loaded first.')
         end
 
         # See lib/picky/backends/file.rb for what this should return.
@@ -27,11 +23,11 @@ module Picky
         # 1. Gets the length and offset for the key.
         # 2. Extracts and decodes the object from the file.
         #
-        def [] key
+        def [](key)
           length, offset = mapping[key]
           return unless length
-          result = MultiJson.decode IO.read(cache_path, length, offset)
-          result
+
+          MultiJson.decode IO.read(cache_path, length, offset)
         end
 
         # Clears the currently loaded index.
@@ -41,18 +37,18 @@ module Picky
         #       anymore, at least to the application.
         #
         def clear
-          self.mapping.clear
+          mapping.clear
         end
 
         # Size of the index is equal to the mapping size.
         #
         def size
-          self.mapping.size
+          mapping.size
         end
 
         # Loads the mapping hash from json format.
         #
-        def load symbol_keys
+        def load(symbol_keys)
           self.mapping = mapping_file.load symbol_keys
           self
         end
@@ -62,10 +58,10 @@ module Picky
         # 1. Dump actual data.
         # 2. Dumps mapping key => [length, offset].
         #
-        def dump hash
+        def dump(hash)
           offset = 0
-          mapping = Hash.new
-          
+          mapping = {}
+
           create_directory cache_path
           ::File.open(cache_path, 'w:utf-8') do |out_file|
             hash.each do |(key, object)|
@@ -91,11 +87,7 @@ module Picky
         def extension
           :json
         end
-
       end
-
     end
-
   end
-
 end

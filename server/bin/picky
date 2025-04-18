@@ -3,12 +3,12 @@
 
 begin
   require 'picky/cli'
-rescue LoadError => e
+rescue LoadError
   require 'rubygems'
-  picky_path = File.expand_path '../../tools', __FILE__
-  $:.unshift(picky_path) if File.directory?(picky_path) && !$:.include?(picky_path)
+  picky_path = File.expand_path '../tools', __dir__
+  $LOAD_PATH.unshift(picky_path) if File.directory?(picky_path) && !$LOAD_PATH.include?(picky_path)
   require 'picky/cli'
 end
 
 cli = Picky::CLI.new
-cli.execute *ARGV
+cli.execute(*ARGV)

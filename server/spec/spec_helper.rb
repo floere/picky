@@ -1,12 +1,13 @@
+require 'English'
 puts 'Run `ulimit -n 3000` if specs fail.'
 system 'rm -r spec/temp/* 2> /dev/null'
 
 # Start Redis if not yet running.
 #
 fork do
-  print "Starting redis-server... "
+  print 'Starting redis-server... '
   `redis-server` # Gets stuck or fails, continuing.
-  puts "(already running, redis-server returned #{$?.exitstatus})." unless $?.success?
+  puts "(already running, redis-server returned #{$CHILD_STATUS.exitstatus})." unless $CHILD_STATUS.success?
 end
 
 # Coverage report.
@@ -24,7 +25,7 @@ end
 #
 if ENV['PIPPI']
   require 'pippi'
-  Pippi::AutoRunner.new(:checkset => ENV['PIPPI_CHECKSET'] || 'basic')
+  Pippi::AutoRunner.new(checkset: ENV['PIPPI_CHECKSET'] || 'basic')
 end
 
 # Make RSpec shut up about deprecations.
@@ -44,55 +45,53 @@ begin
   # Remove this file for the default.
   #
   require_relative 'performance_ratio'
-rescue LoadError => e
+rescue LoadError
   # Default is for slower computers and
   # collaborators who don't need to check
   # performance so much.
   #
-  module Picky; PerformanceRatio = 0.5 end
+  module Picky; PERFORMANCE_RATIO = 0.5 end
 end
-def performance_of
-  if block_given?
-    code = Proc.new
-    GC.disable
-    t0 = Time.now
-    code.call
-    t1 = Time.now
-    GC.enable
-    (t1 - t0) * Picky::PerformanceRatio
-  else
-    raise '#performance_of needs a block'
-  end
-end
-def gc_runs_of
-  if block_given?
-    code = Proc.new
-    GC.start
-    calls = GC.count
-    code.call
-    GC.count - calls
-  else
-    raise '#gc_runs_of needs a block'
-  end
+def performance_of(&code)
+  raise '#performance_of needs a block' unless code
+
+  GC.disable
+  t0 = Time.now
+  code.call
+  t1 = Time.now
+  GC.enable
+  (t1 - t0) * Picky::PERFORMANCE_RATIO
 end
 
-def mark klass = String
+def gc_runs_of
+  raise '#gc_runs_of needs a block' unless block_given?
+
+  code = Proc.new
+  GC.start
+  calls = GC.count
+  code.call
+  GC.count - calls
+end
+
+def mark(klass = String)
   GC.start
   $marked = ObjectSpace.each_object(klass).to_a
-  if block_given?
-    yield
-    diff klass 
-  end
+  return unless block_given?
+
+  yield
+  diff klass
 end
-def diff klass = String
+
+def diff(klass = String)
   return unless $marked
+
   now_hash = Hash.new 0
   now = ObjectSpace.each_object(klass).to_a
   now.each { |thing| now_hash[thing] += 1 }
-  
+
   $marked.each do |thing|
     now_hash[thing] -= 1
   end
-  
+
   now_hash.select { |_, v| v > 0 }
 end

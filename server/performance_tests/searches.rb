@@ -1,43 +1,44 @@
 class Searches
-  
   include Enumerable
-  
+
   attr_reader :complexity, :data_size
-  
-  def initialize complexity, data_size
-    @complexity, @data_size = complexity, data_size
+
+  def initialize(complexity, data_size)
+    @complexity = complexity
+    @data_size = data_size
   end
-  
-  def self.each data_size
+
+  def self.each(data_size)
     (5..5).each do |complexity|
       yield new(complexity, data_size)
     end
   end
-  
-  def each &block
-    self.class.buffer[complexity].each &block
+
+  def each(&block)
+    self.class.buffer[complexity].each(&block)
   end
-  
-  def first queries
+
+  def first(queries)
     if queries > data_size
-      self.class.buffer[complexity].first(data_size).cycle(queries/data_size)
+      self.class.buffer[complexity].first(data_size).cycle(queries / data_size)
     else
       self.class.buffer[complexity].first(queries)
     end
   end
-  
-  def self.buffer
-    @buffer
+
+  class << self
+    attr_reader :buffer
   end
-  def self.size
-    @size
+
+  class << self
+    attr_reader :size
   end
-  
-  def self.prepare 
+
+  def self.prepare
     @buffer = {}
 
     @size = 0
-    CSV.open('data.csv').each do |id, *args|
+    CSV.open('data.csv').each_value do |*args|
       @size += 1
       (1..5).each do |complexity|
         @buffer[complexity] ||= []
@@ -45,5 +46,4 @@ class Searches
       end
     end
   end
-
 end

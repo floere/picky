@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Loggers::Silent do
-  
   let(:io) { StringIO.new }
   let(:logger) { described_class.new thing }
   context 'with Logger' do
@@ -20,7 +19,7 @@ describe Picky::Loggers::Silent do
         logger.load :some_category
         logger.load :some_category
         logger.load :some_category
-      
+
         io.string.should == ''
       end
     end
@@ -41,10 +40,9 @@ describe Picky::Loggers::Silent do
         logger.load :some_category
         logger.load :some_category
         logger.load :some_category
-      
+
         io.string.should == ''
       end
     end
   end
-
 end

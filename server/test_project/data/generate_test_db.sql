@@ -1,25 +1,21 @@
-# MySQL data
-#
-# > mysql -u root
-# CREATE USER developer@localhost;
-# CREATE DATABASE picky_test_project;
-# GRANT ALL ON picky_test_project.* TO developer@localhost;
-#
-# On Florian's local computer:
-# mysql --user developer -D picky_test_project < /Users/hanke/temp/picky/server/test_project/data/generate_test_db.sql
-#
+-- Postgres
+--
+-- > createdb picky_test_project
+-- > psql -d picky_test_project < /Users/admin/temp/picky/server/test_project/data/generate_test_db.sql
+
 DROP TABLE IF EXISTS books;
 
 CREATE TABLE books (
-  id     integer      NOT NULL AUTO_INCREMENT,
-  title  varchar(100) NOT NULL,
-  author varchar(100) NOT NULL,
-  isbn   varchar(10)  NOT NULL,
-  year   decimal(4)   NOT NULL,
-  PRIMARY KEY (id)
+  id        SERIAL PRIMARY KEY,
+  title     TEXT       NOT NULL,
+  author    TEXT       NOT NULL,
+  isbn      TEXT       NOT NULL,
+  year      DECIMAL(4) NOT NULL,
+  publisher TEXT           NULL,
+  category  TEXT           NULL
 );
 
-LOAD DATA INFILE '/Users/hanke/temp/picky/server/test_project/data/books.csv'
-  INTO TABLE books
-  FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-    LINES TERMINATED BY '\n';
+BEGIN;
+  COPY books (id, title, author, isbn, year, publisher, category) FROM '/Users/admin/temp/picky/server/test_project/data/books.csv' WITH (FORMAT csv, HEADER false);
+  SELECT setval('books_id_seq', max(id)) FROM books; -- Since we explicitly set IDs, we need to update serial (last ID inserted).
+END;

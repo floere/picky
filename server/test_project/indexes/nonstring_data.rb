@@ -2,18 +2,18 @@
 #
 NonStringDataSource = Struct.new :id, :nonstring
 class NonStringTokenizer < Picky::Tokenizer
-  def tokenize nonstring
+  def tokenize(nonstring)
     [nonstring.map(&:to_sym)]
   end
 end
 NonstringDataIndex = Picky::Index.new(:nonstring) do
   key_format :to_i
-  source {
+  source do
     [
       NonStringDataSource.new(1, ['gaga', :blabla, 'haha']),
       NonStringDataSource.new(2, [:meow, 'moo', :bang, 'zap'])
     ]
-  }
+  end
   indexing NonStringTokenizer.new
   category :nonstring
 end

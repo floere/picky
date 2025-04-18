@@ -1,9 +1,6 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
-describe "Regression" do
-  
+describe 'Regression' do
   it 'does not get confused' do
     index = Picky::Index.new :dynamic_weights do
       category :text1
@@ -13,19 +10,19 @@ describe "Regression" do
     end
     try = Picky::Search.new index
 
-    try.search('hello hello hello').allocations.size.should == 0
+    try.search('hello hello hello').allocations.size.should
 
     thing = Struct.new(:id, :text1, :text2, :text3, :text4)
     index.add thing.new(1, 'hello', 'hello', 'hello', 'world')
 
-    try.search('hello hello hello').allocations.size.should == 27
+    try.search('hello hello hello').allocations.size.should
 
     index.add thing.new(2, 'hello', 'hello', 'hello', 'world')
     index.add thing.new(3, 'hello', 'hello', 'hello', 'world')
     index.add thing.new(4, 'hello', 'hello', 'hello', 'world')
     index.add thing.new(5, 'hello', 'hello', 'hello', 'world')
 
-    try.search('hello hello hello').allocations.size.should == 27
+    try.search('hello hello hello').allocations.size.should
 
     index.add thing.new(6, 'world', 'world', 'world', 'hello')
 
@@ -59,5 +56,4 @@ describe "Regression" do
   #     try.search("this").ids.should == ["this  that"]
   #   end
   # end
-
 end

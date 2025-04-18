@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'aliases' do
-
   it 'aliases correctly' do
     Picky::Partial.should == Picky::Generators::Partial
   end
@@ -11,5 +10,4 @@ describe 'aliases' do
   it 'aliases correctly' do
     Picky::Weights.should == Picky::Generators::Weights
   end
-  
 end

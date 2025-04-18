@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # This is a query token. Together with other tokens it makes up a query.
     #
     # It remembers the original form, and and a normalized form.
@@ -10,13 +8,30 @@ module Picky
     # or whether it is a partial (bla*).
     #
     class Token
-      
+      mattr_reader :no_partial_character
+      mattr_reader :partial_character
+      mattr_accessor :no_partial
+      mattr_accessor :partial
+
+      mattr_reader :no_similar_character
+      mattr_reader :similar_character
+      mattr_accessor :no_similar
+      mattr_accessor :similar
+
+      mattr_reader :qualifier_text_delimiter
+      mattr_reader :qualifiers_delimiter
+      mattr_accessor :qualifier_text_splitter
+      mattr_accessor :qualifiers_splitter
+
+      mattr_accessor :range_character
+
+      mattr_accessor :illegals
+
       attr_accessor :text, :original
-      attr_writer :similar
-      attr_writer :predefined_categories
-      
-      forward :blank?, :to => :@text
-      
+      attr_writer :similar, :predefined_categories
+
+      forward :blank?, to: :@text
+
       # Normal initializer.
       #
       # Note:
@@ -24,7 +39,7 @@ module Picky
       #
       # TODO Throw away @predefined_categories?
       #
-      def initialize text, original = nil, categories = nil
+      def initialize(text, original = nil, categories = nil)
         @text     = text
         @original = original
         @predefined_categories = categories
@@ -36,9 +51,16 @@ module Picky
       # Use this in the search engine if you need a qualified
       # and normalized token. I.e. one prepared for a search.
       #
-      def self.processed text, original = nil
+      def self.processed(text, original = nil)
         new(text, original).process
       end
+
+      def self.redefine_illegals
+        # NOTE: By default, both no similar and no partial are ".
+        #
+        self.illegals = /[#{@no_similar_character}#{@similar_character}#{@no_partial_character}#{@partial_character}]/
+      end
+
       def process
         qualify
         similarize
@@ -64,46 +86,49 @@ module Picky
       #
       # TODO Do we really need to set the predefined categories on the token?
       #
-      def predefined_categories mapper = nil
+      def predefined_categories(mapper = nil)
         @predefined_categories || mapper && extract_predefined(mapper)
       end
-      def extract_predefined mapper
+
+      def extract_predefined(mapper)
         user_qualified = categorize_with mapper, @qualifiers
         mapper.restrict user_qualified
       end
-      def categorize_with mapper, qualifiers
-        qualifiers && qualifiers.map do |qualifier|
+
+      def categorize_with(mapper, qualifiers)
+        qualifiers&.map do |qualifier|
           mapper.map qualifier
-        end.compact
+        end&.compact
       end
-      
+
       # Selects the bundle to be used.
       #
-      def select_bundle exact, partial
+      def select_bundle(exact, partial)
         @partial ? partial : exact
       end
-      
+
       # Generates a reused stem.
       #
       # Caches a stem for a tokenizer.
       #
-      def stem tokenizer
+      def stem(tokenizer)
         if stem?
-          @stems ||= Hash.new
+          @stems ||= {}
           @stems[tokenizer] ||= tokenizer.stem(@text)
         else
           @text
         end
       end
+
       def stem?
-        @text !~ @@no_partial
+        @text !~ self.class.no_partial
       end
 
       # Partial is a conditional setter.
       #
       # It is only settable if it hasn't been set yet.
       #
-      def partial= partial
+      def partial=(partial)
         @partial = partial if @partial.nil?
       end
 
@@ -126,10 +151,6 @@ module Picky
       # So "hello*" will not be partially searched.
       # So "hello"* will be partially searched.
       #
-      @@no_partial_character = '"'
-      @@partial_character = '*'
-      @@no_partial = /\"\z/
-      @@partial    = /\*\z/
       def partialize
         # A token is partial? only if it not similar
         # and is partial.
@@ -137,89 +158,95 @@ module Picky
         # It can't be similar and partial at the same time.
         #
         self.partial = false or return if @similar
-        self.partial = false or return if @text =~ @@no_partial
-        self.partial = true if @text =~ @@partial
+        self.partial = false or return if @text =~ self.class.no_partial
+
+        self.partial = true if @text =~ self.class.partial
       end
+
       # Define a character which stops a token from
       # being a partial token, even if it is the last token.
       #
       # Default is '"'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.no_partial_character = '\?'
+      #   Picky::Query::Token.no_partial_character = '?'
       #   try.search("tes?") # Won't find "test".
       #
-      def self.no_partial_character= character
-        @@no_partial_character = character
-        @@no_partial = %r{#{character}\z}
+      def self.no_partial_character=(character)
+        @no_partial_character = character
+        self.no_partial = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.no_partial_character = '"'
+
       # Define a character which makes a token a partial token.
       #
       # Default is '*'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.partial_character = '\?'
+      #   Picky::Query::Token.partial_character = '?'
       #   try.search("tes?") # Will find "test".
       #
-      def self.partial_character= character
-        @@partial_character = character
-        @@partial = %r{#{character}\z}
+      def self.partial_character=(character)
+        @partial_character = character
+        self.partial = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.partial_character = '*'
 
       # If the text ends with ~ similarize it. If with ", don't.
       #
       # The latter wins.
       #
-      @@no_similar_character = '"'
-      @@similar_character = '~'
-      @@no_similar = %r{#@@no_similar_character\z}
-      @@similar    = %r{#@@similar_character\z}
       def similarize
-        self.similar = false or return if @text =~ @@no_similar
-        self.similar = true if @text =~ @@similar
+        self.similar = false or return if @text =~ self.class.no_similar
+
+        self.similar = true if @text =~ self.class.similar
       end
+
       # Define a character which stops a token from
       # being a similar token, even if it is the last token.
       #
       # Default is '"'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.no_similar_character = '\?'
+      #   Picky::Query::Token.no_similar_character = '?'
       #   try.search("tost?") # Won't find "test".
       #
-      def self.no_similar_character= character
-        @@no_similar_character = character
-        @@no_similar = %r{#{character}\z}
+      def self.no_similar_character=(character)
+        @no_similar_character = character
+        self.no_similar = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.no_similar_character = '"'
+
       # Define a character which makes a token a similar token.
       #
       # Default is '~'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.similar_character = '\?'
+      #   Picky::Query::Token.similar_character = '?'
       #   try.search("tost?") # Will find "test".
       #
-      def self.similar_character= character
-        @@similar_character = character
-        @@similar = %r{#{character}\z}
+      def self.similar_character=(character)
+        @similar_character = character
+        self.similar = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
-      
+      self.similar_character = '~'
+
       # Define a character which makes a token a range token.
       #
       # Default is '…'.
@@ -228,17 +255,14 @@ module Picky
       #   Picky::Query::Token.range_character = "-"
       #   try.search("year:2000-2008") # Will find results in a range.
       #
-      @@range_character = ?…
-      def self.range_character= character
-        @@range_character = character
-      end
+      self.range_character = '…'
+
       def rangify
-        @range = @text.split(@@range_character, 2) if @text.include? @@range_character
+        @range = @text.split(self.class.range_character, 2) if @text.include?(self.class.range_character)
       end
-      def range
-        @range
-      end
-      
+
+      attr_reader :range
+
       # Is this a "similar" character?
       #
       def similar?
@@ -248,39 +272,33 @@ module Picky
       # Normalizes this token's text.
       #
       def remove_illegals
-        # Note: unless @text.blank? was removed.
+        # NOTE: unless @text.blank? was removed.
         #
-        @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
+        @text.gsub! self.class.illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
-      def self.redefine_illegals
-        # Note: By default, both no similar and no partial are ".
-        #
-        @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
-      end
-      redefine_illegals
-      
+
       # Return all possible combinations.
       #
       # This checks if it needs to also search through similar
       # tokens, if for example, the token is one with ~.
       # If yes, it puts together all solutions.
       #
-      def possible_combinations categories
+      def possible_combinations(categories)
         similar? ? categories.similar_possible_for(self) : categories.possible_for(self)
       end
-      
+
       # If the Token has weight for the given category,
       # it will return a new combination for the tuple
       # (self, category, weight).
       #
-      def combination_for category
+      def combination_for(category)
         weight = category.weight self
         weight && Query::Combination.new(self, category, weight)
       end
 
       # Returns all similar tokens for the token.
       #
-      def similar_tokens_for category
+      def similar_tokens_for(category)
         similars = category.similar self
         similars.map do |similar|
           # The array describes all possible categories. There is only one here.
@@ -291,17 +309,11 @@ module Picky
 
       # Splits text into a qualifier and text.
       #
-      @@qualifier_text_delimiter = /:/
-      @@qualifiers_delimiter     = /,/
-      # TODO Think about making these instances.
-      @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
-      @@qualifiers_splitter      = Splitter.new @@qualifiers_delimiter
       def qualify
-        @qualifiers, @text = @@qualifier_text_splitter.single @text
-        if @qualifiers
-          @qualifiers = @@qualifiers_splitter.multi @qualifiers
-        end
+        @qualifiers, @text = self.class.qualifier_text_splitter.single(@text)
+        @qualifiers = self.class.qualifiers_splitter.multi(@qualifiers) if @qualifiers
       end
+
       # Define a regexp which separates the qualifier
       # from the search text.
       #
@@ -311,10 +323,12 @@ module Picky
       #   Picky::Query::Token.qualifier_text_delimiter = /\?/
       #   try.search("text1?hello text2?world").ids.should == [1]
       #
-      def self.qualifier_text_delimiter= character
-        @@qualifier_text_delimiter = character
-        @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
+      def self.qualifier_text_delimiter=(character)
+        @qualifier_text_delimiter = character
+        self.qualifier_text_splitter = Splitter.new(@qualifier_text_delimiter)
       end
+      self.qualifier_text_delimiter = /:/
+
       # Define a regexp which separates the qualifiers
       # (before the search text).
       #
@@ -324,12 +338,12 @@ module Picky
       #   Picky::Query::Token.qualifiers_delimiter = /|/
       #   try.search("text1|text2:hello").ids.should == [1]
       #
-      
-      def self.qualifiers_delimiter= character
-        @@qualifiers_delimiter = character
-        @@qualifiers_splitter  = Splitter.new @@qualifiers_delimiter
+      def self.qualifiers_delimiter=(character)
+        @qualifiers_delimiter = character
+        self.qualifiers_splitter = Splitter.new(@qualifiers_delimiter)
       end
-      
+      self.qualifiers_delimiter = /,/
+
       # Returns the qualifiers as an array.
       #
       # Example:
@@ -354,13 +368,13 @@ module Picky
       # Note: Used in many backends.
       #
       def identifier
-        "#{similar?? :similarity : :inverted}:#@text"
+        "#{similar? ? :similarity : :inverted}:#{@text}"
       end
 
       # If the originals & the text are the same, they are the same.
       #
-      def == other
-        self.original == other.original && self.text == other.text
+      def ==(other)
+        original == other.original && text == other.text
       end
 
       # Displays the text and the qualifiers.
@@ -370,9 +384,6 @@ module Picky
       def to_s
         "#{self.class}(#{[@text, (@qualifiers.inspect unless @qualifiers.blank?)].compact.join(', ')})"
       end
-
     end
-
   end
-
 end

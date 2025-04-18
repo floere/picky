@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Loader do
-
   before(:each) do
     described_class.stub :exclaim
     @loader_path = File.absolute_path("#{File.dirname(__FILE__)}/../../lib/picky/loader.rb")
@@ -20,7 +19,7 @@ describe Picky::Loader do
     it 'does ok' do
       Kernel.should_receive(:load).once.with 'spec/temp/app.rb'
 
-      lambda { described_class.load_application }.should_not raise_error
+      -> { described_class.load_application }.should_not raise_error
     end
     it 'loads correctly' do
       described_class.should_receive(:load_user).once.with 'app'
@@ -39,7 +38,7 @@ describe Picky::Loader do
       described_class.stub :load_relative
     end
     it 'does ok' do
-      lambda { described_class.load_framework }.should_not raise_error
+      -> { described_class.load_framework }.should_not raise_error
     end
   end
 
@@ -100,5 +99,4 @@ describe Picky::Loader do
       described_class.should_receive(:load_self).once
     end
   end
-
 end

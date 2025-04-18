@@ -1,11 +1,11 @@
 module Picky
-
   # This is the internal results object. Usually, to_marshal, or to_json
   # is called on it to get a string for the answer.
   #
   class Results
-
     include Enumerable
+
+    LOG_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'.freeze
 
     # Duration is set externally by the query.
     #
@@ -17,25 +17,26 @@ module Picky
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil, unique = false
+    def initialize(query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil,
+                   unique = false)
       @amount      = amount
       @query       = query
       @offset      = offset
       @allocations = allocations
       @extra_allocations = extra_allocations
-      @unique      = unique
+      @unique = unique
     end
-    
+
     # Provide a block which
     # accepts a result id.
     #
-    def sort_by &sorting
+    def sort_by(&sorting)
       @sorting = sorting
     end
 
     def allocations
-      # prepare! *(@prepared || [@extra_allocations, @unique, @sorting])
-      prepare! @extra_allocations, @unique, @sorting
+      prepare!(*(@prepared || [@extra_allocations, @unique, @sorting]))
+      # prepare! @extra_allocations, @unique, @sorting # TODO Remove?
       @allocations
     end
 
@@ -44,17 +45,19 @@ module Picky
     # Without this, the allocations are not processed,
     # and no ids are calculated.
     #
-    def prepare! extra_allocations = nil, unique = false, sorting = nil
+    def prepare!(extra_allocations = nil, unique = false, sorting = nil)
       return if @prepared == [extra_allocations, unique, sorting] # cached?
+
       @prepared = [extra_allocations, unique, sorting] # cache!
-      puts "Preparing! (with #{@prepared})"
-      unique ?
-        @allocations.process_unique!(amount, offset, extra_allocations, sorting) :
+      if unique
+        @allocations.process_unique!(amount, offset, extra_allocations, sorting)
+      else
         @allocations.process!(amount, offset, extra_allocations, sorting)
+      end
     end
 
-    def each &block
-      allocations.each &block
+    def each(&block)
+      allocations.each(&block)
     end
 
     # Forwards to allocations.
@@ -65,7 +68,7 @@ module Picky
     #
     # TODO Rewrite such that this triggers calculation, not prepare!
     #
-    def ids only = amount
+    def ids(only = amount)
       allocations.ids only
     end
 
@@ -86,23 +89,22 @@ module Picky
     def to_hash
       {
         allocations: allocations.to_result,
-        offset:      offset,
-        duration:    duration,
-        total:       total
+        offset: offset,
+        duration: duration,
+        total: total
       }
     end
 
     # Convert to json format.
     #
-    def to_json options = {}
+    def to_json(options = {})
       MultiJson.encode to_hash, options
     end
 
     # For logging.
     #
-    @@log_time_format = "%Y-%m-%d %H:%M:%S".freeze
     def to_s
-      "#{log_type}|#{Time.now.strftime @@log_time_format}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
+      "#{log_type}|#{Time.now.strftime(LOG_TIME_FORMAT)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
     end
 
     # The first character in the blog designates what type of query it is.
@@ -110,9 +112,7 @@ module Picky
     # No calculated ids means: No results.
     #
     def log_type
-      amount.zero?? :'.' : :'>'
+      amount.zero? ? :'.' : :'>'
     end
-
   end
-
 end

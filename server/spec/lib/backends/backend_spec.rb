@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 describe Picky::Backends::Backend do
-
   let(:backend) { described_class.new }
 
   # describe 'score' do
   #   it 'forwards to the parameter' do
   #     combinations = double :combinations
-  # 
+  #
   #     combinations.should_receive(:score).once.with no_args
-  # 
+  #
   #     backend.score combinations
   #   end
   # end
@@ -49,5 +48,4 @@ describe Picky::Backends::Backend do
   #     backend.extract_lambda_or(lam, 1, 2).should == :lam
   #   end
   # end
-
 end

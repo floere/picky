@@ -1,14 +1,13 @@
 require 'spec_helper'
 
 describe Picky::Sinatra do
-
   let(:extendee) { Class.new {} }
 
   it 'has no Picky specific methods' do
-    lambda { extendee.indexing }.should raise_error
+    -> { extendee.indexing }.should raise_error
   end
   it 'has no Picky specific methods' do
-    lambda { extendee.searching }.should raise_error
+    -> { extendee.searching }.should raise_error
   end
 
   context 'after extending' do
@@ -27,10 +26,9 @@ describe Picky::Sinatra do
       extendee.send :indexing, some: 'option'
     end
     it 'gets forwardd correctly' do
-      Picky::Tokenizer.should_receive(:default_searching_with).once.with some: 'option'
+      expect(Picky::Tokenizer).to receive(:default_searching_with).once.with(some: 'option')
 
       extendee.send :searching, some: 'option'
     end
   end
-
 end

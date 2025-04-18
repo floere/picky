@@ -1,10 +1,7 @@
 module Picky
-
   module Backends
-
     class File
-      
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = [].freeze
 
       # Base class for all file-based index files.
       #
@@ -14,7 +11,6 @@ module Picky
       # dump/load methods.
       #
       class Basic
-
         include Helpers::File
 
         attr_reader :cache_path,  # This index file's location.
@@ -23,7 +19,7 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_path, options = {}
+        def initialize(cache_path, options = {})
           @cache_path = "#{cache_path}.file.#{extension}"
 
           # This is the mapping file with the in-memory hash for the
@@ -34,7 +30,7 @@ module Picky
           @empty   = options[:empty]
           @initial = options[:initial]
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -51,7 +47,7 @@ module Picky
         # together before it is saved into the files.
         #
         def empty
-          @empty && @empty.clone || {}
+          @empty&.clone || {}
         end
 
         # The initial content before loading.
@@ -60,7 +56,7 @@ module Picky
         #       as in #load.
         #
         def initial
-          @initial && @initial.clone || {}
+          @initial&.clone || {}
         end
 
         # Deletes the file.
@@ -71,16 +67,10 @@ module Picky
           `rm -Rf #{cache_path}`
         end
 
-        #
-        #
         def to_s
           "#{self.class}(#{cache_path},#{mapping_file.cache_path})"
         end
-
       end
-
     end
-
   end
-
 end

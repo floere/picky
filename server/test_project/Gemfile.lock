@@ -1,62 +1,76 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.13)
-      activesupport (= 3.2.13)
-      builder (~> 3.0.0)
-    activerecord (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
-      arel (~> 3.0.2)
-      tzinfo (~> 0.3.29)
-    activesupport (3.2.13)
-      i18n (= 0.6.1)
-      multi_json (~> 1.0)
-    arel (3.0.2)
-    builder (3.0.4)
-    cod (0.5.0)
-    diff-lcs (1.2.4)
-    i18n (0.6.1)
-    multi_json (1.7.6)
-    mysql (2.9.1)
-    procrastinate (0.5.0)
-      cod (~> 0.5)
+    activemodel (6.0.3.4)
+      activesupport (= 6.0.3.4)
+    activerecord (6.0.3.4)
+      activemodel (= 6.0.3.4)
+      activesupport (= 6.0.3.4)
+    activerecord-postgresql-adapter (0.0.1)
+      pg
+    activesupport (6.0.3.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+      zeitwerk (~> 2.2, >= 2.2.2)
+    concurrent-ruby (1.1.7)
+    diff-lcs (1.4.4)
+    i18n (1.8.5)
+      concurrent-ruby (~> 1.0)
+    minitest (5.14.2)
+    multi_json (1.15.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
+    pg (1.2.3)
+    procrastinate (0.6.0)
       state_machine (~> 1.1)
-    rack (1.5.2)
-    rack-protection (1.5.0)
+    rack (2.2.3)
+    rack-protection (2.1.0)
       rack
     rack_fast_escape (2009.06.24)
       url_escape
-    rake (10.0.4)
-    redis (3.0.4)
-    rspec (2.13.0)
-      rspec-core (~> 2.13.0)
-      rspec-expectations (~> 2.13.0)
-      rspec-mocks (~> 2.13.0)
-    rspec-core (2.13.1)
-    rspec-expectations (2.13.0)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.13.1)
-    sinatra (1.4.3)
-      rack (~> 1.4)
-      rack-protection (~> 1.4)
-      tilt (~> 1.3, >= 1.3.4)
-    sqlite3 (1.3.7)
+    rake (13.0.1)
+    redis (4.2.5)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.0)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-support (3.10.0)
+    ruby2_keywords (0.0.2)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
+    sqlite3 (1.4.2)
     state_machine (1.2.0)
-    text (1.2.1)
-    tilt (1.4.1)
-    tzinfo (0.3.37)
+    text (1.3.1)
+    thread_safe (0.3.6)
+    tilt (2.0.10)
+    tzinfo (1.2.8)
+      thread_safe (~> 0.1)
     url_escape (2009.06.24)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.4.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 3)
+  activerecord
+  activerecord-postgresql-adapter
   activesupport
   multi_json
-  mysql
+  pg
   procrastinate (~> 0.4)
   rack
   rack_fast_escape (= 2009.06.24)
@@ -67,3 +81,6 @@ DEPENDENCIES
   sqlite3
   text
   yajl-ruby
+
+BUNDLED WITH
+   2.1.4

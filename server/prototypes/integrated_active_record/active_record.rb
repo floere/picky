@@ -5,53 +5,49 @@ module Picky
   # * Hooks into after_commit.
   #
   # Example:
-  #   
+  #
   #
   #
   module ActiveRecord
-    
-    def self.included model
+    def self.included(model)
       model.send :include, Indexing
       model.send :include, Searching
     end
-    
+
     module Indexing
-      def self.included model
+      def self.included(model)
         model.class.class_eval do
-          
           define_method :updates_picky do |index_or_index_name = model.name.tableize|
-            index = index_or_index_name.respond_to?(:to_sym) ?
-                    Picky::Indexes[index_or_index_name.to_sym] :
-                    index_or_index_name
-            
+            index = if index_or_index_name.respond_to?(:to_sym)
+                      Picky::Indexes[index_or_index_name.to_sym]
+                    else
+                      index_or_index_name
+                    end
+
             model.after_commit do
               if destroyed?
-                index.remove self.id
+                index.remove id
               else
                 index.replace self
               end
             end
           end
-          
         end
       end
     end
-    
+
     module Searching
-      def self.included model
+      def self.included(model)
         model.class.class_eval do
-          
           define_method :searches_picky do |search|
             model.class.class_eval do
               define_method :search do |*args|
-                search.search *args
+                search.search(*args)
               end
             end
           end
-          
         end
       end
     end
-     
   end
 end

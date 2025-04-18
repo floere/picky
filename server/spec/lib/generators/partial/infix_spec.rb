@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Generators::Partial::Infix do
-
   context 'default min' do
     let(:generator) { described_class.new }
 
@@ -96,7 +95,7 @@ describe Picky::Generators::Partial::Infix do
     #     }
     #   end
     # end
-    context "large min" do
+    context 'large min' do
       before(:each) do
         @generator = described_class.new min: 10
       end
@@ -229,5 +228,4 @@ describe Picky::Generators::Partial::Infix do
       # end
     end
   end
-
 end

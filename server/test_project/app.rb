@@ -1,6 +1,3 @@
-# encoding: utf-8
-#
-
 # 1. Index using rake index
 # 2. Start with rake start
 # 3. curl '127.0.0.1:8080/all?query=bla'
@@ -13,38 +10,37 @@
 require 'sinatra/base'
 require 'active_record'
 require 'csv'
-require File.expand_path '../../lib/picky', __FILE__ # Use the current state of Picky.
+require File.expand_path '../lib/picky', __dir__ # Use the current state of Picky.
 
 require_relative 'project'
 
 class BookSearch < Sinatra::Application
-  
   weights = {
-    [:author]         => +6,
-    [:title, :author] => +5,
-    [:author, :year]  => +2
+    [:author] => +6,
+    %i[title author] => +5,
+    %i[author year] => +2
   }
-    
+
   {
-    books: Picky::Search.new(BooksIndex, ISBNIndex) {
+    books: Picky::Search.new(BooksIndex, ISBNIndex) do
       boost weights
-    },
-    books_ignoring: Picky::Search.new(BooksIndex, ISBNIndex) {
+    end,
+    books_ignoring: Picky::Search.new(BooksIndex, ISBNIndex) do
       boost weights
       ignore_unassigned_tokens true
-    },
-    book_each: Picky::Search.new(BookEachIndex) {
+    end,
+    book_each: Picky::Search.new(BookEachIndex) do
       boost weights
       ignore :title
-    },
-    redis: Picky::Search.new(RedisIndex) {
+    end,
+    redis: Picky::Search.new(RedisIndex) do
       boost weights
-    },
+    end,
     memory_changing: Picky::Search.new(MemoryChangingIndex),
     redis_changing: Picky::Search.new(RedisChangingIndex),
-    csv: Picky::Search.new(CSVTestIndex) {
+    csv: Picky::Search.new(CSVIndex) do
       boost weights
-    },
+    end,
     isbn: Picky::Search.new(ISBNIndex),
     sym: Picky::Search.new(SymKeysIndex),
     geo: Picky::Search.new(RealGeoIndex),
@@ -52,20 +48,20 @@ class BookSearch < Sinatra::Application
     iphone: Picky::Search.new(IphoneLocations),
     indexing: Picky::Search.new(IndexingIndex),
     file: Picky::Search.new(FileIndex),
-    japanese: Picky::Search.new(JapaneseIndex) {
-      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}\"\~\*\:\,]/i, # a-zA-Z0-9\s\/\-\_\&\.
-                stopwords:          /\b(and|the|of|it|in|for)\b/i,
-                splits_text_on:     /[\s\/\-\&]+/
-    },
+    japanese: Picky::Search.new(JapaneseIndex) do
+      searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}"~*:,]/i, # a-zA-Z0-9\s\/\-\_\&\.
+                stopwords: /\b(and|the|of|it|in|for)\b/i,
+                splits_text_on: %r{[\s/\-&]+}
+    end,
     nonstring: Picky::Search.new(NonstringDataIndex),
     partial: Picky::Search.new(PartialIndex),
     sqlite: Picky::Search.new(SQLiteIndex),
     commas: Picky::Search.new(CommaIdsIndex),
-    all: Picky::Search.new(BooksIndex, CSVTestIndex, ISBNIndex, MgeoIndex) {
+    all: Picky::Search.new(BooksIndex, CSVIndex, ISBNIndex, MgeoIndex) do
       boost weights
-    }
+    end
   }.each do |(path, things)|
-    get %r{\A/#{path}\z} do
+    get %r{/#{path}} do
       things.search(params[:query], params[:ids] || 20, params[:offset] || 0).to_json
     end
   end
@@ -73,9 +69,8 @@ class BookSearch < Sinatra::Application
   # Live.
   #
   live = Picky::Interfaces::LiveParameters::Unicorn.new
-  get %r{\A/admin\z} do
+  get '/admin' do
     results = live.parameters params
     results.to_json
   end
-
 end

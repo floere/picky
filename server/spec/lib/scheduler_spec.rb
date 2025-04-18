@@ -1,14 +1,12 @@
-# encoding: utf-8
 require 'spec_helper'
 
 describe Picky::Scheduler do
-
   context 'default params' do
     let(:scheduler) { described_class.new }
 
     context 'without forking' do
       before(:each) do
-        scheduler.stub :fork? => false
+        scheduler.stub fork?: false
       end
       context 'non-stubbed forking' do
         it 'works correctly' do
@@ -38,7 +36,7 @@ describe Picky::Scheduler do
       end
       context 'OS cannot fork' do
         before(:each) do
-          Process.stub :fork => nil
+          Process.stub fork: nil
         end
         it 'returns false' do
           scheduler.fork?.should be_falsy
@@ -88,5 +86,4 @@ describe Picky::Scheduler do
       # end
     end
   end
-
 end

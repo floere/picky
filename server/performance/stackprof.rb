@@ -22,7 +22,7 @@ people = Picky::Search.new data
 #
 PerformanceServer = Class.new(Sinatra::Base) do
   set :protection, false
-  
+
   use StackProf::Middleware, enabled: true, mode: :cpu
 
   get '/test' do
@@ -31,21 +31,19 @@ PerformanceServer = Class.new(Sinatra::Base) do
   end
 end
 
-client = Picky::TestClient.new PerformanceServer, :path => '/test'
+client = Picky::TestClient.new PerformanceServer, path: '/test'
 
-%w|cpu object|.each do |thing|
+%w[cpu object].each do |thing|
   profile = StackProf.run(mode: thing.to_sym) do
-    10000.times { client.search 'florian' }
+    10_000.times { client.search 'florian' }
   end
   path = "/tmp/stackprof-#{thing}-picky.dump"
-  File.open(path, 'wb'){ |f| f.write Marshal.dump(profile) }
+  File.open(path, 'wb') { |f| f.write Marshal.dump(profile) }
   puts `stackprof #{path}`
-end
-%w|cpu object|.each do |thing|
   profile = StackProf.run(mode: thing.to_sym) do
-    10000.times { people.search 'florian' }
+    10_000.times { people.search 'florian' }
   end
   path = "/tmp/stackprof-#{thing}-picky.dump"
-  File.open(path, 'wb'){ |f| f.write Marshal.dump(profile) }
+  File.open(path, 'wb') { |f| f.write Marshal.dump(profile) }
   puts `stackprof #{path}`
 end

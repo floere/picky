@@ -1,11 +1,7 @@
 module Picky
-
   module Generators
-
     module Partial
-
       class Postfix < Substring
-
         # The from option signifies where in the symbol it
         # will start in generating the subtokens.
         #
@@ -15,16 +11,14 @@ module Picky
         # * from: 1 # => [:hello, :hell, :hel, :he, :h]
         # * from: 4 # => [:hello, :hell]
         #
-        def initialize options = {}
+        def initialize(options = {})
+          super
+
           options[:to] = -1
 
           super options
         end
-
       end
-
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::File::Basic do
-
   context 'without options' do
     let(:basic) { described_class.new 'spec/temp/some/cache/path/to/file' }
 
@@ -43,5 +42,4 @@ describe Picky::Backends::File::Basic do
       end
     end
   end
-
 end

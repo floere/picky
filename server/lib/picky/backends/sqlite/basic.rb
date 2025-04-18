@@ -1,30 +1,26 @@
 module Picky
-
   module Backends
-
     class SQLite
-      
-      EMPTY_ARRAY = ::Array.new
+      EMPTY_ARRAY = [].freeze
 
       class Basic
-
         include Helpers::File
 
-        attr_reader :cache_path, :db
+        attr_reader :cache_path
 
-        def initialize cache_path, options = {}
+        def initialize(cache_path, options = {})
           @cache_path = "#{cache_path}.sqlite3"
           @empty      = options[:empty]
           @initial    = options[:initial]
           @realtime   = options[:realtime]
-        
-          # Note: If on OSX, too many files get opened during
+
+          # NOTE: If on OSX, too many files get opened during
           #       the specs -> ulimit -n 3000
-          #  
+          #
           # rescue SQLite3::CantOpenException => e
-          #  
+          #
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -32,43 +28,46 @@ module Picky
         end
 
         def initial
-          @initial && @initial.clone || (@realtime ? self.reset : {})
+          @initial&.clone || (@realtime ? reset : {})
         end
 
         def empty
-          @empty && @empty.clone || (@realtime ? self.reset.asynchronous : {})
+          @empty&.clone || (@realtime ? reset.asynchronous : {})
         end
 
-        def dump internal
+        def dump(internal)
           dump_sqlite internal unless @realtime
           self
         end
 
-        def load _
+        def load(_)
           self
         end
 
         def clear
           db.execute 'delete from key_value'
         end
-        
+
         # Lazily creates SQLite client.
         # Note: Perhaps it would be advisable to create only one, when initialising.
         #
         def db
-          @db ||= (create_directory cache_path; SQLite3::Database.new cache_path)
+          @db ||= begin
+            create_directory cache_path
+            SQLite3::Database.new cache_path
+          end
         end
 
-        def dump_sqlite internal
+        def dump_sqlite(internal)
           reset
 
           transaction do
-            # Note: Internal structures need to
+            # NOTE: Internal structures need to
             #       implement each.
             #
             internal.each do |key, value|
               encoded_value = MultiJson.encode value
-              db.execute 'insert into key_value values (?,?)', key.to_s, encoded_value
+              db.execute 'insert into key_value values (?,?)', [key.to_s, encoded_value]
             end
           end
         end
@@ -110,11 +109,7 @@ module Picky
         def to_s
           "#{self.class}(#{cache_path})"
         end
-
       end
-
     end
-
   end
-
 end

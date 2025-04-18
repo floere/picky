@@ -1,22 +1,21 @@
 require 'spec_helper'
 
 describe Picky::Category do
-
   before(:each) do
     @index = Picky::Index.new :some_index do
       source []
     end
-    @partial_strategy    = double :partial, :each_partial => nil, :use_exact_for_partial? => false
-    @weight_strategy     = double :weights, :saved? => true, :weight_for => :some_weight
-    @similarity_strategy = double :similarity, :encode => nil, :prioritize => nil
+    @partial_strategy    = double :partial, each_partial: nil, use_exact_for_partial?: false
+    @weight_strategy     = double :weights, saved?: true, weight_for: :some_weight
+    @similarity_strategy = double :similarity, encode: nil, prioritize: nil
 
-    @exact   = double :exact, :dump => nil, :empty_array => []
-    @partial = double :partial, :dump => nil, :empty_array => []
+    @exact   = double :exact, dump: nil, empty_array: []
+    @partial = double :partial, dump: nil, empty_array: []
 
-    @category = described_class.new :some_name, @index, :partial    => @partial_strategy,
-                                                        :weight     => @weight_strategy,
-                                                        :similarity => @similarity_strategy,
-                                                        :qualifiers => [:q, :qualifier]
+    @category = described_class.new :some_name, @index, partial: @partial_strategy,
+                                                        weight: @weight_strategy,
+                                                        similarity: @similarity_strategy,
+                                                        qualifiers: %i[q qualifier]
 
     @category.stub :exclaim
   end
@@ -28,7 +27,7 @@ describe Picky::Category do
       end
       context 'with a partial strategy that uses the exact index' do
         before(:each) do
-          @partial_strategy.stub :use_exact_for_partial? => true
+          @partial_strategy.stub use_exact_for_partial?: true
         end
         it 'returns the partial index' do
           @category.partial.should be_kind_of(Picky::Bundle)
@@ -49,7 +48,7 @@ describe Picky::Category do
       end
       context 'with a partial strategy that uses the exact index' do
         before(:each) do
-          @partial_strategy.stub :use_exact_for_partial? => true
+          @partial_strategy.stub use_exact_for_partial?: true
         end
         it 'returns the partial index' do
           @category.partial.should be_kind_of(Picky::Bundle)
@@ -64,14 +63,14 @@ describe Picky::Category do
   end
 
   describe 'weight' do
-    let(:token) { double :token, :text => :some_text }
+    let(:token) { double :token, text: :some_text }
     context 'without range' do
       before :each do
-        token.stub :range => nil
+        token.stub range: nil
       end
       context 'partial bundle' do
         before(:each) do
-          @category.stub :bundle_for => @partial
+          @category.stub bundle_for: @partial
         end
         it 'should receive weight with the token text' do
           @partial.should_receive(:weight).once.with :some_text
@@ -81,7 +80,7 @@ describe Picky::Category do
       end
       context 'exact bundle' do
         before(:each) do
-          @category.stub :bundle_for => @exact
+          @category.stub bundle_for: @exact
         end
         it 'should receive weight with the token text' do
           @exact.should_receive(:weight).once.with :some_text
@@ -92,11 +91,11 @@ describe Picky::Category do
     end
     context 'with range' do
       before :each do
-        token.stub :range => [1, 3]
+        token.stub range: [1, 3]
       end
       context 'partial bundle' do
         before(:each) do
-          @category.stub :bundle_for => @partial
+          @category.stub bundle_for: @partial
         end
         it 'should receive weight with the token text' do
           @partial.should_receive(:weight).once.times.with(1).and_return(1)
@@ -110,12 +109,12 @@ describe Picky::Category do
           @partial.should_receive(:weight).once.times.with(2).and_return(nil)
           @partial.should_receive(:weight).once.times.with(3).and_return(nil)
 
-          @category.weight(token).should == nil
+          @category.weight(token).should.nil?
         end
       end
       context 'exact bundle' do
         before(:each) do
-          @category.stub :bundle_for => @exact
+          @category.stub bundle_for: @exact
         end
         it 'should receive weight with the token text' do
           @exact.should_receive(:weight).once.times.with(1).and_return(1)
@@ -129,12 +128,12 @@ describe Picky::Category do
   end
 
   describe 'ids' do
-    let(:token) { double :token, :text => :some_text }
+    let(:token) { double :token, text: :some_text }
     context 'without range' do
-      before(:each) { token.stub :range => nil }
+      before(:each) { token.stub range: nil }
       context 'partial bundle' do
         before(:each) do
-          @category.stub :bundle_for => @partial
+          @category.stub bundle_for: @partial
         end
         it 'should receive ids with the token text' do
           @partial.should_receive(:ids).once.with :some_text
@@ -144,7 +143,7 @@ describe Picky::Category do
       end
       context 'exact bundle' do
         before(:each) do
-          @category.stub :bundle_for => @exact
+          @category.stub bundle_for: @exact
         end
         it 'should receive ids with the token text' do
           @exact.should_receive(:ids).once.with :some_text
@@ -154,29 +153,29 @@ describe Picky::Category do
       end
     end
     context 'with range' do
-      before(:each) { token.stub :range => [1, 3] }
+      before(:each) { token.stub range: [1, 3] }
       context 'partial bundle' do
         before(:each) do
-          @category.stub :bundle_for => @partial
+          @category.stub bundle_for: @partial
         end
         it 'should receive ids with the token text' do
           @partial.should_receive(:ids).once.with(1).and_return [1]
           @partial.should_receive(:ids).once.with(2).and_return [2]
           @partial.should_receive(:ids).once.with(3).and_return [3]
 
-          @category.ids(token).should == [1,2,3]
+          @category.ids(token).should == [1, 2, 3]
         end
       end
       context 'exact bundle' do
         before(:each) do
-          @category.stub :bundle_for => @exact
+          @category.stub bundle_for: @exact
         end
         it 'should receive ids with the token text' do
           @exact.should_receive(:ids).once.with(1).and_return [1]
           @exact.should_receive(:ids).once.with(2).and_return [2]
           @exact.should_receive(:ids).once.with(3).and_return [3]
 
-          @category.ids(token).should == [1,2,3]
+          @category.ids(token).should == [1, 2, 3]
         end
       end
     end
@@ -201,7 +200,7 @@ describe Picky::Category do
   #     end
   #     it 'should create the combination correctly' do
   #       Picky::Query::Combination.should_receive(:new).once.with @token, @category
-  # 
+  #
   #       @category.combination_for @token
   #     end
   #   end
@@ -209,8 +208,8 @@ describe Picky::Category do
 
   context 'stubbed exact/partial' do
     before(:each) do
-      @category.stub :exact => (@exact = double :exact)
-      @category.stub :partial => (@partial = double :partial)
+      @category.stub exact: (@exact = double :exact)
+      @category.stub partial: (@partial = double :partial)
     end
 
     describe 'load' do
@@ -223,5 +222,4 @@ describe Picky::Category do
       end
     end
   end
-
 end

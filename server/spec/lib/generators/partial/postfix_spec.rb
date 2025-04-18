@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Generators::Partial::Postfix do
-
   context 'default from' do
     let(:generator) { described_class.new }
 
@@ -127,5 +126,4 @@ describe Picky::Generators::Partial::Postfix do
     #   end
     # end
   end
-
 end

@@ -1,9 +1,7 @@
 module Picky
   class Category
-
     module Location
-
-      def self.install_on category, grid, precision, anchor
+      def self.install_on(category, grid, precision, anchor)
         category.extend self
 
         exact_bundle = category.exact
@@ -18,8 +16,6 @@ module Picky
       def tokenizer
         @tokenizer ||= Tokenizer.new
       end
-
     end
-
   end
 end

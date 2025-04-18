@@ -1,36 +1,43 @@
 module Picky
-
   module Generators
-
     module Partial
-
       # Generates the right substrings for use in the substring strategy.
       #
       class SubstringGenerator
-
         attr_reader :from, :to
 
-        def initialize from, to
-          @from, @to = from, to
+        def initialize(from, to)
+          super()
+
+          @from = from
+          @to = to
 
           if @to.zero?
-            def each_subtoken token, &block
-              token.each_subtoken @from, &block
-            end
+            extend ToZero
+          elsif @from.negative? && @to.negative?
+            extend FromToNegative
           else
-            if @from < 0 && @to < 0
-              def each_subtoken token, &block
-                token.each_subtoken @from - @to - 1, (0..@to), &block
-              end
-            else
-              def each_subtoken token, &block
-                token.each_subtoken @from, (0..@to), &block
-              end
-            end
+            extend Otherwise
           end
-
         end
 
+        module ToZero
+          def each_subtoken(token, &block)
+            token.each_subtoken @from, &block
+          end
+        end
+
+        module FromToNegative
+          def each_subtoken(token, &block)
+            token.each_subtoken @from - @to - 1, (0..@to), &block
+          end
+        end
+
+        module Otherwise
+          def each_subtoken(token, &block)
+            token.each_subtoken @from, (0..@to), &block
+          end
+        end
       end
 
       # The subtoken partial strategy.
@@ -40,7 +47,6 @@ module Picky
       # (Depending on what the given from value is, the example is with option from: 1)
       #
       class Substring < Strategy
-
         # The from option signifies where in the symbol it
         # will start in generating the subtokens.
         #
@@ -54,7 +60,9 @@ module Picky
         # * from: 1 # => [:hell, :hel, :he, :h]
         # * from: 4 # => [:hell]
         #
-        def initialize options = {}
+        def initialize(options = {})
+          super()
+
           from = options[:from] || 1
           to   = options[:to]   || -1
           @generator = SubstringGenerator.new from, to
@@ -74,14 +82,10 @@ module Picky
 
         # Yields each generated partial.
         #
-        def each_partial token, &block
+        def each_partial(token, &block)
           @generator.each_subtoken token, &block
         end
-
       end
-
     end
-
   end
-
 end

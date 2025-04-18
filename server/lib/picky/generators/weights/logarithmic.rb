@@ -1,9 +1,6 @@
 module Picky
-
   module Generators
-
     module Weights
-      
       # Uses a logarithmic weight.
       #
       # If given a constant, this will be added to the weight.
@@ -13,8 +10,9 @@ module Picky
       # Special case: If x < 1, then we use 0.
       #
       class Logarithmic < Strategy
-        
-        def initialize constant = 0.0
+        def initialize(constant = 0.0)
+          super()
+
           @constant = constant
           # # Note: Optimisation since it is called
           # # once per indexed object.
@@ -26,12 +24,13 @@ module Picky
           #   install_with_constant
           # end
         end
-        
-        def weight_for amount
+
+        def weight_for(amount)
           return @constant if amount < 1
+
           @constant + Math.log(amount).round(3)
         end
-        
+
         # def install_with_constant
         #   # Sets the weight value.
         #   #
@@ -51,11 +50,7 @@ module Picky
         #     Math.log(amount).round 3
         #   end
         # end
-        
       end
-
     end
-
   end
-
 end

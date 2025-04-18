@@ -1,42 +1,41 @@
 require 'spec_helper'
 
 describe Picky::Splitter do
-  
-  describe "single" do
-    let(:splitter) { described_class.new /:/ }
-    it "splits right" do
-      splitter.single(':b').should == ['','b']
+  describe 'single' do
+    let(:splitter) { described_class.new(/:/) }
+    it 'splits right' do
+      splitter.single(':b').should == ['', 'b']
     end
-    it "splits right" do
-      splitter.single('a:b').should == ['a','b']
+    it 'splits right' do
+      splitter.single('a:b').should == %w[a b]
     end
-    it "splits right" do
+    it 'splits right' do
       splitter.single('a').should == [nil, 'a']
     end
-    it "splits right" do
+    it 'splits right' do
       splitter.single('a:b c:d').should == ['a', 'b c:d']
     end
-    it "returns the same string if not split" do
+    it 'returns the same string if not split' do
       s = 'a'
       splitter.single(s)[1].object_id.should == s.object_id
     end
   end
-  
-  describe "multi" do
-    let(:splitter) { described_class.new /\s/ }
-    it "splits right" do
+
+  describe 'multi' do
+    let(:splitter) { described_class.new(/\s/) }
+    it 'splits right' do
       splitter.multi(' b').should == ['', 'b']
     end
-    it "splits right" do
-      splitter.multi('a b').should == ['a', 'b']
+    it 'splits right' do
+      splitter.multi('a b').should == %w[a b]
     end
-    it "splits right" do
-      splitter.multi('a b c d').should == ['a', 'b', 'c', 'd']
+    it 'splits right' do
+      splitter.multi('a b c d').should == %w[a b c d]
     end
-    it "splits right" do
+    it 'splits right' do
       splitter.multi('a').should == ['a']
     end
-    it "returns the same string if not split" do
+    it 'returns the same string if not split' do
       s = 'a'
       splitter.multi(s).first.object_id.should == s.object_id
     end
@@ -79,5 +78,4 @@ describe Picky::Splitter do
     #   # p multi
     # end
   end
-
 end

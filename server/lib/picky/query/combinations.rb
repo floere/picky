@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Combinations represent an ordered list of Combination s.
     #
     # Combinations contain methods for calculating score (including
@@ -11,22 +9,21 @@ module Picky
     # An Allocation consists of a number of Combinations.
     #
     class Combinations
-
       attr_reader :combinations
 
       forward :empty?,
               :inject,
               :map,
-              :to => :@combinations
+              to: :@combinations
 
-      def initialize combinations = []
+      def initialize(combinations = [])
         @combinations = combinations
       end
 
       # TODO
       #
-      def each &block
-        @combinations.each &block
+      def each(&block)
+        @combinations.each(&block)
       end
 
       # Sums up the weights of the combinations.
@@ -44,30 +41,23 @@ module Picky
       # Since identifiers are only nullified, we need to not include the
       # ids that have an associated identifier that is nil.
       #
-      def remove categories = []
-        # TODO Do not use the name, but the category.
+      def remove(categories = [])
+        # TODO: Do not use the name, but the category.
         #
         @combinations.reject! { |combination| categories.include?(combination.category_name) }
       end
 
-      #
-      #
       def to_result
-        @combinations.map &:to_result
+        @combinations.map(&:to_result)
       end
 
       def to_qualifiers
-        @combinations.map &:category_name
+        @combinations.map(&:category_name)
       end
 
-      #
-      #
       def to_s
         @combinations.to_s
       end
-
     end
-
   end
-
 end

@@ -1,16 +1,12 @@
 module Picky
-
   module Generators
-
     module Similarity
-
       # Similarity strategy that does nothing.
       #
       class None < Strategy
-
         # Does not encode text. Just returns nil.
         #
-        def encode text
+        def encode(_text)
           nil
         end
 
@@ -19,11 +15,7 @@ module Picky
         def saved?
           false
         end
-
       end
-
     end
-
   end
-
 end

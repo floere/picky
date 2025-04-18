@@ -14,7 +14,6 @@ gem 'haml'
 gem 'picky', '~> 4.0'
 gem 'rake'
 gem 'rack'
-gem 'rack_fast_escape', '2009.06.24' # Optional.
 gem 'text'
 gem 'multi_json'
 

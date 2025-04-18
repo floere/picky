@@ -5,7 +5,7 @@ require_relative 'model'
 # but the server will dump/reload even
 # when stopping/starting.
 #
-p "Expected: Nothing, Nothing OR 1, 1"
+p 'Expected: Nothing, Nothing OR 1, 1'
 p Model.search 'surname:mcnama*'
 p Model.search 'picky'
 
@@ -16,14 +16,14 @@ florian.save
 tentacles = Model.new(name: 'Tentacles', surname: 'Jellyfish')
 tentacles.save
 
-p "Expected: 1, 1"
+p 'Expected: 1, 1'
 p Model.search 'surname:mcnama*'
 p Model.search 'hanke'
 
-florian.update_attributes! name: 'Kaspar', surname: 'Schiess'
+florian.update_attributes! name: 'Peter', surname: 'Hansmeier'
 tentacles.update_attributes! name: 'Roger', surname: 'Braun'
 
-p "Expected: Nothing, 1, 1"
+p 'Expected: Nothing, 1, 1'
 p Model.search 'hanke' # Not found anymore.
 p Model.search 'surname:schies*'
 p Model.search 'roger'
@@ -31,6 +31,6 @@ p Model.search 'roger'
 florian.destroy
 tentacles.destroy
 
-p "Expected: Nothing, Nothing"
+p 'Expected: Nothing, Nothing'
 p Model.search 'surname:schies*' # (Not found anymore)
 p Model.search 'roger' # And out. (Not found anymore)

@@ -1,9 +1,6 @@
 module Picky
-
   module Generators
-
     module Partial
-
       # The subtoken partial strategy.
       #
       # If given "florian"
@@ -11,7 +8,6 @@ module Picky
       # (Depending on what the given from value is, the example is with option from: 1)
       #
       class Infix < Strategy
-
         attr_reader :min,
                     :max
 
@@ -30,21 +26,19 @@ module Picky
         #
         # (min 1 is default)
         #
-        def initialize options = {}
+        def initialize(options = {})
+          super()
+
           @min = options[:min] || 1
           @max = options[:max] || -1
         end
 
         # Yields each generated partial.
         #
-        def each_partial token, &block
+        def each_partial(token, &block)
           token.each_intoken min, max, &block
         end
-
       end
-
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Indexes do
-
   context 'after initialize' do
     let(:indexes) { described_class.new }
     it 'has an empty mapping' do
@@ -15,8 +14,8 @@ describe Picky::Indexes do
   describe 'methods' do
     let(:indexes) { described_class.new }
     before(:each) do
-      @index1 = double :index1, :name => :index1
-      @index2 = double :index2, :name => :index2
+      @index1 = double :index1, name: :index1
+      @index2 = double :index2, name: :index2
       indexes.register @index1
       indexes.register @index2
     end
@@ -33,7 +32,7 @@ describe Picky::Indexes do
         indexes.indexes.should == [@index1, @index2]
       end
       it 'should have a mapping' do
-        indexes.index_mapping.should == { :index1 => @index1, :index2 => @index2 }
+        indexes.index_mapping.should == { index1: @index1, index2: @index2 }
       end
     end
     describe 'clear' do
@@ -57,5 +56,4 @@ describe Picky::Indexes do
       end
     end
   end
-
 end

@@ -1,6 +1,6 @@
-adapter: mysql
+adapter: postgresql
 host: localhost
-username: root
+username: 
 password:
 database: picky_test_project
 encoding: utf8

@@ -1,6 +1,6 @@
 require 'memory_profiler'
 
-require_relative "../../lib/picky"
+require_relative '../../lib/picky'
 
 # result = MemoryProfiler.report do
 #
@@ -17,14 +17,14 @@ ary = []
 end
 
 p ObjectSpace.memsize_of(ary)
-p [ary.size, (ObjectSpace.memsize_of(ary)-40) / 8]
+p [ary.size, (ObjectSpace.memsize_of(ary) - 40) / 8]
 
 500.times { ary.pop }
 
 p ObjectSpace.memsize_of(ary)
 
 ary2 = Array[*ary]
-p [ary2.size, (ObjectSpace.memsize_of(ary2)-40) / 8]
+p [ary2.size, (ObjectSpace.memsize_of(ary2) - 40) / 8]
 
 p ObjectSpace.memsize_of(ary2)
 
@@ -32,20 +32,19 @@ ary.clear
 
 p ObjectSpace.memsize_of(ary)
 
-
 # ---
 
-h = {}
+hash = {}
 10_000.times do |i|
   h[i] = (0..i).to_a
 end
 
-def remove h, i
-  h.each do |key, ary|
-    ary.delete(i) if ary.include?(i)
+def remove(hash, number)
+  hash.each_value do |ary|
+    ary.delete(number) if ary.include?(number)
   end
 end
 
 t = Time.now
-remove(h, 10000)
+remove(hash, 10_000)
 p Time.now - t

@@ -1,9 +1,5 @@
 module Picky
-
-  #
-  #
   class Category
-
     # Loads the index from cache.
     #
     def load
@@ -15,29 +11,27 @@ module Picky
 
     # Gets the weight for this token's text.
     #
-    def weight token
+    def weight(token)
       bundle = bundle_for token
-      if range = token.range
-        # TODO We might be able to return early?
+      if (range = token.range)
+        # TODO: We might be able to return early?
         #
         @ranger.new(*range).inject(nil) do |sum, text|
           weight = bundle.weight str_or_sym(text)
           weight && (weight + (sum || 0)) || sum
         end
+      elsif tokenizer&.stemmer?
+        bundle.weight str_or_sym(token.stem(tokenizer))
       else
-        if tokenizer && tokenizer.stemmer?
-          bundle.weight str_or_sym(token.stem(tokenizer))
-        else
-          bundle.weight str_or_sym(token.text)
-        end
+        bundle.weight str_or_sym(token.text)
       end
     end
 
     # Gets the ids for this token's text.
     #
-    def ids token
+    def ids(token)
       bundle = bundle_for token
-      if range = token.range
+      if (range = token.range)
         # Adding all to an array, then flattening
         # is faster than using ary + ary.
         #
@@ -49,24 +43,22 @@ module Picky
           ids = bundle.ids str_or_sym(text)
           ids.empty? ? result : result << ids
         end.flatten
-      else
+      elsif tokenizer&.stemmer?
         # Optimization
-        if tokenizer && tokenizer.stemmer?
-          bundle.ids str_or_sym(token.stem(tokenizer))
-        else
-          bundle.ids str_or_sym(token.text)
-        end
+        bundle.ids str_or_sym(token.stem(tokenizer))
+      else
+        bundle.ids str_or_sym(token.text)
       end
     end
-    
+
     # Gets the similars for this token's text.
     #
-    def similar token
+    def similar(token)
       bundle = bundle_for token
       bundle.similar str_or_sym(token.text)
     end
-    
-    def str_or_sym text
+
+    def str_or_sym(text)
       if @symbol_keys
         text.to_sym
       else
@@ -76,10 +68,8 @@ module Picky
 
     # Returns the right index bundle for this token.
     #
-    def bundle_for token
+    def bundle_for(token)
       token.select_bundle exact, partial
     end
-
   end
-
 end

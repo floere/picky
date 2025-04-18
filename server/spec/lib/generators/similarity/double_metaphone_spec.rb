@@ -1,9 +1,6 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 describe Picky::Generators::Similarity::DoubleMetaphone do
-
   before(:each) do
     @similarity = described_class.new
   end
@@ -14,7 +11,7 @@ describe Picky::Generators::Similarity::DoubleMetaphone do
     end
   end
 
-  def self.it_should_encode text, expected
+  def self.it_should_encode(text, expected)
     it "should encode #{text.inspect} correctly" do
       @similarity.encode(text).should == expected
     end
@@ -23,5 +20,4 @@ describe Picky::Generators::Similarity::DoubleMetaphone do
   it_should_encode :meier,       :MR
   it_should_encode :grossberger, :KRSP
   it_should_encode :hadelbla,    :HTLP
-
 end

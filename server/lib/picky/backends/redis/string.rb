@@ -1,11 +1,7 @@
 module Picky
-
   module Backends
-
     class Redis
-
       class String < Basic
-
         # Clears the hash.
         #
         def clear
@@ -20,7 +16,7 @@ module Picky
 
         # Deletes the single value.
         #
-        def delete key
+        def delete(key)
           client.hdel namespace, key
         end
 
@@ -28,12 +24,12 @@ module Picky
         #
         # Note: We could use multi, but it did not help.
         #
-        def dump hash
-          unless @realtime
-            clear
-            hash.each_pair do |key, value|
-              client.hset namespace, key, value
-            end
+        def dump(hash)
+          return if @realtime
+
+          clear
+          hash.each_pair do |key, value|
+            client.hset namespace, key, value
           end
         end
 
@@ -41,20 +37,16 @@ module Picky
         #
         # Internal API method for the index.
         #
-        def [] key
+        def [](key)
           client.hget namespace, key
         end
 
         # Set a single value
         #
-        def []= key, value
+        def []=(key, value)
           client.hset namespace, key, value
         end
-
       end
-
     end
-
   end
-
 end

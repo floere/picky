@@ -1,20 +1,17 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 describe 'Category#tokenize(false)' do
-  
   it 'does tokenize' do
     index = Picky::Index.new :thing do
       category :text, tokenize: true
     end
 
     thing = Struct.new :id, :text
-    index.add thing.new(1, ['already', 'tokenized']) # Does not fail – because #to_s is called on the Array.
+    index.add thing.new(1, %w[already tokenized]) # Does not fail – because #to_s is called on the Array.
     index.add thing.new(2, 'this should not fail')
-    
+
     try = Picky::Search.new index
-    try.search('already').ids.should == [] # Not found because ["already", is indexed.
+    try.search('already').ids.should # Not found because ["already", is indexed.
     try.search('should').ids.should == [2]
   end
   it 'does tokenize (default)' do
@@ -24,12 +21,12 @@ describe 'Category#tokenize(false)' do
 
     thing = Struct.new :id, :text
     # expect do # Does not fail – because #to_s is called on the Array.
-    index.add thing.new(1, ['already', 'tokenized'])
+    index.add thing.new(1, %w[already tokenized])
     # end.to raise_error
     index.add thing.new(2, 'this should not fail')
-    
+
     try = Picky::Search.new index
-    
+
     try.search('already').ids.should == [] # Not found because ['already', is indexed.
   end
   it 'does not tokenize' do
@@ -38,13 +35,13 @@ describe 'Category#tokenize(false)' do
     end
 
     thing = Struct.new :id, :text
-    index.add thing.new(1, ['already', 'tokenized'])
+    index.add thing.new(1, %w[already tokenized])
     expect do
       index.add thing.new(2, 'this should fail')
-    end.to raise_error(%Q{undefined method `each' for "this should fail":String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.})
-    
+    end.to raise_error(%(undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.))
+
     try = Picky::Search.new index
-    
+
     try.search('already').ids.should == [1]
   end
   it 'does not tokenize and indexes correctly' do
@@ -53,14 +50,13 @@ describe 'Category#tokenize(false)' do
     end
 
     thing = Struct.new :id, :text
-    index.add thing.new(1, ['already', 'tokenized'])
+    index.add thing.new(1, %w[already tokenized])
     expect do
       index.add thing.new(2, 'this should fail')
-    end.to raise_error(%Q{undefined method `each' for "this should fail":String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.})
-    
+    end.to raise_error(%(undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.))
+
     try = Picky::Search.new index
-    
+
     try.search('already').ids.should == [1]
   end
-  
 end

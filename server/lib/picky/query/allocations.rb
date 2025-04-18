@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # Container class for Allocation s.
     #
     # This class is asked by the Results class to
@@ -13,7 +11,6 @@ module Picky
     # of its Allocation s.
     #
     class Allocations
-
       forward :each,
               :empty?,
               :first,
@@ -21,15 +18,15 @@ module Picky
               :size,
               :map,
               :[],
-              :to => :@allocations
+              to: :@allocations
 
-      def initialize allocations = []
+      def initialize(allocations = [])
         @allocations = allocations
       end
 
       # Score each allocation.
       #
-      def calculate_score boosts
+      def calculate_score(boosts)
         @allocations.each do |allocation|
           allocation.calculate_score boosts
         end
@@ -43,7 +40,7 @@ module Picky
 
       # Reduces the amount of allocations to x.
       #
-      def reduce_to amount
+      def reduce_to(amount)
         @allocations = @allocations.shift amount
       end
 
@@ -51,7 +48,7 @@ module Picky
       #
       # Only those passed in are removed.
       #
-      def remove_categories categories = []
+      def remove_categories(categories = [])
         @allocations.each { |allocation| allocation.remove categories } unless categories.empty?
       end
 
@@ -61,13 +58,15 @@ module Picky
       #
       # TODO Rewrite, speed up.
       #
-      def remove_allocations qualifiers_array
+      def remove_allocations(qualifiers_array)
         return if qualifiers_array.empty?
+
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
           next(false) if qualifiers_array.any? do |qualifiers|
             allocation_qualifiers == qualifiers
           end
+
           allocation
         end
       end
@@ -78,8 +77,9 @@ module Picky
       #
       # TODO Rewrite, speed up.
       #
-      def keep_allocations qualifiers_array
+      def keep_allocations(qualifiers_array)
         return if qualifiers_array.empty?
+
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
           next(true) if qualifiers_array.any? do |qualifiers|
@@ -90,22 +90,20 @@ module Picky
 
       # Returns the top amount ids.
       #
-      def ids amount = 20
-        # TODO This is called too many times?
-        if allocation = first
-          # TODO Call ids with amount as parameter?
+      def ids(amount = 20)
+        # TODO: This is called too many times?
+        if (first_allocation = first)
+          # TODO: Call ids with amount as parameter?
           # result = inject(allocation.empty_array) do |total, allocation|
-          result = self[1..-1].inject(allocation.ids) do |total, allocation|
-            if total.size >= amount
-              break(total)
-            else
-              total + allocation.ids
-            end
+          result = self[1..].inject(first_allocation.ids) do |total, allocation|
+            break(total) if total.size >= amount
+
+            total + allocation.ids
           end
           # result.shift(amount)
           result.first(amount)
         else
-          [] # TODO Make this Array too index type dependent (by e.g. pseudo-shifting?).
+          [] # TODO: Make this Array too index type dependent (by e.g. pseudo-shifting?).
         end
       end
 
@@ -127,20 +125,20 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      def process! amount, offset = 0, terminate_early = nil, sorting = nil
+      def process!(amount, offset = 0, terminate_early = nil, sorting = nil)
         each do |allocation|
           sorting = nil if amount <= 0 # Stop sorting if the results aren't shown.
           calculated_ids = allocation.process! amount, offset, sorting
           if calculated_ids.empty?
-            offset = offset - allocation.count unless offset.zero?
+            offset -= allocation.count unless offset.zero?
           else
-            amount = amount - calculated_ids.size # we need less results from the following allocation
-            offset = 0                            # we have already passed the offset
+            amount -= calculated_ids.size # we need less results from the following allocation
+            offset = 0 # we have already passed the offset
           end
-          if terminate_early && amount <= 0
-            break if terminate_early <= 0
-            terminate_early -= 1
-          end
+          next unless terminate_early && amount <= 0
+          break if terminate_early <= 0
+
+          terminate_early -= 1
         end
       end
 
@@ -152,7 +150,7 @@ module Picky
       #
       # Note: Slower than #process! especially with large offsets.
       #
-      def process_unique! amount, offset = 0, terminate_early = nil, sorting = nil
+      def process_unique!(amount, offset = 0, terminate_early = nil, sorting = nil)
         unique_ids = nil
         each do |allocation|
           unique_ids ||= allocation.empty_array
@@ -160,18 +158,16 @@ module Picky
           calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids, sorting
           projected_offset = offset - allocation.count
           unique_ids += calculated_ids # uniq this? <- No, slower than just leaving duplicates.
-          if projected_offset <= 0
-            allocation.ids.slice!(0, offset)
-          end
+          allocation.ids.slice!(0, offset) if projected_offset <= 0
           offset = projected_offset
           unless calculated_ids.empty?
-            amount = amount - calculated_ids.size # we need less results from the following allocation
-            offset = 0                            # we have already passed the offset
+            amount -= calculated_ids.size # we need less results from the following allocation
+            offset = 0 # we have already passed the offset
           end
-          if terminate_early && amount <= 0
-            break if terminate_early <= 0
-            terminate_early -= 1
-          end
+          next unless terminate_early && amount <= 0
+          break if terminate_early <= 0
+
+          terminate_early -= 1
         end
       end
 
@@ -180,6 +176,7 @@ module Picky
       def total
         @total ||= calculate_total
       end
+
       def calculate_total
         inject(0) do |total, allocation|
           total + (allocation.count or return total)
@@ -202,7 +199,7 @@ module Picky
       # ]
       #
       def to_result
-        @allocations.map { |allocation| allocation.to_result }.compact
+        @allocations.map(&:to_result).compact
       end
 
       # Simply inspects the internal allocations.
@@ -210,9 +207,6 @@ module Picky
       def to_s
         to_result.inspect
       end
-
     end
-
   end
-
 end

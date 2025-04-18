@@ -4,8 +4,12 @@ require_relative '../lib/picky'
 
 # ruby profile.rb xxs (index size) 100 (amount of queries)
 #
-size   = ARGV[0].to_sym rescue puts("This script needs an index size as first argument.") && exit(1)
-amount = ARGV[1] && ARGV[1].to_i || 10
+size   = begin
+  ARGV[0].to_sym
+rescue StandardError
+  puts('This script needs an index size as first argument.') && exit(1)
+end
+amount = ARGV[1]&.to_i || 10
 
 data = Picky::Index.new size do
   category :text1
@@ -24,33 +28,35 @@ data.load
 # Run queries.
 #
 Searches.series_for(amount).each do |queries|
-
   queries.prepare
 
   run = Picky::Search.new data
   # run.max_allocations 1
   # run.terminate_early
-  
+
   # Required here to avoid RubyProf early start.
   #
   require 'ruby-prof'
-  RubyProf.start rescue "RubyProf docs for the fail!"
+  begin
+    RubyProf.start
+  rescue StandardError
+    'RubyProf docs for the fail!'
+  end
   RubyProf.pause # Does not work.
-  
+
   queries.each do |query|
     run.search query
   end
-  
+
   RubyProf.pause
-  
 end
 
 result = RubyProf.stop
 result.eliminate_methods!([/(Searches|CSV)#.+/])
 
-filename = "#{Dir.pwd}/20#{Time.now.strftime("%y%m%d%H%M")}-ruby-prof-results-#{size}-#{amount}"
-html = filename + '.html'
-viz  = filename + '.viz'
+filename = "#{Dir.pwd}/20#{Time.now.strftime('%y%m%d%H%M')}-ruby-prof-results-#{size}-#{amount}"
+html = "#{filename}.html"
+viz  = "#{filename}.viz"
 File.open html, 'w' do |file|
   RubyProf::CallStackPrinter.new(result).print file
   # RubyProf::GraphHtmlPrinter.new(result).print file
@@ -60,7 +66,7 @@ File.open viz, 'w' do |file|
 end
 
 printer = RubyProf::GraphPrinter.new result
-printer.print STDOUT, :min_percent => 2
+printer.print $stdout, min_percent: 2
 
 command = "open #{html}"
 puts command

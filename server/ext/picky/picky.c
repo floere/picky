@@ -1,7 +1,6 @@
 #include "ruby.h"
 
-static inline VALUE ary_make_hash(ary1, ary2)
-    VALUE ary1, ary2;
+static inline VALUE ary_make_hash(VALUE ary1, VALUE ary2)
 {
     VALUE hash = rb_hash_new();
     long i;
@@ -16,8 +15,12 @@ static inline VALUE ary_make_hash(ary1, ary2)
     }
     return hash;
 }
-static inline VALUE rb_ary_length(VALUE ary) {
-  long length = RARRAY_LEN(ary);
+// static inline VALUE rb_ary_length_i(VALUE ary) {
+//   long length = RARRAY_LEN(ary);
+//   return LONG2NUM(length);
+// }
+static inline VALUE rb_ary_length_i(VALUE yielded_ary, VALUE data, int argc, const VALUE *argv, VALUE blockarg) {
+  long length = RARRAY_LEN(yielded_ary);
   return LONG2NUM(length);
 }
 
@@ -44,8 +47,8 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
 
   // Conversions and presorting.
   //
-  rb_array_of_arrays = rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length, 0);
-  
+  rb_array_of_arrays = rb_block_call(unsorted_array_of_arrays, rb_intern("sort_by!"), 0, 0, rb_ary_length_i, 0);
+
   // Assume the smallest array is the result already.
   //
   result_array = rb_ary_dup(rb_ary_entry(rb_array_of_arrays, 0));
@@ -59,7 +62,7 @@ static inline VALUE memory_efficient_intersect(VALUE self, VALUE unsorted_array_
     if (RARRAY_LEN(result_array) == 0) {
       break;
     }
-    
+
     // If the result array is currently larger than 10
     // entries, use a hash for intersection, else
     // use an array.

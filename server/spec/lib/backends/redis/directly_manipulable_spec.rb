@@ -1,18 +1,17 @@
 require 'spec_helper'
 
 describe Picky::Backends::Redis::DirectlyManipulable do
-
   let(:client) { double :client }
   let(:backend) { double :backend, client: client, namespace: 'some:namespace' }
   let(:list) do
-    list = [1,2]
+    list = [1, 2]
     described_class.make backend, list, 'some:key'
     list
   end
 
   context 'problem cases' do
     it 'does not dup its special abilities' do
-      list = [1,2]
+      list = [1, 2]
       described_class.make backend, list, 'some:key'
       dupped_list = list.dup
 
@@ -29,19 +28,19 @@ describe Picky::Backends::Redis::DirectlyManipulable do
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@append_index)
 
-      client.should_receive(:zadd).once.with "some:namespace:some:key", num+1, 3
+      client.should_receive(:zadd).once.with 'some:namespace:some:key', num + 1, 3
 
       list << 3
     end
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@unshift_index)
 
-      client.should_receive(:zadd).once.with "some:namespace:some:key", num-1, 3
+      client.should_receive(:zadd).once.with 'some:namespace:some:key', num - 1, 3
 
       list.unshift 3
     end
     it 'calls the right client method' do
-      client.should_receive(:zrem).once.with "some:namespace:some:key", 1
+      client.should_receive(:zrem).once.with 'some:namespace:some:key', 1
 
       list.delete 1
     end
@@ -81,12 +80,12 @@ describe Picky::Backends::Redis::DirectlyManipulable do
     it 'behaves like an ordinary Array' do
       list << 3
 
-      list.should == [1,2,3]
+      list.should == [1, 2, 3]
     end
     it 'behaves like an ordinary Array' do
       list.unshift 3
 
-      list.should == [3,1,2]
+      list.should == [3, 1, 2]
     end
     it 'behaves like an ordinary Array' do
       list.delete 1
@@ -96,8 +95,7 @@ describe Picky::Backends::Redis::DirectlyManipulable do
     it 'behaves like an ordinary Array' do
       list.delete 5
 
-      list.should == [1,2]
+      list.should == [1, 2]
     end
   end
-
 end

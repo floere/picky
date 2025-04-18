@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Wrappers::Bundle::Wrapper do
-
   before(:each) do
     @bundle = double :bundle
 
@@ -23,5 +22,4 @@ describe Picky::Wrappers::Bundle::Wrapper do
       @calculation.weight :some_sym
     end
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Query::Indexes::Check do
-
   describe 'check_backend_types' do
     backends = [
       Picky::Backends::Memory.new,
@@ -50,5 +49,4 @@ describe Picky::Query::Indexes::Check do
       end
     end
   end
-
 end

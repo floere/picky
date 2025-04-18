@@ -1,14 +1,14 @@
 # Indexing tasks.
 #
-desc "Generate the index in parallel (index, category optional)."
-task :index, [:index, :category] => :'index:parallel'
+desc 'Generate the index in parallel (index, category optional).'
+task :index, %i[index category] => :'index:parallel'
 
 namespace :index do
-
-  [:parallel, :serial].each do |kind|
+  %i[parallel serial].each do |kind|
     desc "Generate the index in #{kind} (index, category optional)."
-    task kind, [:index, :category] => :application do |_, options|
-      index, category = options.index, options.category
+    task kind, %i[index category] => :application do |_, options|
+      index = options.index
+      category = options.category
 
       specific = Picky::Indexes
       specific = specific[index]    if index
@@ -17,5 +17,4 @@ namespace :index do
       specific.index Picky::Scheduler.new(kind => true)
     end
   end
-
 end

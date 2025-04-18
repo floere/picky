@@ -1,19 +1,17 @@
 class EachRSSItemProxy
-
-  def each &block
+  def each(&block)
     require 'rss'
     require 'open-uri'
-    rss_feed = "http://florianhanke.com/blog/atom.xml"
-    rss_content = ""
-    open rss_feed do |f|
-       rss_content = f.read
+    rss_feed = 'http://florianhanke.com/blog/atom.xml'
+    rss_content = ''
+    URI.parse(rss_feed).open do |f|
+      rss_content = f.read
     end
     rss = RSS::Parser.parse rss_content, true
-    rss.items.each &block
-  rescue
+    rss.items.each(&block)
+  rescue StandardError
     # Don't call block, no data.
   end
-
 end
 
 RSSIndex = Picky::Index.new :rss do

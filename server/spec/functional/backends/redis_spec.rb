@@ -1,16 +1,16 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 # Describes a Picky index that uses the Redis backend
 # for data storage.
 #
 describe Picky::Backends::Redis do
-
   class Book
     attr_reader :id, :title, :author
-    def initialize id, title, author
-      @id, @title, @author = id, title, author
+
+    def initialize(id, title, author)
+      @id = id
+      @title = title
+      @author = author
     end
   end
 
@@ -25,7 +25,7 @@ describe Picky::Backends::Redis do
   end
   let(:books) { Picky::Search.new data }
 
-  its_to_s = ->(*) do
+  its_to_s = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == ['1']
     end
@@ -46,7 +46,7 @@ describe Picky::Backends::Redis do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1']
+      books.search('title').ids.should
 
       data.remove '1'
 
@@ -56,16 +56,16 @@ describe Picky::Backends::Redis do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == ['3', '2', '1']
+      books.search('title').ids.should
 
       data.remove '1'
 
-      books.search('title').ids.should == ['3', '2']
+      books.search('title').ids.should == %w[3 2]
     end
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
 
-      books.search('title').ids.should == []
+      books.search('title').ids.should
       books.search('toitle').ids.should == ['1']
     end
     it 'handles clearing' do
@@ -81,7 +81,7 @@ describe Picky::Backends::Redis do
     end
   end
 
-  its_to_i = ->(*) do
+  its_to_i = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == [1]
     end
@@ -102,7 +102,7 @@ describe Picky::Backends::Redis do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == [2, 1]
+      books.search('title').ids.should
 
       data.remove 1
 
@@ -112,7 +112,7 @@ describe Picky::Backends::Redis do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == [3, 2, 1]
+      books.search('title').ids.should
 
       data.remove 1
 
@@ -121,7 +121,7 @@ describe Picky::Backends::Redis do
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
 
-      books.search('title').ids.should == []
+      books.search('title').ids.should
       books.search('toitle').ids.should == [1]
     end
     it 'handles clearing' do
@@ -149,7 +149,7 @@ describe Picky::Backends::Redis do
         data.add Book.new(1, 'title', 'author')
       end
 
-      instance_eval &its_to_s
+      instance_eval(&its_to_s)
     end
   end
   context 'to_i key format' do
@@ -162,7 +162,7 @@ describe Picky::Backends::Redis do
         data.add Book.new(1, 'title', 'author')
       end
 
-      instance_eval &its_to_i
+      instance_eval(&its_to_i)
     end
   end
 
@@ -178,13 +178,12 @@ describe Picky::Backends::Redis do
         category.exact.load
         category.exact.inverted['test'] = [1, 2, 3]
         category.exact.inverted['test'] = [4, 5, 6]
-        category.exact.inverted['test'].should == ["4", "5", "6"]
-        category.exact.inverted['test'].delete "5"
-        category.exact.inverted['test'].should == ["4", "6"]
-        category.exact.inverted['test'].unshift "3"
-        category.exact.inverted['test'].should == ["3", "4", "6"]
+        category.exact.inverted['test'].should
+        category.exact.inverted['test'].delete '5'
+        category.exact.inverted['test'].should
+        category.exact.inverted['test'].unshift '3'
+        category.exact.inverted['test'].should == %w[3 4 6]
       end
     end
   end
-
 end

@@ -1,14 +1,31 @@
 module Picky
-
   class Category
-
     include API::Tokenizer
 
     attr_accessor :exact,
                   :partial
-    attr_reader :name,
-                :backend
+    attr_reader :name
     attr_writer :source
+
+    # Since the options hash might contain options that do not exist,
+    # we should warn people if they use the wrong options.
+    # (Problem is that if the option is not found, then Picky will use the default)
+    #
+    # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
+    #
+    KNOWN_KEYS = %i[
+      hints
+      indexing
+      partial
+      qualifier
+      qualifiers
+      ranging
+      similarity
+      source
+      tokenize
+      tokenizer
+      weight
+    ].freeze
 
     # Parameters:
     #  * name: Category name to use as identifier and file names.
@@ -33,21 +50,21 @@ module Picky
     #  Weights::Dynamic.new(&block) or an object that responds
     #  to #weight_for(amount_of_ids_for_token) and returns a float.
     #
-    def initialize name, index, options = {}
+    def initialize(name, index, options = {})
       @name  = name
       @index = index
-      
-      # TODO Move.
+
+      # TODO: Move.
       #
       options[:hints] = index.hints
 
       configure_from options
       configure_indexes_from options
     end
-    
-    def configure_from options
+
+    def configure_from(options)
       @from       = options.delete :from
-      
+
       # Instantly extracted to raise an error instantly.
       #
       @source     = Source.from options[:source], true, @index.name
@@ -62,67 +79,54 @@ module Picky
 
       @symbol_keys = options[:symbol_keys] || @index.symbol_keys # SYMBOLS.
     end
-    
+
     def symbol_keys?
       @symbol_keys
     end
 
-    # TODO I do a lot of helper method calls here. Refactor?
+    # TODO: I do a lot of helper method calls here. Refactor?
     #
-    def configure_indexes_from options
+    def configure_indexes_from(options)
       warn_if_unknown options
-      
+
       weights    = weights_from options
       partial    = partial_from options
       similarity = similarity_from options
-      
+
       @exact     = exact_for weights, similarity, options
       @partial   = partial_for @exact, partial, weights, options
     end
-    # Since the options hash might contain options that do not exist,
-    # we should warn people if they use the wrong options.
-    # (Problem is that if the option is not found, then Picky will use the default)
-    #
-    # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
-    #
-    @@known_keys = [
-      :hints,
-      :indexing,
-      :partial,
-      :qualifier,
-      :qualifiers,
-      :ranging,
-      :similarity,
-      :source,
-      :tokenize,
-      :tokenizer,
-      :weight,
-    ]
-    def warn_if_unknown options
-      if options && (options.keys - @@known_keys).size > 0
-        warn <<-WARNING
 
-Warning: Category options #{options} for category #{name} contain an unknown option.
-         Working options are: #@@known_keys.
-WARNING
-      end
+    def warn_if_unknown(options)
+      return unless options && !(options.keys - KNOWN_KEYS).empty?
+
+      warn <<~WARNING
+
+        Warning: Category options #{options} for category #{name} contain an unknown option.
+                 Working options are: #{KNOWN_KEYS}.
+      WARNING
     end
-    def weights_from options
+
+    def weights_from(options)
       Generators::Weights.from options[:weight], index_name, name
     end
-    def partial_from options
+
+    def partial_from(options)
       Generators::Partial.from options[:partial], index_name, name
     end
-    def similarity_from options
+
+    def similarity_from(options)
       Generators::Similarity.from options[:similarity], index_name, name
     end
-    def exact_for weights, similarity, options
+
+    def exact_for(weights, similarity, options)
       Bundle.new :exact, self, weights, Generators::Partial::None.new, similarity, options
     end
-    def partial_for exact, partial_options, weights, options
-      # TODO Also partial.extend Bundle::Exact like in the category.
+
+    def partial_for(exact, partial_options, weights, options)
+      # TODO: Also partial.extend Bundle::Exact like in the category.
       #
-      # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance? 
+      # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance?
       #
       if partial_options.respond_to?(:use_exact_for_partial?) && partial_options.use_exact_for_partial?
         Wrappers::Bundle::ExactPartial.new exact
@@ -130,13 +134,13 @@ WARNING
         Bundle.new :partial, self, weights, partial_options, Generators::Similarity::None.new, options
       end
     end
-    
+
     # Lazily create a prepared index proxy.
     #
     def prepared
       @prepared ||= Backends::Prepared::Text.new prepared_index_path
     end
-    
+
     # Indexes and loads the category.
     #
     def reindex
@@ -159,6 +163,7 @@ WARNING
     def backend
       @backend || @index.backend
     end
+
     # Resets backends in both bundles.
     #
     def reset_backend
@@ -172,9 +177,10 @@ WARNING
     def qualifiers
       @qualifiers || [name]
     end
+
     # Extract qualifiers from the options.
     #
-    def extract_qualifiers_from options
+    def extract_qualifiers_from(options)
       options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
     end
 
@@ -189,18 +195,20 @@ WARNING
     def prepared_index_path
       @prepared_index_path ||= ::File.join(index_directory, name.to_s)
     end
+
     # Get an opened index file.
     #
     # Note: If you don't use it with the block, do not forget to close it.
     #
-    def prepared_index_file &block
+    def prepared_index_file(&block)
       @prepared_index_file ||= Backends::Prepared::Text.new prepared_index_path
-      @prepared_index_file.open &block
+      @prepared_index_file.open(&block)
     end
-    
+
     def index_directory
       @index.directory
     end
+
     def index_name
       @index.name
     end
@@ -210,30 +218,27 @@ WARNING
     def identifier
       :"#{@index.identifier}:#{name}"
     end
-    
+
     # Uniquely identified by index name and name.
     #
-    def == other
+    def ==(other)
       return false unless other
+
       index_name == other.index_name &&
-      name       == other.name
+        name == other.name
     end
 
-    #
-    #
     def to_s
       "#{self.class}(#{identifier})"
     end
-    
-    def to_tree_s indent = 0
-      s = <<-TREE
-#{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
-#{' ' * indent}  #{exact.to_tree_s(4)}
-#{' ' * indent}  #{partial.to_tree_s(4)}
-TREE
+
+    def to_tree_s(indent = 0)
+      s = <<~TREE
+        #{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
+        #{' ' * indent}  #{exact.to_tree_s(4)}
+        #{' ' * indent}  #{partial.to_tree_s(4)}
+      TREE
       s.chomp
     end
-
   end
-
 end

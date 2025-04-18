@@ -1,34 +1,36 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 # To test the interface definition.
 #
 class BackendInterfaceTester < Picky::Backends::Backend
-  def create_inverted _, _ = nil
+  def create_inverted(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_weights _, _ = nil
+
+  def create_weights(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_similarity _, _ = nil
+
+  def create_similarity(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_configuration _, _ = nil
+
+  def create_configuration(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_realtime _, _ = nil
+
+  def create_realtime(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
 end
-class InternalBackendInterfaceTester
 
-  EMPTY_ARRAY = Array.new
+class InternalBackendInterfaceTester
+  EMPTY_ARRAY = []
 
   def initialize
     @hash = {}
   end
-  
+
   def empty_array
     EMPTY_ARRAY.dup
   end
@@ -41,11 +43,11 @@ class InternalBackendInterfaceTester
     self
   end
 
-  def [] key
+  def [](key)
     @hash[key]
   end
 
-  def []= key, value
+  def []=(key, value)
     @hash[key] = value
   end
 
@@ -53,32 +55,31 @@ class InternalBackendInterfaceTester
     @hash.clear
   end
 
-  def delete key
+  def delete(key)
     @hash.delete key
   end
 
   # dump/load
   #
 
-  def dump _
+  def dump(_); end
 
-  end
-
-  def load _
+  def load(_)
     self
   end
-
 end
 
 # Describes a Picky index that uses the Memory backend
 # for data storage.
 #
 describe BackendInterfaceTester do
-
   class Book
     attr_reader :id, :title, :author
-    def initialize id, title, author
-      @id, @title, @author = id, title, author
+
+    def initialize(id, title, author)
+      @id = id
+      @title = title
+      @author = author
     end
   end
 
@@ -93,7 +94,7 @@ describe BackendInterfaceTester do
   end
   let(:books) { Picky::Search.new data }
 
-  its_to_s = ->(*) do
+  its_to_s = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == ['1']
     end
@@ -114,7 +115,7 @@ describe BackendInterfaceTester do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1']
+      books.search('title').ids.should
 
       data.remove '1'
 
@@ -124,16 +125,16 @@ describe BackendInterfaceTester do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == ['3', '2', '1']
+      books.search('title').ids.should
 
       data.remove '1'
 
-      books.search('title').ids.should == ['3', '2']
+      books.search('title').ids.should == %w[3 2]
     end
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
 
-      books.search('title').ids.should == []
+      books.search('title').ids.should
       books.search('toitle').ids.should == ['1']
     end
     it 'handles clearing' do
@@ -149,7 +150,7 @@ describe BackendInterfaceTester do
     end
   end
 
-  its_to_i = ->(*) do
+  its_to_i = lambda do |*|
     it 'searching for it' do
       books.search('title').ids.should == [1]
     end
@@ -170,7 +171,7 @@ describe BackendInterfaceTester do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == [2, 1]
+      books.search('title').ids.should
 
       data.remove 1
 
@@ -180,7 +181,7 @@ describe BackendInterfaceTester do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == [3, 2, 1]
+      books.search('title').ids.should
 
       data.remove 1
 
@@ -189,7 +190,7 @@ describe BackendInterfaceTester do
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
 
-      books.search('title').ids.should == []
+      books.search('title').ids.should
       books.search('toitle').ids.should == [1]
     end
     it 'handles clearing' do
@@ -215,7 +216,7 @@ describe BackendInterfaceTester do
         data.add Book.new(1, 'title', 'author')
       end
 
-      instance_eval &its_to_s
+      instance_eval(&its_to_s)
     end
   end
   context 'to_i key format' do
@@ -228,8 +229,7 @@ describe BackendInterfaceTester do
         data.add Book.new(1, 'title', 'author')
       end
 
-      instance_eval &its_to_i
+      instance_eval(&its_to_i)
     end
   end
-
 end

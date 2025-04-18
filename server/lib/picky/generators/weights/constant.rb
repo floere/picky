@@ -1,9 +1,6 @@
 module Picky
-
   module Generators
-
     module Weights
-
       # Uses a constant weight.
       # Default is 0.0.
       #
@@ -14,15 +11,16 @@ module Picky
       #   * Picky::Weights::Constant.new(3.14) # Uses 3.14 as a constant weight.
       #
       class Constant < Stub
+        def initialize(weight = 0.0)
+          super()
 
-        def initialize weight = 0.0
           @weight = weight
         end
 
         # Always returns the constant weight,
         # except if there are no ids.
         #
-        def [] _
+        def [](_)
           @weight
         end
 
@@ -32,14 +30,10 @@ module Picky
         # Not really used, but is more
         # correct this way.
         #
-        def weight_for _
+        def weight_for(_)
           @weight
         end
-
       end
-
     end
-
   end
-
 end

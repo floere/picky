@@ -1,5 +1,4 @@
 module Picky
-
   module Generators
     module Weights
       # Default is Logarithmic.
@@ -8,5 +7,4 @@ module Picky
       Default = Logarithmic.new
     end
   end
-
 end

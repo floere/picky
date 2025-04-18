@@ -1,20 +1,18 @@
-# encoding: utf-8
-#
 require 'spec_helper'
 
 describe Picky::Interfaces::LiveParameters::Unicorn do
-
   before(:each) do
     @parent = double :parent
     @child  = double :child
-    IO.stub :pipe => [@child, @parent]
+    IO.stub pipe: [@child, @parent]
     @parameters = described_class.new
     @parameters.stub :exclaim
   end
 
   describe Picky::Interfaces::LiveParameters::Unicorn::CouldNotUpdateConfigurationError do
     before(:each) do
-      @error = Picky::Interfaces::LiveParameters::Unicorn::CouldNotUpdateConfigurationError.new :some_key, 'some message'
+      @error = Picky::Interfaces::LiveParameters::Unicorn::CouldNotUpdateConfigurationError.new :some_key,
+                                                                                                'some message'
     end
   end
 
@@ -44,29 +42,31 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
     context 'all goes well' do
       it 'does a few things in order' do
         @parameters.should_receive(:close_child).once.with(no_args).ordered
-        @parameters.should_receive(:try_updating_configuration_with).once.with(:a => :b).ordered
-        @parameters.should_receive(:write_parent).once.with(:a => :b).ordered
+        @parameters.should_receive(:try_updating_configuration_with).once.with(a: :b).ordered
+        @parameters.should_receive(:write_parent).once.with(a: :b).ordered
         @parameters.should_receive(:extract_configuration).once.with(no_args).ordered
 
-        @parameters.parameters :a => :b
+        @parameters.parameters a: :b
       end
     end
     context 'updating failed' do
       before(:each) do
-        @parameters.should_receive(:try_updating_configuration_with).and_raise Picky::Interfaces::LiveParameters::Unicorn::CouldNotUpdateConfigurationError.new(:a, 'hello')
+        @parameters.should_receive(:try_updating_configuration_with).and_raise Picky::Interfaces::LiveParameters::Unicorn::CouldNotUpdateConfigurationError.new(
+          :a, 'hello'
+        )
       end
       it 'kills itself and returns' do
         @parameters.should_receive(:close_child).once.ordered
         @parameters.should_receive(:harakiri).once.ordered
 
-        @parameters.parameters( :a => :b ).should == { :a => :ERROR }
+        @parameters.parameters(a: :b).should == { a: :ERROR }
       end
     end
   end
 
   describe 'harakiri' do
     before(:each) do
-      Process.stub :pid => :some_pid
+      Process.stub pid: :some_pid
     end
     it 'kills itself' do
       Process.should_receive(:kill).once.with :QUIT, :some_pid
@@ -77,19 +77,19 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
 
   describe 'write_parent' do
     before(:each) do
-      Process.stub :pid => :some_pid
+      Process.stub pid: :some_pid
     end
     it 'calls the parent' do
-      @parent.should_receive(:write).once.with "[:some_pid, {:a=>:b}];;;"
+      @parent.should_receive(:write).once.with '[:some_pid, {:a=>:b}];;;'
 
-      @parameters.write_parent :a => :b
+      @parameters.write_parent a: :b
     end
   end
 
   describe 'close_child' do
     context 'child is closed' do
       before(:each) do
-        @child.stub :closed? => true
+        @child.stub closed?: true
       end
       it 'does not receive close' do
         @child.should_receive(:close).never
@@ -99,7 +99,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
     end
     context 'child not yet closed' do
       before(:each) do
-        @child.stub :closed? => false
+        @child.stub closed?: false
       end
       it 'does receives close' do
         @child.should_receive(:close).once.with no_args
@@ -131,7 +131,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
   describe 'kill_each_worker_except' do
     context 'worker pid in the worker pids' do
       before(:each) do
-        @parameters.stub :worker_pids => [1,2,3,4]
+        @parameters.stub worker_pids: [1, 2, 3, 4]
       end
       it 'kills each except the one' do
         @parameters.should_receive(:kill_worker).once.with(:KILL, 1)
@@ -144,7 +144,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
     end
     context 'worker pid not in the worker pids (unrealistic, but...)' do
       before(:each) do
-        @parameters.stub :worker_pids => [1,2,3,4]
+        @parameters.stub worker_pids: [1, 2, 3, 4]
       end
       it 'kills each except the one' do
         @parameters.should_receive(:kill_worker).once.with(:KILL, 1)
@@ -156,5 +156,4 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
       end
     end
   end
-
 end

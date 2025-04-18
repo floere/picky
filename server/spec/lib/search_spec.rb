@@ -1,22 +1,19 @@
-# coding: utf-8
-#
 require 'spec_helper'
 
 describe Picky::Search do
-
   before(:each) do
     @type      = double :type
     @index     = double :some_index,
-                      :internal_indexed => @type,
-                      :each_category    => [],
-                      :backend          => Picky::Backends::Memory.new
+                        internal_indexed: @type,
+                        each_category: [],
+                        backend: Picky::Backends::Memory.new
   end
 
   describe 'tokenized' do
     let(:search) { described_class.new }
     it 'forwards to the tokenizer' do
       tokenizer = double :tokenizer
-      search.stub :tokenizer => tokenizer
+      search.stub tokenizer: tokenizer
 
       tokenizer.should_receive(:tokenize).once.with(:some_text).and_return [['some_text'], [:some_original]]
 
@@ -27,12 +24,12 @@ describe Picky::Search do
   describe 'boost' do
     let(:search) do
       described_class.new do
-        boost [:a, :b] => +3,
-              [:c, :d] => -1
+        boost %i[a b] => +3,
+              %i[c d] => -1
       end
     end
     it 'works' do
-      search.boosts.should == Picky::Query::Boosts.new([:a, :b] => 3, [:c, :d] => -1)
+      search.boosts.should == Picky::Query::Boosts.new(%i[a b] => 3, %i[c d] => -1)
     end
   end
 
@@ -55,61 +52,63 @@ describe Picky::Search do
       end
     end
     context 'tokenizer predefined' do
-      let(:predefined) { double(:tokenizer, :tokenize => nil) }
+      let(:predefined) { double(:tokenizer, tokenize: nil) }
       context 'by way of DSL' do
-        let(:search) { pre = predefined; described_class.new { searching pre } }
+        let(:search) do
+          pre = predefined
+          described_class.new { searching pre }
+        end
         it 'returns the predefined tokenizer' do
           search.tokenizer.should == predefined
         end
       end
     end
-
   end
 
-  describe "boosts handling" do
-    it "creates a default weight when no weights are given" do
+  describe 'boosts handling' do
+    it 'creates a default weight when no weights are given' do
       search = described_class.new
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
-    it "handles :weights options when not yet wrapped" do
-      search = described_class.new do boost [:a, :b] => +3 end
+    it 'handles :weights options when not yet wrapped' do
+      search = described_class.new { boost %i[a b] => +3 }
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
-    it "handles :weights options when already wrapped" do
-      search = described_class.new do boost Picky::Query::Boosts.new([:a, :b] => +3) end
+    it 'handles :weights options when already wrapped' do
+      search = described_class.new { boost Picky::Query::Boosts.new(%i[a b] => +3) }
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
   end
 
-  describe "search" do
+  describe 'search' do
     before(:each) do
       @search = described_class.new
     end
-    it "forwards to search_with correctly" do
-      @search.stub :tokenized => :tokens
+    it 'forwards to search_with correctly' do
+      @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 10, :text, nil
 
       @search.search :text, 20, 10
     end
-    it "forwards to search_with correctly" do
-      @search.stub :tokenized => :tokens
+    it 'forwards to search_with correctly' do
+      @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, nil
 
       @search.search :text, 20, 0
     end
-    it "forwards to search_with correctly" do
-      @search.stub :tokenized => :tokens
+    it 'forwards to search_with correctly' do
+      @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, true
 
       @search.search :text, 20, 0, unique: true
     end
-    it "uses the tokenizer" do
+    it 'uses the tokenizer' do
       @search.stub :search_with
 
       @search.should_receive(:tokenized).once.with :text
@@ -154,7 +153,7 @@ describe Picky::Search do
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
-        tokenizer = double :tokenizer, :tokenize => [['some_text'], ['some_original']]
+        tokenizer = double :tokenizer, tokenize: [['some_text'], ['some_original']]
         @search = described_class.new @index do
           searching tokenizer
         end
@@ -167,7 +166,7 @@ describe Picky::Search do
 
   describe 'to_s' do
     before(:each) do
-      @index.stub :name => :some_index, :each_category => []
+      @index.stub name: :some_index, each_category: []
     end
     context 'without indexes' do
       before(:each) do
@@ -179,7 +178,7 @@ describe Picky::Search do
     end
     context 'with weights' do
       before(:each) do
-        @search = described_class.new @index do boost [:a, :b] => +3 end
+        @search = described_class.new(@index) { boost %i[a b] => +3 }
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({[:a, :b]=>3}))'
@@ -188,14 +187,15 @@ describe Picky::Search do
     context 'with special weights' do
       before(:each) do
         class RandomBoosts
-          def boost_for combinations
+          def boost_for(_combinations)
             rand
           end
+
           def to_s
             "#{self.class}(rand)"
           end
         end
-        @search = described_class.new @index do boost RandomBoosts.new end
+        @search = described_class.new(@index) { boost RandomBoosts.new }
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: RandomBoosts(rand))'
@@ -203,12 +203,11 @@ describe Picky::Search do
     end
     context 'without weights' do
       before(:each) do
-        @search = described_class.new @index
+        @search = described_class.new(@index)
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({}))'
       end
     end
   end
-
 end

@@ -1,8 +1,9 @@
 require_relative '../../lib/picky'
 
-def count klass
-  "#{klass}: #{ObjectSpace.each_object(klass).inject(0) { |total, _| total = total + 1 }}"
+def count(klass)
+  "#{klass}: #{ObjectSpace.each_object(klass).inject(0) { |total, _| total + 1 }}"
 end
+
 def counts
   puts count(Picky::Query::Allocation)
   puts count(Picky::Query::Allocations)
@@ -40,6 +41,6 @@ puts people.search 'tentacles florian tentacles', 20, 0
 counts
 
 require 'benchmark'
-puts Benchmark.measure {
+puts(Benchmark.measure do
   1000.times { people.search 'tentacles florian tentacles', 20, 0 }
-}
+end)

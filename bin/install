@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
-#
 
 # Use ./install REMOTE to use remote gem sources.
 #
 local_or_remote = ARGV.include?('REMOTE') ? '' : '--local'
 
-require File.expand_path '../version', __FILE__
+require File.expand_path '../../version', __FILE__
 
 gem_command = 'gem'
 

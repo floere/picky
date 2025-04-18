@@ -1,7 +1,5 @@
 module Picky
-
   module Query
-
     # The query indexes class bundles indexes given to a query.
     #
     # Example:
@@ -12,9 +10,8 @@ module Picky
     #   # bundle them in an index bundle.
     #
     class Indexes
-      
-      forward :size, :first, :to => :@indexes
-      
+      forward :size, :first, to: :@indexes
+
       attr_reader :indexes,
                   :ignored_categories,
                   :ignored_allocations,
@@ -30,7 +27,7 @@ module Picky
 
         @indexes = indexes
       end
-      
+
       # Ignore the categories with the given qualifiers.
       #
       def ignore_categories *qualifiers
@@ -39,30 +36,30 @@ module Picky
         @ignored_categories += qualifiers
         @ignored_categories.uniq!
       end
-      
+
       # Ignore the allocations with the given qualifiers.
       #
       def ignore_allocations *qualifier_arrays
         @ignored_allocations ||= []
-        @ignored_allocations += qualifier_arrays #.map do |qualifier_array|
-          # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
+        @ignored_allocations += qualifier_arrays # .map do |qualifier_array|
+        # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
         # end.compact
         @ignored_allocations.uniq!
       end
-      
+
       # Exclusively keep the allocations with the given qualifiers.
       #
       def keep_allocations *qualifier_arrays
         @exclusive_allocations ||= []
-        @exclusive_allocations += qualifier_arrays #.map do |qualifier_array|
-          # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
+        @exclusive_allocations += qualifier_arrays # .map do |qualifier_array|
+        # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
         # end.compact
         @exclusive_allocations.uniq!
       end
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #
-      def prepared_allocations_for tokens, boosts = {}, amount = nil
+      def prepared_allocations_for(tokens, boosts = {}, amount = nil)
         allocations = allocations_for tokens
 
         # Score the allocations using weights as bias.
@@ -82,9 +79,9 @@ module Picky
         # Before we can chop off unimportant allocations, we need to sort them.
         #
         allocations.sort!
-        
+
         # allocations.remove_allocations ignored_allocations if ignored_allocations
-        
+
         # Reduce the amount of allocations.
         #
         # Before we remove categories, we should reduce the amount of allocations.
@@ -97,17 +94,20 @@ module Picky
 
         allocations
       end
+
       # Returns a number of possible allocations for the given tokens.
       #
-      def allocations_for tokens
+      def allocations_for(tokens)
         Allocations.new allocations_ary_for(tokens)
       end
-      def allocations_ary_for tokens
+
+      def allocations_ary_for(tokens)
         indexes.inject([]) do |allocations, index|
           allocations + allocation_for(tokens, index)
         end
       end
-      def allocation_for tokens, index
+
+      def allocation_for(tokens, index)
         # Expand the combinations.
         #
         possible_combinations = tokens.possible_combinations_in index.categories
@@ -179,11 +179,11 @@ module Picky
       # Note: Of course I could split this method up into smaller
       #       ones, but I guess I am a bit sentimental.
       #
-      def expand_combinations_from possible_combinations
+      def expand_combinations_from(possible_combinations)
         # If an element has size 0, this means one of the
         # tokens could not be allocated.
         #
-        return [] if possible_combinations.any? { |possible_combination| possible_combination.empty? }
+        return [] if possible_combinations.any?(&:empty?)
 
         # Generate the first multiplicator "with which" (well, not quite) to multiply the smallest amount of combinations.
         #
@@ -197,7 +197,6 @@ module Picky
         # for later combination in allocations.
         #
         possible_combinations.collect! do |combinations|
-
           # Get the size of the combinations of the first token.
           #
           combinations_size = combinations.size
@@ -224,7 +223,7 @@ module Picky
           # since the next combinations' single mult is smaller
           # and we need to adjust for that.
           #
-          group_mult = group_mult * combinations_size
+          group_mult *= combinations_size
 
           # Return the combinations.
           #
@@ -233,11 +232,8 @@ module Picky
 
         return [] if possible_combinations.empty?
 
-        possible_combinations.shift.zip *possible_combinations
+        possible_combinations.shift.zip(*possible_combinations)
       end
-
     end
-
   end
-
 end

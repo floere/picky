@@ -1,11 +1,11 @@
 require 'memory_profiler'
 
-require_relative "../../lib/picky"
+require_relative '../../lib/picky'
 
 GC.start
 
 index = Picky::Index.new(:index) do
-  # optimize :no_dump
+  # OPTIMIZE: no_dump
   static
   symbol_keys true
 
@@ -13,7 +13,6 @@ index = Picky::Index.new(:index) do
 end
 
 klass = Class.new do
-
   attr_reader :id
   attr_reader :name
 
@@ -21,12 +20,11 @@ klass = Class.new do
     @id = id
     @name = name
   end
-
 end
 
 puts ['symbol count', Symbol.all_symbols.count]
 
-thing1 = klass.new(1, "My name")
+thing1 = klass.new(1, 'My name')
 index.add thing1
 
 result = MemoryProfiler.report do

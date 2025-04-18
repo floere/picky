@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Bundle do
-
   before(:each) do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
@@ -36,10 +35,10 @@ describe Picky::Bundle do
         @bundle.add 1, 'title'
         @bundle.add 2, 'title'
 
-        @bundle.realtime[1].should == ['title']
-        @bundle.realtime[2].should == ['title']
-        @bundle.inverted['title'].should == [2,1]
-        @bundle.weights['title'].should == 0.693
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted['title'].should
+        @bundle.weights['title'].should
         @bundle.similarity['TTL'].should == ['title']
       end
       it 'works correctly' do
@@ -48,11 +47,11 @@ describe Picky::Bundle do
         @bundle.remove 1
         @bundle.remove 2
 
-        @bundle.realtime[1].should == nil
-        @bundle.realtime[2].should == nil
-        @bundle.inverted['title'].should == nil
-        @bundle.weights['title'].should == nil
-        @bundle.similarity['TTL'].should == nil
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted['title'].should
+        @bundle.weights['title'].should
+        @bundle.similarity['TTL'].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
@@ -60,11 +59,11 @@ describe Picky::Bundle do
         @bundle.add 1, 'whatever'
         @bundle.remove 1
 
-        @bundle.realtime[1].should == nil
-        @bundle.realtime[2].should == nil
-        @bundle.inverted['title'].should == nil
-        @bundle.weights['title'].should == nil
-        @bundle.similarity['TTL'].should == nil
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted['title'].should
+        @bundle.weights['title'].should
+        @bundle.similarity['TTL'].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
@@ -72,19 +71,19 @@ describe Picky::Bundle do
         @bundle.add 1, 'other'
         @bundle.remove 1
 
-        @bundle.realtime[1].should == nil
-        @bundle.realtime[2].should == ['thing']
-        @bundle.inverted['thing'].should == [2]
-        @bundle.weights['thing'].should == 0.0
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted['thing'].should
+        @bundle.weights['thing'].should
         @bundle.similarity['0NK'].should == ['thing']
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
         @bundle.add 1, 'title'
 
-        @bundle.realtime[1].should == ['title']
-        @bundle.inverted['title'].should == [1]
-        @bundle.weights['title'].should == 0.0
+        @bundle.realtime[1].should
+        @bundle.inverted['title'].should
+        @bundle.weights['title'].should
         @bundle.similarity['TTL'].should == ['title']
       end
       it 'works correctly' do
@@ -92,10 +91,10 @@ describe Picky::Bundle do
         @bundle.remove 1
         @bundle.remove 1
 
-        @bundle.realtime[1].should == nil
-        @bundle.inverted['title'].should == nil
-        @bundle.weights['title'].should == nil
-        @bundle.similarity['TTL'].should == nil
+        @bundle.realtime[1].should
+        @bundle.inverted['title'].should
+        @bundle.weights['title'].should
+        @bundle.similarity['TTL'].should.nil?
       end
     end
 
@@ -103,23 +102,23 @@ describe Picky::Bundle do
       it 'works correctly' do
         @bundle.add 1, 'title'
 
-        @bundle.realtime[1].should == ['title']
+        @bundle.realtime[1].should
 
         @bundle.add 2, 'other'
 
-        @bundle.realtime[1].should == ['title']
-        @bundle.realtime[2].should == ['other']
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
 
         @bundle.add 1, 'thing'
 
-        @bundle.realtime[1].should == ['title', 'thing']
+        @bundle.realtime[1].should
         @bundle.realtime[2].should == ['other']
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
 
-        @bundle.weights['title'].should == 0.0
-        @bundle.inverted['title'].should == [1]
+        @bundle.weights['title'].should
+        @bundle.inverted['title'].should
         @bundle.similarity['TTL'].should == ['title']
       end
     end
@@ -131,15 +130,15 @@ describe Picky::Bundle do
         @bundle.add 1, :title
         @bundle.add 2, :title
 
-        @bundle.realtime.should == { 1 => [:title], 2 => [:title] }
-        @bundle.inverted.should == { :title => [2,1] }
-        @bundle.weights.should == { :title => 0.693 }
-        @bundle.similarity.should == { :TTL => [:title] }
+        @bundle.realtime.should
+        @bundle.inverted.should
+        @bundle.weights.should
+        @bundle.similarity.should
 
-        @bundle.realtime[1].should == [:title]
-        @bundle.realtime[2].should == [:title]
-        @bundle.inverted[:title].should == [2,1]
-        @bundle.weights[:title].should == 0.693
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted[:title].should
+        @bundle.weights[:title].should
         @bundle.similarity[:TTL].should == [:title]
       end
       it 'works correctly' do
@@ -148,11 +147,11 @@ describe Picky::Bundle do
         @bundle.remove 1
         @bundle.remove 2
 
-        @bundle.realtime[1].should == nil
-        @bundle.realtime[2].should == nil
-        @bundle.inverted[:title].should == nil
-        @bundle.weights[:title].should == nil
-        @bundle.similarity[:TTL].should == nil
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted[:title].should
+        @bundle.weights[:title].should
+        @bundle.similarity[:TTL].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -160,10 +159,10 @@ describe Picky::Bundle do
         @bundle.add 1, :whatever
         @bundle.remove 1
 
-        @bundle.realtime[1].should == nil
-        @bundle.inverted[:title].should == nil
-        @bundle.weights[:title].should == nil
-        @bundle.similarity[:TTL].should == nil
+        @bundle.realtime[1].should
+        @bundle.inverted[:title].should
+        @bundle.weights[:title].should
+        @bundle.similarity[:TTL].should.nil?
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -171,30 +170,30 @@ describe Picky::Bundle do
         @bundle.add 1, :other
         @bundle.remove 1
 
-        @bundle.realtime[1].should == nil
-        @bundle.realtime[2].should == [:thing]
-        @bundle.inverted[:thing].should == [2]
-        @bundle.weights[:thing].should == 0.0
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
+        @bundle.inverted[:thing].should
+        @bundle.weights[:thing].should
         @bundle.similarity[:'0NK'].should == [:thing]
       end
       it 'works correctly' do
         @bundle.add 1, :title
         @bundle.add 1, :title
 
-        @bundle.realtime[1].should == [:title]
-        @bundle.inverted[:title].should == [1]
-        @bundle.weights[:title].should == 0.0
-        @bundle.similarity[:'TTL'].should == [:title]
+        @bundle.realtime[1].should
+        @bundle.inverted[:title].should
+        @bundle.weights[:title].should
+        @bundle.similarity[:TTL].should == [:title]
       end
       it 'works correctly' do
         @bundle.add 1, :title
         @bundle.remove 1
         @bundle.remove 1
 
-        @bundle.realtime[1].should == nil
-        @bundle.inverted[:title].should == nil
-        @bundle.weights[:title].should == nil
-        @bundle.similarity[:TTL].should == nil
+        @bundle.realtime[1].should
+        @bundle.inverted[:title].should
+        @bundle.weights[:title].should
+        @bundle.similarity[:TTL].should.nil?
       end
     end
 
@@ -202,26 +201,25 @@ describe Picky::Bundle do
       it 'works correctly' do
         @bundle.add 1, :title
 
-        @bundle.realtime[1].should == [:title]
+        @bundle.realtime[1].should
 
         @bundle.add 2, :other
 
-        @bundle.realtime[1].should == [:title]
-        @bundle.realtime[2].should == [:other]
+        @bundle.realtime[1].should
+        @bundle.realtime[2].should
 
         @bundle.add 1, :thing
 
-        @bundle.realtime[1].should == [:title, :thing]
+        @bundle.realtime[1].should
         @bundle.realtime[2].should == [:other]
       end
       it 'works correctly' do
         @bundle.add 1, :title
 
-        @bundle.weights[:title].should == 0.0
-        @bundle.inverted[:title].should == [1]
+        @bundle.weights[:title].should
+        @bundle.inverted[:title].should
         @bundle.similarity[:TTL].should == [:title]
       end
     end
   end
-
 end

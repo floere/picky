@@ -1,7 +1,6 @@
 class Each
-
-  def self.all file, options = {}
-    Yielder.new file, self.accessibility, options
+  def self.all(file, options = {})
+    Yielder.new file, accessibility, options
   end
 
   def self.accessibility
@@ -9,9 +8,10 @@ class Each
   end
 
   class Yielder
-
-    def initialize file, accessibility, options
-      @file, @accessibility, @options = file, accessibility, options
+    def initialize(file, accessibility, options)
+      @file = file
+      @accessibility = accessibility
+      @options = options
     end
 
     def each
@@ -19,7 +19,5 @@ class Each
         yield row.extend @accessibility
       end
     end
-
   end
-
 end

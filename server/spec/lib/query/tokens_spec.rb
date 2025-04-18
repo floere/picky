@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Query::Tokens do
-
   context 'with ignore_unassigned_tokens true' do
     it 'generates processed tokens from all words' do
       expected = [
@@ -26,24 +25,28 @@ describe Picky::Query::Tokens do
         @tokens = described_class.new [@token1, @token2, @token3], true
       end
       it 'should work correctly' do
-        @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+        @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11
+                                                                                            combination12]
         @token2.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination21]
-        @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+        @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31
+                                                                                            combination32 combination33]
 
         @tokens.possible_combinations_in(:some_index).should == [
-          [:combination11, :combination12],
+          %i[combination11 combination12],
           [:combination21],
-          [:combination31, :combination32, :combination33]
+          %i[combination31 combination32 combination33]
         ]
       end
       it 'should work correctly' do
-        @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+        @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11
+                                                                                            combination12]
         @token2.should_receive(:possible_combinations).once.with(:some_index).and_return []
-        @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+        @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31
+                                                                                            combination32 combination33]
 
         @tokens.possible_combinations_in(:some_index).should == [
-          [:combination11, :combination12],
-          [:combination31, :combination32, :combination33]
+          %i[combination11 combination12],
+          %i[combination31 combination32 combination33]
         ]
       end
     end
@@ -82,12 +85,12 @@ describe Picky::Query::Tokens do
     let(:tokens) { described_class.processed ['a*', 'b'], ['A*', 'B'] }
 
     it 'has non symbolized tokens' do
-      tokens.map(&:text).should == ['a', 'b']
+      tokens.map(&:text).should == %w[a b]
     end
     it 'symbolizes all tokens' do
       tokens.symbolize
 
-      tokens.map(&:text).should == [:a, :b]
+      tokens.map(&:text).should == %i[a b]
     end
   end
 
@@ -171,25 +174,27 @@ describe Picky::Query::Tokens do
       @tokens = described_class.new [@token1, @token2, @token3]
     end
     it 'should work correctly' do
-      @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+      @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11 combination12]
       @token2.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination21]
-      @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+      @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31 combination32
+                                                                                          combination33]
 
       @tokens.possible_combinations_in(:some_index).should == [
-        [:combination11, :combination12],
+        %i[combination11 combination12],
         [:combination21],
-        [:combination31, :combination32, :combination33]
+        %i[combination31 combination32 combination33]
       ]
     end
     it 'should work correctly' do
-      @token1.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination11, :combination12]
+      @token1.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination11 combination12]
       @token2.should_receive(:possible_combinations).once.with(:some_index).and_return nil
-      @token3.should_receive(:possible_combinations).once.with(:some_index).and_return [:combination31, :combination32, :combination33]
+      @token3.should_receive(:possible_combinations).once.with(:some_index).and_return %i[combination31 combination32
+                                                                                          combination33]
 
       @tokens.possible_combinations_in(:some_index).should == [
-        [:combination11, :combination12],
+        %i[combination11 combination12],
         nil,
-        [:combination31, :combination32, :combination33]
+        %i[combination31 combination32 combination33]
       ]
     end
   end
@@ -208,7 +213,7 @@ describe Picky::Query::Tokens do
       @tokens.to_s.should == 'Hello~ I~ Am A* Token~'
     end
   end
-  
+
   describe '+' do
     before(:each) do
       @tokens = described_class.new [
@@ -225,7 +230,7 @@ describe Picky::Query::Tokens do
       (@tokens + @other).to_s.should == 'Hello~ I~ Am A* Token~'
     end
     it 'should work correctly' do
-      (@tokens + @other).texts.should == ['hello', 'i', 'am', 'a', 'token']
+      (@tokens + @other).texts.should == %w[hello i am a token]
     end
     it 'should work correctly' do
       (@tokens + @other).originals.should == ['Hello~', 'I~', 'Am', 'A*', 'Token~']
@@ -235,19 +240,19 @@ describe Picky::Query::Tokens do
     end
     it 'correctly handles ignore_unassigned' do
       yet_another = described_class.new [], true
-      (@tokens + yet_another).ignore_unassigned.should == true
+      (@tokens + yet_another).ignore_unassigned.should
       (yet_another + @tokens).ignore_unassigned.should == true
     end
   end
 
-  def self.it_should_forward name
+  def self.it_should_forward(name)
     describe "forwarding ##{name}" do
       before(:each) do
         @internal_tokens = double :internal_tokens
         @tokens = described_class.new @internal_tokens
       end
       it "should forward #{name} to the internal tokens" do
-        proc_double = lambda {}
+        proc_double = -> {}
 
         @internal_tokens.should_receive(name).once.with no_args, &proc_double
 
@@ -270,5 +275,4 @@ describe Picky::Query::Tokens do
   it_should_forward :empty?
   it_should_forward :each
   it_should_forward :exit
-
 end
