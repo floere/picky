@@ -51,7 +51,7 @@ HELP
         cli.executor_class_for.should == [Picky::CLI::Help]
       end
       it 'returns Generator for generate' do
-        cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{client,server,all_in_one}', :"app_directory_name"]
+        cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{client,server,all_in_one}', :app_directory_name]
       end
       it 'returns Help for help' do
         cli.executor_class_for(:help).should == [Picky::CLI::Help]

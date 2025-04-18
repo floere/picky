@@ -164,7 +164,7 @@ describe Picky::Category do
           @partial.should_receive(:ids).once.with(2).and_return [2]
           @partial.should_receive(:ids).once.with(3).and_return [3]
 
-          @category.ids(token).should == [1,2,3]
+          @category.ids(token).should == [1, 2, 3]
         end
       end
       context 'exact bundle' do
@@ -176,7 +176,7 @@ describe Picky::Category do
           @exact.should_receive(:ids).once.with(2).and_return [2]
           @exact.should_receive(:ids).once.with(3).and_return [3]
 
-          @category.ids(token).should == [1,2,3]
+          @category.ids(token).should == [1, 2, 3]
         end
       end
     end

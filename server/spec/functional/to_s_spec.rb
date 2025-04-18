@@ -20,14 +20,14 @@ describe 'to_s' do
     end
     it 'shows an index correctly' do
       index = Picky::Index.new :test do
-        source { [1,2,3] }
+        source { [1, 2, 3] }
         category :alli
       end
       index.to_s.should == 'Picky::Index(test, result_id: test, source: [1, 2, 3], categories: Picky::Categories(Picky::Category(test:alli)))'
     end
     it 'shows an index correctly' do
       index = Picky::Index.new :test do
-        source { [1,2,3] }
+        source { [1, 2, 3] }
         category :alli
         category :text
       end

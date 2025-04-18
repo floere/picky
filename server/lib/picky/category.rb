@@ -234,7 +234,7 @@ WARNING
     
     def to_tree_s(indent = 0)
       s = <<-TREE
-#{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
+#{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
 #{' ' * indent}  #{exact.to_tree_s(4)}
 #{' ' * indent}  #{partial.to_tree_s(4)}
 TREE

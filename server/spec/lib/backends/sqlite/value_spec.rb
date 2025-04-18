@@ -43,7 +43,7 @@ describe Picky::Backends::SQLite::Value do
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', ['a', '[1,2,3]']
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', ['b', '[4,5,6]']
 
-        db.dump_sqlite a: [1,2,3], b: [4,5,6]
+        db.dump_sqlite a: [1, 2, 3], b: [4, 5, 6]
       end
     end
 

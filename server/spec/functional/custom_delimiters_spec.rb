@@ -102,10 +102,10 @@ describe 'custom delimiters' do
     index.add rangy.new(4, 3000)
 
     try = Picky::Search.new index
-    try.search('1980…2015').ids.should == [2,3,4]
+    try.search('1980…2015').ids.should == [2, 3, 4]
     
     try.search('1980-2015').ids.should == []
     Picky::Query::Token.range_character = '-'
-    try.search('1980-2015').ids.should == [2,3,4]
+    try.search('1980-2015').ids.should == [2, 3, 4]
   end
 end

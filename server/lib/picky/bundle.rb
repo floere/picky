@@ -175,7 +175,7 @@ module Picky
 
     def to_tree_s(indent = 0, &block)
       s = <<-TREE
-#{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
+#{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
 #{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block && block.call(inverted)}
 #{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block && block.call(weights)}
 #{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block && block.call(similarity)}

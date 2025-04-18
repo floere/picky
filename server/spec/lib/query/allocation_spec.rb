@@ -53,7 +53,7 @@ describe Picky::Query::Allocation do
     end
     context 'with ids' do
       before(:each) do
-        @allocation.stub calculate_ids: [1,2,3,4,5,6,7,8,9,10]
+        @allocation.stub calculate_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       end
       it 'should process right' do
         @allocation.process!(0, 0).should == []
@@ -62,16 +62,16 @@ describe Picky::Query::Allocation do
         @allocation.process!(0, 10).should == []
       end
       it 'should process right' do
-        @allocation.process!(5, 0).should == [1,2,3,4,5]
+        @allocation.process!(5, 0).should == [1, 2, 3, 4, 5]
       end
       it 'should process right' do
-        @allocation.process!(5, 5).should == [6,7,8,9,10]
+        @allocation.process!(5, 5).should == [6, 7, 8, 9, 10]
       end
       it 'should process right' do
-        @allocation.process!(20, 0).should == [1,2,3,4,5,6,7,8,9,10]
+        @allocation.process!(20, 0).should == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       end
       it 'should process right' do
-        @allocation.process!(20, 5).should == [6,7,8,9,10]
+        @allocation.process!(20, 5).should == [6, 7, 8, 9, 10]
       end
       it 'should process right' do
         @allocation.process!(20, 10).should == []
@@ -79,7 +79,7 @@ describe Picky::Query::Allocation do
     end
     context 'with symbol ids' do
       before(:each) do
-        @allocation.stub calculate_ids: [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j]
+        @allocation.stub calculate_ids: [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j]
       end
       it 'should process right' do
         @allocation.process!(0, 0).should == []
@@ -88,16 +88,16 @@ describe Picky::Query::Allocation do
         @allocation.process!(0, 10).should == []
       end
       it 'should process right' do
-        @allocation.process!(5, 0).should == [:a,:b,:c,:d,:e]
+        @allocation.process!(5, 0).should == [:a, :b, :c, :d, :e]
       end
       it 'should process right' do
-        @allocation.process!(5, 5).should == [:f,:g,:h,:i,:j]
+        @allocation.process!(5, 5).should == [:f, :g, :h, :i, :j]
       end
       it 'should process right' do
-        @allocation.process!(20, 0).should == [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j]
+        @allocation.process!(20, 0).should == [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j]
       end
       it 'should process right' do
-        @allocation.process!(20, 5).should == [:f,:g,:h,:i,:j]
+        @allocation.process!(20, 5).should == [:f, :g, :h, :i, :j]
       end
       it 'should process right' do
         @allocation.process!(20, 10).should == []
@@ -107,28 +107,28 @@ describe Picky::Query::Allocation do
   
   describe 'subject' do
     before(:each) do
-      @allocation.stub calculate_ids: [1,2,3,4,5,6,7,8,9,10]
+      @allocation.stub calculate_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(0, 0, [1,3,7]).should == []
+      @allocation.process_with_illegals!(0, 0, [1, 3, 7]).should == []
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(0, 10, [1,3,7]).should == []
+      @allocation.process_with_illegals!(0, 10, [1, 3, 7]).should == []
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(5, 0, [1,3,7]).should == [2,4,5,6,8]
+      @allocation.process_with_illegals!(5, 0, [1, 3, 7]).should == [2, 4, 5, 6, 8]
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(5, 5, [1,3,7]).should == [9,10]
+      @allocation.process_with_illegals!(5, 5, [1, 3, 7]).should == [9, 10]
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(20, 0, [1,3,7]).should == [2,4,5,6,8,9,10]
+      @allocation.process_with_illegals!(20, 0, [1, 3, 7]).should == [2, 4, 5, 6, 8, 9, 10]
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(20, 5, [1,3,7]).should == [9,10]
+      @allocation.process_with_illegals!(20, 5, [1, 3, 7]).should == [9, 10]
     end
     it 'should process right' do
-      @allocation.process_with_illegals!(20, 10, [1,3,7]).should == []
+      @allocation.process_with_illegals!(20, 10, [1, 3, 7]).should == []
     end
   end
 
@@ -140,7 +140,7 @@ describe Picky::Query::Allocation do
       end
       context 'with ids' do
         it 'should output an array of information' do
-          @backend.stub ids: [1,2,3]
+          @backend.stub ids: [1, 2, 3]
 
           @allocation.process! 20, 0
 
@@ -158,7 +158,7 @@ describe Picky::Query::Allocation do
       end
       context 'with ids' do
         it 'should output an array of information' do
-          @backend.stub ids: [1,2,3]
+          @backend.stub ids: [1, 2, 3]
 
           @allocation.process! 20, 0
 

@@ -120,6 +120,6 @@ p ary2
 
 p [:intersect, ary1.intersect(ary2.to_ptr)]
 
-p [:slice!, ary1.slice!(2,2)]
+p [:slice!, ary1.slice!(2, 2)]
 
 p ary1

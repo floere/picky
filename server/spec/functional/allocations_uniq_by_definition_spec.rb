@@ -28,14 +28,14 @@ describe 'uniqueness of allocations' do
     
     # Picky finds three categories.
     #
-    it { try.search('text*').ids.should == [1,1,1] }
+    it { try.search('text*').ids.should == [1, 1, 1] }
     
     # Picky finds 9 possible allocations.
     #
-    it { try.search('text* text*').ids.should == [1,1,1]*3 }
+    it { try.search('text* text*').ids.should == [1, 1, 1]*3 }
     
     # Picky finds 27 possible allocations.
     #
-    it { try.search('text* text* text*', 100).ids.should == [1,1,1]*3*3 }
+    it { try.search('text* text* text*', 100).ids.should == [1, 1, 1]*3*3 }
   end
 end

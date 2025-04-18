@@ -15,14 +15,14 @@ describe 'Search#max_allocations' do
     try = Picky::Search.new index
 
     try.search('hello world').allocations.size.should == 4
-    try.search('hello world').ids.should == [1,1,1,1]
+    try.search('hello world').ids.should == [1, 1, 1, 1]
 
     try_again = Picky::Search.new index do
       max_allocations 2
     end
 
     try_again.search('hello world').allocations.size.should == 2
-    try_again.search('hello world').ids.should == [1,1]
+    try_again.search('hello world').ids.should == [1, 1]
 
     try_again.max_allocations 1
 

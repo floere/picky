@@ -285,7 +285,7 @@ describe BookSearch do
   # File based.
   #
   it { expect(file.search('first').ids).to eq [1] }
-  it { expect(file.search('entry').ids).to eq [1,2,3] }
+  it { expect(file.search('entry').ids).to eq [1, 2, 3] }
   it { expect(file.search('entry first').ids).to eq [1] }
 
   # Infix partial.
@@ -325,7 +325,7 @@ describe BookSearch do
   it { expect(partial.search('postfix:octopuss').ids).to eq [1] }
   it { expect(partial.search('postfix:octopussy').ids).to eq [1] }
 
-  it { expect(partial.search('infix:c').ids).to eq [1,2] }
+  it { expect(partial.search('infix:c').ids).to eq [1, 2] }
   it { expect(partial.search('infix:br').ids).to eq [2] }
   it { expect(partial.search('infix:cad').ids).to eq [2] }
 

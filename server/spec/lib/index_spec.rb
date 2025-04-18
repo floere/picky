@@ -129,7 +129,7 @@ EXPECTED
       let(:index) do
         some_source
         idx = described_class.new :some_index_name do
-          source { [1,2,3] }
+          source { [1, 2, 3] }
           category :text1
           category :text2
           result_identifier :foobar

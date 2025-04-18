@@ -32,7 +32,7 @@ describe Picky::Bundle do
         @bundle.add 2, 'title'
 
         @bundle.realtime.should == { 1 => ['title'], 2 => ['title'] }
-        @bundle.inverted.should == { 'title' => [2,1] }
+        @bundle.inverted.should == { 'title' => [2, 1] }
         @bundle.weights.should == { 'title' => 0.693 }
         @bundle.similarity.should == { 'TTL' => ['title'] }
       end
@@ -121,7 +121,7 @@ describe Picky::Bundle do
         @bundle.add 2, :title
 
         @bundle.realtime.should == { 1 => [:title], 2 => [:title] }
-        @bundle.inverted.should == { title: [2,1] }
+        @bundle.inverted.should == { title: [2, 1] }
         @bundle.weights.should == { title: 0.693 }
         @bundle.similarity.should == { TTL: [:title] }
       end

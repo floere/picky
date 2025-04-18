@@ -39,7 +39,7 @@ describe 'range queries' do
     
     # Quote to make it non-partial.
     #
-    try.search('0…3000"').ids.should == [7,6,2,8,3,1,4,5]
+    try.search('0…3000"').ids.should == [7, 6, 2, 8, 3, 1, 4, 5]
   end
   it 'is semi-reasonably fast with huge ranges' do
     # Quote to make it non-partial.
@@ -52,13 +52,13 @@ describe 'range queries' do
   end
     
   it 'handles basic range queries' do
-    try.search('1980…2001').ids.should == [8,3,1]
-    try.search('f…u').ids.should == [2,1,8,7,4]
+    try.search('1980…2001').ids.should == [8, 3, 1]
+    try.search('f…u').ids.should == [2, 1, 8, 7, 4]
   end
   
   it 'can handle qualifiers' do
-    try.search('year:1980…2001').ids.should == [8,3,1]
-    try.search('alphabet:f…u').ids.should == [2,1,8,7,4]
+    try.search('year:1980…2001').ids.should == [8, 3, 1]
+    try.search('alphabet:f…u').ids.should == [2, 1, 8, 7, 4]
   end
   
   it 'can be combined with other search words' do
@@ -67,8 +67,8 @@ describe 'range queries' do
   end
   
   it 'can handle multiple range queries' do
-    try.search('1980…2001 a…h').ids.should == [3,1]
-    try.search('f…u 881…1977').ids.should == [2,7]
+    try.search('1980…2001 a…h').ids.should == [3, 1]
+    try.search('f…u 881…1977').ids.should == [2, 7]
   end
   
   it 'can be combined with partial queries' do

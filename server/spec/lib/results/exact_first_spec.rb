@@ -37,16 +37,16 @@ describe Picky::Results::ExactFirst do
 
   describe 'ids' do
     it 'uses first the exact, then the partial ids' do
-      @exact.stub   ids: [1,4,5,6]
-      @partial.stub ids: [2,3,7]
+      @exact.stub   ids: [1, 4, 5, 6]
+      @partial.stub ids: [2, 3, 7]
 
-      @category.ids(double(:token, text: :anything, partial?: true)).should == [1,4,5,6,2,3,7]
+      @category.ids(double(:token, text: :anything, partial?: true)).should == [1, 4, 5, 6, 2, 3, 7]
     end
     it 'uses only the exact ids' do
-      @exact.stub   ids: [1,4,5,6]
-      @partial.stub ids: [2,3,7]
+      @exact.stub   ids: [1, 4, 5, 6]
+      @partial.stub ids: [2, 3, 7]
 
-      @category.ids(double(:token, text: :anything, partial?: false)).should == [1,4,5,6]
+      @category.ids(double(:token, text: :anything, partial?: false)).should == [1, 4, 5, 6]
     end
   end
 

@@ -52,7 +52,7 @@ module Picky
       def splits(text)
         l = text.length
         (0..l-1).map do |x|
-          [text.slice(0,x), text.slice(x,l)]
+          [text.slice(0, x), text.slice(x, l)]
         end
       end
       

@@ -20,7 +20,7 @@ describe Picky::Query::Indexes do
 
   describe 'expand_combinations_from' do
     it 'generates all possible combinations from the given ones' do
-      combinations = [[1,2,3], [:a, :b, :c], [:k, :l]]
+      combinations = [[1, 2, 3], [:a, :b, :c], [:k, :l]]
 
       indexes.expand_combinations_from(combinations).should == [
         [1, :a, :k],
@@ -49,7 +49,7 @@ describe Picky::Query::Indexes do
       indexes.expand_combinations_from(combinations).should == [[1, 2, 3]]
     end
     it 'can handle empty combinations' do
-      combinations = [[1,2,3], [:a, :b, :c], []]
+      combinations = [[1, 2, 3], [:a, :b, :c], []]
 
       indexes.expand_combinations_from(combinations).should == []
     end
@@ -64,7 +64,7 @@ describe Picky::Query::Indexes do
       indexes.expand_combinations_from(combinations).should == []
     end
     it 'is fast in a complicated case' do
-      combinations = [[1,2,3], [:a, :b, :c], [:k, :l]]
+      combinations = [[1, 2, 3], [:a, :b, :c], [:k, :l]]
 
       performance_of { indexes.expand_combinations_from(combinations) }.should < 0.00055
     end

@@ -105,7 +105,7 @@ describe 'Realtime Indexing' do
 
           index.add Book.new(2, 'Title New', 'Author New')
 
-          books.search('Titl').ids.should == [2,1]
+          books.search('Titl').ids.should == [2, 1]
         end
         it 'will not have duplicate result from adding something twice' do
           books.search('Titl').ids.should == [1]
@@ -114,7 +114,7 @@ describe 'Realtime Indexing' do
           index.add Book.new(2, 'New Title', 'New Author')
           index.add Book.new(2, 'Title New', 'Author New')
 
-          books.search('Titl').ids.should == [2,1]
+          books.search('Titl').ids.should == [2, 1]
         end
 
         it 'allows replacing something' do
@@ -148,11 +148,11 @@ describe 'Realtime Indexing' do
 
           index.add Book.new(2, 'Title New', 'Author New')
 
-          books.search('title:Title').ids.should == [2,1]
+          books.search('title:Title').ids.should == [2, 1]
           
           index.replace Book.new(1, 'Title', 'Author')
           
-          books.search('title:Title').ids.should == [1,2]
+          books.search('title:Title').ids.should == [1, 2]
         end
       end
 
@@ -180,7 +180,7 @@ describe 'Realtime Indexing' do
 
           index.add Book.new(2, 'Title New', 'Author New')
 
-          books.search('Titl').ids.should == [2,1]
+          books.search('Titl').ids.should == [2, 1]
         end
 
         it 'allows replacing something' do
@@ -235,7 +235,7 @@ describe 'Realtime Indexing' do
 
           index.add Book.new(2, 'Title New', 'Author New')
 
-          books.search('Authr~').ids.should == [2,1]
+          books.search('Authr~').ids.should == [2, 1]
         end
 
         it 'allows replacing something' do
@@ -350,7 +350,7 @@ describe 'Realtime Indexing' do
 
         index.add Book.new('two', 'Title New', 'Author New')
 
-        books.search('Titl').ids.should == [:two,:one]
+        books.search('Titl').ids.should == [:two, :one]
       end
 
       it 'allows replacing something' do
@@ -405,7 +405,7 @@ describe 'Realtime Indexing' do
 
         index.add Book.new('two', 'Title New', 'Author New')
 
-        books.search('Titl').ids.should == [:two,:one]
+        books.search('Titl').ids.should == [:two, :one]
       end
 
       it 'allows replacing something' do
@@ -460,7 +460,7 @@ describe 'Realtime Indexing' do
 
         index.add Book.new('two', 'Title New', 'Author New')
 
-        books.search('Authr~').ids.should == [:two,:one]
+        books.search('Authr~').ids.should == [:two, :one]
       end
 
       it 'allows replacing something' do

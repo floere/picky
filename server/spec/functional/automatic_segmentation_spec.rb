@@ -108,9 +108,9 @@ describe 'automatic splitting' do
     
         # Common parts are found in multiple examples.
         #
-        it { try.search('colorpurple').ids.should == [4,1] }
-        it { try.search('bownew').ids.should      == [3,1] }
-        it { try.search('spainisking').ids.should == [6,1] }
+        it { try.search('colorpurple').ids.should == [4, 1] }
+        it { try.search('bownew').ids.should      == [3, 1] }
+        it { try.search('spainisking').ids.should == [6, 1] }
       end
   
       it 'is fast enough' do

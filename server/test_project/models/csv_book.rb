@@ -3,7 +3,7 @@ class CSVBook < Each
     def id
       self[0]
     end
-    [:title,:author,:isbn,:year,:publisher,:subjects].each.with_index do |field, i|
+    [:title, :author, :isbn, :year, :publisher, :subjects].each.with_index do |field, i|
       i = i+1
       define_method field do
         self[i]

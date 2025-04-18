@@ -38,7 +38,7 @@ describe Picky::Bundle do
 
         @bundle.realtime[1].should == ['title']
         @bundle.realtime[2].should == ['title']
-        @bundle.inverted['title'].should == [2,1]
+        @bundle.inverted['title'].should == [2, 1]
         @bundle.weights['title'].should == 0.693
         @bundle.similarity['TTL'].should == ['title']
       end
@@ -132,13 +132,13 @@ describe Picky::Bundle do
         @bundle.add 2, :title
 
         @bundle.realtime.should == { 1 => [:title], 2 => [:title] }
-        @bundle.inverted.should == { title: [2,1] }
+        @bundle.inverted.should == { title: [2, 1] }
         @bundle.weights.should == { title: 0.693 }
         @bundle.similarity.should == { TTL: [:title] }
 
         @bundle.realtime[1].should == [:title]
         @bundle.realtime[2].should == [:title]
-        @bundle.inverted[:title].should == [2,1]
+        @bundle.inverted[:title].should == [2, 1]
         @bundle.weights[:title].should == 0.693
         @bundle.similarity[:TTL].should == [:title]
       end
@@ -184,7 +184,7 @@ describe Picky::Bundle do
         @bundle.realtime[1].should == [:title]
         @bundle.inverted[:title].should == [1]
         @bundle.weights[:title].should == 0.0
-        @bundle.similarity[:'TTL'].should == [:title]
+        @bundle.similarity[:TTL].should == [:title]
       end
       it 'works correctly' do
         @bundle.add 1, :title

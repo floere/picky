@@ -54,10 +54,10 @@ describe Picky::Query::Allocations do
         @allocations.ids(0).should == []
       end
       it 'should return the right amount of ids' do
-        @allocations.ids(6).should == [1,2,3,4,5,6]
+        @allocations.ids(6).should == [1, 2, 3, 4, 5, 6]
       end
       it 'should return the right amount of ids' do
-        @allocations.ids.should == [1,2,3,4,5,6,7,8,9]
+        @allocations.ids.should == [1, 2, 3, 4, 5, 6, 7, 8, 9]
       end
     end
     context 'symbols' do
@@ -71,10 +71,10 @@ describe Picky::Query::Allocations do
         @allocations.ids(0).should == []
       end
       it 'should return the right amount of ids' do
-        @allocations.ids(6).should == [:a,:b,:c,:d,:e,:f]
+        @allocations.ids(6).should == [:a, :b, :c, :d, :e, :f]
       end
       it 'should return the right amount of ids' do
-        @allocations.ids.should == [:a,:b,:c,:d,:e,:f,:g,:h,:i]
+        @allocations.ids.should == [:a, :b, :c, :d, :e, :f, :g, :h, :i]
       end
     end
   end
@@ -93,15 +93,15 @@ describe Picky::Query::Allocations do
           @offset = 1
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(5,1,nil).and_return [2, 3, 4]
-          @allocation2.should_receive(:process!).once.with(2,0,nil).and_return [5, 6]
+          @allocation1.should_receive(:process!).once.with(5, 1, nil).and_return [2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(2, 0, nil).and_return [5, 6]
           @allocation3.should_receive(:process!).never
 
           @allocations.process! @amount, @offset, 0
         end
         it 'should call the process! method right including unique' do
-          @allocation1.should_receive(:process_with_illegals!).once.with(5,0,[],nil).and_return [2, 3, 4]
-          @allocation2.should_receive(:process_with_illegals!).once.with(2,0,[2,3,4],nil).and_return [5, 6]
+          @allocation1.should_receive(:process_with_illegals!).once.with(5, 0, [], nil).and_return [2, 3, 4]
+          @allocation2.should_receive(:process_with_illegals!).once.with(2, 0, [2, 3, 4], nil).and_return [5, 6]
           @allocation3.should_receive(:process_with_illegals!).never
 
           @allocations.process_unique! @amount, @offset, 0
@@ -113,7 +113,7 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(1,0,nil).and_return [1]
+          @allocation1.should_receive(:process!).once.with(1, 0, nil).and_return [1]
           @allocation2.should_receive(:process!).never
           @allocation3.should_receive(:process!).never
 
@@ -126,9 +126,9 @@ describe Picky::Query::Allocations do
           @offset = 1
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(5,1,nil).and_return [2, 3, 4]
-          @allocation2.should_receive(:process!).once.with(2,0,nil).and_return [5, 6]
-          @allocation3.should_receive(:process!).once.with(0,0,nil).and_return []
+          @allocation1.should_receive(:process!).once.with(5, 1, nil).and_return [2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(2, 0, nil).and_return [5, 6]
+          @allocation3.should_receive(:process!).once.with(0, 0, nil).and_return []
 
           @allocations.process! @amount, @offset, 1
         end
@@ -139,8 +139,8 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(1,0,nil).and_return [1]
-          @allocation2.should_receive(:process!).once.with(0,0,nil).and_return []
+          @allocation1.should_receive(:process!).once.with(1, 0, nil).and_return [1]
+          @allocation2.should_receive(:process!).once.with(0, 0, nil).and_return []
           @allocation3.should_receive(:process!).never
 
           @allocations.process! @amount, @offset, 1
@@ -152,7 +152,7 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(4,0,nil).and_return [1, 2, 3, 4]
+          @allocation1.should_receive(:process!).once.with(4, 0, nil).and_return [1, 2, 3, 4]
           @allocation2.should_receive(:process!).never
           @allocation3.should_receive(:process!).never
 
@@ -165,8 +165,8 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(4,0,nil).and_return [1, 2, 3, 4]
-          @allocation2.should_receive(:process!).once.with(0,0,nil).and_return []
+          @allocation1.should_receive(:process!).once.with(4, 0, nil).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(0, 0, nil).and_return []
           @allocation3.should_receive(:process!).never
 
           @allocations.process! @amount, @offset, 1
@@ -178,8 +178,8 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(5,0,nil).and_return [1, 2, 3, 4]
-          @allocation2.should_receive(:process!).once.with(1,0,nil).and_return [5]
+          @allocation1.should_receive(:process!).once.with(5, 0, nil).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(1, 0, nil).and_return [5]
           @allocation3.should_receive(:process!).never
 
           @allocations.process! @amount, @offset, 0
@@ -191,9 +191,9 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(5,0,nil).and_return [1, 2, 3, 4]
-          @allocation2.should_receive(:process!).once.with(1,0,nil).and_return [5]
-          @allocation3.should_receive(:process!).once.with(0,0,nil).and_return []
+          @allocation1.should_receive(:process!).once.with(5, 0, nil).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(1, 0, nil).and_return [5]
+          @allocation3.should_receive(:process!).once.with(0, 0, nil).and_return []
 
           @allocations.process! @amount, @offset, 1
         end
@@ -204,9 +204,9 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should call the process! method right' do
-          @allocation1.should_receive(:process!).once.with(8,0,nil).and_return [1, 2, 3, 4]
-          @allocation2.should_receive(:process!).once.with(4,0,nil).and_return [5, 6, 7]
-          @allocation3.should_receive(:process!).once.with(1,0,nil).and_return [8]
+          @allocation1.should_receive(:process!).once.with(8, 0, nil).and_return [1, 2, 3, 4]
+          @allocation2.should_receive(:process!).once.with(4, 0, nil).and_return [5, 6, 7]
+          @allocation3.should_receive(:process!).once.with(1, 0, nil).and_return [8]
 
           @allocations.process! @amount, @offset, 1
         end
@@ -218,9 +218,9 @@ describe Picky::Query::Allocations do
         @offset = 2
       end
       it 'should call the process! method right' do
-        @allocation1.should_receive(:process!).once.with(6,2,nil).and_return [3,4]
-        @allocation2.should_receive(:process!).once.with(4,0,nil).and_return [5,6,7]
-        @allocation3.should_receive(:process!).once.with(1,0,nil).and_return [8]
+        @allocation1.should_receive(:process!).once.with(6, 2, nil).and_return [3, 4]
+        @allocation2.should_receive(:process!).once.with(4, 0, nil).and_return [5, 6, 7]
+        @allocation3.should_receive(:process!).once.with(1, 0, nil).and_return [8]
 
         @allocations.process! @amount, @offset
       end
@@ -231,9 +231,9 @@ describe Picky::Query::Allocations do
         @offset = 8
       end
       it 'should call the process! method right' do
-        @allocation1.should_receive(:process!).once.with(10,8,nil).and_return []
-        @allocation2.should_receive(:process!).once.with(10,4,nil).and_return []
-        @allocation3.should_receive(:process!).once.with(10,1,nil).and_return [9]
+        @allocation1.should_receive(:process!).once.with(10, 8, nil).and_return []
+        @allocation2.should_receive(:process!).once.with(10, 4, nil).and_return []
+        @allocation3.should_receive(:process!).once.with(10, 1, nil).and_return [9]
 
         @allocations.process! @amount, @offset
       end
@@ -243,9 +243,9 @@ describe Picky::Query::Allocations do
         @amount = 0
       end
       it 'should return an empty array always' do
-        @allocation1.should_receive(:process!).once.with(0,0,nil).and_return []
-        @allocation2.should_receive(:process!).once.with(0,0,nil).and_return []
-        @allocation3.should_receive(:process!).once.with(0,0,nil).and_return []
+        @allocation1.should_receive(:process!).once.with(0, 0, nil).and_return []
+        @allocation2.should_receive(:process!).once.with(0, 0, nil).and_return []
+        @allocation3.should_receive(:process!).once.with(0, 0, nil).and_return []
 
         @allocations.process! @amount
       end
@@ -259,9 +259,9 @@ describe Picky::Query::Allocations do
           @offset = 0
         end
         it 'should return certain ids' do
-          @allocation1.should_receive(:process!).once.with(3,0,nil).and_return [1,2,3]
-          @allocation2.should_receive(:process!).once.with(0,0,nil).and_return []
-          @allocation3.should_receive(:process!).once.with(0,0,nil).and_return []
+          @allocation1.should_receive(:process!).once.with(3, 0, nil).and_return [1, 2, 3]
+          @allocation2.should_receive(:process!).once.with(0, 0, nil).and_return []
+          @allocation3.should_receive(:process!).once.with(0, 0, nil).and_return []
 
           @allocations.process! @amount, @offset
         end
@@ -271,9 +271,9 @@ describe Picky::Query::Allocations do
           @offset = 3
         end
         it 'should return certain ids' do
-          @allocation1.should_receive(:process!).once.with(3,3,nil).and_return [4]
-          @allocation2.should_receive(:process!).once.with(2,0,nil).and_return [5,6]
-          @allocation3.should_receive(:process!).once.with(0,0,nil).and_return []
+          @allocation1.should_receive(:process!).once.with(3, 3, nil).and_return [4]
+          @allocation2.should_receive(:process!).once.with(2, 0, nil).and_return [5, 6]
+          @allocation3.should_receive(:process!).once.with(0, 0, nil).and_return []
 
           @allocations.process! @amount, @offset
         end

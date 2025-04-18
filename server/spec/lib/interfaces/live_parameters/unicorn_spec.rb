@@ -131,7 +131,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
   describe 'kill_each_worker_except' do
     context 'worker pid in the worker pids' do
       before(:each) do
-        @parameters.stub worker_pids: [1,2,3,4]
+        @parameters.stub worker_pids: [1, 2, 3, 4]
       end
       it 'kills each except the one' do
         @parameters.should_receive(:kill_worker).once.with(:KILL, 1)
@@ -144,7 +144,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
     end
     context 'worker pid not in the worker pids (unrealistic, but...)' do
       before(:each) do
-        @parameters.stub worker_pids: [1,2,3,4]
+        @parameters.stub worker_pids: [1, 2, 3, 4]
       end
       it 'kills each except the one' do
         @parameters.should_receive(:kill_worker).once.with(:KILL, 1)

@@ -5,7 +5,7 @@ describe Picky::Splitter do
   describe 'single' do
     let(:splitter) { described_class.new /:/ }
     it 'splits right' do
-      splitter.single(':b').should == ['','b']
+      splitter.single(':b').should == ['', 'b']
     end
     it 'splits right' do
       splitter.single('a:b').should == %w[a b]
