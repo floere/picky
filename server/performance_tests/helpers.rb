@@ -1,17 +1,15 @@
 class Object; def timed_exclaim(_); end end
 
 def performance_of
-  if block_given?
-    code = Proc.new
-    GC.disable
-    t0 = Time.now
-    code.call
-    t1 = Time.now
-    GC.enable
-    (t1 - t0)
-  else
-    raise '#performance_of needs a block'
-  end
+  raise '#performance_of needs a block' unless block_given?
+
+  code = Proc.new
+  GC.disable
+  t0 = Time.now
+  code.call
+  t1 = Time.now
+  GC.enable
+  (t1 - t0)
 end
 
 def compare_strings

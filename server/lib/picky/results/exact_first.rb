@@ -10,10 +10,10 @@ module Picky
       # THINK Can we unextend in the case it is an index?
       #
       def self.extended(index_or_category)
-        if index_or_category.respond_to? :categories
-          extend_each_of index_or_category.categories
-          index_or_category
-        end
+        return unless index_or_category.respond_to? :categories
+
+        extend_each_of index_or_category.categories
+        index_or_category
       end
 
       def self.extend_each_of(categories)

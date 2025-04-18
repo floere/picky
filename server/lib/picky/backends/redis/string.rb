@@ -25,11 +25,11 @@ module Picky
         # Note: We could use multi, but it did not help.
         #
         def dump(hash)
-          unless @realtime
-            clear
-            hash.each_pair do |key, value|
-              client.hset namespace, key, value
-            end
+          return if @realtime
+
+          clear
+          hash.each_pair do |key, value|
+            client.hset namespace, key, value
           end
         end
 

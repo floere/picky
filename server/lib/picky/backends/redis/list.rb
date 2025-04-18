@@ -32,15 +32,15 @@ module Picky
         # Writes the hash into Redis.
         #
         def dump(hash)
-          unless @realtime
-            clear
-            hash.each_pair do |key, values|
-              redis_key = "#{namespace}:#{key}"
-              i = 0
-              values.each do |value|
-                i += 1
-                client.zadd redis_key, i, value
-              end
+          return if @realtime
+
+          clear
+          hash.each_pair do |key, values|
+            redis_key = "#{namespace}:#{key}"
+            i = 0
+            values.each do |value|
+              i += 1
+              client.zadd redis_key, i, value
             end
           end
         end

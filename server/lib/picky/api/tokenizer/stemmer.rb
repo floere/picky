@@ -3,14 +3,12 @@ module Picky
     module Tokenizer
       module Stemmer
         def extract_stemmer(thing)
-          if thing.respond_to? :stem
-            thing
-          else
-            raise ArgumentError, <<~ERROR
-              The stems_with option needs a stemmer,
-              which responds to #stem(text) and returns stemmed_text."
-            ERROR
-          end
+          raise ArgumentError, <<~ERROR unless thing.respond_to? :stem
+            The stems_with option needs a stemmer,
+            which responds to #stem(text) and returns stemmed_text."
+          ERROR
+
+          thing
         end
       end
     end

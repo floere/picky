@@ -80,10 +80,10 @@ amount = 2_000
 def mark(klass = String)
   GC.start
   $marked = ObjectSpace.each_object(klass).to_a
-  if block_given?
-    yield
-    diff klass
-  end
+  return unless block_given?
+
+  yield
+  diff klass
 end
 
 def diff(klass = String)

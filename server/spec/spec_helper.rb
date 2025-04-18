@@ -53,37 +53,33 @@ rescue LoadError
   module Picky; PerformanceRatio = 0.5 end
 end
 def performance_of(&code)
-  if code
-    GC.disable
-    t0 = Time.now
-    code.call
-    t1 = Time.now
-    GC.enable
-    (t1 - t0) * Picky::PerformanceRatio
-  else
-    raise '#performance_of needs a block'
-  end
+  raise '#performance_of needs a block' unless code
+
+  GC.disable
+  t0 = Time.now
+  code.call
+  t1 = Time.now
+  GC.enable
+  (t1 - t0) * Picky::PerformanceRatio
 end
 
 def gc_runs_of
-  if block_given?
-    code = Proc.new
-    GC.start
-    calls = GC.count
-    code.call
-    GC.count - calls
-  else
-    raise '#gc_runs_of needs a block'
-  end
+  raise '#gc_runs_of needs a block' unless block_given?
+
+  code = Proc.new
+  GC.start
+  calls = GC.count
+  code.call
+  GC.count - calls
 end
 
 def mark(klass = String)
   GC.start
   $marked = ObjectSpace.each_object(klass).to_a
-  if block_given?
-    yield
-    diff klass
-  end
+  return unless block_given?
+
+  yield
+  diff klass
 end
 
 def diff(klass = String)

@@ -97,13 +97,13 @@ module Picky
       weight
     ]
     def warn_if_unknown(options)
-      if options && !(options.keys - @@known_keys).empty?
-        warn <<~WARNING
+      return unless options && !(options.keys - @@known_keys).empty?
 
-          Warning: Category options #{options} for category #{name} contain an unknown option.
-                   Working options are: #{@@known_keys}.
-        WARNING
-      end
+      warn <<~WARNING
+
+        Warning: Category options #{options} for category #{name} contain an unknown option.
+                 Working options are: #{@@known_keys}.
+      WARNING
     end
 
     def weights_from(options)

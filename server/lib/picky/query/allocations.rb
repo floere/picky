@@ -96,11 +96,9 @@ module Picky
           # TODO: Call ids with amount as parameter?
           # result = inject(allocation.empty_array) do |total, allocation|
           result = self[1..].inject(first_allocation.ids) do |total, allocation|
-            if total.size >= amount
-              break(total)
-            else
-              total + allocation.ids
-            end
+            break(total) if total.size >= amount
+
+            total + allocation.ids
           end
           # result.shift(amount)
           result.first(amount)
