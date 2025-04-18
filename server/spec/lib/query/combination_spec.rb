@@ -62,7 +62,7 @@ describe Picky::Query::Combination do
 
   describe 'weight' do
     it 'should return the weight' do
-      @combination.weight.should == 3.14
+      expect(@combination.weight).to be_within(Float::EPSILON).of(3.14)
     end
   end
 end

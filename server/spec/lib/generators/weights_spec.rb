@@ -13,7 +13,7 @@ describe Picky::Generators::Weights do
         weights.from(7.3).should be_kind_of(Picky::Weights::Logarithmic)
       end
       it 'returns a logarithmic weighter' do
-        weights.from(3.14).weight_for(10).should == 5.443 # ln(10) + 3.14 = 2.3025 + 3.14
+        expect(weights.from(3.14).weight_for(10)).to be_within(Float::EPSILON).of(5.443) # ln(10) + 3.14 = 2.3025 + 3.14
       end
     end
     context 'with a weight object' do
@@ -25,7 +25,7 @@ describe Picky::Generators::Weights do
         end.new
       end
       it 'creates a tokenizer' do
-        weights.from(weighter).weight_for(21).should == 7.0
+        expect(weights.from(weighter).weight_for(21)).to be_within(Float::EPSILON).of(7.0)
       end
     end
     context 'invalid weight' do

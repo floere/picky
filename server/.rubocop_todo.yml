@@ -12,19 +12,6 @@
 Lint/ConstantDefinitionInBlock:
   Enabled: false
 
-# Offense count: 18
-Lint/FloatComparison:
-  Exclude:
-    - 'spec/functional/dynamic_weights_spec.rb'
-    - 'spec/lib/api/search/boost_spec.rb'
-    - 'spec/lib/backends/redis/float_spec.rb'
-    - 'spec/lib/generators/weights/constant_spec.rb'
-    - 'spec/lib/generators/weights/logarithmic_spec.rb'
-    - 'spec/lib/generators/weights_spec.rb'
-    - 'spec/lib/query/combination_spec.rb'
-    - 'spec/lib/query/combinations_spec.rb'
-    - 'spec/lib/results/exact_first_spec.rb'
-
 # Offense count: 12
 # Configuration parameters: AllowedParentClasses.
 Lint/MissingSuper:

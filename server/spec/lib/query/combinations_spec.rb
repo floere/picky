@@ -31,7 +31,7 @@ describe Picky::Query::Combinations do
       @combinations = described_class.new @combinations_ary
     end
     it 'sums the scores' do
-      @combinations.score.should == 5.90
+      expect(@combinations.score).to be_within(Float::EPSILON).of(5.9)
     end
   end
 

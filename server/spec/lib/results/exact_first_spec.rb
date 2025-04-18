@@ -59,10 +59,10 @@ describe Picky::Results::ExactFirst do
           @partial.stub weight: 1.23
         end
         it 'uses the higher weight' do
-          @category.weight(double(:token, text: :anything, partial?: true)).should == 1.23
+          expect(@category.weight(double(:token, text: :anything, partial?: true))).to be_within(Float::EPSILON).of(1.23)
         end
         it 'uses the exact weight' do
-          @category.weight(double(:token, text: :anything, partial?: false)).should == 0.12
+          expect(@category.weight(double(:token, text: :anything, partial?: false))).to be_within(Float::EPSILON).of(0.12)
         end
       end
       context 'partial without weight' do
@@ -70,10 +70,10 @@ describe Picky::Results::ExactFirst do
           @partial.stub weight: nil
         end
         it 'uses the exact weight' do
-          @category.weight(double(:token, text: :anything, partial?: true)).should == 0.12
+          expect(@category.weight(double(:token, text: :anything, partial?: true))).to be_within(Float::EPSILON).of(0.12)
         end
         it 'uses the exact weight' do
-          @category.weight(double(:token, text: :anything, partial?: false)).should == 0.12
+          expect(@category.weight(double(:token, text: :anything, partial?: false))).to be_within(Float::EPSILON).of(0.12)
         end
       end
     end
@@ -86,7 +86,7 @@ describe Picky::Results::ExactFirst do
           @partial.stub weight: 0.12
         end
         it 'uses the partial weight' do
-          @category.weight(double(:token, text: :anything, partial?: true)).should == 0.12
+          expect(@category.weight(double(:token, text: :anything, partial?: true))).to be_within(Float::EPSILON).of(0.12)
         end
         it 'uses the exact weight' do
           @category.weight(double(:token, text: :anything, partial?: false)).should.nil?

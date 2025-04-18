@@ -24,7 +24,7 @@ describe Picky::Backends::Redis::Float do
     it 'returns whatever it gets from the backend' do
       client.should_receive(:hget).at_least(1).and_return '1.23'
 
-      backend['anything'].should == 1.23
+      expect(backend['anything']).to be_within(Float::EPSILON).of(1.23)
     end
     it 'returns whatever it gets from the backend' do
       client.should_receive(:hget).at_least(1).and_return nil

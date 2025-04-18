@@ -32,6 +32,6 @@ describe 'Weights' do
     end
 
     try_with_boosts.search('text1:ohai').allocations.first.score.should
-    try_with_boosts.search('text2:hello').allocations.first.score.should == 5.00
+    expect(try_with_boosts.search('text2:hello').allocations.first.score).to be_within(Float::EPSILON).of(5.0)
   end
 end

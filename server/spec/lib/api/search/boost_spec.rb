@@ -13,7 +13,7 @@ describe Picky::API::Search::Boost do
           double(:combination, category_name: :bla)
         ]
 
-        object.extract_boosts([:bla] => +7.77).boost_for(combinations).should == 7.77
+        expect(object.extract_boosts([:bla] => +7.77).boost_for(combinations)).to be_within(Float::EPSILON).of(7.77)
       end
     end
     context 'with a boosts object' do
@@ -25,7 +25,7 @@ describe Picky::API::Search::Boost do
         end.new
       end
       it 'returns a boosts object' do
-        object.extract_boosts(booster).boost_for(:anything).should == 7.0
+        expect(object.extract_boosts(booster).boost_for(:anything)).to be_within(Float::EPSILON).of(7.0)
       end
     end
     context 'invalid weight' do
