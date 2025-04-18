@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # Requiring text here as it's optional in Picky.

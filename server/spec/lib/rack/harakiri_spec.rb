@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # If you want to use Rack::Harakiri, you

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # Describes a Picky index that uses the SQLite backend

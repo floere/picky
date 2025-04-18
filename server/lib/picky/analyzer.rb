@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Range
   def expand_with(thing)
     return (thing..thing) unless min

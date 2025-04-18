@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Picky
   module Indexers
     # Uses a number of categories, a source, and a tokenizer to index data.

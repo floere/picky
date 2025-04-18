@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # Shows that realime update data can be ignored if they are

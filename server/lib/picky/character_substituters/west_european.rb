@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #
 # THINK Does it also remove diacritics, like べ to へ?
 #

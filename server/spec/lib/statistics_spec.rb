@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # We need to load the Statistics file explicitly as the Statistics

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # We need to load the CLI file explicitly as the CLI is not loaded with the Loader (not needed in the server, only for script runs).

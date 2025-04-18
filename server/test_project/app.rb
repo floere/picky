@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # 1. Index using rake index
 # 2. Start with rake start
 # 3. curl '127.0.0.1:8080/all?query=bla'

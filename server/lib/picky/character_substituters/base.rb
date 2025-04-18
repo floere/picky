@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 module Picky
   module CharacterSubstituters
     class Base

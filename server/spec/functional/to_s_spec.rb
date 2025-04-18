@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 # Describes how users see often used classes when calling #to_s on them.

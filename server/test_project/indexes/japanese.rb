@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require_relative '../models/japanese'
 JapaneseIndex = Picky::Index.new(:japanese) do
   key_format :to_i

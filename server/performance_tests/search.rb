@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'csv'
 require 'sinatra/base'
 require_relative '../lib/picky'

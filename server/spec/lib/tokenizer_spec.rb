@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'spec_helper'
 
 describe Picky::Tokenizer do
@@ -43,7 +41,7 @@ describe Picky::Tokenizer do
           Stopwords:          -
           Splits text on:     /\\s/
           Normalizes words:   -
-          Rejects tokens?     Yes, see line 29 in app/application.rb
+          Rejects tokens?     Yes, see line 27 in app/application.rb
           Substitutes chars?  -
           Stems?              -
           Case sensitive?     Yes.

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Picky
   # Defines tokenizing processes used both in indexing and querying.
   #

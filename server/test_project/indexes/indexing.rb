@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 IndexingIndex = Picky::Index.new(:special_indexing) do
   key_format :to_i
   source   { CSVBook.all('data/books.csv') }

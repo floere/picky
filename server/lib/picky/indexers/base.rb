@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Picky
   module Indexers
     class Base

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Picky
   module Wrappers
     module Bundle

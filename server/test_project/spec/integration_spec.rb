@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require 'spec_helper'
 require_relative '../app' # Only needed when running this spec alone.
 require_relative '../../../client/lib/picky-client/spec'

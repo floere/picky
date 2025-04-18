@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
-
 module Picky
   # Handles the IRB console for Picky.
   #

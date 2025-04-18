@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 Picky::Tokenizer.default_indexing_with substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
                                        removes_characters: /[^äöüa-zA-Z0-9\s\/\-_:"&|]/i,
                                        stopwords: /\b(and|the|or|on|of|in|is|to|from|as|at|an)\b/i,
