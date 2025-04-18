@@ -3,7 +3,7 @@ puts "(if you haven't done so already)"
 puts
 
 begin
-  require File.expand_path '../../../../client/lib/picky-client', __FILE__
+  require File.expand_path '../../../client/lib/picky-client', __dir__
 rescue LoadError
   require 'picky-client'
 end

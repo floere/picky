@@ -1,4 +1,4 @@
-require File.expand_path '../../version', __FILE__
+require File.expand_path '../version', __dir__
 
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY

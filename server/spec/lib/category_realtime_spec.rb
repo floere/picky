@@ -8,7 +8,7 @@ describe Picky::Category, "Realtime API" do
 
   let(:category) do
     index    = Picky::Index.new :some_index_name
-    category = described_class.new :text, index
+    described_class.new :text, index
   end
 
   it 'offers an add method' do

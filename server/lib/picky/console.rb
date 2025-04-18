@@ -19,7 +19,7 @@ module Picky
       end
 
       libs =  " -r irb/completion"
-      libs << %( -r "#{File.expand_path('../../picky.rb', __FILE__)}" )
+      libs << %( -r "#{File.expand_path('../picky.rb', __dir__)}" )
 
       mapping = {
         'p' => 'production',

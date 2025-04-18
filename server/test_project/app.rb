@@ -13,7 +13,7 @@
 require 'sinatra/base'
 require 'active_record'
 require 'csv'
-require File.expand_path '../../lib/picky', __FILE__ # Use the current state of Picky.
+require File.expand_path '../lib/picky', __dir__ # Use the current state of Picky.
 
 require_relative 'project'
 

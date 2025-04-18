@@ -127,7 +127,7 @@ EXPECTED
 
     describe '#to_tree_s' do
       let(:index) do
-        the_source = some_source
+        some_source
         idx = described_class.new :some_index_name do
           source { [1,2,3] }
           category :text1

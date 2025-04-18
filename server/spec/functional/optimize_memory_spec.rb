@@ -51,13 +51,13 @@ describe "Memory optimization" do
     require 'objspace'
     
     GC.start
-    memsize_without_added_thing = ObjectSpace.memsize_of_all(Array)
+    ObjectSpace.memsize_of_all(Array)
     GC.start
     
     index.add thing.new(1, 'one', 'two', 'three', 'four')
     
     GC.start
-    memsize_with_added_thing = ObjectSpace.memsize_of_all(Array)
+    ObjectSpace.memsize_of_all(Array)
     GC.start
     
     10.times do |i|

@@ -60,7 +60,7 @@ module Picky
 
         require 'picky-live'
         require 'picky-live/application/app'
-      rescue LoadError => e
+      rescue LoadError
         require 'picky/extensions/object'
         warn_gem_missing 'picky-live', 'the Picky Live Interface'
         exit 1
@@ -77,7 +77,7 @@ module Picky
         require 'picky-client/tools/terminal'
         terminal = Terminal.new url_or_path, ids
         terminal.run
-      rescue LoadError => e
+      rescue LoadError
         require 'picky/extensions/object'
         warn_gem_missing 'picky-client', 'the Picky client'
         exit 1
@@ -95,7 +95,7 @@ module Picky
 
         require 'picky-statistics'
         require 'picky-statistics/application/app'
-      rescue LoadError => e
+      rescue LoadError
         require 'picky/extensions/object'
         warn_gem_missing 'picky-statistics', 'the Picky statistics'
         exit 1

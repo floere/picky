@@ -42,7 +42,7 @@ module Picky
     def fork?
       require 'procrastinate'
       parallel && Process.respond_to?(:fork)
-    rescue LoadError => e
+    rescue LoadError
       warn_procrastinate_missing
       return false
     end

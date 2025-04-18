@@ -46,7 +46,7 @@ describe "Memory Usage" do
     require 'objspace'
     
     GC.start
-    memsize_without_added_thing = ObjectSpace.memsize_of_all(Symbol)
+    ObjectSpace.memsize_of_all(Symbol)
     GC.start
     
     index.add thing.new(1, 'one')

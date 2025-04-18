@@ -11,7 +11,7 @@ module Picky
                  to: :categories
   
     def update object, where = :unshift
-      replace object, where = :unshift
+      replace object, :unshift
     end
     
   end

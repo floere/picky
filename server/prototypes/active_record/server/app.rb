@@ -3,7 +3,7 @@
 require 'active_support/json'
 require 'sinatra/base'
 begin
-  require File.expand_path '../../../../lib/picky', __FILE__
+  require File.expand_path '../../../lib/picky', __dir__
 rescue LoadError
   require 'picky'
 end

@@ -44,7 +44,7 @@ begin
   # Remove this file for the default.
   #
   require_relative 'performance_ratio'
-rescue LoadError => e
+rescue LoadError
   # Default is for slower computers and
   # collaborators who don't need to check
   # performance so much.

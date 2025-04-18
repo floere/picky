@@ -29,7 +29,7 @@ module Picky
       end
       def check_redis_gem
         require 'redis'
-      rescue LoadError => e
+      rescue LoadError
         warn_gem_missing 'redis', 'the Redis client'
       end
 
@@ -247,7 +247,7 @@ module Picky
                             offset,
                             (offset + amount)
             end
-          rescue ::Redis::CommandError => e
+          rescue ::Redis::CommandError
             # Install script in Redis.
             #
             @ids_script_hash = client.script 'load', @ids_script

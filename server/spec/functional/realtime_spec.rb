@@ -11,7 +11,7 @@ describe "Realtime Indexing" do
     end
   end
 
-  default_index = Picky::Index.new(:books) do
+  Picky::Index.new(:books) do
     category :title
     category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
   end

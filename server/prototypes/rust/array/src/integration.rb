@@ -61,7 +61,7 @@ module Rust
   class Array
     extend FunctionMapping
 
-    pr = Fiddle.dlopen File.expand_path('../../target/release/libpicky_rust.dylib', __FILE__)
+    pr = Fiddle.dlopen File.expand_path('../target/release/libpicky_rust.dylib', __dir__)
 
     def initialize pointer = nil
       @internal_instance = pointer || self.class.new_rust

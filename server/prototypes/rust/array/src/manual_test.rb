@@ -1,4 +1,4 @@
-require File.expand_path('../integration', __FILE__)
+require File.expand_path('integration', __dir__)
 
 def mem
   GC.start

@@ -38,14 +38,14 @@ describe Picky::Pool do
     end
     it 'does not create a new reference if it has free ones' do
       p1 = pool_klass.new 1
-      p2 = pool_klass.new 2
+      pool_klass.new 2
       p1.release
       
       pool_klass.free_size.should == 1
     end
     it 'gives me the released reference if I try to new' do
       p1 = pool_klass.new 1
-      p2 = pool_klass.new 2
+      pool_klass.new 2
       p1.release
       
       pool_klass.new(3).number.should == 3

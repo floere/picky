@@ -38,7 +38,7 @@ module Picky
   # Note: We don't use require_relative yet because MacRuby
   # doesn't have it.
   #
-  require File.expand_path '../picky/platforms/macruby', __FILE__
+  require File.expand_path 'picky/platforms/macruby', __dir__
   
   # Modify/configure the external libraries.
   #

@@ -79,7 +79,7 @@ describe 'Sinatra Index Actions' do
           result.status.should == 200
         end
         it 'returns a correct code after deleting twice' do
-          result = request.delete('/', params: {
+          request.delete('/', params: {
             index: 'some_index',
             data: %Q{{ "id":"1" }}
           })

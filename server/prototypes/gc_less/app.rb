@@ -1,7 +1,7 @@
 require_relative '../../lib/picky'
 
 def count klass
-  "#{klass}: #{ObjectSpace.each_object(klass).inject(0) { |total, _| total = total + 1 }}"
+  "#{klass}: #{ObjectSpace.each_object(klass).inject(0) { |total, _| total + 1 }}"
 end
 def counts
   puts count(Picky::Query::Allocation)

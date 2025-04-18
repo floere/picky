@@ -10,7 +10,7 @@ module Picky
         @realtime = options[:realtime]
 
         require 'sqlite3'
-      rescue LoadError => e
+      rescue LoadError
         warn_gem_missing 'sqlite3', 'SQLite bindings'
       end
 

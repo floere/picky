@@ -28,7 +28,7 @@ include Picky
 
 require_relative 'searches'
 
-queries  = ->(complexity, amount) do
+->(complexity, amount) do
   Searches.new complexity, amount
 end
 
@@ -144,7 +144,7 @@ definitions.each do |definition, description|
 
       rams = []
       strings = []
-      symbols = []
+      []
       gc_runs = []
       
       # Run amount queries, but only chosen from searches that will return a result.
@@ -197,7 +197,7 @@ definitions.each do |definition, description|
         searches.each do |query|
           p query
           # mark
-          r = run.search query
+          run.search query
           # GC.start
           # d = diff
           # unless d.empty?

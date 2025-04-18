@@ -1,5 +1,5 @@
 begin
-  require ::File.expand_path '../picky/picky', __FILE__
+  require ::File.expand_path 'picky/picky', __dir__
 rescue LoadError => e
   # Give up and inform the user.
   #
