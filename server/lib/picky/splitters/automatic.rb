@@ -34,8 +34,8 @@ module Picky
       # Reset the memoization.
       #
       def reset_memoization
-        @exact_memo = Hash.new
-        @partial_memo = Hash.new
+        @exact_memo = {}
+        @partial_memo = {}
       end
 
       # Split the given text into its most
@@ -72,9 +72,9 @@ module Picky
 
           segments, head_weight = segment_recursively head, use_partial
 
-          weight = (head_weight && tail_weight &&
+          weight = head_weight && tail_weight &&
                    (head_weight + tail_weight) ||
-                   tail_weight || head_weight)
+                   tail_weight || head_weight
 
           if (weight || -1) >= (heaviest || 0)
             [tail_weight ? segments + [tail] : segments, weight]

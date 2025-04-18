@@ -26,7 +26,7 @@ def rust_ary
 end
 
 def ruby_ary
-  ary = Array.new
+  ary = []
   timed do
     TIMES.times do |i|
       ary << i
@@ -62,12 +62,12 @@ end
 #   end
 # end
 def ruby_hash
-  hash = Hash.new
+  hash = {}
   keys_size = KEYS.size
   timed do
     TIMES.times do |i|
       key = KEYS[i % keys_size]
-      hash[key] ||= Array.new
+      hash[key] ||= []
       hash[key] << i
     end
   end

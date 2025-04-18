@@ -15,18 +15,16 @@ data.replace_from id: 5, name: 'Florian', surname: 'Tentacles'
 # Look facets up in the index.
 #
 puts 'Facets:'
-puts data[:name].exact.inverted.inject({}) { |result, token_ids|
+puts data[:name].exact.inverted.each_with_object({}) { |token_ids, result|
   token, ids = token_ids
   result[token] = ids.size
-  result
 }
 
 class Picky::Index
   def facets(category)
-    self[category].exact.inverted.inject({}) do |result, token_ids|
+    self[category].exact.inverted.each_with_object({}) do |token_ids, result|
       token, ids = token_ids
       result[token] = ids.size
-      result
     end
   end
 end

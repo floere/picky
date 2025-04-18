@@ -4,7 +4,7 @@ class IndexGenerator
   def initialize(amount, &length)
     @random = Random.new 115_032_730_400_174_366_788_466_674_494_640_623_225
     @amount = amount
-    @length = length || ->() { @random.rand(18) + 3 }
+    @length = length || -> { @random.rand(18) + 3 }
   end
 
   class Thing
@@ -24,7 +24,7 @@ class IndexGenerator
     end
   end
 
-  def each()
+  def each
     characters = %w[a b c d]
     size = characters.size
 

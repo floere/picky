@@ -89,7 +89,7 @@ describe 'Sinatra Index Actions' do
         it 'returns a correct code after deleting without id' do
           result = request.delete('/', params: {
                                     index: 'some_index',
-                                    data: "{}"
+                                    data: '{}'
                                   })
           result.status.should == 400
         end

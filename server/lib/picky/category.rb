@@ -101,7 +101,7 @@ module Picky
         warn <<~WARNING
 
           Warning: Category options #{options} for category #{name} contain an unknown option.
-                   Working options are: #@@known_keys.
+                   Working options are: #{@@known_keys}.
         WARNING
       end
     end

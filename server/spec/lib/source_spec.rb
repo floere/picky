@@ -4,7 +4,7 @@ describe Picky::Source do
   context 'unblock_source' do
     context 'with block' do
       it 'unblocks' do
-        result = described_class.from ->() { :some_source }, false
+        result = described_class.from -> { :some_source }, false
 
         result.call == :some_source
       end
@@ -21,14 +21,13 @@ describe Picky::Source do
   context 'extract_source' do
     context 'block with source hash' do
       it 'extracts a source' do
-        described_class.from(->() {}, false).should be_kind_of(Proc)
+        described_class.from(-> {}, false).should be_kind_of(Proc)
       end
     end
     context 'each source' do
       let(:source) do
         Class.new do
-          def each
-          end
+          def each; end
         end.new
       end
       it 'extracts a source' do

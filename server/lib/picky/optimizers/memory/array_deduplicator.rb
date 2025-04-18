@@ -7,10 +7,9 @@ module Picky::Optimizers::Memory
   # TODO Could we have C-Ruby point to parts of another Array?
   #
   class ArrayDeduplicator
-    def deduplicate(hashes, array_references = Hash.new)
-      hashes.inject(array_references) do |array_references, hash|
+    def deduplicate(hashes, array_references = {})
+      hashes.each_with_object(array_references) do |hash, array_references|
         deduplicate_hash hash, array_references
-        array_references
       end
     end
 

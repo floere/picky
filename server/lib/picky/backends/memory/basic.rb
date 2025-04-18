@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class Memory
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = []
 
       # Base class for all memory-based index files.
       #

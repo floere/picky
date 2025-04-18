@@ -19,13 +19,11 @@ module Picky
 
         # Nothing needs to be deleted from it.
         #
-        def delete(_)
-        end
+        def delete(_); end
 
         # It does not need to be cleared.
         #
-        def clear
-        end
+        def clear; end
 
         # Returns nil.
         #
@@ -35,8 +33,7 @@ module Picky
 
         # Saves nothing by default.
         #
-        def []=(_, _)
-        end
+        def []=(_, _); end
       end
     end
   end

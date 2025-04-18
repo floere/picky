@@ -10,7 +10,7 @@ describe 'stemming' do
       #
       module Stemmer
         class << self
-          alias_method :stem, :stem_word
+          alias stem stem_word
         end
       end
       Stemmer
@@ -38,7 +38,7 @@ describe 'stemming' do
         class << self
           # stem_word is a bit silly, what else would you stem???
           #
-          alias_method :stem, :stem_word
+          alias stem stem_word
         end
       end
 

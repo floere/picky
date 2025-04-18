@@ -37,7 +37,7 @@ module Picky
         end
 
         def to_s
-          "Currently it isn't possible to mix Indexes with backends #{@backends.join(" and ")} in the same Search instance."
+          "Currently it isn't possible to mix Indexes with backends #{@backends.join(' and ')} in the same Search instance."
         end
       end
     end

@@ -10,13 +10,13 @@ module Picky
       @@allowed_hints = [:no_dump]
       def check(hints)
         hints.each do |hint|
-          unless @@allowed_hints.include?(hint)
-            raise <<-ERROR
+          next if @@allowed_hints.include?(hint)
+
+          raise <<-ERROR
               Picky cannot optimize for #{hint}.
               Allowed hints are:
                 #{@@allowed_hints.join("\n")}
-            ERROR
-          end
+          ERROR
         end
         hints
       end

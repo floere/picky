@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class File
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = []
 
       # Base class for all file-based index files.
       #

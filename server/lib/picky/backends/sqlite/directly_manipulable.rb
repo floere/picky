@@ -24,9 +24,7 @@ module Picky
 
         def delete(value)
           value = super value
-          if value
-            backend[key] = self
-          end
+          backend[key] = self if value
           value
         end
       end

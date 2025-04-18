@@ -80,9 +80,7 @@ class Analyzer
   def index_analysis
     return unless analysis[:index]
 
-    if analysis[:__keys] < 100
-      comments << "\033[33mVery small index (< 100 keys).\033[m"
-    end
+    comments << "\033[33mVery small index (< 100 keys).\033[m" if analysis[:__keys] < 100
 
     range = analysis[:index][:key_length]
     case range.min
@@ -103,13 +101,13 @@ class Analyzer
     index.each_pair do |_key, value|
       if value < min_weight
         min_weight = value
-      else
-        max_weight = value if value > max_weight
+      elsif value > max_weight
+        max_weight = value
       end
       weight_average += value
     end
 
-    weight_average = weight_average / index.size
+    weight_average /= index.size
 
     analysis[:weights] ||= {}
     analysis[:weights][:weight_range]   = (min_weight..max_weight)
@@ -134,7 +132,7 @@ class Analyzer
   def index_to_s
     return if analysis[:__keys].zero?
 
-    ary = ["index key cardinality:                #{"%9d" % analysis[:__keys]}"]
+    ary = ["index key cardinality:                #{'%9d' % analysis[:__keys]}"]
     return ary.join "\n" unless analysis[:index]
 
     ary << formatted(nil,       :key_length)

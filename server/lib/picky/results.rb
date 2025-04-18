@@ -47,9 +47,11 @@ module Picky
       return if @prepared == [extra_allocations, unique, sorting] # cached?
 
       @prepared = [extra_allocations, unique, sorting] # cache!
-      unique ?
-        @allocations.process_unique!(amount, offset, extra_allocations, sorting) :
+      if unique
+        @allocations.process_unique!(amount, offset, extra_allocations, sorting)
+      else
         @allocations.process!(amount, offset, extra_allocations, sorting)
+      end
     end
 
     def each(&block)

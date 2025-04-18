@@ -27,17 +27,15 @@ module Picky
 
       if thing.respond_to? :tokenize
         thing
+      elsif thing.respond_to? :[]
+        Picky::Tokenizer.new thing
       else
-        if thing.respond_to? :[]
-          Picky::Tokenizer.new thing
-        else
-          raise <<~ERROR
-            indexing options #{identifier_for(index_name, category_name)}should be either
-            * a Hash
-            or
-            * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
-          ERROR
-        end
+        raise <<~ERROR
+          indexing options #{identifier_for(index_name, category_name)}should be either
+          * a Hash
+          or
+          * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+        ERROR
       end
     end
 
@@ -46,12 +44,16 @@ module Picky
       <<~TOKENIZER
         Removes characters: #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
         Stopwords:          #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
-        Splits text on:     #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
-        Normalizes words:   #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
+        Splits text on:     #{if @splits_text_on.respond_to?(:source)
+                                "/#{@splits_text_on.source}/"
+                              else
+                                @splits_text_on || '-'
+                              end}
+        Normalizes words:   #{@normalizes_words_regexp_replaces || '-'}
         Rejects tokens?     #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
         Substitutes chars?  #{@substituter ? "Yes, using #{@substituter}." : '-'}
         Stems?              #{@stemmer ? "Yes, using #{@stemmer}." : '-'}
-        Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
+        Case sensitive?     #{@case_sensitive ? 'Yes.' : '-'}
       TOKENIZER
     end
 
@@ -98,7 +100,9 @@ module Picky
     # Note: We do not test against to_str since symbols do not work with String#split.
     #
     def splits_text_on(thing)
-      raise ArgumentError.new "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
+      unless thing.is_a?(Regexp) || thing.respond_to?(:split)
+        raise ArgumentError.new "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}."
+      end
 
       @splits_text_on = if thing.respond_to? :split
                           thing
@@ -121,7 +125,9 @@ module Picky
     # TODO 5.0 Rename to normalize(text) or normalize_words
     #
     def normalizes_words(regexp_replaces)
-      raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
+      unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
+        raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}."
+      end
 
       @normalizes_words_regexp_replaces = regexp_replaces
     end
@@ -296,7 +302,12 @@ module Picky
     # Downcases.
     #
     def tokens_for(words)
-      words.collect! { |word| word.downcase!; word } if downcase?
+      if downcase?
+        words.collect! do |word|
+          word.downcase!
+          word
+        end
+      end
       words.collect! { |word| stem word } if stemmer? # Usually only done in indexing step.
       words
     end

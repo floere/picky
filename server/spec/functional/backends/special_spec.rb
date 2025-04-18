@@ -25,7 +25,7 @@ class BackendInterfaceTester < Picky::Backends::Backend
 end
 
 class InternalBackendInterfaceTester
-  EMPTY_ARRAY = Array.new
+  EMPTY_ARRAY = []
 
   def initialize
     @hash = {}
@@ -62,8 +62,7 @@ class InternalBackendInterfaceTester
   # dump/load
   #
 
-  def dump(_)
-  end
+  def dump(_); end
 
   def load(_)
     self

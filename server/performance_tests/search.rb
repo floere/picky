@@ -45,7 +45,7 @@ definitions = []
 
 # TODO: Why does the String count explode when using key_format :to_s?
 #
-definitions << [Proc.new do
+definitions << [proc do
   category :text1
   category :text2
   category :text3

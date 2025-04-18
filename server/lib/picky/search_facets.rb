@@ -87,7 +87,7 @@ module Picky
     end
 
     def facets_with_counts(counts, minimal_counts, tokenized_filter_query, _last_token_text, _options = {})
-      counts.inject({}) do |result, (key, _)|
+      counts.each_with_object({}) do |(key, _), result|
         # Replace only the key token text because that
         # is the only information that changes in between
         # queries.
@@ -102,7 +102,6 @@ module Picky
         next result unless total >= minimal_counts
 
         result[key] = total
-        result
       end
     end
   end

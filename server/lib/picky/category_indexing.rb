@@ -40,11 +40,9 @@ module Picky
 
     # Take a data snapshot if the source offers it.
     #
-    def with_data_snapshot
+    def with_data_snapshot(&block)
       if source.respond_to? :with_snapshot
-        source.with_snapshot(@index) do
-          yield
-        end
+        source.with_snapshot(@index, &block)
       else
         yield
       end

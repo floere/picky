@@ -31,6 +31,4 @@ end
 
 # Check if toplevel Sinatra picky methods need to be installed.
 #
-if private_methods.include? :get
-  extend Picky::Sinatra
-end
+extend Picky::Sinatra if private_methods.include? :get

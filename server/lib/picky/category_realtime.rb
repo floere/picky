@@ -92,7 +92,7 @@ module Picky
       # text_or_tokens = text_or_tokens.to_sym if @symbol_keys # SYMBOLS.
       tokens = nil
       if tokenizer
-        tokens, _ = tokenizer.tokenize text_or_tokens
+        tokens, = tokenizer.tokenize text_or_tokens
       else
         tokens = text_or_tokens
       end
@@ -108,7 +108,7 @@ module Picky
 
     def show_informative_add_text_error_message_for(e)
       if e.name == :each
-        raise %Q{#{e.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
+        raise %(#{e.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.)
       else
         raise e
       end
@@ -125,7 +125,7 @@ module Picky
       partial.add_partialized id, text, method: method, static: static, force_update: force_update
     rescue NoMethodError => e
       puts e.message
-      raise %Q{The object id with text "#{text}" does not respond to method #{key_format}.}
+      raise %(The object id with text "#{text}" does not respond to method #{key_format}.)
     end
 
     # Clears the realtime mapping.

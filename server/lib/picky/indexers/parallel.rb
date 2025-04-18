@@ -58,7 +58,7 @@ module Picky
         from = category.from
         objects.each do |object|
           tokens = object.send from
-          tokens, _ = tokenizer.tokenize tokens if tokenizer # NOTE: Originals not needed. TODO Optimize?
+          tokens, = tokenizer.tokenize tokens if tokenizer # NOTE: Originals not needed. TODO Optimize?
           tokens.each do |token_text|
             next unless token_text
 

@@ -27,11 +27,7 @@ class String
   def each_subtoken(from_length = 1, range = nil)
     sub = self
 
-    if range
-      unless (range.first.zero? && range.last == -1)
-        sub = sub[range]
-      end
-    end
+    sub = sub[range] if range && !(range.first.zero? && range.last == -1)
 
     yield sub
 

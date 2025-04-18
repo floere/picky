@@ -25,7 +25,8 @@ module Picky
           size = ids.size
           next result if minimal_counts && size < minimal_counts
 
-          result[text] = size; result
+          result[text] = size
+          result
         end
       end
     end

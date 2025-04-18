@@ -4,7 +4,7 @@ describe Symbol do
   context 'performance' do
     include Picky::Helpers::Measuring
     before(:each) do
-      @token = (((0..9).to_a) * 10).to_s.to_sym
+      @token = ((0..9).to_a * 10).to_s.to_sym
     end
     it 'is fast' do
       performance_of { @token.each_subtoken { |subtoken| } }.should < 0.001

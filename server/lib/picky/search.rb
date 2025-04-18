@@ -274,7 +274,7 @@ module Picky
     def to_s
       s = [
         (@indexes.indexes.map(&:name).join(', ') unless @indexes.indexes.empty?),
-        ("boosts: #@boosts" if @boosts)
+        ("boosts: #{@boosts}" if @boosts)
       ].compact
       "#{self.class}(#{s.join(', ')})"
     end

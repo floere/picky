@@ -28,7 +28,7 @@ module Picky
     #
     def clear_categories
       @categories    = []
-      @category_hash = Hash.new
+      @category_hash = {}
     end
 
     # Updates the qualifier ("qualifier:searchterm") mapping.
@@ -52,7 +52,8 @@ module Picky
     #
     def <<(category)
       reset_qualifier_mapper # TODO: Have an add method on QualifierMapper?
-      categories << category unless categories.include? category # TODO: This is wrong, and needs to be handled in index.rb
+      # TODO: This is wrong, and needs to be handled in index.rb
+      categories << category unless categories.include? category
       category_hash[category.name] = category
     end
 
@@ -64,7 +65,7 @@ module Picky
     end
 
     def raise_not_found(category_name)
-      raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
+      raise %(Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".)
     end
 
     def to_stats

@@ -24,7 +24,7 @@ module Picky
               IO.select([@child], nil, nil, 2) or next
               result = @child.gets ';;;'
               pid, configuration_hash = eval result
-              next unless Hash === configuration_hash
+              next unless configuration_hash.is_a?(Hash)
               next if configuration_hash.empty?
 
               exclaim 'Trying to update MASTER configuration.'
@@ -142,7 +142,7 @@ module Picky
         end
 
         def querying_removes_characters=(new_value)
-          Tokenizer.searching.removes_characters %r{#{new_value}}
+          Tokenizer.searching.removes_characters(/#{new_value}/)
         end
 
         def querying_stopwords
@@ -151,7 +151,7 @@ module Picky
         end
 
         def querying_stopwords=(new_value)
-          Tokenizer.searching.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
+          Tokenizer.searching.instance_variable_set(:@remove_stopwords_regexp, /#{new_value}/)
         end
 
         def querying_splits_text_on
@@ -162,7 +162,7 @@ module Picky
         def querying_splits_text_on=(new_value)
           splits = Tokenizer.searching.instance_variable_get :@splits_text_on
           if splits.respond_to?(:source)
-            Tokenizer.searching.instance_variable_set(:@splits_text_on, %r{#{new_value}})
+            Tokenizer.searching.instance_variable_set(:@splits_text_on, /#{new_value}/)
           else
             Tokenizer.searching.instance_variable_set(:@splits_text_on, new_value)
           end

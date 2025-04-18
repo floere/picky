@@ -8,23 +8,23 @@ module Picky
       end
 
       def tokenize(index_or_category, prepared_file)
-        timed_exclaim %Q{  "#{index_or_category.identifier}": Tokenized -> #{prepared_file.path.gsub("#{Picky.root}/",
-                                                                                                     '')}.}
+        timed_exclaim %(  "#{index_or_category.identifier}": Tokenized -> #{prepared_file.path.gsub("#{Picky.root}/",
+                                                                                                    '')}.)
       end
 
       def dump(category)
-        timed_exclaim %Q{  "#{category.identifier}": Dumped -> #{category.index_directory.gsub("#{Picky.root}/",
-                                                                                               '')}/#{category.name}_*.}
+        timed_exclaim %(  "#{category.identifier}": Dumped -> #{category.index_directory.gsub("#{Picky.root}/",
+                                                                                              '')}/#{category.name}_*.)
       end
 
       def load(category)
-        timed_exclaim %Q{  "#{category.identifier}": Loading index from cache.}
+        timed_exclaim %(  "#{category.identifier}": Loading index from cache.)
       end
 
       def adapt_for_logger
         super
         def timed_exclaim(text)
-          output.info "#{Time.now.strftime("%H:%M:%S")}: #{text}"
+          output.info "#{Time.now.strftime('%H:%M:%S')}: #{text}"
         end
 
         def warn(text)
@@ -39,7 +39,7 @@ module Picky
       def adapt_for_io
         super
         def timed_exclaim(text)
-          output.puts "#{Time.now.strftime("%H:%M:%S")}: #{text}"
+          output.puts "#{Time.now.strftime('%H:%M:%S')}: #{text}"
           flush
         end
 

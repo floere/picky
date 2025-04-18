@@ -186,7 +186,7 @@ describe Picky::Tokenizer do
       end
       context 'with specific splitting pattern' do
         before(:each) do
-          tokenizer.splits_text_on(/[\s.\/]/)
+          tokenizer.splits_text_on(%r{[\s./]})
         end
         it 'splits text correctly' do
           expect { tokenizer.split('a b/c.d') }.to_not raise_error

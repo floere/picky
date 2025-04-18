@@ -9,8 +9,7 @@ module Picky
     #
     class Token
       attr_accessor :text, :original
-      attr_writer :similar
-      attr_writer :predefined_categories
+      attr_writer :similar, :predefined_categories
 
       forward :blank?, to: :@text
 
@@ -89,7 +88,7 @@ module Picky
       #
       def stem(tokenizer)
         if stem?
-          @stems ||= Hash.new
+          @stems ||= {}
           @stems[tokenizer] ||= tokenizer.stem(@text)
         else
           @text
@@ -157,7 +156,7 @@ module Picky
       #
       def self.no_partial_character=(character)
         @@no_partial_character = character
-        @@no_partial = %r{#{character}\z}
+        @@no_partial = /#{character}\z/
         redefine_illegals
       end
 
@@ -174,7 +173,7 @@ module Picky
       #
       def self.partial_character=(character)
         @@partial_character = character
-        @@partial = %r{#{character}\z}
+        @@partial = /#{character}\z/
         redefine_illegals
       end
 
@@ -184,8 +183,8 @@ module Picky
       #
       @@no_similar_character = '"'
       @@similar_character = '~'
-      @@no_similar = %r{#@@no_similar_character\z}
-      @@similar    = %r{#@@similar_character\z}
+      @@no_similar = /#{@@no_similar_character}\z/
+      @@similar    = /#{@@similar_character}\z/
       def similarize
         self.similar = false or return if @text =~ @@no_similar
 
@@ -206,7 +205,7 @@ module Picky
       #
       def self.no_similar_character=(character)
         @@no_similar_character = character
-        @@no_similar = %r{#{character}\z}
+        @@no_similar = /#{character}\z/
         redefine_illegals
       end
 
@@ -223,7 +222,7 @@ module Picky
       #
       def self.similar_character=(character)
         @@similar_character = character
-        @@similar = %r{#{character}\z}
+        @@similar = /#{character}\z/
         redefine_illegals
       end
 
@@ -244,9 +243,7 @@ module Picky
         @range = @text.split(@@range_character, 2) if @text.include? @@range_character
       end
 
-      def range
-        @range
-      end
+      attr_reader :range
 
       # Is this a "similar" character?
       #
@@ -265,7 +262,7 @@ module Picky
       def self.redefine_illegals
         # NOTE: By default, both no similar and no partial are ".
         #
-        @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
+        @@illegals = /[#{@@no_similar_character}#{@@similar_character}#{@@no_partial_character}#{@@partial_character}]/
       end
       redefine_illegals
 
@@ -308,9 +305,7 @@ module Picky
       @@qualifiers_splitter      = Splitter.new @@qualifiers_delimiter
       def qualify
         @qualifiers, @text = @@qualifier_text_splitter.single @text
-        if @qualifiers
-          @qualifiers = @@qualifiers_splitter.multi @qualifiers
-        end
+        @qualifiers = @@qualifiers_splitter.multi @qualifiers if @qualifiers
       end
 
       # Define a regexp which separates the qualifier
@@ -365,13 +360,13 @@ module Picky
       # Note: Used in many backends.
       #
       def identifier
-        "#{similar? ? :similarity : :inverted}:#@text"
+        "#{similar? ? :similarity : :inverted}:#{@text}"
       end
 
       # If the originals & the text are the same, they are the same.
       #
       def ==(other)
-        self.original == other.original && self.text == other.text
+        original == other.original && text == other.text
       end
 
       # Displays the text and the qualifiers.

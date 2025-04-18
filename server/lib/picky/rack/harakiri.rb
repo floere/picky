@@ -41,7 +41,7 @@ module Rack
     # Note: Sends its process a QUIT signal if it is time.
     #
     def harakiri
-      @requests = @requests + 1
+      @requests += 1
       Process.kill(:QUIT, Process.pid) if harakiri?
     end
 

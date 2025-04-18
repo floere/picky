@@ -7,7 +7,7 @@ class Array
   #
   def clustered_uniq
     result = []
-    self.inject(nil) do |last, element|
+    inject(nil) do |last, element|
       if last == element
         last
       else

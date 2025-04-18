@@ -23,14 +23,13 @@ module FunctionMapping
     # Get the right error position.
     begin
       /^(.+?):(\d+)/ =~ caller.first
-      file = $1
-      line = $2.to_i
-    rescue
-      file = __FILE__
+      ::Regexp.last_match(1)
+      line = ::Regexp.last_match(2).to_i
+    rescue StandardError
       line = __LINE__ + 3
     end
     # Map external interface to C interface.
-    module_eval(<<-EOS, file, line)
+    module_eval(<<-EOS, __FILE__, line)
       def #{external}(*args, &block)
         # p [:calling, :'#{external}', @internal_instance, args]
         f = #{relative}func_map[:'#{internal}']
@@ -45,9 +44,7 @@ module FunctionMapping
         end
       }
         #{
-        if retval == AS_OBJ
-          'res = self.class.from_ptr(res)'
-        end
+        'res = self.class.from_ptr(res)' if retval == AS_OBJ
       }
         # p res
         res

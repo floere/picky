@@ -54,7 +54,10 @@ describe Picky::Search do
     context 'tokenizer predefined' do
       let(:predefined) { double(:tokenizer, tokenize: nil) }
       context 'by way of DSL' do
-        let(:search) { pre = predefined; described_class.new { searching pre } }
+        let(:search) do
+          pre = predefined
+          described_class.new { searching pre }
+        end
         it 'returns the predefined tokenizer' do
           search.tokenizer.should == predefined
         end

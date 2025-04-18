@@ -223,7 +223,7 @@ module Picky
           # since the next combinations' single mult is smaller
           # and we need to adjust for that.
           #
-          group_mult = group_mult * combinations_size
+          group_mult *= combinations_size
 
           # Return the combinations.
           #

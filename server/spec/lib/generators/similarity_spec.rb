@@ -15,8 +15,7 @@ describe Picky::Generators::Similarity do
             :encoded
           end
 
-          def prioritize(ary, encoded)
-          end
+          def prioritize(ary, encoded); end
         end.new
       end
       it 'returns the encoded string' do

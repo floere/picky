@@ -12,14 +12,14 @@ class Symbol
   # Returns a metaphone code for this symbol.
   #
   def metaphone
-    code = Text::Metaphone.metaphone self.to_s
+    code = Text::Metaphone.metaphone to_s
     code.intern if code
   end
 
   # Returns a soundex code for this symbol.
   #
   def soundex
-    code = Text::Soundex.soundex self.to_s
+    code = Text::Soundex.soundex to_s
     code.intern if code
   end
 
@@ -27,13 +27,9 @@ class Symbol
   # :keys.each_subtoken(2) # => yields each of [:keys, :key, :ke]
   #
   def each_subtoken(from_length = 1, range = nil)
-    sub = self.id2name
+    sub = id2name
 
-    if range
-      unless (range.first.zero? && range.last == -1)
-        sub = sub[range]
-      end
-    end
+    sub = sub[range] if range && !(range.first.zero? && range.last == -1)
 
     yield sub.intern
 

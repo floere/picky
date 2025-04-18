@@ -9,7 +9,7 @@ module Picky
         check_hiredis_gem
         check_redis_gem
 
-        @client   = options[:client] || ::Redis.new(db: (options[:db] || 15))
+        @client   = options[:client] || ::Redis.new(db: options[:db] || 15)
         @realtime = options[:realtime]
       end
 

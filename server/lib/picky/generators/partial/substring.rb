@@ -14,15 +14,13 @@ module Picky
             def each_subtoken(token, &block)
               token.each_subtoken @from, &block
             end
+          elsif @from < 0 && @to < 0
+            def each_subtoken(token, &block)
+              token.each_subtoken @from - @to - 1, (0..@to), &block
+            end
           else
-            if @from < 0 && @to < 0
-              def each_subtoken(token, &block)
-                token.each_subtoken @from - @to - 1, (0..@to), &block
-              end
-            else
-              def each_subtoken(token, &block)
-                token.each_subtoken @from, (0..@to), &block
-              end
+            def each_subtoken(token, &block)
+              token.each_subtoken @from, (0..@to), &block
             end
           end
         end

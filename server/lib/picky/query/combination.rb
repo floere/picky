@@ -31,9 +31,7 @@ module Picky
 
       # Returns the weight of this combination.
       #
-      def weight
-        @weight
-      end
+      attr_reader :weight
 
       # Returns an array of ids for the given text.
       #

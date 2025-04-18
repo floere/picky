@@ -30,9 +30,9 @@ module Picky
           # In essence, we don't know if and when we can remove it.
           # (One idea is to add an array of ids and remove from that)
           #
-          @similarity.delete self.similarity_strategy.encode(str_or_sym)
+          @similarity.delete similarity_strategy.encode(str_or_sym)
         else
-          @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
+          @weights[str_or_sym] = weight_strategy.weight_for ids.size
           # @weights[str_or_sym] = self.weight_strategy.respond_to?(:[]) &&
           #                        self.weight_strategy[str_or_sym] ||
           #                        self.weight_strategy.weight_for(ids.size)
@@ -59,14 +59,12 @@ module Picky
         if force_update
           ids.delete id
           ids.send method, id
+        elsif ids.include?(id)
+        # TODO: Adding should not change the array if it's already in.
+        #
+        # Do nothing. Not forced, and already in.
         else
-          # TODO: Adding should not change the array if it's already in.
-          #
-          if ids.include?(id)
-            # Do nothing. Not forced, and already in.
-          else
-            ids.send method, id
-          end
+          ids.send method, id
         end
       else
         # Use a generalized strategy.
@@ -101,7 +99,7 @@ module Picky
 
       # Weights.
       #
-      @weights[str_or_sym] = self.weight_strategy.weight_for ids.size
+      @weights[str_or_sym] = weight_strategy.weight_for ids.size
 
       # Similarity.
       #
@@ -115,7 +113,7 @@ module Picky
     # Add string/symbol to similarity index.
     #
     def add_similarity(str_or_sym, method: :unshift)
-      if (encoded = self.similarity_strategy.encode(str_or_sym))
+      if (encoded = similarity_strategy.encode(str_or_sym))
         similars = @similarity[encoded] ||= []
 
         # Not completely correct, as others will also be affected, but meh.
@@ -123,7 +121,7 @@ module Picky
         similars.delete str_or_sym if similars.include? str_or_sym
         similars << str_or_sym
 
-        self.similarity_strategy.prioritize similars, str_or_sym
+        similarity_strategy.prioritize similars, str_or_sym
       end
     end
 
@@ -136,7 +134,7 @@ module Picky
     end
 
     def partialized(text, &block)
-      self.partial_strategy.each_partial text, &block
+      partial_strategy.each_partial text, &block
     end
 
     # Builds the realtime mapping.

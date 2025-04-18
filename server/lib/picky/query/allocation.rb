@@ -49,12 +49,12 @@ module Picky
       # ignored (ie. removed).
       #
       def calculate_score(boosts)
-        @score ||= (if @combinations.empty?
-                      0 # Optimization.
-                    else
-                      # NOTE: Was @backend.score(@combinations) - indirection for maximum flexibility.
-                      @combinations.score + boosts.boost_for(@combinations)
-                    end)
+        @score ||= if @combinations.empty?
+                     0 # Optimization.
+                   else
+                     # NOTE: Was @backend.score(@combinations) - indirection for maximum flexibility.
+                     @combinations.score + boosts.boost_for(@combinations)
+                   end
       end
 
       # Ids return by default empty_array.
@@ -117,14 +117,16 @@ module Picky
       # Sort highest score first.
       #
       def <=>(other)
-        other.score <=> self.score
+        other.score <=> score
       end
 
       # Transform the allocation into result form.
       #
       def to_result
-        [@index.result_identifier, self.score, self.count, @combinations.to_result,
-         self.ids] if self.count && self.count > 0
+        if count && count > 0
+          [@index.result_identifier, score, count, @combinations.to_result,
+           ids]
+        end
       end
 
       def to_qualifiers

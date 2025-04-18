@@ -10,7 +10,7 @@ module Picky
       # Basically forwards to its internal tokens array.
       #
       forward(*[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each,
-                :exit, to: :@tokens].flatten)
+                :exit, { to: :@tokens }].flatten)
       each_forward :partial=,
                    to: :@tokens
 
@@ -89,13 +89,13 @@ module Picky
       end
 
       def ==(other)
-        self.tokens == other.tokens
+        tokens == other.tokens
       end
 
       # Non-destructive addition.
       #
       def +(other)
-        self.class.new (@tokens + other.tokens), (self.ignore_unassigned || other.ignore_unassigned)
+        self.class.new (@tokens + other.tokens), (ignore_unassigned || other.ignore_unassigned)
       end
 
       # Just join the token original texts.

@@ -24,7 +24,7 @@ describe 'exact first' do
 
     exact_first = Picky::Search.new index
     exact_first.search('disco').ids.should # Exact first.
-    exact_first.search('disc').ids.should  == [2, 1] # Not exact, so not first.
+    exact_first.search('disc').ids.should == [2, 1] # Not exact, so not first.
   end
 
   it 'handles extending single categories' do
@@ -44,7 +44,7 @@ describe 'exact first' do
 
     exact_first = Picky::Search.new index
     exact_first.search('disco').ids.should # Exact first.
-    exact_first.search('disc').ids.should  == [2, 1] # Not exact, so not first.
+    exact_first.search('disc').ids.should == [2, 1] # Not exact, so not first.
   end
 
   it 'can do dumps/loads etc.' do
@@ -72,6 +72,6 @@ describe 'exact first' do
     Picky::Indexes.index
 
     exact_first.search('disco').ids.should # Exact first.
-    exact_first.search('disc').ids.should  == [1, 2] # Not exact, so not first.
+    exact_first.search('disc').ids.should == [1, 2] # Not exact, so not first.
   end
 end

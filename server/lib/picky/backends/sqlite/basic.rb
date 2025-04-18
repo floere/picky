@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class SQLite
-      EMPTY_ARRAY = ::Array.new
+      EMPTY_ARRAY = []
 
       class Basic
         include Helpers::File
@@ -28,11 +28,11 @@ module Picky
         end
 
         def initial
-          @initial && @initial.clone || (@realtime ? self.reset : {})
+          @initial && @initial.clone || (@realtime ? reset : {})
         end
 
         def empty
-          @empty && @empty.clone || (@realtime ? self.reset.asynchronous : {})
+          @empty && @empty.clone || (@realtime ? reset.asynchronous : {})
         end
 
         def dump(internal)
@@ -52,7 +52,10 @@ module Picky
         # Note: Perhaps it would be advisable to create only one, when initialising.
         #
         def db
-          @db ||= (create_directory cache_path; SQLite3::Database.new cache_path)
+          @db ||= begin
+            create_directory cache_path
+            SQLite3::Database.new cache_path
+          end
         end
 
         def dump_sqlite(internal)

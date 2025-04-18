@@ -51,7 +51,7 @@ module Picky
         #
         if tokenizer
           datas.each do |indexed_id, text|
-            tokens, _ = tokenizer.tokenize text # NOTE: Originals not needed.
+            tokens, = tokenizer.tokenize text # NOTE: Originals not needed.
             tokens.each do |token_text|
               next unless token_text
 

@@ -1,7 +1,7 @@
 module Picky
   module Backends
     class Redis
-      EMPTY_ARRAY = Array.new
+      EMPTY_ARRAY = []
 
       # Redis Backend Accessor.
       #
@@ -35,7 +35,7 @@ module Picky
         # together.
         #
         def empty
-          @empty && @empty.clone || (@realtime ? self.reset : {})
+          @empty && @empty.clone || (@realtime ? reset : {})
         end
 
         # The initial content before loading.
@@ -44,7 +44,7 @@ module Picky
         #       this just returns the same thing as #load.
         #
         def initial
-          @initial && @initial.clone || (@realtime ? self.reset : {})
+          @initial && @initial.clone || (@realtime ? reset : {})
         end
 
         # Returns itself.

@@ -26,14 +26,14 @@ describe Picky::Backends::SQLite::Value do
 
         db.should_receive(:db).exactly(4).times.with no_args
 
-        db.dump_sqlite Hash.new
+        db.dump_sqlite({})
       end
       it 'executes something' do
         db.stub :lazily_initialize_client
 
         client.should_receive(:execute).at_least(1).times
 
-        db.dump_sqlite Hash.new
+        db.dump_sqlite({})
       end
       it 'inserts keys and values' do
         # db.stub :db

@@ -26,12 +26,12 @@ class Searches
     end
   end
 
-  def self.buffer
-    @buffer
+  class << self
+    attr_reader :buffer
   end
 
-  def self.size
-    @size
+  class << self
+    attr_reader :size
   end
 
   def self.prepare

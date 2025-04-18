@@ -40,20 +40,20 @@ module Picky
     #
     def clear_indexes
       @indexes       = []
-      @index_mapping = Hash.new
+      @index_mapping = {}
     end
 
     # Tries to optimize the memory usage of the indexes.
     #
-    def optimize_memory(array_references = Hash.new)
+    def optimize_memory(array_references = {})
       Picky::Optimizers::Memory::ArrayDeduplicator.new
       @indexes.each do |index|
         index.optimize_memory array_references
       end
     end
 
-    def self.optimize_memory(array_references = Hash.new)
-      self.instance.optimize_memory array_references
+    def self.optimize_memory(array_references = {})
+      instance.optimize_memory array_references
     end
 
     # Registers an index with the indexes.
@@ -62,12 +62,12 @@ module Picky
       # TODO: Do not store duplicate indexes.
       #
       # self.indexes.delete_if { |existing| existing.name == index.name }
-      self.indexes << index
-      self.index_mapping[index.name] = index
+      indexes << index
+      index_mapping[index.name] = index
     end
 
     def self.register(index)
-      self.instance.register index
+      instance.register index
     end
 
     # Extracts an index, given its identifier.
@@ -80,7 +80,7 @@ module Picky
     # Raises a not found for the index.
     #
     def raise_not_found(index_name)
-      raise %Q{Index "#{index_name}" not found. Possible indexes: "#{indexes.map(&:name).join('", "')}".}
+      raise %(Index "#{index_name}" not found. Possible indexes: "#{indexes.map(&:name).join('", "')}".)
     end
 
     def to_s

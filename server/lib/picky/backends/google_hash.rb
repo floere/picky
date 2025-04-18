@@ -10,7 +10,7 @@ begin
     def ==(other)
       return false unless other.respond_to?(:to_h)
 
-      self.each do |key, value|
+      each do |key, value|
         return false if other[key] != value
       end
       other.each do |key, value|

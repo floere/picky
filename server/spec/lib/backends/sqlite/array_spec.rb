@@ -26,12 +26,12 @@ describe Picky::Backends::SQLite::Array do
 
         db.should_receive(:db).exactly(4).times.with no_args
 
-        db.dump_sqlite Hash.new
+        db.dump_sqlite({})
       end
       it 'executes something' do
         client.should_receive(:execute).at_least(1).times
 
-        db.dump_sqlite Hash.new
+        db.dump_sqlite({})
       end
       it 'inserts keys and values' do
         client.stub :execute # We only want to test the insert statements.
@@ -91,12 +91,12 @@ describe Picky::Backends::SQLite::Array do
 
         db.should_receive(:db).exactly(4).times.with no_args
 
-        db.dump_sqlite Hash.new
+        db.dump_sqlite({})
       end
       it 'executes something' do
         client.should_receive(:execute).at_least(1).times
 
-        db.dump_sqlite Hash.new
+        db.dump_sqlite({})
       end
       it 'inserts keys and values' do
         client.stub :execute # We only want to test the insert statements.

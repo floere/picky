@@ -13,8 +13,8 @@ module Picky
 
       @preamble ||= <<-PREAMBLE
   \033[1mApplication(s)\033[m
-    Definition LOC:  #{"%4d" % loc}
-    Indexes defined: #{"%4d" % Indexes.size}
+    Definition LOC:  #{'%4d' % loc}
+    Indexes defined: #{'%4d' % Indexes.size}
       PREAMBLE
     end
 

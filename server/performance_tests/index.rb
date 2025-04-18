@@ -41,7 +41,7 @@ full_partial    = Picky::Partial::Postfix.new from: 1
 double_meta     = Picky::Similarity::DoubleMetaphone.new 3
 
 def definition_with(categories_amount, identifier, options = {})
-  [Proc.new do
+  [proc do
     1.upto(categories_amount).each do |i|
       category :"text#{i}", options
     end
@@ -81,7 +81,7 @@ GC::Profiler.enable
 
 backends.each do |backend_description, backend, amount|
   puts
-  print "Running tests with #{backend_description} with #{"%5d" % amount} indexed:"
+  print "Running tests with #{backend_description} with #{'%5d' % amount} indexed:"
   print '           add/index |    dump |   total      '
   puts gc ? 'RAM/string/symbols per indexed' : ''
 

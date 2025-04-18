@@ -38,7 +38,7 @@ describe 'Category#tokenize(false)' do
     index.add thing.new(1, %w[already tokenized])
     expect do
       index.add thing.new(2, 'this should fail')
-    end.to raise_error(%Q{undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.})
+    end.to raise_error(%(undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.))
 
     try = Picky::Search.new index
 
@@ -53,7 +53,7 @@ describe 'Category#tokenize(false)' do
     index.add thing.new(1, %w[already tokenized])
     expect do
       index.add thing.new(2, 'this should fail')
-    end.to raise_error(%Q{undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.})
+    end.to raise_error(%(undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.))
 
     try = Picky::Search.new index
 

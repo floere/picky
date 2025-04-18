@@ -16,7 +16,7 @@ module Picky
             data = params['data']
             return 400 unless data
 
-            data && index.replace_from(MultiJson.decode data) && 200
+            data && index.replace_from(MultiJson.decode(data)) && 200
           rescue IdNotGivenException
             400
           rescue StandardError

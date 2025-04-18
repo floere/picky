@@ -135,7 +135,7 @@ module Picky
 
     # Explicitly trigger memory optimization.
     #
-    def optimize_memory(array_references = Hash.new)
+    def optimize_memory(array_references = {})
       dedup = Picky::Optimizers::Memory::ArrayDeduplicator.new
       dedup.deduplicate categories.map(&:exact).map(&:inverted), array_references
       dedup.deduplicate categories.map(&:partial).map(&:inverted), array_references

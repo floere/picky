@@ -42,7 +42,7 @@ module Picky
 
     # Reset the pool.
     #
-    self.clear
+    clear
 
     def self.extended(klass)
       add klass

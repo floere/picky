@@ -73,7 +73,7 @@ module Picky
       # configured weights.
       #
       def to_s
-        "#{self.class}(#@boosts)"
+        "#{self.class}(#{@boosts})"
       end
     end
   end

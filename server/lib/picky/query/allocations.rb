@@ -132,16 +132,15 @@ module Picky
           sorting = nil if amount <= 0 # Stop sorting if the results aren't shown.
           calculated_ids = allocation.process! amount, offset, sorting
           if calculated_ids.empty?
-            offset = offset - allocation.count unless offset.zero?
+            offset -= allocation.count unless offset.zero?
           else
-            amount = amount - calculated_ids.size # we need less results from the following allocation
-            offset = 0                            # we have already passed the offset
+            amount -= calculated_ids.size # we need less results from the following allocation
+            offset = 0 # we have already passed the offset
           end
-          if terminate_early && amount <= 0
-            break if terminate_early <= 0
+          next unless terminate_early && amount <= 0
+          break if terminate_early <= 0
 
-            terminate_early -= 1
-          end
+          terminate_early -= 1
         end
       end
 
@@ -161,19 +160,16 @@ module Picky
           calculated_ids = allocation.process_with_illegals! amount, 0, unique_ids, sorting
           projected_offset = offset - allocation.count
           unique_ids += calculated_ids # uniq this? <- No, slower than just leaving duplicates.
-          if projected_offset <= 0
-            allocation.ids.slice!(0, offset)
-          end
+          allocation.ids.slice!(0, offset) if projected_offset <= 0
           offset = projected_offset
           unless calculated_ids.empty?
-            amount = amount - calculated_ids.size # we need less results from the following allocation
-            offset = 0                            # we have already passed the offset
+            amount -= calculated_ids.size # we need less results from the following allocation
+            offset = 0 # we have already passed the offset
           end
-          if terminate_early && amount <= 0
-            break if terminate_early <= 0
+          next unless terminate_early && amount <= 0
+          break if terminate_early <= 0
 
-            terminate_early -= 1
-          end
+          terminate_early -= 1
         end
       end
 

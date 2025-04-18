@@ -240,8 +240,8 @@ describe BookSearch do
   # Range based area search. Memory.
   #
   it {
-    expect(simple_geo.search('north1:47.41 east1:8.55').ids).to eq [1481, 5014, 5015, 5016, 10_576, 10_717, 17_777, 
-17_999]
+    expect(simple_geo.search('north1:47.41 east1:8.55').ids).to eq [1481, 5014, 5015, 5016, 10_576, 10_717, 17_777,
+                                                                    17_999]
   }
 
   # Geo based area search.

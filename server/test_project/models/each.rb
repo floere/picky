@@ -1,6 +1,6 @@
 class Each
   def self.all(file, options = {})
-    Yielder.new file, self.accessibility, options
+    Yielder.new file, accessibility, options
   end
 
   def self.accessibility

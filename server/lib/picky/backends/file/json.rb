@@ -27,8 +27,7 @@ module Picky
           length, offset = mapping[key]
           return unless length
 
-          result = MultiJson.decode IO.read(cache_path, length, offset)
-          result
+          MultiJson.decode IO.read(cache_path, length, offset)
         end
 
         # Clears the currently loaded index.
@@ -38,13 +37,13 @@ module Picky
         #       anymore, at least to the application.
         #
         def clear
-          self.mapping.clear
+          mapping.clear
         end
 
         # Size of the index is equal to the mapping size.
         #
         def size
-          self.mapping.size
+          mapping.size
         end
 
         # Loads the mapping hash from json format.
@@ -61,7 +60,7 @@ module Picky
         #
         def dump(hash)
           offset = 0
-          mapping = Hash.new
+          mapping = {}
 
           create_directory cache_path
           ::File.open(cache_path, 'w:utf-8') do |out_file|

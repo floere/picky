@@ -332,7 +332,7 @@ describe Picky::Query::Token do
       token.text.should_not == token.original
     end
     def self.it_should_have_similarity(text, expected_similarity_value)
-      it "should have #{"no" unless expected_similarity_value} similarity for '#{text}'" do
+      it "should have #{'no' unless expected_similarity_value} similarity for '#{text}'" do
         described_class.processed(text, text.upcase).similar?.should == expected_similarity_value
       end
     end

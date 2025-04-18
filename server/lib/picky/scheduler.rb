@@ -42,7 +42,7 @@ module Picky
       parallel && Process.respond_to?(:fork)
     rescue LoadError
       warn_procrastinate_missing
-      return false
+      false
     end
 
     def warn_procrastinate_missing

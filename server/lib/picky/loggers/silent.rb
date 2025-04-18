@@ -25,8 +25,7 @@ module Picky
       end
 
       def adapt_for_logger
-        def flush
-        end
+        def flush; end
       end
 
       def adapt_for_io
@@ -35,23 +34,17 @@ module Picky
         end
       end
 
-      def info(*)
-      end
+      def info(*); end
 
-      def warn(*)
-      end
+      def warn(*); end
 
-      def write(*)
-      end
+      def write(*); end
 
-      def tokenize(*)
-      end
+      def tokenize(*); end
 
-      def dump(*)
-      end
+      def dump(*); end
 
-      def load(*)
-      end
+      def load(*); end
     end
   end
 end

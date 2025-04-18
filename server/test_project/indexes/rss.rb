@@ -9,7 +9,7 @@ class EachRSSItemProxy
     end
     rss = RSS::Parser.parse rss_content, true
     rss.items.each(&block)
-  rescue
+  rescue StandardError
     # Don't call block, no data.
   end
 end

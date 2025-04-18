@@ -3,7 +3,7 @@ class Object
   #   12:34:56: text here
   #
   def timed_exclaim(text)
-    exclaim "#{Time.now.strftime("%H:%M:%S")}: #{text}"
+    exclaim "#{Time.now.strftime('%H:%M:%S')}: #{text}"
   end
 
   # Just outputs the given text to the logger.
@@ -34,7 +34,7 @@ class Object
   # Indents each line by <tt>amount=2</tt> spaces.
   #
   def indented_to_s(amount = 2)
-    ary = self.respond_to?(:join) ? self : self.to_s.split("\n")
-    ary.map { |s| "#{" " * amount}#{s}" }.join("\n")
+    ary = respond_to?(:join) ? self : to_s.split("\n")
+    ary.map { |s| "#{' ' * amount}#{s}" }.join("\n")
   end
 end

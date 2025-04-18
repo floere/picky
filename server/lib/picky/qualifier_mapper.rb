@@ -5,14 +5,16 @@ module Picky
     attr_reader :mapping
 
     def initialize(categories)
-      @mapping = Hash.new
+      @mapping = {}
       categories.each { |category| add category }
     end
 
     def add(category)
       category.qualifiers.each do |qualifier|
         sym_qualifier = qualifier.intern
-        Picky.logger.warn %Q{Warning: Qualifier "#{qualifier}" already mapped to category #{mapping[sym_qualifier].identifier} (ambiguous qualifier mapping).} if mapping.has_key? sym_qualifier
+        if mapping.has_key? sym_qualifier
+          Picky.logger.warn %{Warning: Qualifier "#{qualifier}" already mapped to category #{mapping[sym_qualifier].identifier} (ambiguous qualifier mapping).}
+        end
         mapping[sym_qualifier] = category
       end
     end
