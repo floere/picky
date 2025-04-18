@@ -11,6 +11,8 @@ module Picky
       #
       class Logarithmic < Strategy
         def initialize(constant = 0.0)
+          super()
+
           @constant = constant
           # # Note: Optimisation since it is called
           # # once per indexed object.

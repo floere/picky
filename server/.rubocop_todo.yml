@@ -25,23 +25,6 @@ Lint/FloatComparison:
     - 'spec/lib/query/combinations_spec.rb'
     - 'spec/lib/results/exact_first_spec.rb'
 
-# Offense count: 12
-# Configuration parameters: AllowedParentClasses.
-Lint/MissingSuper:
-  Exclude:
-    - 'lib/picky/backends/redis.rb'
-    - 'lib/picky/backends/sqlite.rb'
-    - 'lib/picky/generators/partial/infix.rb'
-    - 'lib/picky/generators/partial/substring.rb'
-    - 'lib/picky/generators/similarity/phonetic.rb'
-    - 'lib/picky/generators/weights/constant.rb'
-    - 'lib/picky/generators/weights/dynamic.rb'
-    - 'lib/picky/generators/weights/logarithmic.rb'
-    - 'lib/picky/query/combination/or.rb'
-    - 'lib/picky/query/indexes/check.rb'
-    - 'lib/picky/query/or.rb'
-    - 'prototypes/active_record/server/app.rb'
-
 # Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Lint/NestedMethodDefinition:

@@ -5,6 +5,8 @@ module Picky
                   :realtime
 
       def initialize(options = {})
+        super()
+
         maybe_load_hiredis
         check_hiredis_gem
         check_redis_gem

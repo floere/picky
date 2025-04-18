@@ -27,6 +27,8 @@ module Picky
         # (min 1 is default)
         #
         def initialize(options = {})
+          super()
+
           @min = options[:min] || 1
           @max = options[:max] || -1
         end

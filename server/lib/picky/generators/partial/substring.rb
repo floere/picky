@@ -7,6 +7,8 @@ module Picky
         attr_reader :from, :to
 
         def initialize(from, to)
+          super()
+
           @from = from
           @to = to
 
@@ -47,6 +49,8 @@ module Picky
         # * from: 4 # => [:hell]
         #
         def initialize(options = {})
+          super()
+
           from = options[:from] || 1
           to   = options[:to]   || -1
           @generator = SubstringGenerator.new from, to

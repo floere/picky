@@ -4,6 +4,8 @@ module Picky
       attr_reader :realtime
 
       def initialize(options = {})
+        super()
+
         @realtime = options[:realtime]
 
         require 'sqlite3'

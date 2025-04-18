@@ -12,6 +12,8 @@ module Picky
       #
       class Constant < Stub
         def initialize(weight = 0.0)
+          super()
+
           @weight = weight
         end
 

@@ -15,6 +15,8 @@ module Picky
         # and returns a weight.
         #
         def initialize(&calculation)
+          super()
+
           @calculation = calculation
         end
 

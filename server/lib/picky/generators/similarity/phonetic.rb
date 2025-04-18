@@ -13,6 +13,8 @@ module Picky
         attr_reader :amount
 
         def initialize(amount = 3)
+          super()
+
           check_gem
           @amount = amount
         end

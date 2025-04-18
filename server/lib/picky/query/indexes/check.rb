@@ -33,6 +33,8 @@ module Picky
       #
       class DifferentBackendsError < StandardError
         def initialize(backends)
+          super()
+
           @backends = backends
         end
 

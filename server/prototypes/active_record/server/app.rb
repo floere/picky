@@ -11,6 +11,8 @@ class ExternalDataSearch < Sinatra::Base
   extend Sinatra::IndexActions
 
   def initialize
+    super()
+
     at_exit { data.dump }
   end
 
