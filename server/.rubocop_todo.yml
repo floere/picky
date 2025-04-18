@@ -225,18 +225,6 @@ Style/ClassVars:
     - 'test_project/indexes/isbn_each.rb'
     - 'tools/picky/cli.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/CombinableLoops:
-  Exclude:
-    - 'performance/stackprof.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/CommentedKeyword:
-  Exclude:
-    - 'lib/picky/category_realtime.rb'
-
 # Offense count: 97
 # Configuration parameters: AllowedConstants.
 Style/Documentation:

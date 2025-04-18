@@ -40,8 +40,6 @@ client = Picky::TestClient.new PerformanceServer, path: '/test'
   path = "/tmp/stackprof-#{thing}-picky.dump"
   File.open(path, 'wb') { |f| f.write Marshal.dump(profile) }
   puts `stackprof #{path}`
-end
-%w[cpu object].each do |thing|
   profile = StackProf.run(mode: thing.to_sym) do
     10_000.times { people.search 'florian' }
   end
