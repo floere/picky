@@ -6,6 +6,8 @@ module Picky
     include API::Tokenizer::CharacterSubstituter
     include API::Tokenizer::Stemmer
 
+    NON_SINGLE_STOPWORD_REGEXP = /^\b[\w:]+?\b[.*~]?\s?$/
+
     def self.default_indexing_with(options = {})
       @indexing = from options
     end
@@ -70,10 +72,10 @@ module Picky
       text.gsub! @remove_stopwords_regexp, EMPTY_STRING if @remove_stopwords_regexp
       text
     end
-    @@non_single_stopword_regexp = /^\b[\w:]+?\b[.*~]?\s?$/
+
     def remove_non_single_stopwords(text)
       return text unless @remove_stopwords_regexp
-      return text if text.match @@non_single_stopword_regexp
+      return text if text.match(NON_SINGLE_STOPWORD_REGEXP)
 
       remove_stopwords text
     end

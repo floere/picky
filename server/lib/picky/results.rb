@@ -5,6 +5,8 @@ module Picky
   class Results
     include Enumerable
 
+    LOG_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'.freeze
+
     # Duration is set externally by the query.
     #
     attr_writer :duration
@@ -101,9 +103,8 @@ module Picky
 
     # For logging.
     #
-    @@log_time_format = '%Y-%m-%d %H:%M:%S'.freeze
     def to_s
-      "#{log_type}|#{Time.now.strftime @@log_time_format}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
+      "#{log_type}|#{Time.now.strftime(LOG_TIME_FORMAT)}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
     end
 
     # The first character in the blog designates what type of query it is.

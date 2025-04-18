@@ -7,6 +7,26 @@ module Picky
     attr_reader :name
     attr_writer :source
 
+    # Since the options hash might contain options that do not exist,
+    # we should warn people if they use the wrong options.
+    # (Problem is that if the option is not found, then Picky will use the default)
+    #
+    # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
+    #
+    KNOWN_KEYS = %i[
+      hints
+      indexing
+      partial
+      qualifier
+      qualifiers
+      ranging
+      similarity
+      source
+      tokenize
+      tokenizer
+      weight
+    ].freeze
+
     # Parameters:
     #  * name: Category name to use as identifier and file names.
     #  * index: Index to which this category is attached to.
@@ -76,32 +96,14 @@ module Picky
       @exact     = exact_for weights, similarity, options
       @partial   = partial_for @exact, partial, weights, options
     end
-    # Since the options hash might contain options that do not exist,
-    # we should warn people if they use the wrong options.
-    # (Problem is that if the option is not found, then Picky will use the default)
-    #
-    # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
-    #
-    @@known_keys = %i[
-      hints
-      indexing
-      partial
-      qualifier
-      qualifiers
-      ranging
-      similarity
-      source
-      tokenize
-      tokenizer
-      weight
-    ]
+
     def warn_if_unknown(options)
-      return unless options && !(options.keys - @@known_keys).empty?
+      return unless options && !(options.keys - KNOWN_KEYS).empty?
 
       warn <<~WARNING
 
         Warning: Category options #{options} for category #{name} contain an unknown option.
-                 Working options are: #{@@known_keys}.
+                 Working options are: #{KNOWN_KEYS}.
       WARNING
     end
 
