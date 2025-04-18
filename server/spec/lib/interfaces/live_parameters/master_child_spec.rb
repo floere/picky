@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe Picky::Interfaces::LiveParameters::MasterChild do
-  before(:each) do
+  before do
     @parent = double :parent
     @child  = double :child
-    IO.stub pipe: [@child, @parent]
+    allow(IO).to receive(:pipe).and_return([@child, @parent])
     @parameters = described_class.new
-    @parameters.stub :exclaim
+    allow(@parameters).to receive(:exclaim)
+  end
+
+  after do
+    allow(IO).to receive(:pipe).and_call_original
   end
 
   describe Picky::Interfaces::LiveParameters::MasterChild::CouldNotUpdateConfigurationError do
@@ -66,7 +70,7 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
 
   describe 'harakiri' do
     before(:each) do
-      Process.stub pid: :some_pid
+      allow(Process).to receive(:pid).and_return(:some_pid)
     end
     it 'kills itself' do
       Process.should_receive(:kill).once.with :QUIT, :some_pid
@@ -77,7 +81,7 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
 
   describe 'write_parent' do
     before(:each) do
-      Process.stub pid: :some_pid
+      allow(Process).to receive(:pid).and_return(:some_pid)
     end
     it 'calls the parent' do
       @parent.should_receive(:write).once.with '[:some_pid, {:a=>:b}];;;'
@@ -89,7 +93,7 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
   describe 'close_child' do
     context 'child is closed' do
       before(:each) do
-        @child.stub closed?: true
+        allow(@child).to receive(:closed?).and_return(true)
       end
       it 'does not receive close' do
         @child.should_receive(:close).never
@@ -99,7 +103,7 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
     end
     context 'child not yet closed' do
       before(:each) do
-        @child.stub closed?: false
+        allow(@child).to receive(:closed?).and_return(false)
       end
       it 'does receives close' do
         @child.should_receive(:close).once.with no_args
