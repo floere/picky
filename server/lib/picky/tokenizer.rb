@@ -207,7 +207,7 @@ module Picky
     #
     def check_argument_in(method, types, argument)
       types = [*types]
-      raise ArgumentError, "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}." unless types.any? { |type| type === argument }
+      raise ArgumentError, "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}." unless types.any? { |type| argument.is_a?(type) }
     end
 
     attr_reader :substituter, :stemmer
