@@ -10,7 +10,7 @@ module Picky
 
         # Yields each generated partial.
         #
-        def each_partial token
+        def each_partial(token)
           # yields nothing
         end
 

@@ -9,7 +9,7 @@ describe Module do
 
           each_forward :bli, :bla, :blu, to: :@some_enumerable
 
-          def initialize some_enumerable
+          def initialize(some_enumerable)
             @some_enumerable = some_enumerable
           end
 
@@ -42,7 +42,7 @@ describe Module do
 
           forward :bli, :bla, :blu, to: :@some_thing
 
-          def initialize some_thing
+          def initialize(some_thing)
             @some_thing = some_thing
           end
 

@@ -4,12 +4,12 @@ module Picky
 
     class RegexpWrapper
       
-      def initialize regexp
+      def initialize(regexp)
         @regexp = regexp
         @splitter = Splitter.new @regexp
       end
   
-      def split text
+      def split(text)
         @splitter.multi text
       end
   

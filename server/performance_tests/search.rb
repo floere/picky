@@ -10,7 +10,7 @@ require_relative 'source'
 #
 class Source
 
-  def each &block
+  def each(&block)
     i = 0
     CSV.open('data.csv').each do |args|
       block.call Thing.new(*args)
@@ -85,7 +85,7 @@ Searches.prepare
 
 amount = 2_000
 
-def mark klass = String
+def mark(klass = String)
   GC.start
   $marked = ObjectSpace.each_object(klass).to_a
   if block_given?
@@ -93,7 +93,7 @@ def mark klass = String
     diff klass 
   end
 end
-def diff klass = String
+def diff(klass = String)
   return unless $marked
   now_hash = Hash.new 0
   now = ObjectSpace.each_object(klass).to_a

@@ -25,7 +25,7 @@ class String
   # 'keys'.each_subtoken    # => yields each of ['keys', 'key', 'ke', 'k']
   # 'keys'.each_subtoken(2) # => yields each of ['keys', 'key', 'ke']
   #
-  def each_subtoken from_length = 1, range = nil
+  def each_subtoken(from_length = 1, range = nil)
     sub = self
     
     if range
@@ -51,7 +51,7 @@ class String
   # 'keys'.each_intoken(2, 3)   # => yields each of ['key', 'eys', 'ke', 'ey', 'ys']
   # 'keys'.each_intoken(10, 12) # => yields nothing (min larger than str)
   #
-  def each_intoken min_length = 1, max_length = -1
+  def each_intoken(min_length = 1, max_length = -1)
     max_length = size + max_length + 1 if max_length < 0
     max_length = size if size < max_length
     max_length = 1 if max_length < 1

@@ -11,7 +11,7 @@ module Picky
 
     # Indexes, creates the "prepared_..." file.
     #
-    def prepare scheduler = Scheduler.new
+    def prepare(scheduler = Scheduler.new)
       categories = Categories.new
       categories << self
       with_data_snapshot do
@@ -24,7 +24,7 @@ module Picky
 
     # Generates all caches for this category.
     #
-    def cache scheduler = Scheduler.new
+    def cache(scheduler = Scheduler.new)
       scheduler.schedule do
         empty
         retrieve

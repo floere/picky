@@ -8,7 +8,7 @@ module Picky
 
         attr_accessor :backend, :key
 
-        def self.make backend, list, key
+        def self.make(backend, list, key)
           list.extend DirectlyManipulable
           list.backend = backend
           list.key     = key
@@ -17,7 +17,7 @@ module Picky
         # THINK Current implementation is very brittle.
         #
         @@append_index = 0
-        def << value
+        def <<(value)
           super
           zadd value, @@append_index += 1
         end
@@ -25,14 +25,14 @@ module Picky
         # THINK Current implementation is very brittle.
         #
         @@unshift_index = 0
-        def unshift value
+        def unshift(value)
           super
           zadd value, @@unshift_index -= 1
         end
         
         # Deletes the value.
         #
-        def delete value
+        def delete(value)
           result = super value
           backend.client.zrem "#{backend.namespace}:#{key}", value if result
           result
@@ -40,7 +40,7 @@ module Picky
         
         # Z-Adds a value with the given index.
         #
-        def zadd value, index
+        def zadd(value, index)
           backend.client.zadd "#{backend.namespace}:#{key}", index, value
           backend[key]
         end

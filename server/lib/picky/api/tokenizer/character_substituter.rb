@@ -4,7 +4,7 @@ module Picky
 
       module CharacterSubstituter
 
-        def extract_character_substituter thing
+        def extract_character_substituter(thing)
           if thing.respond_to? :substitute
             thing
           else

@@ -14,7 +14,7 @@ describe Picky::Generators::Similarity::DoubleMetaphone do
     end
   end
 
-  def self.it_should_encode text, expected
+  def self.it_should_encode(text, expected)
     it "should encode #{text.inspect} correctly" do
       @similarity.encode(text).should == expected
     end

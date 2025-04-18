@@ -16,20 +16,20 @@ module Picky
 
         # Loads the index hash from marshal format.
         #
-        def load _
+        def load(_)
           ::Marshal.load ::File.open(cache_path, 'r:binary')
         end
 
         # Dumps the index internal backend in marshal format.
         #
-        def dump internal
+        def dump(internal)
           create_directory cache_path
           dump_marshal internal
         end
 
         # Dumps binary self to the path given. Minus extension.
         #
-        def dump_marshal internal
+        def dump_marshal(internal)
           ::File.open(cache_path, 'w:binary') do |out_file|
             ::Marshal.dump internal, out_file
           end

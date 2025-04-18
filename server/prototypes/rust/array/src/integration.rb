@@ -63,7 +63,7 @@ module Rust
 
     pr = Fiddle.dlopen File.expand_path('../target/release/libpicky_rust.dylib', __dir__)
 
-    def initialize pointer = nil
+    def initialize(pointer = nil)
       @internal_instance = pointer || self.class.new_rust
     end
     
@@ -71,7 +71,7 @@ module Rust
       @internal_instance
     end
     
-    def self.from_ptr pointer
+    def self.from_ptr(pointer)
       new(pointer)
     end
 

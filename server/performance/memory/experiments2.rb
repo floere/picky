@@ -40,7 +40,7 @@ h = {}
   h[i] = (0..i).to_a
 end
 
-def remove h, i
+def remove(h, i)
   h.each do |key, ary|
     ary.delete(i) if ary.include?(i)
   end

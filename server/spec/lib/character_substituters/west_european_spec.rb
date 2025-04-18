@@ -8,12 +8,12 @@ describe Picky::CharacterSubstituters::WestEuropean do
 
   # A bit of metaprogramming to help with the myriads of its.
   #
-  def self.it_should_substitute special_character, normal_character
+  def self.it_should_substitute(special_character, normal_character)
     it "should substitute #{special_character} with #{normal_character}" do
       substituter.substitute(special_character).should == normal_character
     end
   end
-  def self.it_should_not_substitute special_character
+  def self.it_should_not_substitute(special_character)
     it "should not substitute #{special_character}" do
       substituter.substitute(special_character).should == special_character
     end

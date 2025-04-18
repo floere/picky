@@ -8,14 +8,14 @@ module Picky
       
     #
     #
-    def initialize categories
+    def initialize(categories)
       @mapping = Hash.new
       categories.each { |category| add category }
     end
 
     #
     #
-    def add category
+    def add(category)
       category.qualifiers.each do |qualifier|
         sym_qualifier = qualifier.intern
         Picky.logger.warn %Q{Warning: Qualifier "#{qualifier}" already mapped to category #{mapping[sym_qualifier].identifier} (ambiguous qualifier mapping).} if mapping.has_key? sym_qualifier
@@ -27,7 +27,7 @@ module Picky
     #
     # Returns nil if it is not allowed, the normalized qualifier if it is.
     #
-    def map qualifier
+    def map(qualifier)
       return nil if qualifier.empty?
 
       mapping[qualifier.intern]
@@ -35,7 +35,7 @@ module Picky
       
     # Restricts the given categories.
     #
-    def restrict user_qualified
+    def restrict(user_qualified)
       if @restricted
         user_qualified ? @restricted & user_qualified : @restricted 
       else

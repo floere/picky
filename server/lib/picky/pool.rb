@@ -33,7 +33,7 @@ module Picky
       
       # Add a pooled class to the managed pools.
       #
-      def add klass
+      def add(klass)
         @pools << klass
       end
       
@@ -49,7 +49,7 @@ module Picky
     #
     self.clear
     
-    def self.extended klass
+    def self.extended(klass)
       add klass
       
       class << klass
@@ -76,7 +76,7 @@ module Picky
         # Releasing an instance adds it to the free pool.
         # (And removes it from the used pool)
         #
-        def release instance
+        def release(instance)
           @__free__ << instance
            
           # Note: This is relatively fast as there are often only

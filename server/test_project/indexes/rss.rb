@@ -1,6 +1,6 @@
 class EachRSSItemProxy
 
-  def each &block
+  def each(&block)
     require 'rss'
     require 'open-uri'
     rss_feed = "http://florianhanke.com/blog/atom.xml"

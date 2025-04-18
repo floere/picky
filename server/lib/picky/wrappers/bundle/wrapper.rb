@@ -16,7 +16,7 @@ module Picky
 
         attr_reader :bundle
 
-        def initialize bundle
+        def initialize(bundle)
           @bundle = bundle
         end
 

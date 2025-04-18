@@ -10,7 +10,7 @@ describe Picky::Pool do
     
       attr_reader :number
     
-      def initialize number
+      def initialize(number)
         @number = number
       end
     end
@@ -21,7 +21,7 @@ describe Picky::Pool do
     
       attr_reader :number
     
-      def initialize number
+      def initialize(number)
         @number = number
       end
     end

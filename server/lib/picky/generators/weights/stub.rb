@@ -22,7 +22,7 @@ module Picky
 
         # Nothing needs to be deleted from it.
         #
-        def delete _
+        def delete(_)
 
         end
 
@@ -34,13 +34,13 @@ module Picky
 
         # Returns nil.
         #
-        def weight_for _
+        def weight_for(_)
           # Nothing.
         end
 
         # Saves nothing by default.
         #
-        def []= _, _
+        def []=(_, _)
 
         end
 

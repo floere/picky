@@ -8,7 +8,7 @@ module Picky
 
     attr_reader :text, :specific
 
-    def initialize text, index = nil, category = nil
+    def initialize(text, index = nil, category = nil)
       @text = text
       @specific = Picky::Indexes
       @specific = @specific[index.intern]    if index

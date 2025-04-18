@@ -42,13 +42,13 @@ module Picky
 
         # Taken from Unicorn.
         #
-        def kill_each_worker_except pid
+        def kill_each_worker_except(pid)
           worker_pids.each do |wpid|
             next if wpid == pid
             kill_worker :KILL, wpid
           end
         end
-        def kill_worker signal, wpid
+        def kill_worker(signal, wpid)
           Process.kill signal, wpid
           exclaim "Killing worker ##{wpid} with signal #{signal}."
         rescue Errno::ESRCH
@@ -88,7 +88,7 @@ module Picky
         #
         # Note: The ;;; is the end marker for the message.
         #
-        def write_parent configuration_hash
+        def write_parent(configuration_hash)
           @parent.write "#{[Process.pid, configuration_hash]};;;"
         end
         # Close the child if it isn't yet closed.
@@ -99,7 +99,7 @@ module Picky
 
         class CouldNotUpdateConfigurationError < StandardError
           attr_reader :config_key
-          def initialize config_key, message
+          def initialize(config_key, message)
             super message
             @config_key = config_key
           end
@@ -107,7 +107,7 @@ module Picky
 
         # Tries updating the configuration in the child process or parent process.
         #
-        def try_updating_configuration_with configuration_hash
+        def try_updating_configuration_with(configuration_hash)
           current_key = nil
           begin
             configuration_hash.each_pair do |key, new_value|
@@ -137,21 +137,21 @@ module Picky
           regexp = Tokenizer.searching.instance_variable_get :@removes_characters_regexp
           regexp && regexp.source
         end
-        def querying_removes_characters= new_value
+        def querying_removes_characters=(new_value)
           Tokenizer.searching.removes_characters %r{#{new_value}}
         end
         def querying_stopwords
           regexp = Tokenizer.searching.instance_variable_get :@remove_stopwords_regexp
           regexp && regexp.source
         end
-        def querying_stopwords= new_value
+        def querying_stopwords=(new_value)
           Tokenizer.searching.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
         end
         def querying_splits_text_on
           splits = Tokenizer.searching.instance_variable_get :@splits_text_on
           splits && splits.respond_to?(:source) ? splits.source : splits
         end
-        def querying_splits_text_on= new_value
+        def querying_splits_text_on=(new_value)
           splits = Tokenizer.searching.instance_variable_get :@splits_text_on
           if splits.respond_to?(:source)
             Tokenizer.searching.instance_variable_set(:@splits_text_on, %r{#{new_value}})

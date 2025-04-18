@@ -9,7 +9,7 @@ describe Picky::Backends::Redis do
 
   class Book
     attr_reader :id, :title, :author
-    def initialize id, title, author
+    def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
   end

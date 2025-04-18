@@ -41,7 +41,7 @@ module Picky
     # @param object [Object] The object to replace.
     # @param method [Symbol] The method name to use on the id array.
     #
-    def replace object, method: :unshift
+    def replace(object, method: :unshift)
       remove object.send id
       add object, method: method
     end
@@ -55,7 +55,7 @@ module Picky
     # @param object [Object] The object to replace.
     # @param method [Symbol] The method name to use on the id array.
     #
-    def replace! object, method: :unshift
+    def replace!(object, method: :unshift)
       remove object.send id
       add object, method: method
     end
@@ -64,7 +64,7 @@ module Picky
     #
     # Note: Takes a hash as opposed to the add/replace method.
     #
-    def replace_from hash #, id = (hash[:id] || hash['id'] || raise(IdNotGivenException.new)).send(key_format)
+    def replace_from(hash) #, id = (hash[:id] || hash['id'] || raise(IdNotGivenException.new)).send(key_format)
       return unless text = hash[from] || hash[from.to_s]
 
       raise IdNotGivenException.new unless id = hash[:id] || hash['id']
@@ -76,20 +76,20 @@ module Picky
 
     # Add at the end.
     #
-    def << thing
+    def <<(thing)
       add thing, method: __method__
     end
 
     # Add at the beginning.
     #
-    def unshift thing
+    def unshift(thing)
       add thing, method: __method__
     end
 
     # For the given id, adds the list of
     # strings to the index for the given id.
     #
-    def add_text id, text_or_tokens, method: :unshift, force_update: false
+    def add_text(id, text_or_tokens, method: :unshift, force_update: false)
       # text_or_tokens = text_or_tokens.to_sym if @symbol_keys # SYMBOLS.
       tokens = nil
       if tokenizer
@@ -107,7 +107,7 @@ module Picky
       show_informative_add_text_error_message_for e
     end
 
-    def show_informative_add_text_error_message_for e
+    def show_informative_add_text_error_message_for(e)
       if e.name == :each
         raise %Q{#{e.message}. You probably set tokenize: false on category "#{name}". It will need an Enumerator of previously tokenized tokens.}
       else
@@ -117,7 +117,7 @@ module Picky
 
     #
     #
-    def add_tokenized_token id, text, method: :unshift, format: true, static: false, force_update: false
+    def add_tokenized_token(id, text, method: :unshift, format: true, static: false, force_update: false)
       return unless text
 
       id = id.send key_format if format

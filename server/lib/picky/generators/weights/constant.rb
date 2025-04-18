@@ -15,14 +15,14 @@ module Picky
       #
       class Constant < Stub
 
-        def initialize weight = 0.0
+        def initialize(weight = 0.0)
           @weight = weight
         end
 
         # Always returns the constant weight,
         # except if there are no ids.
         #
-        def [] _
+        def [](_)
           @weight
         end
 
@@ -32,7 +32,7 @@ module Picky
         # Not really used, but is more
         # correct this way.
         #
-        def weight_for _
+        def weight_for(_)
           @weight
         end
 

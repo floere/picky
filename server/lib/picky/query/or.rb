@@ -12,13 +12,13 @@ module Picky
       #
       class Or < Tokens
       
-        def initialize processed_tokens
+        def initialize(processed_tokens)
           @tokens = processed_tokens
         end
         
         # TODO
         #
-        def possible_combinations categories
+        def possible_combinations(categories)
           combinations = @tokens.inject([]) do |result, token|
             result + token.possible_combinations(categories)
           end

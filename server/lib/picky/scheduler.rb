@@ -4,7 +4,7 @@ module Picky
 
     attr_reader :parallel
 
-    def initialize options = {}
+    def initialize(options = {})
       @parallel = options[:parallel]
       @factor   = options[:factor] || 2
 
@@ -13,7 +13,7 @@ module Picky
 
     def configure
       if fork?
-        def schedule &block
+        def schedule(&block)
           scheduler.schedule &block
         end
 

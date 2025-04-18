@@ -10,21 +10,21 @@ module Picky
     include API::Tokenizer::CharacterSubstituter
     include API::Tokenizer::Stemmer
 
-    def self.default_indexing_with options = {}
+    def self.default_indexing_with(options = {})
       @indexing = from options
     end
     def self.indexing
       @indexing ||= new
     end
 
-    def self.default_searching_with options = {}
+    def self.default_searching_with(options = {})
       @searching = from options
     end
     def self.searching
       @searching ||= new
     end
     
-    def self.from thing, index_name = nil, category_name = nil
+    def self.from(thing, index_name = nil, category_name = nil)
       return unless thing
         
       if thing.respond_to? :tokenize
@@ -61,16 +61,16 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     # We even allow Strings even if it's hard to understand.
     #
-    def stopwords regexp
+    def stopwords(regexp)
       check_argument_in __method__, [Regexp, String, FalseClass], regexp
       @remove_stopwords_regexp = regexp
     end
-    def remove_stopwords text
+    def remove_stopwords(text)
       text.gsub! @remove_stopwords_regexp, EMPTY_STRING if @remove_stopwords_regexp
       text
     end
     @@non_single_stopword_regexp = /^\b[\w:]+?\b[\.\*\~]?\s?$/
-    def remove_non_single_stopwords text
+    def remove_non_single_stopwords(text)
       return text unless @remove_stopwords_regexp
       return text if text.match @@non_single_stopword_regexp
       remove_stopwords text
@@ -81,11 +81,11 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     # We only allow regexps (even if string would be okay
     # too for gsub! - it's too hard to understand)
     #
-    def removes_characters regexp
+    def removes_characters(regexp)
       check_argument_in __method__, [Regexp, FalseClass], regexp
       @removes_characters_regexp = regexp
     end
-    def remove_illegals text
+    def remove_illegals(text)
       text.gsub! @removes_characters_regexp, EMPTY_STRING if @removes_characters_regexp
       text
     end
@@ -96,7 +96,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     # Note: We do not test against to_str since symbols do not work with String#split.
     #
-    def splits_text_on thing
+    def splits_text_on(thing)
       raise ArgumentError.new "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
       @splits_text_on = if thing.respond_to? :split
         thing
@@ -104,7 +104,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         RegexpWrapper.new thing
       end
     end
-    def split text
+    def split(text)
       # Does not create a new string if nothing is split.
       #
       @splits_text_on.split text
@@ -117,11 +117,11 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     # TODO 5.0 Rename to normalizes(config) or normalizes_words
     # TODO 5.0 Rename to normalize(text) or normalize_words
     #
-    def normalizes_words regexp_replaces
+    def normalizes_words(regexp_replaces)
       raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
       @normalizes_words_regexp_replaces = regexp_replaces
     end
-    def normalize_with_patterns text
+    def normalize_with_patterns(text)
       return text unless @normalizes_words_regexp_replaces # TODO Remove.
 
       @normalizes_words_regexp_replaces.each do |regex, replace|
@@ -140,28 +140,28 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     # Default is European Character substitution.
     #
-    def substitutes_characters_with substituter = CharacterSubstituters::WestEuropean.new
+    def substitutes_characters_with(substituter = CharacterSubstituters::WestEuropean.new)
       @substituter = extract_character_substituter substituter
     end
-    def substitute_characters text
+    def substitute_characters(text)
       substituter?? substituter.substitute(text) : text
     end
     
     # Stems tokens with this stemmer.
     #
-    def stems_with stemmer
+    def stems_with(stemmer)
       @stemmer = extract_stemmer stemmer
     end
-    def stem text
+    def stem(text)
       stemmer?? stemmer.stem(text) : text
     end
 
     # Reject tokens after tokenizing based on the given criteria.
     #
-    def rejects_token_if condition
+    def rejects_token_if(condition)
       @reject_condition = condition
     end
-    def reject tokens
+    def reject(tokens)
       tokens.reject! &@reject_condition
     end
 
@@ -169,7 +169,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     # Note: If false, simply downcases the data/query.
     #
-    def case_sensitive case_sensitive
+    def case_sensitive(case_sensitive)
       @case_sensitive = case_sensitive
     end
     def downcase?
@@ -179,19 +179,19 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     # The maximum amount of words
     # to pass into the search engine.
     #
-    def max_words amount
+    def max_words(amount)
       @max_words = amount
     end
-    def cap words
+    def cap(words)
       words.slice!(@max_words..-1) if cap?(words)
     end
-    def cap? words
+    def cap?(words)
       @max_words && words.size > @max_words
     end
 
     # Checks if the right argument type has been given.
     #
-    def check_argument_in method, types, argument, &condition
+    def check_argument_in(method, types, argument, &condition)
       types = [*types]
       unless types.any? { |type| type === argument }
         raise ArgumentError.new "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}."
@@ -202,7 +202,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     alias substituter? substituter
     alias stemmer? stemmer
 
-    def initialize options = {}
+    def initialize(options = {})
       options = default_options.merge options
       options.each do |method_name, value|
         send method_name, value unless value.nil?
@@ -236,7 +236,7 @@ ERROR
     # Returns:
     #  [[:token1, :token2], ["Original1", "Original2"]]
     #
-    def tokenize text
+    def tokenize(text)
       text = preprocess text.to_s # processing the text
       return empty_tokens if text.empty? # TODO blank?
       words = pretokenize text # splitting and preparations for tokenizing
@@ -252,7 +252,7 @@ ERROR
     # 2. Remove illegal expressions.
     # 3. Remove non-single stopwords. (Stopwords that occur with other words)
     #
-    def preprocess text
+    def preprocess(text)
       text = substitute_characters text
       remove_illegals text
       # We do not remove single stopwords e.g. in the indexer for
@@ -270,7 +270,7 @@ ERROR
     #  * Split the text into words.
     #  * Cap the amount of tokens if max_words is set.
     #
-    def pretokenize text
+    def pretokenize(text)
       words = split text
       words.collect! { |word| normalize_with_patterns word } if normalize_with_patterns?
       reject words
@@ -280,7 +280,7 @@ ERROR
 
     # Downcases.
     #
-    def tokens_for words
+    def tokens_for(words)
       words.collect! { |word| word.downcase!; word } if downcase?
       words.collect! { |word| stem word } if stemmer? # Usually only done in indexing step.
       words

@@ -4,7 +4,7 @@ module Picky
 
       module Boost
 
-        def extract_boosts thing
+        def extract_boosts(thing)
           if thing.respond_to?(:boost_for)
             thing
           else

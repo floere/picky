@@ -28,7 +28,7 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_file_path, hash_type = Hash, options = {}
+        def initialize(cache_file_path, hash_type = Hash, options = {})
           @cache_file_path = cache_file_path
           @hash_type       = hash_type
           @empty           = options[:empty]

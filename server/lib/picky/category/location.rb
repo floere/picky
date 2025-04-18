@@ -3,7 +3,7 @@ module Picky
 
     module Location
 
-      def self.install_on category, grid, precision, anchor
+      def self.install_on(category, grid, precision, anchor)
         category.extend self
 
         exact_bundle = category.exact

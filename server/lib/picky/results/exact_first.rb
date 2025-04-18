@@ -14,19 +14,19 @@ module Picky
       #
       # THINK Can we unextend in the case it is an index?
       #
-      def self.extended index_or_category
+      def self.extended(index_or_category)
         if index_or_category.respond_to? :categories
           extend_each_of index_or_category.categories
           index_or_category
         end
       end
-      def self.extend_each_of categories
+      def self.extend_each_of(categories)
         categories.categories.each { |category| category.extend self }
       end
 
       # Overrides the original method.
       #
-      def ids token
+      def ids(token)
         text = token.text
         if token.partial?
           exact.ids(text) | partial.ids(text)
@@ -37,7 +37,7 @@ module Picky
 
       # Overrides the original method.
       #
-      def weight token
+      def weight(token)
         text = token.text
         if token.partial?
           [exact.weight(text), partial.weight(text)].compact.max

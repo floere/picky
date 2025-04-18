@@ -1,6 +1,6 @@
 class Each
 
-  def self.all file, options = {}
+  def self.all(file, options = {})
     Yielder.new file, self.accessibility, options
   end
 
@@ -10,7 +10,7 @@ class Each
 
   class Yielder
 
-    def initialize file, accessibility, options
+    def initialize(file, accessibility, options)
       @file, @accessibility, @options = file, accessibility, options
     end
 

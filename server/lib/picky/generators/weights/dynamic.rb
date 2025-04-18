@@ -18,13 +18,13 @@ module Picky
         # Give it a block that takes a string/symbol
         # and returns a weight.
         #
-        def initialize &calculation
+        def initialize(&calculation)
           @calculation = calculation
         end
 
         # Calls the block to calculate the weight.
         #
-        def [] str_or_sym
+        def [](str_or_sym)
           @calculation.call str_or_sym
         end
 

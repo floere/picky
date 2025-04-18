@@ -2,7 +2,7 @@ class Source
 
   attr_reader :amount
 
-  def initialize amount
+  def initialize(amount)
     @amount = amount
   end
 

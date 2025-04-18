@@ -51,7 +51,7 @@ rescue LoadError
   #
   module Picky; PerformanceRatio = 0.5 end
 end
-def performance_of &code
+def performance_of(&code)
   if code
     GC.disable
     t0 = Time.now
@@ -75,7 +75,7 @@ def gc_runs_of
   end
 end
 
-def mark klass = String
+def mark(klass = String)
   GC.start
   $marked = ObjectSpace.each_object(klass).to_a
   if block_given?
@@ -83,7 +83,7 @@ def mark klass = String
     diff klass
   end
 end
-def diff klass = String
+def diff(klass = String)
   return unless $marked
   now_hash = Hash.new 0
   now = ObjectSpace.each_object(klass).to_a

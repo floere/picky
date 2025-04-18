@@ -6,7 +6,7 @@ module Picky
 
     class Polish < Base
 
-      def substitute text
+      def substitute(text)
         trans = @chars.new(text).unicode_normalize :nfkd
 
         trans.gsub! 'Ł', 'L'

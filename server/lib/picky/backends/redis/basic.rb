@@ -20,7 +20,7 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize client, namespace, options = {}
+        def initialize(client, namespace, options = {})
           @client    = client
           @namespace = namespace
 
@@ -53,7 +53,7 @@ module Picky
 
         # Returns itself.
         #
-        def load _
+        def load(_)
           self
         end
 

@@ -19,7 +19,7 @@ describe Picky::API::Search::Boost do
     context 'with a boosts object' do
       let(:booster) do
         Class.new do
-          def boost_for whatever
+          def boost_for(whatever)
             7.0
           end
         end.new

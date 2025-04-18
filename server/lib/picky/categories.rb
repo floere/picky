@@ -22,7 +22,7 @@ module Picky
 
     # A list of indexed categories.
     #
-    def initialize options = {}
+    def initialize(options = {})
       clear_categories
     end
 
@@ -52,7 +52,7 @@ module Picky
 
     # Add the given category to the list of categories.
     #
-    def << category
+    def <<(category)
       reset_qualifier_mapper # TODO Have an add method on QualifierMapper?
       categories << category unless categories.include? category # TODO This is wrong, and needs to be handled in index.rb
       category_hash[category.name] = category
@@ -60,11 +60,11 @@ module Picky
 
     # Find a given category in the categories.
     #
-    def [] category_name
+    def [](category_name)
       category_name = category_name.intern
       category_hash[category_name] || raise_not_found(category_name)
     end
-    def raise_not_found category_name
+    def raise_not_found(category_name)
       raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
     end
     
@@ -72,7 +72,7 @@ module Picky
       map(&:name).join(', ')
     end
     
-    def to_tree_s indent = 0
+    def to_tree_s(indent = 0)
       ([' ' * indent] * categories.size).zip(categories.map(&:to_tree_s)).map(&:join).join "\n"
     end
 

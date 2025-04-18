@@ -5,7 +5,7 @@ module Picky
     module Similarity
       extend Helpers::Identification
 
-      def self.from thing, index_name = nil, category_name = nil
+      def self.from(thing, index_name = nil, category_name = nil)
         return Default unless thing
 
         if thing.respond_to?(:encode) && thing.respond_to?(:prioritize)

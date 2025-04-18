@@ -9,14 +9,14 @@ module Picky::Optimizers::Memory
   #
   class ArrayDeduplicator
     
-    def deduplicate hashes, array_references = Hash.new
+    def deduplicate(hashes, array_references = Hash.new)
       hashes.inject(array_references) do |array_references, hash|
         deduplicate_hash hash, array_references
         array_references
       end
     end
     
-    def deduplicate_hash hash, array_references
+    def deduplicate_hash(hash, array_references)
       hash.each do |k, ary|
         stored_ary = if array_references.has_key?(ary)
           array_references.fetch ary
@@ -31,7 +31,7 @@ module Picky::Optimizers::Memory
       end
     end
     
-    def compact ary
+    def compact(ary)
       Array[*ary]
     end
     

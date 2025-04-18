@@ -14,7 +14,7 @@ module Picky
       #
       class Logarithmic < Strategy
         
-        def initialize constant = 0.0
+        def initialize(constant = 0.0)
           @constant = constant
           # # Note: Optimisation since it is called
           # # once per indexed object.
@@ -27,7 +27,7 @@ module Picky
           # end
         end
         
-        def weight_for amount
+        def weight_for(amount)
           return @constant if amount < 1
           @constant + Math.log(amount).round(3)
         end

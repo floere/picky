@@ -62,7 +62,7 @@ module Picky
 
       # Returns a number of prepared (sorted, reduced etc.) allocations for the given tokens.
       #
-      def prepared_allocations_for tokens, boosts = {}, amount = nil
+      def prepared_allocations_for(tokens, boosts = {}, amount = nil)
         allocations = allocations_for tokens
 
         # Score the allocations using weights as bias.
@@ -99,15 +99,15 @@ module Picky
       end
       # Returns a number of possible allocations for the given tokens.
       #
-      def allocations_for tokens
+      def allocations_for(tokens)
         Allocations.new allocations_ary_for(tokens)
       end
-      def allocations_ary_for tokens
+      def allocations_ary_for(tokens)
         indexes.inject([]) do |allocations, index|
           allocations + allocation_for(tokens, index)
         end
       end
-      def allocation_for tokens, index
+      def allocation_for(tokens, index)
         # Expand the combinations.
         #
         possible_combinations = tokens.possible_combinations_in index.categories
@@ -179,7 +179,7 @@ module Picky
       # Note: Of course I could split this method up into smaller
       #       ones, but I guess I am a bit sentimental.
       #
-      def expand_combinations_from possible_combinations
+      def expand_combinations_from(possible_combinations)
         # If an element has size 0, this means one of the
         # tokens could not be allocated.
         #

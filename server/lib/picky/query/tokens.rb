@@ -18,7 +18,7 @@ module Picky
 
       # Create a new Tokens object with the array of tokens passed in.
       #
-      def initialize tokens, ignore_unassigned = false
+      def initialize(tokens, ignore_unassigned = false)
         @tokens            = tokens
         @ignore_unassigned = ignore_unassigned
       end
@@ -27,7 +27,7 @@ module Picky
       #
       @@or_splitting_pattern = /\|/
       @@splitter = Splitter.new @@or_splitting_pattern
-      def self.processed words, originals, ignore_unassigned = false
+      def self.processed(words, originals, ignore_unassigned = false)
         new(words.zip(originals).collect! do |word, original|
           w, *middle, rest = @@splitter.multi word
           if rest
@@ -45,7 +45,7 @@ module Picky
       #  [combination, combination]               # of token 3
       # ]
       #
-      def possible_combinations_in categories
+      def possible_combinations_in(categories)
         @tokens.inject([]) do |combinations, token|
           possible_combinations = token.possible_combinations categories
           
@@ -90,13 +90,13 @@ module Picky
       
       #
       #
-      def == other
+      def ==(other)
         self.tokens == other.tokens
       end
       
       # Non-destructive addition.
       #
-      def + other
+      def +(other)
         self.class.new (@tokens + other.tokens), (self.ignore_unassigned || other.ignore_unassigned)
       end
 

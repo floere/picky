@@ -27,7 +27,7 @@ module Picky
         # 1. Gets the length and offset for the key.
         # 2. Extracts and decodes the object from the file.
         #
-        def [] key
+        def [](key)
           length, offset = mapping[key]
           return unless length
           result = MultiJson.decode IO.read(cache_path, length, offset)
@@ -52,7 +52,7 @@ module Picky
 
         # Loads the mapping hash from json format.
         #
-        def load symbol_keys
+        def load(symbol_keys)
           self.mapping = mapping_file.load symbol_keys
           self
         end
@@ -62,7 +62,7 @@ module Picky
         # 1. Dump actual data.
         # 2. Dumps mapping key => [length, offset].
         #
-        def dump hash
+        def dump(hash)
           offset = 0
           mapping = Hash.new
           

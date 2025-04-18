@@ -8,7 +8,7 @@ module Picky
       
       attr_reader :output
       
-      def initialize output = STDOUT
+      def initialize(output = STDOUT)
         @output = output
         adapt
       end

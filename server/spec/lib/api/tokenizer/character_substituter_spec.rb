@@ -10,7 +10,7 @@ describe Picky::API::Tokenizer do
     context 'with a substituter' do
       let(:substituter) do
         Class.new do
-          def substitute text
+          def substitute(text)
             text.tr('a-z', '1-9')
           end
         end.new

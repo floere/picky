@@ -13,7 +13,7 @@ module Picky
     #
     # Parameters are the exact same as for indexing.
     #
-    def indexing options = {}
+    def indexing(options = {})
       @tokenizer = Tokenizer.from options
     end
 
@@ -25,7 +25,7 @@ module Picky
     #
     # TODO Do a critical reading of this on the blog.
     #
-    def prepare scheduler = Scheduler.new
+    def prepare(scheduler = Scheduler.new)
       if source.respond_to?(:each)
         check_source_empty
         prepare_in_parallel scheduler
@@ -47,7 +47,7 @@ module Picky
     #
     # Only use where the category does have a #each source defined.
     #
-    def prepare_in_parallel scheduler
+    def prepare_in_parallel(scheduler)
       indexer = Indexers::Parallel.new self
       indexer.prepare categories, scheduler
     end
@@ -78,7 +78,7 @@ module Picky
     # anything responding to #each and returning objects that
     # respond to id and the category names (or the category from option).
     #
-    def source some_source = nil, &block
+    def source(some_source = nil, &block)
       some_source ||= block
       some_source ? (@source = Source.from(some_source, false, name)) : unblock_source
     end
@@ -96,7 +96,7 @@ module Picky
     # === Parameters
     # * name: Method name of the ID.
     #
-    def id name = nil, options = {}
+    def id(name = nil, options = {})
       key_format options[:format]
       @id_name = name || @id_name || :id
     end
@@ -107,14 +107,14 @@ module Picky
     #
     # TODO Rename to id_format.
     #
-    def key_format key_format = nil
+    def key_format(key_format = nil)
       key_format ? (@key_format = key_format) : @key_format
     end
 
     # Define what to do after indexing.
     # (Only used in the Sources::DB)
     #
-    def after_indexing after_indexing = nil
+    def after_indexing(after_indexing = nil)
       after_indexing ? (@after_indexing = after_indexing) : @after_indexing
     end
 

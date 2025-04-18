@@ -138,7 +138,7 @@ describe Picky::Query::Token do
   # end
 
   describe 'qualify' do
-    def self.it_should_qualify text, expected_result
+    def self.it_should_qualify(text, expected_result)
       it "should extract the qualifier #{expected_result} from #{text}" do
         token = described_class.new text
         token.qualify
@@ -333,7 +333,7 @@ describe Picky::Query::Token do
       token = described_class.processed "bla~", 'BLA~'
       token.text.should_not == token.original
     end
-    def self.it_should_have_similarity text, expected_similarity_value
+    def self.it_should_have_similarity(text, expected_similarity_value)
       it "should have #{ "no" unless expected_similarity_value } similarity for '#{text}'" do
         described_class.processed(text, text.upcase).similar?.should == expected_similarity_value
       end

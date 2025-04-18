@@ -11,7 +11,7 @@ module Picky
     #
     # TODO Think about having a separate index for counts to reduce the complexity of this.
     #
-    def facets category_identifier, options = {}
+    def facets(category_identifier, options = {})
       text_ids = self[category_identifier].exact.inverted
       no_counts = options[:counts] == false
       minimal_counts = options[:at_least]

@@ -8,7 +8,7 @@ module Picky
         #
         class Location < Calculation
 
-          def initialize bundle, user_grid, options = {}
+          def initialize(bundle, user_grid, options = {})
             super bundle
 
             anchor     = options[:anchor]    || 0.0
@@ -19,13 +19,13 @@ module Picky
 
           #
           #
-          def calculate float
+          def calculate(float)
             @calculation.calculate float
           end
 
           # Recalculates the added location.
           #
-          def add id, location, where = :unshift
+          def add(id, location, where = :unshift)
             @calculation.calculated_range(location.to_s.to_f).each do |new_location|
               bundle.add id, new_location.to_s, where
             end
@@ -33,7 +33,7 @@ module Picky
 
           # Do not generate a partial.
           #
-          def add_partialized does_not, matter, at_all
+          def add_partialized(does_not, matter, at_all)
             # Nothing
           end
 
@@ -47,7 +47,7 @@ module Picky
 
           # Load first the bundle, then extract the config.
           #
-          def load symbol_keys
+          def load(symbol_keys)
             bundle.load symbol_keys
 
             location_anchor     = bundle['location_anchor']

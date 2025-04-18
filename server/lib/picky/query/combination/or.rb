@@ -10,7 +10,7 @@ module Picky
       #
       class Or < Combination
         
-        def initialize combinations
+        def initialize(combinations)
           @combinations = combinations
         end
         

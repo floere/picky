@@ -12,7 +12,7 @@ module Picky
 
         attr_reader :cache_path, :db
 
-        def initialize cache_path, options = {}
+        def initialize(cache_path, options = {})
           @cache_path = "#{cache_path}.sqlite3"
           @empty      = options[:empty]
           @initial    = options[:initial]
@@ -39,12 +39,12 @@ module Picky
           @empty && @empty.clone || (@realtime ? self.reset.asynchronous : {})
         end
 
-        def dump internal
+        def dump(internal)
           dump_sqlite internal unless @realtime
           self
         end
 
-        def load _
+        def load(_)
           self
         end
 
@@ -59,7 +59,7 @@ module Picky
           @db ||= (create_directory cache_path; SQLite3::Database.new cache_path)
         end
 
-        def dump_sqlite internal
+        def dump_sqlite(internal)
           reset
 
           transaction do

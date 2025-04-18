@@ -60,7 +60,7 @@ module Picky
     #     searching MyTokenizerThatRespondsToTheMethodTokenize.new
     #   end
     #
-    def searching options
+    def searching(options)
       @tokenizer = if options.respond_to? :tokenize
         options
       else
@@ -75,7 +75,7 @@ module Picky
     #     max_allocations 10
     #   end
     #
-    def max_allocations amount = nil
+    def max_allocations(amount = nil)
       amount ? @max_allocations = amount : @max_allocations
     end
 
@@ -106,7 +106,7 @@ module Picky
     #     terminate_early 5
     #   end
     #
-    def terminate_early extra_allocations = 0
+    def terminate_early(extra_allocations = 0)
       @extra_allocations = extra_allocations.respond_to?(:to_hash) ? extra_allocations[:with_extra_allocations] : extra_allocations
     end
 
@@ -135,7 +135,7 @@ module Picky
     #     boost my_boosts
     #   end
     #
-    def boost boosts
+    def boost(boosts)
       @boosts = extract_boosts boosts
     end
     
@@ -199,7 +199,7 @@ module Picky
     # couldn't be assigned to any category, it will simply be
     # ignored. This is done for each categorization.
     #
-    def ignore_unassigned_tokens value = true
+    def ignore_unassigned_tokens(value = true)
       @ignore_unassigned = value
     end
 
@@ -216,7 +216,7 @@ module Picky
     #
     # Note: The Rack adapter calls this method after unravelling the HTTP request.
     #
-    def search text, ids = 20, offset = 0, options = {}
+    def search(text, ids = 20, offset = 0, options = {})
       search_with tokenized(text), ids.to_i, offset.to_i, text, options[:unique]
     end
 
@@ -224,7 +224,7 @@ module Picky
     #
     # Note: Internal method, use #search to search.
     #
-    def search_with tokens, ids = 20, offset = 0, original_text = nil, unique = false
+    def search_with(tokens, ids = 20, offset = 0, original_text = nil, unique = false)
       results = nil
 
       duration = timed do
@@ -239,7 +239,7 @@ module Picky
     #
     # Note: Internal method, use #search to search.
     #
-    def execute tokens, ids, offset, original_text = nil, unique = false
+    def execute(tokens, ids, offset, original_text = nil, unique = false)
       Results.new original_text,
                   ids,
                   offset,
@@ -259,7 +259,7 @@ module Picky
     # Returns:
     # * A Picky::Query::Tokens instance.
     #
-    def tokenized text, partialize_last = true
+    def tokenized(text, partialize_last = true)
       tokens, originals = tokenizer.tokenize text
       tokens = Query::Tokens.processed tokens, originals || tokens, @ignore_unassigned
       tokens.symbolize if @symbol_keys # SYMBOLS.
@@ -271,7 +271,7 @@ module Picky
     #
     # TODO Remove and just call prepared (and rename to sorted)?
     #
-    def sorted_allocations tokens, amount = nil
+    def sorted_allocations(tokens, amount = nil)
       indexes.prepared_allocations_for tokens, boosts, amount
     end
 

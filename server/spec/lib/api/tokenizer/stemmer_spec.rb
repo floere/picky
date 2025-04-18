@@ -10,7 +10,7 @@ describe Picky::API::Tokenizer do
     context 'with a substituter' do
       let(:stemmer) do
         Class.new do
-          def stem text
+          def stem(text)
             text.gsub /computers/, 'comput' # a simple one word stemmer ;)
           end
         end.new

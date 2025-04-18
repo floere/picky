@@ -10,7 +10,7 @@ module Picky
                  :build_realtime_mapping,
                  to: :categories
   
-    def update object, where = :unshift
+    def update(object, where = :unshift)
       replace object, :unshift
     end
     

@@ -31,7 +31,7 @@ module Picky
 
     # Gathers information about the indexes.
     #
-    def analyze object
+    def analyze(object)
       object.each_category do |category|
         @indexes << <<-ANALYSIS
   #{"#{category.index_name}".indented_to_s}\n
@@ -56,7 +56,7 @@ module Picky
     # Internal methods.
     #
 
-    def lines_of_code text
+    def lines_of_code(text)
       text.scan(/^\s*[^#\s].*$/).size
     end
 

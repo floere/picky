@@ -10,13 +10,13 @@ module Picky
   #
   module ActiveRecord
     
-    def self.included model
+    def self.included(model)
       model.send :include, Indexing
       model.send :include, Searching
     end
     
     module Indexing
-      def self.included model
+      def self.included(model)
         model.class.class_eval do
           
           define_method :updates_picky do |index_or_index_name = model.name.tableize|
@@ -38,7 +38,7 @@ module Picky
     end
     
     module Searching
-      def self.included model
+      def self.included(model)
         model.class.class_eval do
           
           define_method :searches_picky do |search|

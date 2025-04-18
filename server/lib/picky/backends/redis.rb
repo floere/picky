@@ -9,7 +9,7 @@ module Picky
       attr_reader :client,
                   :realtime
 
-      def initialize options = {}
+      def initialize(options = {})
         maybe_load_hiredis
         check_hiredis_gem
         check_redis_gem
@@ -36,31 +36,31 @@ module Picky
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => [id, id, id, id, id] (an array of ids)
       #
-      def create_inverted bundle, _ = nil
+      def create_inverted(bundle, _ = nil)
         List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:inverted", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
-      def create_weights bundle, _ = nil
+      def create_weights(bundle, _ = nil)
         Float.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:weights", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
-      def create_similarity bundle, _ = nil
+      def create_similarity(bundle, _ = nil)
         List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:similarity", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
-      def create_configuration bundle, _ = nil
+      def create_configuration(bundle, _ = nil)
         String.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:configuration", realtime: realtime
       end
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [id] # => [:sym1, :sym2]
       #
-      def create_realtime bundle, _ = nil
+      def create_realtime(bundle, _ = nil)
         List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:realtime", realtime: realtime
       end
 
@@ -77,7 +77,7 @@ module Picky
       #
       # Note: Destructive.
       #
-      def at_least_version major_minor_patch, should_be
+      def at_least_version(major_minor_patch, should_be)
         3.times { return false if major_minor_patch.shift < should_be.shift }
         true
       end
@@ -100,7 +100,7 @@ module Picky
 
       # Returns the total weight for the combinations.
       #
-      def weight combinations
+      def weight(combinations)
         # Note: A nice experiment that generated far too many strings.
         #
         # if redis_with_scripting?
@@ -154,7 +154,7 @@ module Picky
       #
       # Note: We use the amount and offset hints to speed Redis up.
       #
-      def ids combinations, amount, offset
+      def ids(combinations, amount, offset)
         # TODO This is actually not correct:
         #      A dumped/loaded Redis backend should use
         #      the Redis backend calculation method.
@@ -212,7 +212,7 @@ module Picky
         @intermediate_result_id ||= "#{host}:#{pid}:picky:result"
       end
       
-      def identifiers_for combinations
+      def identifiers_for(combinations)
         combinations.inject([]) do |identifiers, combination|
           identifiers << "#{PICKY_ENVIRONMENT}:#{combination.identifier}"
         end
@@ -221,7 +221,7 @@ module Picky
       # Uses Lua scripting on Redis 2.6.
       #
       module Scripting
-        def ids combinations, amount, offset
+        def ids(combinations, amount, offset)
           identifiers = identifiers_for combinations
 
           # Assume it's using EVALSHA.
@@ -259,7 +259,7 @@ module Picky
       # Does not use Lua scripting, < Redis 2.6.
       #
       module NonScripting
-        def ids combinations, amount, offset
+        def ids(combinations, amount, offset)
           identifiers = identifiers_for combinations
 
           result_id = generate_intermediate_result_id

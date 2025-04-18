@@ -1,6 +1,6 @@
 require_relative '../../lib/picky'
 
-def count klass
+def count(klass)
   "#{klass}: #{ObjectSpace.each_object(klass).inject(0) { |total, _| total + 1 }}"
 end
 def counts

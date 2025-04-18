@@ -13,7 +13,7 @@ module Picky
 
     # Overrides index from the helper.
     #
-    def self.index scheduler = Scheduler.new
+    def self.index(scheduler = Scheduler.new)
       timed_indexing scheduler do
         instance.index scheduler
       end

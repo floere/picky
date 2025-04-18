@@ -19,7 +19,7 @@ describe Picky::Generators::Weights do
     context 'with a weight object' do
       let(:weighter) do
         Class.new do
-          def weight_for amount
+          def weight_for(amount)
             7.0
           end
         end.new

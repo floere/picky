@@ -14,21 +14,21 @@ module Picky
       # an object that responds to:
       #   object[:token] # => [id, id, id, id, id] (an array of ids)
       #
-      def create_inverted bundle, _ = nil
+      def create_inverted(bundle, _ = nil)
         json bundle.index_path(:inverted)
       end
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[:key] # => value (a value for this config key)
       #
-      def create_configuration bundle, _ = nil
+      def create_configuration(bundle, _ = nil)
         json bundle.index_path(:configuration)
       end
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[id] # => [:sym1, :sym2]
       #
-      def create_realtime bundle, _ = nil
+      def create_realtime(bundle, _ = nil)
         json bundle.index_path(:realtime)
       end
 
@@ -55,7 +55,7 @@ module Picky
       # We cannot use the information to speed up the algorithm,
       # unfortunately.
       #
-      def ids combinations, _, _
+      def ids(combinations, _, _)
         # Get the ids for each combination and pass to the optimized C algorithm.
         #
         # Note: It orders the passed arrays by size.

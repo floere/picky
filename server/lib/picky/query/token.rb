@@ -24,7 +24,7 @@ module Picky
       #
       # TODO Throw away @predefined_categories?
       #
-      def initialize text, original = nil, categories = nil
+      def initialize(text, original = nil, categories = nil)
         @text     = text
         @original = original
         @predefined_categories = categories
@@ -36,7 +36,7 @@ module Picky
       # Use this in the search engine if you need a qualified
       # and normalized token. I.e. one prepared for a search.
       #
-      def self.processed text, original = nil
+      def self.processed(text, original = nil)
         new(text, original).process
       end
       def process
@@ -64,14 +64,14 @@ module Picky
       #
       # TODO Do we really need to set the predefined categories on the token?
       #
-      def predefined_categories mapper = nil
+      def predefined_categories(mapper = nil)
         @predefined_categories || mapper && extract_predefined(mapper)
       end
-      def extract_predefined mapper
+      def extract_predefined(mapper)
         user_qualified = categorize_with mapper, @qualifiers
         mapper.restrict user_qualified
       end
-      def categorize_with mapper, qualifiers
+      def categorize_with(mapper, qualifiers)
         qualifiers && qualifiers.map do |qualifier|
           mapper.map qualifier
         end.compact
@@ -79,7 +79,7 @@ module Picky
       
       # Selects the bundle to be used.
       #
-      def select_bundle exact, partial
+      def select_bundle(exact, partial)
         @partial ? partial : exact
       end
       
@@ -87,7 +87,7 @@ module Picky
       #
       # Caches a stem for a tokenizer.
       #
-      def stem tokenizer
+      def stem(tokenizer)
         if stem?
           @stems ||= Hash.new
           @stems[tokenizer] ||= tokenizer.stem(@text)
@@ -103,7 +103,7 @@ module Picky
       #
       # It is only settable if it hasn't been set yet.
       #
-      def partial= partial
+      def partial=(partial)
         @partial = partial if @partial.nil?
       end
 
@@ -152,7 +152,7 @@ module Picky
       #   Picky::Query::Token.no_partial_character = '\?'
       #   try.search("tes?") # Won't find "test".
       #
-      def self.no_partial_character= character
+      def self.no_partial_character=(character)
         @@no_partial_character = character
         @@no_partial = %r{#{character}\z}
         redefine_illegals
@@ -168,7 +168,7 @@ module Picky
       #   Picky::Query::Token.partial_character = '\?'
       #   try.search("tes?") # Will find "test".
       #
-      def self.partial_character= character
+      def self.partial_character=(character)
         @@partial_character = character
         @@partial = %r{#{character}\z}
         redefine_illegals
@@ -198,7 +198,7 @@ module Picky
       #   Picky::Query::Token.no_similar_character = '\?'
       #   try.search("tost?") # Won't find "test".
       #
-      def self.no_similar_character= character
+      def self.no_similar_character=(character)
         @@no_similar_character = character
         @@no_similar = %r{#{character}\z}
         redefine_illegals
@@ -214,7 +214,7 @@ module Picky
       #   Picky::Query::Token.similar_character = '\?'
       #   try.search("tost?") # Will find "test".
       #
-      def self.similar_character= character
+      def self.similar_character=(character)
         @@similar_character = character
         @@similar = %r{#{character}\z}
         redefine_illegals
@@ -229,7 +229,7 @@ module Picky
       #   try.search("year:2000-2008") # Will find results in a range.
       #
       @@range_character = ?…
-      def self.range_character= character
+      def self.range_character=(character)
         @@range_character = character
       end
       def rangify
@@ -265,7 +265,7 @@ module Picky
       # tokens, if for example, the token is one with ~.
       # If yes, it puts together all solutions.
       #
-      def possible_combinations categories
+      def possible_combinations(categories)
         similar? ? categories.similar_possible_for(self) : categories.possible_for(self)
       end
       
@@ -273,14 +273,14 @@ module Picky
       # it will return a new combination for the tuple
       # (self, category, weight).
       #
-      def combination_for category
+      def combination_for(category)
         weight = category.weight self
         weight && Query::Combination.new(self, category, weight)
       end
 
       # Returns all similar tokens for the token.
       #
-      def similar_tokens_for category
+      def similar_tokens_for(category)
         similars = category.similar self
         similars.map do |similar|
           # The array describes all possible categories. There is only one here.
@@ -311,7 +311,7 @@ module Picky
       #   Picky::Query::Token.qualifier_text_delimiter = /\?/
       #   try.search("text1?hello text2?world").ids.should == [1]
       #
-      def self.qualifier_text_delimiter= character
+      def self.qualifier_text_delimiter=(character)
         @@qualifier_text_delimiter = character
         @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
       end
@@ -325,7 +325,7 @@ module Picky
       #   try.search("text1|text2:hello").ids.should == [1]
       #
       
-      def self.qualifiers_delimiter= character
+      def self.qualifiers_delimiter=(character)
         @@qualifiers_delimiter = character
         @@qualifiers_splitter  = Splitter.new @@qualifiers_delimiter
       end
@@ -359,7 +359,7 @@ module Picky
 
       # If the originals & the text are the same, they are the same.
       #
-      def == other
+      def ==(other)
         self.original == other.original && self.text == other.text
       end
 

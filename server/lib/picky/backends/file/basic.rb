@@ -23,7 +23,7 @@ module Picky
         # An index cache takes a path, without file extension,
         # which will be provided by the subclasses.
         #
-        def initialize cache_path, options = {}
+        def initialize(cache_path, options = {})
           @cache_path = "#{cache_path}.file.#{extension}"
 
           # This is the mapping file with the in-memory hash for the

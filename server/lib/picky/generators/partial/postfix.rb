@@ -15,7 +15,7 @@ module Picky
         # * from: 1 # => [:hello, :hell, :hel, :he, :h]
         # * from: 4 # => [:hello, :hell]
         #
-        def initialize options = {}
+        def initialize(options = {})
           options[:to] = -1
 
           super options

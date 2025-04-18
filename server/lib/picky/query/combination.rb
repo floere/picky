@@ -15,7 +15,7 @@ module Picky
                   :category,
                   :weight
 
-      def initialize token, category, weight
+      def initialize(token, category, weight)
         @token    = token
         @category = category
         @weight   = weight

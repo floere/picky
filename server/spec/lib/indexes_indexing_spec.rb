@@ -44,7 +44,7 @@ describe Picky::Indexes do
         indexes.indexes.should == []
       end
     end
-    def self.it_forwards_each name
+    def self.it_forwards_each(name)
       describe "forwarding ##{name}" do
         it "calls #{name} on each in order" do
           @index1.should_receive(name).once.with(no_args).ordered

@@ -240,7 +240,7 @@ describe Picky::Query::Tokens do
     end
   end
 
-  def self.it_should_forward name
+  def self.it_should_forward(name)
     describe "forwarding ##{name}" do
       before(:each) do
         @internal_tokens = double :internal_tokens

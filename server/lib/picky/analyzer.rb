@@ -2,7 +2,7 @@
 #
 
 class Range
-  def expand_with thing
+  def expand_with(thing)
     return (thing..thing) unless min
     if max < thing
       (min..thing)
@@ -27,7 +27,7 @@ class Analyzer
 
   #
   #
-  def analyze bundle
+  def analyze(bundle)
     bundle.load_inverted
     analysis[:__keys] = bundle.inverted.size
     cardinality :index, bundle.inverted
@@ -50,7 +50,7 @@ class Analyzer
     self
   end
     
-  def cardinality identifier, index
+  def cardinality(identifier, index)
     return unless can_calculate_cardinality? index
 
     key_length_sum = 0
@@ -68,7 +68,7 @@ class Analyzer
 
     report_cardinality identifier, index, key_length, ids_length, key_length_sum, ids_length_sum
   end
-  def report_cardinality identifier, index, key_length, ids_length, key_length_sum, ids_length_sum
+  def report_cardinality(identifier, index, key_length, ids_length, key_length_sum, ids_length_sum)
     analysis_identifier = analysis[identifier] ||= {}
     analysis_identifier[:key_length]         = key_length
     analysis_identifier[:ids_length]         = ids_length
@@ -76,7 +76,7 @@ class Analyzer
     analysis_identifier[:ids_length_average] = ids_length_sum.to_f / index.size    
   end
   
-  def can_calculate_cardinality? index
+  def can_calculate_cardinality?(index)
     return if index.size.zero?
     return unless index.respond_to? :each_pair
     true
@@ -96,7 +96,7 @@ class Analyzer
     end
   end
   
-  def weights index
+  def weights(index)
     return if !index.respond_to?(:size) || index.size.zero?
     return unless index.respond_to?(:each_pair)
 
@@ -147,7 +147,7 @@ class Analyzer
     ary.join "\n"
   end
   
-  def formatted description, key, index = :index
+  def formatted(description, key, index = :index)
     what    = "%-40s" % ["index", description, "key length range (avg):"].compact.join(' ')
     range   = "%7s" % analysis[index][key]
     average = "%8s" % "(#{analysis[index][:"#{key}_average"].round(2)})"

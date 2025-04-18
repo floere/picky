@@ -10,7 +10,7 @@ module Picky
 
         # Creates all necessary directories.
         #
-        def create_directory path
+        def create_directory(path)
           FileUtils.mkdir_p ::File.dirname(path)
         end
 

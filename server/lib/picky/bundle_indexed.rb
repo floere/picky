@@ -23,7 +23,7 @@ module Picky
     # Note: If the backend wants to return a special
     # enumerable, the backend should do so.
     #
-    def ids str_or_sym
+    def ids(str_or_sym)
       @inverted[str_or_sym] || []
       # THINK Place the key_format conversion here – or move into the backend?
       #
@@ -46,7 +46,7 @@ module Picky
     #
     # Returns a number, or nil.
     #
-    def weight str_or_sym
+    def weight(str_or_sym)
       @weights[str_or_sym]
     end
 
@@ -54,7 +54,7 @@ module Picky
     #
     # Returns an object.
     #
-    def [] str_or_sym
+    def [](str_or_sym)
       @configuration[str_or_sym]
     end
 
@@ -63,7 +63,7 @@ module Picky
     # Loading loads index objects from the backend.
     # They should each respond to [] and return something appropriate.
     #
-    def load symbol_keys = false
+    def load(symbol_keys = false)
       load_inverted symbol_keys
       load_weights symbol_keys
       load_similarity symbol_keys
@@ -73,17 +73,17 @@ module Picky
 
     # Loads the core index.
     #
-    def load_inverted symbol_keys
+    def load_inverted(symbol_keys)
       self.inverted = @backend_inverted.load symbol_keys
     end
     # Loads the weights index.
     #
-    def load_weights symbol_keys
+    def load_weights(symbol_keys)
       self.weights = @backend_weights.load symbol_keys unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
     end
     # Loads the similarity index.
     #
-    def load_similarity symbol_keys
+    def load_similarity(symbol_keys)
       self.similarity = @backend_similarity.load symbol_keys unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
     end
     # Loads the configuration.

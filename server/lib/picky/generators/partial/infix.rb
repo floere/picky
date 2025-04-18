@@ -30,14 +30,14 @@ module Picky
         #
         # (min 1 is default)
         #
-        def initialize options = {}
+        def initialize(options = {})
           @min = options[:min] || 1
           @max = options[:max] || -1
         end
 
         # Yields each generated partial.
         #
-        def each_partial token, &block
+        def each_partial(token, &block)
           token.each_intoken min, max, &block
         end
 

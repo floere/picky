@@ -9,7 +9,7 @@ module Picky
       # Reloads the whole app.
       # First itself, then the app.
       #
-      def reload app_file = 'app'
+      def reload(app_file = 'app')
         Dir.chdir Picky.root
         exclaim 'Reloading loader.'
         load_self
@@ -36,13 +36,13 @@ module Picky
 
       # Load a user file.
       #
-      def load_user filename
+      def load_user(filename)
         Kernel.load File.join(Picky.root, "#{filename}.rb")
       end
 
       # Load the user's application.
       #
-      def load_application file = 'app'
+      def load_application(file = 'app')
         load_user file
       rescue LoadError => e
         exclaim "\nBy default, Picky needs/loads the <Picky.root>/app.rb file as the app.\n\n"

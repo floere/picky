@@ -2,7 +2,7 @@ module Picky
 
   class Category
 
-    def each_bundle &block
+    def each_bundle(&block)
       if block
         yield exact
         yield partial

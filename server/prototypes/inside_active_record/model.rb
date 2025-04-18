@@ -14,10 +14,10 @@ class Model < ActiveRecord::Base
     @models ||= Picky::Search.new data
   end
   
-  def self.replace model
+  def self.replace(model)
     data.replace model
   end
-  def self.remove model
+  def self.remove(model)
     data.remove model.id
   end
   def self.search *args

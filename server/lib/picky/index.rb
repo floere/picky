@@ -117,7 +117,7 @@ module Picky
     #     result_identifier :my_special_results
     #   end
     #
-    def initialize name, &proc
+    def initialize(name, &proc)
       @name       = name.intern
       @categories = Categories.new
 
@@ -137,7 +137,7 @@ module Picky
 
     # Explicitly trigger memory optimization.
     #
-    def optimize_memory array_references = Hash.new
+    def optimize_memory(array_references = Hash.new)
       dedup = Picky::Optimizers::Memory::ArrayDeduplicator.new
       dedup.deduplicate categories.map(&:exact).map(&:inverted), array_references
       dedup.deduplicate categories.map(&:partial).map(&:inverted), array_references
@@ -157,7 +157,7 @@ module Picky
     # Sets/returns the backend used.
     # Default is @Backends::Memory.new@.
     #
-    def backend backend = nil
+    def backend(backend = nil)
       if backend
         @backend = backend
         reset_backend
@@ -168,7 +168,7 @@ module Picky
 
     # API method.
     #
-    def symbol_keys value = nil
+    def symbol_keys(value = nil)
       if value
         @symbol_keys = value
       else
@@ -233,7 +233,7 @@ module Picky
     # * source: Use a different source than the index uses. If you think you need that, there might be a better solution to your problem. Please post to the mailing list first with your application.rb :)
     # * from: Take the data from the data category with this name. Example: You have a source Sources::CSV.new(:title, file:'some_file.csv') but you want the category to be called differently. The you use from: category(:similar_title, :from => :title).
     #
-    def category category_name, options = {}
+    def category(category_name, options = {})
       new_category = Category.new category_name.intern, self, options
       categories << new_category
 
@@ -306,7 +306,7 @@ module Picky
     # * anchor: Where to anchor the grid.
     # * ... all options of #category.
     #
-    def ranged_category category_name, range, options = {}
+    def ranged_category(category_name, range, options = {})
       precision = options.delete(:precision) || 1
       anchor    = options.delete(:anchor)    || 0.0
 
@@ -409,7 +409,7 @@ INDEX
 
     # Displays the structure as a tree.
     #
-    def to_tree_s indent = 0
+    def to_tree_s(indent = 0)
       <<-TREE
 #{' ' * indent}Index(#{name})
 #{' ' * indent}  source: #{source.to_s[0..40]}

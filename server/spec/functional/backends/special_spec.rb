@@ -5,19 +5,19 @@ require 'spec_helper'
 # To test the interface definition.
 #
 class BackendInterfaceTester < Picky::Backends::Backend
-  def create_inverted _, _ = nil
+  def create_inverted(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_weights _, _ = nil
+  def create_weights(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_similarity _, _ = nil
+  def create_similarity(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_configuration _, _ = nil
+  def create_configuration(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
-  def create_realtime _, _ = nil
+  def create_realtime(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
 end
@@ -41,11 +41,11 @@ class InternalBackendInterfaceTester
     self
   end
 
-  def [] key
+  def [](key)
     @hash[key]
   end
 
-  def []= key, value
+  def []=(key, value)
     @hash[key] = value
   end
 
@@ -53,18 +53,18 @@ class InternalBackendInterfaceTester
     @hash.clear
   end
 
-  def delete key
+  def delete(key)
     @hash.delete key
   end
 
   # dump/load
   #
 
-  def dump _
+  def dump(_)
 
   end
 
-  def load _
+  def load(_)
     self
   end
 
@@ -77,7 +77,7 @@ describe BackendInterfaceTester do
 
   class Book
     attr_reader :id, :title, :author
-    def initialize id, title, author
+    def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
   end

@@ -15,7 +15,7 @@ module Picky
           result.first.first.to_i
         end
 
-        def []= key, array
+        def []=(key, array)
           unless array.empty?
             db.execute 'INSERT OR REPLACE INTO key_value (key,value) VALUES (?,?)',
                        [key.to_s, MultiJson.encode(array)]
@@ -25,7 +25,7 @@ module Picky
           array
         end
 
-        def [] key
+        def [](key)
           res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1", [key.to_s]
 
           array = res.blank? ? [] : MultiJson.decode(res.first.first)
@@ -33,7 +33,7 @@ module Picky
           array
         end
 
-        def delete key
+        def delete(key)
           db.execute "DELETE FROM key_value WHERE key = (?)", [key.to_s]
         end
 

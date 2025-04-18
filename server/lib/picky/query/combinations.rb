@@ -19,13 +19,13 @@ module Picky
               :map,
               to: :@combinations
 
-      def initialize combinations = []
+      def initialize(combinations = [])
         @combinations = combinations
       end
 
       # TODO
       #
-      def each &block
+      def each(&block)
         @combinations.each &block
       end
 
@@ -44,7 +44,7 @@ module Picky
       # Since identifiers are only nullified, we need to not include the
       # ids that have an associated identifier that is nil.
       #
-      def remove categories = []
+      def remove(categories = [])
         # TODO Do not use the name, but the category.
         #
         @combinations.reject! { |combination| categories.include?(combination.category_name) }

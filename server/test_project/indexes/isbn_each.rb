@@ -3,7 +3,7 @@
 class ISBN
   @@id = 1
   attr_reader :id, :isbn
-  def initialize isbn
+  def initialize(isbn)
     @id   = @@id += 1
     @isbn = isbn
   end

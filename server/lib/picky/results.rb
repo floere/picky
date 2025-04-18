@@ -17,7 +17,7 @@ module Picky
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil, unique = false
+    def initialize(query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil, unique = false)
       @amount      = amount
       @query       = query
       @offset      = offset
@@ -29,7 +29,7 @@ module Picky
     # Provide a block which
     # accepts a result id.
     #
-    def sort_by &sorting
+    def sort_by(&sorting)
       @sorting = sorting
     end
 
@@ -44,7 +44,7 @@ module Picky
     # Without this, the allocations are not processed,
     # and no ids are calculated.
     #
-    def prepare! extra_allocations = nil, unique = false, sorting = nil
+    def prepare!(extra_allocations = nil, unique = false, sorting = nil)
       return if @prepared == [extra_allocations, unique, sorting] # cached?
       @prepared = [extra_allocations, unique, sorting] # cache!
       unique ?
@@ -52,7 +52,7 @@ module Picky
         @allocations.process!(amount, offset, extra_allocations, sorting)
     end
 
-    def each &block
+    def each(&block)
       allocations.each &block
     end
 
@@ -64,7 +64,7 @@ module Picky
     #
     # TODO Rewrite such that this triggers calculation, not prepare!
     #
-    def ids only = amount
+    def ids(only = amount)
       allocations.ids only
     end
 
@@ -93,7 +93,7 @@ module Picky
 
     # Convert to json format.
     #
-    def to_json options = {}
+    def to_json(options = {})
       MultiJson.encode to_hash, options
     end
 

@@ -23,13 +23,13 @@ module Picky
               :[],
               to: :@allocations
 
-      def initialize allocations = []
+      def initialize(allocations = [])
         @allocations = allocations
       end
 
       # Score each allocation.
       #
-      def calculate_score boosts
+      def calculate_score(boosts)
         @allocations.each do |allocation|
           allocation.calculate_score boosts
         end
@@ -43,7 +43,7 @@ module Picky
 
       # Reduces the amount of allocations to x.
       #
-      def reduce_to amount
+      def reduce_to(amount)
         @allocations = @allocations.shift amount
       end
 
@@ -51,7 +51,7 @@ module Picky
       #
       # Only those passed in are removed.
       #
-      def remove_categories categories = []
+      def remove_categories(categories = [])
         @allocations.each { |allocation| allocation.remove categories } unless categories.empty?
       end
 
@@ -61,7 +61,7 @@ module Picky
       #
       # TODO Rewrite, speed up.
       #
-      def remove_allocations qualifiers_array
+      def remove_allocations(qualifiers_array)
         return if qualifiers_array.empty?
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
@@ -78,7 +78,7 @@ module Picky
       #
       # TODO Rewrite, speed up.
       #
-      def keep_allocations qualifiers_array
+      def keep_allocations(qualifiers_array)
         return if qualifiers_array.empty?
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
@@ -90,7 +90,7 @@ module Picky
 
       # Returns the top amount ids.
       #
-      def ids amount = 20
+      def ids(amount = 20)
         # TODO This is called too many times?
         if first_allocation = first
           # TODO Call ids with amount as parameter?
@@ -127,7 +127,7 @@ module Picky
       #
       # Note: It's possible that no ids are returned by an allocation, but a count. (In case of an offset)
       #
-      def process! amount, offset = 0, terminate_early = nil, sorting = nil
+      def process!(amount, offset = 0, terminate_early = nil, sorting = nil)
         each do |allocation|
           sorting = nil if amount <= 0 # Stop sorting if the results aren't shown.
           calculated_ids = allocation.process! amount, offset, sorting
@@ -152,7 +152,7 @@ module Picky
       #
       # Note: Slower than #process! especially with large offsets.
       #
-      def process_unique! amount, offset = 0, terminate_early = nil, sorting = nil
+      def process_unique!(amount, offset = 0, terminate_early = nil, sorting = nil)
         unique_ids = nil
         each do |allocation|
           unique_ids ||= allocation.empty_array

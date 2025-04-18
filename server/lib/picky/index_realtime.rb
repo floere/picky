@@ -15,13 +15,13 @@ module Picky
 
     # Add at the end.
     #
-    def << thing
+    def <<(thing)
       add(thing, method: __method__)
     end
 
     # Add at the beginning (calls add).
     #
-    def unshift thing
+    def unshift(thing)
       add(thing, method: __method__)
     end
 

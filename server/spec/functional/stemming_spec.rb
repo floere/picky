@@ -133,7 +133,7 @@ describe 'stemming' do
     describe 'multiple stemmers' do
       it 'caching works' do
         do_nothing_stemmer = Class.new do
-          def stem text
+          def stem(text)
             text
           end
         end.new

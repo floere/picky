@@ -5,7 +5,7 @@ module Picky
     module Partial
       extend Helpers::Identification
       
-      def self.from thing, index_name = nil, category_name = nil
+      def self.from(thing, index_name = nil, category_name = nil)
         return Default unless thing
 
         if thing.respond_to? :each_partial

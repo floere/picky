@@ -10,21 +10,21 @@ module Picky
           db.execute 'create table key_value (key varchar(255) PRIMARY KEY, value text);'
         end
 
-        def []= key, value
+        def []=(key, value)
           db.execute 'INSERT OR REPLACE INTO key_value (key, value) VALUES (?,?)',
                      [key.to_s, MultiJson.encode(value)]
 
           value
         end
 
-        def [] key
+        def [](key)
           res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1;", [key.to_s]
           return nil if res.empty?
 
           MultiJson.decode res.first.first
         end
 
-        def delete key
+        def delete(key)
           db.execute "DELETE FROM key_value WHERE key = (?)", [key.to_s]
         end
 

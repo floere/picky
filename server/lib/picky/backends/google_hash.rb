@@ -8,7 +8,7 @@ begin
     # This is mainly used in tests, which is
     # why we allow for a silly implementation.
     #
-    def == hash
+    def ==(hash)
       return false unless hash.respond_to?(:to_h)
     
       self.each do |key, value|
@@ -29,7 +29,7 @@ begin
   
     # TODO
     #
-    def inject init, &block
+    def inject(init, &block)
       result = init
       each do |key, value|
         result = block.call result, [key, value]

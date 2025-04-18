@@ -3,7 +3,7 @@ module Picky
       
     module IndexActions
       
-      def self.extended base
+      def self.extended(base)
         # Updates the given item and returns HTTP codes:
         #  * 200 if the index has been updated or no error case has occurred.
         #  * 404 if the index cannot be found.

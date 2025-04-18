@@ -32,7 +32,7 @@ def compare_strings
 
 end
 
-def ram file_name
+def ram(file_name)
   # Demeter is rotating in her grave :D
   #
   `ps u`.split("\n").select { |line| line.include? file_name }.first.split(/\s+/)[5].to_i

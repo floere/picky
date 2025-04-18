@@ -5,7 +5,7 @@ module Picky
     
     # Either a thing responding to #each or a block is fine.
     #
-    def self.from thing, nil_ok, index_name = nil
+    def self.from(thing, nil_ok, index_name = nil)
       if thing.respond_to?(:each) || thing.respond_to?(:call)
         thing
       else

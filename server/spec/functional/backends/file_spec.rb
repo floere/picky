@@ -9,7 +9,7 @@ describe Picky::Backends::File do
 
   class PoetryBook
     attr_reader :id, :title, :author
-    def initialize id, title, author
+    def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
   end

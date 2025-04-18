@@ -21,7 +21,7 @@ class Source
     end
   end
 
-  def each up_to = nil, &block
+  def each(up_to = nil, &block)
     @buffer[0..(up_to || amount)].each &block
   end
 
@@ -44,14 +44,14 @@ no_partial      = Picky::Partial::None.new
 full_partial    = Picky::Partial::Postfix.new from: 1
 double_meta     = Picky::Similarity::DoubleMetaphone.new 3
 
-def definition_with categories_amount, identifier, options = {}
+def definition_with(categories_amount, identifier, options = {})
   [Proc.new do
     1.upto(categories_amount).each do |i|
       category :"text#{i}", options
     end
   end, "#{identifier} (#{categories_amount})"]
 end
-def definitions_with upto, identifier, options = {}
+def definitions_with(upto, identifier, options = {})
   definitions = []
   (1..upto).each do |categories_amount|
     definitions << definition_with(categories_amount, identifier, options)

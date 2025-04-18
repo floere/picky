@@ -19,7 +19,7 @@ module Rack
       attr_accessor :after
     end
 
-    def initialize app
+    def initialize(app)
       @app = app
 
       @requests            = 0
@@ -31,7 +31,7 @@ module Rack
     # Harakiri is a middleware, so it forwards the the app or
     # the next middleware after checking if it is time to honorably retire.
     #
-    def call env
+    def call(env)
       harakiri
       @app.call env
     end

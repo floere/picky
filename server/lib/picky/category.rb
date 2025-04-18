@@ -33,7 +33,7 @@ module Picky
     #  Weights::Dynamic.new(&block) or an object that responds
     #  to #weight_for(amount_of_ids_for_token) and returns a float.
     #
-    def initialize name, index, options = {}
+    def initialize(name, index, options = {})
       @name  = name
       @index = index
       
@@ -45,7 +45,7 @@ module Picky
       configure_indexes_from options
     end
     
-    def configure_from options
+    def configure_from(options)
       @from       = options.delete :from
       
       # Instantly extracted to raise an error instantly.
@@ -69,7 +69,7 @@ module Picky
 
     # TODO I do a lot of helper method calls here. Refactor?
     #
-    def configure_indexes_from options
+    def configure_indexes_from(options)
       warn_if_unknown options
       
       weights    = weights_from options
@@ -98,7 +98,7 @@ module Picky
       :tokenizer,
       :weight,
     ]
-    def warn_if_unknown options
+    def warn_if_unknown(options)
       if options && (options.keys - @@known_keys).size > 0
         warn <<-WARNING
 
@@ -107,19 +107,19 @@ Warning: Category options #{options} for category #{name} contain an unknown opt
 WARNING
       end
     end
-    def weights_from options
+    def weights_from(options)
       Generators::Weights.from options[:weight], index_name, name
     end
-    def partial_from options
+    def partial_from(options)
       Generators::Partial.from options[:partial], index_name, name
     end
-    def similarity_from options
+    def similarity_from(options)
       Generators::Similarity.from options[:similarity], index_name, name
     end
-    def exact_for weights, similarity, options
+    def exact_for(weights, similarity, options)
       Bundle.new :exact, self, weights, Generators::Partial::None.new, similarity, options
     end
-    def partial_for exact, partial_options, weights, options
+    def partial_for(exact, partial_options, weights, options)
       # TODO Also partial.extend Bundle::Exact like in the category.
       #
       # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance? 
@@ -174,7 +174,7 @@ WARNING
     end
     # Extract qualifiers from the options.
     #
-    def extract_qualifiers_from options
+    def extract_qualifiers_from(options)
       options[:qualifiers] || options[:qualifier] && [options[:qualifier]]
     end
 
@@ -193,7 +193,7 @@ WARNING
     #
     # Note: If you don't use it with the block, do not forget to close it.
     #
-    def prepared_index_file &block
+    def prepared_index_file(&block)
       @prepared_index_file ||= Backends::Prepared::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
@@ -213,7 +213,7 @@ WARNING
     
     # Uniquely identified by index name and name.
     #
-    def == other
+    def ==(other)
       return false unless other
       index_name == other.index_name &&
       name       == other.name
@@ -225,7 +225,7 @@ WARNING
       "#{self.class}(#{identifier})"
     end
     
-    def to_tree_s indent = 0
+    def to_tree_s(indent = 0)
       s = <<-TREE
 #{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
 #{' ' * indent}  #{exact.to_tree_s(4)}

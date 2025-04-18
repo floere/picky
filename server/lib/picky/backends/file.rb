@@ -10,11 +10,11 @@ module Picky
     #
     class File < Backend
       
-      def create_weights bundle, _ = nil
+      def create_weights(bundle, _ = nil)
         Memory::JSON.new bundle.index_path(:weights)
       end
       
-      def create_similarity bundle, _ = nil
+      def create_similarity(bundle, _ = nil)
         json bundle.index_path(:similarity)
       end
 

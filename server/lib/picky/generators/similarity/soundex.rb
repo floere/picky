@@ -18,7 +18,7 @@ module Picky
         #
         # Returns a symbol.
         #
-        def encode str_or_sym
+        def encode(str_or_sym)
           str_or_sym.soundex
         end
 

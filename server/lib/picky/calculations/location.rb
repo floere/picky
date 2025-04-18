@@ -15,7 +15,7 @@ module Picky
                   :precision,
                   :grid
 
-      def initialize user_grid, anchor = 0.0, precision = nil
+      def initialize(user_grid, anchor = 0.0, precision = nil)
         @user_grid  = user_grid
         @precision  = precision || 1
         @grid       = @user_grid / (@precision + 0.5)
@@ -23,7 +23,7 @@ module Picky
         self.anchor = anchor
       end
 
-      def anchor= value
+      def anchor=(value)
         # Add a margin of 1 user grid.
         #
         value -= @user_grid
@@ -38,23 +38,23 @@ module Picky
 
       #
       #
-      def add_margin length
+      def add_margin(length)
         @anchor -= length
       end
 
       #
       #
-      def calculated_range location
+      def calculated_range(location)
         range calculate(location)
       end
       #
       #
-      def range around_location
+      def range(around_location)
         (around_location - @precision)..(around_location + @precision)
       end
       #
       #
-      def calculate location
+      def calculate(location)
         ((location - @anchor) / @grid).floor
       end
 

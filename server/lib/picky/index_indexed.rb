@@ -14,7 +14,7 @@ module Picky
     #
     # Default is the name of the index.
     #
-    def result_identifier result_identifier = nil
+    def result_identifier(result_identifier = nil)
       result_identifier ? (@result_identifier = result_identifier) : (@result_identifier || @name)
     end
 

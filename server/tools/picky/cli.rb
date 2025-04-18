@@ -13,29 +13,29 @@ module Picky
       executor = executor_class.new
       executor.execute selector, args, params
     end
-    def executor_class_for selector = nil
+    def executor_class_for(selector = nil)
       selector && @@mapping[selector.intern] || [Help]
     end
 
     class Base
-      def usage name, params
+      def usage(name, params)
         puts "Usage:\n  picky #{name} #{params_to_s(params)}"
       end
       # String params are optional, Symbol params aren't.
       #
-      def params_to_s params
+      def params_to_s(params)
         params.map { |param| param.respond_to?(:to_str) ? "[#{param}]" : param }.join(' ') if params
       end
     end
     class Generate < Base
-      def execute name, args, params
+      def execute(name, args, params)
         Kernel.system "picky-generate #{args.join(' ')}"
       end
     end
     class Help < Base
       # Displays usage information.
       #
-      def execute name, args, params
+      def execute(name, args, params)
         commands = Picky::CLI.mapping.map do |command, object_and_params|
           _, *params = object_and_params
           ary = []
@@ -49,7 +49,7 @@ module Picky
       end
     end
     class Live < Base
-      def execute name, args, params
+      def execute(name, args, params)
         url  = args.shift
         port = args.shift
 
@@ -67,7 +67,7 @@ module Picky
       end
     end
     class Search < Base
-      def execute name, args, params
+      def execute(name, args, params)
         url_or_path = args.shift
         ids         = args.shift
 
@@ -84,7 +84,7 @@ module Picky
       end
     end
     class Statistics < Base
-      def execute name, args, params
+      def execute(name, args, params)
         relative_log_file = args.shift
         port              = args.shift
 

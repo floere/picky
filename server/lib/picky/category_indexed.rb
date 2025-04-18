@@ -15,7 +15,7 @@ module Picky
 
     # Gets the weight for this token's text.
     #
-    def weight token
+    def weight(token)
       bundle = bundle_for token
       if range = token.range
         # TODO We might be able to return early?
@@ -35,7 +35,7 @@ module Picky
 
     # Gets the ids for this token's text.
     #
-    def ids token
+    def ids(token)
       bundle = bundle_for token
       if range = token.range
         # Adding all to an array, then flattening
@@ -61,12 +61,12 @@ module Picky
     
     # Gets the similars for this token's text.
     #
-    def similar token
+    def similar(token)
       bundle = bundle_for token
       bundle.similar str_or_sym(token.text)
     end
     
-    def str_or_sym text
+    def str_or_sym(text)
       if @symbol_keys
         text.to_sym
       else
@@ -76,7 +76,7 @@ module Picky
 
     # Returns the right index bundle for this token.
     #
-    def bundle_for token
+    def bundle_for(token)
       token.select_bundle exact, partial
     end
 

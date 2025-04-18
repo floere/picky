@@ -18,7 +18,7 @@ module Picky
 
         #
         #
-        def initialize amount = 3
+        def initialize(amount = 3)
           check_gem
           @amount = amount
         end
@@ -34,7 +34,7 @@ module Picky
 
         # Sorts the index values in place.
         #
-        def prioritize ary, code
+        def prioritize(ary, code)
           ary.sort_by_levenshtein! code
           ary.slice! amount, ary.size # Note: The ary.size is not perfectly correct.
         end

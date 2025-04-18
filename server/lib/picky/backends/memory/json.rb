@@ -18,7 +18,7 @@ module Picky
         #
         # Also ensures all hash keys are frozen.
         #
-        def load symbol_keys
+        def load(symbol_keys)
           MultiJson.decode ::File.open(cache_path, 'r'), symbolize_keys: symbol_keys # SYMBOLS.
           # index_hash && index_hash.each { |(key, value)| key.freeze }
           # index_hash
@@ -26,7 +26,7 @@ module Picky
 
         # Dumps the index internal backend in json format.
         #
-        def dump internal
+        def dump(internal)
           create_directory cache_path
           dump_json internal
         end
@@ -36,7 +36,7 @@ module Picky
         # TODO Add IO option:
         # MultiJson.encode(object, io: out_file)
         #
-        def dump_json internal
+        def dump_json(internal)
           ::File.open(cache_path, 'w') do |out_file|
             # If using Yajl, this will stream write to out_file.
             # Note: But it fails on oj.

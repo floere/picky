@@ -11,7 +11,7 @@ module Picky
     #
     # TODO Simplify (and slow) this again – remove the realtime index.
     #
-    def remove id
+    def remove(id)
       # Is it anywhere?
       #
       str_or_syms = @realtime[id]
@@ -52,7 +52,7 @@ module Picky
     # TODO Why the realtime index? Is it really necessary?
     #      Not absolutely. It was for efficient deletion/replacement.
     #
-    def add id, str_or_sym, method: :unshift, static: false, force_update: false
+    def add(id, str_or_sym, method: :unshift, static: false, force_update: false)
       # If static, indexing will be slower, but will use less
       # space in the end.
       #
@@ -116,7 +116,7 @@ module Picky
 
     # Add string/symbol to similarity index.
     #
-    def add_similarity str_or_sym, method: :unshift
+    def add_similarity(str_or_sym, method: :unshift)
       if encoded = self.similarity_strategy.encode(str_or_sym)
         similars = @similarity[encoded] ||= []
 
@@ -131,12 +131,12 @@ module Picky
 
     # Partializes the text and then adds each.
     #
-    def add_partialized id, text, method: :unshift, static: false, force_update: false
+    def add_partialized(id, text, method: :unshift, static: false, force_update: false)
       partialized text do |partial_text|
         add id, partial_text, method: method, static: static, force_update: force_update
       end
     end
-    def partialized text, &block
+    def partialized(text, &block)
       self.partial_strategy.each_partial text, &block
     end
 
@@ -146,7 +146,7 @@ module Picky
     #
     # THINK Maybe load it and just replace the arrays with the corresponding ones.
     #
-    def build_realtime symbol_keys
+    def build_realtime(symbol_keys)
       clear_realtime
       @inverted.each_pair do |str_or_sym, ids|
         ids.each do |id|

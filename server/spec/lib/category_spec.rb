@@ -74,7 +74,7 @@ WARNING
     context 'tokenizer' do
       let(:tokenizer) do
         Class.new do
-          def tokenize text
+          def tokenize(text)
             ['unmoved', 'by', 'your', 'texts']
           end
         end.new

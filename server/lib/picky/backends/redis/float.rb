@@ -16,7 +16,7 @@ module Picky
         # Note: nil.to_f returns 0.0. That's why the
         #       code below looks a bit funny.
         #
-        def [] key
+        def [](key)
           float = super
           float && float.to_f
         end

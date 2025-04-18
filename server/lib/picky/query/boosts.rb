@@ -31,7 +31,7 @@ module Picky
       #   [:category_name1, :category_name2] => +3
       # (some positive or negative weight)
       #
-      def initialize boosts = {}
+      def initialize(boosts = {})
         @boosts = boosts
       end
 
@@ -46,7 +46,7 @@ module Picky
       # Note: Use Array#clustered_uniq to make
       #       [:a, :a, :b, :a] => [:a, :b, :a]
       #
-      def boost_for_categories names
+      def boost_for_categories(names)
         @boosts[names.clustered_uniq] || 0
       end
 
@@ -61,14 +61,14 @@ module Picky
       #
       # TODO Push into categories? Store boosts in categories?
       #
-      def boost_for combinations
+      def boost_for(combinations)
         boost_for_categories combinations.map { |combination| combination.category_name }
       end
 
       # A Weights instance is == to another if
       # the weights are the same.
       #
-      def == other
+      def ==(other)
         @boosts == other.boosts
       end
 

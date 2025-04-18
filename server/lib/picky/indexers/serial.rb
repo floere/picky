@@ -16,7 +16,7 @@ module Picky
       # Parameters:
       #  * categories: An enumerable of Category-s.
       #
-      def process source_for_prepare, categories, scheduler = Scheduler.new
+      def process(source_for_prepare, categories, scheduler = Scheduler.new)
         categories.each do |category|
 
           category.prepared_index_file do |file|
@@ -51,7 +51,7 @@ module Picky
 
       end
 
-      def index_flush datas, file, cache, tokenizer
+      def index_flush(datas, file, cache, tokenizer)
         comma   = ?,
         newline = ?\n
         
@@ -79,7 +79,7 @@ module Picky
         flush file, cache
       end
 
-      def flush prepared_file, cache
+      def flush(prepared_file, cache)
         prepared_file.write(cache.join) && cache.clear
       end
 

@@ -197,7 +197,7 @@ ERROR
       context "with a splitter given" do
         let(:splitter) do
           Class.new do
-            def split text
+            def split(text)
               text.split(/,/)
             end
           end.new
@@ -348,7 +348,7 @@ ERROR
     context 'tokenizer' do
       let(:tokenizer) do
         Class.new do
-          def tokenize text
+          def tokenize(text)
             ['unmoved', 'by', 'your', 'texts']
           end
         end.new

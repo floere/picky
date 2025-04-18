@@ -17,7 +17,7 @@ module Picky
           Unicorn::HttpServer::WORKERS.keys
         end
 
-        def remove_worker wpid
+        def remove_worker(wpid)
           worker = Unicorn::HttpServer::WORKERS.delete(wpid) and worker.tmp.close rescue nil
         end
 

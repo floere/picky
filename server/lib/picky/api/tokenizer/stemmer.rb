@@ -4,7 +4,7 @@ module Picky
 
       module Stemmer
 
-        def extract_stemmer thing
+        def extract_stemmer(thing)
           if thing.respond_to? :stem
             thing
           else

@@ -22,7 +22,7 @@ class Array
   #
   # Will raise if encounters not to_s-able element.
   #
-  def sort_by_levenshtein! from
+  def sort_by_levenshtein!(from)
     from = from.to_s
     sort! do |this, that|
       Text::Levenshtein.distance(this.to_s, from) <=> Text::Levenshtein.distance(that.to_s, from)

@@ -2,7 +2,7 @@
 #
 NonStringDataSource = Struct.new :id, :nonstring
 class NonStringTokenizer < Picky::Tokenizer
-  def tokenize nonstring
+  def tokenize(nonstring)
     [nonstring.map(&:to_sym)]
   end
 end

@@ -46,7 +46,7 @@ module Picky
 
     # TODO Move the strategies into options.
     #
-    def initialize name, category, weight_strategy, partial_strategy, similarity_strategy, options = {}
+    def initialize(name, category, weight_strategy, partial_strategy, similarity_strategy, options = {})
       @name     = name
       @category = category
 
@@ -113,7 +113,7 @@ module Picky
 
     # Extracted to avoid duplicate code.
     #
-    def on_all_indexes_call method_name
+    def on_all_indexes_call(method_name)
       @inverted      = @backend_inverted.send method_name
       @weights       = @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved? ? @weight_strategy : @backend_weights.send(method_name)
       @similarity    = @backend_similarity.send method_name
@@ -137,7 +137,7 @@ module Picky
     #
     # Note: Also checks for itself.
     #
-    def similar str_or_sym
+    def similar(str_or_sym)
       code = similarity_strategy.encode str_or_sym
       return [] unless code
       @similarity[code] || []
@@ -169,11 +169,11 @@ module Picky
     # Returns just the part without subindex type,
     # if none given.
     #
-    def index_path type = nil
+    def index_path(type = nil)
       ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
     end
 
-    def to_tree_s indent = 0, &block
+    def to_tree_s(indent = 0, &block)
       s = <<-TREE
 #{' ' * indent}#{self.class.name.gsub('Picky::','')}(#{name})
 #{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block && block.call(inverted)}

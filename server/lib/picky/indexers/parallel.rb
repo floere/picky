@@ -15,7 +15,7 @@ module Picky
       # Parameters:
       #  * categories: An Enumerable of Category-s.
       #
-      def process source_for_prepare, categories, scheduler = Scheduler.new
+      def process(source_for_prepare, categories, scheduler = Scheduler.new)
         # Prepare a combined object - array.
         #
         combined = categories.map do |category|
@@ -55,7 +55,7 @@ module Picky
         end
       end
 
-      def index_flush objects, file, category, cache, tokenizer
+      def index_flush(objects, file, category, cache, tokenizer)
         comma   = ?,
         newline = ?\n
 
@@ -75,7 +75,7 @@ module Picky
         flush file, cache
       end
 
-      def flush file, cache
+      def flush(file, cache)
         file.write(cache.join) && cache.clear
       end
 

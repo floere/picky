@@ -8,7 +8,7 @@ module Picky
       # Factory method to return a fitting
       # weight handling thing for the given thing.
       #  
-      def self.from thing, index_name = nil, category_name = nil
+      def self.from(thing, index_name = nil, category_name = nil)
         return Default unless thing
 
         if thing.respond_to? :weight_for
