@@ -78,17 +78,13 @@ module Picky
     # Loads the weights index.
     #
     def load_weights(symbol_keys)
-      unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
-        self.weights = @backend_weights.load symbol_keys
-      end
+      self.weights = @backend_weights.load symbol_keys unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
     end
 
     # Loads the similarity index.
     #
     def load_similarity(symbol_keys)
-      unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
-        self.similarity = @backend_similarity.load symbol_keys
-      end
+      self.similarity = @backend_similarity.load symbol_keys unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
     end
 
     # Loads the configuration.

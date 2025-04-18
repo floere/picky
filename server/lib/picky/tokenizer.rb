@@ -100,9 +100,7 @@ module Picky
     # Note: We do not test against to_str since symbols do not work with String#split.
     #
     def splits_text_on(thing)
-      unless thing.is_a?(Regexp) || thing.respond_to?(:split)
-        raise ArgumentError, "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}."
-      end
+      raise ArgumentError, "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}." unless thing.is_a?(Regexp) || thing.respond_to?(:split)
 
       @splits_text_on = if thing.respond_to? :split
                           thing
@@ -125,9 +123,7 @@ module Picky
     # TODO 5.0 Rename to normalize(text) or normalize_words
     #
     def normalizes_words(regexp_replaces)
-      unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
-        raise ArgumentError, "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}."
-      end
+      raise ArgumentError, "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
 
       @normalizes_words_regexp_replaces = regexp_replaces
     end
@@ -211,9 +207,7 @@ module Picky
     #
     def check_argument_in(method, types, argument)
       types = [*types]
-      unless types.any? { |type| type === argument }
-        raise ArgumentError, "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}."
-      end
+      raise ArgumentError, "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}." unless types.any? { |type| type === argument }
     end
 
     attr_reader :substituter, :stemmer

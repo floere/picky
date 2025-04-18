@@ -37,9 +37,7 @@ module Picky
     #       user as early as possible.
     #
     def check_source_empty
-      if source.respond_to?(:empty?) && source.empty?
-        Picky.logger.warn %{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n}
-      end
+      Picky.logger.warn %{\n\033[1mWarning\033[m, source for index "#{name}" is empty: #{source} (responds true to empty?).\n} if source.respond_to?(:empty?) && source.empty?
     end
 
     # Indexes the categories in parallel.

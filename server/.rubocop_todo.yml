@@ -302,17 +302,6 @@ Style/IdenticalConditionalBranches:
   Exclude:
     - 'lib/picky/backends/memory.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/picky/bundle.rb'
-    - 'lib/picky/bundle_indexed.rb'
-    - 'lib/picky/index_indexing.rb'
-    - 'lib/picky/qualifier_mapper.rb'
-    - 'lib/picky/tokenizer.rb'
-    - 'lib/tasks/try.rake'
-
 # Offense count: 1
 Style/MissingRespondToMissing:
   Exclude:
