@@ -17,6 +17,7 @@ module Picky
       def create_inverted(bundle, _ = nil)
         json bundle.index_path(:inverted)
       end
+
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[:key] # => value (a value for this config key)
@@ -24,6 +25,7 @@ module Picky
       def create_configuration(bundle, _ = nil)
         json bundle.index_path(:configuration)
       end
+
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[id] # => [:sym1, :sym2]

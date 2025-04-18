@@ -136,6 +136,7 @@ module Picky
         add id, partial_text, method: method, static: static, force_update: force_update
       end
     end
+
     def partialized(text, &block)
       self.partial_strategy.each_partial text, &block
     end

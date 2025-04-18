@@ -37,6 +37,7 @@ def ram(file_name)
   #
   `ps u`.split("\n").select { |line| line.include? file_name }.first.split(/\s+/)[5].to_i
 end
+
 def string_count
   i = 0
   GC.start
@@ -46,6 +47,7 @@ def string_count
   end
   i
 end
+
 def runs
   GC::Profiler.result.match(/\d+/)[0].to_i
 end

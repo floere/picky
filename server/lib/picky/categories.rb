@@ -22,7 +22,7 @@ module Picky
 
     # A list of indexed categories.
     #
-    def initialize(options = {})
+    def initialize(_options = {})
       clear_categories
     end
 
@@ -64,6 +64,7 @@ module Picky
       category_name = category_name.intern
       category_hash[category_name] || raise_not_found(category_name)
     end
+
     def raise_not_found(category_name)
       raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
     end

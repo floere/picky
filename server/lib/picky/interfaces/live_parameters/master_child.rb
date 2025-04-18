@@ -48,6 +48,7 @@ module Picky
             kill_worker :KILL, wpid
           end
         end
+
         def kill_worker(signal, wpid)
           Process.kill signal, wpid
           exclaim "Killing worker ##{wpid} with signal #{signal}."
@@ -79,11 +80,13 @@ module Picky
           harakiri
           { e.config_key => :ERROR }
         end
+
         # Kills itself, but still answering the request honorably.
         #
         def harakiri
           Process.kill :QUIT, Process.pid
         end
+
         # Write the parent.
         #
         # Note: The ;;; is the end marker for the message.
@@ -91,6 +94,7 @@ module Picky
         def write_parent(configuration_hash)
           @parent.write "#{[Process.pid, configuration_hash]};;;"
         end
+
         # Close the child if it isn't yet closed.
         #
         def close_child
@@ -137,20 +141,25 @@ module Picky
           regexp = Tokenizer.searching.instance_variable_get :@removes_characters_regexp
           regexp && regexp.source
         end
+
         def querying_removes_characters=(new_value)
           Tokenizer.searching.removes_characters %r{#{new_value}}
         end
+
         def querying_stopwords
           regexp = Tokenizer.searching.instance_variable_get :@remove_stopwords_regexp
           regexp && regexp.source
         end
+
         def querying_stopwords=(new_value)
           Tokenizer.searching.instance_variable_set(:@remove_stopwords_regexp, %r{#{new_value}})
         end
+
         def querying_splits_text_on
           splits = Tokenizer.searching.instance_variable_get :@splits_text_on
           splits && splits.respond_to?(:source) ? splits.source : splits
         end
+
         def querying_splits_text_on=(new_value)
           splits = Tokenizer.searching.instance_variable_get :@splits_text_on
           if splits.respond_to?(:source)

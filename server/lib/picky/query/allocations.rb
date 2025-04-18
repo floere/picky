@@ -180,6 +180,7 @@ module Picky
       def total
         @total ||= calculate_total
       end
+
       def calculate_total
         inject(0) do |total, allocation|
           total + (allocation.count or return total)

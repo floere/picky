@@ -29,6 +29,7 @@ class Searches
   def self.buffer
     @buffer
   end
+
   def self.size
     @size
   end

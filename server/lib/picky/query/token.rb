@@ -39,6 +39,7 @@ module Picky
       def self.processed(text, original = nil)
         new(text, original).process
       end
+
       def process
         qualify
         similarize
@@ -67,10 +68,12 @@ module Picky
       def predefined_categories(mapper = nil)
         @predefined_categories || mapper && extract_predefined(mapper)
       end
+
       def extract_predefined(mapper)
         user_qualified = categorize_with mapper, @qualifiers
         mapper.restrict user_qualified
       end
+
       def categorize_with(mapper, qualifiers)
         qualifiers && qualifiers.map do |qualifier|
           mapper.map qualifier
@@ -95,6 +98,7 @@ module Picky
           @text
         end
       end
+
       def stem?
         @text !~ @@no_partial
       end
@@ -140,6 +144,7 @@ module Picky
         self.partial = false or return if @text =~ @@no_partial
         self.partial = true if @text =~ @@partial
       end
+
       # Define a character which stops a token from
       # being a partial token, even if it is the last token.
       #
@@ -157,6 +162,7 @@ module Picky
         @@no_partial = %r{#{character}\z}
         redefine_illegals
       end
+
       # Define a character which makes a token a partial token.
       #
       # Default is '*'.
@@ -186,6 +192,7 @@ module Picky
         self.similar = false or return if @text =~ @@no_similar
         self.similar = true if @text =~ @@similar
       end
+
       # Define a character which stops a token from
       # being a similar token, even if it is the last token.
       #
@@ -203,6 +210,7 @@ module Picky
         @@no_similar = %r{#{character}\z}
         redefine_illegals
       end
+
       # Define a character which makes a token a similar token.
       #
       # Default is '~'.
@@ -232,9 +240,11 @@ module Picky
       def self.range_character=(character)
         @@range_character = character
       end
+
       def rangify
         @range = @text.split(@@range_character, 2) if @text.include? @@range_character
       end
+
       def range
         @range
       end
@@ -252,6 +262,7 @@ module Picky
         #
         @text.gsub! @@illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
+
       def self.redefine_illegals
         # Note: By default, both no similar and no partial are ".
         #
@@ -302,6 +313,7 @@ module Picky
           @qualifiers = @@qualifiers_splitter.multi @qualifiers
         end
       end
+
       # Define a regexp which separates the qualifier
       # from the search text.
       #

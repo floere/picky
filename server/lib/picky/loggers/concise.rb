@@ -31,22 +31,27 @@ module Picky
         def info(text)
           output.info text
         end
+
         def warn(text)
           output.warn text
         end
+
         def write(message)
           output << message
         end
       end
+
       def adapt_for_io
         super
         def info(text)
           output.write text
         end
+
         def warn(text)
           output.puts text
           flush
         end
+
         def write(message)
           output.write message
         end

@@ -17,16 +17,19 @@ module Picky
         @client   = options[:client] || ::Redis.new(db: (options[:db] || 15))
         @realtime = options[:realtime]
       end
+
       def maybe_load_hiredis
         require 'hiredis'
       rescue LoadError
         # It's ok.
       end
+
       def check_hiredis_gem
         require 'redis/connection/hiredis'
       rescue LoadError
         # It's ok, the next check will fail if this one does.
       end
+
       def check_redis_gem
         require 'redis'
       rescue LoadError
@@ -39,24 +42,28 @@ module Picky
       def create_inverted(bundle, _ = nil)
         List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:inverted", realtime: realtime
       end
+
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:token] # => 1.23 (a weight)
       #
       def create_weights(bundle, _ = nil)
         Float.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:weights", realtime: realtime
       end
+
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:encoded] # => [:original, :original] (an array of original symbols this similarity encoded thing maps to)
       #
       def create_similarity(bundle, _ = nil)
         List.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:similarity", realtime: realtime
       end
+
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [:key] # => value (a value for this config key)
       #
       def create_configuration(bundle, _ = nil)
         String.new client, "#{PICKY_ENVIRONMENT}:#{bundle.identifier}:configuration", realtime: realtime
       end
+
       # Returns an object that on #initial, #load returns an object that responds to:
       #   [id] # => [:sym1, :sym2]
       #
@@ -199,6 +206,7 @@ module Picky
       def self.extract_host
         @host ||= Socket.gethostname
       end
+
       def host
         self.class.extract_host
       end
@@ -206,6 +214,7 @@ module Picky
       def pid
         @pid ||= Process.pid
       end
+
       # Use the host and pid (generated lazily in child processes) for the result.
       #
       def generate_intermediate_result_id

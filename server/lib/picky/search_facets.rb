@@ -65,7 +65,8 @@ module Picky
         end
       end
     end
-    def facets_without_counts(counts, minimal_counts, tokenized_filter_query, last_token_text, options = {})
+
+    def facets_without_counts(counts, minimal_counts, tokenized_filter_query, _last_token_text, _options = {})
       counts.inject([]) do |result, (key, _)|
         # Replace only the key token text because that
         # is the only information that changes in between
@@ -84,7 +85,8 @@ module Picky
         result << key
       end
     end
-    def facets_with_counts(counts, minimal_counts, tokenized_filter_query, last_token_text, options = {})
+
+    def facets_with_counts(counts, minimal_counts, tokenized_filter_query, _last_token_text, _options = {})
       counts.inject({}) do |result, (key, _)|
         # Replace only the key token text because that
         # is the only information that changes in between

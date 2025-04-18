@@ -13,7 +13,7 @@ module Picky
 
     # Privatizes app file methods.
     #
-    def self.extended(into)
+    def self.extended(_into)
       private :indexing, :searching
     end
 

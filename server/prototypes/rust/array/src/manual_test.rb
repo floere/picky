@@ -24,6 +24,7 @@ def rust_ary
   p ary.size
   p [ary.first, ary.last]
 end
+
 def ruby_ary
   ary = Array.new
   timed do
@@ -48,6 +49,7 @@ def rust_hash
     end
   end
 end
+
 # def rust_hash_fast_append
 #   hash = Rust::Hash.new
 #   keys_size = KEYS.size

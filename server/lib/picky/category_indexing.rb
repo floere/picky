@@ -74,6 +74,7 @@ module Picky
     def key_format
       @key_format ||= @index.key_format
     end
+
     def key_format?
       key_format
     end

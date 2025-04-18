@@ -20,7 +20,7 @@ class IndexGenerator
     end
   end
 
-  def each(&block)
+  def each()
     characters = %w[a b c d]
     size = characters.size
 

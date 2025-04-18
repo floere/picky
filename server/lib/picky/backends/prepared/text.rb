@@ -12,7 +12,7 @@ module Picky
 
         attr_reader :cache_path
 
-        def initialize(cache_path, options = {})
+        def initialize(cache_path, _options = {})
           @cache_path = "#{cache_path}.prepared.#{extension}"
         end
 
@@ -38,7 +38,7 @@ module Picky
         # Text files are used exclusively for
         # prepared data files.
         #
-        def dump(hash)
+        def dump(_hash)
           raise "Can't dump to text file. Use JSON or Marshal."
         end
 

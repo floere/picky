@@ -97,16 +97,19 @@ module Picky
 
         allocations
       end
+
       # Returns a number of possible allocations for the given tokens.
       #
       def allocations_for(tokens)
         Allocations.new allocations_ary_for(tokens)
       end
+
       def allocations_ary_for(tokens)
         indexes.inject([]) do |allocations, index|
           allocations + allocation_for(tokens, index)
         end
       end
+
       def allocation_for(tokens, index)
         # Expand the combinations.
         #

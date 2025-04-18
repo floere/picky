@@ -8,19 +8,24 @@ class BackendInterfaceTester < Picky::Backends::Backend
   def create_inverted(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
+
   def create_weights(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
+
   def create_similarity(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
+
   def create_configuration(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
+
   def create_realtime(_, _ = nil)
     InternalBackendInterfaceTester.new
   end
 end
+
 class InternalBackendInterfaceTester
 
   EMPTY_ARRAY = Array.new

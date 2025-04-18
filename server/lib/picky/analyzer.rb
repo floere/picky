@@ -68,6 +68,7 @@ class Analyzer
 
     report_cardinality identifier, index, key_length, ids_length, key_length_sum, ids_length_sum
   end
+
   def report_cardinality(identifier, index, key_length, ids_length, key_length_sum, ids_length_sum)
     analysis_identifier = analysis[identifier] ||= {}
     analysis_identifier[:key_length]         = key_length

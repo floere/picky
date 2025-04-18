@@ -107,18 +107,23 @@ Warning: Category options #{options} for category #{name} contain an unknown opt
 WARNING
       end
     end
+
     def weights_from(options)
       Generators::Weights.from options[:weight], index_name, name
     end
+
     def partial_from(options)
       Generators::Partial.from options[:partial], index_name, name
     end
+
     def similarity_from(options)
       Generators::Similarity.from options[:similarity], index_name, name
     end
+
     def exact_for(weights, similarity, options)
       Bundle.new :exact, self, weights, Generators::Partial::None.new, similarity, options
     end
+
     def partial_for(exact, partial_options, weights, options)
       # TODO Also partial.extend Bundle::Exact like in the category.
       #
@@ -159,6 +164,7 @@ WARNING
     def backend
       @backend || @index.backend
     end
+
     # Resets backends in both bundles.
     #
     def reset_backend
@@ -172,6 +178,7 @@ WARNING
     def qualifiers
       @qualifiers || [name]
     end
+
     # Extract qualifiers from the options.
     #
     def extract_qualifiers_from(options)
@@ -189,6 +196,7 @@ WARNING
     def prepared_index_path
       @prepared_index_path ||= ::File.join(index_directory, name.to_s)
     end
+
     # Get an opened index file.
     #
     # Note: If you don't use it with the block, do not forget to close it.
@@ -201,6 +209,7 @@ WARNING
     def index_directory
       @index.directory
     end
+
     def index_name
       @index.name
     end

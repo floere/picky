@@ -11,9 +11,10 @@ describe Picky::Generators::Similarity do
     context 'with a similarity object' do
       let(:similarizer) do
         Class.new do
-          def encode(text)
+          def encode(_text)
             :encoded
           end
+
           def prioritize(ary, encoded)
 
           end

@@ -26,6 +26,7 @@ module Picky
             raise_different backends if backends.size > 1
             backends
           end
+
           def raise_different(backends)
             raise DifferentBackendsError.new(backends)
           end
@@ -41,6 +42,7 @@ module Picky
         def initialize(backends)
           @backends = backends
         end
+
         def to_s
           "Currently it isn't possible to mix Indexes with backends #{@backends.join(" and ")} in the same Search instance."
         end

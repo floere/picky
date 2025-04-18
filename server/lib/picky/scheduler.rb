@@ -46,6 +46,7 @@ module Picky
       warn_procrastinate_missing
       return false
     end
+
     def warn_procrastinate_missing
       warn_gem_missing 'Procrastinate', 'parallelized indexing (with the procrastinate gem)' unless @gem_missing_warned
       @gem_missing_warned = true

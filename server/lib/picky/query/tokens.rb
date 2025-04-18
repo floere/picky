@@ -79,9 +79,11 @@ module Picky
       def originals
         @tokens.map(&:original)
       end
+
       def original
         originals
       end
+
       # TODO
       #
       def texts

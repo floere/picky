@@ -33,6 +33,7 @@ module Picky
     def self.instance
       @instance ||= new
     end
+
     def self.identifier
       name
     end
@@ -52,6 +53,7 @@ module Picky
         index.optimize_memory array_references
       end
     end
+
     def self.optimize_memory(array_references = Hash.new)
       self.instance.optimize_memory array_references
     end
@@ -65,6 +67,7 @@ module Picky
       self.indexes << index
       self.index_mapping[index.name] = index
     end
+
     def self.register(index)
       self.instance.register index
     end

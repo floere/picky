@@ -32,6 +32,7 @@ module Picky
             
         end
       end
+
       def adapt_for_io
         def flush
           output.flush

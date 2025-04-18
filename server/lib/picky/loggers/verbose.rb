@@ -27,23 +27,28 @@ module Picky
         def timed_exclaim(text)
           output.info "#{Time.now.strftime("%H:%M:%S")}: #{text}"
         end
+
         def warn(text)
           output.warn text
         end
+
         def write(message)
           output << message
         end
       end
+
       def adapt_for_io
         super
         def timed_exclaim(text)
           output.puts "#{Time.now.strftime("%H:%M:%S")}: #{text}"
           flush
         end
+
         def warn(text)
           output.puts text
           flush
         end
+
         def write(message)
           output.write message
         end

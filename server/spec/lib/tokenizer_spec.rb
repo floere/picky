@@ -348,7 +348,7 @@ ERROR
     context 'tokenizer' do
       let(:tokenizer) do
         Class.new do
-          def tokenize(text)
+          def tokenize(_text)
             %w[unmoved by your texts]
           end
         end.new

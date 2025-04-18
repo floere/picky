@@ -93,6 +93,7 @@ def mark(klass = String)
     diff klass 
   end
 end
+
 def diff(klass = String)
   return unless $marked
   now_hash = Hash.new 0

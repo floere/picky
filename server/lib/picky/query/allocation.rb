@@ -97,6 +97,7 @@ module Picky
         @count = calculated_ids.size                                          # cache the count before throwing away the ids
         @ids   = calculated_ids.slice!(offset, amount) || backend.empty_array # slice out the relevant part
       end
+
       # Same as the above, but with illegal ids. Parameter added:
       #  * illegal_ids: ids to ignore.
       #

@@ -188,9 +188,10 @@ describe Picky::Search do
     context 'with special weights' do
       before(:each) do
         class RandomBoosts
-          def boost_for(combinations)
+          def boost_for(_combinations)
             rand
           end
+
           def to_s
             "#{self.class}(rand)"
           end

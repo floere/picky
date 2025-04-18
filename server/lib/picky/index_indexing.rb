@@ -82,6 +82,7 @@ module Picky
       some_source ||= block
       some_source ? (@source = Source.from(some_source, false, name)) : unblock_source
     end
+
     # Get the actual source if it is wrapped in a time
     # capsule, ie. a block/lambda.
     #

@@ -10,6 +10,7 @@ class Model < ActiveRecord::Base
       category :surname
     end
   end
+
   def self.models
     @models ||= Picky::Search.new data
   end
@@ -17,9 +18,11 @@ class Model < ActiveRecord::Base
   def self.replace(model)
     data.replace model
   end
+
   def self.remove(model)
     data.remove model.id
   end
+
   def self.search *args
     models.search *args
   end

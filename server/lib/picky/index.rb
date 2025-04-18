@@ -148,6 +148,7 @@ module Picky
     def static
       @static = true
     end
+
     def static?
       @static
     end
@@ -195,7 +196,7 @@ module Picky
     #
     # TODO Redesign.
     #
-    def only *qualifiers
+    def only *_qualifiers
       raise 'Sorry, Picky::Search#only has been removed in version.'
       # @qualifier_mapper.restrict_to *qualifiers
     end

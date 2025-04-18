@@ -13,6 +13,7 @@ module Picky
     def self.default_indexing_with(options = {})
       @indexing = from options
     end
+
     def self.indexing
       @indexing ||= new
     end
@@ -20,6 +21,7 @@ module Picky
     def self.default_searching_with(options = {})
       @searching = from options
     end
+
     def self.searching
       @searching ||= new
     end
@@ -65,6 +67,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       check_argument_in __method__, [Regexp, String, FalseClass], regexp
       @remove_stopwords_regexp = regexp
     end
+
     def remove_stopwords(text)
       text.gsub! @remove_stopwords_regexp, EMPTY_STRING if @remove_stopwords_regexp
       text
@@ -85,6 +88,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       check_argument_in __method__, [Regexp, FalseClass], regexp
       @removes_characters_regexp = regexp
     end
+
     def remove_illegals(text)
       text.gsub! @removes_characters_regexp, EMPTY_STRING if @removes_characters_regexp
       text
@@ -104,6 +108,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         RegexpWrapper.new thing
       end
     end
+
     def split(text)
       # Does not create a new string if nothing is split.
       #
@@ -121,6 +126,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
       @normalizes_words_regexp_replaces = regexp_replaces
     end
+
     def normalize_with_patterns(text)
       return text unless @normalizes_words_regexp_replaces # TODO Remove.
 
@@ -132,6 +138,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
 
       text
     end
+
     def normalize_with_patterns?
       @normalizes_words_regexp_replaces
     end
@@ -143,6 +150,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def substitutes_characters_with(substituter = CharacterSubstituters::WestEuropean.new)
       @substituter = extract_character_substituter substituter
     end
+
     def substitute_characters(text)
       substituter?? substituter.substitute(text) : text
     end
@@ -152,6 +160,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def stems_with(stemmer)
       @stemmer = extract_stemmer stemmer
     end
+
     def stem(text)
       stemmer?? stemmer.stem(text) : text
     end
@@ -161,6 +170,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def rejects_token_if(condition)
       @reject_condition = condition
     end
+
     def reject(tokens)
       tokens.reject! &@reject_condition
     end
@@ -172,6 +182,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def case_sensitive(case_sensitive)
       @case_sensitive = case_sensitive
     end
+
     def downcase?
       !@case_sensitive
     end
@@ -182,16 +193,18 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def max_words(amount)
       @max_words = amount
     end
+
     def cap(words)
       words.slice!(@max_words..-1) if cap?(words)
     end
+
     def cap?(words)
       @max_words && words.size > @max_words
     end
 
     # Checks if the right argument type has been given.
     #
-    def check_argument_in(method, types, argument, &condition)
+    def check_argument_in(method, types, argument)
       types = [*types]
       unless types.any? { |type| type === argument }
         raise ArgumentError.new "Application##{method} takes any of #{types.join(', ')} as argument, but not a #{argument.class}."
@@ -223,6 +236,7 @@ A short overview:
 
 ERROR
     end
+
     def default_options
       {
         splits_text_on: /\s/,

@@ -57,6 +57,7 @@ module Picky
       def load_c_code
         require_relative '../try_compile'
       end
+
       def load_extensions
         load_relative 'extensions/object',
                       'extensions/array',
@@ -65,6 +66,7 @@ module Picky
                       'extensions/module',
                       'extensions/class'
       end
+
       def load_helpers
         load_relative 'helpers/measuring',
                       'helpers/indexing',
@@ -73,6 +75,7 @@ module Picky
                       'optimizers',
                       'optimizers/memory/array_deduplicator'
       end
+
       def load_index_generation_strategies
         load_relative 'indexers/base',
                       'indexers/serial',

@@ -16,7 +16,7 @@ module Picky
       # Parameters:
       #  * categories: An enumerable of Category-s.
       #
-      def process(source_for_prepare, categories, scheduler = Scheduler.new)
+      def process(source_for_prepare, categories, _scheduler = Scheduler.new)
         categories.each do |category|
 
           category.prepared_index_file do |file|

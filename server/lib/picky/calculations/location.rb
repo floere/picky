@@ -47,11 +47,13 @@ module Picky
       def calculated_range(location)
         range calculate(location)
       end
+
       #
       #
       def range(around_location)
         (around_location - @precision)..(around_location + @precision)
       end
+
       #
       #
       def calculate(location)

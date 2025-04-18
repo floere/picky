@@ -51,6 +51,7 @@ def definition_with(categories_amount, identifier, options = {})
     end
   end, "#{identifier} (#{categories_amount})"]
 end
+
 def definitions_with(upto, identifier, options = {})
   definitions = []
   (1..upto).each do |categories_amount|

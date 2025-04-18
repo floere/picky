@@ -46,9 +46,11 @@ module Picky
         def extension
           :index
         end
+
         def type
           :memory
         end
+
         def cache_path
           [cache_file_path, type, extension].join(?.)
         end

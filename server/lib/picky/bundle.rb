@@ -59,6 +59,7 @@ module Picky
 
       reset_backend
     end
+
     def identifier
       @identifier ||= :"#{category.identifier}:#{name}"
     end

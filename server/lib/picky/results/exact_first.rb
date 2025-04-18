@@ -20,6 +20,7 @@ module Picky
           index_or_category
         end
       end
+
       def self.extend_each_of(categories)
         categories.categories.each { |category| category.extend self }
       end

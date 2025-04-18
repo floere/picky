@@ -11,7 +11,7 @@ describe Picky::Generators::Partial do
     context 'with a partial object' do
       let(:partializer) do
         Class.new do
-          def each_partial(text)
+          def each_partial(_text)
             'tex'
           end
         end.new

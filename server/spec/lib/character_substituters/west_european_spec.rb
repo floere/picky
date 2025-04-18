@@ -13,6 +13,7 @@ describe Picky::CharacterSubstituters::WestEuropean do
       substituter.substitute(special_character).should == normal_character
     end
   end
+
   def self.it_should_not_substitute(special_character)
     it "should not substitute #{special_character}" do
       substituter.substitute(special_character).should == special_character

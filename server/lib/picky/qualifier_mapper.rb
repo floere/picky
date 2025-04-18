@@ -42,6 +42,7 @@ module Picky
         user_qualified
       end
     end
+
     def restrict_to *qualifiers
       @restricted = qualifiers.map { |qualifier| map qualifier }.compact
     end

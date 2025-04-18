@@ -76,21 +76,25 @@ module Picky
     def load_inverted(symbol_keys)
       self.inverted = @backend_inverted.load symbol_keys
     end
+
     # Loads the weights index.
     #
     def load_weights(symbol_keys)
       self.weights = @backend_weights.load symbol_keys unless @weight_strategy.respond_to?(:saved?) && !@weight_strategy.saved?
     end
+
     # Loads the similarity index.
     #
     def load_similarity(symbol_keys)
       self.similarity = @backend_similarity.load symbol_keys unless @similarity_strategy.respond_to?(:saved?) && !@similarity_strategy.saved?
     end
+
     # Loads the configuration.
     #
     def load_configuration
       self.configuration = @backend_configuration.load false
     end
+
     # Loads the realtime mapping.
     #
     def load_realtime
@@ -112,21 +116,25 @@ module Picky
     def clear_inverted
       inverted.clear
     end
+
     # Clears the weights index.
     #
     def clear_weights
       weights.clear
     end
+
     # Clears the similarity index.
     #
     def clear_similarity
       similarity.clear
     end
+
     # Clears the configuration.
     #
     def clear_configuration
       configuration.clear
     end
+
     # Clears the realtime mapping.
     #
     def clear_realtime
