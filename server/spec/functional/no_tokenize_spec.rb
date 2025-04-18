@@ -10,7 +10,7 @@ describe 'Category#tokenize(false)' do
     end
 
     thing = Struct.new :id, :text
-    index.add thing.new(1, ['already', 'tokenized']) # Does not fail – because #to_s is called on the Array.
+    index.add thing.new(1, %w[already tokenized]) # Does not fail – because #to_s is called on the Array.
     index.add thing.new(2, 'this should not fail')
 
     try = Picky::Search.new index
@@ -24,7 +24,7 @@ describe 'Category#tokenize(false)' do
 
     thing = Struct.new :id, :text
     # expect do # Does not fail – because #to_s is called on the Array.
-    index.add thing.new(1, ['already', 'tokenized'])
+    index.add thing.new(1, %w[already tokenized])
     # end.to raise_error
     index.add thing.new(2, 'this should not fail')
 
@@ -38,7 +38,7 @@ describe 'Category#tokenize(false)' do
     end
 
     thing = Struct.new :id, :text
-    index.add thing.new(1, ['already', 'tokenized'])
+    index.add thing.new(1, %w[already tokenized])
     expect do
       index.add thing.new(2, 'this should fail')
     end.to raise_error(%Q{undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.})
@@ -53,7 +53,7 @@ describe 'Category#tokenize(false)' do
     end
 
     thing = Struct.new :id, :text
-    index.add thing.new(1, ['already', 'tokenized'])
+    index.add thing.new(1, %w[already tokenized])
     expect do
       index.add thing.new(2, 'this should fail')
     end.to raise_error(%Q{undefined method `each' for an instance of String. You probably set tokenize: false on category "text". It will need an Enumerator of previously tokenized tokens.})

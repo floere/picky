@@ -21,7 +21,7 @@ class IndexGenerator
   end
 
   def each(&block)
-    characters = ['a', 'b', 'c', 'd']
+    characters = %w[a b c d]
     size = characters.size
 
     amount.times do |i|

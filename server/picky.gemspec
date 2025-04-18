@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.author = 'Florian Hanke'
   s.email = 'florian.hanke+picky@gmail.com'
 
-  s.licenses = ['MIT', 'LGPL']
+  s.licenses = %w[MIT LGPL]
 
   s.homepage = 'http://florianhanke.com/picky'
 

@@ -69,7 +69,7 @@ EXPECTED
 
     describe 'rejects_token_if' do
       it 'rejects empty? tokens by default' do
-        tokenizer.reject(['a', '', 'b', '']).should == ['a', 'b']
+        tokenizer.reject(['a', '', 'b', '']).should == %w[a b]
       end
       it 'rejects tokens based on the given rejection criteria if set' do
         tokenizer.rejects_token_if :nil?.to_proc
@@ -180,7 +180,7 @@ ERROR
           tokenizer.split('a b/c.d').should == ['a', 'b/c.d']
         end
         it 'splits text on /\s/ by default' do
-          tokenizer.split('this is a test').should == ['this', 'is', 'a', 'test']
+          tokenizer.split('this is a test').should == %w[this is a test]
         end
       end
       context "with specific splitting pattern" do
@@ -191,7 +191,7 @@ ERROR
           expect { tokenizer.split('a b/c.d') }.to_not raise_error
         end
         it "splits text correctly" do
-          tokenizer.split('a b/c.d').should == ['a','b','c','d']
+          tokenizer.split('a b/c.d').should == %w[a b c d]
         end
       end
       context "with a splitter given" do
@@ -342,20 +342,20 @@ ERROR
     context 'options hash' do
       it 'creates a tokenizer' do
         described_class.from(splits_text_on: /\t/).
-          tokenize("hello\tworld").should == [['hello', 'world'], ['hello', 'world']]
+          tokenize("hello\tworld").should == [%w[hello world], %w[hello world]]
       end
     end
     context 'tokenizer' do
       let(:tokenizer) do
         Class.new do
           def tokenize(text)
-            ['unmoved', 'by', 'your', 'texts']
+            %w[unmoved by your texts]
           end
         end.new
       end
       it 'creates a tokenizer' do
         described_class.from(tokenizer).
-          tokenize("hello\tworld").should == ['unmoved', 'by', 'your', 'texts']
+          tokenize("hello\tworld").should == %w[unmoved by your texts]
       end
     end
     context 'invalid tokenizer' do

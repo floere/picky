@@ -36,7 +36,7 @@ def ruby_ary
   p [ary.first, ary.last]
 end
 
-KEYS = ['abc', 'def', 'ghi', 'jkl', 'mno']
+KEYS = %w[abc def ghi jkl mno]
 def rust_hash
   hash = Rust::Hash.new
   keys_size = KEYS.size

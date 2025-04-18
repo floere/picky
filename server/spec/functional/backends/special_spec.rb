@@ -114,7 +114,7 @@ describe BackendInterfaceTester do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1']
+      books.search('title').ids.should == %w[2 1]
 
       data.remove '1'
 
@@ -124,11 +124,11 @@ describe BackendInterfaceTester do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == ['3', '2', '1']
+      books.search('title').ids.should == %w[3 2 1]
 
       data.remove '1'
 
-      books.search('title').ids.should == ['3', '2']
+      books.search('title').ids.should == %w[3 2]
     end
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')

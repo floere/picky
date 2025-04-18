@@ -68,20 +68,20 @@ WARNING
     context 'options hash' do
       let(:category) { described_class.new :some_category, index, indexing: { splits_text_on: /\t/ } }
       it 'creates a tokenizer' do
-        category.tokenizer.tokenize("hello\tworld").should == [['hello', 'world'], ['hello', 'world']]
+        category.tokenizer.tokenize("hello\tworld").should == [%w[hello world], %w[hello world]]
       end
     end
     context 'tokenizer' do
       let(:tokenizer) do
         Class.new do
           def tokenize(text)
-            ['unmoved', 'by', 'your', 'texts']
+            %w[unmoved by your texts]
           end
         end.new
       end
       let(:category) { described_class.new :some_category, index, indexing: tokenizer }
       it 'creates a tokenizer' do
-        category.tokenizer.tokenize("hello\tworld").should == ['unmoved', 'by', 'your', 'texts']
+        category.tokenizer.tokenize("hello\tworld").should == %w[unmoved by your texts]
       end
     end
     context 'invalid tokenizer' do

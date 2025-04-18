@@ -112,7 +112,7 @@ describe Picky::Bundle do
 
         @bundle.add 1, 'thing'
 
-        @bundle.realtime[1].should == ['title', 'thing']
+        @bundle.realtime[1].should == %w[title thing]
         @bundle.realtime[2].should == ['other']
       end
       it 'works correctly' do

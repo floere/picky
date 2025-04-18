@@ -4,7 +4,7 @@ describe Array do
 
   describe 'sort_by_levenshtein!' do
     it 'should sort right' do
-      ['fish', 'flash', 'flush', 'smooch'].sort_by_levenshtein!(:fush).should == ['fish', 'flush', 'flash', 'smooch']
+      %w[fish flash flush smooch].sort_by_levenshtein!(:fush).should == %w[fish flush flash smooch]
     end
   end
   

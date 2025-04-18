@@ -82,7 +82,7 @@ describe Picky::Query::Tokens do
     let(:tokens) { described_class.processed ['a*', 'b'], ['A*', 'B'] }
 
     it 'has non symbolized tokens' do
-      tokens.map(&:text).should == ['a', 'b']
+      tokens.map(&:text).should == %w[a b]
     end
     it 'symbolizes all tokens' do
       tokens.symbolize
@@ -225,7 +225,7 @@ describe Picky::Query::Tokens do
       (@tokens + @other).to_s.should == 'Hello~ I~ Am A* Token~'
     end
     it 'should work correctly' do
-      (@tokens + @other).texts.should == ['hello', 'i', 'am', 'a', 'token']
+      (@tokens + @other).texts.should == %w[hello i am a token]
     end
     it 'should work correctly' do
       (@tokens + @other).originals.should == ['Hello~', 'I~', 'Am', 'A*', 'Token~']

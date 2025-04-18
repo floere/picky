@@ -75,7 +75,7 @@ describe Picky::Query::Token do
     let(:token) { described_class.processed 'similar~', 'Similar~' }
     context 'with similar' do
       before(:each) do
-        @category = double :category, similar: ['array', 'of', 'similar']
+        @category = double :category, similar: %w[array of similar]
       end
       it 'returns a list of tokens' do
         token.similar_tokens_for(@category).each do |token|
@@ -88,10 +88,10 @@ describe Picky::Query::Token do
         end
       end
       it 'returns a list of tokens with the right text' do
-        token.similar_tokens_for(@category).map(&:text).should == ['array', 'of', 'similar']
+        token.similar_tokens_for(@category).map(&:text).should == %w[array of similar]
       end
       it 'returns a list of tokens with the right original' do
-        token.similar_tokens_for(@category).map(&:original).should == ['array', 'of', 'similar']
+        token.similar_tokens_for(@category).map(&:original).should == %w[array of similar]
       end
       it 'returns a list of tokens with the right categorization' do
         token.similar_tokens_for(@category).map do |token|
@@ -159,8 +159,8 @@ describe Picky::Query::Token do
     it_should_qualify ':nothing',          [[''],          'nothing']
     it_should_qualify 'hello',             [nil,           'hello']
     it_should_qualify 'a:b:c',             [['a'],         'b:c']
-    it_should_qualify 'a,b:c',             [['a','b'],     'c']
-    it_should_qualify 'a,b,c:d',           [['a','b','c'], 'd']
+    it_should_qualify 'a,b:c',             [%w[a b],     'c']
+    it_should_qualify 'a,b,c:d',           [%w[a b c], 'd']
     it_should_qualify ':',                 [[''],          '']
     it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
   end
@@ -179,7 +179,7 @@ describe Picky::Query::Token do
     it 'returns the right thing' do
       token = described_class.processed 'a,b:c'
 
-      token.qualifiers.should == ['a', 'b']
+      token.qualifiers.should == %w[a b]
     end
   end
 
@@ -415,7 +415,7 @@ describe Picky::Query::Token do
     context 'with multiple qualifiers' do
       let(:token) { described_class.processed 'sp,spec:qualifier' }
       it 'should return the qualifier' do
-        token.qualifiers.should == ['sp', 'spec']
+        token.qualifiers.should == %w[sp spec]
       end
     end
     context 'without qualifier' do

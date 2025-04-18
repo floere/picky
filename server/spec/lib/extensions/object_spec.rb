@@ -50,7 +50,7 @@ EXPECTED
       end
     end
     describe Array do
-      let(:array) { Array.new(["Hello", "Test"]) }
+      let(:array) { Array.new(%w[Hello Test]) }
 
       it 'indents a default amount' do
         array.indented_to_s.should == "  Hello\n  Test"

@@ -46,7 +46,7 @@ describe Picky::Backends::File do
     it 'handles removing with more than one entry' do
       data.add PoetryBook.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1']
+      books.search('title').ids.should == %w[2 1]
 
       data.remove '1'
 
@@ -56,11 +56,11 @@ describe Picky::Backends::File do
       data.add PoetryBook.new(2, 'title', 'author')
       data.add PoetryBook.new(3, 'title', 'author')
 
-      books.search('title').ids.should == ['3', '2', '1']
+      books.search('title').ids.should == %w[3 2 1]
 
       data.remove '1'
 
-      books.search('title').ids.should == ['3', '2']
+      books.search('title').ids.should == %w[3 2]
     end
     it 'handles replacing' do
       data.replace PoetryBook.new(1, 'toitle', 'oithor')

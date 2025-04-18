@@ -598,7 +598,7 @@ describe "Realtime Indexing" do
 
         index.add Book.new('two', 'Title New', 'Author New')
 
-        books.search('Titl').ids.should == ['two', 'one']
+        books.search('Titl').ids.should == %w[two one]
       end
 
       it 'allows replacing something' do
@@ -609,7 +609,7 @@ describe "Realtime Indexing" do
 
         index.replace Book.new('one', 'Title New', 'Author New')
 
-        books.search('Ne').ids.should == ['one', 'one']
+        books.search('Ne').ids.should == %w[one one]
       end
       it 'handles more complex cases' do
         books.search('Ne').ids.should == []
@@ -653,7 +653,7 @@ describe "Realtime Indexing" do
 
         index.add Book.new("two", "Title New", "Author New")
 
-        books.search('Titl').ids.should == ['two', 'one']
+        books.search('Titl').ids.should == %w[two one]
       end
 
       it 'allows replacing something' do
@@ -664,7 +664,7 @@ describe "Realtime Indexing" do
 
         index.replace Book.new("one", "Title New", "Author New")
 
-        books.search('Ne').ids.should == ['one', 'one']
+        books.search('Ne').ids.should == %w[one one]
       end
       it 'handles more complex cases' do
         books.search('Ne').ids.should == []
@@ -708,7 +708,7 @@ describe "Realtime Indexing" do
 
         index.add Book.new("two", "Title New", "Author New")
 
-        books.search('Authr~').ids.should == ['two', 'one']
+        books.search('Authr~').ids.should == %w[two one]
       end
 
       it 'allows replacing something' do
@@ -745,7 +745,7 @@ describe "Realtime Indexing" do
 
         # Note: Allocations are [:two, :one], then [:three].
         #
-        books.search('author:Athr~').ids.should == ['two', 'one', 'three']
+        books.search('author:Athr~').ids.should == %w[two one three]
       end
     end
   end

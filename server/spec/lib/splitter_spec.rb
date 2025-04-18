@@ -8,7 +8,7 @@ describe Picky::Splitter do
       splitter.single(':b').should == ['','b']
     end
     it "splits right" do
-      splitter.single('a:b').should == ['a','b']
+      splitter.single('a:b').should == %w[a b]
     end
     it "splits right" do
       splitter.single('a').should == [nil, 'a']
@@ -28,10 +28,10 @@ describe Picky::Splitter do
       splitter.multi(' b').should == ['', 'b']
     end
     it "splits right" do
-      splitter.multi('a b').should == ['a', 'b']
+      splitter.multi('a b').should == %w[a b]
     end
     it "splits right" do
-      splitter.multi('a b c d').should == ['a', 'b', 'c', 'd']
+      splitter.multi('a b c d').should == %w[a b c d]
     end
     it "splits right" do
       splitter.multi('a').should == ['a']

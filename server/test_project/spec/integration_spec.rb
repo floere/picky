@@ -57,8 +57,8 @@ describe BookSearch do
 
   it 'has correctly structured in-detail results' do
     expect(csv.search('alan').allocations).to eq [
-      ["Books", 6.693, 2, [["author", "alan", "alan"]], [259, 307]],
-      ["Books", 0.0,   1, [["title",  "alan", "alan"]], [449]]
+      ["Books", 6.693, 2, [%w[author alan alan]], [259, 307]],
+      ["Books", 0.0,   1, [%w[title alan alan]], [449]]
     ]
   end
 
@@ -111,7 +111,7 @@ describe BookSearch do
   end
 
   it 'can handle changing data with a Redis backend' do
-    expect(redis_changing.search('entry').ids).to eq ["1", "2", "3"]
+    expect(redis_changing.search('entry').ids).to eq %w[1 2 3]
 
     new_source = [
       # ChangingItem.new("1", 'first entry'), # Removed.
@@ -123,7 +123,7 @@ describe BookSearch do
     Picky::Indexes[:redis_changing].index
     Picky::Indexes[:redis_changing].load
 
-    expect(redis_changing.search('entry').ids).to eq ["2", "3", "4"]
+    expect(redis_changing.search('entry').ids).to eq %w[2 3 4]
 
     # TODO.
     #
@@ -162,7 +162,7 @@ describe BookSearch do
 
   # "Symbol" keys.
   #
-  it { expect(sym.search('key').ids).to eq ['a', 'b', 'c', 'd', 'e', 'f'] }
+  it { expect(sym.search('key').ids).to eq %w[a b c d e f] }
   it { expect(sym.search('keydkey').ids).to eq ['d'] }
   it { expect(sym.search('"keydkey"').ids).to eq ['d'] }
 
@@ -246,9 +246,9 @@ describe BookSearch do
   it { expect(redis.search('soledad human').ids).to eq ['72'] }
   it { expect(redis.search('first three minutes weinberg').ids).to eq ['1'] }
   it { expect(redis.search('gover* systems').ids).to eq ['7'] }
-  it { expect(redis.search('a*').ids).to eq ['4', '7', '8', '80', '117', '119', '125', '132', '168', '176', '184', '222', '239', '242', '333', '346', '352', '361', '364', '380'] }
-  it { expect(redis.search('a* b* c* d* f').ids).to eq ['110', '416'] }
-  it { expect(redis.search('1977').ids).to eq ['86', '394'] }
+  it { expect(redis.search('a*').ids).to eq %w[4 7 8 80 117 119 125 132 168 176 184 222 239 242 333 346 352 361 364 380] }
+  it { expect(redis.search('a* b* c* d* f').ids).to eq %w[110 416] }
+  it { expect(redis.search('1977').ids).to eq %w[86 394] }
 
   # Categorization.
   #
@@ -336,7 +336,7 @@ describe BookSearch do
   #
   # TODO Removed in 4.9+. Reintroduce!
   #
-  it { expect(book_each.search("alan history").ids).to eq ["259", "307"] } # Ignores History or Alan in title.
+  it { expect(book_each.search("alan history").ids).to eq %w[259 307] } # Ignores History or Alan in title.
 
   # SQLite backend.
   #
@@ -372,7 +372,7 @@ describe BookSearch do
   # Database index reloading.
   #
   it 'can handle changing data with a Memory backend with an each DB source' do
-    expect(book_each.search('1977').ids).to eq ["86", "394"]
+    expect(book_each.search('1977').ids).to eq %w[86 394]
 
     # Some webapp adds a book.
     #

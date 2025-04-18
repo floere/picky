@@ -33,7 +33,7 @@ describe "automatic splitting" do
         #
         it do
           automatic_splitter.segment('purplerainbow').should == [
-            ['purple', 'rain', 'bow'],
+            %w[purple rain bow],
             2.078999999999999
           ]
         end
@@ -44,14 +44,14 @@ describe "automatic splitting" do
     
         # It splits the text correctly.
         #
-        it { automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow'] }
-        it { automatic_splitter.split('purplerain').should == ['purple', 'rain'] }
+        it { automatic_splitter.split('purplerainbow').should == %w[purple rain bow] }
+        it { automatic_splitter.split('purplerain').should == %w[purple rain] }
         it { automatic_splitter.split('purple').should == ['purple'] }
     
         # When it can't, it splits it using the partial index (correctly).
         #
-        it { automatic_splitter.split('purplerainbo').should == ['purple', 'rain'] }
-        it { automatic_splitter.split('purplerainb').should  == ['purple', 'rain'] }
+        it { automatic_splitter.split('purplerainbo').should == %w[purple rain] }
+        it { automatic_splitter.split('purplerainb').should  == %w[purple rain] }
         #
         it { automatic_splitter.split('purplerai').should == ['purple'] }
         it { automatic_splitter.split('purplera').should  == ['purple'] }
@@ -69,23 +69,23 @@ describe "automatic splitting" do
     
         # It splits the text correctly.
         #
-        it { automatic_splitter.split('purplerainbow').should == ['purple', 'rain', 'bow'] }
-        it { automatic_splitter.split('purplerain').should == ['purple', 'rain'] }
+        it { automatic_splitter.split('purplerainbow').should == %w[purple rain bow] }
+        it { automatic_splitter.split('purplerain').should == %w[purple rain] }
         it { automatic_splitter.split('purple').should == ['purple'] }
     
         # Creates the right queries (see below).
         #
-        it { automatic_splitter.split('colorpurple').should == ['color', 'purple'] }
-        it { automatic_splitter.split('bownew').should == ['bow', 'new'] }
-        it { automatic_splitter.split('spainisking').should == ['spain', 'is', 'king'] }
+        it { automatic_splitter.split('colorpurple').should == %w[color purple] }
+        it { automatic_splitter.split('bownew').should == %w[bow new] }
+        it { automatic_splitter.split('spainisking').should == %w[spain is king] }
     
         # When it can't, it splits it using the partial index (correctly).
         #
-        it { automatic_splitter.split('purplerainbo').should == ['purple', 'rain', 'bo'] }
-        it { automatic_splitter.split('purplerainb').should == ['purple', 'rain', 'b'] }
+        it { automatic_splitter.split('purplerainbo').should == %w[purple rain bo] }
+        it { automatic_splitter.split('purplerainb').should == %w[purple rain b] }
         #
-        it { automatic_splitter.split('purplerai').should == ['purple', 'rai'] }
-        it { automatic_splitter.split('purplera').should == ['purple', 'ra'] }
+        it { automatic_splitter.split('purplerai').should == %w[purple rai] }
+        it { automatic_splitter.split('purplera').should == %w[purple ra] }
         it { automatic_splitter.split('purpler').should == ['purple'] } # No 'r' in partial index.
         #
         it { automatic_splitter.split('purpl').should == ['purpl'] }

@@ -214,15 +214,15 @@ describe 'facets' do
         finder.facets(:age_category, filter: 'surname:meier name:peter', counts: false).should == ['45']
       end
       it 'has two filtered facets' do
-        finder.facets(:surname, filter: 'age:40 name:peter', counts: false).should == [
-          'kunz',
-          'hanke'
+        finder.facets(:surname, filter: 'age:40 name:peter', counts: false).should == %w[
+          kunz
+          hanke
         ]
       end
       it 'has 2 facets >= count 1' do
-        finder.facets(:surname, filter: 'age:40 name:peter', at_least: 1, counts: false).should == [
-          'kunz',
-          'hanke'
+        finder.facets(:surname, filter: 'age:40 name:peter', at_least: 1, counts: false).should == %w[
+          kunz
+          hanke
         ]
       end
       it 'has 0 facets >= counts 2' do

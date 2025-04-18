@@ -47,7 +47,7 @@ describe String do
           @str.each_intoken do |subtoken|
             result << subtoken
           end
-          result.should == ['picky', 'pick', 'icky', 'pic', 'ick', 'cky', 'pi', 'ic', 'ck', 'ky', 'p', 'i', 'c', 'k', 'y']
+          result.should == %w[picky pick icky pic ick cky pi ic ck ky p i c k y]
         end
       end
       context 'with min_length == 0' do
@@ -56,7 +56,7 @@ describe String do
           @str.each_intoken(0) do |subtoken|
             result << subtoken
           end
-          result.should == ['picky', 'pick', 'icky', 'pic', 'ick', 'cky', 'pi', 'ic', 'ck', 'ky', 'p', 'i', 'c', 'k', 'y']
+          result.should == %w[picky pick icky pic ick cky pi ic ck ky p i c k y]
         end
         context 'max_length == 0' do
           it 'yields the right elements' do
@@ -64,7 +64,7 @@ describe String do
             @str.each_intoken(0, 0) do |subtoken|
               result << subtoken
             end
-            result.should == ['p', 'i', 'c', 'k', 'y']
+            result.should == %w[p i c k y]
           end
         end
         context 'max_length == 1' do
@@ -73,7 +73,7 @@ describe String do
             @str.each_intoken(0, 1) do |subtoken|
               result << subtoken
             end
-            result.should == ['p', 'i', 'c', 'k', 'y']
+            result.should == %w[p i c k y]
           end
         end
         context 'max_length == 2' do
@@ -82,7 +82,7 @@ describe String do
             @str.each_intoken(0, 2) do |subtoken|
               result << subtoken
             end
-            result.should == ['pi', 'ic', 'ck', 'ky', 'p', 'i', 'c', 'k', 'y']
+            result.should == %w[pi ic ck ky p i c k y]
           end
         end
         context 'max_length == 10' do
@@ -91,7 +91,7 @@ describe String do
             @str.each_intoken(0, 10) do |subtoken|
               result << subtoken
             end
-            result.should == ['picky', 'pick', 'icky', 'pic', 'ick', 'cky', 'pi', 'ic', 'ck', 'ky', 'p', 'i', 'c', 'k', 'y']
+            result.should == %w[picky pick icky pic ick cky pi ic ck ky p i c k y]
           end
         end
         context 'max_length == -1' do
@@ -100,7 +100,7 @@ describe String do
             @str.each_intoken(0, -1) do |subtoken|
               result << subtoken
             end
-            result.should == ['picky', 'pick', 'icky', 'pic', 'ick', 'cky', 'pi', 'ic', 'ck', 'ky', 'p', 'i', 'c', 'k', 'y']
+            result.should == %w[picky pick icky pic ick cky pi ic ck ky p i c k y]
           end
         end
       end
@@ -218,7 +218,7 @@ describe String do
           @str.each_intoken(-2) do |subtoken|
             result << subtoken
           end
-          result.should == ['picky', 'pick', 'icky']
+          result.should == %w[picky pick icky]
         end
         context 'max_length == 0' do
           it 'yields the right elements' do
@@ -253,7 +253,7 @@ describe String do
             @str.each_intoken(-2, 10) do |subtoken|
               result << subtoken
             end
-            result.should == ['picky', 'pick', 'icky']
+            result.should == %w[picky pick icky]
           end
         end
         context 'max_length == -1' do
@@ -262,7 +262,7 @@ describe String do
             @str.each_intoken(-2, -1) do |subtoken|
               result << subtoken
             end
-            result.should == ['picky', 'pick', 'icky']
+            result.should == %w[picky pick icky]
           end
         end
       end
@@ -280,7 +280,7 @@ describe String do
           @str.each_subtoken do |subtoken|
             result << subtoken
           end
-          result.should == ['reinke', 'reink', 'rein', 'rei', 're', 'r']
+          result.should == %w[reinke reink rein rei re r]
         end
       end
       context 'downto is larger than the String' do
@@ -316,7 +316,7 @@ describe String do
           @str.each_subtoken(@downto) do |subtoken|
             result << subtoken
           end
-          result.should == ['reinke', 'reink', 'rein']
+          result.should == %w[reinke reink rein]
         end
       end
       context 'downto is 1' do
@@ -328,7 +328,7 @@ describe String do
           @str.each_subtoken(@downto) do |subtoken|
             result << subtoken
           end
-          result.should == ['reinke', 'reink', 'rein', 'rei', 're', 'r']
+          result.should == %w[reinke reink rein rei re r]
         end
       end
       context 'downto is 0' do
@@ -340,7 +340,7 @@ describe String do
           @str.each_subtoken(@downto) do |subtoken|
             result << subtoken
           end
-          result.should == ['reinke', 'reink', 'rein', 'rei', 're', 'r']
+          result.should == %w[reinke reink rein rei re r]
         end
       end
       context 'downto is less than zero' do
@@ -352,7 +352,7 @@ describe String do
           @str.each_subtoken(@downto) do |subtoken|
             result << subtoken
           end
-          result.should == ['reinke', 'reink']
+          result.should == %w[reinke reink]
         end
       end
     end
@@ -496,14 +496,14 @@ describe String do
         'reinke'.each_subtoken 2, (0..3) do |subtoken|
           result << subtoken
         end
-        result.should == ['rein', 'rei', 're']
+        result.should == %w[rein rei re]
       end
       it "returns a subtoken array from a clipped original" do
         result = []
         'reinke'.each_subtoken 2, (1..-2) do |subtoken|
           result << subtoken
         end
-        result.should == ['eink', 'ein', 'ei']
+        result.should == %w[eink ein ei]
       end
     end
   end

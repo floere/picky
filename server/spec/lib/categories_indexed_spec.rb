@@ -26,7 +26,7 @@ describe Picky::Categories do
       end
       context 'with some similar' do
         before(:each) do
-          @bundle1 = double :bundle1, similar: ['similar', 'text'], weight: 1, identifier: ''
+          @bundle1 = double :bundle1, similar: %w[similar text], weight: 1, identifier: ''
           @category1.stub bundle_for: @bundle1
         end
         # it "returns possible categories" do

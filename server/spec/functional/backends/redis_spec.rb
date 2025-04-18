@@ -46,7 +46,7 @@ describe Picky::Backends::Redis do
     it 'handles removing with more than one entry' do
       data.add Book.new(2, 'title', 'author')
 
-      books.search('title').ids.should == ['2', '1']
+      books.search('title').ids.should == %w[2 1]
 
       data.remove '1'
 
@@ -56,11 +56,11 @@ describe Picky::Backends::Redis do
       data.add Book.new(2, 'title', 'author')
       data.add Book.new(3, 'title', 'author')
 
-      books.search('title').ids.should == ['3', '2', '1']
+      books.search('title').ids.should == %w[3 2 1]
 
       data.remove '1'
 
-      books.search('title').ids.should == ['3', '2']
+      books.search('title').ids.should == %w[3 2]
     end
     it 'handles replacing' do
       data.replace Book.new(1, 'toitle', 'oithor')
@@ -178,11 +178,11 @@ describe Picky::Backends::Redis do
         category.exact.load
         category.exact.inverted['test'] = [1, 2, 3]
         category.exact.inverted['test'] = [4, 5, 6]
-        category.exact.inverted['test'].should == ["4", "5", "6"]
+        category.exact.inverted['test'].should == %w[4 5 6]
         category.exact.inverted['test'].delete "5"
-        category.exact.inverted['test'].should == ["4", "6"]
+        category.exact.inverted['test'].should == %w[4 6]
         category.exact.inverted['test'].unshift "3"
-        category.exact.inverted['test'].should == ["3", "4", "6"]
+        category.exact.inverted['test'].should == %w[3 4 6]
       end
     end
   end

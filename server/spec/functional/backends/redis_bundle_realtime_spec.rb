@@ -38,7 +38,7 @@ describe Picky::Bundle do
 
         @bundle.realtime['1'].should == ['title']
         @bundle.realtime['2'].should == ['title']
-        @bundle.inverted['title'].should == ['2','1']
+        @bundle.inverted['title'].should == %w[2 1]
         @bundle.weights['title'].should == 0.693
         @bundle.similarity['TTL'].should == ['title']
       end
@@ -112,7 +112,7 @@ describe Picky::Bundle do
 
         @bundle.add '1', 'thing'
 
-        @bundle.realtime['1'].should == ['title', 'thing']
+        @bundle.realtime['1'].should == %w[title thing]
         @bundle.realtime['2'].should == ['other']
       end
       it 'works correctly' do
