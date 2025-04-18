@@ -136,9 +136,6 @@ Style/EachWithObject:
 # SupportedStyles: format, sprintf, percent
 Style/FormatString:
   Exclude:
-    - 'lib/picky/analyzer.rb'
-    - 'lib/picky/results.rb'
-    - 'lib/picky/statistics.rb'
     - 'performance_tests/index.rb'
     - 'performance_tests/search.rb'
 
