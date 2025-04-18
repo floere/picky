@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'custom delimiters' do
   after(:each) do
-    Picky::Query::Token.partial_character = '\*'
+    Picky::Query::Token.partial_character = '*'
     Picky::Query::Token.no_partial_character = '"'
     Picky::Query::Token.similar_character = '~'
     Picky::Query::Token.no_similar_character = '"'

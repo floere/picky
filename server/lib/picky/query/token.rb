@@ -8,11 +8,24 @@ module Picky
     # or whether it is a partial (bla*).
     #
     class Token
+      mattr_reader :no_partial_character
+      mattr_reader :partial_character
+      mattr_accessor :no_partial
+      mattr_accessor :partial
+
+      mattr_reader :no_similar_character
+      mattr_reader :similar_character
+      mattr_accessor :no_similar
+      mattr_accessor :similar
+
       mattr_reader :qualifier_text_delimiter
       mattr_reader :qualifiers_delimiter
-
       mattr_accessor :qualifier_text_splitter
       mattr_accessor :qualifiers_splitter
+
+      mattr_accessor :range_character
+
+      mattr_accessor :illegals
 
       attr_accessor :text, :original
       attr_writer :similar, :predefined_categories
@@ -40,6 +53,12 @@ module Picky
       #
       def self.processed(text, original = nil)
         new(text, original).process
+      end
+
+      def self.redefine_illegals
+        # NOTE: By default, both no similar and no partial are ".
+        #
+        self.illegals = /[#{@no_similar_character}#{@similar_character}#{@no_partial_character}#{@partial_character}]/
       end
 
       def process
@@ -102,7 +121,7 @@ module Picky
       end
 
       def stem?
-        @text !~ @@no_partial
+        @text !~ self.class.no_partial
       end
 
       # Partial is a conditional setter.
@@ -132,10 +151,6 @@ module Picky
       # So "hello*" will not be partially searched.
       # So "hello"* will be partially searched.
       #
-      @@no_partial_character = '"'
-      @@partial_character = '*'
-      @@no_partial = /"\z/
-      @@partial    = /\*\z/
       def partialize
         # A token is partial? only if it not similar
         # and is partial.
@@ -143,9 +158,9 @@ module Picky
         # It can't be similar and partial at the same time.
         #
         self.partial = false or return if @similar
-        self.partial = false or return if @text =~ @@no_partial
+        self.partial = false or return if @text =~ self.class.no_partial
 
-        self.partial = true if @text =~ @@partial
+        self.partial = true if @text =~ self.class.partial
       end
 
       # Define a character which stops a token from
@@ -157,14 +172,15 @@ module Picky
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.no_partial_character = '\?'
+      #   Picky::Query::Token.no_partial_character = '?'
       #   try.search("tes?") # Won't find "test".
       #
       def self.no_partial_character=(character)
-        @@no_partial_character = character
-        @@no_partial = /#{character}\z/
+        @no_partial_character = character
+        self.no_partial = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.no_partial_character = '"'
 
       # Define a character which makes a token a partial token.
       #
@@ -174,27 +190,24 @@ module Picky
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.partial_character = '\?'
+      #   Picky::Query::Token.partial_character = '?'
       #   try.search("tes?") # Will find "test".
       #
       def self.partial_character=(character)
-        @@partial_character = character
-        @@partial = /#{character}\z/
+        @partial_character = character
+        self.partial = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.partial_character = '*'
 
       # If the text ends with ~ similarize it. If with ", don't.
       #
       # The latter wins.
       #
-      @@no_similar_character = '"'
-      @@similar_character = '~'
-      @@no_similar = /#{@@no_similar_character}\z/
-      @@similar    = /#{@@similar_character}\z/
       def similarize
-        self.similar = false or return if @text =~ @@no_similar
+        self.similar = false or return if @text =~ self.class.no_similar
 
-        self.similar = true if @text =~ @@similar
+        self.similar = true if @text =~ self.class.similar
       end
 
       # Define a character which stops a token from
@@ -206,14 +219,15 @@ module Picky
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.no_similar_character = '\?'
+      #   Picky::Query::Token.no_similar_character = '?'
       #   try.search("tost?") # Won't find "test".
       #
       def self.no_similar_character=(character)
-        @@no_similar_character = character
-        @@no_similar = /#{character}\z/
+        @no_similar_character = character
+        self.no_similar = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.no_similar_character = '"'
 
       # Define a character which makes a token a similar token.
       #
@@ -223,14 +237,15 @@ module Picky
       # so escape the character.
       #
       # Example:
-      #   Picky::Query::Token.similar_character = '\?'
+      #   Picky::Query::Token.similar_character = '?'
       #   try.search("tost?") # Will find "test".
       #
       def self.similar_character=(character)
-        @@similar_character = character
-        @@similar = /#{character}\z/
+        @similar_character = character
+        self.similar = /#{Regexp.escape(character)}\z/
         redefine_illegals
       end
+      self.similar_character = '~'
 
       # Define a character which makes a token a range token.
       #
@@ -240,7 +255,6 @@ module Picky
       #   Picky::Query::Token.range_character = "-"
       #   try.search("year:2000-2008") # Will find results in a range.
       #
-      mattr_accessor :range_character
       self.range_character = '…'
 
       def rangify
@@ -255,8 +269,6 @@ module Picky
         @similar
       end
 
-      mattr_accessor :illegals
-
       # Normalizes this token's text.
       #
       def remove_illegals
@@ -264,13 +276,6 @@ module Picky
         #
         @text.gsub! self.class.illegals, EMPTY_STRING unless @text == EMPTY_STRING
       end
-
-      def self.redefine_illegals
-        # NOTE: By default, both no similar and no partial are ".
-        #
-        self.illegals = /[#{@@no_similar_character}#{@@similar_character}#{@@no_partial_character}#{@@partial_character}]/
-      end
-      redefine_illegals
 
       # Return all possible combinations.
       #
