@@ -23,13 +23,13 @@ module Picky
 
       # Creates a new Tokens object from a number of Strings.
       #
-      @@or_splitting_pattern = /\|/
-      @@splitter = Splitter.new @@or_splitting_pattern
+      @or_splitting_pattern = /\|/
+      @splitter = Splitter.new(@or_splitting_pattern)
       def self.processed(words, originals, ignore_unassigned = false)
         new(words.zip(originals).collect! do |word, original|
-          w, *middle, rest = @@splitter.multi word
+          w, *middle, rest = @splitter.multi word
           if rest
-            Or.new processed [w, *middle, rest], original.split(@@or_splitting_pattern)
+            Or.new processed [w, *middle, rest], original.split(@or_splitting_pattern)
           else
             Token.processed w, original
           end
