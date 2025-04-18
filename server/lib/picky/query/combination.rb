@@ -10,7 +10,7 @@ module Picky
     class Combination
       attr_reader :token,
                   :category,
-                  :weight
+                  :weight # Returns the weight of this combination.
 
       def initialize(token, category, weight)
         @token    = token
@@ -28,10 +28,6 @@ module Picky
       def bundle
         category.bundle_for token
       end
-
-      # Returns the weight of this combination.
-      #
-      attr_reader :weight
 
       # Returns an array of ids for the given text.
       #

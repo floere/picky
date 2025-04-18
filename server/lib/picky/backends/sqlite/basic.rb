@@ -6,7 +6,7 @@ module Picky
       class Basic
         include Helpers::File
 
-        attr_reader :cache_path, :db
+        attr_reader :cache_path
 
         def initialize(cache_path, options = {})
           @cache_path = "#{cache_path}.sqlite3"

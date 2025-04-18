@@ -4,8 +4,7 @@ module Picky
 
     attr_accessor :exact,
                   :partial
-    attr_reader :name,
-                :backend
+    attr_reader :name
     attr_writer :source
 
     # Parameters:
