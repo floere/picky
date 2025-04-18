@@ -36,7 +36,7 @@ module Picky
       # Releases all obtained objects.
       #
       def release_all
-        @pools.each { |pool| pool.release_all }
+        @pools.each(&:release_all)
       end
     end
 

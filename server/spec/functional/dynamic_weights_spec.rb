@@ -7,7 +7,7 @@ describe 'Weights' do
     index = Picky::Index.new :dynamic_weights do
       category :text1, weight: Picky::Weights::Constant.new
       category :text2, weight: Picky::Weights::Constant.new(3.14)
-      category :text3, weight: Picky::Weights::Dynamic.new { |str_or_sym| str_or_sym.size }
+      category :text3, weight: Picky::Weights::Dynamic.new(&:size)
       category :text4 # Default
     end
 

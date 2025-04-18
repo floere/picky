@@ -92,9 +92,7 @@ describe Picky::Query::Token do
         token.similar_tokens_for(@category).map(&:original).should == %w[array of similar]
       end
       it 'returns a list of tokens with the right categorization' do
-        token.similar_tokens_for(@category).map do |token|
-          token.predefined_categories
-        end.should == [[@category], [@category], [@category]]
+        token.similar_tokens_for(@category).map(&:predefined_categories).should == [[@category], [@category], [@category]]
       end
     end
     context 'without similar' do

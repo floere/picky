@@ -57,7 +57,7 @@ module Picky
         #
         # Note: It orders the passed arrays by size.
         #
-        Performant::Array.memory_efficient_intersect(combinations.map { |combination| combination.ids })
+        Performant::Array.memory_efficient_intersect(combinations.map(&:ids))
       end
 
       def to_s

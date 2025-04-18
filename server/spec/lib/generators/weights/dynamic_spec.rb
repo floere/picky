@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Generators::Weights::Dynamic do
   context 'defined block' do
-    let(:constant) { described_class.new { |str_or_sym| str_or_sym.size } }
+    let(:constant) { described_class.new(&:size) }
 
     describe '[]' do
       it 'is the length of the given string' do

@@ -183,7 +183,7 @@ module Picky
         # If an element has size 0, this means one of the
         # tokens could not be allocated.
         #
-        return [] if possible_combinations.any? { |possible_combination| possible_combination.empty? }
+        return [] if possible_combinations.any?(&:empty?)
 
         # Generate the first multiplicator "with which" (well, not quite) to multiply the smallest amount of combinations.
         #

@@ -12,5 +12,5 @@ Picky::Index.new(:weights) do
   category :logarithmic,      weight: Picky::Weights::Logarithmic.new
   category :constant_default, weight: Picky::Weights::Constant.new
   category :constant,         weight: Picky::Weights::Constant.new(3.14)
-  category :dynamic,          weight: Picky::Weights::Dynamic.new { |token| token.size }
+  category :dynamic,          weight: Picky::Weights::Dynamic.new(&:size)
 end

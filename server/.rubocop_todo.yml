@@ -432,22 +432,6 @@ Style/StringConcatenation:
   Exclude:
     - 'performance_tests/profile.rb'
 
-# Offense count: 9
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, AllowComments.
-# AllowedMethods: define_method
-Style/SymbolProc:
-  Exclude:
-    - 'lib/picky/backends/backend.rb'
-    - 'lib/picky/pool.rb'
-    - 'lib/picky/query/allocations.rb'
-    - 'lib/picky/query/boosts.rb'
-    - 'lib/picky/query/indexes.rb'
-    - 'spec/functional/dynamic_weights_spec.rb'
-    - 'spec/lib/generators/weights/dynamic_spec.rb'
-    - 'spec/lib/query/token_spec.rb'
-    - 'test_project/indexes/weights.rb'
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/ZeroLengthPredicate:
