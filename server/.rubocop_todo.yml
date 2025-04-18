@@ -211,11 +211,6 @@ Style/HashEachMethods:
     - 'performance/memory/experiments2.rb'
     - 'performance_tests/searches.rb'
 
-# Offense count: 1
-Style/MissingRespondToMissing:
-  Exclude:
-    - 'lib/picky/tokenizer/regexp_wrapper.rb'
-
 # Offense count: 3
 Style/MixinUsage:
   Exclude:
