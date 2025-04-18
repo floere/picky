@@ -23,7 +23,6 @@ Lint/MissingSuper:
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Lint/NestedMethodDefinition:
   Exclude:
-    - 'lib/picky/generators/partial/substring.rb'
     - 'lib/picky/loggers/concise.rb'
     - 'lib/picky/loggers/silent.rb'
     - 'lib/picky/loggers/verbose.rb'
