@@ -22,11 +22,11 @@ module Picky
     end
 
     def ids
-      total = 0
+      total_size = 0
       indexes.each_bundle do |bundle|
-        total += bundle.inverted.inject(0) { |total, (_, values)| total + values.size }
+        total_size += bundle.inverted.inject(0) { |total, (_, values)| total + values.size }
       end
-      total
+      total_size
     end
 
     # def lengths index

@@ -8,8 +8,8 @@ module Picky::Optimizers::Memory
   #
   class ArrayDeduplicator
     def deduplicate(hashes, array_references = {})
-      hashes.each_with_object(array_references) do |hash, array_references|
-        deduplicate_hash hash, array_references
+      hashes.each_with_object(array_references) do |hash, object|
+        deduplicate_hash hash, object
       end
     end
 

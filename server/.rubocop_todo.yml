@@ -42,13 +42,6 @@ Lint/NestedMethodDefinition:
     - 'lib/picky/loggers/verbose.rb'
     - 'lib/picky/scheduler.rb'
 
-# Offense count: 3
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'lib/picky/analytics.rb'
-    - 'lib/picky/optimizers/memory/array_deduplicator.rb'
-    - 'performance_tests/index.rb'
-
 # Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes.
 Metrics/AbcSize:

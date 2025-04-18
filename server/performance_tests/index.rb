@@ -56,17 +56,17 @@ def definitions_with(upto, identifier, options = {})
   definitions
 end
 
-amount = 5
+upto = 5
 
 definitions = []
-definitions += definitions_with(amount, :no_weights_no_partial_no_similarity, weight: constant_weight,
-                                                                              partial: no_partial)
-definitions += definitions_with(amount, :no_weights_default_partial_no_similarity, weight: constant_weight)
-definitions += definitions_with(amount, :default_weights_default_partial_no_similarity)
-definitions += definitions_with(amount, :default_weights_full_partial_no_similarity, partial: full_partial)
-definitions += definitions_with(amount, :default_weights_default_partial_double_metaphone_similarity,
+definitions += definitions_with(upto, :no_weights_no_partial_no_similarity, weight: constant_weight,
+                                                                            partial: no_partial)
+definitions += definitions_with(upto, :no_weights_default_partial_no_similarity, weight: constant_weight)
+definitions += definitions_with(upto, :default_weights_default_partial_no_similarity)
+definitions += definitions_with(upto, :default_weights_full_partial_no_similarity, partial: full_partial)
+definitions += definitions_with(upto, :default_weights_default_partial_double_metaphone_similarity,
                                 similarity: double_meta)
-definitions += definitions_with(amount, :default_weights_full_partial_double_metaphone_similarity,
+definitions += definitions_with(upto, :default_weights_full_partial_double_metaphone_similarity,
                                 partial: full_partial, similarity: double_meta)
 
 puts
