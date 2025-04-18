@@ -18,7 +18,7 @@ class Module
   def forwarding(methods, method_definition_template, error_message = nil)
     to = extract_to_from_options methods, error_message
     methods.each do |method|
-      method_definition = method_definition_template % { to: to, method: method }
+      method_definition = format(method_definition_template, to: to, method: method)
       module_eval method_definition, '(__FORWARDING__)', 1
     end
   end

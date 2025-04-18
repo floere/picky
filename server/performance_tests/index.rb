@@ -115,26 +115,26 @@ backends.each do |backend_description, backend, amount|
       symbols = Symbol.all_symbols.size
     end
 
-    print '%7.0f' % (amount / add_duration)
+    print format('%7.0f', (amount / add_duration))
     print ' | '
 
     dump_duration = performance_of do
       data.dump
     end
 
-    print '%7.0f' % (amount / dump_duration)
+    print format('%7.0f', (amount / dump_duration))
     print ' | '
-    print '%7.0f' % (amount / (add_duration + dump_duration))
+    print format('%7.0f', (amount / (add_duration + dump_duration)))
     if gc
       print '   '
-      print '%5d' % (current_ram / amount)
+      print format('%5d', (current_ram / amount))
       print 'K  '
-      print '%6.1f' % ((strings - initial_strings) / amount.to_f)
+      print format('%6.1f', ((strings - initial_strings) / amount.to_f))
       print ' Strings  '
-      print '%6.1f' % ((symbols - initial_symbols) / amount.to_f)
+      print format('%6.1f', ((symbols - initial_symbols) / amount.to_f))
       print ' Symbols  '
       print 'GC extra: '
-      print '%2d' % (runs - last_gc)
+      print format('%2d', (runs - last_gc))
     end
     puts
 

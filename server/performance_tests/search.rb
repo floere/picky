@@ -227,7 +227,7 @@ definitions.each do |definition, description|
         GC.enable
 
         print ', '
-        print '%6d' % (amount / duration) # "%2.4f" % (duration*1000/amount)
+        print format('%6d', (amount / duration)) # "%2.4f" % (duration*1000/amount)
       end
 
       print '   '
@@ -236,10 +236,10 @@ definitions.each do |definition, description|
       print '('
       print rams.map { |s| '%6d' % s }.join(', ')
       print ')'
-      print '  %6d ' % (strings.sum / amount.to_f)
+      print format('  %6d ', (strings.sum / amount.to_f))
       print 'Strings '
       print '('
-      print strings.map { |s| '%4.1f' % (s / amount.to_f) }.join(', ')
+      print strings.map { |s| format('%4.1f', (s / amount.to_f)) }.join(', ')
       print ')'
       print ' %2d' % gc_runs.sum
       puts
