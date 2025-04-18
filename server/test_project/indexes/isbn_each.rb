@@ -1,11 +1,13 @@
 # Fake ISBN class to demonstrate that #each indexing is working.
 #
 class ISBN
-  @@id = 1
+  mattr_reader :id
   attr_reader :id, :isbn
 
+  self.id = 1
+
   def initialize(isbn)
-    @id   = @@id += 1
+    @id   = self.class.id += 1
     @isbn = isbn
   end
 end
