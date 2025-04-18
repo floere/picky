@@ -8,6 +8,12 @@ module Picky
     # or whether it is a partial (bla*).
     #
     class Token
+      mattr_reader :qualifier_text_delimiter
+      mattr_reader :qualifiers_delimiter
+
+      mattr_accessor :qualifier_text_splitter
+      mattr_accessor :qualifiers_splitter
+
       attr_accessor :text, :original
       attr_writer :similar, :predefined_categories
 
@@ -295,12 +301,6 @@ module Picky
           self.class.new similar, similar, [category]
         end
       end
-
-      mattr_reader :qualifier_text_delimiter
-      mattr_reader :qualifiers_delimiter
-
-      mattr_accessor :qualifier_text_splitter
-      mattr_accessor :qualifiers_splitter
 
       # Splits text into a qualifier and text.
       #
