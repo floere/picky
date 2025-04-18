@@ -4,7 +4,7 @@ class EachRSSItemProxy
     require 'open-uri'
     rss_feed = 'http://florianhanke.com/blog/atom.xml'
     rss_content = ''
-    open rss_feed do |f|
+    URI.parse(rss_feed).open do |f|
       rss_content = f.read
     end
     rss = RSS::Parser.parse rss_content, true

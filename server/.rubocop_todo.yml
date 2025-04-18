@@ -104,11 +104,6 @@ Security/MarshalLoad:
   Exclude:
     - 'lib/picky/backends/memory/marshal.rb'
 
-# Offense count: 1
-Security/Open:
-  Exclude:
-    - 'test_project/indexes/rss.rb'
-
 Style/OptionalBooleanParameter:
   Enabled: false
 
