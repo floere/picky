@@ -234,13 +234,11 @@ module Picky
       #   Picky::Query::Token.range_character = "-"
       #   try.search("year:2000-2008") # Will find results in a range.
       #
-      @@range_character = '…'
-      def self.range_character=(character)
-        @@range_character = character
-      end
+      mattr_accessor :range_character
+      self.range_character = '…'
 
       def rangify
-        @range = @text.split(@@range_character, 2) if @text.include? @@range_character
+        @range = @text.split(self.class.range_character, 2) if @text.include?(self.class.range_character)
       end
 
       attr_reader :range

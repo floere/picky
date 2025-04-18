@@ -123,7 +123,6 @@ Style/ClassAndModuleChildren:
 Style/ClassVars:
   Exclude:
     - 'lib/picky/backends/redis/directly_manipulable.rb'
-    - 'lib/picky/query/token.rb'
 
 # Offense count: 97
 # Configuration parameters: AllowedConstants.
