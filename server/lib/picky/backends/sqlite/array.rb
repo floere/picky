@@ -18,8 +18,7 @@ module Picky
         def []= key, array
           unless array.empty?
             db.execute 'INSERT OR REPLACE INTO key_value (key,value) VALUES (?,?)',
-                       key.to_s,
-                       MultiJson.encode(array)
+                       [key.to_s, MultiJson.encode(array)]
           end
 
           DirectlyManipulable.make self, array, key
@@ -28,7 +27,7 @@ module Picky
 
         def [] key
           res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1",
-                           key.to_s
+                           [key.to_s]
 
           array = res.blank? ? [] : MultiJson.decode(res.first.first)
           DirectlyManipulable.make self, array, key
