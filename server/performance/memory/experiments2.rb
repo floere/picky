@@ -46,5 +46,5 @@ def remove(h, i)
 end
 
 t = Time.now
-remove(h, 10000)
+remove(h, 10_000)
 p Time.now - t

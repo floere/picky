@@ -2,7 +2,7 @@ class IndexGenerator
   attr_reader :amount, :length
 
   def initialize(amount, &length)
-    @random = Random.new 115032730400174366788466674494640623225
+    @random = Random.new 115_032_730_400_174_366_788_466_674_494_640_623_225
     @amount = amount
     @length = length || ->() { @random.rand(18) + 3 }
   end

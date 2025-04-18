@@ -35,7 +35,7 @@ client = Picky::TestClient.new PerformanceServer, path: '/test'
 
 %w|cpu object|.each do |thing|
   profile = StackProf.run(mode: thing.to_sym) do
-    10000.times { client.search 'florian' }
+    10_000.times { client.search 'florian' }
   end
   path = "/tmp/stackprof-#{thing}-picky.dump"
   File.open(path, 'wb') { |f| f.write Marshal.dump(profile) }
@@ -43,7 +43,7 @@ client = Picky::TestClient.new PerformanceServer, path: '/test'
 end
 %w|cpu object|.each do |thing|
   profile = StackProf.run(mode: thing.to_sym) do
-    10000.times { people.search 'florian' }
+    10_000.times { people.search 'florian' }
   end
   path = "/tmp/stackprof-#{thing}-picky.dump"
   File.open(path, 'wb') { |f| f.write Marshal.dump(profile) }

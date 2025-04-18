@@ -47,7 +47,7 @@ describe Picky::Results do
 
         @results = described_class.new 'some_query', 20, 1234, @allocations
         @results.stub duration: 0.1234567890,
-                      total: 12345678
+                      total: 12_345_678
       end
       it 'should output a specific log' do
         @results.to_s.should == '>|2011-08-16 10:07:33|0.123457|some_query                                        |12345678|1234|12|'
