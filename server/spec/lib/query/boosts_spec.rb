@@ -41,10 +41,10 @@ describe Picky::Query::Boosts do
       end
     end
 
-    it_should_return_a_specific_boost_for %i[test1 test2],         6
-    it_should_return_a_specific_boost_for [:test1],                 5
-    it_should_return_a_specific_boost_for %i[test1 test3],         2
-    it_should_return_a_specific_boost_for [:test3],                 3
+    it_should_return_a_specific_boost_for %i[test1 test2], 6
+    it_should_return_a_specific_boost_for [:test1], 5
+    it_should_return_a_specific_boost_for %i[test1 test3], 2
+    it_should_return_a_specific_boost_for [:test3], 3
     it_should_return_a_specific_boost_for %i[test3 test2],         4
     it_should_return_a_specific_boost_for %i[test1 test4],         5
     it_should_return_a_specific_boost_for %i[test4 test1],         5

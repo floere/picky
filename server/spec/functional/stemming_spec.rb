@@ -26,7 +26,7 @@ describe 'stemming' do
       tokenizer.stem('computers').should
       tokenizer.stem('computing').should
       tokenizer.stem('computed').should
-      tokenizer.stem('computer').should  == 'comput'
+      tokenizer.stem('computer').should == 'comput'
     end
 
     # This tests the stems_with option.
