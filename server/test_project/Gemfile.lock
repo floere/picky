@@ -1,24 +1,24 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (6.0.3.4)
-      activesupport (= 6.0.3.4)
-    activerecord (6.0.3.4)
-      activemodel (= 6.0.3.4)
-      activesupport (= 6.0.3.4)
+    activemodel (6.1.7.1)
+      activesupport (= 6.1.7.1)
+    activerecord (6.1.7.1)
+      activemodel (= 6.1.7.1)
+      activesupport (= 6.1.7.1)
     activerecord-postgresql-adapter (0.0.1)
       pg
-    activesupport (6.0.3.4)
+    activesupport (6.1.7.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-      zeitwerk (~> 2.2, >= 2.2.2)
-    concurrent-ruby (1.1.7)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
+    concurrent-ruby (1.3.5)
     diff-lcs (1.4.4)
-    i18n (1.8.5)
+    i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    minitest (5.14.2)
+    minitest (5.25.5)
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -28,8 +28,6 @@ GEM
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
-    rack_fast_escape (2009.06.24)
-      url_escape
     rake (13.0.1)
     redis (4.2.5)
     rspec (3.10.0)
@@ -54,13 +52,11 @@ GEM
     sqlite3 (1.4.2)
     state_machine (1.2.0)
     text (1.3.1)
-    thread_safe (0.3.6)
     tilt (2.0.10)
-    tzinfo (1.2.8)
-      thread_safe (~> 0.1)
-    url_escape (2009.06.24)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
     yajl-ruby (1.4.1)
-    zeitwerk (2.4.2)
+    zeitwerk (2.7.2)
 
 PLATFORMS
   ruby
@@ -73,7 +69,6 @@ DEPENDENCIES
   pg
   procrastinate (~> 0.4)
   rack
-  rack_fast_escape (= 2009.06.24)
   rake
   redis
   rspec
