@@ -195,15 +195,6 @@ Style/MutableConstant:
     - 'prototypes/rust/array/src/manual_test.rb'
     - 'spec/functional/backends/special_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'lib/picky/optimizers/memory/array_deduplicator.rb'
-    - 'lib/picky/qualifier_mapper.rb'
-
 # Offense count: 27
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
