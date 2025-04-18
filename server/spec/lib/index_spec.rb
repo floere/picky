@@ -6,19 +6,19 @@ describe Picky::Index do
   context 'initializer' do
     it 'works' do
       the_source = some_source
-      expect { described_class.new :some_index_name do source the_source end }.to_not raise_error
+      expect { described_class.new(:some_index_name) { source the_source } }.to_not raise_error
     end
     it 'fails correctly' do
-      expect { described_class.new 0, some_source }.to raise_error
+      expect { described_class.new(0, some_source) }.to raise_error
     end
     it 'fails correctly' do
-      expect { described_class.new :some_index_name, some_source }.to raise_error
+      expect { described_class.new(:some_index_name, some_source) }.to raise_error
     end
     it 'does not fail' do
-      expect { described_class.new :some_index_name do source [] end }.to_not raise_error
+      expect { described_class.new(:some_index_name) { source [] } }.to_not raise_error
     end
     it 'does not fail' do
-      expect { described_class.new :some_index_name do source { [] } end }.to_not raise_error
+      expect { described_class.new(:some_index_name) { source { [] } } }.to_not raise_error
     end
     it 'evaluates the source every time' do
       expector = double :expector

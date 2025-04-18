@@ -178,7 +178,7 @@ describe Picky::Search do
     end
     context 'with weights' do
       before(:each) do
-        @search = described_class.new @index do boost %i[a b] => +3 end
+        @search = described_class.new(@index) { boost %i[a b] => +3 }
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({[:a, :b]=>3}))'
@@ -195,7 +195,7 @@ describe Picky::Search do
             "#{self.class}(rand)"
           end
         end
-        @search = described_class.new @index do boost RandomBoosts.new end
+        @search = described_class.new(@index) { boost RandomBoosts.new }
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: RandomBoosts(rand))'
@@ -203,7 +203,7 @@ describe Picky::Search do
     end
     context 'without weights' do
       before(:each) do
-        @search = described_class.new @index
+        @search = described_class.new(@index)
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({}))'
