@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "automatic splitting" do
+describe 'automatic splitting' do
   
   [false, true].each do |sym_keys|
     context "symbol index? #{sym_keys}" do

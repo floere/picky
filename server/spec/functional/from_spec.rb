@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "From option" do
+describe 'From option' do
 
   it 'can be given a lambda' do
     index = Picky::Index.new :lambda do
@@ -11,15 +11,15 @@ describe "From option" do
 
     require 'ostruct'
 
-    thing = OpenStruct.new id: 1, some_text: "ohai"
-    other = OpenStruct.new id: 2, some_text: "ohai kthxbye"
+    thing = OpenStruct.new id: 1, some_text: 'ohai'
+    other = OpenStruct.new id: 2, some_text: 'ohai kthxbye'
 
     index.add thing
     index.add other
 
     try = Picky::Search.new index
 
-    try.search("text:ohaiohai").ids.should == [1]
+    try.search('text:ohaiohai').ids.should == [1]
   end
 
 end

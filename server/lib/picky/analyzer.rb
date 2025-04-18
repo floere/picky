@@ -148,17 +148,17 @@ class Analyzer
   end
   
   def formatted(description, key, index = :index)
-    what    = "%-40s" % ["index", description, "key length range (avg):"].compact.join(' ')
-    range   = "%7s" % analysis[index][key]
-    average = "%8s" % "(#{analysis[index][:"#{key}_average"].round(2)})"
+    what    = '%-40s' % ['index', description, 'key length range (avg):'].compact.join(' ')
+    range   = '%7s' % analysis[index][key]
+    average = '%8s' % "(#{analysis[index][:"#{key}_average"].round(2)})"
     what + range + average
   end
   
   def weights_to_s
     return unless analysis[:weights]
-    what    = "%-30s" % "weights range (avg):"
-    range   = "%17s" % analysis[:weights][:weight_range]
-    average = "%8s" % "(#{analysis[:weights][:weight_average].round(2)})"
+    what    = '%-30s' % 'weights range (avg):'
+    range   = '%17s' % analysis[:weights][:weight_range]
+    average = '%8s' % "(#{analysis[:weights][:weight_average].round(2)})"
     what + range + average
   end
   

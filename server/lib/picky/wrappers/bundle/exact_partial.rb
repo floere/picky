@@ -21,7 +21,7 @@ module Picky
         def load(*); end
         
         def to_tree_s(indent = 0)
-          bundle.to_tree_s(indent) { "(reference)" }
+          bundle.to_tree_s(indent) { '(reference)' }
         end
 
       end

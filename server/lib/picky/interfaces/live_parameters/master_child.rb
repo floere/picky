@@ -30,7 +30,7 @@ module Picky
               pid, configuration_hash = eval result
               next unless Hash === configuration_hash
               next if configuration_hash.empty?
-              exclaim "Trying to update MASTER configuration."
+              exclaim 'Trying to update MASTER configuration.'
               try_updating_configuration_with configuration_hash
               kill_each_worker_except pid
 
@@ -68,7 +68,7 @@ module Picky
         #
         def parameters **configuration_hash
           close_child
-          exclaim "Trying to update worker child configuration." unless configuration_hash.empty?
+          exclaim 'Trying to update worker child configuration.' unless configuration_hash.empty?
           try_updating_configuration_with **configuration_hash
           write_parent **configuration_hash
           extract_configuration
@@ -163,7 +163,7 @@ module Picky
         #
         #
         def to_s
-          "Suckerfish Live Interface (Use the picky-live gem to introspect)"
+          'Suckerfish Live Interface (Use the picky-live gem to introspect)'
         end
 
       end

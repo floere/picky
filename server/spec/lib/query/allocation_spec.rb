@@ -9,18 +9,18 @@ describe Picky::Query::Allocation do
     @allocation   = described_class.new @index, @combinations
   end
 
-  describe "to_s" do
+  describe 'to_s' do
     before(:each) do
       @combinations.stub to_result: 'combinations_result'
     end
-    context "allocation.count > 0" do
+    context 'allocation.count > 0' do
       before(:each) do
         @allocation.stub count: 10
         @allocation.stub score: :score
         @allocation.stub ids: :ids
       end
-      it "represents correctly" do
-        @allocation.to_s.should == "Allocation([:some_result_identifier, :score, 10, \"combinations_result\", :ids])"
+      it 'represents correctly' do
+        @allocation.to_s.should == 'Allocation([:some_result_identifier, :score, 10, "combinations_result", :ids])'
       end
     end
   end
@@ -105,7 +105,7 @@ describe Picky::Query::Allocation do
     end
   end
   
-  describe "subject" do
+  describe 'subject' do
     before(:each) do
       @allocation.stub calculate_ids: [1,2,3,4,5,6,7,8,9,10]
     end
@@ -151,8 +151,8 @@ describe Picky::Query::Allocation do
     context 'with results' do
       before(:each) do
         combinations = double :combinations,
-                            empty?: false,
-                            to_result: [:some_result1, :some_result2]
+                              empty?: false,
+                              to_result: [:some_result1, :some_result2]
         @allocation = described_class.new @index, combinations
         @allocation.instance_variable_set :@score, :some_score
       end
@@ -181,7 +181,7 @@ describe Picky::Query::Allocation do
     end
   end
 
-  describe "calculate_score" do
+  describe 'calculate_score' do
     context 'non-empty combinations' do
       it 'should forward to backend and combinations' do
         @combinations.should_receive(:score).once.and_return 1
@@ -192,8 +192,8 @@ describe Picky::Query::Allocation do
     end
   end
 
-  describe "<=>" do
-    it "should sort higher first" do
+  describe '<=>' do
+    it 'should sort higher first' do
       first = described_class.new @index, []
       first.instance_variable_set :@score, 20
       second = described_class.new @index, []
@@ -203,8 +203,8 @@ describe Picky::Query::Allocation do
     end
   end
 
-  describe "sort!" do
-    it "should sort correctly" do
+  describe 'sort!' do
+    it 'should sort correctly' do
       first = described_class.new @index, :whatever
       first.instance_variable_set :@score, 20
       second = described_class.new @index, :whatever
@@ -218,7 +218,7 @@ describe Picky::Query::Allocation do
     end
   end
 
-  describe "process!" do
+  describe 'process!' do
     before(:each) do
       @amount = double :amount
       @offset = double :offset

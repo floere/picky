@@ -26,7 +26,7 @@ module Picky
         end
 
         def [](key)
-          res = db.execute "SELECT value FROM key_value WHERE key = ? LIMIT 1", [key.to_s]
+          res = db.execute 'SELECT value FROM key_value WHERE key = ? LIMIT 1', [key.to_s]
 
           array = res.blank? ? [] : MultiJson.decode(res.first.first)
           DirectlyManipulable.make self, array, key
@@ -34,7 +34,7 @@ module Picky
         end
 
         def delete(key)
-          db.execute "DELETE FROM key_value WHERE key = (?)", [key.to_s]
+          db.execute 'DELETE FROM key_value WHERE key = (?)', [key.to_s]
         end
 
       end

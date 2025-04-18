@@ -5,8 +5,8 @@ Picky::Index.new(:weights) do
   key_format :to_i
   source do
     [
-      WeightsItem.new(1, "octopussy", "octopussy", "octopussy", "octopussy"),
-      WeightsItem.new(2, "abracadabra", "abracadabra", "abracadabra", "abracadabra")
+      WeightsItem.new(1, 'octopussy', 'octopussy', 'octopussy', 'octopussy'),
+      WeightsItem.new(2, 'abracadabra', 'abracadabra', 'abracadabra', 'abracadabra')
     ]
   end
   category :logarithmic,      weight: Picky::Weights::Logarithmic.new

@@ -10,7 +10,7 @@ def performance_of
     GC.enable
     (t1 - t0)
   else
-    raise "#performance_of needs a block"
+    raise '#performance_of needs a block'
   end
 end
 

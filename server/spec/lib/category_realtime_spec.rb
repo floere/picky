@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Picky::Category, "Realtime API" do
+describe Picky::Category, 'Realtime API' do
 
   Thing = Struct.new :id, :text
 
@@ -30,11 +30,11 @@ describe Picky::Category, "Realtime API" do
     category.unshift Thing.new(1, 'text')
   end
   it 'offers a replace_from method' do
-    category.replace_from id: 1, text: "some text"
+    category.replace_from id: 1, text: 'some text'
   end
   it 'raises on no id given' do
     expect {
-      category.replace_from text: "some text"
+      category.replace_from text: 'some text'
     }.to raise_error
   end
   it 'shrugs off no data given' do

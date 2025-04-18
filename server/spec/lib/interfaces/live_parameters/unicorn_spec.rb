@@ -80,7 +80,7 @@ describe Picky::Interfaces::LiveParameters::Unicorn do
       Process.stub pid: :some_pid
     end
     it 'calls the parent' do
-      @parent.should_receive(:write).once.with "[:some_pid, {:a=>:b}];;;"
+      @parent.should_receive(:write).once.with '[:some_pid, {:a=>:b}];;;'
 
       @parameters.write_parent a: :b
     end

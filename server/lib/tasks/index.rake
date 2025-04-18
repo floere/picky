@@ -1,6 +1,6 @@
 # Indexing tasks.
 #
-desc "Generate the index in parallel (index, category optional)."
+desc 'Generate the index in parallel (index, category optional).'
 task :index, [:index, :category] => :'index:parallel'
 
 namespace :index do

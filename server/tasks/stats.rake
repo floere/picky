@@ -1,6 +1,6 @@
 # Very pedestrian, coder only cloc.
 #
-desc "Pedestrian CLOC statistics."
+desc 'Pedestrian CLOC statistics.'
 task :stats do
   libs  = 0.0
   specs = 0.0

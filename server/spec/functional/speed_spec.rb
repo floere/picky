@@ -2,8 +2,8 @@
 #
 require 'spec_helper'
 
-describe "Speccing Ruby for speed" do
-  describe "various versions for allocation id concatenating – with symbols" do
+describe 'Speccing Ruby for speed' do
+  describe 'various versions for allocation id concatenating – with symbols' do
     before(:each) do
       @allocs = [:hello, :speed, :test]
       @ids = {
@@ -12,8 +12,8 @@ describe "Speccing Ruby for speed" do
         test: (:'0_001'..:'1_000').to_a
       }
     end
-    describe "+" do
-      it "should be fast" do
+    describe '+' do
+      it 'should be fast' do
         performance_of do
           @allocs.inject([]) do |total, alloc|
             total + @ids[alloc]
@@ -21,15 +21,15 @@ describe "Speccing Ruby for speed" do
         end.should < 0.0025
       end
     end
-    describe "map and flatten!(1)" do
-      it "should be fast" do
+    describe 'map and flatten!(1)' do
+      it 'should be fast' do
         performance_of do
           @allocs.map { |alloc| @ids[alloc] }.flatten!(1)
         end.should < 0.02
       end
     end
-    describe "<< and flatten!(1)" do
-      it "should be fast" do
+    describe '<< and flatten!(1)' do
+      it 'should be fast' do
         performance_of do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
@@ -37,8 +37,8 @@ describe "Speccing Ruby for speed" do
         end.should < 0.02
       end
     end
-    describe "<< and flatten!" do
-      it "should be fast" do
+    describe '<< and flatten!' do
+      it 'should be fast' do
         performance_of do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
@@ -47,7 +47,7 @@ describe "Speccing Ruby for speed" do
       end
     end
   end
-  describe "various versions for allocation id concatenating – with integers" do
+  describe 'various versions for allocation id concatenating – with integers' do
     before(:each) do
       @allocs = [:hello, :speed, :test]
       @ids = {
@@ -56,8 +56,8 @@ describe "Speccing Ruby for speed" do
         test: (1..1_000).to_a
       }
     end
-    describe "+" do
-      it "should be fast" do
+    describe '+' do
+      it 'should be fast' do
         performance_of do
           @allocs.inject([]) do |total, alloc|
             total + @ids[alloc]
@@ -65,15 +65,15 @@ describe "Speccing Ruby for speed" do
         end.should < 0.0025
       end
     end
-    describe "map and flatten!(1)" do
-      it "should be fast" do
+    describe 'map and flatten!(1)' do
+      it 'should be fast' do
         performance_of do
           @allocs.map { |alloc| @ids[alloc] }.flatten!(1)
         end.should < 0.02
       end
     end
-    describe "<< and flatten!(1)" do
-      it "should be fast" do
+    describe '<< and flatten!(1)' do
+      it 'should be fast' do
         performance_of do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]
@@ -81,8 +81,8 @@ describe "Speccing Ruby for speed" do
         end.should < 0.02
       end
     end
-    describe "<< and flatten!" do
-      it "should be fast" do
+    describe '<< and flatten!' do
+      it 'should be fast' do
         performance_of do
           @allocs.inject([]) do |total, alloc|
             total << @ids[alloc]

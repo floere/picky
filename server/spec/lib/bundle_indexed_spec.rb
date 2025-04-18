@@ -14,7 +14,7 @@ describe Picky::Bundle do
 
   describe 'to_s' do
     it 'does something' do
-      @bundle.to_s.should == "Picky::Bundle(some_index:some_category:some_name)"
+      @bundle.to_s.should == 'Picky::Bundle(some_index:some_category:some_name)'
     end
   end
 
@@ -114,12 +114,12 @@ describe Picky::Bundle do
       @bundle.load :something
     end
   end
-  describe "loading indexes" do
+  describe 'loading indexes' do
     before(:each) do
       @bundle.stub :timed_exclaim
     end
-    describe "load_index" do
-      it "uses the right file" do
+    describe 'load_index' do
+      it 'uses the right file' do
         MultiJson.stub :decode
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
@@ -127,8 +127,8 @@ describe Picky::Bundle do
         @bundle.load_inverted :anything
       end
     end
-    describe "load_weights" do
-      it "uses the right file" do
+    describe 'load_weights' do
+      it 'uses the right file' do
         MultiJson.stub :decode
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
@@ -136,8 +136,8 @@ describe Picky::Bundle do
         @bundle.load_weights :anything
       end
     end
-    describe "load_similarity" do
-      it "uses the right file" do
+    describe 'load_similarity' do
+      it 'uses the right file' do
         Marshal.stub :load
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
@@ -145,8 +145,8 @@ describe Picky::Bundle do
         @bundle.load_similarity :anything
       end
     end
-    describe "load_configuration" do
-      it "uses the right file" do
+    describe 'load_configuration' do
+      it 'uses the right file' do
         MultiJson.stub :decode
 
         File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'

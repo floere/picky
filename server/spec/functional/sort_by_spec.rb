@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "id option" do
+describe 'id option' do
 
   it 'can sort' do
     data = Picky::Index.new :id do
@@ -13,8 +13,8 @@ describe "id option" do
 
     require 'ostruct'
 
-    thing = OpenStruct.new id: 1, number: 2, text: "aabcdef bcdef"
-    other = OpenStruct.new id: 2, number: 1, text: "abcdef bbcdef"
+    thing = OpenStruct.new id: 1, number: 2, text: 'aabcdef bcdef'
+    other = OpenStruct.new id: 2, number: 1, text: 'abcdef bbcdef'
 
     data.add thing
     data.add other
@@ -28,7 +28,7 @@ describe "id option" do
 
     # Sort by number.
     #
-    results = try.search("a")
+    results = try.search('a')
     
     results.sort_by { |id| sorting_order[id].number }
     
@@ -36,7 +36,7 @@ describe "id option" do
     
     # Sort by text.
     #
-    results = try.search("a")
+    results = try.search('a')
     
     results.sort_by { |id| sorting_order[id].text }
     
@@ -44,7 +44,7 @@ describe "id option" do
     
     # Sort by number.
     #
-    results = try.search("a* b")
+    results = try.search('a* b')
     
     results.sort_by { |id| sorting_order[id].number }
     
@@ -52,7 +52,7 @@ describe "id option" do
     
     # Sort by text.
     #
-    results = try.search("a* b")
+    results = try.search('a* b')
     
     results.sort_by { |id| sorting_order[id].text }
     

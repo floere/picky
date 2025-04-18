@@ -36,7 +36,7 @@ backends = [
   # ["standard Redis", Backends::Redis.new, 200],
   # ["standard SQLite", Backends::SQLite.new, 200],
   # ["standard File", Backends::File.new, 300],
-  ["standard Memory", Backends::Memory.new, 1000],
+  ['standard Memory', Backends::Memory.new, 1000],
 ]
 
 constant_weight = Picky::Weights::Constant.new
@@ -71,7 +71,7 @@ definitions += definitions_with(amount, :default_weights_full_partial_double_met
 
 puts
 puts
-puts "All measurements in processed per second!"
+puts 'All measurements in processed per second!'
 
 source = Source.new 1000
 source.prepare
@@ -83,13 +83,13 @@ backends.each do |backend_description, backend, amount|
 
   puts
   print "Running tests with #{backend_description} with #{"%5d" % amount} indexed:"
-  print "           add/index |    dump |   total      "
-  puts gc ? "RAM/string/symbols per indexed" : ""
+  print '           add/index |    dump |   total      '
+  puts gc ? 'RAM/string/symbols per indexed' : ''
 
   definitions.each do |definition, description|
 
-    print "%65s" % description
-    print ": "
+    print '%65s' % description
+    print ': '
 
     Indexes.clear_indexes
 
@@ -117,26 +117,26 @@ backends.each do |backend_description, backend, amount|
       symbols = Symbol.all_symbols.size
     end
 
-    print "%7.0f" % (amount / add_duration)
-    print " | "
+    print '%7.0f' % (amount / add_duration)
+    print ' | '
 
     dump_duration = performance_of do
       data.dump
     end
 
-    print "%7.0f" % (amount / dump_duration)
-    print " | "
-    print "%7.0f" % (amount / (add_duration + dump_duration))
+    print '%7.0f' % (amount / dump_duration)
+    print ' | '
+    print '%7.0f' % (amount / (add_duration + dump_duration))
     if gc
-      print "   "
-      print "%5d" % (current_ram / amount)
-      print "K  "
-      print "%6.1f" % ((strings - initial_strings) / amount.to_f)
-      print " Strings  "
-      print "%6.1f" % ((symbols - initial_symbols) / amount.to_f)
-      print " Symbols  "
-      print "GC extra: "
-      print "%2d" % (runs - last_gc)
+      print '   '
+      print '%5d' % (current_ram / amount)
+      print 'K  '
+      print '%6.1f' % ((strings - initial_strings) / amount.to_f)
+      print ' Strings  '
+      print '%6.1f' % ((symbols - initial_symbols) / amount.to_f)
+      print ' Symbols  '
+      print 'GC extra: '
+      print '%2d' % (runs - last_gc)
     end
     puts
 

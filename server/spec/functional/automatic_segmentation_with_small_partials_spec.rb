@@ -2,14 +2,14 @@
 #
 require 'spec_helper'
 
-describe "partial automatic splitting with small partials" do
+describe 'partial automatic splitting with small partials' do
   
   let(:index) do
     index = Picky::Index.new :automatic_text_splitting do
       indexing removes_characters: /[^a-z\s]/i,
                stopwords: /\b(in|a)\b/
       category :text,
-                partial: Picky::Partial::Postfix.new(from: 1)
+               partial: Picky::Partial::Postfix.new(from: 1)
     end
     index.replace_from id: 1, text: 'Rainbow'
     index

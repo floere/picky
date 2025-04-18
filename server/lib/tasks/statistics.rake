@@ -1,6 +1,6 @@
 # Statistics tasks.
 #
-desc "Analyzes indexes (index, category optional)."
+desc 'Analyzes indexes (index, category optional).'
 task :analyze, [:index, :category] => :'stats:prepare' do |_, options|
   index, category = options.index, options.category
 

@@ -129,7 +129,7 @@ definitions.each do |definition, description|
 
     puts
     puts backend.class
-    puts " Amount,  1wQ/s,  2wQ/s,  3wQ/s,  4wQ/s,  5wQ/s    Memory etc."
+    puts ' Amount,  1wQ/s,  2wQ/s,  3wQ/s,  4wQ/s,  5wQ/s    Memory etc.'
     
     Indexes.each do |data|
       
@@ -140,7 +140,7 @@ definitions.each do |definition, description|
       data.cache
       data.load
 
-      print "%7d" % data.source.amount
+      print '%7d' % data.source.amount
 
       rams = []
       strings = []
@@ -237,23 +237,23 @@ definitions.each do |definition, description|
         
         GC.enable
 
-        print ", "
-        print "%6d" % (amount/duration) # "%2.4f" % (duration*1000/amount)
+        print ', '
+        print '%6d' % (amount/duration) # "%2.4f" % (duration*1000/amount)
 
       end
 
-      print "   "
-      print "%5d" % rams.sum
-      print "K "
-      print "("
-      print rams.map { |s| "%6d" % s }.join(', ')
-      print ")"
-      print "  %6d " % (strings.sum/amount.to_f)
-      print "Strings "
-      print "("
-      print strings.map { |s| "%4.1f" % (s/amount.to_f) }.join(', ')
-      print ")"
-      print " %2d" % gc_runs.sum
+      print '   '
+      print '%5d' % rams.sum
+      print 'K '
+      print '('
+      print rams.map { |s| '%6d' % s }.join(', ')
+      print ')'
+      print '  %6d ' % (strings.sum/amount.to_f)
+      print 'Strings '
+      print '('
+      print strings.map { |s| '%4.1f' % (s/amount.to_f) }.join(', ')
+      print ')'
+      print ' %2d' % gc_runs.sum
       puts
 
     end

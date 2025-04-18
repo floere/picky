@@ -8,7 +8,7 @@ describe Picky::Category do
   end
   let(:category) { described_class.new(:some_category, @index, source: @source).tap { |c| c.stub :timed_exclaim } }
 
-  context "unit specs" do
+  context 'unit specs' do
     let(:exact) { category.exact }
     let(:partial) { category.partial }
 
@@ -109,20 +109,20 @@ describe Picky::Category do
       end
     end
 
-    describe "index" do
+    describe 'index' do
       before(:each) do
         @indexer = double :indexer, index: nil
         category.stub indexer: @indexer
       end
-      it "tells the indexer to index" do
+      it 'tells the indexer to index' do
         @indexer.should_receive(:prepare).once
 
         category.prepare
       end
     end
-    describe "source" do
-      context "without source" do
-        it "has no problem with that" do
+    describe 'source' do
+      context 'without source' do
+        it 'has no problem with that' do
           lambda { described_class.new :some_name, @index }.should_not raise_error
         end
       end

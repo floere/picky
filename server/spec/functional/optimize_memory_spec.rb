@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Memory optimization" do
+describe 'Memory optimization' do
   
   before(:each) do
     # Remove all indexes.

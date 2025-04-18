@@ -4,7 +4,7 @@ system 'rm -r spec/temp/* 2> /dev/null'
 # Start Redis if not yet running.
 #
 fork do
-  print "Starting redis-server... "
+  print 'Starting redis-server... '
   `redis-server` # Gets stuck or fails, continuing.
   puts "(already running, redis-server returned #{$?.exitstatus})." unless $?.success?
 end

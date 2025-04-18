@@ -6,14 +6,14 @@ describe Picky::Backends::Memory::JSON do
 
   let(:backend) { described_class.new '/tmp/picky_test_cache' }
   
-  describe "dump_json" do
-    it "works with ascii characters" do
+  describe 'dump_json' do
+    it 'works with ascii characters' do
       backend.dump_json key: 'abc'
     end
-    it "works with cyrillic characters" do
+    it 'works with cyrillic characters' do
       backend.dump_json key: 'й'
     end
-    it "works with ascii strings" do
+    it 'works with ascii strings' do
       # See https://github.com/floere/picky/pull/69.
       #
       # Rails sets both encodings to UTF-8.

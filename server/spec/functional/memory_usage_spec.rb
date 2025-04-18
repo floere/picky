@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Memory Usage" do
+describe 'Memory Usage' do
   
   before(:each) do
     Picky::Indexes.clear_indexes

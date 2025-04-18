@@ -7,9 +7,9 @@ describe Picky::Search do
   before(:each) do
     @type      = double :type
     @index     = double :some_index,
-                      internal_indexed: @type,
-                      each_category: [],
-                      backend: Picky::Backends::Memory.new
+                        internal_indexed: @type,
+                        each_category: [],
+                        backend: Picky::Backends::Memory.new
   end
 
   describe 'tokenized' do
@@ -66,50 +66,50 @@ describe Picky::Search do
 
   end
 
-  describe "boosts handling" do
-    it "creates a default weight when no weights are given" do
+  describe 'boosts handling' do
+    it 'creates a default weight when no weights are given' do
       search = described_class.new
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
-    it "handles :weights options when not yet wrapped" do
+    it 'handles :weights options when not yet wrapped' do
       search = described_class.new do boost [:a, :b] => +3 end
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
-    it "handles :weights options when already wrapped" do
+    it 'handles :weights options when already wrapped' do
       search = described_class.new do boost Picky::Query::Boosts.new([:a, :b] => +3) end
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
   end
 
-  describe "search" do
+  describe 'search' do
     before(:each) do
       @search = described_class.new
     end
-    it "forwards to search_with correctly" do
+    it 'forwards to search_with correctly' do
       @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 10, :text, nil
 
       @search.search :text, 20, 10
     end
-    it "forwards to search_with correctly" do
+    it 'forwards to search_with correctly' do
       @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, nil
 
       @search.search :text, 20, 0
     end
-    it "forwards to search_with correctly" do
+    it 'forwards to search_with correctly' do
       @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, true
 
       @search.search :text, 20, 0, unique: true
     end
-    it "uses the tokenizer" do
+    it 'uses the tokenizer' do
       @search.stub :search_with
 
       @search.should_receive(:tokenized).once.with :text

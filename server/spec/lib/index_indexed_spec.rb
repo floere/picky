@@ -19,7 +19,7 @@ describe Picky::Index do
     end
   end
 
-  context "with stubbed categories" do
+  context 'with stubbed categories' do
     before(:each) do
       @categories = double :categories
 
@@ -30,8 +30,8 @@ describe Picky::Index do
       @index.stub categories: @categories
     end
 
-    describe "load" do
-      it "forwards to each category" do
+    describe 'load' do
+      it 'forwards to each category' do
         @categories.should_receive(:load).once.with no_args
 
         @index.load
@@ -61,8 +61,8 @@ describe Picky::Index do
     end
   end
 
-  context "no categories" do
-    it "works" do
+  context 'no categories' do
+    it 'works' do
       described_class.new :some_name
     end
   end

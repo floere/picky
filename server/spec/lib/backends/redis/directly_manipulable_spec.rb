@@ -29,19 +29,19 @@ describe Picky::Backends::Redis::DirectlyManipulable do
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@append_index)
 
-      client.should_receive(:zadd).once.with "some:namespace:some:key", num+1, 3
+      client.should_receive(:zadd).once.with 'some:namespace:some:key', num+1, 3
 
       list << 3
     end
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@unshift_index)
 
-      client.should_receive(:zadd).once.with "some:namespace:some:key", num-1, 3
+      client.should_receive(:zadd).once.with 'some:namespace:some:key', num-1, 3
 
       list.unshift 3
     end
     it 'calls the right client method' do
-      client.should_receive(:zrem).once.with "some:namespace:some:key", 1
+      client.should_receive(:zrem).once.with 'some:namespace:some:key', 1
 
       list.delete 1
     end

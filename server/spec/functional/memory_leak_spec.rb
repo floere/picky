@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Memory leak?" do
+describe 'Memory leak?' do
   
   before(:each) do
     # Remove all indexes.

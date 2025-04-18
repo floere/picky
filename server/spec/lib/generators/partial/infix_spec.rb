@@ -96,7 +96,7 @@ describe Picky::Generators::Partial::Infix do
     #     }
     #   end
     # end
-    context "large min" do
+    context 'large min' do
       before(:each) do
         @generator = described_class.new min: 10
       end

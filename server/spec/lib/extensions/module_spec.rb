@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Module do
 
   describe 'each_forward' do
-    context "with correct params" do
+    context 'with correct params' do
       let(:klass) do
         Class.new do
 
@@ -24,7 +24,7 @@ describe Module do
         delegating.bli
       end
     end
-    context "without correct params" do
+    context 'without correct params' do
       it 'should raise an error' do
         lambda do
           Class.new do
@@ -36,7 +36,7 @@ describe Module do
   end
 
   describe 'forward' do
-    context "with correct params" do
+    context 'with correct params' do
       let(:klass) do
         Class.new do
 
@@ -61,20 +61,20 @@ describe Module do
         delegating.blu
       end
     end
-    context "without correct params" do
+    context 'without correct params' do
       it 'should raise an error' do
         expect do
           Class.new do
             forward :bli, :bla, :blu # :to missing
           end
-        end.to raise_error(ArgumentError, "Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, to: :a_reader).")
+        end.to raise_error(ArgumentError, 'Forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. forward :something, to: :a_reader).')
       end
       it 'should raise an error' do
         lambda do
           Class.new do
             each_forward :bli, :bla, :blu # :to missing
           end
-        end.should raise_error(ArgumentError, "Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, to: :an_array_reader).")
+        end.should raise_error(ArgumentError, 'Multi forwarding needs a target. Supply an options hash with a :to key as the last argument (e.g. each_forward :something, to: :an_array_reader).')
       end
     end
   end

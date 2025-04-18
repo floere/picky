@@ -4,8 +4,8 @@ SQLiteIndex = Picky::Index.new :sqlite do
   backend Picky::Backends::SQLite.new
   source do
     [
-      SQLiteItem.new(1, "hello", "sqlite"),
-      SQLiteItem.new(2, "bingo", "bongo")
+      SQLiteItem.new(1, 'hello', 'sqlite'),
+      SQLiteItem.new(2, 'bingo', 'bongo')
     ]
   end
   category :first_name

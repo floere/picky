@@ -8,8 +8,8 @@ describe Picky::Generators::Similarity::None do
     @similarity = described_class.new
   end
 
-  describe "saved?" do
-    it "returns the right answer" do
+  describe 'saved?' do
+    it 'returns the right answer' do
       @similarity.saved?.should == false
     end
   end

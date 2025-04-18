@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Object Use" do
+describe 'Object Use' do
 
   it 'is not too high' do
     index = Picky::Index.new :object_use do
@@ -38,9 +38,9 @@ describe "Object Use" do
       try.search s
     end
     expect(result).to eq(
-      "three" => 1,
-      "two" => 1,
-      "one" => 1,
+      'three' => 1,
+      'two' => 1,
+      'one' => 1,
       'one two three' => 2 # TODO Is GC'd.
     )
 
@@ -48,9 +48,9 @@ describe "Object Use" do
       try.search 'text1:one'
     end
     result.should == {
-      "one" => 1,
-      "text1" => 1,
-      "text1:one" => 1
+      'one' => 1,
+      'text1' => 1,
+      'text1:one' => 1
     } # Only the necessary split strings.
 
     s = 'text1:one text2:two text3:three'
@@ -58,16 +58,16 @@ describe "Object Use" do
       try.search s
     end
     expect(result).to eq(
-      "three" => 1,
-      "two" => 1,
-      "one" => 1,
-      "text3" => 1,
-      "text2" => 1,
-      "text1" => 1,
-      "text3:three" => 1,
-      "text2:two" => 1,
-      "text1:one" => 1,
-      "text1:one text2:two text3:three" => 2 # Sadly this one is left.
+      'three' => 1,
+      'two' => 1,
+      'one' => 1,
+      'text3' => 1,
+      'text2' => 1,
+      'text1' => 1,
+      'text3:three' => 1,
+      'text2:two' => 1,
+      'text1:one' => 1,
+      'text1:one text2:two text3:three' => 2 # Sadly this one is left.
     ) # Only the necessary split strings.
 
     s = 'text1:one text2:two text3,text4:three'
@@ -75,18 +75,18 @@ describe "Object Use" do
       try.search s
     end
     expect(result).to eq(
-      "three" => 1,
-      "two" => 1,
-      "one" => 1,
-      "text3,text4" => 2, # TODO
-      "text3" => 1,
-      "text4" => 1,
-      "text2" => 1,
-      "text1" => 1,
-      "text1:one" => 1,
-      "text2:two" => 1,
-      "text3,text4:three" => 1,
-      "text1:one text2:two text3,text4:three" => 3 # Sadly this one is left.
+      'three' => 1,
+      'two' => 1,
+      'one' => 1,
+      'text3,text4' => 2, # TODO
+      'text3' => 1,
+      'text4' => 1,
+      'text2' => 1,
+      'text1' => 1,
+      'text1:one' => 1,
+      'text2:two' => 1,
+      'text3,text4:three' => 1,
+      'text1:one text2:two text3,text4:three' => 3 # Sadly this one is left.
     )
 
   end

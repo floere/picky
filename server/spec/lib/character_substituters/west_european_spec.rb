@@ -22,13 +22,13 @@ describe Picky::CharacterSubstituters::WestEuropean do
   # Speed spec at the top since the order of the describes made the
   # speed spec trip. And not on mushrooms either.
   #
-  describe "speed" do
-    it "is fast" do
+  describe 'speed' do
+    it 'is fast' do
       substituter.substitute 'ä' # Prerun
       result = performance_of { substituter.substitute('ä') }
       result.should < 0.00009
     end
-    it "is fast" do
+    it 'is fast' do
       result = performance_of { substituter.substitute('abcdefghijklmnopqrstuvwxyz1234567890') }
       result.should < 0.00015
     end
@@ -40,17 +40,17 @@ describe Picky::CharacterSubstituters::WestEuropean do
     end
   end
 
-  describe "normal characters" do
+  describe 'normal characters' do
     it_should_not_substitute('abcdefghijklmnopqrstuvwxyz1234567890')
   end
 
-  describe "situations" do
+  describe 'situations' do
     it_should_substitute 'Peter Müller', 'Peter Mueller'
     it_should_substitute 'Lüchinger', 'Luechinger'
     # it_should_substitute 'LÜCHINGER', 'LUECHINGER'
   end
 
-  describe "umlauts" do
+  describe 'umlauts' do
     it_should_substitute 'ä', 'ae'
     it_should_substitute 'Ä', 'Ae'
     it_should_substitute 'ë', 'e'
@@ -63,7 +63,7 @@ describe Picky::CharacterSubstituters::WestEuropean do
     it_should_substitute 'Ü', 'Ue'
   end
 
-  describe "acute" do
+  describe 'acute' do
     it_should_substitute 'á', 'a'
     it_should_substitute 'Á', 'A'
     it_should_substitute 'é', 'e'
@@ -72,7 +72,7 @@ describe Picky::CharacterSubstituters::WestEuropean do
     it_should_substitute 'ó', 'o'
   end
 
-  describe "grave" do
+  describe 'grave' do
     it_should_substitute 'à', 'a'
     it_should_substitute 'À', 'A'
     it_should_substitute 'è', 'e'
@@ -81,7 +81,7 @@ describe Picky::CharacterSubstituters::WestEuropean do
     it_should_substitute 'ò', 'o'
   end
 
-  describe "circonflex" do
+  describe 'circonflex' do
     it_should_substitute 'â', 'a'
     it_should_substitute 'ê', 'e'
     it_should_substitute 'Ê', 'E'
@@ -92,23 +92,23 @@ describe Picky::CharacterSubstituters::WestEuropean do
     it_should_substitute 'û', 'u'
   end
 
-  describe "cedilla" do
+  describe 'cedilla' do
     it_should_substitute 'ç', 'c'
     it_should_substitute 'Ç', 'C'
   end
 
-  describe "ligatures" do
+  describe 'ligatures' do
     it_should_substitute 'ß', 'ss'
     # it_should_substitute 'Æ', 'AE'
   end
 
-  describe "norse" do
+  describe 'norse' do
     # it_should_substitute 'ø', 'o'
     it_should_substitute 'å', 'a'
     it_should_substitute 'Å', 'A'
   end
 
-  describe "diacritic" do
+  describe 'diacritic' do
     it_should_substitute 'ñ', 'n'
   end
 

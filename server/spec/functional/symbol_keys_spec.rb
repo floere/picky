@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'ostruct'
 
-describe "Option symbol_keys" do
+describe 'Option symbol_keys' do
 
   let(:index) do
     Picky::Index.new(:results1) { symbol_keys true }
@@ -15,20 +15,20 @@ describe "Option symbol_keys" do
   it 'returns results' do
     index.category :text
 
-    thing = OpenStruct.new id: 1, text: "ohai"
-    other = OpenStruct.new id: 2, text: "ohai kthxbye"
+    thing = OpenStruct.new id: 1, text: 'ohai'
+    other = OpenStruct.new id: 2, text: 'ohai kthxbye'
 
     index.add thing
     index.add other
 
-    try.search("text:ohai").ids.should == [2, 1]
+    try.search('text:ohai').ids.should == [2, 1]
   end
   
   it 'works with facets' do
     index.category :text
 
-    thing = OpenStruct.new id: 1, text: "ohai"
-    other = OpenStruct.new id: 2, text: "ohai kthxbye"
+    thing = OpenStruct.new id: 1, text: 'ohai'
+    other = OpenStruct.new id: 2, text: 'ohai kthxbye'
 
     index.add thing
     index.add other
@@ -40,7 +40,7 @@ describe "Option symbol_keys" do
   it 'actually uses symbols - paranoia' do
     index.category :text
 
-    thing = OpenStruct.new id: 1, text: "ohai"
+    thing = OpenStruct.new id: 1, text: 'ohai'
     
     index.add thing
     
@@ -53,7 +53,7 @@ describe "Option symbol_keys" do
   it 'does the internals right - uses symbols' do
     index.category :text
 
-    thing = OpenStruct.new id: 1, text: "ohai"
+    thing = OpenStruct.new id: 1, text: 'ohai'
     
     index.add thing
     

@@ -3,8 +3,8 @@ class EachRSSItemProxy
   def each(&block)
     require 'rss'
     require 'open-uri'
-    rss_feed = "http://florianhanke.com/blog/atom.xml"
-    rss_content = ""
+    rss_feed = 'http://florianhanke.com/blog/atom.xml'
+    rss_content = ''
     open rss_feed do |f|
        rss_content = f.read
     end

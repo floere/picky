@@ -24,7 +24,7 @@ describe Picky::Indexers::Base do
 
       expect {
         indexer.prepare Picky::Categories.new
-      }.to raise_error("Trying to index without a source for some_index_or_category.")
+      }.to raise_error('Trying to index without a source for some_index_or_category.')
     end
   end
 

@@ -330,7 +330,7 @@ describe Picky::Query::Token do
 
   describe 'similar' do
     it 'should not change the original with the text' do
-      token = described_class.processed "bla~", 'BLA~'
+      token = described_class.processed 'bla~', 'BLA~'
       token.text.should_not == token.original
     end
     def self.it_should_have_similarity(text, expected_similarity_value)
@@ -361,37 +361,37 @@ describe Picky::Query::Token do
     end
   end
 
-  describe "original" do
-    it "should keep the original text even when processed" do
+  describe 'original' do
+    it 'should keep the original text even when processed' do
       token = described_class.processed "I'm the processed text.", "I'm the original text."
 
       token.original.should == "I'm the original text."
     end
   end
 
-  describe "blank?" do
-    it "should be blank if the token text itself is blank" do
+  describe 'blank?' do
+    it 'should be blank if the token text itself is blank' do
       token = described_class.processed ''
 
       token.blank?.should be_truthy
     end
-    it "should be non-blank if the token text itself is non-blank" do
+    it 'should be non-blank if the token text itself is non-blank' do
       token = described_class.processed 'not empty'
 
       token.blank?.should be_falsy
     end
   end
 
-  describe "to_s" do
-    describe "with qualifier" do
+  describe 'to_s' do
+    describe 'with qualifier' do
       it "should display qualifier and text combined with a ':'" do
         token = described_class.processed('sp:qualifier')
 
         token.to_s.should == 'Picky::Query::Token(qualifier, ["sp"])'
       end
     end
-    describe "without qualifier" do
-      it "should display just the text" do
+    describe 'without qualifier' do
+      it 'should display just the text' do
         token = described_class.processed('text')
 
         token.to_s.should == 'Picky::Query::Token(text)'
@@ -500,7 +500,7 @@ describe Picky::Query::Token do
     end
   end
 
-  describe "processed" do
+  describe 'processed' do
     it 'should remove *' do
       token = described_class.processed 'text*'
 
@@ -516,7 +516,7 @@ describe Picky::Query::Token do
 
       token.text.should == 'text'
     end
-    it "should pass on a processed text" do
+    it 'should pass on a processed text' do
       described_class.processed('text').text.should == 'text'
     end
   end

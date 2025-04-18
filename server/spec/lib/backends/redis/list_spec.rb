@@ -12,7 +12,7 @@ describe Picky::Backends::Redis::List do
       expect(index[:anything]).to eq [:some_lrange_result]
     end
     it 'calls the right method on the backend' do
-      client.should_receive(:zrange).once.with("some_namespace:some_sym", :"0", :"-1").and_return([])
+      client.should_receive(:zrange).once.with('some_namespace:some_sym', :"0", :"-1").and_return([])
 
       index[:some_sym]
     end

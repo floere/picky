@@ -78,7 +78,7 @@ EXPECTED
       end
     end
 
-    describe "substitute(s)_characters*" do
+    describe 'substitute(s)_characters*' do
       it "doesn't substitute if there is no substituter" do
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzäöü'
       end
@@ -89,24 +89,24 @@ The substitutes_characters_with option needs a character substituter,
 which responds to #substitute(text) and returns substituted_text."
 ERROR
       end
-      it "uses the substituter to replace characters" do
+      it 'uses the substituter to replace characters' do
         tokenizer.substitutes_characters_with Picky::CharacterSubstituters::WestEuropean.new
 
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
       end
-      it "uses the european substituter as default" do
+      it 'uses the european substituter as default' do
         tokenizer.substitutes_characters_with
 
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzaeoeue'
       end
     end
 
-    describe "normalizes_words" do
+    describe 'normalizes_words' do
       it 'handles broken arguments' do
         expect { tokenizer.normalizes_words(:not_an_array) }.to raise_error(ArgumentError)
       end
-      context "without normalizes_words called" do
-        it "has normalize_with_patterns" do
+      context 'without normalizes_words called' do
+        it 'has normalize_with_patterns' do
           expect { tokenizer.normalize_with_patterns('any') }.to_not raise_error
         end
         it 'should define a method normalize_with_patterns does nothing' do
@@ -115,7 +115,7 @@ ERROR
           tokenizer.normalize_with_patterns(unchanging).should == unchanging
         end
       end
-      context "with normalizes_words called" do
+      context 'with normalizes_words called' do
         before(:each) do
           tokenizer.normalizes_words([
             [/st\./, 'sankt'],
@@ -124,16 +124,16 @@ ERROR
             [/&/, 'and']
           ])
         end
-        it "has normalize_with_patterns" do
+        it 'has normalize_with_patterns' do
           expect { tokenizer.normalize_with_patterns('a b/c.d') }.to_not raise_error
         end
-        it "normalizes, but just the first one" do
+        it 'normalizes, but just the first one' do
           tokenizer.normalize_with_patterns('st. wegstrasse').should == 'sankt wegstrasse'
         end
-        it "works correctly" do
+        it 'works correctly' do
           tokenizer.normalize_with_patterns('camera +').should == 'camera plus'
         end
-        it "works correctly" do
+        it 'works correctly' do
           tokenizer.normalize_with_patterns('alice & bob').should == 'alice and bob'
         end
       end
@@ -165,15 +165,15 @@ ERROR
       # end
     end
 
-    describe "splits_text_on" do
+    describe 'splits_text_on' do
       it 'handles nonbroken arguments' do
-        expect { tokenizer.splits_text_on("hello") }.to_not raise_error
+        expect { tokenizer.splits_text_on('hello') }.to_not raise_error
       end
       it 'handles broken arguments' do
         expect { tokenizer.splits_text_on(:gnorf) }.to raise_error(ArgumentError)
       end
-      context "without splits_text_on called" do
-        it "has split" do
+      context 'without splits_text_on called' do
+        it 'has split' do
           lambda { tokenizer.split('any') }.should_not raise_error
         end
         it 'should define a method split that splits by default on \s' do
@@ -183,18 +183,18 @@ ERROR
           tokenizer.split('this is a test').should == %w[this is a test]
         end
       end
-      context "with specific splitting pattern" do
+      context 'with specific splitting pattern' do
         before(:each) do
           tokenizer.splits_text_on(/[\s.\/]/)
         end
-        it "splits text correctly" do
+        it 'splits text correctly' do
           expect { tokenizer.split('a b/c.d') }.to_not raise_error
         end
-        it "splits text correctly" do
+        it 'splits text correctly' do
           tokenizer.split('a b/c.d').should == %w[a b c d]
         end
       end
-      context "with a splitter given" do
+      context 'with a splitter given' do
         let(:splitter) do
           Class.new do
             def split(text)
@@ -205,18 +205,18 @@ ERROR
         before(:each) do
           tokenizer.splits_text_on splitter
         end
-        it "splits text correctly" do
+        it 'splits text correctly' do
           tokenizer.split('a,b/c.d').should == ['a', 'b/c.d']
         end
       end
     end
 
-    describe "removes_characters" do
+    describe 'removes_characters' do
       it 'handles broken arguments' do
-        expect { tokenizer.removes_characters("hello") }.to raise_error(ArgumentError)
+        expect { tokenizer.removes_characters('hello') }.to raise_error(ArgumentError)
       end
-      context "without removes_characters called" do
-        it "has remove_illegals" do
+      context 'without removes_characters called' do
+        it 'has remove_illegals' do
           expect { tokenizer.remove_illegals('any') }.to_not raise_error
         end
         it 'should define a method remove_illegals that does nothing' do
@@ -225,25 +225,25 @@ ERROR
           tokenizer.remove_illegals unchanging
         end
       end
-      context "with removes_characters called" do
+      context 'with removes_characters called' do
         before(:each) do
           tokenizer.removes_characters(/[afo]/)
         end
-        it "has remove_illegals" do
+        it 'has remove_illegals' do
           expect { tokenizer.remove_illegals('abcdefghijklmnop') }.to_not raise_error
         end
-        it "removes illegal characters" do
+        it 'removes illegal characters' do
           tokenizer.remove_illegals('abcdefghijklmnop').should == 'bcdeghijklmnp'
         end
       end
-      context "with removes_characters called using false" do
+      context 'with removes_characters called using false' do
         before(:each) do
           tokenizer.removes_characters false
         end
-        it "has remove_illegals" do
+        it 'has remove_illegals' do
           expect { tokenizer.remove_illegals('abcdefghijklmnop') }.to_not raise_error
         end
-        it "removes illegal characters" do
+        it 'removes illegal characters' do
           tokenizer.remove_illegals('abcdefghijklmnop').should == 'abcdefghijklmnop'
         end
       end

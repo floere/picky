@@ -30,8 +30,8 @@ describe BookSearch do
   let(:sqlite)          { Picky::TestClient.new(described_class, path: '/sqlite')         }
   let(:commas)          { Picky::TestClient.new(described_class, path: '/commas')         }
   
-  describe "dump" do
-    it "simply works" do
+  describe 'dump' do
+    it 'simply works' do
       Thing = Struct.new :id, :name
 
       index = Picky::Index.new :dump_test do
@@ -57,8 +57,8 @@ describe BookSearch do
 
   it 'has correctly structured in-detail results' do
     expect(csv.search('alan').allocations).to eq [
-      ["Books", 6.693, 2, [%w[author alan alan]], [259, 307]],
-      ["Books", 0.0,   1, [%w[title alan alan]], [449]]
+      ['Books', 6.693, 2, [%w[author alan alan]], [259, 307]],
+      ['Books', 0.0,   1, [%w[title alan alan]], [449]]
     ]
   end
 
@@ -83,7 +83,7 @@ describe BookSearch do
 
   it 'finds the same after reloading' do
     expect(csv.search('soledad human').ids).to eq [72]
-    Picky.logger.info "Reloading"
+    Picky.logger.info 'Reloading'
     Picky::Indexes.load
     expect(csv.search('soledad human').ids).to eq [72]
   end
@@ -93,9 +93,9 @@ describe BookSearch do
 
     new_source = [
       # ChangingItem.new("1", 'first entry'), # Removed.
-      ChangingItem.new("2", 'second entry'),
-      ChangingItem.new("3", 'third entry'),
-      ChangingItem.new("4", 'fourth entry') # Added.
+      ChangingItem.new('2', 'second entry'),
+      ChangingItem.new('3', 'third entry'),
+      ChangingItem.new('4', 'fourth entry') # Added.
     ]
     Picky::Indexes[:memory_changing].source new_source
     Picky::Indexes[:memory_changing].index
@@ -115,9 +115,9 @@ describe BookSearch do
 
     new_source = [
       # ChangingItem.new("1", 'first entry'), # Removed.
-      ChangingItem.new("2", 'second entry'),
-      ChangingItem.new("3", 'third entry'),
-      ChangingItem.new("4", 'fourth entry') # Added.
+      ChangingItem.new('2', 'second entry'),
+      ChangingItem.new('3', 'third entry'),
+      ChangingItem.new('4', 'fourth entry') # Added.
     ]
     Picky::Indexes[:redis_changing].source new_source
     Picky::Indexes[:redis_changing].index
@@ -207,8 +207,8 @@ describe BookSearch do
 
   # Stopwords.
   #
-  it { expect(csv.search("and the history or fergus").ids).to eq [4, 4] }
-  it { expect(csv.search("and the or on of in is to from as at an history fergus").ids).to eq [4, 4] }
+  it { expect(csv.search('and the history or fergus').ids).to eq [4, 4] }
+  it { expect(csv.search('and the or on of in is to from as at an history fergus').ids).to eq [4, 4] }
 
   # Normalization.
   #
@@ -217,11 +217,11 @@ describe BookSearch do
 
   # Remove after splitting.
   #
-  it { expect(csv.search("his|tory fer|gus").ids).to eq [4, 4] }
+  it { expect(csv.search('his|tory fer|gus').ids).to eq [4, 4] }
 
   # Character Substitution.
   #
-  it { expect(csv.search("hïstôry educåtioñ fërgus").ids).to eq [4, 4, 4, 4] }
+  it { expect(csv.search('hïstôry educåtioñ fërgus').ids).to eq [4, 4, 4, 4] }
 
   # Token Rejection.
   #
@@ -229,17 +229,17 @@ describe BookSearch do
 
   # Breakage.
   #
-  it { expect(csv.search("%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}").ids).to eq [] }
-  it { expect(csv.search("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").ids).to eq [] }
-  it { expect(csv.search("glorfgnorfblorf").ids).to eq [] }
+  it { expect(csv.search('%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}').ids).to eq [] }
+  it { expect(csv.search('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').ids).to eq [] }
+  it { expect(csv.search('glorfgnorfblorf').ids).to eq [] }
 
   # Range based area search. Memory.
   #
-  it { expect(simple_geo.search("north1:47.41 east1:8.55").ids).to eq [1481, 5014, 5015, 5016, 10576, 10717, 17777, 17999] }
+  it { expect(simple_geo.search('north1:47.41 east1:8.55').ids).to eq [1481, 5014, 5015, 5016, 10576, 10717, 17777, 17999] }
 
   # Geo based area search.
   #
-  it { expect(geo.search("north:47.41 east:8.55").ids).to eq [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5059, 9110, 10347, 10576, 10717, 10879, 17777, 17955, 18038] }
+  it { expect(geo.search('north:47.41 east:8.55').ids).to eq [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5059, 9110, 10347, 10576, 10717, 10879, 17777, 17955, 18038] }
 
   # Redis.
   #
@@ -278,73 +278,73 @@ describe BookSearch do
 
   # Downcasing.
   #
-  it { expect(csv.search("history fergus").ids).to eq [4, 4] }
-  it { expect(csv.search("HISTORY FERGUS").ids).to eq [] }
-  it { expect(csv.search("history AND OR fergus").ids).to eq [4, 4] }
+  it { expect(csv.search('history fergus').ids).to eq [4, 4] }
+  it { expect(csv.search('HISTORY FERGUS').ids).to eq [] }
+  it { expect(csv.search('history AND OR fergus').ids).to eq [4, 4] }
 
   # File based.
   #
-  it { expect(file.search("first").ids).to eq [1] }
-  it { expect(file.search("entry").ids).to eq [1,2,3] }
-  it { expect(file.search("entry first").ids).to eq [1] }
+  it { expect(file.search('first').ids).to eq [1] }
+  it { expect(file.search('entry').ids).to eq [1,2,3] }
+  it { expect(file.search('entry first').ids).to eq [1] }
 
   # Infix partial.
   #
-  it { expect(file.search("ntr* rst*").ids).to eq [1] }
+  it { expect(file.search('ntr* rst*').ids).to eq [1] }
 
   # Japanese characters (UTF-8).
   #
-  it { expect(japanese.search("日本語").ids).to eq [1] }
-  it { expect(japanese.search("にほんご").ids).to eq [1] }
-  it { expect(japanese.search("食べる").ids).to eq [2] }
-  it { expect(japanese.search("たべる").ids).to eq [2] }
+  it { expect(japanese.search('日本語').ids).to eq [1] }
+  it { expect(japanese.search('にほんご').ids).to eq [1] }
+  it { expect(japanese.search('食べる').ids).to eq [2] }
+  it { expect(japanese.search('たべる').ids).to eq [2] }
   #
   # Partial.
   #
-  it { expect(japanese.search("日").ids).to eq [1] }
+  it { expect(japanese.search('日').ids).to eq [1] }
 
   # Different tokenizer.
   #
-  it { expect(nonstring.search("moo zap").ids).to eq [2] }
+  it { expect(nonstring.search('moo zap').ids).to eq [2] }
 
   # Partial options.
   #
-  it { expect(partial.search("substring:oct").ids).to eq [] }
-  it { expect(partial.search("substring:octo").ids).to eq [] }
-  it { expect(partial.search("substring:octop").ids).to eq [1] }
-  it { expect(partial.search("substring:octopu").ids).to eq [1] }
-  it { expect(partial.search("substring:octopus").ids).to eq [1] }
-  it { expect(partial.search("substring:octopuss").ids).to eq [] }
-  it { expect(partial.search("substring:octopussy").ids).to eq [] }
+  it { expect(partial.search('substring:oct').ids).to eq [] }
+  it { expect(partial.search('substring:octo').ids).to eq [] }
+  it { expect(partial.search('substring:octop').ids).to eq [1] }
+  it { expect(partial.search('substring:octopu').ids).to eq [1] }
+  it { expect(partial.search('substring:octopus').ids).to eq [1] }
+  it { expect(partial.search('substring:octopuss').ids).to eq [] }
+  it { expect(partial.search('substring:octopussy').ids).to eq [] }
 
-  it { expect(partial.search("postfix:oct").ids).to eq [] }
-  it { expect(partial.search("postfix:octo").ids).to eq [] }
-  it { expect(partial.search("postfix:octop").ids).to eq [1] }
-  it { expect(partial.search("postfix:octopu").ids).to eq [1] }
-  it { expect(partial.search("postfix:octopus").ids).to eq [1] }
-  it { expect(partial.search("postfix:octopuss").ids).to eq [1] }
-  it { expect(partial.search("postfix:octopussy").ids).to eq [1] }
+  it { expect(partial.search('postfix:oct').ids).to eq [] }
+  it { expect(partial.search('postfix:octo').ids).to eq [] }
+  it { expect(partial.search('postfix:octop').ids).to eq [1] }
+  it { expect(partial.search('postfix:octopu').ids).to eq [1] }
+  it { expect(partial.search('postfix:octopus').ids).to eq [1] }
+  it { expect(partial.search('postfix:octopuss').ids).to eq [1] }
+  it { expect(partial.search('postfix:octopussy').ids).to eq [1] }
 
-  it { expect(partial.search("infix:c").ids).to eq [1,2] }
-  it { expect(partial.search("infix:br").ids).to eq [2] }
-  it { expect(partial.search("infix:cad").ids).to eq [2] }
+  it { expect(partial.search('infix:c').ids).to eq [1,2] }
+  it { expect(partial.search('infix:br').ids).to eq [2] }
+  it { expect(partial.search('infix:cad').ids).to eq [2] }
 
-  it { expect(partial.search("none:octopussy").ids).to eq [1] }
-  it { expect(partial.search("none:abracadabra").ids).to eq [2] }
+  it { expect(partial.search('none:octopussy').ids).to eq [1] }
+  it { expect(partial.search('none:abracadabra').ids).to eq [2] }
 
   # Search#ignore option.
   #
   # TODO Removed in 4.9+. Reintroduce!
   #
-  it { expect(book_each.search("alan history").ids).to eq %w[259 307] } # Ignores History or Alan in title.
+  it { expect(book_each.search('alan history').ids).to eq %w[259 307] } # Ignores History or Alan in title.
 
   # SQLite backend.
   #
-  it { expect(sqlite.search("hello sqlite").ids).to eq [1] }
+  it { expect(sqlite.search('hello sqlite').ids).to eq [1] }
   
   # Commas in ids.
   #
-  it { expect(commas.search("text").ids).to eq ['a,b', 'c,d'] }
+  it { expect(commas.search('text').ids).to eq ['a,b', 'c,d'] }
 
   # Database index reloading.
   #
@@ -353,10 +353,10 @@ describe BookSearch do
 
     # Some webapp adds a book.
     #
-    added_book = Book.create! title:  "Some Title",
-                              author: "Tester Mc Testy",
-                              isbn:   "1231231231231",
-                              year:   "1977"
+    added_book = Book.create! title:  'Some Title',
+                              author: 'Tester Mc Testy',
+                              isbn:   '1231231231231',
+                              year:   '1977'
     expected_id = added_book.id
 
     Picky::Indexes[:books].index
@@ -376,9 +376,9 @@ describe BookSearch do
 
     # Some webapp adds a book.
     #
-    added_book = Book.create! title:  "Some Title",
-                              author: "Tester Mc Testy",
-                              isbn:   "1231231231231",
+    added_book = Book.create! title:  'Some Title',
+                              author: 'Tester Mc Testy',
+                              isbn:   '1231231231231',
                               year:   1977
     expected_id = added_book.id
 
@@ -389,7 +389,7 @@ describe BookSearch do
     #
     added_book.destroy
 
-    expect(book_each.search('1977').ids).to eq ["86", "394", expected_id.to_s]
+    expect(book_each.search('1977').ids).to eq ['86', '394', expected_id.to_s]
   end
 
 end

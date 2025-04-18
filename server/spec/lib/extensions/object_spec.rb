@@ -7,10 +7,10 @@ describe Object do
   context 'basic object' do
     let(:object) { described_class.new }
 
-    describe "timed_exclaim" do
-      it "should exclaim right" do
+    describe 'timed_exclaim' do
+      it 'should exclaim right' do
         Time.stub now: Time.parse('07-03-1977 12:34:56')
-        object.should_receive(:exclaim).once.with "12:34:56: bla"
+        object.should_receive(:exclaim).once.with '12:34:56: bla'
 
         object.timed_exclaim 'bla'
       end

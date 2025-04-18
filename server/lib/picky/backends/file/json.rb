@@ -19,7 +19,7 @@ module Picky
         # the JSON data in the file.
         #
         def mapping
-          @mapping || raise("The File index/category needs to be loaded first.")
+          @mapping || raise('The File index/category needs to be loaded first.')
         end
 
         # See lib/picky/backends/file.rb for what this should return.

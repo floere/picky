@@ -39,7 +39,7 @@ module Picky
         commands = Picky::CLI.mapping.map do |command, object_and_params|
           _, *params = object_and_params
           ary = []
-          ary << "  picky"
+          ary << '  picky'
           ary << command
           ary << params_to_s(params) unless params.empty?
           ary.join ' '

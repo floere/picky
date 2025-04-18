@@ -17,7 +17,7 @@ describe Picky::API::Tokenizer do
       end
       it 'creates a tokenizer' do
         object.extract_character_substituter(substituter).
-          substitute("picky").should == '99399'
+          substitute('picky').should == '99399'
       end
     end
     context 'invalid tokenizer' do

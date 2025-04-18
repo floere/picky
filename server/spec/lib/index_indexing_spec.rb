@@ -34,11 +34,11 @@ describe Picky::Index do
     context 'with it set' do
       let(:index) do
         described_class.new :some_name do
-          after_indexing "some after indexing going on"
+          after_indexing 'some after indexing going on'
         end
       end
       it 'has an after_indexing set' do
-        index.after_indexing.should == "some after indexing going on"
+        index.after_indexing.should == 'some after indexing going on'
       end
     end
     context 'with it not set' do
@@ -82,7 +82,7 @@ ERROR
     end
   end
 
-  context "with categories" do
+  context 'with categories' do
     before(:each) do
       the_source = []
 
@@ -125,8 +125,8 @@ ERROR
     end
   end
 
-  context "no categories" do
-    it "works" do
+  context 'no categories' do
+    it 'works' do
       described_class.new :some_name do
         source []
       end

@@ -23,12 +23,12 @@ describe 'Search#only' do
     # These allocations are now exclusively kept.
     #
     try.search('some some').allocations.to_result.should == [
-      [:books, 1.386, 2, [[:text, "some", "some"],   [:text, "some", "some"]],   [2, 1]],
+      [:books, 1.386, 2, [[:text, 'some', 'some'],   [:text, 'some', 'some']],   [2, 1]],
       # [:books, 1.386, 2, [[:text, "some", "some"],   [:title, "some", "some"]],  [2, 1]],
       # [:books, 1.386, 2, [[:title, "some", "some"],  [:text, "some", "some"]],   [2, 1]],
       # [:books, 1.386, 2, [[:title, "some", "some"],  [:title, "some", "some"]],  [2, 1]],
       # [:books, 0.693, 1, [[:title, "some", "some"],  [:author, "some", "some"]], [2]],
-      [:books, 0.693, 1, [[:author, "some", "some"], [:text, "some", "some"]],   [2]],
+      [:books, 0.693, 1, [[:author, 'some', 'some'], [:text, 'some', 'some']],   [2]],
       # [:books, 0.693, 1, [[:author, "some", "some"], [:title, "some", "some"]],  [2]],
       # [:books, 0.693, 1, [[:text, "some", "some"],   [:author, "some", "some"]], [2]],
       # [:books, 0.0,   1, [[:author, "some", "some"], [:author, "some", "some"]], [2]]
@@ -37,7 +37,7 @@ describe 'Search#only' do
     # These allocations are now exclusively kept.
     #
     try.search('some some some').allocations.to_result.should == [
-      [:books, 2.0789999999999997, 2, [[:text, "some", "some"],   [:text, "some", "some"],  [:text, "some", "some"]],    [2, 1]],
+      [:books, 2.0789999999999997, 2, [[:text, 'some', 'some'],   [:text, 'some', 'some'],  [:text, 'some', 'some']],    [2, 1]],
       # [:books, 2.0789999999999997, 2, [[:text, "some", "some"],   [:text, "some", "some"],  [:title, "some", "some"]],   [2, 1]],
       # [:books, 2.0789999999999997, 2, [[:text, "some", "some"],   [:title, "some", "some"], [:text, "some", "some"]],    [2, 1]],
       # [:books, 2.0789999999999997, 2, [[:text, "some", "some"],   [:title, "some", "some"], [:title, "some", "some"]],   [2, 1]],
@@ -45,7 +45,7 @@ describe 'Search#only' do
       # [:books, 2.0789999999999997, 2, [[:title, "some", "some"],  [:text, "some", "some"],   [:title, "some", "some"]],  [2, 1]],
       # [:books, 2.0789999999999997, 2, [[:title, "some", "some"],  [:title, "some", "some"],  [:text, "some", "some"]],   [2, 1]],
       # [:books, 2.0789999999999997, 2, [[:title, "some", "some"],  [:title, "some", "some"],  [:title, "some", "some"]],  [2, 1]],
-      [:books, 1.386,              1, [[:author, "some", "some"], [:text, "some", "some"],   [:text, "some", "some"]],   [2]],
+      [:books, 1.386,              1, [[:author, 'some', 'some'], [:text, 'some', 'some'],   [:text, 'some', 'some']],   [2]],
       # [:books, 1.386,              1, [[:text, "some", "some"],   [:text, "some", "some"],   [:author, "some", "some"]], [2]],
       # [:books, 1.386,              1, [[:title, "some", "some"],  [:author, "some", "some"], [:title, "some", "some"]],  [2]],
       # [:books, 1.386,              1, [[:title, "some", "some"],  [:author, "some", "some"], [:text, "some", "some"]],   [2]],
@@ -62,7 +62,7 @@ describe 'Search#only' do
       # [:books, 0.693,              1, [[:author, "some", "some"], [:title, "some", "some"],  [:author, "some", "some"]], []],
       # [:books, 0.693,              1, [[:author, "some", "some"], [:author, "some", "some"], [:title, "some", "some"]],  []],
       # [:books, 0.693,              1, [[:title, "some", "some"],  [:author, "some", "some"], [:author, "some", "some"]], []],
-      [:books, 0.693,              1, [[:author, "some", "some"], [:author, "some", "some"], [:text, "some", "some"]],   [2]],
+      [:books, 0.693,              1, [[:author, 'some', 'some'], [:author, 'some', 'some'], [:text, 'some', 'some']],   [2]],
       # [:books, 0.0,                1, [[:author, "some", "some"], [:author, "some", "some"], [:author, "some", "some"]], []]
     ]
   end

@@ -10,7 +10,7 @@ describe Picky::Query::Combinations do
     @combinations = described_class.new @combinations_ary
   end
 
-  describe "to_result" do
+  describe 'to_result' do
     before(:each) do
       @combination1 = double :combination1, to_result: :result1
       @combination2 = double :combination2, to_result: :result2
@@ -19,12 +19,12 @@ describe Picky::Query::Combinations do
 
       @combinations = described_class.new @combinations_ary
     end
-    it "resultifies the combinations" do
+    it 'resultifies the combinations' do
       @combinations.to_result.should == [:result1, :result2]
     end
   end
 
-  describe "total_score" do
+  describe 'total_score' do
     before(:each) do
       @combination1 = double :combination1, weight: 3.14
       @combination2 = double :combination2, weight: 2.76
@@ -33,7 +33,7 @@ describe Picky::Query::Combinations do
 
       @combinations = described_class.new @combinations_ary
     end
-    it "sums the scores" do
+    it 'sums the scores' do
       @combinations.score.should == 5.90
     end
   end

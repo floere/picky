@@ -11,7 +11,7 @@ describe 'qualifier remapping' do
 
     QualifierRemappingThing = Struct.new(:id, :a, :b)
     
-    index.add QualifierRemappingThing.new(1, "a", "b")
+    index.add QualifierRemappingThing.new(1, 'a', 'b')
     
     try = Picky::Search.new index
     
@@ -22,7 +22,7 @@ describe 'qualifier remapping' do
     # Add a new category and a thing.
     #
     index.category :b
-    index.add QualifierRemappingThing.new(2, "c", "b")
+    index.add QualifierRemappingThing.new(2, 'c', 'b')
     
     # It finds it.
     #

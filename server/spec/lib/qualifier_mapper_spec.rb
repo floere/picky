@@ -18,7 +18,7 @@ describe Picky::QualifierMapper do
     end
   end
 
-  describe "mapping" do
+  describe 'mapping' do
     it { mapper.map(:t1).should   == @category1 }
     it { mapper.map(:tt1).should  == @category1 }
     it { mapper.map(:ttt1).should == @category1 }

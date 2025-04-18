@@ -14,7 +14,7 @@ data.replace_from id: 5, name: 'Florian', surname: 'Tentacles'
 
 # Look facets up in the index.
 #
-puts "Facets:"
+puts 'Facets:'
 puts data[:name].exact.inverted.inject({}) { |result, token_ids|
   token, ids = token_ids
   result[token] = ids.size

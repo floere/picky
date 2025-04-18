@@ -17,8 +17,8 @@ describe Picky::Indexers::Parallel do
         Picky::Category.new(:text, @index)
       ]
       @source = [
-        thing.new(1, "hello"),
-        thing.new(2, "world"),
+        thing.new(1, 'hello'),
+        thing.new(2, 'world'),
       ]
     end
 
@@ -52,8 +52,8 @@ describe Picky::Indexers::Parallel do
         Picky::Category.new(:text, @index, tokenize: false)
       ]
       @source = [
-        thing.new(1, ["hello"]),
-        thing.new(2, ["world"]),
+        thing.new(1, ['hello']),
+        thing.new(2, ['world']),
       ]
     end
 

@@ -1,6 +1,6 @@
 require 'memory_profiler'
 
-require_relative "../../lib/picky"
+require_relative '../../lib/picky'
 
 # result = MemoryProfiler.report do
 #

@@ -8,14 +8,14 @@ describe Picky::Query::Combination do
     @bundle      = double :bundle, identifier: :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
     @category    = double :category,
-                        bundle_for: @bundle,
-                        name: :some_category_name,
-                        identifier: 'some_category_identifier'
+                          bundle_for: @bundle,
+                          name: :some_category_name,
+                          identifier: 'some_category_identifier'
 
     @combination = described_class.new @token, @category, 3.14
   end
 
-  describe "to_s" do
+  describe 'to_s' do
     it "shows the combination's info" do
       @token.stub to_result: :token_result
 
@@ -43,7 +43,7 @@ describe Picky::Query::Combination do
 
   describe 'identifier' do
     it 'should get the category name from the bundle' do
-      @combination.identifier.should == "bundle_name:inverted:some_text"
+      @combination.identifier.should == 'bundle_name:inverted:some_text'
     end
   end
 

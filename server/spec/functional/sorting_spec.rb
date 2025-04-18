@@ -4,7 +4,7 @@ require 'spec_helper'
 
 require 'ostruct'
 
-describe "special sorting" do
+describe 'special sorting' do
 
   before(:each) do
     Picky::Indexes.clear_indexes

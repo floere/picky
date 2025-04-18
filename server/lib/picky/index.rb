@@ -196,7 +196,7 @@ module Picky
     # TODO Redesign.
     #
     def only *qualifiers
-      raise "Sorry, Picky::Search#only has been removed in version."
+      raise 'Sorry, Picky::Search#only has been removed in version.'
       # @qualifier_mapper.restrict_to *qualifiers
     end
 

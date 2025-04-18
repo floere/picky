@@ -43,9 +43,9 @@ p ['+ []', (Time.now - t)]
 
 # Splitting the text should only split on the first.
 #
-raise if "a…b…c".split('…', 2) != ['a', 'b…c']
+raise if 'a…b…c'.split('…', 2) != ['a', 'b…c']
 
-s = "a…b…c"
+s = 'a…b…c'
 
 t = Time.now
 1000.times do

@@ -128,18 +128,18 @@ describe 'Search#terminate_early' do
 
     result_hash = try.search('hello', 1, 0).to_hash
     result_hash[:allocations].should == [
-        [:terminate_early, 1.792, 6, [[:text1, "hello", "hello"]], [6]],
-        [:terminate_early, 1.792, 6, [[:text2, "hello", "hello"]], []]
+        [:terminate_early, 1.792, 6, [[:text1, 'hello', 'hello']], [6]],
+        [:terminate_early, 1.792, 6, [[:text2, 'hello', 'hello']], []]
       ]
     result_hash[:offset].should == 0
     result_hash[:total].should == 12
 
     result_hash = try.search('hello', 1, 12).to_hash
     result_hash[:allocations].should == [
-        [:terminate_early, 1.792, 6, [[:text1, "hello", "hello"]], []],
-        [:terminate_early, 1.792, 6, [[:text2, "hello", "hello"]], []],
-        [:terminate_early, 1.792, 6, [[:text3, "hello", "hello"]], [6]],
-        [:terminate_early, 1.792, 6, [[:text4, "hello", "hello"]], []]
+        [:terminate_early, 1.792, 6, [[:text1, 'hello', 'hello']], []],
+        [:terminate_early, 1.792, 6, [[:text2, 'hello', 'hello']], []],
+        [:terminate_early, 1.792, 6, [[:text3, 'hello', 'hello']], [6]],
+        [:terminate_early, 1.792, 6, [[:text4, 'hello', 'hello']], []]
       ]
     result_hash[:offset].should == 12
     result_hash[:total].should == 24

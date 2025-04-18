@@ -332,53 +332,53 @@ describe Picky::Query::Allocations do
     end
   end
 
-  describe "each" do
+  describe 'each' do
     before(:each) do
       @internal_allocations = double :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
-    it "should forward to the internal allocations" do
+    it 'should forward to the internal allocations' do
       stub_proc = lambda {}
       @internal_allocations.should_receive(:each).once.with no_args, &stub_proc
 
       @allocations.each &stub_proc
     end
   end
-  describe "inject" do
+  describe 'inject' do
     before(:each) do
       @internal_allocations = double :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
-    it "should forward to the internal allocations" do
+    it 'should forward to the internal allocations' do
       stub_proc = lambda {}
       @internal_allocations.should_receive(:inject).once.with no_args, &stub_proc
 
       @allocations.inject &stub_proc
     end
   end
-  describe "empty?" do
+  describe 'empty?' do
     before(:each) do
       @internal_allocations = double :internal_allocations
       @allocations = described_class.new @internal_allocations
     end
-    it "should forward to the internal allocations array" do
+    it 'should forward to the internal allocations array' do
       @internal_allocations.should_receive(:empty?).once
       @allocations.empty?
     end
   end
 
-  describe "to_s" do
+  describe 'to_s' do
     before(:each) do
       @allocation           = double :allocation, to_result: :some_result
       @no_result_allocation = double :no_results, to_result: nil
       @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
     end
-    it "should forward to the internal allocations array" do
-      @allocations.to_s.should == "[:some_result, :some_result]"
+    it 'should forward to the internal allocations array' do
+      @allocations.to_s.should == '[:some_result, :some_result]'
     end
   end
 
-  describe "process!" do
+  describe 'process!' do
     context 'some allocations' do
       before(:each) do
         @allocations = described_class.new [

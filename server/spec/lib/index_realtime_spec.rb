@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe Picky::Index, "Realtime API" do
+describe Picky::Index, 'Realtime API' do
 
   RealtimeThing = Struct.new :id, :text
 

@@ -99,7 +99,7 @@ module Picky
 
     # For logging.
     #
-    @@log_time_format = "%Y-%m-%d %H:%M:%S".freeze
+    @@log_time_format = '%Y-%m-%d %H:%M:%S'.freeze
     def to_s
       "#{log_type}|#{Time.now.strftime @@log_time_format}|#{'%8f' % duration}|#{'%-50s' % query}|#{'%8d' % total}|#{'%4d' % offset}|#{'%2d' % allocations.size}|"
     end

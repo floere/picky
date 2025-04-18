@@ -1,6 +1,6 @@
 require 'memory_profiler'
 
-require_relative "../../lib/picky"
+require_relative '../../lib/picky'
 
 GC.start
 
@@ -26,7 +26,7 @@ end
 
 puts ['symbol count', Symbol.all_symbols.count]
 
-thing1 = klass.new(1, "My name")
+thing1 = klass.new(1, 'My name')
 index.add thing1
 
 result = MemoryProfiler.report do

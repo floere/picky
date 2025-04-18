@@ -9,7 +9,7 @@ describe Symbol do
     before(:each) do
       @token = (((0..9).to_a)*10).to_s.to_sym
     end
-    it "is fast" do
+    it 'is fast' do
       performance_of { @token.each_subtoken { |subtoken| } }.should < 0.001
     end
     it 'is fast enough' do
@@ -39,7 +39,7 @@ describe Symbol do
         @sym = :picky
       end
       context 'no params' do
-        it "yields the right elements" do
+        it 'yields the right elements' do
           result = []
           @sym.each_intoken do |subtoken|
             result << subtoken
@@ -48,7 +48,7 @@ describe Symbol do
         end
       end
       context 'with min_length == 0' do
-        it "yields the right elements" do
+        it 'yields the right elements' do
           result = []
           @sym.each_intoken(0) do |subtoken|
             result << subtoken
@@ -102,7 +102,7 @@ describe Symbol do
         end
       end
       context 'with min_length == sym.size' do
-        it "yields the right elements" do
+        it 'yields the right elements' do
           result = []
           @sym.each_intoken(@sym.size) do |subtoken|
             result << subtoken
@@ -156,7 +156,7 @@ describe Symbol do
         end
       end
       context 'with min_length > sym.size' do
-        it "yields the right elements" do
+        it 'yields the right elements' do
           result = []
           @sym.each_intoken(@sym.size+1) do |subtoken|
             result << subtoken
@@ -210,7 +210,7 @@ describe Symbol do
         end
       end
       context 'with min_length < 0' do
-        it "yields the right elements" do
+        it 'yields the right elements' do
           result = []
           @sym.each_intoken(-2) do |subtoken|
             result << subtoken
@@ -266,13 +266,13 @@ describe Symbol do
     end
   end
 
-  describe "each_subtoken" do
+  describe 'each_subtoken' do
     context 'normal symbol' do
       before(:each) do
         @sym = :reinke
       end
       context 'no downto' do
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken do |subtoken|
             result << subtoken
@@ -284,7 +284,7 @@ describe Symbol do
         before(:each) do
           @downto = 8
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -296,7 +296,7 @@ describe Symbol do
         before(:each) do
           @downto = 6
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -308,7 +308,7 @@ describe Symbol do
         before(:each) do
           @downto = 4
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -320,7 +320,7 @@ describe Symbol do
         before(:each) do
           @downto = 1
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -332,7 +332,7 @@ describe Symbol do
         before(:each) do
           @downto = 0
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -344,7 +344,7 @@ describe Symbol do
         before(:each) do
           @downto = -2
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -357,7 +357,7 @@ describe Symbol do
       before(:each) do
         @sym = :日本語
       end
-      it "should return an array of japanese symbols, each 1 smaller than the other" do
+      it 'should return an array of japanese symbols, each 1 smaller than the other' do
         result = []
         @sym.each_subtoken do |subtoken|
           result << subtoken
@@ -370,7 +370,7 @@ describe Symbol do
         @sym = :r
       end
       context 'no downto' do
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken do |subtoken|
             result << subtoken
@@ -382,7 +382,7 @@ describe Symbol do
         before(:each) do
           @downto = 8
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -394,7 +394,7 @@ describe Symbol do
         before(:each) do
           @downto = 6
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -406,7 +406,7 @@ describe Symbol do
         before(:each) do
           @downto = 4
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -418,7 +418,7 @@ describe Symbol do
         before(:each) do
           @downto = 1
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -430,7 +430,7 @@ describe Symbol do
         before(:each) do
           @downto = 0
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -442,7 +442,7 @@ describe Symbol do
         before(:each) do
           @downto = -1
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -454,7 +454,7 @@ describe Symbol do
         before(:each) do
           @downto = -2
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -466,7 +466,7 @@ describe Symbol do
         before(:each) do
           @downto = -3
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -478,7 +478,7 @@ describe Symbol do
         before(:each) do
           @downto = -100
         end
-        it "should return an array of pieces of the original token, each 1 smaller than the other" do
+        it 'should return an array of pieces of the original token, each 1 smaller than the other' do
           result = []
           @sym.each_subtoken(@downto) do |subtoken|
             result << subtoken
@@ -487,15 +487,15 @@ describe Symbol do
         end
       end
     end
-    context "with range param" do
-      it "returns a subtoken array from a clipped original" do
+    context 'with range param' do
+      it 'returns a subtoken array from a clipped original' do
         result = []
         :reinke.each_subtoken 2, (0..3) do |subtoken|
           result << subtoken
         end
         result.should == [:rein, :rei, :re]
       end
-      it "returns a subtoken array from a clipped original" do
+      it 'returns a subtoken array from a clipped original' do
         result = []
         :reinke.each_subtoken 2, (1..-2) do |subtoken|
           result << subtoken

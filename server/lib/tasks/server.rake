@@ -1,10 +1,10 @@
 # Server tasks, like starting/stopping/restarting.
 #
-desc "Start the server."
+desc 'Start the server.'
 task :start do
   Rake::Task[:'server:start'].invoke
 end
-desc "Stop the server."
+desc 'Stop the server.'
 task :stop do
   Rake::Task[:'server:stop'].invoke
 end

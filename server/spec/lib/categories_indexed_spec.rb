@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Categories do
 
-  context "with real categories" do
+  context 'with real categories' do
     before(:each) do
       @index1 = Picky::Index.new :name
 
@@ -15,12 +15,12 @@ describe Picky::Categories do
       @categories << @category2
       @categories << @category3
     end
-    describe "similar_possible_for" do
+    describe 'similar_possible_for' do
       before(:each) do
         @token = Picky::Query::Token.processed 'similar~', 'Similar~'
       end
       context 'with nothing similar' do
-        it "returns possible categories" do
+        it 'returns possible categories' do
           @categories.similar_possible_for(@token).should == []
         end
       end
@@ -53,7 +53,7 @@ describe Picky::Categories do
       @categories.categories.should_not be_empty
       @categories.category_hash.should_not be_empty
     end
-    it "is clear again after clearing" do
+    it 'is clear again after clearing' do
       @categories << double(:category, name: :some_name)
 
       @categories.clear_categories

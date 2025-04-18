@@ -17,7 +17,7 @@ describe Picky::API::Tokenizer do
       end
       it 'creates a tokenizer' do
         object.extract_stemmer(stemmer).
-          stem("computers").should == 'comput'
+          stem('computers').should == 'comput'
       end
     end
     context 'invalid tokenizer' do

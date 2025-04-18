@@ -22,7 +22,7 @@ describe Picky::Loggers::Concise do
         logger.load :some_category
         logger.load :some_category
       
-        io.string.should == "Tokenizing TTT Dumping DD Loading ...."
+        io.string.should == 'Tokenizing TTT Dumping DD Loading ....'
       end
     end
   end

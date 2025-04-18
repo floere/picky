@@ -179,9 +179,9 @@ describe Picky::Backends::Redis do
         category.exact.inverted['test'] = [1, 2, 3]
         category.exact.inverted['test'] = [4, 5, 6]
         category.exact.inverted['test'].should == %w[4 5 6]
-        category.exact.inverted['test'].delete "5"
+        category.exact.inverted['test'].delete '5'
         category.exact.inverted['test'].should == %w[4 6]
-        category.exact.inverted['test'].unshift "3"
+        category.exact.inverted['test'].unshift '3'
         category.exact.inverted['test'].should == %w[3 4 6]
       end
     end

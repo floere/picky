@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Realtime Indexing" do
+describe 'Realtime Indexing' do
 
   ReloadingBook = Struct.new(:id, :title, :author)
 
@@ -16,22 +16,22 @@ describe "Realtime Indexing" do
     let(:books) { Picky::Search.new index }
 
     before(:each) do
-      index.add ReloadingBook.new(1, "Title", "Author")
+      index.add ReloadingBook.new(1, 'Title', 'Author')
     end
 
     context 'dumping and loading' do
       it "doesn't find books anymore after dumping and loading and updating" do
-        index.replace ReloadingBook.new(2, "Title New", "Author New")
+        index.replace ReloadingBook.new(2, 'Title New', 'Author New')
 
-        books.search("title").ids.should == [2, 1]
+        books.search('title').ids.should == [2, 1]
 
         index.dump
         index.load
         index.build_realtime_mapping
 
-        index.replace ReloadingBook.new(2, "Blah New", "Author New")
+        index.replace ReloadingBook.new(2, 'Blah New', 'Author New')
 
-        books.search("title").ids.should == [1]
+        books.search('title').ids.should == [1]
       end
     end
   end

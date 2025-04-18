@@ -2,7 +2,7 @@
 #
 require 'spec_helper'
 
-describe "Regression" do
+describe 'Regression' do
   
   it 'does not get confused' do
     index = Picky::Index.new :dynamic_weights do

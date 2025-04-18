@@ -17,8 +17,8 @@ describe Picky::Backends::Memory::Marshal do
       end
     end
 
-    describe "dump" do
-      it "forwards to the given hash" do
+    describe 'dump' do
+      it 'forwards to the given hash' do
         hash = double :hash
 
         marshal.should_receive(:dump_marshal).once.with hash
@@ -27,8 +27,8 @@ describe Picky::Backends::Memory::Marshal do
       end
     end
 
-    describe "retrieve" do
-      it "raises" do
+    describe 'retrieve' do
+      it 'raises' do
         lambda do
           marshal.retrieve
         end.should raise_error("Can't retrieve from marshalled file. Use text file.")

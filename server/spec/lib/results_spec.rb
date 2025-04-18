@@ -2,18 +2,18 @@ require 'spec_helper'
 
 describe Picky::Results do
 
-  describe "ids" do
+  describe 'ids' do
     before(:each) do
       @allocations = double :allocations
       @results = described_class.new :unimportant, :amount, :offset, @allocations
     end
-    it "forwards" do
+    it 'forwards' do
       @allocations.should_receive(:process!).once.with :amount, :offset, nil, nil
       @allocations.should_receive(:ids).once.with :anything
 
       @results.ids :anything
     end
-    it "forwards and uses amount if nothing given" do
+    it 'forwards and uses amount if nothing given' do
       @allocations.should_receive(:process!).once.with :amount, :offset, nil, nil
       @allocations.should_receive(:ids).once.with :amount
 
@@ -23,7 +23,7 @@ describe Picky::Results do
 
   describe 'to_s time format' do
     it 'is in the right format' do
-      described_class.new("some_query").to_s.should match(/\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
+      described_class.new('some_query').to_s.should match(/\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
     end
   end
 
@@ -34,7 +34,7 @@ describe Picky::Results do
     end
     context 'without results' do
       before(:each) do
-        @results = described_class.new "some_query"
+        @results = described_class.new 'some_query'
       end
       it 'should output a default log' do
         @results.to_s.should == '.|2011-08-16 10:07:33|0.000000|some_query                                        |       0|   0| 0|'
@@ -46,7 +46,7 @@ describe Picky::Results do
                               process!: nil,
                               size: 12
 
-        @results = described_class.new "some_query", 20, 1234, @allocations
+        @results = described_class.new 'some_query', 20, 1234, @allocations
         @results.stub duration: 0.1234567890,
                       total: 12345678
       end
@@ -81,24 +81,24 @@ describe Picky::Results do
     end
   end
 
-  describe "accessors" do
+  describe 'accessors' do
     before(:each) do
       @allocations = double :allocations, process!: :allocations
       @results = described_class.new :query, :amount, :offset, @allocations
     end
-    it "should have accessors for query" do
+    it 'should have accessors for query' do
       @results.query.should == :query
     end
-    it "should have accessors for amount" do
+    it 'should have accessors for amount' do
       @results.amount.should == :amount
     end
-    it "should have accessors for offset" do
+    it 'should have accessors for offset' do
       @results.offset.should == :offset
     end
-    it "should have accessors for allocations" do
+    it 'should have accessors for allocations' do
       @results.allocations.should == @allocations
     end
-    it "should have accessors for duration" do
+    it 'should have accessors for duration' do
       @results.duration = :some_duration
       @results.duration.should == :some_duration
     end
