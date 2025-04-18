@@ -115,7 +115,7 @@ module Picky
     # Add string/symbol to similarity index.
     #
     def add_similarity(str_or_sym, method: :unshift)
-      if encoded = self.similarity_strategy.encode(str_or_sym)
+      if (encoded = self.similarity_strategy.encode(str_or_sym))
         similars = @similarity[encoded] ||= []
 
         # Not completely correct, as others will also be affected, but meh.

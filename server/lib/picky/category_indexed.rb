@@ -13,7 +13,7 @@ module Picky
     #
     def weight(token)
       bundle = bundle_for token
-      if range = token.range
+      if (range = token.range)
         # TODO We might be able to return early?
         #
         @ranger.new(*range).inject(nil) do |sum, text|
@@ -33,7 +33,7 @@ module Picky
     #
     def ids(token)
       bundle = bundle_for token
-      if range = token.range
+      if (range = token.range)
         # Adding all to an array, then flattening
         # is faster than using ary + ary.
         #

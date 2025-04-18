@@ -26,7 +26,7 @@ module Picky
 
       # We're done if there is no filter.
       #
-      return counts unless filter_query = options[:filter]
+      return counts unless (filter_query = options[:filter])
 
       # Pre-tokenize query token category.
       #

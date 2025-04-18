@@ -59,7 +59,7 @@ module Picky
         # and uses an existing one if there is.
         #
         def new *args, &block
-          unless reference = @__free__.shift
+          unless (reference = @__free__.shift)
             reference = allocate
           end
           reference.send :initialize, *args, &block

@@ -25,7 +25,7 @@ class Module
 
   def extract_to_from_options(args, error_message)
     options = args.pop
-    unless options.is_a?(Hash) && to = options[:to]
+    unless options.is_a?(Hash) && (to = options[:to])
       raise ArgumentError, error_message
     end
 
