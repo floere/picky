@@ -5,7 +5,7 @@ module Picky
   class Indexes
 
     instance_forward :load, :analyze
-    each_forward :load, :to => :indexes
+    each_forward :load, to: :indexes
 
   end
 

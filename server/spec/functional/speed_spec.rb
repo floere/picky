@@ -7,9 +7,9 @@ describe "Speccing Ruby for speed" do
     before(:each) do
       @allocs = [:hello, :speed, :test]
       @ids = {
-        :hello => (:'000_001'..:'100_000').to_a,
-        :speed => (:'0_001'..:'5_000').to_a,
-        :test => (:'0_001'..:'1_000').to_a
+        hello: (:'000_001'..:'100_000').to_a,
+        speed: (:'0_001'..:'5_000').to_a,
+        test: (:'0_001'..:'1_000').to_a
       }
     end
     describe "+" do
@@ -51,9 +51,9 @@ describe "Speccing Ruby for speed" do
     before(:each) do
       @allocs = [:hello, :speed, :test]
       @ids = {
-        :hello => (1..100_000).to_a,
-        :speed => (1..5_000).to_a,
-        :test => (1..1_000).to_a
+        hello: (1..100_000).to_a,
+        speed: (1..5_000).to_a,
+        test: (1..1_000).to_a
       }
     end
     describe "+" do

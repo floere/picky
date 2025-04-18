@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Picky::Indexers::Base do
 
-  let(:some_index_or_category) { double :some_index_or_category, :name => 'some_index_or_category' }
+  let(:some_index_or_category) { double :some_index_or_category, name: 'some_index_or_category' }
   let(:indexer) { described_class.new some_index_or_category }
 
   describe 'index_or_category' do
@@ -33,7 +33,7 @@ describe Picky::Indexers::Base do
       some_index_or_category.should_receive(:source).at_least(1).and_return :some_source
     end
     it 'processes' do
-      categories = double :categories, :empty => nil, :cache => nil
+      categories = double :categories, empty: nil, cache: nil
 
       indexer.should_receive(:process).once.with :some_source, categories, anything
 

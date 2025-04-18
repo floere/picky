@@ -12,8 +12,8 @@ describe Picky::Query::Combinations do
 
   describe "to_result" do
     before(:each) do
-      @combination1 = double :combination1, :to_result => :result1
-      @combination2 = double :combination2, :to_result => :result2
+      @combination1 = double :combination1, to_result: :result1
+      @combination2 = double :combination2, to_result: :result2
 
       @combinations_ary = [@combination1, @combination2]
 
@@ -26,8 +26,8 @@ describe Picky::Query::Combinations do
 
   describe "total_score" do
     before(:each) do
-      @combination1 = double :combination1, :weight => 3.14
-      @combination2 = double :combination2, :weight => 2.76
+      @combination1 = double :combination1, weight: 3.14
+      @combination2 = double :combination2, weight: 2.76
 
       @combinations_ary = [@combination1, @combination2]
 

@@ -130,7 +130,7 @@ describe 'facets' do
       index = Picky::Index.new :facets do
         category :name
         category :surname
-        category :age_category, :qualifier => :age
+        category :age_category, qualifier: :age
       end
 
       thing = Struct.new :id, :name, :surname, :age_category

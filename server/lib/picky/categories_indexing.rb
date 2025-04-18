@@ -7,7 +7,7 @@ module Picky
     each_forward :cache,
                  :clear,
                  :prepare,
-                 :to => :categories
+                 to: :categories
   end
 
 end

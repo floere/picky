@@ -7,16 +7,16 @@ describe Picky::Search do
   before(:each) do
     @type      = double :type
     @index     = double :some_index,
-                      :internal_indexed => @type,
-                      :each_category    => [],
-                      :backend          => Picky::Backends::Memory.new
+                      internal_indexed: @type,
+                      each_category: [],
+                      backend: Picky::Backends::Memory.new
   end
 
   describe 'tokenized' do
     let(:search) { described_class.new }
     it 'forwards to the tokenizer' do
       tokenizer = double :tokenizer
-      search.stub :tokenizer => tokenizer
+      search.stub tokenizer: tokenizer
 
       tokenizer.should_receive(:tokenize).once.with(:some_text).and_return [['some_text'], [:some_original]]
 
@@ -55,7 +55,7 @@ describe Picky::Search do
       end
     end
     context 'tokenizer predefined' do
-      let(:predefined) { double(:tokenizer, :tokenize => nil) }
+      let(:predefined) { double(:tokenizer, tokenize: nil) }
       context 'by way of DSL' do
         let(:search) { pre = predefined; described_class.new { searching pre } }
         it 'returns the predefined tokenizer' do
@@ -89,21 +89,21 @@ describe Picky::Search do
       @search = described_class.new
     end
     it "forwards to search_with correctly" do
-      @search.stub :tokenized => :tokens
+      @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 10, :text, nil
 
       @search.search :text, 20, 10
     end
     it "forwards to search_with correctly" do
-      @search.stub :tokenized => :tokens
+      @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, nil
 
       @search.search :text, 20, 0
     end
     it "forwards to search_with correctly" do
-      @search.stub :tokenized => :tokens
+      @search.stub tokenized: :tokens
 
       @search.should_receive(:search_with).once.with :tokens, 20, 0, :text, true
 
@@ -154,7 +154,7 @@ describe Picky::Search do
   describe 'initializer' do
     context 'with tokenizer' do
       before(:each) do
-        tokenizer = double :tokenizer, :tokenize => [['some_text'], ['some_original']]
+        tokenizer = double :tokenizer, tokenize: [['some_text'], ['some_original']]
         @search = described_class.new @index do
           searching tokenizer
         end
@@ -167,7 +167,7 @@ describe Picky::Search do
 
   describe 'to_s' do
     before(:each) do
-      @index.stub :name => :some_index, :each_category => []
+      @index.stub name: :some_index, each_category: []
     end
     context 'without indexes' do
       before(:each) do

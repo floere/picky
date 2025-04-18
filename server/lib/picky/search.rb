@@ -24,7 +24,7 @@ module Picky
                   :boosts
 
     forward :remap_qualifiers,
-            :to => :indexes
+            to: :indexes
 
     # Takes:
     # * A number of indexes

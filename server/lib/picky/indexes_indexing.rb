@@ -9,7 +9,7 @@ module Picky
 
     instance_forward :clear, :tokenizer
 
-    each_forward :cache, :clear, :prepare, :to => :indexes
+    each_forward :cache, :clear, :prepare, to: :indexes
 
     # Overrides index from the helper.
     #

@@ -14,14 +14,14 @@ describe Picky::Indexes do
   describe 'methods' do
     let(:indexes) { described_class.new }
     before(:each) do
-      @index1 = double :index1, :name => :index1
-      @index2 = double :index2, :name => :index2
+      @index1 = double :index1, name: :index1
+      @index2 = double :index2, name: :index2
       indexes.register @index1
       indexes.register @index2
     end
     describe 'index' do
       it 'prepares and caches each' do
-        scheduler = double :scheduler, :fork? => false, :finish => nil
+        scheduler = double :scheduler, fork?: false, finish: nil
 
         @index1.should_receive(:prepare).once.with(scheduler).ordered
         @index2.should_receive(:prepare).once.with(scheduler).ordered

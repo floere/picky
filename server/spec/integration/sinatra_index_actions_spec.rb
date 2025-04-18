@@ -182,7 +182,7 @@ describe 'Sinatra Index Actions' do
         results['total'].should == 0
       end
       it 'works with the (test) client' do
-        client = Picky::TestClient.new MyIndexActionsPickyServer, :path => '/people'
+        client = Picky::TestClient.new MyIndexActionsPickyServer, path: '/people'
       
         request.put('/', params: {
           index: 'some_index',

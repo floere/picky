@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Picky::Index do
 
-  let(:some_source) { double :source, :each => nil, :inspect => 'some_source' }
+  let(:some_source) { double :source, each: nil, inspect: 'some_source' }
 
   context 'initializer' do
     it 'works' do

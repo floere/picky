@@ -31,7 +31,7 @@ PerformanceServer = Class.new(Sinatra::Base) do
   end
 end
 
-client = Picky::TestClient.new PerformanceServer, :path => '/test'
+client = Picky::TestClient.new PerformanceServer, path: '/test'
 
 %w|cpu object|.each do |thing|
   profile = StackProf.run(mode: thing.to_sym) do

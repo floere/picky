@@ -8,7 +8,7 @@ module Picky
                  :replace_from,
                  :clear_realtime,
                  :build_realtime_mapping,
-                 :to => :categories
+                 to: :categories
   
     def update object, where = :unshift
       replace object, where = :unshift

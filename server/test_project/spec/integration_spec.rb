@@ -147,8 +147,8 @@ describe BookSearch do
 
   # Respects ids param and offset.
   #
-  it { expect(csv.search('title:le* title:hystoree~', :ids => 2, :offset => 0).ids).to eq [4, 250] }
-  it { expect(csv.search('title:le* title:hystoree~', :ids => 1, :offset => 1).ids).to eq [250] }
+  it { expect(csv.search('title:le* title:hystoree~', ids: 2, offset: 0).ids).to eq [4, 250] }
+  it { expect(csv.search('title:le* title:hystoree~', ids: 1, offset: 1).ids).to eq [250] }
 
   # Standard tests.
   #

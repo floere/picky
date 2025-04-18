@@ -20,14 +20,14 @@ task :analyze, [:index, :category] => :'stats:prepare' do |_, options|
   puts statistics
 end
 
-task :stats => :'stats:prepare' do
+task stats: :'stats:prepare' do
   stats = Picky::Statistics.new
   puts stats.application
 end
 
 namespace :stats do
 
-  task :prepare => :application do
+  task prepare: :application do
     require_relative '../picky/statistics'
   end
 

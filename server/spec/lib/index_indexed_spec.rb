@@ -27,7 +27,7 @@ describe Picky::Index do
       @index.category :some_category_name1
       @index.category :some_category_name2
 
-      @index.stub :categories => @categories
+      @index.stub categories: @categories
     end
 
     describe "load" do

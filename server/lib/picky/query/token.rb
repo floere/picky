@@ -15,7 +15,7 @@ module Picky
       attr_writer :similar
       attr_writer :predefined_categories
       
-      forward :blank?, :to => :@text
+      forward :blank?, to: :@text
       
       # Normal initializer.
       #

@@ -21,7 +21,7 @@ module Picky
               :size,
               :map,
               :[],
-              :to => :@allocations
+              to: :@allocations
 
       def initialize allocations = []
         @allocations = allocations

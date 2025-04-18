@@ -4,7 +4,7 @@ describe Picky::Index do
 
   describe 'tokenizer' do
     context 'with tokenizer' do
-      let(:tokenizer) { double :tokenizer, :tokenize => '' }
+      let(:tokenizer) { double :tokenizer, tokenize: '' }
       let(:index) do
         the_tokenizer = tokenizer
         described_class.new :some_name do
@@ -59,7 +59,7 @@ describe Picky::Index do
       end
 
       it 'does things in order' do
-        scheduler = double :scheduler, :fork? => false, :finish => nil
+        scheduler = double :scheduler, fork?: false, finish: nil
 
         index.should_receive(:prepare).once.with(scheduler).ordered
         index.should_receive(:cache).once.with(scheduler).ordered
@@ -69,7 +69,7 @@ describe Picky::Index do
     end
     context 'with non#each source' do
       it 'raises' do
-        the_source = double :source, :harvest => nil
+        the_source = double :source, harvest: nil
         expect {
           described_class.new :some_name do
             source the_source
@@ -94,7 +94,7 @@ ERROR
     end
     describe 'source' do
       it 'can be set with this method' do
-        source = double :source, :each => [].each
+        source = double :source, each: [].each
 
         @index.source source
 
@@ -111,7 +111,7 @@ ERROR
       end
       context 'with categories' do
         before(:each) do
-          @index.category :some_name, :source => double(:source)
+          @index.category :some_name, source: double(:source)
         end
         it 'returns it if found' do
           @index[:some_name].should_not == nil

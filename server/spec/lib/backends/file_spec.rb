@@ -44,7 +44,7 @@ describe Picky::Backends::File do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        double(type, :index_path => "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
+                        double(type, index_path: "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
           ).should be_kind_of(kind)
         end
       end

@@ -5,19 +5,19 @@ require 'spec_helper'
 describe Picky::Query::Combination do
 
   before(:each) do
-    @bundle      = double :bundle, :identifier => :bundle_name
+    @bundle      = double :bundle, identifier: :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
     @category    = double :category,
-                        :bundle_for => @bundle,
-                        :name => :some_category_name,
-                        :identifier => 'some_category_identifier'
+                        bundle_for: @bundle,
+                        name: :some_category_name,
+                        identifier: 'some_category_identifier'
 
     @combination = described_class.new @token, @category, 3.14
   end
 
   describe "to_s" do
     it "shows the combination's info" do
-      @token.stub :to_result => :token_result
+      @token.stub to_result: :token_result
 
       @combination.to_s.should == '(bundle_name,some_category_name:token_result)'
     end
@@ -35,7 +35,7 @@ describe Picky::Query::Combination do
       end
     end
     it 'should return a correct result' do
-      @token.stub :to_result => [:some_original_text, :some_text]
+      @token.stub to_result: [:some_original_text, :some_text]
 
       @combination.to_result.should == [:some_category_name, :some_original_text, :some_text]
     end
@@ -54,7 +54,7 @@ describe Picky::Query::Combination do
       @combination.ids
     end
     it 'should not call it twice, but cache' do
-      @category.stub :ids => :some_ids
+      @category.stub ids: :some_ids
       @combination.ids
 
       @category.should_receive(:ids).never

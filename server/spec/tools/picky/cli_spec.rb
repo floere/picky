@@ -11,11 +11,11 @@ describe Picky::CLI do
   describe '.mapping' do
     it 'returns the right mapping' do
       Picky::CLI.mapping.should == {
-        :generate => [Picky::CLI::Generate, :"{client,server,all_in_one}", :app_directory_name],
-        :help     => [Picky::CLI::Help],
-        :live     => [Picky::CLI::Live, "host:port/path (default: localhost:8080/admin)", "port (default: 4568)"],
-        :search   => [Picky::CLI::Search, :url_or_path, 'amount of ids (default 20)'],
-        :stats    => [Picky::CLI::Statistics, :"logfile (e.g. log/search.log)", "port (default: 4567)"]
+        generate: [Picky::CLI::Generate, :"{client,server,all_in_one}", :app_directory_name],
+        help: [Picky::CLI::Help],
+        live: [Picky::CLI::Live, "host:port/path (default: localhost:8080/admin)", "port (default: 4568)"],
+        search: [Picky::CLI::Search, :url_or_path, 'amount of ids (default 20)'],
+        stats: [Picky::CLI::Statistics, :"logfile (e.g. log/search.log)", "port (default: 4567)"]
       }
     end
   end

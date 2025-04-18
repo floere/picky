@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Picky::Indexes do
 
-  let(:index) { double :some_index,   :name => :some_index }
-  let(:index2) { double :some_index2, :name => :some_index }
+  let(:index) { double :some_index,   name: :some_index }
+  let(:index2) { double :some_index2, name: :some_index }
 
   context 'with instance' do
     let(:indexes) { Picky::Indexes.new }

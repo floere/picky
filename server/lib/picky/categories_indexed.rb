@@ -4,7 +4,7 @@ module Picky
 
     each_forward :load,
                  :analyze,
-                 :to => :categories
+                 to: :categories
 
     # Gets all similar tokens and puts together the possible combinations
     # for each found similar token.

@@ -60,7 +60,7 @@ File.open viz, 'w' do |file|
 end
 
 printer = RubyProf::GraphPrinter.new result
-printer.print STDOUT, :min_percent => 2
+printer.print STDOUT, min_percent: 2
 
 command = "open #{html}"
 puts command

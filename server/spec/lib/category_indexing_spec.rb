@@ -4,9 +4,9 @@ describe Picky::Category do
 
   before(:each) do
     @index  = Picky::Index.new :some_index
-    @source = double :some_given_source, :each => nil
+    @source = double :some_given_source, each: nil
   end
-  let(:category) { described_class.new(:some_category, @index, :source => @source).tap { |c| c.stub :timed_exclaim } }
+  let(:category) { described_class.new(:some_category, @index, source: @source).tap { |c| c.stub :timed_exclaim } }
 
   context "unit specs" do
     let(:exact) { category.exact }
@@ -85,7 +85,7 @@ describe Picky::Category do
         end
         context 'it has an index' do
           before(:each) do
-            category.instance_variable_set :@index, double(:index, :key_format => :yet_another_key_format)
+            category.instance_variable_set :@index, double(:index, key_format: :yet_another_key_format)
           end
           it 'returns that key_format' do
             category.key_format.should == :yet_another_key_format
@@ -96,13 +96,13 @@ describe Picky::Category do
 
     describe 'source' do
       context 'with explicit source' do
-        let(:category) { described_class.new(:some_category, @index, :source => [1]) }
+        let(:category) { described_class.new(:some_category, @index, source: [1]) }
         it 'returns the right source' do
           category.source.should == [1]
         end
       end
       context 'without explicit source' do
-        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub :source => :index_source }) }
+        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub source: :index_source }) }
         it 'returns the right source' do
           category.source.should == :index_source
         end
@@ -111,8 +111,8 @@ describe Picky::Category do
 
     describe "index" do
       before(:each) do
-        @indexer = double :indexer, :index => nil
-        category.stub :indexer => @indexer
+        @indexer = double :indexer, index: nil
+        category.stub indexer: @indexer
       end
       it "tells the indexer to index" do
         @indexer.should_receive(:prepare).once

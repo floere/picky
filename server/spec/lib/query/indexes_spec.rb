@@ -88,7 +88,7 @@ describe Picky::Query::Indexes do
   describe 'prepared_allocations_for' do
     before(:each) do
       @allocations = double :allocations
-      indexes.stub :allocations_for => @allocations
+      indexes.stub allocations_for: @allocations
     end
     it 'calls the right method in order' do
       # @allocations.should_receive(:uniq!).once.ordered.with no_args

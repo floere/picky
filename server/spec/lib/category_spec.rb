@@ -55,12 +55,12 @@ Warning: Category options {:weights=>:some_weight} for category some_category co
          Working options are: [:hints, :indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight].
 WARNING
       
-      category.warn_if_unknown :weights => :some_weight
+      category.warn_if_unknown weights: :some_weight
     end
     it 'does not warn on right options' do
       category.should_receive(:warn).never
       
-      category.warn_if_unknown :weight => :some_weight
+      category.warn_if_unknown weight: :some_weight
     end
   end
 

@@ -11,7 +11,7 @@ module Picky
       irb = 'irb'
 
       require 'optparse'
-      options = { :sandbox => false, :irb => irb }
+      options = { sandbox: false, irb: irb }
       OptionParser.new do |opt|
         opt.banner = "Usage: console [environment] [options]"
         opt.on("--irb=[#{irb}]", 'Invoke a different irb.') { |v| options[:irb] = v }

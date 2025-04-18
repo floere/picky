@@ -29,8 +29,8 @@ describe Picky::Results do
 
   describe 'to_s' do
     before(:each) do
-      time = double :time, :strftime => '2011-08-16 10:07:33'
-      Time.stub :now => time
+      time = double :time, strftime: '2011-08-16 10:07:33'
+      Time.stub now: time
     end
     context 'without results' do
       before(:each) do
@@ -43,12 +43,12 @@ describe Picky::Results do
     context 'with results' do
       before(:each) do
         @allocations = double :allocations,
-                              :process! => nil,
-                              :size => 12
+                              process!: nil,
+                              size: 12
 
         @results = described_class.new "some_query", 20, 1234, @allocations
-        @results.stub :duration => 0.1234567890,
-                      :total    => 12345678
+        @results.stub duration: 0.1234567890,
+                      total: 12345678
       end
       it 'should output a specific log' do
         @results.to_s.should == '>|2011-08-16 10:07:33|0.123457|some_query                                        |12345678|1234|12|'
@@ -61,7 +61,7 @@ describe Picky::Results do
       @results = described_class.new
     end
     it 'should do it correctly' do
-      @results.stub :to_hash => :serialized
+      @results.stub to_hash: :serialized
 
       @results.to_json.should == '"serialized"'
     end
@@ -69,7 +69,7 @@ describe Picky::Results do
 
   describe 'to_hash' do
     before(:each) do
-      @allocations = double :allocations, :process! => nil, :to_result => :allocations, :total => :some_total
+      @allocations = double :allocations, process!: nil, to_result: :allocations, total: :some_total
 
       @results = described_class.new :unimportant, :some_results_amount, :some_offset, @allocations
       @results.duration = :some_duration
@@ -77,13 +77,13 @@ describe Picky::Results do
     it 'should do it correctly' do
       @results.prepare!
 
-      @results.to_hash.should == { :allocations => :allocations, :offset => :some_offset, :duration => :some_duration, :total => :some_total }
+      @results.to_hash.should == { allocations: :allocations, offset: :some_offset, duration: :some_duration, total: :some_total }
     end
   end
 
   describe "accessors" do
     before(:each) do
-      @allocations = double :allocations, :process! => :allocations
+      @allocations = double :allocations, process!: :allocations
       @results = described_class.new :query, :amount, :offset, @allocations
     end
     it "should have accessors for query" do

@@ -4,7 +4,7 @@ describe Picky::Loggers::Verbose do
 
   let(:index) { Picky::Index.new :some_index }
   let(:category) { Picky::Category.new :some_category, index }
-  let(:file) { double :file, :path => 'some/path' }
+  let(:file) { double :file, path: 'some/path' }
   let(:io) { StringIO.new }
   let(:logger) { described_class.new thing }
   context 'with Logger' do
@@ -18,7 +18,7 @@ describe Picky::Loggers::Verbose do
     end
     describe 'more complicated test case' do
       it 'is correct' do
-        Time.stub :now => Time.new('0000')
+        Time.stub now: Time.new('0000')
 
         logger.info 'Tokenizing '
         logger.tokenize category, file
@@ -41,7 +41,7 @@ describe Picky::Loggers::Verbose do
     let(:thing) { io }
     describe 'more complicated test case' do
       it 'is correct' do
-        Time.stub :now => Time.new('0000')
+        Time.stub now: Time.new('0000')
 
         logger.info 'Tokenizing '
         logger.tokenize category, file

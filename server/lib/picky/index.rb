@@ -95,7 +95,7 @@ module Picky
             :each,
             :inject,
             :reset_backend,
-            :to => :categories
+            to: :categories
 
     # Create a new index with a given source.
     #

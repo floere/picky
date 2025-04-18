@@ -26,8 +26,8 @@ describe Picky::Categories do
       end
       context 'with some similar' do
         before(:each) do
-          @bundle1 = double :bundle1, :similar => ['similar', 'text'], :weight => 1, :identifier => ''
-          @category1.stub :bundle_for => @bundle1
+          @bundle1 = double :bundle1, similar: ['similar', 'text'], weight: 1, identifier: ''
+          @category1.stub bundle_for: @bundle1
         end
         # it "returns possible categories" do
         #   @categories.similar_possible_for(@token).should == [
@@ -48,13 +48,13 @@ describe Picky::Categories do
       @categories.category_hash.should be_empty
     end
     it "isn't clear anymore after adding" do
-      @categories << double(:category, :name => :some_name)
+      @categories << double(:category, name: :some_name)
 
       @categories.categories.should_not be_empty
       @categories.category_hash.should_not be_empty
     end
     it "is clear again after clearing" do
-      @categories << double(:category, :name => :some_name)
+      @categories << double(:category, name: :some_name)
 
       @categories.clear_categories
 
@@ -139,7 +139,7 @@ describe Picky::Categories do
     describe 'possible_categories' do
       context 'user defined exists' do
         before(:each) do
-          @token = double :token, :predefined_categories => [@category2]
+          @token = double :token, predefined_categories: [@category2]
         end
         it 'should return the right categories' do
           @categories.possible_categories(@token).should == [@category2]
@@ -147,7 +147,7 @@ describe Picky::Categories do
       end
       context 'user defined does not exist' do
         before(:each) do
-          @token = double :token, :predefined_categories => nil
+          @token = double :token, predefined_categories: nil
         end
         it 'should return all categories' do
           @categories.possible_categories(@token).should == [@category1, @category2, @category3]

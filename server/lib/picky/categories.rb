@@ -10,7 +10,7 @@ module Picky
             :map!,
             :include?,
             :empty?,
-            :to => :categories
+            to: :categories
 
     each_forward :cache,
                  :dump,
@@ -18,7 +18,7 @@ module Picky
                  :inject,
                  :reindex,
                  :reset_backend,
-                 :to => :categories
+                 to: :categories
 
     # A list of indexed categories.
     #

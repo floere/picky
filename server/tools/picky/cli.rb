@@ -107,11 +107,11 @@ module Picky
     # THINK Try to load the other gems and get the commands dynamically.
     #
     @@mapping = {
-      :generate => [Generate, :'{client,server,all_in_one}', :'app_directory_name'],
-      :help     => [Help],
-      :live     => [Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)'],
-      :search   => [Search, :url_or_path, 'amount of ids (default 20)'],
-      :stats    => [Statistics, :'logfile (e.g. log/search.log)', 'port (default: 4567)']
+      generate: [Generate, :'{client,server,all_in_one}', :'app_directory_name'],
+      help: [Help],
+      live: [Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)'],
+      search: [Search, :url_or_path, 'amount of ids (default 20)'],
+      stats: [Statistics, :'logfile (e.g. log/search.log)', 'port (default: 4567)']
     }
     def self.mapping
       @@mapping

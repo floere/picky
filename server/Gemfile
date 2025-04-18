@@ -21,7 +21,7 @@ group :test do
 
   # Needed for testing itself.
   #
-  gem 'simplecov', :require => false # Will install simplecov-html as a dependency
+  gem 'simplecov', require: false # Will install simplecov-html as a dependency
 
   # Needed to test optional data sources etc.
   #
@@ -36,8 +36,8 @@ group :test do
   gem 'uuidtools'
   gem 'www-delicious'
 
-  gem 'fast-stemmer', :require => 'stemmer'
-  gem 'ruby-stemmer', :require => 'lingua/stemmer'
+  gem 'fast-stemmer', require: 'stemmer'
+  gem 'ruby-stemmer', require: 'lingua/stemmer'
 
   gem 'ostruct'
 

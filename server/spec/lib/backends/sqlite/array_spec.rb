@@ -20,7 +20,7 @@ describe Picky::Backends::SQLite::Array do
     describe 'dump_sqlite' do
       let(:client) { double :client }
       before(:each) do
-        db.stub :db => client
+        db.stub db: client
       end
       it 'initializes the client' do
         client.stub :execute
@@ -40,7 +40,7 @@ describe Picky::Backends::SQLite::Array do
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', ['a', '[1,2,3]']
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', ['b', '[4,5,6]']
 
-        db.dump_sqlite :a => [1,2,3], :b => [4,5,6]
+        db.dump_sqlite a: [1,2,3], b: [4,5,6]
       end
     end
 
@@ -85,7 +85,7 @@ describe Picky::Backends::SQLite::Array do
     describe 'dump_sqlite' do
       let(:client) { double :client }
       before(:each) do
-        db.stub :db => client
+        db.stub db: client
       end
       it 'initializes the client' do
         client.stub :execute
@@ -105,7 +105,7 @@ describe Picky::Backends::SQLite::Array do
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', ['a', '[1,2,3]']
         client.should_receive(:execute).once.with 'insert into key_value values (?,?)', ['b', '[4,5,6]']
 
-        db.dump_sqlite :a => [1,2,3], :b => [4,5,6]
+        db.dump_sqlite a: [1,2,3], b: [4,5,6]
       end
     end
 

@@ -7,7 +7,7 @@ module Picky
 
     forward :cache,
             :clear,
-            :to => :categories
+            to: :categories
 
     # Define an index tokenizer on the index.
     #

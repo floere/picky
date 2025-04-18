@@ -121,9 +121,9 @@ describe Picky::Bundle do
         @bundle.add 2, :title
 
         @bundle.realtime.should == { 1 => [:title], 2 => [:title] }
-        @bundle.inverted.should == { :title => [2,1] }
-        @bundle.weights.should == { :title => 0.693 }
-        @bundle.similarity.should == { :TTL => [:title] }
+        @bundle.inverted.should == { title: [2,1] }
+        @bundle.weights.should == { title: 0.693 }
+        @bundle.similarity.should == { TTL: [:title] }
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -154,18 +154,18 @@ describe Picky::Bundle do
         @bundle.remove 1
 
         @bundle.realtime.should == { 2 => [:thing] }
-        @bundle.weights.should == { :thing => 0.0 }
-        @bundle.inverted.should == { :thing => [2] }
-        @bundle.similarity.should == { :"0NK" => [:thing] }
+        @bundle.weights.should == { thing: 0.0 }
+        @bundle.inverted.should == { thing: [2] }
+        @bundle.similarity.should == { "0NK": [:thing] }
       end
       it 'works correctly' do
         @bundle.add 1, :title
         @bundle.add 1, :title
 
         @bundle.realtime.should == { 1 => [:title] }
-        @bundle.weights.should  == { :title => 0.0 }
-        @bundle.inverted.should == { :title => [1] }
-        @bundle.similarity.should  == { :TTL => [:title] }
+        @bundle.weights.should  == { title: 0.0 }
+        @bundle.inverted.should == { title: [1] }
+        @bundle.similarity.should  == { TTL: [:title] }
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -196,9 +196,9 @@ describe Picky::Bundle do
       it 'works correctly' do
         @bundle.add 1, :title
 
-        @bundle.weights.should == { :title => 0.0 }
-        @bundle.inverted.should == { :title => [1] }
-        @bundle.similarity.should == { :TTL => [:title] }
+        @bundle.weights.should == { title: 0.0 }
+        @bundle.inverted.should == { title: [1] }
+        @bundle.similarity.should == { TTL: [:title] }
       end
     end
   end

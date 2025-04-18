@@ -22,8 +22,8 @@ describe Picky::Query::Boosts do
     describe 'boost_for' do
       it 'gets the category names from the combinations' do
         combinations = [
-          double(:combination1, :category_name => :test1),
-          double(:combination1, :category_name => :test2)
+          double(:combination1, category_name: :test1),
+          double(:combination1, category_name: :test2)
         ]
 
         boosts.boost_for(combinations).should == +6

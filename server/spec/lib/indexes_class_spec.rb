@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Picky::Indexes do
 
   before(:each) do
-    @index   = double :some_index, :name => :some_index
+    @index   = double :some_index, name: :some_index
     @indexes = described_class.instance
   end
 

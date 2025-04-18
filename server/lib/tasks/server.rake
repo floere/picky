@@ -13,7 +13,7 @@ namespace :server do
 
   # desc "Start the unicorns. (Wehee!)"
   #
-  task :start => :framework do
+  task start: :framework do
     chdir_to_root
     daemonize = PICKY_ENVIRONMENT == 'production' ? '-D' : ''
     ENV['PICKY_ENV'] = PICKY_ENVIRONMENT
@@ -24,7 +24,7 @@ namespace :server do
 
   # desc "Stop the unicorns. (Blam!)"
   #
-  task :stop => :framework do
+  task stop: :framework do
     `kill -QUIT #{current_pid}` if current_pid
   end
 

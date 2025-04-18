@@ -45,9 +45,9 @@ describe Picky::Query::Allocations do
   describe 'ids' do
     context 'integers' do
       before(:each) do
-        @allocation1 = double :allocation1, :ids => [1, 2, 3, 4]
-        @allocation2 = double :allocation2, :ids => [5, 6, 7]
-        @allocation3 = double :allocation3, :ids => [8, 9]
+        @allocation1 = double :allocation1, ids: [1, 2, 3, 4]
+        @allocation2 = double :allocation2, ids: [5, 6, 7]
+        @allocation3 = double :allocation3, ids: [8, 9]
         @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
@@ -62,9 +62,9 @@ describe Picky::Query::Allocations do
     end
     context 'symbols' do
       before(:each) do
-        @allocation1 = double :allocation1, :ids => [:a, :b, :c, :d]
-        @allocation2 = double :allocation2, :ids => [:e, :f, :g]
-        @allocation3 = double :allocation3, :ids => [:h, :i]
+        @allocation1 = double :allocation1, ids: [:a, :b, :c, :d]
+        @allocation2 = double :allocation2, ids: [:e, :f, :g]
+        @allocation3 = double :allocation3, ids: [:h, :i]
         @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
@@ -81,9 +81,9 @@ describe Picky::Query::Allocations do
 
   describe 'process!' do
     before(:each) do
-      @allocation1 = double :allocation1, :count => 4, ids: [1, 2, 3, 4], empty_array: [] # TODO Why is empty_array necessary?
-      @allocation2 = double :allocation2, :count => 3, ids: [5, 6, 7]
-      @allocation3 = double :allocation3, :count => 2, ids: [8, 9]
+      @allocation1 = double :allocation1, count: 4, ids: [1, 2, 3, 4], empty_array: [] # TODO Why is empty_array necessary?
+      @allocation2 = double :allocation2, count: 3, ids: [5, 6, 7]
+      @allocation3 = double :allocation3, count: 2, ids: [8, 9]
       @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
     end
     describe 'lazy evaluation' do
@@ -295,8 +295,8 @@ describe Picky::Query::Allocations do
     end
     context 'one allocation has no results' do
       before(:each) do
-        @allocation           = double :allocation, :to_result => :some_result
-        @no_result_allocation = double :no_results, :to_result => nil
+        @allocation           = double :allocation, to_result: :some_result
+        @no_result_allocation = double :no_results, to_result: nil
         @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
       end
       it 'should forward to each allocation with the same params' do
@@ -309,9 +309,9 @@ describe Picky::Query::Allocations do
     context 'with allocations' do
       before(:each) do
         @allocations = described_class.new [
-          double(:allocation, :process! => (1..10).to_a, :count => 10),
-          double(:allocation, :process! => (1..80).to_a, :count => 80),
-          double(:allocation, :process! => (1..20).to_a, :count => 20)
+          double(:allocation, process!: (1..10).to_a, count: 10),
+          double(:allocation, process!: (1..80).to_a, count: 80),
+          double(:allocation, process!: (1..20).to_a, count: 20)
         ]
       end
       it 'should traverse the allocations and sum the counts' do
@@ -369,8 +369,8 @@ describe Picky::Query::Allocations do
 
   describe "to_s" do
     before(:each) do
-      @allocation           = double :allocation, :to_result => :some_result
-      @no_result_allocation = double :no_results, :to_result => nil
+      @allocation           = double :allocation, to_result: :some_result
+      @no_result_allocation = double :no_results, to_result: nil
       @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
     end
     it "should forward to the internal allocations array" do
@@ -382,9 +382,9 @@ describe Picky::Query::Allocations do
     context 'some allocations' do
       before(:each) do
         @allocations = described_class.new [
-          double(:allocation, :process! => (1..10).to_a, :count => 10),
-          double(:allocation, :process! => (1..80).to_a, :count => 80),
-          double(:allocation, :process! => (1..20).to_a, :count => 20)
+          double(:allocation, process!: (1..10).to_a, count: 10),
+          double(:allocation, process!: (1..80).to_a, count: 80),
+          double(:allocation, process!: (1..20).to_a, count: 20)
         ]
       end
       it 'should calculate the right total' do

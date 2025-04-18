@@ -29,7 +29,7 @@ module Picky
                 
                 :to_tree_s,
 
-                :to => :bundle
+                to: :bundle
 
       end
 
@@ -45,7 +45,7 @@ module Picky
                 :generate_partial_from,
                 :retrieve,
                 :size,
-                :to => :bundle
+                to: :bundle
 
       end
 
@@ -69,7 +69,7 @@ module Picky
                 :name,
                 :remove,
                 :weight,
-                :to => :bundle
+                to: :bundle
 
       end
 

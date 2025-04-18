@@ -41,8 +41,8 @@ module Picky
                   :partial_strategy,
                   :similarity_strategy
 
-    forward :[], :[]=,        :to => :configuration
-    forward :index_directory, :to => :category
+    forward :[], :[]=,        to: :configuration
+    forward :index_directory, to: :category
 
     # TODO Move the strategies into options.
     #

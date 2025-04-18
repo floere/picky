@@ -10,7 +10,7 @@ describe Picky::API::Search::Boost do
     context 'with a Hash' do
       it 'returns a boosts object' do
         combinations = [
-          double(:combination, :category_name => :bla)
+          double(:combination, category_name: :bla)
         ]
 
         object.extract_boosts([:bla] => +7.77).boost_for(combinations).should == 7.77

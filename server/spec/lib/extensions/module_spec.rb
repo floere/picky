@@ -7,7 +7,7 @@ describe Module do
       let(:klass) do
         Class.new do
 
-          each_forward :bli, :bla, :blu, :to => :@some_enumerable
+          each_forward :bli, :bla, :blu, to: :@some_enumerable
 
           def initialize some_enumerable
             @some_enumerable = some_enumerable
@@ -40,7 +40,7 @@ describe Module do
       let(:klass) do
         Class.new do
 
-          forward :bli, :bla, :blu, :to => :@some_thing
+          forward :bli, :bla, :blu, to: :@some_thing
 
           def initialize some_thing
             @some_thing = some_thing
