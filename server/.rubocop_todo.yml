@@ -126,11 +126,9 @@ Style/ClassVars:
     - 'lib/picky/category.rb'
     - 'lib/picky/index/hints.rb'
     - 'lib/picky/query/token.rb'
-    - 'lib/picky/query/tokens.rb'
     - 'lib/picky/results.rb'
     - 'lib/picky/tokenizer.rb'
     - 'test_project/indexes/isbn_each.rb'
-    - 'tools/picky/cli.rb'
 
 # Offense count: 97
 # Configuration parameters: AllowedConstants.
