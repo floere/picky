@@ -78,7 +78,7 @@ describe Picky::Query::Allocation do
     end
     context 'with symbol ids' do
       before(:each) do
-        @allocation.stub calculate_ids: [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j]
+        @allocation.stub calculate_ids: %i[a b c d e f g h i j]
       end
       it 'should process right' do
         @allocation.process!(0, 0).should == []
@@ -87,16 +87,16 @@ describe Picky::Query::Allocation do
         @allocation.process!(0, 10).should == []
       end
       it 'should process right' do
-        @allocation.process!(5, 0).should == [:a, :b, :c, :d, :e]
+        @allocation.process!(5, 0).should == %i[a b c d e]
       end
       it 'should process right' do
-        @allocation.process!(5, 5).should == [:f, :g, :h, :i, :j]
+        @allocation.process!(5, 5).should == %i[f g h i j]
       end
       it 'should process right' do
-        @allocation.process!(20, 0).should == [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j]
+        @allocation.process!(20, 0).should == %i[a b c d e f g h i j]
       end
       it 'should process right' do
-        @allocation.process!(20, 5).should == [:f, :g, :h, :i, :j]
+        @allocation.process!(20, 5).should == %i[f g h i j]
       end
       it 'should process right' do
         @allocation.process!(20, 10).should == []
@@ -151,7 +151,7 @@ describe Picky::Query::Allocation do
       before(:each) do
         combinations = double :combinations,
                               empty?: false,
-                              to_result: [:some_result1, :some_result2]
+                              to_result: %i[some_result1 some_result2]
         @allocation = described_class.new @index, combinations
         @allocation.instance_variable_set :@score, :some_score
       end
@@ -161,7 +161,7 @@ describe Picky::Query::Allocation do
 
           @allocation.process! 20, 0
 
-          @allocation.to_result.should == [:some_result_identifier, :some_score, 3, [:some_result1, :some_result2],
+          @allocation.to_result.should == [:some_result_identifier, :some_score, 3, %i[some_result1 some_result2],
                                            [1, 2, 3]]
         end
       end

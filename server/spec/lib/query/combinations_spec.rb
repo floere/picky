@@ -19,7 +19,7 @@ describe Picky::Query::Combinations do
       @combinations = described_class.new @combinations_ary
     end
     it 'resultifies the combinations' do
-      @combinations.to_result.should == [:result1, :result2]
+      @combinations.to_result.should == %i[result1 result2]
     end
   end
 

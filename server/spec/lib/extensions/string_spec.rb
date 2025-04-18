@@ -364,7 +364,7 @@ describe String do
         @str.each_subtoken do |subtoken|
           result << subtoken
         end
-        result.should == [:日本語, :日本, :日]
+        result.should == %i[日本語 日本 日]
       end
     end
     context 'very short String' do

@@ -21,10 +21,10 @@ describe Picky::Bundle do
       bundle.add_similarity :dargon
     end
     it 'returns the right similars (including itself)' do
-      bundle.similar(:dragon).should == [:dargon, :dragon]
+      bundle.similar(:dragon).should == %i[dargon dragon]
     end
     it 'returns the right similars' do
-      bundle.similar(:trkn).should == [:dargon, :dragon]
+      bundle.similar(:trkn).should == %i[dargon dragon]
     end
     it 'performs' do
       performance_of { bundle.similar(:dragon) }.should < 0.000075

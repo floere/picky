@@ -190,7 +190,7 @@ describe Picky::Bundle do
 
         @bundle.add 1, :thing
 
-        @bundle.realtime.should == { 1 => [:title, :thing], 2 => [:other] }
+        @bundle.realtime.should == { 1 => %i[title thing], 2 => [:other] }
       end
       it 'works correctly' do
         @bundle.add 1, :title

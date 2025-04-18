@@ -6,7 +6,7 @@ IndexingIndex = Picky::Index.new(:special_indexing) do
   indexing removes_characters: /[^äöüd-zD-Z0-9\s\/\-"&.]/i, # a-c, A-C are removed
            splits_text_on: /[\s\/\-"&\/]/
   category :title,
-           qualifiers: [:t, :title, :titre],
+           qualifiers: %i[t title titre],
            partial: Picky::Partial::Substring.new(from: 1),
            similarity: Picky::Similarity::DoubleMetaphone.new(2)
 end

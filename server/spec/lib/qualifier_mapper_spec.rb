@@ -5,8 +5,8 @@ describe Picky::QualifierMapper do
     index      = Picky::Index.new :test
     categories = Picky::Categories.new
     @category1 = categories << Picky::Category.new(:category1, index, qualifiers: %w[t1 tt1 ttt1])
-    @category2 = categories << Picky::Category.new(:category2, index, qualifiers: [:t2, :tt2, :ttt2])
-    @category3 = categories << Picky::Category.new(:category3, index, qualifiers: [:t3, :tt3, :ttt3])
+    @category2 = categories << Picky::Category.new(:category2, index, qualifiers: %i[t2 tt2 ttt2])
+    @category3 = categories << Picky::Category.new(:category3, index, qualifiers: %i[t3 tt3 ttt3])
     categories
   end
   let(:mapper) { described_class.new categories }

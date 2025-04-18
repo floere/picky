@@ -12,5 +12,5 @@ end
 ISBNEachIndex = Picky::Index.new :isbn_each do
   key_format :to_i
   source   [ISBN.new('ABC'), ISBN.new('DEF')]
-  category :isbn, qualifiers: [:i, :isbn], key_format: :to_s
+  category :isbn, qualifiers: %i[i isbn], key_format: :to_s
 end

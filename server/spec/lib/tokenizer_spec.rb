@@ -31,10 +31,10 @@ describe Picky::Tokenizer do
       }, case_sensitive: true
     }
     it 'rejects tokens with length < 2' do
-      tokenizer.reject([:'', :a, :ab, :abc]).should == [:ab, :abc]
+      tokenizer.reject([:'', :a, :ab, :abc]).should == %i[ab abc]
     end
     it 'rejects tokens that are called :hello' do
-      tokenizer.reject([:hel, :hell, :hello]).should == [:hel, :hell]
+      tokenizer.reject(%i[hel hell hello]).should == %i[hel hell]
     end
     describe 'to_s' do
       it 'spits out the right text' do

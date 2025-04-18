@@ -15,7 +15,7 @@ describe 'Search#only' do
     index.add thing.new(2, 'some name', 'some title', 'some text')
 
     try = Picky::Search.new index do
-      only [:author, :text],
+      only %i[author text],
            [:text]
     end
 
@@ -82,8 +82,8 @@ describe 'Search#only' do
     #
     performance_of { try.search('some some') }.should
 
-    try.only [:author, :text],
-             [:text, :text]
+    try.only %i[author text],
+             %i[text text]
 
     # Much faster.
     #

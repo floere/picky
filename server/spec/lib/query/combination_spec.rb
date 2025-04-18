@@ -34,9 +34,9 @@ describe Picky::Query::Combination do
       end
     end
     it 'should return a correct result' do
-      @token.stub to_result: [:some_original_text, :some_text]
+      @token.stub to_result: %i[some_original_text some_text]
 
-      @combination.to_result.should == [:some_category_name, :some_original_text, :some_text]
+      @combination.to_result.should == %i[some_category_name some_original_text some_text]
     end
   end
 

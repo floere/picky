@@ -6,10 +6,10 @@ describe 'Multi Index Qualifiers' do
   it 'resolves the same qualifier to different categories on each index' do
     people = Picky::Index.new :people do
       category :title
-      category :name, qualifiers: [:name, :last_name]
+      category :name, qualifiers: %i[name last_name]
     end
     books = Picky::Index.new :books do
-      category :title, qualifiers: [:title, :name]
+      category :title, qualifiers: %i[title name]
       category :subtitle
     end
 

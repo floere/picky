@@ -15,7 +15,7 @@ describe Picky::Category do
     @category = described_class.new :some_name, @index, partial: @partial_strategy,
                                                         weight: @weight_strategy,
                                                         similarity: @similarity_strategy,
-                                                        qualifiers: [:q, :qualifier]
+                                                        qualifiers: %i[q qualifier]
 
     @category.stub :exclaim
   end

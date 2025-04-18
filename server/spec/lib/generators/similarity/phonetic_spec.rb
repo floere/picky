@@ -32,57 +32,57 @@ describe Picky::Generators::Similarity::Phonetic do
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 2
 
-      ary = [:a, :b, :c]
+      ary = %i[a b c]
       phonetic.prioritize ary, :b
 
-      ary.should == [:b, :a]
+      ary.should == %i[b a]
     end
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 2
 
-      ary = [:aaa, :aa, :aaaa]
+      ary = %i[aaa aa aaaa]
       phonetic.prioritize ary, :aaa
 
-      ary.should == [:aaa, :aa]
+      ary.should == %i[aaa aa]
     end
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 3
 
-      ary = [:aaa, :aa, :aaaa]
+      ary = %i[aaa aa aaaa]
       phonetic.prioritize ary, :aaa
 
-      ary.should == [:aaa, :aa, :aaaa]
+      ary.should == %i[aaa aa aaaa]
     end
     it 'sorts correctly' do
-      ary = [:aaa, :aaaaaa, :aa]
+      ary = %i[aaa aaaaaa aa]
 
       ary.sort_by_levenshtein! :aaaaa
 
-      ary.should == [:aaaaaa, :aaa, :aa]
+      ary.should == %i[aaaaaa aaa aa]
     end
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 3
 
-      ary = [:aaaaaa, :aa, :a]
+      ary = %i[aaaaaa aa a]
       phonetic.prioritize ary, :aaa
 
-      ary.should == [:aa, :a, :aaaaaa]
+      ary.should == %i[aa a aaaaaa]
     end
     it 'sorts correctly (longer first)' do
       phonetic.instance_variable_set :@amount, 3
 
-      ary = [:aaaaa, :aaa, :a]
+      ary = %i[aaaaa aaa a]
       phonetic.prioritize ary, :aaa
 
-      ary.should == [:aaa, :aaaaa, :a]
+      ary.should == %i[aaa aaaaa a]
     end
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 3
 
-      ary = [:aaaaa, :aa]
+      ary = %i[aaaaa aa]
       phonetic.prioritize ary, :aaa
 
-      ary.should == [:aa, :aaaaa]
+      ary.should == %i[aa aaaaa]
     end
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 3
@@ -95,7 +95,7 @@ describe Picky::Generators::Similarity::Phonetic do
     it 'sorts correctly' do
       phonetic.instance_variable_set :@amount, 1
 
-      ary = [:a, :aa, :aaa]
+      ary = %i[a aa aaa]
       phonetic.prioritize ary, :aaa
 
       ary.should == [:aaa]

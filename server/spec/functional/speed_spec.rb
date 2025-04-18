@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'Speccing Ruby for speed' do
   describe 'various versions for allocation id concatenating – with symbols' do
     before(:each) do
-      @allocs = [:hello, :speed, :test]
+      @allocs = %i[hello speed test]
       @ids = {
         hello: (:'000_001'..:'100_000').to_a,
         speed: (:'0_001'..:'5_000').to_a,
@@ -49,7 +49,7 @@ describe 'Speccing Ruby for speed' do
   end
   describe 'various versions for allocation id concatenating – with integers' do
     before(:each) do
-      @allocs = [:hello, :speed, :test]
+      @allocs = %i[hello speed test]
       @ids = {
         hello: (1..100_000).to_a,
         speed: (1..5_000).to_a,

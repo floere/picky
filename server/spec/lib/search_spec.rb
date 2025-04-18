@@ -26,12 +26,12 @@ describe Picky::Search do
   describe 'boost' do
     let(:search) do
       described_class.new do
-        boost [:a, :b] => +3,
-              [:c, :d] => -1
+        boost %i[a b] => +3,
+              %i[c d] => -1
       end
     end
     it 'works' do
-      search.boosts.should == Picky::Query::Boosts.new([:a, :b] => 3, [:c, :d] => -1)
+      search.boosts.should == Picky::Query::Boosts.new(%i[a b] => 3, %i[c d] => -1)
     end
   end
 
@@ -71,12 +71,12 @@ describe Picky::Search do
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
     it 'handles :weights options when not yet wrapped' do
-      search = described_class.new do boost [:a, :b] => +3 end
+      search = described_class.new do boost %i[a b] => +3 end
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
     it 'handles :weights options when already wrapped' do
-      search = described_class.new do boost Picky::Query::Boosts.new([:a, :b] => +3) end
+      search = described_class.new do boost Picky::Query::Boosts.new(%i[a b] => +3) end
 
       search.boosts.should be_kind_of(Picky::Query::Boosts)
     end
@@ -177,7 +177,7 @@ describe Picky::Search do
     end
     context 'with weights' do
       before(:each) do
-        @search = described_class.new @index do boost [:a, :b] => +3 end
+        @search = described_class.new @index do boost %i[a b] => +3 end
       end
       it 'works correctly' do
         @search.to_s.should == 'Picky::Search(some_index, boosts: Picky::Query::Boosts({[:a, :b]=>3}))'

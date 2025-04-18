@@ -19,7 +19,7 @@ describe Picky do
       #{ruby} -I #{load_path} -r picky -e "puts 'OK'"
     COMMAND
 
-    response = IO.popen(simple_load, err: [:child, :out])
+    response = IO.popen(simple_load, err: %i[child out])
     expect(response.readlines.last.chomp).to eq 'OK'
   end
 end

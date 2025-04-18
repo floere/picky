@@ -83,18 +83,18 @@ module Picky
     #
     # TODO Rewrite it such that this does not need to be maintained separately (and gets available options automatically).
     #
-    @@known_keys = [
-      :hints,
-      :indexing,
-      :partial,
-      :qualifier,
-      :qualifiers,
-      :ranging,
-      :similarity,
-      :source,
-      :tokenize,
-      :tokenizer,
-      :weight,
+    @@known_keys = %i[
+      hints
+      indexing
+      partial
+      qualifier
+      qualifiers
+      ranging
+      similarity
+      source
+      tokenize
+      tokenizer
+      weight
     ]
     def warn_if_unknown(options)
       if options && (options.keys - @@known_keys).size > 0

@@ -19,8 +19,8 @@ require_relative 'project'
 class BookSearch < Sinatra::Application
   weights = {
     [:author] => +6,
-    [:title, :author] => +5,
-    [:author, :year] => +2
+    %i[title author] => +5,
+    %i[author year] => +2
   }
 
   {

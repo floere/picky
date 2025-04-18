@@ -3,19 +3,19 @@ require 'spec_helper'
 describe Picky::Query::Boosts do
   context 'with boosts' do
     let(:boosts) do
-      described_class.new [:test1, :test2] => 6,
+      described_class.new %i[test1 test2] => 6,
                           [:test1] => 5,
                           [:test3] => 3,
-                          [:test3, :test2] => 4,
-                          [:test1, :test4] => 5,
-                          [:test4, :test1] => 5,
-                          [:test4, :test1, :test2] => 4,
-                          [:test1, :test4, :test2] => 4,
-                          [:test4, :test5] => 3,
-                          [:test5, :test1] => 2,
-                          [:test1, :test5] => 2,
-                          [:test3, :test1] => 2,
-                          [:test1, :test3] => 2
+                          %i[test3 test2] => 4,
+                          %i[test1 test4] => 5,
+                          %i[test4 test1] => 5,
+                          %i[test4 test1 test2] => 4,
+                          %i[test1 test4 test2] => 4,
+                          %i[test4 test5] => 3,
+                          %i[test5 test1] => 2,
+                          %i[test1 test5] => 2,
+                          %i[test3 test1] => 2,
+                          %i[test1 test3] => 2
     end
 
     describe 'boost_for' do
@@ -41,19 +41,19 @@ describe Picky::Query::Boosts do
       end
     end
 
-    it_should_return_a_specific_boost_for [:test1, :test2],         6
+    it_should_return_a_specific_boost_for %i[test1 test2],         6
     it_should_return_a_specific_boost_for [:test1],                 5
-    it_should_return_a_specific_boost_for [:test1, :test3],         2
+    it_should_return_a_specific_boost_for %i[test1 test3],         2
     it_should_return_a_specific_boost_for [:test3],                 3
-    it_should_return_a_specific_boost_for [:test3, :test2],         4
-    it_should_return_a_specific_boost_for [:test1, :test4],         5
-    it_should_return_a_specific_boost_for [:test4, :test1],         5
-    it_should_return_a_specific_boost_for [:test4, :test1, :test2], 4
-    it_should_return_a_specific_boost_for [:test1, :test4, :test2], 4
-    it_should_return_a_specific_boost_for [:test4, :test5],         3
-    it_should_return_a_specific_boost_for [:test5, :test1],         2
-    it_should_return_a_specific_boost_for [:test1, :test5],         2
-    it_should_return_a_specific_boost_for [:test3, :test1],         2
+    it_should_return_a_specific_boost_for %i[test3 test2],         4
+    it_should_return_a_specific_boost_for %i[test1 test4],         5
+    it_should_return_a_specific_boost_for %i[test4 test1],         5
+    it_should_return_a_specific_boost_for %i[test4 test1 test2], 4
+    it_should_return_a_specific_boost_for %i[test1 test4 test2], 4
+    it_should_return_a_specific_boost_for %i[test4 test5],         3
+    it_should_return_a_specific_boost_for %i[test5 test1],         2
+    it_should_return_a_specific_boost_for %i[test1 test5],         2
+    it_should_return_a_specific_boost_for %i[test3 test1],         2
 
     describe 'to_s' do
       it 'is correct' do

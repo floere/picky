@@ -61,19 +61,19 @@ describe Picky::Query::Allocations do
     end
     context 'symbols' do
       before(:each) do
-        @allocation1 = double :allocation1, ids: [:a, :b, :c, :d]
-        @allocation2 = double :allocation2, ids: [:e, :f, :g]
-        @allocation3 = double :allocation3, ids: [:h, :i]
+        @allocation1 = double :allocation1, ids: %i[a b c d]
+        @allocation2 = double :allocation2, ids: %i[e f g]
+        @allocation3 = double :allocation3, ids: %i[h i]
         @allocations = described_class.new [@allocation1, @allocation2, @allocation3]
       end
       it 'should return the right amount of ids' do
         @allocations.ids(0).should == []
       end
       it 'should return the right amount of ids' do
-        @allocations.ids(6).should == [:a, :b, :c, :d, :e, :f]
+        @allocations.ids(6).should == %i[a b c d e f]
       end
       it 'should return the right amount of ids' do
-        @allocations.ids.should == [:a, :b, :c, :d, :e, :f, :g, :h, :i]
+        @allocations.ids.should == %i[a b c d e f g h i]
       end
     end
   end
@@ -299,7 +299,7 @@ describe Picky::Query::Allocations do
         @allocations = described_class.new [@allocation, @no_result_allocation, @allocation]
       end
       it 'should forward to each allocation with the same params' do
-        @allocations.to_result.should == [:some_result, :some_result]
+        @allocations.to_result.should == %i[some_result some_result]
       end
     end
   end

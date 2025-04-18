@@ -47,7 +47,7 @@ describe 'ignoring allocations/categories' do
     index.add thing.new(2, 'some name', 'some title', 'some text')
 
     try = Picky::Search.new index do
-      ignore [:author, :text],
+      ignore %i[author text],
              [:text]
     end
 

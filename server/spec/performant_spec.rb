@@ -57,25 +57,25 @@ describe Performant::Array do
 
   describe 'memory_efficient_intersect with symbols' do
     it 'should intersect empty arrays correctly' do
-      arys = [[:c, :d], [:a, :b, :c], []]
+      arys = [%i[c d], %i[a b c], []]
 
       Performant::Array.memory_efficient_intersect(arys).should == []
     end
     it 'should handle intermediate empty results correctly' do
-      arys = [[:e, :d], [:a, :b, :c], [:c, :d, :e, :h, :i]]
+      arys = [%i[e d], %i[a b c], %i[c d e h i]]
 
       Performant::Array.memory_efficient_intersect(arys).should == []
     end
     it 'should intersect correctly' do
-      arys = [[:c, :d], [:a, :b, :c], [:c, :d, :e, :h, :i]]
+      arys = [%i[c d], %i[a b c], %i[c d e h i]]
 
       Performant::Array.memory_efficient_intersect(arys).should == [:c]
     end
     it 'should intersect many arrays' do
-      arys = [[:c, :d, :e, :f, :g], [:a, :b, :c, :e, :f, :g], [:c, :d, :e, :f, :g, :h, :i],
-              [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j], [:b, :c, :e, :f, :g, :s], [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j], [:b, :c, :e, :f, :g, :s]]
+      arys = [%i[c d e f g], %i[a b c e f g], %i[c d e f g h i],
+              %i[a b c d e f g h i j], %i[b c e f g s], %i[a b c d e f g h i j], %i[b c e f g s]]
 
-      Performant::Array.memory_efficient_intersect(arys).should == [:c, :e, :f, :g]
+      Performant::Array.memory_efficient_intersect(arys).should == %i[c e f g]
     end
     it 'should be optimal for 2 small arrays of 50/10_000' do
       arys = [(:'1'..:'50').to_a, (:'10_000'..:'20_000').to_a]
