@@ -20,7 +20,7 @@ module Picky
           weight = bundle.weight str_or_sym(text)
           weight && (weight + (sum || 0)) || sum
         end
-      elsif tokenizer && tokenizer.stemmer?
+      elsif tokenizer&.stemmer?
         bundle.weight str_or_sym(token.stem(tokenizer))
       else
         bundle.weight str_or_sym(token.text)
@@ -43,7 +43,7 @@ module Picky
           ids = bundle.ids str_or_sym(text)
           ids.empty? ? result : result << ids
         end.flatten
-      elsif tokenizer && tokenizer.stemmer?
+      elsif tokenizer&.stemmer?
         # Optimization
         bundle.ids str_or_sym(token.stem(tokenizer))
       else

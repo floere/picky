@@ -175,11 +175,11 @@ module Picky
     def to_tree_s(indent = 0, &block)
       s = <<~TREE
         #{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
-        #{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block && block.call(inverted)}
-        #{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block && block.call(weights)}
-        #{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block && block.call(similarity)}
-        #{' ' * indent}    Realtime(#{realtime.size})[#{backend_realtime}]#{block && block.call(realtime)}
-        #{' ' * indent}    Configur(#{configuration.size})[#{backend_configuration}]#{block && block.call(configuration)}
+        #{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block&.call(inverted)}
+        #{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block&.call(weights)}
+        #{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block&.call(similarity)}
+        #{' ' * indent}    Realtime(#{realtime.size})[#{backend_realtime}]#{block&.call(realtime)}
+        #{' ' * indent}    Configur(#{configuration.size})[#{backend_configuration}]#{block&.call(configuration)}
       TREE
       s.chomp
     end

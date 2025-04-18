@@ -182,8 +182,6 @@ Style/MutableConstant:
 # AllowedMethods: present?, blank?, presence, try, try!
 Style/SafeNavigation:
   Exclude:
-    - 'lib/picky/bundle.rb'
-    - 'lib/picky/category_indexed.rb'
     - 'lib/picky/extensions/string.rb'
     - 'lib/picky/extensions/symbol.rb'
 
