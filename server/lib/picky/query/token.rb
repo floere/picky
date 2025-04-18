@@ -296,16 +296,17 @@ module Picky
         end
       end
 
+      mattr_reader :qualifier_text_delimiter
+      mattr_reader :qualifiers_delimiter
+
+      mattr_accessor :qualifier_text_splitter
+      mattr_accessor :qualifiers_splitter
+
       # Splits text into a qualifier and text.
       #
-      @@qualifier_text_delimiter = /:/
-      @@qualifiers_delimiter     = /,/
-      # TODO: Think about making these instances.
-      @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
-      @@qualifiers_splitter      = Splitter.new @@qualifiers_delimiter
       def qualify
-        @qualifiers, @text = @@qualifier_text_splitter.single @text
-        @qualifiers = @@qualifiers_splitter.multi @qualifiers if @qualifiers
+        @qualifiers, @text = self.class.qualifier_text_splitter.single(@text)
+        @qualifiers = self.class.qualifiers_splitter.multi(@qualifiers) if @qualifiers
       end
 
       # Define a regexp which separates the qualifier
@@ -318,9 +319,11 @@ module Picky
       #   try.search("text1?hello text2?world").ids.should == [1]
       #
       def self.qualifier_text_delimiter=(character)
-        @@qualifier_text_delimiter = character
-        @@qualifier_text_splitter  = Splitter.new @@qualifier_text_delimiter
+        @qualifier_text_delimiter = character
+        self.qualifier_text_splitter = Splitter.new(@qualifier_text_delimiter)
       end
+      self.qualifier_text_delimiter = /:/
+
       # Define a regexp which separates the qualifiers
       # (before the search text).
       #
@@ -330,11 +333,11 @@ module Picky
       #   Picky::Query::Token.qualifiers_delimiter = /|/
       #   try.search("text1|text2:hello").ids.should == [1]
       #
-
       def self.qualifiers_delimiter=(character)
-        @@qualifiers_delimiter = character
-        @@qualifiers_splitter  = Splitter.new @@qualifiers_delimiter
+        @qualifiers_delimiter = character
+        self.qualifiers_splitter = Splitter.new(@qualifiers_delimiter)
       end
+      self.qualifiers_delimiter = /,/
 
       # Returns the qualifiers as an array.
       #
