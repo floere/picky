@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Generators::Similarity::Soundex do
-
   before(:each) do
     @similarity = described_class.new
   end
@@ -23,5 +22,4 @@ describe Picky::Generators::Similarity::Soundex do
   it_should_encode :meier,       :M600
   it_should_encode :grossberger, :G621
   it_should_encode :hadelbla,    :H341
-
 end

@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'Picky::Generators::Partial::Default' do
-  
   let(:default) { Picky::Generators::Partial::Default }
-  
+
   it 'should be a subtoken' do
     default.should be_kind_of(Picky::Generators::Partial::Substring)
   end
@@ -13,5 +12,4 @@ describe 'Picky::Generators::Partial::Default' do
   it 'should be a the right starting at' do
     default.to.should == -1
   end
-  
 end

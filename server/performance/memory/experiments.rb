@@ -13,7 +13,6 @@ index = Picky::Index.new(:index) do
 end
 
 klass = Class.new do
-
   attr_reader :id
   attr_reader :name
 
@@ -21,7 +20,6 @@ klass = Class.new do
     @id = id
     @name = name
   end
-
 end
 
 puts ['symbol count', Symbol.all_symbols.count]

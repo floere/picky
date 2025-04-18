@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Query::Allocation do
-
   before(:each) do
     @backend      = double :backend, empty_array: []
     @index        = double :index, result_identifier: :some_result_identifier, backend: @backend
@@ -104,7 +103,7 @@ describe Picky::Query::Allocation do
       end
     end
   end
-  
+
   describe 'subject' do
     before(:each) do
       @allocation.stub calculate_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -162,7 +161,8 @@ describe Picky::Query::Allocation do
 
           @allocation.process! 20, 0
 
-          @allocation.to_result.should == [:some_result_identifier, :some_score, 3, [:some_result1, :some_result2], [1, 2, 3]]
+          @allocation.to_result.should == [:some_result_identifier, :some_score, 3, [:some_result1, :some_result2],
+                                           [1, 2, 3]]
         end
       end
     end
@@ -249,5 +249,4 @@ describe Picky::Query::Allocation do
       @allocation.ids.should == :some_sliced_ids
     end
   end
-
 end

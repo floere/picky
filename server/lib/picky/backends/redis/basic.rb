@@ -1,7 +1,6 @@
 module Picky
   module Backends
     class Redis
-      
       EMPTY_ARRAY = Array.new
 
       # Redis Backend Accessor.
@@ -25,7 +24,7 @@ module Picky
           @initial  = options[:initial]
           @realtime = options[:realtime]
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -67,8 +66,6 @@ module Picky
           self
         end
 
-        #
-        #
         def to_s
           "#{self.class}(#{namespace}:*)"
         end

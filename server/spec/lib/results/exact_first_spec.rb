@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Results::ExactFirst do
-
   before(:each) do
     @exact    = double :exact
     @partial  = double :partial
@@ -106,5 +105,4 @@ describe Picky::Results::ExactFirst do
       end
     end
   end
-
 end

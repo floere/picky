@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Indexers::Base do
-
   let(:some_index_or_category) { double :some_index_or_category, name: 'some_index_or_category' }
   let(:indexer) { described_class.new some_index_or_category }
 
@@ -49,5 +48,4 @@ describe Picky::Indexers::Base do
       indexer.prepare categories
     end
   end
-
 end

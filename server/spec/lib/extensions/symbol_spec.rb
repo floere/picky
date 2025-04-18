@@ -1,13 +1,12 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Symbol do
-
   context 'performance' do
     include Picky::Helpers::Measuring
     before(:each) do
-      @token = (((0..9).to_a)*10).to_s.to_sym
+      @token = (((0..9).to_a) * 10).to_s.to_sym
     end
     it 'is fast' do
       performance_of { @token.each_subtoken { |subtoken| } }.should < 0.001
@@ -158,7 +157,7 @@ describe Symbol do
       context 'with min_length > sym.size' do
         it 'yields the right elements' do
           result = []
-          @sym.each_intoken(@sym.size+1) do |subtoken|
+          @sym.each_intoken(@sym.size + 1) do |subtoken|
             result << subtoken
           end
           result.should == []
@@ -166,7 +165,7 @@ describe Symbol do
         context 'max_length == 0' do
           it 'yields the right elements' do
             result = []
-            @sym.each_intoken(@sym.size+1, 0) do |subtoken|
+            @sym.each_intoken(@sym.size + 1, 0) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -175,7 +174,7 @@ describe Symbol do
         context 'max_length == 1' do
           it 'yields the right elements' do
             result = []
-            @sym.each_intoken(@sym.size+1, 1) do |subtoken|
+            @sym.each_intoken(@sym.size + 1, 1) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -184,7 +183,7 @@ describe Symbol do
         context 'max_length == 2' do
           it 'yields the right elements' do
             result = []
-            @sym.each_intoken(@sym.size+1, 2) do |subtoken|
+            @sym.each_intoken(@sym.size + 1, 2) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -193,7 +192,7 @@ describe Symbol do
         context 'max_length == 10' do
           it 'yields the right elements' do
             result = []
-            @sym.each_intoken(@sym.size+1, 10) do |subtoken|
+            @sym.each_intoken(@sym.size + 1, 10) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -202,7 +201,7 @@ describe Symbol do
         context 'max_length == -1' do
           it 'yields the right elements' do
             result = []
-            @sym.each_intoken(@sym.size+1, -1) do |subtoken|
+            @sym.each_intoken(@sym.size + 1, -1) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -504,5 +503,4 @@ describe Symbol do
       end
     end
   end
-
 end

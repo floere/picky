@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 module Picky
   # Defines tokenizing processes used both in indexing and querying.
   #
@@ -23,37 +23,37 @@ module Picky
     def self.searching
       @searching ||= new
     end
-    
+
     def self.from(thing, index_name = nil, category_name = nil)
       return unless thing
-        
+
       if thing.respond_to? :tokenize
         thing
       else
         if thing.respond_to? :[]
           Picky::Tokenizer.new thing
         else
-          raise <<-ERROR
-indexing options #{identifier_for(index_name, category_name)}should be either
-* a Hash
-or
-* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
-ERROR
+          raise <<~ERROR
+            indexing options #{identifier_for(index_name, category_name)}should be either
+            * a Hash
+            or
+            * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+          ERROR
         end
       end
     end
 
     def to_s
       reject_condition_location = @reject_condition.to_s[/:(\d+) \(lambda\)/, 1]
-      <<-TOKENIZER
-Removes characters: #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
-Stopwords:          #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
-Splits text on:     #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
-Normalizes words:   #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
-Rejects tokens?     #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
-Substitutes chars?  #{@substituter ? "Yes, using #{@substituter}." : '-' }
-Stems?              #{@stemmer ? "Yes, using #{@stemmer}." : '-' }
-Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
+      <<~TOKENIZER
+        Removes characters: #{@removes_characters_regexp ? "/#{@removes_characters_regexp.source}/" : '-'}
+        Stopwords:          #{@remove_stopwords_regexp ? "/#{@remove_stopwords_regexp.source}/" : '-'}
+        Splits text on:     #{@splits_text_on.respond_to?(:source) ? "/#{@splits_text_on.source}/" : (@splits_text_on ? @splits_text_on : '-')}
+        Normalizes words:   #{@normalizes_words_regexp_replaces ? @normalizes_words_regexp_replaces : '-'}
+        Rejects tokens?     #{reject_condition_location ? "Yes, see line #{reject_condition_location} in app/application.rb" : '-'}
+        Substitutes chars?  #{@substituter ? "Yes, using #{@substituter}." : '-'}
+        Stems?              #{@stemmer ? "Yes, using #{@stemmer}." : '-'}
+        Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
       TOKENIZER
     end
 
@@ -74,6 +74,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     def remove_non_single_stopwords(text)
       return text unless @remove_stopwords_regexp
       return text if text.match @@non_single_stopword_regexp
+
       remove_stopwords text
     end
 
@@ -100,11 +101,12 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     def splits_text_on(thing)
       raise ArgumentError.new "#{__method__} takes a Regexp or a thing that responds to #split as argument, not a #{thing.class}." unless Regexp === thing || thing.respond_to?(:split)
+
       @splits_text_on = if thing.respond_to? :split
-        thing
-      else
-        RegexpWrapper.new thing
-      end
+                          thing
+                        else
+                          RegexpWrapper.new thing
+                        end
     end
 
     def split(text)
@@ -122,6 +124,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     #
     def normalizes_words(regexp_replaces)
       raise ArgumentError.new "#{__method__} takes an Array of replaces as argument, not a #{regexp_replaces.class}." unless regexp_replaces.respond_to?(:to_ary) || regexp_replaces.respond_to?(:normalize_with_patterns)
+
       @normalizes_words_regexp_replaces = regexp_replaces
     end
 
@@ -150,9 +153,9 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     end
 
     def substitute_characters(text)
-      substituter?? substituter.substitute(text) : text
+      substituter? ? substituter.substitute(text) : text
     end
-    
+
     # Stems tokens with this stemmer.
     #
     def stems_with(stemmer)
@@ -160,7 +163,7 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
     end
 
     def stem(text)
-      stemmer?? stemmer.stem(text) : text
+      stemmer? ? stemmer.stem(text) : text
     end
 
     # Reject tokens after tokenizing based on the given criteria.
@@ -219,20 +222,20 @@ Case sensitive?     #{@case_sensitive ? "Yes." : "-"}
         send method_name, value unless value.nil?
       end
     rescue NoMethodError => e
-      raise <<-ERROR
-The option "#{e.name}" is not a valid option for a Picky tokenizer.
-Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
-A short overview:
-  removes_characters          /regexp/
-  stopwords                   /regexp/
-  splits_text_on              /regexp/ or "String", default /\s/
-  normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
-  rejects_token_if            Proc/lambda, default :empty?.to_proc
-  substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
-  stems_with                  Instance responds to #stem(String)
-  case_sensitive              true/false
+      raise <<~ERROR
+        The option "#{e.name}" is not a valid option for a Picky tokenizer.
+        Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
+        A short overview:
+          removes_characters          /regexp/
+          stopwords                   /regexp/
+          splits_text_on              /regexp/ or "String", default /\s/
+          normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
+          rejects_token_if            Proc/lambda, default :empty?.to_proc
+          substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
+          stems_with                  Instance responds to #stem(String)
+          case_sensitive              true/false
 
-ERROR
+      ERROR
     end
 
     def default_options
@@ -251,8 +254,10 @@ ERROR
     def tokenize(text)
       text = preprocess text.to_s # processing the text
       return empty_tokens if text.empty? # TODO blank?
+
       words = pretokenize text # splitting and preparations for tokenizing
       return empty_tokens if words.empty?
+
       tokens = tokens_for words # creating tokens / strings
       [tokens, words]
     end

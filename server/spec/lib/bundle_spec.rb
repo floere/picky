@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Bundle do
-
   before(:each) do
     @index    = Picky::Index.new :some_index
     @category = Picky::Category.new :some_category, @index
@@ -28,5 +27,4 @@ describe Picky::Bundle do
       bundle.index_path.should == 'spec/temp/index/test/some_index/some_category_some_name'
     end
   end
-
 end

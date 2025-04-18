@@ -1,12 +1,10 @@
 module Picky
   class Index
-    
     class Hints
-      
       def initialize(hints)
         @hints = check hints
       end
-      
+
       # Check if all hints are allowed
       #
       @@allowed_hints = [:no_dump]
@@ -22,7 +20,7 @@ module Picky
         end
         hints
       end
-      
+
       # Tells us if the user intends to e.g. not dump the indexes.
       #
       # E.g. hints.does?(:no_dump) # => true/false
@@ -30,8 +28,6 @@ module Picky
       def does?(hint)
         @hints.include? hint
       end
-      
     end
-    
   end
 end

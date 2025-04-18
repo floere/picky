@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Generators::Weights::Logarithmic do
-
   describe 'with defaults' do
     let(:logarithmic) { described_class.new }
 
@@ -23,7 +22,7 @@ describe Picky::Generators::Weights::Logarithmic do
       end
     end
   end
-  
+
   describe 'with constant' do
     let(:logarithmic) { described_class.new(3.5) }
 
@@ -45,5 +44,4 @@ describe Picky::Generators::Weights::Logarithmic do
       end
     end
   end
-
 end

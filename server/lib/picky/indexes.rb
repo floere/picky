@@ -42,7 +42,7 @@ module Picky
       @indexes       = []
       @index_mapping = Hash.new
     end
-    
+
     # Tries to optimize the memory usage of the indexes.
     #
     def optimize_memory(array_references = Hash.new)
@@ -83,8 +83,6 @@ module Picky
       raise %Q{Index "#{index_name}" not found. Possible indexes: "#{indexes.map(&:name).join('", "')}".}
     end
 
-    #
-    #
     def to_s
       indexes.indented_to_s
     end

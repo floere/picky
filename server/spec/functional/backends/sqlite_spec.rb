@@ -1,14 +1,14 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # Describes a Picky index that uses the SQLite backend
 # for data storage.
 #
 describe Picky::Backends::SQLite do
-
   class Book
     attr_reader :id, :title, :author
+
     def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
@@ -100,5 +100,4 @@ describe Picky::Backends::SQLite do
 
     instance_eval &its
   end
-
 end

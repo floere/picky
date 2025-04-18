@@ -16,7 +16,6 @@ describe Picky::Generators::Similarity do
           end
 
           def prioritize(ary, encoded)
-
           end
         end.new
       end
@@ -28,32 +27,32 @@ describe Picky::Generators::Similarity do
       it 'raises with a nice error message' do
         expect {
           similarity.from Object.new
-        }.to raise_error(<<-ERROR)
-Similarity options should be either
-* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
-or
-* an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
-ERROR
+        }.to raise_error(<<~ERROR)
+          Similarity options should be either
+          * for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+          or
+          * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
+        ERROR
       end
       it 'raises with a nice error message' do
         expect {
           similarity.from Object.new, 'some_index'
-        }.to raise_error(<<-ERROR)
-Similarity options for some_index should be either
-* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
-or
-* an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
-ERROR
+        }.to raise_error(<<~ERROR)
+          Similarity options for some_index should be either
+          * for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+          or
+          * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
+        ERROR
       end
       it 'raises with a nice error message' do
         expect {
           similarity.from Object.new, 'some_index', 'some_category'
-        }.to raise_error(<<-ERROR)
-Similarity options for some_index:some_category should be either
-* for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
-or
-* an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
-ERROR
+        }.to raise_error(<<~ERROR)
+          Similarity options for some_index:some_category should be either
+          * for example a Similarity::Soundex.new(n), Similarity::Metaphone.new(n), Similarity::DoubleMetaphone.new(n) etc.
+          or
+          * an object that responds to #encode(text) => encoded_text and #prioritize(array_of_encoded, encoded)
+        ERROR
       end
     end
   end

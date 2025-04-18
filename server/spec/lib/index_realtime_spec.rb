@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Index, 'Realtime API' do
-
   RealtimeThing = Struct.new :id, :text
 
   let(:index) do
@@ -30,5 +29,4 @@ describe Picky::Index, 'Realtime API' do
   it 'offers an unshift method' do
     index.unshift RealtimeThing.new(1, 'text')
   end
-
 end

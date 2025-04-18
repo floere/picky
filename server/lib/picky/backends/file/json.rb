@@ -1,7 +1,6 @@
 module Picky
   module Backends
     class File
-      
       def json *args
         JSON.new *args
       end
@@ -27,6 +26,7 @@ module Picky
         def [](key)
           length, offset = mapping[key]
           return unless length
+
           result = MultiJson.decode IO.read(cache_path, length, offset)
           result
         end
@@ -62,7 +62,7 @@ module Picky
         def dump(hash)
           offset = 0
           mapping = Hash.new
-          
+
           create_directory cache_path
           ::File.open(cache_path, 'w:utf-8') do |out_file|
             hash.each do |(key, object)|

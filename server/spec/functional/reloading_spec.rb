@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Realtime Indexing' do
-
   ReloadingBook = Struct.new(:id, :title, :author)
 
   context 'default index' do
@@ -35,5 +34,4 @@ describe 'Realtime Indexing' do
       end
     end
   end
-
 end

@@ -16,18 +16,18 @@ describe Picky::API::Tokenizer do
         end.new
       end
       it 'creates a tokenizer' do
-        object.extract_stemmer(stemmer).
-          stem('computers').should == 'comput'
+        object.extract_stemmer(stemmer)
+              .stem('computers').should == 'comput'
       end
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
         expect {
           object.extract_stemmer Object.new
-        }.to raise_error(<<-ERROR)
-The stems_with option needs a stemmer,
-which responds to #stem(text) and returns stemmed_text."
-ERROR
+        }.to raise_error(<<~ERROR)
+          The stems_with option needs a stemmer,
+          which responds to #stem(text) and returns stemmed_text."
+        ERROR
       end
     end
   end

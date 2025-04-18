@@ -34,7 +34,7 @@ module Picky
     def initialize(name, index, options = {})
       @name  = name
       @index = index
-      
+
       # TODO Move.
       #
       options[:hints] = index.hints
@@ -42,10 +42,10 @@ module Picky
       configure_from options
       configure_indexes_from options
     end
-    
+
     def configure_from(options)
       @from       = options.delete :from
-      
+
       # Instantly extracted to raise an error instantly.
       #
       @source     = Source.from options[:source], true, @index.name
@@ -60,7 +60,7 @@ module Picky
 
       @symbol_keys = options[:symbol_keys] || @index.symbol_keys # SYMBOLS.
     end
-    
+
     def symbol_keys?
       @symbol_keys
     end
@@ -69,11 +69,11 @@ module Picky
     #
     def configure_indexes_from(options)
       warn_if_unknown options
-      
+
       weights    = weights_from options
       partial    = partial_from options
       similarity = similarity_from options
-      
+
       @exact     = exact_for weights, similarity, options
       @partial   = partial_for @exact, partial, weights, options
     end
@@ -98,11 +98,11 @@ module Picky
     ]
     def warn_if_unknown(options)
       if options && (options.keys - @@known_keys).size > 0
-        warn <<-WARNING
+        warn <<~WARNING
 
-Warning: Category options #{options} for category #{name} contain an unknown option.
-         Working options are: #@@known_keys.
-WARNING
+          Warning: Category options #{options} for category #{name} contain an unknown option.
+                   Working options are: #@@known_keys.
+        WARNING
       end
     end
 
@@ -125,7 +125,7 @@ WARNING
     def partial_for(exact, partial_options, weights, options)
       # TODO Also partial.extend Bundle::Exact like in the category.
       #
-      # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance? 
+      # Instead of exact for partial, use respond_to? :exact= on eg. Partial::None, then set it on the instance?
       #
       if partial_options.respond_to?(:use_exact_for_partial?) && partial_options.use_exact_for_partial?
         Wrappers::Bundle::ExactPartial.new exact
@@ -133,13 +133,13 @@ WARNING
         Bundle.new :partial, self, weights, partial_options, Generators::Similarity::None.new, options
       end
     end
-    
+
     # Lazily create a prepared index proxy.
     #
     def prepared
       @prepared ||= Backends::Prepared::Text.new prepared_index_path
     end
-    
+
     # Indexes and loads the category.
     #
     def reindex
@@ -203,7 +203,7 @@ WARNING
       @prepared_index_file ||= Backends::Prepared::Text.new prepared_index_path
       @prepared_index_file.open &block
     end
-    
+
     def index_directory
       @index.directory
     end
@@ -217,27 +217,26 @@ WARNING
     def identifier
       :"#{@index.identifier}:#{name}"
     end
-    
+
     # Uniquely identified by index name and name.
     #
     def ==(other)
       return false unless other
+
       index_name == other.index_name &&
-      name       == other.name
+        name == other.name
     end
 
-    #
-    #
     def to_s
       "#{self.class}(#{identifier})"
     end
-    
+
     def to_tree_s(indent = 0)
-      s = <<-TREE
-#{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
-#{' ' * indent}  #{exact.to_tree_s(4)}
-#{' ' * indent}  #{partial.to_tree_s(4)}
-TREE
+      s = <<~TREE
+        #{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
+        #{' ' * indent}  #{exact.to_tree_s(4)}
+        #{' ' * indent}  #{partial.to_tree_s(4)}
+      TREE
       s.chomp
     end
   end

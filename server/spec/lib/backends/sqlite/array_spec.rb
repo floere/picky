@@ -3,7 +3,6 @@ require 'spec_helper'
 require 'sqlite3'
 
 describe Picky::Backends::SQLite::Array do
-
   context 'hash-based indexes' do
     let(:db) { described_class.new 'spec/temp/some/other/cache/path/to/file' }
 
@@ -133,5 +132,4 @@ describe Picky::Backends::SQLite::Array do
       end
     end
   end
-
 end

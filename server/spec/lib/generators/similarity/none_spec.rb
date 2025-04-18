@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Generators::Similarity::None do
-
   before(:each) do
     @similarity = described_class.new
   end
@@ -19,5 +18,4 @@ describe Picky::Generators::Similarity::None do
       @similarity.encode(:whatever).should == nil
     end
   end
-
 end

@@ -1,14 +1,14 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # Describes a Picky index that uses the Memory backend
 # for data storage.
 #
 describe Picky::Backends::Memory do
-
   class Book
     attr_reader :id, :title, :author
+
     def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
@@ -163,5 +163,4 @@ describe Picky::Backends::Memory do
       instance_eval &its_to_i
     end
   end
-
 end

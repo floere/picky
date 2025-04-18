@@ -26,9 +26,7 @@ task stats: :'stats:prepare' do
 end
 
 namespace :stats do
-
   task prepare: :application do
     require_relative '../picky/statistics'
   end
-
 end

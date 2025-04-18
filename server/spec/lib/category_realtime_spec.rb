@@ -1,13 +1,12 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Category, 'Realtime API' do
-
   Thing = Struct.new :id, :text
 
   let(:category) do
-    index    = Picky::Index.new :some_index_name
+    index = Picky::Index.new :some_index_name
     described_class.new :text, index
   end
 
@@ -40,5 +39,4 @@ describe Picky::Category, 'Realtime API' do
   it 'shrugs off no data given' do
     category.replace_from id: 1
   end
-
 end

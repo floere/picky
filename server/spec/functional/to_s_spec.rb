@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # Describes how users see often used classes when calling #to_s on them.
@@ -8,7 +8,6 @@ describe 'to_s' do
   describe 'index' do
     it 'shows an index correctly' do
       index = Picky::Index.new :test do
-      
       end
       index.to_s.should == 'Picky::Index(test, result_id: test)'
     end

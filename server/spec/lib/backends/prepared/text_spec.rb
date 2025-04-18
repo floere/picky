@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Prepared::Text do
-
   let(:text) { described_class.new 'some_cache_path' }
 
   describe 'extension' do
@@ -48,5 +47,4 @@ describe Picky::Backends::Prepared::Text do
       performance_of { text.retrieve { |id, token| } }.should < 0.00006
     end
   end
-
 end

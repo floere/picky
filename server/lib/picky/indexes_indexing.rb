@@ -17,8 +17,6 @@ module Picky
       end
     end
 
-    #
-    #
     def tokenizer
       Tokenizer.indexing
     end

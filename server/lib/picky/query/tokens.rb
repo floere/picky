@@ -5,12 +5,12 @@ module Picky
     # This class primarily handles switching through similar token constellations.
     #
     class Tokens
-      
       attr_reader :tokens, :ignore_unassigned
 
       # Basically forwards to its internal tokens array.
       #
-      forward *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each, :exit, to: :@tokens].flatten
+      forward *[Enumerable.instance_methods, :slice!, :[], :uniq!, :last, :reject!, :length, :size, :empty?, :each,
+                :exit, to: :@tokens].flatten
       each_forward :partial=,
                    to: :@tokens
 
@@ -46,7 +46,7 @@ module Picky
       def possible_combinations_in(categories)
         @tokens.inject([]) do |combinations, token|
           possible_combinations = token.possible_combinations categories
-          
+
           # Note: Optimization for ignoring tokens that allocate to nothing and
           # can be ignored.
           # For example in a special search, where "florian" is not
@@ -87,13 +87,11 @@ module Picky
       def texts
         @tokens.map(&:text)
       end
-      
-      #
-      #
+
       def ==(other)
         self.tokens == other.tokens
       end
-      
+
       # Non-destructive addition.
       #
       def +(other)

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::SQLite::DirectlyManipulable do
-
   let(:client) { double :client }
   let(:backend) { double :backend, client: client, namespace: 'some:namespace' }
   let(:array) do
@@ -61,5 +60,4 @@ describe Picky::Backends::SQLite::DirectlyManipulable do
       array.should == [1, 2]
     end
   end
-
 end

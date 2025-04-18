@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Indexes do
-
   context 'after initialize' do
     let(:indexes) { described_class.new }
     it 'has an empty mapping' do
@@ -57,5 +56,4 @@ describe Picky::Indexes do
       end
     end
   end
-
 end

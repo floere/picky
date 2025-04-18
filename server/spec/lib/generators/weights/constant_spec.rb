@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Generators::Weights::Constant do
-
   context 'default weight' do
     let(:constant) { described_class.new }
 
@@ -33,5 +32,4 @@ describe Picky::Generators::Weights::Constant do
       end
     end
   end
-
 end

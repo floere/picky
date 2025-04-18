@@ -15,7 +15,6 @@ def performance_of
 end
 
 def compare_strings
-
   s1 = []
   ObjectSpace.each_object(String) do |s|
     s1 << s
@@ -29,7 +28,6 @@ def compare_strings
   end
 
   p s2 - s1
-
 end
 
 def ram(file_name)
@@ -53,9 +51,7 @@ def runs
 end
 
 class Array
-  
   def sum
     inject(0) { |result, value| result + value }
   end
-  
 end

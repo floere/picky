@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Index do
-
   describe 'tokenizer' do
     context 'with tokenizer' do
       let(:tokenizer) { double :tokenizer, tokenize: '' }
@@ -74,10 +73,10 @@ describe Picky::Index do
           described_class.new :some_name do
             source the_source
           end
-        }.to raise_error(<<-ERROR)
-The source for some_name should respond to either the method #each or
-it can be a lambda/block, returning such a source.
-ERROR
+        }.to raise_error(<<~ERROR)
+          The source for some_name should respond to either the method #each or
+          it can be a lambda/block, returning such a source.
+        ERROR
       end
     end
   end
@@ -132,5 +131,4 @@ ERROR
       end
     end
   end
-
 end

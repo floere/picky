@@ -15,19 +15,20 @@ class Module
 
   private
 
-    def forwarding(methods, method_definition_template, error_message = nil)
-      to = extract_to_from_options methods, error_message
-      methods.each do |method|
-        method_definition = method_definition_template % { to: to, method: method }
-        module_eval method_definition, '(__FORWARDING__)', 1
-      end
+  def forwarding(methods, method_definition_template, error_message = nil)
+    to = extract_to_from_options methods, error_message
+    methods.each do |method|
+      method_definition = method_definition_template % { to: to, method: method }
+      module_eval method_definition, '(__FORWARDING__)', 1
+    end
+  end
+
+  def extract_to_from_options(args, error_message)
+    options = args.pop
+    unless options.is_a?(Hash) && to = options[:to]
+      raise ArgumentError, error_message
     end
 
-    def extract_to_from_options(args, error_message)
-      options = args.pop
-      unless options.is_a?(Hash) && to = options[:to]
-        raise ArgumentError, error_message
-      end
-      to
-    end
+    to
+  end
 end

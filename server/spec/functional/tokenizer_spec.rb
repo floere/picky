@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Tokenizer do
@@ -10,8 +10,8 @@ describe Picky::Tokenizer do
     end
     it 'works correctly' do
       tokenizer = described_class.new(normalizes_words: [[/&/, 'and']])
-      
-      # Is this really correct? Shouldn't we split after normalizing? 
+
+      # Is this really correct? Shouldn't we split after normalizing?
       #
       # Yes – we split using more information.
       #
@@ -19,8 +19,8 @@ describe Picky::Tokenizer do
     end
     it 'works correctly' do
       tokenizer = described_class.new(stopwords: /\b(and)\b/, normalizes_words: [[/&/, 'and']])
-      
-      # Is this really correct? Shouldn't we stop words after normalizing? 
+
+      # Is this really correct? Shouldn't we stop words after normalizing?
       #
       # Yes – we do stopwords using more information.
       #
@@ -58,13 +58,13 @@ describe Picky::Tokenizer do
         substitutes_characters_with: Picky::CharacterSubstituters::WestEuropean.new,
         removes_characters: /e/
       )
-      
+
       # Ä -> Ae -> A
       #
       tokenizer.tokenize('Ä ä').should == [%w[a a], %w[a a]]
     end
     it 'removes characters, then only lets through an ok sized token' do
-      tokenizer = described_class.new(rejects_token_if: ->(token){ token.size >= 5 }, removes_characters: /e/)
+      tokenizer = described_class.new(rejects_token_if: ->(token) { token.size >= 5 }, removes_characters: /e/)
       tokenizer.tokenize('hullo').should == [[], []]
       tokenizer.tokenize('hello').should == [['hllo'], ['hllo']]
     end

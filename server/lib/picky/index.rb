@@ -359,7 +359,7 @@ module Picky
 
       # One can be a normal ranged_category.
       #
-      ranged_category lat_name, radius*0.00898312, **options.merge(from: lat_from)
+      ranged_category lat_name, radius * 0.00898312, **options.merge(from: lat_from)
 
       # The other needs to adapt the radius depending on the one.
       #
@@ -374,15 +374,15 @@ module Picky
       # A degree on the 45 degree line is equal to ~222.6398 km.
       # So a km on the 45 degree line is equal to 0.01796624 degrees.
       #
-      ranged_category lng_name, radius*0.01796624, **options.merge(from: lng_from)
+      ranged_category lng_name, radius * 0.01796624, **options.merge(from: lng_from)
     end
 
     def to_stats
-      stats = <<-INDEX
-#{name} (#{self.class}):
-#{"source:            #{source}".indented_to_s}
-#{"categories:        #{categories.to_stats}".indented_to_s}
-INDEX
+      stats = <<~INDEX
+        #{name} (#{self.class}):
+        #{"source:            #{source}".indented_to_s}
+        #{"categories:        #{categories.to_stats}".indented_to_s}
+      INDEX
       stats << "result identifier: \"#{result_identifier}\"".indented_to_s unless result_identifier.to_s == name.to_s
       stats << "\n"
       stats
@@ -394,8 +394,6 @@ INDEX
       name
     end
 
-    #
-    #
     def to_s
       s = [
         name,
@@ -409,13 +407,13 @@ INDEX
     # Displays the structure as a tree.
     #
     def to_tree_s(indent = 0)
-      <<-TREE
-#{' ' * indent}Index(#{name})
-#{' ' * indent}  source: #{source.to_s[0..40]}
-#{' ' * indent}  result identifier: "#{result_identifier}"
-#{' ' * indent}  categories:
-#{' ' * indent}#{categories.to_tree_s(4)}
-TREE
+      <<~TREE
+        #{' ' * indent}Index(#{name})
+        #{' ' * indent}  source: #{source.to_s[0..40]}
+        #{' ' * indent}  result identifier: "#{result_identifier}"
+        #{' ' * indent}  categories:
+        #{' ' * indent}#{categories.to_tree_s(4)}
+      TREE
     end
   end
 end

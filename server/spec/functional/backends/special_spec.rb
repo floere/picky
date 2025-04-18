@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # To test the interface definition.
@@ -32,7 +32,7 @@ class InternalBackendInterfaceTester
   def initialize
     @hash = {}
   end
-  
+
   def empty_array
     EMPTY_ARRAY.dup
   end
@@ -65,7 +65,6 @@ class InternalBackendInterfaceTester
   #
 
   def dump(_)
-
   end
 
   def load(_)
@@ -77,9 +76,9 @@ end
 # for data storage.
 #
 describe BackendInterfaceTester do
-
   class Book
     attr_reader :id, :title, :author
+
     def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
@@ -234,5 +233,4 @@ describe BackendInterfaceTester do
       instance_eval &its_to_i
     end
   end
-
 end

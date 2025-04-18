@@ -1,31 +1,28 @@
 module Picky
-  
   module Loggers
-    
     # The verbose logger outputs little information.
     #
     class Concise < Silent
-      
       def initialize *args
         super *args
       end
-      
+
       def tokenize(*)
         progress 'T'
       end
-      
+
       def dump(*)
         progress 'D'
       end
-      
+
       def load(*)
         progress
       end
-      
+
       def progress(type = '.')
         write type
       end
-      
+
       def adapt_for_logger
         super
         def info(text)
@@ -56,9 +53,6 @@ module Picky
           output.write message
         end
       end
-      
     end
-    
   end
-  
 end

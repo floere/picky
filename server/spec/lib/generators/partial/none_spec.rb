@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Generators::Partial::None do
-  
   it 'is not saved' do
     described_class.new.saved?.should == false
   end
@@ -16,5 +15,4 @@ describe Picky::Generators::Partial::None do
       described_class.new.use_exact_for_partial?.should == true
     end
   end
-  
 end

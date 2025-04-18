@@ -1,7 +1,6 @@
 module Picky
   module Backends
     class Memory
-      
       EMPTY_ARRAY = Array.new
 
       # Base class for all memory-based index files.
@@ -17,7 +16,7 @@ module Picky
         # This file's cache file without extensions.
         #
         attr_reader :cache_file_path
-        
+
         # What hash type to use. Default: ::Hash
         #
         attr_reader :hash_type
@@ -31,7 +30,7 @@ module Picky
           @empty           = options[:empty]
           @initial         = options[:initial]
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -71,8 +70,6 @@ module Picky
           `rm -Rf #{cache_path}`
         end
 
-        #
-        #
         def to_s
           "#{self.class}(#{cache_path})"
         end

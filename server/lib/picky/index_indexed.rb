@@ -1,6 +1,4 @@
 module Picky
-  #
-  #
   class Index
     forward :load,
             :analyze,

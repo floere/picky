@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Indexes do
-
   context 'after initialize' do
     let(:indexes) { described_class.new }
     it 'has no indexes' do
@@ -56,5 +55,4 @@ describe Picky::Indexes do
     end
     it_forwards_each :clear
   end
-
 end

@@ -58,8 +58,6 @@ module Picky
           end
         end
 
-        #
-        #
         def open(&block)
           create_directory cache_path
           ::File.open cache_path, 'w:utf-8', &block

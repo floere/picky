@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 module Picky
   module Indexers
     # Uses a category to index its data.
@@ -15,9 +15,7 @@ module Picky
       #
       def process(source_for_prepare, categories, _scheduler = Scheduler.new)
         categories.each do |category|
-
           category.prepared_index_file do |file|
-
             datas = []
             result = []
             tokenizer = category.tokenizer
@@ -25,7 +23,6 @@ module Picky
             reset source_for_prepare
 
             source.harvest(category) do |*data|
-
               # Accumulate data.
               #
               datas << data
@@ -37,7 +34,6 @@ module Picky
               index_flush datas, file, result, tokenizer
 
               datas.clear
-
             end
 
             index_flush datas, file, result, tokenizer
@@ -45,13 +41,12 @@ module Picky
             yield file
           end
         end
-
       end
 
       def index_flush(datas, file, cache, tokenizer)
         comma   = ','
         newline = "\n"
-        
+
         # Optimized, therefore duplicate code.
         #
         # TODO Deoptimize?
@@ -61,6 +56,7 @@ module Picky
             tokens, _ = tokenizer.tokenize text # Note: Originals not needed.
             tokens.each do |token_text|
               next unless token_text
+
               cache << indexed_id << comma << token_text << newline
             end
           end
@@ -68,6 +64,7 @@ module Picky
           datas.each do |indexed_id, tokens|
             tokens.each do |token_text|
               next unless token_text
+
               cache << indexed_id << comma << token_text << newline
             end
           end

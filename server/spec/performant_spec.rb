@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Performant::Array do
-
   describe 'memory_efficient_intersect' do
     it 'should intersect empty arrays correctly' do
       arys = [[3, 4], [1, 2, 3], []]
@@ -23,7 +22,8 @@ describe Performant::Array do
       Performant::Array.memory_efficient_intersect(arys).should == [3, 5, 6, 7]
     end
     it 'should intersect many arrays' do
-      arys = [[3, 4, 5, 6, 7], [1, 2, 3, 5, 6, 7], [3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 3, 5, 6, 7, 19], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 3, 5, 6, 7, 19]]
+      arys = [[3, 4, 5, 6, 7], [1, 2, 3, 5, 6, 7], [3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+              [2, 3, 5, 6, 7, 19], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 3, 5, 6, 7, 19]]
 
       Performant::Array.memory_efficient_intersect(arys).should == [3, 5, 6, 7]
     end
@@ -31,7 +31,9 @@ describe Performant::Array do
       proto = Array.new(100, 3_500_000)
       arys = [proto.map { |e| rand e }, proto.map { |e| rand e }, proto.map { |e| rand e }]
 
-      Performant::Array.memory_efficient_intersect(arys).should == arys.inject(arys.shift.dup) { |total, ary| total & arys }
+      Performant::Array.memory_efficient_intersect(arys).should == arys.inject(arys.shift.dup) { |total, ary|
+        total & arys
+      }
     end
     it 'should be optimal for 2 small arrays of 50/10_000' do
       arys = [(1..50).to_a, (10_000..20_000).to_a << 7]
@@ -70,7 +72,8 @@ describe Performant::Array do
       Performant::Array.memory_efficient_intersect(arys).should == [:c]
     end
     it 'should intersect many arrays' do
-      arys = [[:c, :d, :e, :f, :g], [:a, :b, :c, :e, :f, :g], [:c, :d, :e, :f, :g, :h, :i], [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j], [:b, :c, :e, :f, :g, :s], [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j], [:b, :c, :e, :f, :g, :s]]
+      arys = [[:c, :d, :e, :f, :g], [:a, :b, :c, :e, :f, :g], [:c, :d, :e, :f, :g, :h, :i],
+              [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j], [:b, :c, :e, :f, :g, :s], [:a, :b, :c, :d, :e, :f, :g, :h, :i, :j], [:b, :c, :e, :f, :g, :s]]
 
       Performant::Array.memory_efficient_intersect(arys).should == [:c, :e, :f, :g]
     end
@@ -93,7 +96,7 @@ describe Performant::Array do
       end.should < 0.0015
     end
   end
-  
+
   describe 'memory_efficient_intersect with strings' do
     it 'should intersect empty arrays correctly' do
       arys = [%w[c d], %w[a b c], []]
@@ -111,7 +114,8 @@ describe Performant::Array do
       Performant::Array.memory_efficient_intersect(arys).should == ['c']
     end
     it 'should intersect many arrays' do
-      arys = [%w[c d e f g], %w[a b c e f g], %w[c d e f g h i], %w[a b c d e f g h i j], %w[b c e f g s], %w[a b c d e f g h i j], %w[b c e f g s]]
+      arys = [%w[c d e f g], %w[a b c e f g], %w[c d e f g h i], %w[a b c d e f g h i j], %w[b c e f g s],
+              %w[a b c d e f g h i j], %w[b c e f g s]]
 
       Performant::Array.memory_efficient_intersect(arys).should == %w[c e f g]
     end
@@ -141,5 +145,4 @@ describe Performant::Array do
       end.should < 0.0015
     end
   end
-
 end

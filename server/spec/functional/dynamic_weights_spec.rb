@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Weights' do
-
   # This tests the weights option.
   #
   it 'can handle dynamic weights' do
@@ -37,5 +36,4 @@ describe 'Weights' do
     try_with_boosts.search('text1:ohai').allocations.first.score.should  == 7.65
     try_with_boosts.search('text2:hello').allocations.first.score.should == 5.00
   end
-
 end

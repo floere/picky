@@ -16,18 +16,18 @@ describe Picky::API::Tokenizer do
         end.new
       end
       it 'creates a tokenizer' do
-        object.extract_character_substituter(substituter).
-          substitute('picky').should == '99399'
+        object.extract_character_substituter(substituter)
+              .substitute('picky').should == '99399'
       end
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
         expect {
           object.extract_character_substituter Object.new
-        }.to raise_error(<<-ERROR)
-The substitutes_characters_with option needs a character substituter,
-which responds to #substitute(text) and returns substituted_text."
-ERROR
+        }.to raise_error(<<~ERROR)
+          The substitutes_characters_with option needs a character substituter,
+          which responds to #substitute(text) and returns substituted_text."
+        ERROR
       end
     end
   end

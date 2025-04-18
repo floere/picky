@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Category do
-
   before(:each) do
     @index  = Picky::Index.new :some_index
     @source = double :some_given_source, each: nil
@@ -102,7 +101,7 @@ describe Picky::Category do
         end
       end
       context 'without explicit source' do
-        let(:category) { described_class.new(:some_category, @index.tap{ |index| index.stub source: :index_source }) }
+        let(:category) { described_class.new(:some_category, @index.tap { |index| index.stub source: :index_source }) }
         it 'returns the right source' do
           category.source.should == :index_source
         end
@@ -128,5 +127,4 @@ describe Picky::Category do
       end
     end
   end
-
 end

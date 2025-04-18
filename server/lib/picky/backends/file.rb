@@ -7,11 +7,10 @@ module Picky
     #   ...[1,2,3,21,7,4,13,15]...
     #
     class File < Backend
-      
       def create_weights(bundle, _ = nil)
         Memory::JSON.new bundle.index_path(:weights)
       end
-      
+
       def create_similarity(bundle, _ = nil)
         json bundle.index_path(:similarity)
       end

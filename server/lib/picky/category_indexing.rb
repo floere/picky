@@ -1,6 +1,4 @@
 module Picky
-  #
-  #
   class Category
     include Helpers::Indexing
 

@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Regression' do
-  
   it 'does not get confused' do
     index = Picky::Index.new :dynamic_weights do
       category :text1
@@ -59,5 +58,4 @@ describe 'Regression' do
   #     try.search("this").ids.should == ["this  that"]
   #   end
   # end
-
 end

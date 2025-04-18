@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Sinatra do
-
   let(:extendee) { Class.new {} }
 
   it 'has no Picky specific methods' do
@@ -32,5 +31,4 @@ describe Picky::Sinatra do
       extendee.send :searching, some: 'option'
     end
   end
-
 end

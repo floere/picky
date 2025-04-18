@@ -1,6 +1,4 @@
 module Picky
-  #
-  #
   class Categories
     each_forward :each_bundle, to: :categories
 

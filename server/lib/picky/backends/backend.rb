@@ -1,13 +1,10 @@
 module Picky
   module Backends
-    #
-    #
     class Backend
-      
       # This is the default behaviour and should be overridden
       # for different backends.
       #
-      
+
       # Returns an object that on #initial, #load returns
       # an object that responds to:
       #   object[:token] # => [id, id, id, id, id] (an array of ids)
@@ -63,8 +60,6 @@ module Picky
         Performant::Array.memory_efficient_intersect combinations.map { |combination| combination.ids }
       end
 
-      #
-      #
       def to_s
         self.class.name
       end

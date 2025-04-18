@@ -1,8 +1,8 @@
 # encoding: utf-8
+
 require 'spec_helper'
 
 describe Picky::Scheduler do
-
   context 'default params' do
     let(:scheduler) { described_class.new }
 
@@ -88,5 +88,4 @@ describe Picky::Scheduler do
       # end
     end
   end
-
 end

@@ -60,11 +60,13 @@ module Picky
       #
       def remove_allocations(qualifiers_array)
         return if qualifiers_array.empty?
+
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
           next(false) if qualifiers_array.any? do |qualifiers|
             allocation_qualifiers == qualifiers
           end
+
           allocation
         end
       end
@@ -77,6 +79,7 @@ module Picky
       #
       def keep_allocations(qualifiers_array)
         return if qualifiers_array.empty?
+
         @allocations.select! do |allocation|
           allocation_qualifiers = allocation.combinations.to_qualifiers.clustered_uniq
           next(true) if qualifiers_array.any? do |qualifiers|
@@ -136,6 +139,7 @@ module Picky
           end
           if terminate_early && amount <= 0
             break if terminate_early <= 0
+
             terminate_early -= 1
           end
         end
@@ -167,6 +171,7 @@ module Picky
           end
           if terminate_early && amount <= 0
             break if terminate_early <= 0
+
             terminate_early -= 1
           end
         end

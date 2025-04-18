@@ -34,7 +34,7 @@ module Picky
       def backend
         @index.backend
       end
-      
+
       # TODO
       #
       def empty_array
@@ -50,11 +50,11 @@ module Picky
       #
       def calculate_score(boosts)
         @score ||= (if @combinations.empty?
-          0 # Optimization.
-        else
-          # Note: Was @backend.score(@combinations) - indirection for maximum flexibility.
-          @combinations.score + boosts.boost_for(@combinations)
-        end)
+                      0 # Optimization.
+                    else
+                      # Note: Was @backend.score(@combinations) - indirection for maximum flexibility.
+                      @combinations.score + boosts.boost_for(@combinations)
+                    end)
       end
 
       # Ids return by default empty_array.
@@ -110,8 +110,6 @@ module Picky
         @ids   = calculated_ids.slice!(offset, amount) || backend.empty_array # slice out the relevant part
       end
 
-      #
-      #
       def remove(categories = [])
         @combinations.remove categories
       end
@@ -119,23 +117,20 @@ module Picky
       # Sort highest score first.
       #
       def <=>(other_allocation)
-         other_allocation.score <=> self.score
+        other_allocation.score <=> self.score
       end
 
       # Transform the allocation into result form.
       #
       def to_result
-        [@index.result_identifier, self.score, self.count, @combinations.to_result, self.ids] if self.count && self.count > 0
+        [@index.result_identifier, self.score, self.count, @combinations.to_result,
+         self.ids] if self.count && self.count > 0
       end
 
-      #
-      #
       def to_qualifiers
         @combinations.to_qualifiers
       end
 
-      #
-      #
       def to_s
         "Allocation(#{to_result})"
       end

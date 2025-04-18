@@ -30,7 +30,7 @@ module Picky
       @categories    = []
       @category_hash = Hash.new
     end
-    
+
     # Updates the qualifier ("qualifier:searchterm") mapping.
     #
     # Example:
@@ -41,7 +41,7 @@ module Picky
     def qualifier_mapper
       @qualifier_mapper ||= QualifierMapper.new self
     end
-    
+
     # Resets the qualifier mapper used.
     #
     def reset_qualifier_mapper
@@ -66,11 +66,11 @@ module Picky
     def raise_not_found(category_name)
       raise %Q{Index category "#{category_name}" not found. Possible categories: "#{categories.map(&:name).join('", "')}".}
     end
-    
+
     def to_stats
       map(&:name).join(', ')
     end
-    
+
     def to_tree_s(indent = 0)
       ([' ' * indent] * categories.size).zip(categories.map(&:to_tree_s)).map(&:join).join "\n"
     end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Bundle do
-
   before(:each) do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
@@ -122,7 +121,8 @@ describe Picky::Bundle do
       it 'uses the right file' do
         MultiJson.stub :decode
 
-        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_inverted.memory.json', 'r'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_inverted.memory.json',
+                                             'r'
 
         @bundle.load_inverted :anything
       end
@@ -131,7 +131,8 @@ describe Picky::Bundle do
       it 'uses the right file' do
         MultiJson.stub :decode
 
-        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_weights.memory.json', 'r'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_weights.memory.json',
+                                             'r'
 
         @bundle.load_weights :anything
       end
@@ -140,7 +141,8 @@ describe Picky::Bundle do
       it 'uses the right file' do
         Marshal.stub :load
 
-        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_similarity.memory.dump', 'r:binary'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_similarity.memory.dump',
+                                             'r:binary'
 
         @bundle.load_similarity :anything
       end
@@ -149,7 +151,8 @@ describe Picky::Bundle do
       it 'uses the right file' do
         MultiJson.stub :decode
 
-        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_configuration.memory.json', 'r'
+        File.should_receive(:open).once.with 'spec/temp/index/test/some_index/some_category_some_name_configuration.memory.json',
+                                             'r'
 
         @bundle.load_configuration
       end
@@ -181,5 +184,4 @@ describe Picky::Bundle do
       @bundle.similarity_strategy.should == :similarity
     end
   end
-
 end

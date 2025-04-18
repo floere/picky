@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::CharacterSubstituters::WestEuropean do
-
   let(:substituter) { described_class.new.tap { |s| s.substitute '' } }
 
   # A bit of metaprogramming to help with the myriads of its.
@@ -112,5 +111,4 @@ describe Picky::CharacterSubstituters::WestEuropean do
   describe 'diacritic' do
     it_should_substitute 'ñ', 'n'
   end
-
 end

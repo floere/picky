@@ -45,7 +45,7 @@ module Picky
         exclaim "\nBy default, Picky needs/loads the <Picky.root>/app.rb file as the app.\n\n"
         raise e
       end
-      
+
       # Loads the compiled C code.
       #
       # Note: Picky already tries to compile
@@ -77,9 +77,9 @@ module Picky
         load_relative 'indexers/base',
                       'indexers/serial',
                       'indexers/parallel'
-        
+
         load_relative 'generators/strategy'
-        
+
         # Partial index generation strategies.
         #
         load_relative 'generators/partial/strategy',
@@ -88,7 +88,7 @@ module Picky
                       'generators/partial/postfix',
                       'generators/partial/infix',
                       'generators/partial/default'
-        
+
         # Weight index generation strategies.
         #
         load_relative 'generators/weights/strategy',
@@ -97,7 +97,7 @@ module Picky
                       'generators/weights/constant',
                       'generators/weights/logarithmic',
                       'generators/weights/default'
-        
+
         # Similarity index generation strategies.
         #
         load_relative 'generators/similarity/strategy',
@@ -108,7 +108,7 @@ module Picky
                       'generators/similarity/soundex',
                       'generators/similarity/default'
       end
-      
+
       # Loads the index store handling.
       #
       def load_index_stores
@@ -141,7 +141,7 @@ module Picky
                       'backends/sqlite/string_key_array',
                       'backends/sqlite/integer_key_array'
       end
-      
+
       # Indexing and Indexed things.
       #
       def load_indexes
@@ -150,7 +150,7 @@ module Picky
                       'bundle_indexed',
                       'bundle_realtime'
       end
-      
+
       # Index wrappers.
       #
       def load_wrappers
@@ -162,7 +162,7 @@ module Picky
                       'wrappers/bundle/location',
                       'wrappers/bundle/exact_partial'
       end
-      
+
       # Query combinations, qualifiers, weigher.
       #
       def load_query
@@ -178,7 +178,7 @@ module Picky
         load_relative 'query/indexes',
                       'query/indexes/check'
       end
-      
+
       # Loads the internal parts of the framework.
       # (Not for the user)
       #
@@ -197,7 +197,7 @@ module Picky
         load_relative 'query/or'
         load_query
       end
-      
+
       # All things API related.
       #
       def load_api
@@ -205,24 +205,24 @@ module Picky
                       'api/tokenizer/stemmer',
                       'api/search/boost'
       end
-      
+
       def load_logging
         load_relative 'loggers/silent',
                       'loggers/concise',
                       'loggers/verbose',
                       'loggers/default'
       end
-      
+
       def load_generators
         load_relative 'generators/weights'
         load_relative 'generators/partial'
         load_relative 'generators/similarity'
         load_relative 'generators/aliases'
       end
-      
+
       def load_inner_api
         load_relative 'qualifier_mapper'
-        
+
         load_relative 'category',
                       'category_indexed',
                       'category_indexing',
@@ -239,7 +239,7 @@ module Picky
                       'indexes_indexed',
                       'indexes_indexing',
                       'indexes_convenience'
-        
+
         load_relative 'index',
                       'index_indexed',
                       'index_indexing',
@@ -247,22 +247,22 @@ module Picky
                       'index_facets',
                       'index_convenience'
       end
-      
+
       def load_results
         load_relative 'results',
                       'results/exact_first'
       end
-      
+
       def load_search
         load_relative 'search',
                       'search_facets'
       end
-      
+
       def load_interfaces
         load_relative 'interfaces/live_parameters/master_child',
                       'interfaces/live_parameters/unicorn'
       end
-      
+
       # Loads the user interface parts.
       #
       def load_user_interface

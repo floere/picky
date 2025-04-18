@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 module Picky
   module Indexers
     # Uses a number of categories, a source, and a tokenizer to index data.
@@ -26,7 +26,6 @@ module Picky
         reset source_for_prepare
 
         source_for_prepare.each do |object|
-
           # Accumulate objects.
           #
           objects << object
@@ -40,7 +39,6 @@ module Picky
           end
 
           objects.clear
-
         end
 
         # Close all files.
@@ -65,6 +63,7 @@ module Picky
           tokens, _ = tokenizer.tokenize tokens if tokenizer # Note: Originals not needed. TODO Optimize?
           tokens.each do |token_text|
             next unless token_text
+
             cache << object.send(id) << comma << token_text << newline
           end
         end

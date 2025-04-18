@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Memory do
-
   # context 'with options' do
   #   before(:each) do
   #     @backend = described_class.new inverted:      Picky::Backends::Memory::Marshal.new(:unimportant),
@@ -60,7 +59,7 @@ describe Picky::Backends::Memory do
 
       @backend.stub :timed_exclaim
     end
-  
+
     describe 'create_...' do
       [
         [:inverted,      Picky::Backends::Memory::JSON],
@@ -70,12 +69,12 @@ describe Picky::Backends::Memory do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        double(type, index_path: "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
-          ).should be_kind_of(kind)
+                        double(type,
+                               index_path: "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")).should be_kind_of(kind)
         end
       end
     end
-  
+
     describe 'ids' do
       before(:each) do
         @combination1 = double :combination1
@@ -127,5 +126,4 @@ describe Picky::Backends::Memory do
       end
     end
   end
-
 end

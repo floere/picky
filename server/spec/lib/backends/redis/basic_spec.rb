@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Redis::Basic do
-
   let(:client) { double :client }
 
   context 'without options' do
@@ -55,5 +54,4 @@ describe Picky::Backends::Redis::Basic do
       end
     end
   end
-
 end

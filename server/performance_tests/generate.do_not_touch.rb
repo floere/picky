@@ -24,7 +24,7 @@ class IndexGenerator
     size = characters.size
 
     amount.times do |i|
-      args = [i+1]
+      args = [i + 1]
       5.times do
         current = []
         length[].times do

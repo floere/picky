@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Bundle do
-
   before(:each) do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
@@ -220,5 +219,4 @@ describe Picky::Bundle do
   #     end
   #   end
   # end
-
 end

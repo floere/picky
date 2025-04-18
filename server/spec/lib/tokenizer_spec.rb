@@ -1,32 +1,35 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Tokenizer do
-
   describe 'with wrong/incorrectly spelled option' do
     it 'informs the user nicely' do
       expect {
         described_class.new rejetcs_token_if: :blank?.to_proc
-      }.to raise_error(<<-MESSAGE)
-The option "rejetcs_token_if" is not a valid option for a Picky tokenizer.
-Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
-A short overview:
-  removes_characters          /regexp/
-  stopwords                   /regexp/
-  splits_text_on              /regexp/ or "String", default /\s/
-  normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
-  rejects_token_if            Proc/lambda, default :empty?.to_proc
-  substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
-  stems_with                  Instance responds to #stem(String)
-  case_sensitive              true/false
+      }.to raise_error(<<~MESSAGE)
+        The option "rejetcs_token_if" is not a valid option for a Picky tokenizer.
+        Please see https://github.com/floere/picky/wiki/Indexing-configuration for valid options.
+        A short overview:
+          removes_characters          /regexp/
+          stopwords                   /regexp/
+          splits_text_on              /regexp/ or "String", default /\s/
+          normalizes_words            [[/replace (this)/, 'with this \\1'], ...]
+          rejects_token_if            Proc/lambda, default :empty?.to_proc
+          substitutes_characters_with Picky::CharacterSubstituter or responds to #substitute(String)
+          stems_with                  Instance responds to #stem(String)
+          case_sensitive              true/false
 
-MESSAGE
+      MESSAGE
     end
   end
 
   context 'with special instance' do
-    let (:tokenizer) { described_class.new rejects_token_if: lambda { |token| token.to_s.length < 2 || token == :hello }, case_sensitive: true }
+    let (:tokenizer) {
+      described_class.new rejects_token_if: lambda { |token|
+        token.to_s.length < 2 || token == :hello
+      }, case_sensitive: true
+    }
     it 'rejects tokens with length < 2' do
       tokenizer.reject([:'', :a, :ab, :abc]).should == [:ab, :abc]
     end
@@ -35,16 +38,16 @@ MESSAGE
     end
     describe 'to_s' do
       it 'spits out the right text' do
-        tokenizer.to_s.should == <<-EXPECTED
-Removes characters: -
-Stopwords:          -
-Splits text on:     /\\s/
-Normalizes words:   -
-Rejects tokens?     Yes, see line 29 in app/application.rb
-Substitutes chars?  -
-Stems?              -
-Case sensitive?     Yes.
-EXPECTED
+        tokenizer.to_s.should == <<~EXPECTED
+          Removes characters: -
+          Stopwords:          -
+          Splits text on:     /\\s/
+          Normalizes words:   -
+          Rejects tokens?     Yes, see line 29 in app/application.rb
+          Substitutes chars?  -
+          Stems?              -
+          Case sensitive?     Yes.
+        EXPECTED
       end
     end
   end
@@ -52,20 +55,20 @@ EXPECTED
   context 'with normal instance' do
     let(:tokenizer) { described_class.new }
 
-        describe 'to_s' do
-          it 'spits out the right text' do
-            tokenizer.to_s.should == <<-EXPECTED
-Removes characters: -
-Stopwords:          -
-Splits text on:     /\\s/
-Normalizes words:   -
-Rejects tokens?     -
-Substitutes chars?  -
-Stems?              -
-Case sensitive?     -
-EXPECTED
-          end
-        end
+    describe 'to_s' do
+      it 'spits out the right text' do
+        tokenizer.to_s.should == <<~EXPECTED
+          Removes characters: -
+          Stopwords:          -
+          Splits text on:     /\\s/
+          Normalizes words:   -
+          Rejects tokens?     -
+          Substitutes chars?  -
+          Stems?              -
+          Case sensitive?     -
+        EXPECTED
+      end
+    end
 
     describe 'rejects_token_if' do
       it 'rejects empty? tokens by default' do
@@ -83,11 +86,11 @@ EXPECTED
         tokenizer.substitute_characters('abcdefghijklmnopqrstuvwxyzäöü').should == 'abcdefghijklmnopqrstuvwxyzäöü'
       end
       it 'raises if nothing with #substitute is given' do
-        expect { tokenizer.substitutes_characters_with Object.new }.
-          to raise_error(<<-ERROR)
-The substitutes_characters_with option needs a character substituter,
-which responds to #substitute(text) and returns substituted_text."
-ERROR
+        expect { tokenizer.substitutes_characters_with Object.new }
+          .to raise_error(<<~ERROR)
+            The substitutes_characters_with option needs a character substituter,
+            which responds to #substitute(text) and returns substituted_text."
+          ERROR
       end
       it 'uses the substituter to replace characters' do
         tokenizer.substitutes_characters_with Picky::CharacterSubstituters::WestEuropean.new
@@ -118,11 +121,11 @@ ERROR
       context 'with normalizes_words called' do
         before(:each) do
           tokenizer.normalizes_words([
-            [/st\./, 'sankt'],
-            [/stras?s?e?/, 'str'],
-            [/\+/, 'plus'],
-            [/&/, 'and']
-          ])
+                                       [/st\./, 'sankt'],
+                                       [/stras?s?e?/, 'str'],
+                                       [/\+/, 'plus'],
+                                       [/&/, 'and']
+                                     ])
         end
         it 'has normalize_with_patterns' do
           expect { tokenizer.normalize_with_patterns('a b/c.d') }.to_not raise_error
@@ -337,12 +340,12 @@ ERROR
       end
     end
   end
-  
+
   context 'from' do
     context 'options hash' do
       it 'creates a tokenizer' do
-        described_class.from(splits_text_on: /\t/).
-          tokenize("hello\tworld").should == [%w[hello world], %w[hello world]]
+        described_class.from(splits_text_on: /\t/)
+                       .tokenize("hello\tworld").should == [%w[hello world], %w[hello world]]
       end
     end
     context 'tokenizer' do
@@ -354,42 +357,41 @@ ERROR
         end.new
       end
       it 'creates a tokenizer' do
-        described_class.from(tokenizer).
-          tokenize("hello\tworld").should == %w[unmoved by your texts]
+        described_class.from(tokenizer)
+                       .tokenize("hello\tworld").should == %w[unmoved by your texts]
       end
     end
     context 'invalid tokenizer' do
       it 'raises with a nice error message' do
         expect {
           described_class.from Object.new
-        }.to raise_error(<<-ERROR)
-indexing options should be either
-* a Hash
-or
-* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
-ERROR
+        }.to raise_error(<<~ERROR)
+          indexing options should be either
+          * a Hash
+          or
+          * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+        ERROR
       end
       it 'raises with a nice error message' do
         expect {
           described_class.from Object.new, 'some_index'
-        }.to raise_error(<<-ERROR)
-indexing options for some_index should be either
-* a Hash
-or
-* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
-ERROR
+        }.to raise_error(<<~ERROR)
+          indexing options for some_index should be either
+          * a Hash
+          or
+          * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+        ERROR
       end
       it 'raises with a nice error message' do
         expect {
           described_class.from Object.new, 'some_index', 'some_category'
-        }.to raise_error(<<-ERROR)
-indexing options for some_index:some_category should be either
-* a Hash
-or
-* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
-ERROR
+        }.to raise_error(<<~ERROR)
+          indexing options for some_index:some_category should be either
+          * a Hash
+          or
+          * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+        ERROR
       end
     end
   end
-
 end

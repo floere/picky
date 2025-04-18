@@ -1,10 +1,9 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 require 'ostruct'
 
 describe 'Results' do
-
   let(:index1) { Picky::Index.new :results1 }
   let(:index2) { Picky::Index.new :results2 }
   let(:try) { Picky::Search.new index1, index2 }
@@ -59,5 +58,4 @@ describe 'Results' do
     results.ids.should == [2, 1]
     results.ids.object_id.should_not == results.ids.object_id # Not cached.
   end
-
 end

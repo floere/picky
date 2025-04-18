@@ -4,7 +4,6 @@ desc 'Generate the index in parallel (index, category optional).'
 task :index, [:index, :category] => :'index:parallel'
 
 namespace :index do
-
   [:parallel, :serial].each do |kind|
     desc "Generate the index in #{kind} (index, category optional)."
     task kind, [:index, :category] => :application do |_, options|
@@ -17,5 +16,4 @@ namespace :index do
       specific.index Picky::Scheduler.new(kind => true)
     end
   end
-
 end

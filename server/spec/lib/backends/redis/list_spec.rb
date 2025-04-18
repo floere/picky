@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Redis::List do
-
   let(:client) { double :client }
   let(:index) { described_class.new client, :some_namespace }
 
@@ -23,5 +22,4 @@ describe Picky::Backends::Redis::List do
       expect(index.to_s).to eq 'Picky::Backends::Redis::List(some_namespace:*)'
     end
   end
-
 end

@@ -1,5 +1,4 @@
 module Picky
-  
   # Try is used by
   #   rake try[text,index,category]
   # to test how the text would be indexed and processed during a search.
@@ -23,11 +22,11 @@ module Picky
     end
 
     def output
-      <<-OUTPUT
-\"#{text}\" is saved in the #{specific.identifier} index as #{saved}
-\"#{text}\" as a search will be tokenized as #{searched}
+      <<~OUTPUT
+        \"#{text}\" is saved in the #{specific.identifier} index as #{saved}
+        \"#{text}\" as a search will be tokenized as #{searched}
 
-(category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')
+        (category qualifiers, e.g. title: are removed if they do not exist as a qualifier, so 'toitle:bla' -> 'bla')
       OUTPUT
     end
 

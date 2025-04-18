@@ -1,9 +1,8 @@
 # coding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Search do
-
   before(:each) do
     @type      = double :type
     @index     = double :some_index,
@@ -63,7 +62,6 @@ describe Picky::Search do
         end
       end
     end
-
   end
 
   describe 'boosts handling' do
@@ -211,5 +209,4 @@ describe Picky::Search do
       end
     end
   end
-
 end

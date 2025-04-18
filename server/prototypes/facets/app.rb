@@ -21,9 +21,7 @@ puts data[:name].exact.inverted.inject({}) { |result, token_ids|
   result
 }
 
-
 class Picky::Index
-  
   def facets(category)
     self[category].exact.inverted.inject({}) { |result, token_ids|
       token, ids = token_ids
@@ -31,7 +29,6 @@ class Picky::Index
       result
     }
   end
-  
 end
 
 puts data.facets :name

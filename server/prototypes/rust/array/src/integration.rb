@@ -1,18 +1,17 @@
-require 'fiddle'  
+require 'fiddle'
 require 'fiddle/import'
 
 module FunctionMapping
-  
   attr_reader :func_map
-  
+
   AS_OBJ = :as_obj
-  
+
   def __func__ from, external, internal, retval, *params
     class_method = external.to_s.match(/\Aself\./)
     relative = class_method ? '' : 'self.class.'
     params = class_method ? params : params.unshift(Fiddle::TYPE_VOIDP)
     # params.map! { |param| param == AS_OBJ ? Fiddle::TYPE_VOIDP : '' }
-    
+
     func = Fiddle::Function.new(
       from[internal.to_s],
       params,
@@ -20,13 +19,13 @@ module FunctionMapping
     )
     @func_map ||= {}
     @func_map[internal] = func
-    
+
     # Get the right error position.
     begin
       /^(.+?):(\d+)/ =~ caller.first
       file, line = $1, $2.to_i
     rescue
-      file, line = __FILE__, __LINE__+3
+      file, line = __FILE__, __LINE__ + 3
     end
     # Map external interface to C interface.
     module_eval(<<-EOS, file, line)
@@ -42,22 +41,21 @@ module FunctionMapping
           puts "Installing #{external}(#{params.join(',')})."
           'res = f.call(@internal_instance,*args,&block)'
         end
-        }
+      }
         #{
         if retval == AS_OBJ
           'res = self.class.from_ptr(res)'
         end
-        }
+      }
         # p res
         res
       end
     EOS
     func
   end
-  
 end
 
-module Rust  
+module Rust
   class Array
     extend FunctionMapping
 
@@ -66,11 +64,11 @@ module Rust
     def initialize(pointer = nil)
       @internal_instance = pointer || self.class.new_rust
     end
-    
+
     def to_ptr
       @internal_instance
     end
-    
+
     def self.from_ptr(pointer)
       new(pointer)
     end
@@ -79,22 +77,22 @@ module Rust
     # TODO Add RUBY_OBJECT type which automatically calls its #to_ptr.
     # TODO Add RUBY_OBJECT type which automatically calls this class' #from_ptr.
 
-    __func__ pr, :'self.new_rust', :rust_array_new,  Fiddle::TYPE_VOIDP
+    __func__ pr, :'self.new_rust', :rust_array_new, Fiddle::TYPE_VOIDP
     __func__ pr, :free, :rust_array_free, Fiddle::TYPE_VOIDP
-    
-    __func__ pr, :append,  :rust_array_append, Fiddle::TYPE_INT, Fiddle::TYPE_INT
+
+    __func__ pr, :append, :rust_array_append, Fiddle::TYPE_INT, Fiddle::TYPE_INT
     __func__ pr, :shift, :rust_array_shift, Fiddle::TYPE_INT
-    
+
     __func__ pr, :intersect, :rust_array_intersect, FunctionMapping::AS_OBJ, Fiddle::TYPE_VOIDP
     __func__ pr, :'slice!', :rust_array_slice_bang, FunctionMapping::AS_OBJ, Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T
-    
+
     __func__ pr, :first, :rust_array_first, Fiddle::TYPE_INT
     __func__ pr, :last, :rust_array_last, Fiddle::TYPE_INT
-    
+
     __func__ pr, :length, :rust_array_length, Fiddle::TYPE_INT
-    
+
     __func__ pr, :inspect, :rust_array_inspect, Fiddle::TYPE_VOIDP
-    
+
     alias << append
     alias size length
   end

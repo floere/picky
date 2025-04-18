@@ -25,7 +25,6 @@ t = Time.now
 end
 p [:exc, :include?, (Time.now … t)]
 
-
 ary = []
 add = []
 
@@ -39,7 +38,6 @@ t = Time.now
   ary + add
 end
 p ['+ []', (Time.now - t)]
-
 
 # Splitting the text should only split on the first.
 #

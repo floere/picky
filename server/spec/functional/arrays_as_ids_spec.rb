@@ -1,10 +1,9 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 require 'ostruct'
 
 describe 'Array IDs' do
-
   let(:index) { Picky::Index.new :arrays }
   let(:try) { Picky::Search.new index }
 
@@ -42,5 +41,4 @@ describe 'Array IDs' do
       %w[id1 thing1]
     ]
   end
-
 end

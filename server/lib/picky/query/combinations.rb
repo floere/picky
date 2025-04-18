@@ -47,8 +47,6 @@ module Picky
         @combinations.reject! { |combination| categories.include?(combination.category_name) }
       end
 
-      #
-      #
       def to_result
         @combinations.map &:to_result
       end
@@ -57,8 +55,6 @@ module Picky
         @combinations.map &:category_name
       end
 
-      #
-      #
       def to_s
         @combinations.to_s
       end

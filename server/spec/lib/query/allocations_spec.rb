@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Query::Allocations do
-
   describe 'reduce_to' do
     before(:each) do
       @allocation1 = double :allocation1
@@ -397,5 +396,4 @@ describe Picky::Query::Allocations do
       end
     end
   end
-
 end

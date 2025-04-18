@@ -10,9 +10,8 @@ module Picky
     #   # bundle them in an index bundle.
     #
     class Indexes
-      
       forward :size, :first, to: :@indexes
-      
+
       attr_reader :indexes,
                   :ignored_categories,
                   :ignored_allocations,
@@ -28,7 +27,7 @@ module Picky
 
         @indexes = indexes
       end
-      
+
       # Ignore the categories with the given qualifiers.
       #
       def ignore_categories *qualifiers
@@ -37,23 +36,23 @@ module Picky
         @ignored_categories += qualifiers
         @ignored_categories.uniq!
       end
-      
+
       # Ignore the allocations with the given qualifiers.
       #
       def ignore_allocations *qualifier_arrays
         @ignored_allocations ||= []
-        @ignored_allocations += qualifier_arrays #.map do |qualifier_array|
-          # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
+        @ignored_allocations += qualifier_arrays # .map do |qualifier_array|
+        # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
         # end.compact
         @ignored_allocations.uniq!
       end
-      
+
       # Exclusively keep the allocations with the given qualifiers.
       #
       def keep_allocations *qualifier_arrays
         @exclusive_allocations ||= []
-        @exclusive_allocations += qualifier_arrays #.map do |qualifier_array|
-          # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
+        @exclusive_allocations += qualifier_arrays # .map do |qualifier_array|
+        # qualifier_array.map { |qualifier| @qualifier_mapper.map qualifier }
         # end.compact
         @exclusive_allocations.uniq!
       end
@@ -80,9 +79,9 @@ module Picky
         # Before we can chop off unimportant allocations, we need to sort them.
         #
         allocations.sort!
-        
+
         # allocations.remove_allocations ignored_allocations if ignored_allocations
-        
+
         # Reduce the amount of allocations.
         #
         # Before we remove categories, we should reduce the amount of allocations.
@@ -198,7 +197,6 @@ module Picky
         # for later combination in allocations.
         #
         possible_combinations.collect! do |combinations|
-
           # Get the size of the combinations of the first token.
           #
           combinations_size = combinations.size

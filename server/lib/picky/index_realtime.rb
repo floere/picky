@@ -1,8 +1,6 @@
 module Picky
-  #
-  #
   class Index
-    forward :remove,  # aka "delete".
+    forward :remove, # aka "delete".
             # :add,     # aka "insert". # See below.
             :replace, # aka "delete then insert".
             :update,

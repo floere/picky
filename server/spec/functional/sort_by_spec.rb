@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'id option' do
-
   it 'can sort' do
     data = Picky::Index.new :id do
       id :id
@@ -29,35 +28,33 @@ describe 'id option' do
     # Sort by number.
     #
     results = try.search('a')
-    
+
     results.sort_by { |id| sorting_order[id].number }
-    
+
     results.ids.should == [2, 1]
-    
+
     # Sort by text.
     #
     results = try.search('a')
-    
+
     results.sort_by { |id| sorting_order[id].text }
-    
+
     results.ids.should == [1, 2]
-    
+
     # Sort by number.
     #
     results = try.search('a* b')
-    
+
     results.sort_by { |id| sorting_order[id].number }
-    
+
     results.ids.should == [2, 1]
-    
+
     # Sort by text.
     #
     results = try.search('a* b')
-    
+
     results.sort_by { |id| sorting_order[id].text }
-    
+
     results.ids.should == [1, 2]
   end
-  
-
 end

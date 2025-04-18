@@ -1,12 +1,11 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 require 'stemmer'
 require 'lingua/stemmer'
 
 describe 'stemming' do
-  
   describe 'per-index stemming' do
     let(:stemmer) {
       # Fast stemmer does not conform with the API.
@@ -18,11 +17,11 @@ describe 'stemming' do
       end
       Stemmer
     }
-    
+
     it 'works correctly' do
       tokenizer = Picky::Tokenizer.new(stems_with: stemmer)
-      
-      # Is this really correct? Shouldn't we split after normalizing? 
+
+      # Is this really correct? Shouldn't we split after normalizing?
       #
       # Yes – we split using more information.
       #
@@ -31,7 +30,7 @@ describe 'stemming' do
       tokenizer.stem('computed').should  == 'comput'
       tokenizer.stem('computer').should  == 'comput'
     end
-    
+
     # This tests the stems_with option.
     #
     it 'stems right (API conform Stemmer)' do
@@ -44,7 +43,7 @@ describe 'stemming' do
           alias_method :stem, :stem_word
         end
       end
-      
+
       index = Picky::Index.new :stemming do
         # Be aware that if !s are not removed from
         # eg. Lemming!, then stemming won't work.
@@ -53,18 +52,18 @@ describe 'stemming' do
                  stems_with: Stemmer
         category :text
       end
-      
+
       index.replace_from id: 1, text: 'Hello good Sirs, these things here need stems to work!'
       index.replace_from id: 2, text: 'Stemming Lemming!'
 
       try = Picky::Search.new index
-      
+
       # Stems for both, so finds both.
       #
       try.search('text:stemming').ids.should == [2, 1]
       try.search('text:lem').ids.should == [2]
     end
-    
+
     # This tests the stems_with option.
     #
     it 'stems right (Lingua::Stemmer.new)' do
@@ -86,7 +85,7 @@ describe 'stemming' do
       try.search('text:lem').ids.should == [2]
     end
   end
-  
+
   describe 'per-category stemming' do
     describe 'mixed stemming categories' do
       it 'stems some but not others' do
@@ -101,31 +100,31 @@ describe 'stemming' do
           category :text2,
                    partial: Picky::Partial::None.new
         end
-    
+
         index.replace_from id: 1, text1: 'stemming', text2: 'ios'
         index.replace_from id: 2, text1: 'ios', text2: 'stemming'
 
         try = Picky::Search.new index
-    
+
         try.search('stemming').ids.should == [1, 2]
         try.search('stemmin').ids.should == []
         try.search('stemmi').ids.should == []
         try.search('stemm').ids.should == []
         try.search('stem').ids.should == [1]
-        
+
         try.search('ios').ids.should == [2, 1]
         try.search('io').ids.should == [2]
         try.search('i').ids.should == []
-        
+
         try.search('text1:stemming').ids.should == [1]
         try.search('text2:ios').ids.should == [1]
-    
+
         try.search('text1:ios').ids.should == [2]
         try.search('text2:stemming').ids.should == [2]
-      
+
         try.search('text1:stem').ids.should == [1]
         try.search('text2:io').ids.should == []
-      
+
         try.search('text1:io').ids.should == [2]
         try.search('text2:stem').ids.should == []
       end
@@ -137,7 +136,7 @@ describe 'stemming' do
             text
           end
         end.new
-        
+
         index = Picky::Index.new :stemming do
           # Be aware that if !s are not removed from
           # eg. Lemming!, then stemming won't work.
@@ -150,31 +149,31 @@ describe 'stemming' do
                    partial: Picky::Partial::None.new,
                    indexing: { stems_with: do_nothing_stemmer }
         end
-    
+
         index.replace_from id: 1, text1: 'stemming', text2: 'ios'
         index.replace_from id: 2, text1: 'ios', text2: 'stemming'
 
         try = Picky::Search.new index
-    
+
         try.search('stemming').ids.should == [1, 2]
         try.search('stemmin').ids.should == []
         try.search('stemmi').ids.should == []
         try.search('stemm').ids.should == []
         try.search('stem').ids.should == [1]
-        
+
         try.search('ios').ids.should == [2, 1]
         try.search('io').ids.should == [2]
         try.search('i').ids.should == []
-        
+
         try.search('text1:stemming').ids.should == [1]
         try.search('text2:ios').ids.should == [1]
-    
+
         try.search('text1:ios').ids.should == [2]
         try.search('text2:stemming').ids.should == [2]
-      
+
         try.search('text1:stem').ids.should == [1]
         try.search('text2:io').ids.should == []
-      
+
         try.search('text1:io').ids.should == [2]
         try.search('text2:stem').ids.should == []
       end

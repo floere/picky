@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Interfaces::LiveParameters::MasterChild do
-
   before(:each) do
     @parent = double :parent
     @child  = double :child
@@ -14,7 +13,8 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
 
   describe Picky::Interfaces::LiveParameters::MasterChild::CouldNotUpdateConfigurationError do
     before(:each) do
-      @error = Picky::Interfaces::LiveParameters::MasterChild::CouldNotUpdateConfigurationError.new :some_key, 'some message'
+      @error = Picky::Interfaces::LiveParameters::MasterChild::CouldNotUpdateConfigurationError.new :some_key,
+                                                                                                    'some message'
     end
   end
 
@@ -53,13 +53,15 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
     end
     context 'updating failed' do
       before(:each) do
-        @parameters.should_receive(:try_updating_configuration_with).and_raise Picky::Interfaces::LiveParameters::MasterChild::CouldNotUpdateConfigurationError.new(:a, 'hello')
+        @parameters.should_receive(:try_updating_configuration_with).and_raise Picky::Interfaces::LiveParameters::MasterChild::CouldNotUpdateConfigurationError.new(
+          :a, 'hello'
+        )
       end
       it 'kills itself and returns' do
         @parameters.should_receive(:close_child).once.ordered
         @parameters.should_receive(:harakiri).once.ordered
 
-        @parameters.parameters(a: :b).should == {a: :ERROR }
+        @parameters.parameters(a: :b).should == { a: :ERROR }
       end
     end
   end
@@ -156,5 +158,4 @@ describe Picky::Interfaces::LiveParameters::MasterChild do
       end
     end
   end
-
 end

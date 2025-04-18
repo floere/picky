@@ -1,11 +1,10 @@
 module Picky
   class Bundle
-    
     # TODO Push methods back into the backend, so that we
     #      can apply more efficient methods tailored for
     #      each specific backends.
     #
-    
+
     # Removes the given id from the indexes.
     #
     # TODO Simplify (and slow) this again – remove the realtime index.
@@ -77,29 +76,29 @@ module Picky
         # Inverted.
         #
         ids = if str_or_syms.include?(str_or_sym)
-          ids = @inverted[str_or_sym] ||= empty_array
-          # If updates are forced or if it isn't in there already
-          # then remove and add to the index.
-          if force_update || !ids.include?(id)
-            ids.delete id
-            ids.send method, id
-          end
-          ids
-        else
-          # Update the realtime index.
-          #
-          str_or_syms << str_or_sym
-          # TODO Add has_key? to index backends.
-          # ids = if @inverted.has_key?(str_or_sym)
-          #   @inverted[str_or_sym]
-          # else
-          #   @inverted[str_or_sym] = empty_array
-          # end
-          ids = (@inverted[str_or_sym] ||= empty_array)
-          ids.send method, id
-        end
+                ids = @inverted[str_or_sym] ||= empty_array
+                # If updates are forced or if it isn't in there already
+                # then remove and add to the index.
+                if force_update || !ids.include?(id)
+                  ids.delete id
+                  ids.send method, id
+                end
+                ids
+              else
+                # Update the realtime index.
+                #
+                str_or_syms << str_or_sym
+                # TODO Add has_key? to index backends.
+                # ids = if @inverted.has_key?(str_or_sym)
+                #   @inverted[str_or_sym]
+                # else
+                #   @inverted[str_or_sym] = empty_array
+                # end
+                ids = (@inverted[str_or_sym] ||= empty_array)
+                ids.send method, id
+              end
       end
-        
+
       # Weights.
       #
       @weights[str_or_sym] = self.weight_strategy.weight_for ids.size

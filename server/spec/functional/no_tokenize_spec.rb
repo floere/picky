@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Category#tokenize(false)' do
-
   it 'does tokenize' do
     index = Picky::Index.new :thing do
       category :text, tokenize: true
@@ -62,5 +61,4 @@ describe 'Category#tokenize(false)' do
 
     try.search('already').ids.should == [1]
   end
-
 end

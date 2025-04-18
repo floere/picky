@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'csv'
 require 'sinatra/base'
 require_relative '../lib/picky'
@@ -16,7 +16,7 @@ class Source
     i = 0
     CSV.open('data.csv').each do |args|
       @buffer << Thing.new(*args)
-      break if (i+=1) == @amount
+      break if (i += 1) == @amount
     end
   end
 
@@ -61,12 +61,15 @@ end
 amount = 5
 
 definitions = []
-definitions += definitions_with(amount, :no_weights_no_partial_no_similarity, weight: constant_weight, partial: no_partial)
+definitions += definitions_with(amount, :no_weights_no_partial_no_similarity, weight: constant_weight,
+                                                                              partial: no_partial)
 definitions += definitions_with(amount, :no_weights_default_partial_no_similarity, weight: constant_weight)
 definitions += definitions_with(amount, :default_weights_default_partial_no_similarity)
 definitions += definitions_with(amount, :default_weights_full_partial_no_similarity, partial: full_partial)
-definitions += definitions_with(amount, :default_weights_default_partial_double_metaphone_similarity, similarity: double_meta)
-definitions += definitions_with(amount, :default_weights_full_partial_double_metaphone_similarity, partial: full_partial, similarity: double_meta)
+definitions += definitions_with(amount, :default_weights_default_partial_double_metaphone_similarity,
+                                similarity: double_meta)
+definitions += definitions_with(amount, :default_weights_full_partial_double_metaphone_similarity,
+                                partial: full_partial, similarity: double_meta)
 
 puts
 puts
@@ -79,14 +82,12 @@ GC.enable
 GC::Profiler.enable
 
 backends.each do |backend_description, backend, amount|
-
   puts
   print "Running tests with #{backend_description} with #{"%5d" % amount} indexed:"
   print '           add/index |    dump |   total      '
   puts gc ? 'RAM/string/symbols per indexed' : ''
 
   definitions.each do |definition, description|
-
     print '%65s' % description
     print ': '
 
@@ -109,7 +110,7 @@ backends.each do |backend_description, backend, amount|
         data.add thing # direct
       end
     end
-    
+
     if gc
       current_ram = ram(__FILE__) - initial_ram
       strings = string_count
@@ -140,7 +141,5 @@ backends.each do |backend_description, backend, amount|
     puts
 
     data.clear
-
   end
-
 end

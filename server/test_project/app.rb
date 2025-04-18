@@ -1,5 +1,4 @@
 # encoding: utf-8
-#
 
 # 1. Index using rake index
 # 2. Start with rake start
@@ -18,13 +17,12 @@ require File.expand_path '../lib/picky', __dir__ # Use the current state of Pick
 require_relative 'project'
 
 class BookSearch < Sinatra::Application
-  
   weights = {
-    [:author]         => +6,
+    [:author] => +6,
     [:title, :author] => +5,
-    [:author, :year]  => +2
+    [:author, :year] => +2
   }
-    
+
   {
     books: Picky::Search.new(BooksIndex, ISBNIndex) {
       boost weights
@@ -54,8 +52,8 @@ class BookSearch < Sinatra::Application
     file: Picky::Search.new(FileIndex),
     japanese: Picky::Search.new(JapaneseIndex) {
       searching removes_characters: /[^\p{Han}\p{Katakana}\p{Hiragana}"~*:,]/i, # a-zA-Z0-9\s\/\-\_\&\.
-                stopwords:          /\b(and|the|of|it|in|for)\b/i,
-                splits_text_on:     /[\s\/\-&]+/
+                stopwords: /\b(and|the|of|it|in|for)\b/i,
+                splits_text_on: /[\s\/\-&]+/
     },
     nonstring: Picky::Search.new(NonstringDataIndex),
     partial: Picky::Search.new(PartialIndex),

@@ -1,9 +1,8 @@
 # coding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Query::Combinations do
-
   before(:each) do
     @combinations_ary = double :combinations_ary
 
@@ -50,5 +49,4 @@ describe Picky::Query::Combinations do
   #     @combinations.remove([:to_remove]).should == [@combination1]
   #   end
   # end
-
 end

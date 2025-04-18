@@ -1,16 +1,15 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # Requiring text here as it's optional in Picky.
 require 'text'
 
 describe String do
-
   context 'performance' do
     include Picky::Helpers::Measuring
     before(:each) do
-      @token = (((0..9).to_a)*10).to_s
+      @token = (((0..9).to_a) * 10).to_s
     end
     it 'is fast' do
       performance_of { @token.each_subtoken { |subtoken| } }.should < 0.00065
@@ -161,7 +160,7 @@ describe String do
       context 'with min_length > sym.size' do
         it 'yields the right elements' do
           result = []
-          @str.each_intoken(@str.size+1) do |subtoken|
+          @str.each_intoken(@str.size + 1) do |subtoken|
             result << subtoken
           end
           result.should == []
@@ -169,7 +168,7 @@ describe String do
         context 'max_length == 0' do
           it 'yields the right elements' do
             result = []
-            @str.each_intoken(@str.size+1, 0) do |subtoken|
+            @str.each_intoken(@str.size + 1, 0) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -178,7 +177,7 @@ describe String do
         context 'max_length == 1' do
           it 'yields the right elements' do
             result = []
-            @str.each_intoken(@str.size+1, 1) do |subtoken|
+            @str.each_intoken(@str.size + 1, 1) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -187,7 +186,7 @@ describe String do
         context 'max_length == 2' do
           it 'yields the right elements' do
             result = []
-            @str.each_intoken(@str.size+1, 2) do |subtoken|
+            @str.each_intoken(@str.size + 1, 2) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -196,7 +195,7 @@ describe String do
         context 'max_length == 10' do
           it 'yields the right elements' do
             result = []
-            @str.each_intoken(@str.size+1, 10) do |subtoken|
+            @str.each_intoken(@str.size + 1, 10) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -205,7 +204,7 @@ describe String do
         context 'max_length == -1' do
           it 'yields the right elements' do
             result = []
-            @str.each_intoken(@str.size+1, -1) do |subtoken|
+            @str.each_intoken(@str.size + 1, -1) do |subtoken|
               result << subtoken
             end
             result.should == []
@@ -507,5 +506,4 @@ describe String do
       end
     end
   end
-
 end

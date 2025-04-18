@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Categories do
-
   context 'with real categories' do
     before(:each) do
       @index1 = Picky::Index.new :name
@@ -87,7 +86,7 @@ describe Picky::Categories do
     #     end
     #     it "calls the right method" do
     #       @categories.should_receive(:similar_possible_for).once.with @token
-    # 
+    #
     #       @categories.possible_combinations @token
     #     end
     #   end
@@ -97,7 +96,7 @@ describe Picky::Categories do
     #     end
     #     it "calls the right method" do
     #       @categories.should_receive(:possible_for).once.with @token
-    # 
+    #
     #       @categories.possible_combinations @token
     #     end
     #   end
@@ -128,11 +127,11 @@ describe Picky::Categories do
     #       end
     #     end
     #     context 'user defined does not exist' do
-    # 
+    #
     #     end
     #   end
     #   context 'with preselected categories' do
-    # 
+    #
     #   end
     # end
 
@@ -154,7 +153,5 @@ describe Picky::Categories do
         end
       end
     end
-
   end
-
 end

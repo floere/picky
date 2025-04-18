@@ -22,7 +22,7 @@ module Picky
         def scheduler
           @scheduler ||= create_scheduler
         end
-        
+
         def create_scheduler
           Procrastinate::Scheduler.start Procrastinate::SpawnStrategy::Default.new(@factor)
         end

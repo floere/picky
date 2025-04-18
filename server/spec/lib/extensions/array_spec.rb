@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe Array do
-
   describe 'sort_by_levenshtein!' do
     it 'should sort right' do
       %w[fish flash flush smooch].sort_by_levenshtein!(:fush).should == %w[fish flush flash smooch]
     end
   end
-  
+
   describe 'clustered_uniq' do
     it 'should generate a new array' do
       ary = [:test1, :test2, :test1]
@@ -44,5 +43,4 @@ describe Array do
   #     performance_of { [:test1, :test1, :test2, :test2, :test3].clustered_uniq }.should < 0.000012
   #   end
   # end
-
 end

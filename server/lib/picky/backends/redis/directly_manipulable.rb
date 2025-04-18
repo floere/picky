@@ -25,7 +25,7 @@ module Picky
           super
           zadd value, @@unshift_index -= 1
         end
-        
+
         # Deletes the value.
         #
         def delete(value)
@@ -33,14 +33,13 @@ module Picky
           backend.client.zrem "#{backend.namespace}:#{key}", value if result
           result
         end
-        
+
         # Z-Adds a value with the given index.
         #
         def zadd(value, index)
           backend.client.zadd "#{backend.namespace}:#{key}", index, value
           backend[key]
         end
-        
       end
     end
   end

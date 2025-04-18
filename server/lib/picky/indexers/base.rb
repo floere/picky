@@ -1,9 +1,7 @@
 # encoding: utf-8
-#
+
 module Picky
   module Indexers
-    #
-    #
     class Base
       attr_reader :index_or_category
 

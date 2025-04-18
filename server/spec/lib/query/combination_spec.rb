@@ -1,9 +1,8 @@
 # coding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Query::Combination do
-
   before(:each) do
     @bundle      = double :bundle, identifier: :bundle_name
     @token       = Picky::Query::Token.processed('some_text~', 'Some Original~')
@@ -68,5 +67,4 @@ describe Picky::Query::Combination do
       @combination.weight.should == 3.14
     end
   end
-
 end

@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Object Use' do
-
   it 'is not too high' do
     index = Picky::Index.new :object_use do
       category :text1
@@ -88,7 +87,5 @@ describe 'Object Use' do
       'text3,text4:three' => 1,
       'text1:one text2:two text3,text4:three' => 3 # Sadly this one is left.
     )
-
   end
-
 end

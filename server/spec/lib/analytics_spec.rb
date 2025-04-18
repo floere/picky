@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # Not loaded by default.
@@ -7,7 +7,6 @@ require 'spec_helper'
 require_relative '../../lib/picky/analytics'
 
 describe Picky::Analytics do
-
   attr_reader :index1, :index2
 
   Item = Struct.new :id, :text
@@ -61,5 +60,4 @@ describe Picky::Analytics do
       analytics.ids.should == 32
     end
   end
-
 end

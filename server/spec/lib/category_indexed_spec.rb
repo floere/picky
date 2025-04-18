@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Category do
-
   before(:each) do
     @index = Picky::Index.new :some_index do
       source []
@@ -201,7 +200,7 @@ describe Picky::Category do
   #     end
   #     it 'should create the combination correctly' do
   #       Picky::Query::Combination.should_receive(:new).once.with @token, @category
-  # 
+  #
   #       @category.combination_for @token
   #     end
   #   end
@@ -223,5 +222,4 @@ describe Picky::Category do
       end
     end
   end
-
 end

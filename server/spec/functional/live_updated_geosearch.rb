@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Location search with live updates' do
-
   it 'works with location search' do
     index = Picky::Index.new :live_location_search do
       ranged_category :x, 1
@@ -14,7 +13,7 @@ describe 'Location search with live updates' do
     index.add thing.new(1,  0,  0)
     index.add thing.new(2,  1,  8)
     index.add thing.new(3, -2,  1)
-    index.add thing.new(4,  1, -1)
+    index.add thing.new(4, 1, -1)
     index.add thing.new(5, -3, -3)
     index.add thing.new(6, -3.5, -3.5)
 
@@ -55,11 +54,11 @@ describe 'Location search with live updates' do
     end
 
     thing = Struct.new :id, :x, :y, :z
-    index.add thing.new(1,  0,    0  ,  0  )
-    index.add thing.new(2,  1,    8  ,  3  )
-    index.add thing.new(3, -2,    1  ,  5  )
-    index.add thing.new(4,  1,   -1  ,  2  )
-    index.add thing.new(5, -3,   -3  , -3  )
+    index.add thing.new(1,  0,    0,  0)
+    index.add thing.new(2,  1,    8,  3)
+    index.add thing.new(3, -2,    1,  5)
+    index.add thing.new(4, 1, -1, 2)
+    index.add thing.new(5, -3,   -3, -3)
     index.add thing.new(6, -3.5, -3.5, -3.5)
 
     try = Picky::Search.new index
@@ -100,7 +99,7 @@ describe 'Location search with live updates' do
     index.add thing.new(1,  0,  0)
     index.add thing.new(2,  1,  8)
     index.add thing.new(3, -2,  1)
-    index.add thing.new(4,  1, -1)
+    index.add thing.new(4, 1, -1)
     index.add thing.new(5, -3, -3)
     index.add thing.new(6, -3.5, -3.5)
 
@@ -126,5 +125,4 @@ describe 'Location search with live updates' do
     index.remove 1
     try.search('x:0 y:0').ids.should == [] # See first "should".
   end
-
 end

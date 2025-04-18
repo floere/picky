@@ -22,5 +22,5 @@ task :stats do
     puts "#{original_dir}: #{total}"
   end
   puts
-  puts "Code/Test Ratio: 1:#{(specs/libs).round(1)}"
+  puts "Code/Test Ratio: 1:#{(specs / libs).round(1)}"
 end

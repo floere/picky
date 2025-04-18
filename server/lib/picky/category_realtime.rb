@@ -11,10 +11,10 @@ module Picky
     #
     def add(object, method: :unshift, force_update: false)
       data = if from.respond_to? :call
-        from.call(object)
-      else
-        object.send(from)
-      end
+               from.call(object)
+             else
+               object.send(from)
+             end
       add_text(object.send(id), data, method:, force_update:)
     end
 
@@ -62,10 +62,11 @@ module Picky
     #
     # Note: Takes a hash as opposed to the add/replace method.
     #
-    def replace_from(hash) #, id = (hash[:id] || hash['id'] || raise(IdNotGivenException.new)).send(key_format)
+    def replace_from(hash) # , id = (hash[:id] || hash['id'] || raise(IdNotGivenException.new)).send(key_format)
       return unless text = hash[from] || hash[from.to_s]
 
       raise IdNotGivenException.new unless id = hash[:id] || hash['id']
+
       id = id.send key_format if key_format?
 
       remove id
@@ -113,8 +114,6 @@ module Picky
       end
     end
 
-    #
-    #
     def add_tokenized_token(id, text, method: :unshift, format: true, static: false, force_update: false)
       return unless text
 

@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 require 'spec_helper'
 
 # If you want to use Rack::Harakiri, you
@@ -71,5 +72,4 @@ describe Rack::Harakiri do
       @ronin.instance_variable_get(:@quit_after_requests).should == 100
     end
   end
-
 end

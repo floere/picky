@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Speccing Ruby for speed' do
@@ -91,5 +91,4 @@ describe 'Speccing Ruby for speed' do
       end
     end
   end
-
 end

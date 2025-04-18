@@ -3,16 +3,12 @@ module Picky
   #
   class QualifierMapper
     attr_reader :mapping
-      
-    #
-    #
+
     def initialize(categories)
       @mapping = Hash.new
       categories.each { |category| add category }
     end
 
-    #
-    #
     def add(category)
       category.qualifiers.each do |qualifier|
         sym_qualifier = qualifier.intern
@@ -30,12 +26,12 @@ module Picky
 
       mapping[qualifier.intern]
     end
-      
+
     # Restricts the given categories.
     #
     def restrict(user_qualified)
       if @restricted
-        user_qualified ? @restricted & user_qualified : @restricted 
+        user_qualified ? @restricted & user_qualified : @restricted
       else
         user_qualified
       end

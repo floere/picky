@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Category do
-
   let(:index) { Picky::Index.new :some_index }
 
   context 'default parameters' do
@@ -22,7 +21,7 @@ describe Picky::Category do
 
       category.instance_variable_get(:@symbol_keys).should == nil
     end
-    
+
     context '#==' do
       it 'is identical on the same thing' do
         category.should == category
@@ -38,28 +37,28 @@ describe Picky::Category do
       end
     end
   end
-  
+
   context 'directories' do
     let(:category) { described_class.new :some_category, index }
     it 'is correct' do
       category.prepared_index_path.should == 'spec/temp/index/test/some_index/some_category'
     end
   end
-  
+
   describe 'options' do
     let(:category) { described_class.new :some_category, index }
     it 'warns on wrong options' do
-      category.should_receive(:warn).once.with <<-WARNING
+      category.should_receive(:warn).once.with <<~WARNING
 
-Warning: Category options {:weights=>:some_weight} for category some_category contain an unknown option.
-         Working options are: [:hints, :indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight].
-WARNING
-      
+        Warning: Category options {:weights=>:some_weight} for category some_category contain an unknown option.
+                 Working options are: [:hints, :indexing, :partial, :qualifier, :qualifiers, :ranging, :similarity, :source, :tokenize, :tokenizer, :weight].
+      WARNING
+
       category.warn_if_unknown weights: :some_weight
     end
     it 'does not warn on right options' do
       category.should_receive(:warn).never
-      
+
       category.warn_if_unknown weight: :some_weight
     end
   end
@@ -88,14 +87,13 @@ WARNING
       it 'raises with a nice error message' do
         expect {
           described_class.new :some_category, index, indexing: Object.new
-        }.to raise_error(<<-ERROR)
-indexing options for some_index:some_category should be either
-* a Hash
-or
-* an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
-ERROR
+        }.to raise_error(<<~ERROR)
+          indexing options for some_index:some_category should be either
+          * a Hash
+          or
+          * an object that responds to #tokenize(text) => [[token1, token2, ...], [original1, original2, ...]]
+        ERROR
       end
     end
   end
-
 end

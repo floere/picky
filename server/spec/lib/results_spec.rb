@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Results do
-
   describe 'ids' do
     before(:each) do
       @allocations = double :allocations
@@ -77,7 +76,8 @@ describe Picky::Results do
     it 'should do it correctly' do
       @results.prepare!
 
-      @results.to_hash.should == { allocations: :allocations, offset: :some_offset, duration: :some_duration, total: :some_total }
+      @results.to_hash.should == { allocations: :allocations, offset: :some_offset, duration: :some_duration,
+                                   total: :some_total }
     end
   end
 
@@ -103,5 +103,4 @@ describe Picky::Results do
       @results.duration.should == :some_duration
     end
   end
-
 end

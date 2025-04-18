@@ -24,7 +24,6 @@ module Picky
               end
             end
           end
-
         end
       end
 

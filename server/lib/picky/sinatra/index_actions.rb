@@ -1,8 +1,6 @@
 module Picky
   module Sinatra
-      
     module IndexActions
-      
       def self.extended(base)
         # Updates the given item and returns HTTP codes:
         #  * 200 if the index has been updated or no error case has occurred.
@@ -17,6 +15,7 @@ module Picky
             index = Picky::Indexes[index_name.to_sym]
             data = params['data']
             return 400 unless data
+
             data && index.replace_from(MultiJson.decode data) && 200
           rescue IdNotGivenException
             400
@@ -24,7 +23,7 @@ module Picky
             404
           end
         end
-        
+
         # Deletes the given item and returns:
         #  * 200 if the index has been updated or no error case has occurred.
         #  * 404 if the index cannot be found.
@@ -44,8 +43,6 @@ module Picky
           end
         end
       end
-      
     end
-    
   end
 end

@@ -51,9 +51,9 @@ module Picky
         #
         def [](key)
           list = client.zrange "#{namespace}:#{key}", :'0', :'-1'
-          
+
           DirectlyManipulable.make self, list, key
-          
+
           list
         end
 
@@ -68,12 +68,12 @@ module Picky
             i += 1
             client.zadd redis_key, i, value
           end
-          
+
           DirectlyManipulable.make self, values, key
-          
+
           values
         end
-        
+
         # Inject.
         #
         def inject(initial, &block)

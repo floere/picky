@@ -3,7 +3,7 @@
 puts
 print "Compiling on Ruby #{RUBY_VERSION}"
 if defined?(RbConfig)
-  RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC'] 
+  RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
   print " with CC set to #{RbConfig::MAKEFILE_CONFIG['CC']}"
 end
 puts '.'

@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe Picky::Query::Indexes do
-
   before(:each) do
     Picky::Query::Indexes::Check.stub :check_backends
   end
 
   3.times do |i|
-    name = :"index#{i+1}"
+    name = :"index#{i + 1}"
     let(name) { Picky::Index.new(name) }
   end
 
@@ -105,5 +104,4 @@ describe Picky::Query::Indexes do
       indexes.prepared_allocations_for :some_tokens
     end
   end
-
 end

@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'id option' do
-
   it 'can be given a different id (in-ruby based)' do
     data = Picky::Index.new :id do
       id :number
@@ -61,5 +60,4 @@ describe 'id option' do
 
     try.search('text:kthxbye').ids.should == [2]
   end
-
 end

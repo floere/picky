@@ -12,8 +12,6 @@ module Picky
       class Phonetic < Strategy
         attr_reader :amount
 
-        #
-        #
         def initialize(amount = 3)
           check_gem
           @amount = amount

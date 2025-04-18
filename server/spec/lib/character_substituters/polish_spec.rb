@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::CharacterSubstituters::Polish do
-
   let(:substituter) { described_class.new.tap { |s| s.substitute '' } }
 
   # A bit of metaprogramming to help with the myriads of its.
@@ -51,7 +50,7 @@ describe Picky::CharacterSubstituters::Polish do
   end
 
   describe 'diacritics' do
-    #ĄąĘęĆćŁłŃńŚśÓóŹźŻż
+    # ĄąĘęĆćŁłŃńŚśÓóŹźŻż
     it_should_substitute 'ą', 'a'
     it_should_substitute 'Ą', 'A'
     it_should_substitute 'ę', 'e'
@@ -71,5 +70,4 @@ describe Picky::CharacterSubstituters::Polish do
     it_should_substitute 'ż', 'z'
     it_should_substitute 'Ż', 'Z'
   end
-
 end

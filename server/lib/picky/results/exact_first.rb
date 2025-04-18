@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 module Picky
   class Results
     # This index combines an exact and partial index.

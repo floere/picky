@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Redis::DirectlyManipulable do
-
   let(:client) { double :client }
   let(:backend) { double :backend, client: client, namespace: 'some:namespace' }
   let(:list) do
@@ -29,14 +28,14 @@ describe Picky::Backends::Redis::DirectlyManipulable do
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@append_index)
 
-      client.should_receive(:zadd).once.with 'some:namespace:some:key', num+1, 3
+      client.should_receive(:zadd).once.with 'some:namespace:some:key', num + 1, 3
 
       list << 3
     end
     it 'calls the right client method' do
       num = described_class.class_variable_get(:@@unshift_index)
 
-      client.should_receive(:zadd).once.with 'some:namespace:some:key', num-1, 3
+      client.should_receive(:zadd).once.with 'some:namespace:some:key', num - 1, 3
 
       list.unshift 3
     end
@@ -99,5 +98,4 @@ describe Picky::Backends::Redis::DirectlyManipulable do
       list.should == [1, 2]
     end
   end
-
 end

@@ -1,7 +1,6 @@
 module Picky
   module Backends
     class File
-      
       EMPTY_ARRAY = Array.new
 
       # Base class for all file-based index files.
@@ -31,7 +30,7 @@ module Picky
           @empty   = options[:empty]
           @initial = options[:initial]
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -68,8 +67,6 @@ module Picky
           `rm -Rf #{cache_path}`
         end
 
-        #
-        #
         def to_s
           "#{self.class}(#{cache_path},#{mapping_file.cache_path})"
         end

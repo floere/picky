@@ -15,15 +15,16 @@ module Picky
 
     # Takes instances of Query::Allocations as param.
     #
-    def initialize(query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil, unique = false)
+    def initialize(query = nil, amount = 0, offset = 0, allocations = Query::Allocations.new, extra_allocations = nil,
+                   unique = false)
       @amount      = amount
       @query       = query
       @offset      = offset
       @allocations = allocations
       @extra_allocations = extra_allocations
-      @unique      = unique
+      @unique = unique
     end
-    
+
     # Provide a block which
     # accepts a result id.
     #
@@ -44,6 +45,7 @@ module Picky
     #
     def prepare!(extra_allocations = nil, unique = false, sorting = nil)
       return if @prepared == [extra_allocations, unique, sorting] # cached?
+
       @prepared = [extra_allocations, unique, sorting] # cache!
       unique ?
         @allocations.process_unique!(amount, offset, extra_allocations, sorting) :
@@ -83,9 +85,9 @@ module Picky
     def to_hash
       {
         allocations: allocations.to_result,
-        offset:      offset,
-        duration:    duration,
-        total:       total
+        offset: offset,
+        duration: duration,
+        total: total
       }
     end
 
@@ -107,7 +109,7 @@ module Picky
     # No calculated ids means: No results.
     #
     def log_type
-      amount.zero?? :'.' : :'>'
+      amount.zero? ? :'.' : :'>'
     end
   end
 end

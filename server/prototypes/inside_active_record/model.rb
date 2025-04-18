@@ -3,7 +3,6 @@ require_relative '../model_setup'
 # Fake ActiveRecord model.
 #
 class Model < ActiveRecord::Base
-  
   def self.data
     @data ||= Picky::Index.new :models do
       category :name
@@ -14,7 +13,7 @@ class Model < ActiveRecord::Base
   def self.models
     @models ||= Picky::Search.new data
   end
-  
+
   def self.replace(model)
     data.replace model
   end
@@ -26,7 +25,7 @@ class Model < ActiveRecord::Base
   def self.search *args
     models.search *args
   end
-  
+
   after_commit do
     if destroyed?
       self.class.remove self
@@ -34,5 +33,4 @@ class Model < ActiveRecord::Base
       self.class.replace self
     end
   end
-  
 end

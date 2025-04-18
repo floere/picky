@@ -10,7 +10,6 @@ task :stop do
 end
 
 namespace :server do
-
   # desc "Start the unicorns. (Wehee!)"
   #
   task start: :framework do
@@ -50,5 +49,4 @@ namespace :server do
       pid.chomp
     end
   end
-
 end

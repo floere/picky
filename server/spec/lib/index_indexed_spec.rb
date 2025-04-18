@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Index do
-
   context 'without stubbed categories' do
     before(:each) do
       @index = described_class.new :some_index_name
@@ -66,5 +65,4 @@ describe Picky::Index do
       described_class.new :some_name
     end
   end
-
 end

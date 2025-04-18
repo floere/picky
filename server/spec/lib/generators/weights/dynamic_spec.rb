@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Generators::Weights::Dynamic do
-
   context 'defined block' do
     let(:constant) { described_class.new { |str_or_sym| str_or_sym.size } }
 
@@ -23,5 +22,4 @@ describe Picky::Generators::Weights::Dynamic do
       end
     end
   end
-
 end

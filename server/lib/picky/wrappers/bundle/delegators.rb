@@ -3,28 +3,20 @@ module Picky
     module Bundle
       module Delegator
         forward :add,
-
                 :inverted,
                 :weights,
                 :similarity,
                 :configuration,
-
                 :backup,
                 :restore,
                 :delete,
-                
                 :empty_array,
-
                 :reset_backend,
-
                 :raise_unless_cache_exists,
                 :raise_unless_index_exists,
                 :raise_unless_similarity_exists,
-
                 :similar,
-                
                 :to_tree_s,
-
                 to: :bundle
       end
 

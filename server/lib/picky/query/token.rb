@@ -8,13 +8,12 @@ module Picky
     # or whether it is a partial (bla*).
     #
     class Token
-      
       attr_accessor :text, :original
       attr_writer :similar
       attr_writer :predefined_categories
-      
+
       forward :blank?, to: :@text
-      
+
       # Normal initializer.
       #
       # Note:
@@ -77,13 +76,13 @@ module Picky
           mapper.map qualifier
         end.compact
       end
-      
+
       # Selects the bundle to be used.
       #
       def select_bundle(exact, partial)
         @partial ? partial : exact
       end
-      
+
       # Generates a reused stem.
       #
       # Caches a stem for a tokenizer.
@@ -140,6 +139,7 @@ module Picky
         #
         self.partial = false or return if @similar
         self.partial = false or return if @text =~ @@no_partial
+
         self.partial = true if @text =~ @@partial
       end
 
@@ -148,7 +148,7 @@ module Picky
       #
       # Default is '"'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
@@ -165,7 +165,7 @@ module Picky
       #
       # Default is '*'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
@@ -188,6 +188,7 @@ module Picky
       @@similar    = %r{#@@similar_character\z}
       def similarize
         self.similar = false or return if @text =~ @@no_similar
+
         self.similar = true if @text =~ @@similar
       end
 
@@ -196,7 +197,7 @@ module Picky
       #
       # Default is '"'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
@@ -213,7 +214,7 @@ module Picky
       #
       # Default is '~'.
       #
-      # This is used in a regexp (%r{#{char}\z}) for String#=~, 
+      # This is used in a regexp (%r{#{char}\z}) for String#=~,
       # so escape the character.
       #
       # Example:
@@ -225,7 +226,7 @@ module Picky
         @@similar = %r{#{character}\z}
         redefine_illegals
       end
-      
+
       # Define a character which makes a token a range token.
       #
       # Default is '…'.
@@ -246,7 +247,7 @@ module Picky
       def range
         @range
       end
-      
+
       # Is this a "similar" character?
       #
       def similar?
@@ -267,7 +268,7 @@ module Picky
         @@illegals = %r{[#@@no_similar_character#@@similar_character#@@no_partial_character#@@partial_character]}
       end
       redefine_illegals
-      
+
       # Return all possible combinations.
       #
       # This checks if it needs to also search through similar
@@ -277,7 +278,7 @@ module Picky
       def possible_combinations(categories)
         similar? ? categories.similar_possible_for(self) : categories.possible_for(self)
       end
-      
+
       # If the Token has weight for the given category,
       # it will return a new combination for the tuple
       # (self, category, weight).
@@ -334,12 +335,12 @@ module Picky
       #   Picky::Query::Token.qualifiers_delimiter = /|/
       #   try.search("text1|text2:hello").ids.should == [1]
       #
-      
+
       def self.qualifiers_delimiter=(character)
         @@qualifiers_delimiter = character
         @@qualifiers_splitter  = Splitter.new @@qualifiers_delimiter
       end
-      
+
       # Returns the qualifiers as an array.
       #
       # Example:
@@ -364,7 +365,7 @@ module Picky
       # Note: Used in many backends.
       #
       def identifier
-        "#{similar?? :similarity : :inverted}:#@text"
+        "#{similar? ? :similarity : :inverted}:#@text"
       end
 
       # If the originals & the text are the same, they are the same.

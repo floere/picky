@@ -1,11 +1,10 @@
 # coding: utf-8
-#
+
 require 'spec_helper'
 require_relative '../app' # Only needed when running this spec alone.
 require_relative '../../../client/lib/picky-client/spec'
 
 describe BookSearch do
-
   before(:all) do
     Picky::Indexes.index
     Picky::Indexes.load
@@ -29,7 +28,7 @@ describe BookSearch do
   let(:partial)         { Picky::TestClient.new(described_class, path: '/partial')        }
   let(:sqlite)          { Picky::TestClient.new(described_class, path: '/sqlite')         }
   let(:commas)          { Picky::TestClient.new(described_class, path: '/commas')         }
-  
+
   describe 'dump' do
     it 'simply works' do
       Thing = Struct.new :id, :name
@@ -177,7 +176,10 @@ describe BookSearch do
   # Partial searches.
   #
   it { expect(csv.search('gover* systems').ids).to eq [7] }
-  it { expect(csv.search('a*').ids).to eq [4, 7, 8, 80, 117, 119, 125, 132, 168, 176, 184, 222, 239, 242, 333, 346, 352, 361, 364, 380] }
+  it {
+    expect(csv.search('a*').ids).to eq [4, 7, 8, 80, 117, 119, 125, 132, 168, 176, 184, 222, 239, 242, 333, 346, 352, 361,
+                                        364, 380]
+  }
   it { expect(csv.search('a* b* c* d* f').ids).to eq [110, 416] }
   it { expect(csv.search('1977').ids).to eq [86, 394] }
 
@@ -185,7 +187,9 @@ describe BookSearch do
   #
   it { expect(csv.search('hystori~ leeward').ids).to eq [4] }
   it { expect(csv.search('strutigic~').ids).to eq [7, 398, 414] }
-  it { expect(csv.search('guvurnance~').ids).to eq [126, 181, 198, 263, 298, 324, 419, 22] } # TODO 7 should be in the result set.
+  it {
+    expect(csv.search('guvurnance~').ids).to eq [126, 181, 198, 263, 298, 324, 419, 22]
+  } # TODO 7 should be in the result set.
   it { expect(csv.search('strutigic~ guvurnance~').ids).to eq [7] }
   it { expect(csv.search('strategic~ governance~').ids).to eq [] } # Does not find itself.
 
@@ -230,23 +234,32 @@ describe BookSearch do
   # Breakage.
   #
   it { expect(csv.search('%@{*^$!*$$^!&%!@%#!%#(#!@%#!#!)}').ids).to eq [] }
-  it { expect(csv.search('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').ids).to eq [] }
+  it {
+    expect(csv.search('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').ids).to eq []
+  }
   it { expect(csv.search('glorfgnorfblorf').ids).to eq [] }
 
   # Range based area search. Memory.
   #
-  it { expect(simple_geo.search('north1:47.41 east1:8.55').ids).to eq [1481, 5014, 5015, 5016, 10576, 10717, 17777, 17999] }
+  it {
+    expect(simple_geo.search('north1:47.41 east1:8.55').ids).to eq [1481, 5014, 5015, 5016, 10576, 10717, 17777, 17999]
+  }
 
   # Geo based area search.
   #
-  it { expect(geo.search('north:47.41 east:8.55').ids).to eq [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5059, 9110, 10347, 10576, 10717, 10879, 17777, 17955, 18038] }
+  it {
+    expect(geo.search('north:47.41 east:8.55').ids).to eq [1481, 5010, 5011, 5012, 5013, 5014, 5015, 5016, 5017, 5059,
+                                                           9110, 10347, 10576, 10717, 10879, 17777, 17955, 18038]
+  }
 
   # Redis.
   #
   it { expect(redis.search('soledad human').ids).to eq ['72'] }
   it { expect(redis.search('first three minutes weinberg').ids).to eq ['1'] }
   it { expect(redis.search('gover* systems').ids).to eq ['7'] }
-  it { expect(redis.search('a*').ids).to eq %w[4 7 8 80 117 119 125 132 168 176 184 222 239 242 333 346 352 361 364 380] }
+  it {
+    expect(redis.search('a*').ids).to eq %w[4 7 8 80 117 119 125 132 168 176 184 222 239 242 333 346 352 361 364 380]
+  }
   it { expect(redis.search('a* b* c* d* f').ids).to eq %w[110 416] }
   it { expect(redis.search('1977').ids).to eq %w[86 394] }
 
@@ -341,7 +354,7 @@ describe BookSearch do
   # SQLite backend.
   #
   it { expect(sqlite.search('hello sqlite').ids).to eq [1] }
-  
+
   # Commas in ids.
   #
   it { expect(commas.search('text').ids).to eq ['a,b', 'c,d'] }
@@ -353,10 +366,10 @@ describe BookSearch do
 
     # Some webapp adds a book.
     #
-    added_book = Book.create! title:  'Some Title',
+    added_book = Book.create! title: 'Some Title',
                               author: 'Tester Mc Testy',
-                              isbn:   '1231231231231',
-                              year:   '1977'
+                              isbn: '1231231231231',
+                              year: '1977'
     expected_id = added_book.id
 
     Picky::Indexes[:books].index
@@ -376,10 +389,10 @@ describe BookSearch do
 
     # Some webapp adds a book.
     #
-    added_book = Book.create! title:  'Some Title',
+    added_book = Book.create! title: 'Some Title',
                               author: 'Tester Mc Testy',
-                              isbn:   '1231231231231',
-                              year:   1977
+                              isbn: '1231231231231',
+                              year: 1977
     expected_id = added_book.id
 
     Picky::Indexes[:book_each].index
@@ -391,5 +404,4 @@ describe BookSearch do
 
     expect(book_each.search('1977').ids).to eq ['86', '394', expected_id.to_s]
   end
-
 end

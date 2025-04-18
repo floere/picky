@@ -1,7 +1,5 @@
 module Picky
   module Backends
-    #
-    #
     class Redis < Backend
       attr_reader :client,
                   :realtime
@@ -141,7 +139,7 @@ module Picky
         # else
         #   class << self
         #     def weight combinations
-            combinations.score
+        combinations.score
         #     end
         #   end
         # end
@@ -217,13 +215,13 @@ module Picky
       def generate_intermediate_result_id
         @intermediate_result_id ||= "#{host}:#{pid}:picky:result"
       end
-      
+
       def identifiers_for(combinations)
         combinations.inject([]) do |identifiers, combination|
           identifiers << "#{PICKY_ENVIRONMENT}:#{combination.identifier}"
         end
       end
-      
+
       # Uses Lua scripting on Redis 2.6.
       #
       module Scripting
@@ -261,7 +259,7 @@ module Picky
           end
         end
       end
-      
+
       # Does not use Lua scripting, < Redis 2.6.
       #
       module NonScripting

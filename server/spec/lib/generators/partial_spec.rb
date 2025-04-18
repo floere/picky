@@ -26,32 +26,32 @@ describe Picky::Generators::Partial do
       it 'raises with a nice error message' do
         expect {
           partial.from Object.new
-        }.to raise_error(<<-ERROR)
-partial options should be either
-* for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
-or
-* an object that responds to #each_partial(str_or_sym) and yields each partial
-ERROR
+        }.to raise_error(<<~ERROR)
+          partial options should be either
+          * for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
+          or
+          * an object that responds to #each_partial(str_or_sym) and yields each partial
+        ERROR
       end
       it 'raises with a nice error message' do
         expect {
           partial.from Object.new, 'some_index'
-        }.to raise_error(<<-ERROR)
-partial options for some_index should be either
-* for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
-or
-* an object that responds to #each_partial(str_or_sym) and yields each partial
-ERROR
+        }.to raise_error(<<~ERROR)
+          partial options for some_index should be either
+          * for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
+          or
+          * an object that responds to #each_partial(str_or_sym) and yields each partial
+        ERROR
       end
       it 'raises with a nice error message' do
         expect {
           partial.from Object.new, 'some_index', 'some_category'
-        }.to raise_error(<<-ERROR)
-partial options for some_index:some_category should be either
-* for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
-or
-* an object that responds to #each_partial(str_or_sym) and yields each partial
-ERROR
+        }.to raise_error(<<~ERROR)
+          partial options for some_index:some_category should be either
+          * for example a Partial::Substring.new(from: m, to: n), Partial::Postfix.new(from: n), Partial::Infix.new(min: m, max: n) etc.
+          or
+          * an object that responds to #each_partial(str_or_sym) and yields each partial
+        ERROR
       end
     end
   end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Loggers::Verbose do
-
   let(:index) { Picky::Index.new :some_index }
   let(:category) { Picky::Category.new :some_category, index }
   let(:file) { double :file, path: 'some/path' }
@@ -60,5 +59,4 @@ describe Picky::Loggers::Verbose do
       end
     end
   end
-
 end

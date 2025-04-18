@@ -1,8 +1,8 @@
 # coding: utf-8
+
 require 'spec_helper'
 
 describe Picky::Query::Token do
-
   describe '==' do
     it 'is equal if the originals are equal' do
       described_class.processed('similar~', 'Similar~').should == described_class.processed('similar~', 'Similar~')
@@ -11,7 +11,7 @@ describe Picky::Query::Token do
       described_class.processed('similar~', 'Similar~').should_not == described_class.processed('similar', 'Similar')
     end
   end
-  
+
   describe 'categorize' do
     let(:mapper) do
       index      = Picky::Index.new :mapper
@@ -159,7 +159,7 @@ describe Picky::Query::Token do
     it_should_qualify ':nothing',          [[''],          'nothing']
     it_should_qualify 'hello',             [nil,           'hello']
     it_should_qualify 'a:b:c',             [['a'],         'b:c']
-    it_should_qualify 'a,b:c',             [%w[a b],     'c']
+    it_should_qualify 'a,b:c',             [%w[a b], 'c']
     it_should_qualify 'a,b,c:d',           [%w[a b c], 'd']
     it_should_qualify ':',                 [[''],          '']
     it_should_qualify 'vorname:qualifier', [['vorname'],   'qualifier']
@@ -334,7 +334,7 @@ describe Picky::Query::Token do
       token.text.should_not == token.original
     end
     def self.it_should_have_similarity(text, expected_similarity_value)
-      it "should have #{ "no" unless expected_similarity_value } similarity for '#{text}'" do
+      it "should have #{"no" unless expected_similarity_value} similarity for '#{text}'" do
         described_class.processed(text, text.upcase).similar?.should == expected_similarity_value
       end
     end
@@ -520,5 +520,4 @@ describe Picky::Query::Token do
       described_class.processed('text').text.should == 'text'
     end
   end
-
 end

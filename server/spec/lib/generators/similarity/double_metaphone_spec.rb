@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Generators::Similarity::DoubleMetaphone do
-
   before(:each) do
     @similarity = described_class.new
   end
@@ -23,5 +22,4 @@ describe Picky::Generators::Similarity::DoubleMetaphone do
   it_should_encode :meier,       :MR
   it_should_encode :grossberger, :KRSP
   it_should_encode :hadelbla,    :HTLP
-
 end

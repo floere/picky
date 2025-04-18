@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Splitter do
-  
   describe 'single' do
     let(:splitter) { described_class.new /:/ }
     it 'splits right' do
@@ -21,7 +20,7 @@ describe Picky::Splitter do
       splitter.single(s)[1].object_id.should == s.object_id
     end
   end
-  
+
   describe 'multi' do
     let(:splitter) { described_class.new /\s/ }
     it 'splits right' do
@@ -79,5 +78,4 @@ describe Picky::Splitter do
     #   # p multi
     # end
   end
-
 end

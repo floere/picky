@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Bundle do
-
   before(:each) do
     @index        = Picky::Index.new :some_index
     @category     = Picky::Category.new :some_category, @index
@@ -76,7 +75,7 @@ describe Picky::Bundle do
         @bundle.realtime.should == { 1 => ['title'] }
         @bundle.weights.should  == { 'title' => 0.0 }
         @bundle.inverted.should == { 'title' => [1] }
-        @bundle.similarity.should  == { 'TTL' => ['title'] }
+        @bundle.similarity.should == { 'TTL' => ['title'] }
       end
       it 'works correctly' do
         @bundle.add 1, 'title'
@@ -165,7 +164,7 @@ describe Picky::Bundle do
         @bundle.realtime.should == { 1 => [:title] }
         @bundle.weights.should  == { title: 0.0 }
         @bundle.inverted.should == { title: [1] }
-        @bundle.similarity.should  == { TTL: [:title] }
+        @bundle.similarity.should == { TTL: [:title] }
       end
       it 'works correctly' do
         @bundle.add 1, :title
@@ -202,5 +201,4 @@ describe Picky::Bundle do
       end
     end
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Loggers::Concise do
-  
   let(:io) { StringIO.new }
   let(:logger) { described_class.new thing }
 
@@ -21,7 +20,7 @@ describe Picky::Loggers::Concise do
         logger.load :some_category
         logger.load :some_category
         logger.load :some_category
-      
+
         io.string.should == 'Tokenizing TTT Dumping DD Loading ....'
       end
     end
@@ -42,10 +41,9 @@ describe Picky::Loggers::Concise do
         logger.load :some_category
         logger.load :some_category
         logger.load :some_category
-      
+
         io.string.should == 'Tokenizing TTT Dumping DD Loading ....'
       end
     end
   end
-
 end

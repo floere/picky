@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Loader do
-
   before(:each) do
     described_class.stub :exclaim
     @loader_path = File.absolute_path("#{File.dirname(__FILE__)}/../../lib/picky/loader.rb")
@@ -100,5 +99,4 @@ describe Picky::Loader do
       described_class.should_receive(:load_self).once
     end
   end
-
 end

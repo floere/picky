@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Memory::Marshal do
-
   context 'hash-based indexes' do
     let(:marshal) { described_class.new 'spec/temp/some/cache/path/to/file' }
 
@@ -41,5 +40,4 @@ describe Picky::Backends::Memory::Marshal do
       end
     end
   end
-
 end

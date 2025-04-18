@@ -3,7 +3,6 @@ require 'spec_helper'
 require 'sqlite3'
 
 describe Picky::Backends::SQLite do
-
   # context 'with options' do
   #   before(:each) do
   #     @backend = described_class.new inverted:      Picky::Backends::SQLite::Value.new(:unimportant),
@@ -72,8 +71,8 @@ describe Picky::Backends::SQLite do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        double(type, index_path: "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")
-          ).should be_kind_of(kind)
+                        double(type,
+                               index_path: "spec/temp/index/test/some_index/some_category_some_bundle_#{type}")).should be_kind_of(kind)
         end
       end
     end
@@ -129,5 +128,4 @@ describe Picky::Backends::SQLite do
       end
     end
   end
-
 end

@@ -26,6 +26,7 @@ module Picky
               pid, configuration_hash = eval result
               next unless Hash === configuration_hash
               next if configuration_hash.empty?
+
               exclaim 'Trying to update MASTER configuration.'
               try_updating_configuration_with configuration_hash
               kill_each_worker_except pid
@@ -41,6 +42,7 @@ module Picky
         def kill_each_worker_except(pid)
           worker_pids.each do |wpid|
             next if wpid == pid
+
             kill_worker :KILL, wpid
           end
         end
@@ -99,6 +101,7 @@ module Picky
 
         class CouldNotUpdateConfigurationError < StandardError
           attr_reader :config_key
+
           def initialize(config_key, message)
             super message
             @config_key = config_key
@@ -125,8 +128,8 @@ module Picky
         def extract_configuration
           {
             querying_removes_characters: querying_removes_characters,
-            querying_stopwords:          querying_stopwords,
-            querying_splits_text_on:     querying_splits_text_on
+            querying_stopwords: querying_stopwords,
+            querying_splits_text_on: querying_splits_text_on
           }
         end
 
@@ -165,8 +168,6 @@ module Picky
           end
         end
 
-        #
-        #
         def to_s
           'Suckerfish Live Interface (Use the picky-live gem to introspect)'
         end

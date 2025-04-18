@@ -24,25 +24,23 @@ data.load
 # Run queries.
 #
 Searches.series_for(amount).each do |queries|
-
   queries.prepare
 
   run = Picky::Search.new data
   # run.max_allocations 1
   # run.terminate_early
-  
+
   # Required here to avoid RubyProf early start.
   #
   require 'ruby-prof'
   RubyProf.start rescue 'RubyProf docs for the fail!'
   RubyProf.pause # Does not work.
-  
+
   queries.each do |query|
     run.search query
   end
-  
+
   RubyProf.pause
-  
 end
 
 result = RubyProf.stop

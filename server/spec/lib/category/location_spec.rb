@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe Picky::Category::Location do
-
   let(:category) do
     category = Class.new do
       attr_accessor :exact, :partial
@@ -26,5 +25,4 @@ describe Picky::Category::Location do
       category.partial.should be_kind_of(Picky::Wrappers::Bundle::Location)
     end
   end
-
 end

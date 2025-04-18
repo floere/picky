@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Bundle do
-
   before(:each) do
     @index    = Picky::Index.new :some_index
     @category = Picky::Category.new :some_category, @index
@@ -41,8 +40,6 @@ describe Picky::Bundle do
     end
   end
 
-
-
   describe 'initialization' do
     it 'should initialize the index correctly' do
       bundle.inverted.should == {}
@@ -66,5 +63,4 @@ describe Picky::Bundle do
       bundle.similarity_strategy.should == @similarity
     end
   end
-
 end

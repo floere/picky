@@ -33,26 +33,18 @@ module Picky
         @anchor = value
       end
 
-      #
-      #
       def add_margin(length)
         @anchor -= length
       end
 
-      #
-      #
       def calculated_range(location)
         range calculate(location)
       end
 
-      #
-      #
       def range(around_location)
         (around_location - @precision)..(around_location + @precision)
       end
 
-      #
-      #
       def calculate(location)
         ((location - @anchor) / @grid).floor
       end

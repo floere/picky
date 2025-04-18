@@ -25,8 +25,6 @@ module Picky
         @category_name ||= category.name
       end
 
-      #
-      #
       def bundle
         category.bundle_for token
       end

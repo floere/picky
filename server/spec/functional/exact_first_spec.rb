@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'exact first' do
-
   before(:each) do
     Picky::Indexes.clear_indexes
   end
@@ -55,11 +54,13 @@ describe 'exact first' do
 
     data = Picky::Index.new :exact_first do
       key_format :to_i
-      
-      source { [
-        OpenStruct.new(id: 1, text: 'discofox'),
-        OpenStruct.new(id: 2, text: 'disco')
-      ] }
+
+      source {
+        [
+          OpenStruct.new(id: 1, text: 'discofox'),
+          OpenStruct.new(id: 2, text: 'disco')
+        ]
+      }
       category :text, partial: Picky::Partial::Substring.new(from: 1)
     end
     normal = Picky::Search.new data
@@ -75,5 +76,4 @@ describe 'exact first' do
     exact_first.search('disco').ids.should == [2, 1] # Exact first.
     exact_first.search('disc').ids.should  == [1, 2] # Not exact, so not first.
   end
-
 end

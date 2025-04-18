@@ -20,11 +20,11 @@ Perfer.session 'Search#search' do |s|
   end
   s.bench "Search#search('florian') with variable index size and fixed search size" do |n|
     data.clear
-    
+
     n.times do |i|
       data.replace_from id: i, name: 'florian', surname: 'hanke'
     end
-  
+
     s.measure { 1000.times { people.search 'florian' } }
   end
   # The following is pointless - the measurements grow with the number of searches.
@@ -33,7 +33,7 @@ Perfer.session 'Search#search' do |s|
   #   1000.times do |i|
   #     data.replace_from id: i, name: 'florian', surname: 'hanke'
   #   end
-  # 
+  #
   #   s.measure { n.times { people.search 'florian' } }
   # end
 end

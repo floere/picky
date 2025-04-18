@@ -29,13 +29,11 @@ module Picky
                   :similarity,
                   :configuration,
                   :realtime,
-
                   :backend_inverted,
                   :backend_weights,
                   :backend_similarity,
                   :backend_configuration,
                   :backend_realtime,
-
                   :weight_strategy,
                   :partial_strategy,
                   :similarity_strategy
@@ -52,7 +50,7 @@ module Picky
       @weight_strategy     = weight_strategy
       @partial_strategy    = partial_strategy
       @similarity_strategy = similarity_strategy
-      
+
       @hints      = options[:hints]
       @backend    = options[:backend]
 
@@ -104,7 +102,7 @@ module Picky
     def empty
       on_all_indexes_call :empty
     end
-    
+
     # Returns a new, empty instance of an array type.
     #
     def empty_array
@@ -140,8 +138,9 @@ module Picky
     def similar(str_or_sym)
       code = similarity_strategy.encode str_or_sym
       return [] unless code
+
       @similarity[code] || []
-      
+
       # similar_codes = @similarity[code]
       # if similar_codes.blank?
       #   [] # Return a simple array.
@@ -170,18 +169,18 @@ module Picky
     # if none given.
     #
     def index_path(type = nil)
-      ::File.join index_directory, "#{category.name}_#{name}#{ "_#{type}" if type }"
+      ::File.join index_directory, "#{category.name}_#{name}#{"_#{type}" if type}"
     end
 
     def to_tree_s(indent = 0, &block)
-      s = <<-TREE
-#{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
-#{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block && block.call(inverted)}
-#{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block && block.call(weights)}
-#{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block && block.call(similarity)}
-#{' ' * indent}    Realtime(#{realtime.size})[#{backend_realtime}]#{block && block.call(realtime)}
-#{' ' * indent}    Configur(#{configuration.size})[#{backend_configuration}]#{block && block.call(configuration)}
-TREE
+      s = <<~TREE
+        #{' ' * indent}#{self.class.name.gsub('Picky::', '')}(#{name})
+        #{' ' * indent}    Inverted(#{inverted.size})[#{backend_inverted}]#{block && block.call(inverted)}
+        #{' ' * indent}    Weights (#{weights.size})[#{backend_weights}]#{block && block.call(weights)}
+        #{' ' * indent}    Similari(#{similarity.size})[#{backend_similarity}]#{block && block.call(similarity)}
+        #{' ' * indent}    Realtime(#{realtime.size})[#{backend_realtime}]#{block && block.call(realtime)}
+        #{' ' * indent}    Configur(#{configuration.size})[#{backend_configuration}]#{block && block.call(configuration)}
+      TREE
       s.chomp
     end
 

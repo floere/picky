@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Redis::Float do
-
   let(:client) { double :client }
   let(:backend) { described_class.new client, 'some_namespace' }
 
@@ -39,5 +38,4 @@ describe Picky::Backends::Redis::Float do
       backend.to_s.should == 'Picky::Backends::Redis::Float(some_namespace:*)'
     end
   end
-
 end

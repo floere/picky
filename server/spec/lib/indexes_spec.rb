@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Indexes do
-
   let(:index) { double :some_index,   name: :some_index }
   let(:index2) { double :some_index2, name: :some_index }
 
@@ -47,13 +46,12 @@ describe Picky::Indexes do
       end
       # it 'does remove duplicates (with same name)' do
       #   indexes.clear_indexes
-      # 
+      #
       #   indexes.register index
       #   indexes.register index2
-      # 
+      #
       #   indexes.indexes.should == [index2]
       # end
     end
   end
-
 end

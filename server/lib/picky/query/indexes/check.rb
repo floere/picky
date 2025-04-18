@@ -1,7 +1,6 @@
 module Picky
   module Query
     class Indexes
-      
       # Checks if multiple backends are used in the same search instance.
       #
       # Using multiple backends for the same search are not yet possible.
@@ -27,9 +26,8 @@ module Picky
             raise DifferentBackendsError.new(backends)
           end
         end
-        
       end
-      
+
       # Currently it isn't possible using Memory and Redis etc.
       # indexes in the same query index group.
       #
@@ -42,7 +40,6 @@ module Picky
           "Currently it isn't possible to mix Indexes with backends #{@backends.join(" and ")} in the same Search instance."
         end
       end
-      
     end
   end
 end

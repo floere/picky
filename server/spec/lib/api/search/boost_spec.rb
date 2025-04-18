@@ -32,12 +32,12 @@ describe Picky::API::Search::Boost do
       it 'raises with a nice error message' do
         expect {
           object.extract_boosts Object.new
-        }.to raise_error(<<-ERROR)
-boost options for a Search should be either
-* for example a Hash { [:name, :surname] => +3 }
-or
-* an object that responds to #boost_for(combinations) and returns a boost float
-ERROR
+        }.to raise_error(<<~ERROR)
+          boost options for a Search should be either
+          * for example a Hash { [:name, :surname] => +3 }
+          or
+          * an object that responds to #boost_for(combinations) and returns a boost float
+        ERROR
       end
     end
   end

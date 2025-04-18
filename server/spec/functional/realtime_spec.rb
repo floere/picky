@@ -1,11 +1,11 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Realtime Indexing' do
-
   class Book
     attr_reader :id, :title, :author
+
     def initialize(id, title, author)
       @id, @title, @author = id, title, author
     end
@@ -15,10 +15,10 @@ describe 'Realtime Indexing' do
     category :title
     category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
   end
-  
+
   symbol_keys_index = Picky::Index.new(:books) do
     symbol_keys true
-    
+
     category :title
     category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
   end
@@ -149,9 +149,9 @@ describe 'Realtime Indexing' do
           index.add Book.new(2, 'Title New', 'Author New')
 
           books.search('title:Title').ids.should == [2, 1]
-          
+
           index.replace Book.new(1, 'Title', 'Author')
-          
+
           books.search('title:Title').ids.should == [1, 2]
         end
       end
@@ -282,7 +282,7 @@ describe 'Realtime Indexing' do
     let(:index) do
       Picky::Index.new(:books) do
         key_format :to_sym
-        
+
         category :title
         category :author, similarity: Picky::Generators::Similarity::DoubleMetaphone.new(3)
       end
@@ -501,7 +501,7 @@ describe 'Realtime Indexing' do
       end
     end
   end
-  
+
   context 'with Redis backend' do
     let(:index) do
       Picky::Index.new(:books) do
@@ -521,28 +521,28 @@ describe 'Realtime Indexing' do
       it 'finds the first entry' do
         books.search('title:Titl').ids.should == ['one']
       end
-      
+
       it 'finds the first entry' do
         books.search('author:author title:Titl').ids.should == ['one']
       end
-      
+
       it 'finds the first entry' do
         books.search('Author Titl').ids.should == ['one']
       end
-      
+
       it 'finds the first entry the second time, too' do
         books.search('author:author title:Titl')
-        
+
         books.search('author:author title:Titl').ids.should == ['one']
       end
-      
+
       it 'finds the first entry the second time, even if the Redis script cache is flushed' do
         books.search('author:author title:Titl')
-        
+
         books.search('author:author title:Titl').ids.should == ['one']
-        
+
         index.backend.client.script 'flush'
-        
+
         books.search('author:author title:Titl').ids.should == ['one']
       end
 
@@ -749,5 +749,4 @@ describe 'Realtime Indexing' do
       end
     end
   end
-
 end

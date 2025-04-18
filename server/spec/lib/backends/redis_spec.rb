@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Picky::Backends::Redis do
-
   # context 'with options' do
   #   before(:each) do
   #     @backend = described_class.new inverted:      Picky::Backends::Redis::Float.new(:unimportant, :unimportant),
@@ -96,8 +95,7 @@ describe Picky::Backends::Redis do
       ].each do |type, kind|
         it "creates and returns a(n) #{type} index" do
           @backend.send(:"create_#{type}",
-                        double(type, identifier: "some_identifier:#{type}")
-          ).should be_kind_of(kind)
+                        double(type, identifier: "some_identifier:#{type}")).should be_kind_of(kind)
         end
       end
     end
@@ -155,5 +153,4 @@ describe Picky::Backends::Redis do
     #   end
     # end
   end
-
 end

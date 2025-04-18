@@ -1,12 +1,11 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'From option' do
-
   it 'can be given a lambda' do
     index = Picky::Index.new :lambda do
-      category :text, from: ->(thing){ thing.some_text * 2 } # Anything, really.
+      category :text, from: ->(thing) { thing.some_text * 2 } # Anything, really.
     end
 
     require 'ostruct'
@@ -21,5 +20,4 @@ describe 'From option' do
 
     try.search('text:ohaiohai').ids.should == [1]
   end
-
 end

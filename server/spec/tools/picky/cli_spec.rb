@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 # We need to load the CLI file explicitly as the CLI is not loaded with the Loader (not needed in the server, only for script runs).
@@ -7,7 +7,6 @@ require 'spec_helper'
 require_relative '../../../tools/picky/cli'
 
 describe Picky::CLI do
-
   describe '.mapping' do
     it 'returns the right mapping' do
       Picky::CLI.mapping.should == {
@@ -29,14 +28,14 @@ describe Picky::CLI do
         cli.execute 'generate', 'one', 'two', 'three'
       end
       it 'calls help correctly' do
-        Kernel.should_receive(:puts).once.with <<-HELP
-Possible commands:
-  picky generate {client,server,all_in_one} app_directory_name
-  picky help
-  picky live [host:port/path (default: localhost:8080/admin)] [port (default: 4568)]
-  picky search url_or_path [amount of ids (default 20)]
-  picky stats logfile (e.g. log/search.log) [port (default: 4567)]
-HELP
+        Kernel.should_receive(:puts).once.with <<~HELP
+          Possible commands:
+            picky generate {client,server,all_in_one} app_directory_name
+            picky help
+            picky live [host:port/path (default: localhost:8080/admin)] [port (default: 4568)]
+            picky search url_or_path [amount of ids (default 20)]
+            picky stats logfile (e.g. log/search.log) [port (default: 4567)]
+        HELP
         cli.execute 'help'
       end
       # it 'calls live and it does not fail' do
@@ -51,19 +50,22 @@ HELP
         cli.executor_class_for.should == [Picky::CLI::Help]
       end
       it 'returns Generator for generate' do
-        cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{client,server,all_in_one}', :app_directory_name]
+        cli.executor_class_for(:generate).should == [Picky::CLI::Generate, :'{client,server,all_in_one}',
+                                                     :app_directory_name]
       end
       it 'returns Help for help' do
         cli.executor_class_for(:help).should == [Picky::CLI::Help]
       end
       it 'returns Live for live' do
-        cli.executor_class_for(:live).should == [Picky::CLI::Live, 'host:port/path (default: localhost:8080/admin)', 'port (default: 4568)']
+        cli.executor_class_for(:live).should == [Picky::CLI::Live, 'host:port/path (default: localhost:8080/admin)',
+                                                 'port (default: 4568)']
       end
       it 'returns Search for stats' do
         cli.executor_class_for(:search).should == [Picky::CLI::Search, :url_or_path, 'amount of ids (default 20)']
       end
       it 'returns Statistics for stats' do
-        cli.executor_class_for(:stats).should == [Picky::CLI::Statistics, :"logfile (e.g. log/search.log)", 'port (default: 4567)']
+        cli.executor_class_for(:stats).should == [Picky::CLI::Statistics, :"logfile (e.g. log/search.log)",
+                                                  'port (default: 4567)']
       end
       it 'returns Help for silly input' do
         cli.executor_class_for(:gagagagagagaga).should == [Picky::CLI::Help]
@@ -90,5 +92,4 @@ HELP
       end
     end
   end
-
 end

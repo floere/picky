@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 module Picky
   # = Picky Searches
   #
@@ -60,10 +60,10 @@ module Picky
     #
     def searching(options)
       @tokenizer = if options.respond_to? :tokenize
-        options
-      else
-        options && Tokenizer.new(options)
-      end
+                     options
+                   else
+                     options && Tokenizer.new(options)
+                   end
     end
 
     # Sets the max amount of allocations to calculate.
@@ -136,7 +136,7 @@ module Picky
     def boost(boosts)
       @boosts = extract_boosts boosts
     end
-    
+
     def symbol_keys
       @symbol_keys = true
     end

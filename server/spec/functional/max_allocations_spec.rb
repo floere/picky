@@ -1,9 +1,8 @@
 # encoding: utf-8
-#
+
 require 'spec_helper'
 
 describe 'Search#max_allocations' do
-
   it 'offers the option max_allocations' do
     index = Picky::Index.new :dynamic_weights do
       category :text1
@@ -60,5 +59,4 @@ describe 'Search#max_allocations' do
       try_again.search 'hello world'
     end.should < threshold
   end
-
 end

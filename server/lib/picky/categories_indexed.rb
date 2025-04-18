@@ -20,8 +20,6 @@ module Picky
       end
     end
 
-    #
-    #
     def inject_possible_for(tokens)
       tokens.inject([]) do |result, token|
         possible = possible_categories token

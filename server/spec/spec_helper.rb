@@ -87,6 +87,7 @@ end
 
 def diff(klass = String)
   return unless $marked
+
   now_hash = Hash.new 0
   now = ObjectSpace.each_object(klass).to_a
   now.each { |thing| now_hash[thing] += 1 }

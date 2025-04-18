@@ -1,5 +1,5 @@
 # encoding: utf-8
-#
+
 require_relative 'analyzer'
 
 module Picky
@@ -17,7 +17,7 @@ module Picky
   \033[1mApplication(s)\033[m
     Definition LOC:  #{"%4d" % loc}
     Indexes defined: #{"%4d" % Indexes.size}
-  PREAMBLE
+      PREAMBLE
     end
 
     # Gathers information about the application.
@@ -36,7 +36,7 @@ module Picky
   #{"#{category.name}".indented_to_s(4)}\n
   #{"exact\n#{Analyzer.new.analyze(category.exact).indented_to_s}".indented_to_s(6)}\n
   #{"partial\n#{Analyzer.new.analyze(category.partial).indented_to_s}".indented_to_s(6)}
-  ANALYSIS
+        ANALYSIS
       end
     end
 
@@ -48,7 +48,7 @@ module Picky
   Picky Configuration:
 
   #{[@preamble, @application, @indexes.join("\n")].compact.join("\n")}
-  STATS
+      STATS
     end
 
     # Internal methods.
