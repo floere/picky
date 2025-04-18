@@ -119,11 +119,6 @@ Style/ClassAndModuleChildren:
     - 'lib/picky/optimizers/memory/array_deduplicator.rb'
     - 'prototypes/facets/app.rb'
 
-# Offense count: 40
-Style/ClassVars:
-  Exclude:
-    - 'lib/picky/backends/redis/directly_manipulable.rb'
-
 # Offense count: 97
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
