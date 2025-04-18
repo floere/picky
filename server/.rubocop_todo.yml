@@ -54,12 +54,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 17
 
-# Offense count: 6
-# Configuration parameters: AsciiConstants.
-Naming/AsciiIdentifiers:
-  Exclude:
-    - 'prototypes/range_query/performance.rb'
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
