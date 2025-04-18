@@ -116,8 +116,8 @@ module Picky
 
       # Sort highest score first.
       #
-      def <=>(other_allocation)
-        other_allocation.score <=> self.score
+      def <=>(other)
+        other.score <=> self.score
       end
 
       # Transform the allocation into result form.

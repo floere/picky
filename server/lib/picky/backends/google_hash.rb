@@ -7,13 +7,13 @@ begin
     # This is mainly used in tests, which is
     # why we allow for a silly implementation.
     #
-    def ==(hash)
-      return false unless hash.respond_to?(:to_h)
+    def ==(other)
+      return false unless other.respond_to?(:to_h)
 
       self.each do |key, value|
-        return false if hash[key] != value
+        return false if other[key] != value
       end
-      hash.each do |key, value|
+      other.each do |key, value|
         return false if self[key] != value
       end
 
