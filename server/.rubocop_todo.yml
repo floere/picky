@@ -393,13 +393,6 @@ Style/SafeNavigation:
     - 'performance_tests/profile.rb'
     - 'tools/picky/cli.rb'
 
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'lib/picky/analyzer.rb'
-    - 'lib/picky/category.rb'
-
 # Offense count: 115
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns, SplitStrings.

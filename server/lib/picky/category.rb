@@ -97,7 +97,7 @@ module Picky
       weight
     ]
     def warn_if_unknown(options)
-      if options && (options.keys - @@known_keys).size > 0
+      if options && !(options.keys - @@known_keys).empty?
         warn <<~WARNING
 
           Warning: Category options #{options} for category #{name} contain an unknown option.

@@ -71,7 +71,7 @@ class Analyzer
   end
 
   def can_calculate_cardinality?(index)
-    return if index.size.zero?
+    return if index.empty?
     return unless index.respond_to? :each_pair
 
     true
@@ -90,7 +90,7 @@ class Analyzer
   end
 
   def weights(index)
-    return if !index.respond_to?(:size) || index.size.zero?
+    return if !index.respond_to?(:size) || index.empty?
     return unless index.respond_to?(:each_pair)
 
     min_weight = 1.0 / 0 # Infinity
