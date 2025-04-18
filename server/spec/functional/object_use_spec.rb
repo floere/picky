@@ -5,7 +5,6 @@ require 'spec_helper'
 describe "Object Use" do
 
   it 'is not too high' do
-
     index = Picky::Index.new :object_use do
       category :text1
       category :text2
@@ -67,7 +66,8 @@ describe "Object Use" do
       "text1" => 1,
       "text3:three" => 1,
       "text2:two" => 1,
-      "text1:one" => 1
+      "text1:one" => 1,
+      "text1:one text2:two text3:three" => 2 # Sadly this one is left.
     ) # Only the necessary split strings.
 
     s = 'text1:one text2:two text3,text4:three'
@@ -85,7 +85,8 @@ describe "Object Use" do
       "text1" => 1,
       "text1:one" => 1,
       "text2:two" => 1,
-      "text3,text4:three" => 1
+      "text3,text4:three" => 1,
+      "text1:one text2:two text3,text4:three" => 3 # Sadly this one is left.
     )
 
   end
