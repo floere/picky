@@ -59,12 +59,6 @@ Lint/ShadowingOuterLocalVariable:
     - 'lib/picky/optimizers/memory/array_deduplicator.rb'
     - 'performance_tests/index.rb'
 
-# Offense count: 2
-Lint/StructNewOverride:
-  Exclude:
-    - 'spec/functional/pool_spec.rb'
-    - 'spec/functional/sorting_spec.rb'
-
 # Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes.
 Metrics/AbcSize:

@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'ostruct'
 
 describe 'GC stats: searching' do
-  PoolSpecThing = Struct.new :id, :first, :last, :other
+  PoolSpecThing = Struct.new :id, :the_first, :the_last, :other
 
   before(:each) do
     Picky::Indexes.clear_indexes
@@ -12,8 +12,8 @@ describe 'GC stats: searching' do
   let(:amount) { 5_000 }
   let(:data) do
     index = Picky::Index.new :sorted do
-      category :first
-      category :last
+      category :the_first
+      category :the_last
       category :other
     end
     3.times do |i|
