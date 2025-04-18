@@ -3,7 +3,7 @@ module Picky
   module Backends
 
     class SQLite
-      
+
       EMPTY_ARRAY = ::Array.new
 
       class Basic
@@ -17,14 +17,14 @@ module Picky
           @empty      = options[:empty]
           @initial    = options[:initial]
           @realtime   = options[:realtime]
-        
+
           # Note: If on OSX, too many files get opened during
           #       the specs -> ulimit -n 3000
-          #  
+          #
           # rescue SQLite3::CantOpenException => e
-          #  
+          #
         end
-        
+
         # Return a new, empty instance of this array type.
         #
         def empty_array
@@ -51,7 +51,7 @@ module Picky
         def clear
           db.execute 'delete from key_value'
         end
-        
+
         # Lazily creates SQLite client.
         # Note: Perhaps it would be advisable to create only one, when initialising.
         #
@@ -68,7 +68,7 @@ module Picky
             #
             internal.each do |key, value|
               encoded_value = MultiJson.encode value
-              db.execute 'insert into key_value values (?,?)', key.to_s, encoded_value
+              db.execute 'insert into key_value values (?,?)', [key.to_s, encoded_value]
             end
           end
         end
